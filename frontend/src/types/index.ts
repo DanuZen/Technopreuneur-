@@ -109,3 +109,4 @@ export interface JobItem {
   matchReason?: string[];
   missingSkills?: string[];
 }
+
