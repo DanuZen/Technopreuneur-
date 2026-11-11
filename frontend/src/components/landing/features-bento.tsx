@@ -12,9 +12,9 @@ export function FeaturesBento() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-6xl mx-auto">
         {/* Box 1: Zero Cost (100% Free Tier) */}
-        <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between space-y-4">
+        <div className="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between space-y-4 hover:-translate-y-1 hover:shadow-lg hover:border-slate-300 transition-all duration-300">
           <div className="space-y-2">
             <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-semibold">
               Akses Terbuka
@@ -31,7 +31,7 @@ export function FeaturesBento() {
         </div>
 
         {/* Box 2: Blind Scoring */}
-        <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between space-y-4">
+        <div className="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between space-y-4 hover:-translate-y-1 hover:shadow-lg hover:border-slate-300 transition-all duration-300">
           <div className="space-y-2">
             <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-semibold">
               Objektivitas
@@ -48,7 +48,7 @@ export function FeaturesBento() {
         </div>
 
         {/* Box 3: Privacy UU PDP */}
-        <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between space-y-4">
+        <div className="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between space-y-4 hover:-translate-y-1 hover:shadow-lg hover:border-slate-300 transition-all duration-300">
           <div className="space-y-2">
             <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-semibold">
               Regulasi Hukum
@@ -67,3 +67,4 @@ export function FeaturesBento() {
     </section>
   );
 }
+

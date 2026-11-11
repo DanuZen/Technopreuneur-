@@ -2,8 +2,8 @@ import Link from "next/link";
 
 export function DarkCtaBanner() {
   return (
-    <section className="max-w-4xl mx-auto px-4 sm:px-6">
-      <div className="rounded-3xl bg-slate-950 text-white p-8 sm:p-12 text-center space-y-5 shadow-2xl border border-slate-800">
+    <section className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="rounded-3xl bg-slate-950 text-white p-8 sm:p-14 text-center space-y-6 shadow-2xl border border-slate-800/80 hover:border-slate-700 transition-all duration-300">
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight">
           Siap Mengetahui Kualitas CV Anda Sekarang?
         </h2>
@@ -29,3 +29,4 @@ export function DarkCtaBanner() {
     </section>
   );
 }
+

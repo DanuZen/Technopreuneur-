@@ -111,9 +111,9 @@ export function InteractiveWorkflow() {
         })}
       </div>
 
-      {/* Card Showcase Container (like reference) */}
-      <div className="p-6 sm:p-10 rounded-3xl bg-white border border-slate-200 shadow-md max-w-4xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      {/* Card Showcase Container (like reference with minimal margin) */}
+      <div className="p-6 sm:p-10 rounded-3xl bg-white border border-slate-200/90 shadow-md hover:shadow-xl hover:border-slate-300 transition-all duration-500 max-w-6xl mx-auto">
+        <div key={activeStepId} className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center animate-fade-in-up">
           {/* Left Text Column */}
           <div className="space-y-4">
             <span className="text-[11px] font-mono uppercase tracking-wider text-blue-600 font-semibold bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200">
@@ -163,3 +163,4 @@ export function InteractiveWorkflow() {
     </section>
   );
 }
+

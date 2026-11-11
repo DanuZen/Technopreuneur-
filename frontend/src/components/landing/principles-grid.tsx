@@ -12,9 +12,9 @@ export function PrinciplesGrid() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
         {/* Card 1 */}
-        <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4 hover:border-slate-300 transition">
+        <div className="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm space-y-4 hover:-translate-y-1 hover:shadow-lg hover:border-slate-300 transition-all duration-300">
           <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-800 flex items-center justify-center">
             <FileCheck className="w-5 h-5" aria-hidden="true" />
           </div>
@@ -31,7 +31,7 @@ export function PrinciplesGrid() {
         </div>
 
         {/* Card 2 */}
-        <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4 hover:border-slate-300 transition">
+        <div className="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm space-y-4 hover:-translate-y-1 hover:shadow-lg hover:border-slate-300 transition-all duration-300">
           <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-800 flex items-center justify-center">
             <BarChart3 className="w-5 h-5" aria-hidden="true" />
           </div>
@@ -48,7 +48,7 @@ export function PrinciplesGrid() {
         </div>
 
         {/* Card 3 */}
-        <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4 hover:border-slate-300 transition">
+        <div className="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm space-y-4 hover:-translate-y-1 hover:shadow-lg hover:border-slate-300 transition-all duration-300">
           <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-800 flex items-center justify-center">
             <Target className="w-5 h-5" aria-hidden="true" />
           </div>
@@ -67,3 +67,4 @@ export function PrinciplesGrid() {
     </section>
   );
 }
+
