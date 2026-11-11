@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { UploadCloud, FileSpreadsheet, CheckCircle, Shield, ArrowDown } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { UploadCloud, FileSpreadsheet, ArrowRight, ShieldCheck, CheckCircle2 } from "lucide-react";
 import { CVDropzone } from "@/components/cv/cv-dropzone";
-import { CVQuestionnaireWizard } from "@/components/cv/cv-questionnaire-wizard";
 import { CVAnalysisView } from "@/components/cv/cv-analysis-view";
 import { ProductMockup } from "@/components/landing/product-mockup";
 import { InteractiveWorkflow } from "@/components/landing/interactive-workflow";
@@ -13,11 +13,13 @@ import { DarkCtaBanner } from "@/components/landing/dark-cta-banner";
 import { CVAnalysisResult } from "@/types";
 
 export default function Home() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<"upload" | "questionnaire">("upload");
   const [analysisResult, setAnalysisResult] = useState<CVAnalysisResult | null>(null);
 
   const handleAnalysisSuccess = (result: CVAnalysisResult) => {
     setAnalysisResult(result);
+    router.push("/dashboard");
   };
 
   const handleReset = () => {
@@ -88,7 +90,31 @@ export default function Home() {
                 {activeTab === "upload" ? (
                   <CVDropzone onAnalysisComplete={handleAnalysisSuccess} />
                 ) : (
-                  <CVQuestionnaireWizard onComplete={handleAnalysisSuccess} />
+                  <div className="p-6 sm:p-8 bg-white rounded-2xl border border-slate-200/90 shadow-sm text-center space-y-4">
+                    <div className="w-12 h-12 rounded-2xl bg-slate-100 text-slate-900 flex items-center justify-center mx-auto">
+                      <FileSpreadsheet className="w-6 h-6" aria-hidden="true" />
+                    </div>
+
+                    <div className="space-y-1.5 max-w-lg mx-auto">
+                      <h3 className="text-base sm:text-lg font-bold text-slate-900">
+                        Belum Memiliki Berkas CV Siap Pakai?
+                      </h3>
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Sistem kami memandu Anda menyusun resume berstandar industri ATS (1-kolom, ramah parser mesin rekrutmen) melalui alur onboarding terpadu di dashboard.
+                      </p>
+                    </div>
+
+                    <div className="pt-2 flex items-center justify-center">
+                      <button
+                        type="button"
+                        onClick={() => router.push("/dashboard?onboarding=true")}
+                        className="w-full sm:w-auto px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-semibold rounded-full shadow-md transition flex items-center justify-center gap-2 min-h-[44px]"
+                      >
+                        <span>Mulai Onboarding CV ATS di Dashboard</span>
+                        <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                      </button>
+                    </div>
+                  </div>
                 )}
               </div>
             </div>
