@@ -7,58 +7,42 @@ Dokumen ini memuat rincian daftar tugas (*work breakdown structure*), roadmap pe
 
 ---
 
-## 1. Fase Riset & Validasi Kebutuhan Awal (Discovery & Research Phase)
+## 1. Fase Riset Teknis (Technical Spikes & Feasibility)
 
-Sebelum pengembangan teknis dilakukan, seluruh tim menjalankan serangkaian riset pengguna, pasar, teknis AI, dan regulasi hukum guna memastikan solusi yang dibangun tepat sasaran dan berdasar pada data nyata.
+Riset awal difokuskan secara eksklusif pada **riset teknis** untuk memvalidasi kelayakan arsitektur, pustaka, dan performa infrastruktur pada sisi **Backend AI** dan **Backend API**. Frontend tidak dibebani riset non-teknis dan dapat langsung fokus pada pengembangan antarmuka.
 
-### 1.1 Riset Pengguna & Kebutuhan Fitur (*User Discovery*)
-- [ ] **Wawancara Pencari Kerja & Fresh Graduate (10–15 Responden):**
-  - Mengidentifikasi hambatan utama dalam melamar kerja, alasan CV sering diabaikan, dan kendala pelamar yang belum memiliki CV sama sekali.
-  - Menguji pemahaman pengguna terhadap konsep skor ATS dan rekomendasi lowongan berbasis AI.
-  - **[PIC: Wira Fikri Ramadanu]**
-- [ ] **Formulasi Pertanyaan Kuesioner Terpandu (*Guided Questions Design*):**
-  - Riset struktur pertanyaan paling efektif untuk pengguna tanpa CV: identifikasi latar belakang pendidikan, kompetensi teknis & non-teknis, riwayat organisasi/magang/proyek kampus, serta preferensi bidang kerja.
-  - Menyusun urutan langkah formulir wizard agar ringkas, mudah dipahami, dan selesai diisi dalam waktu $< 5$ menit.
-  - **[PIC: Wira Fikri Ramadanu]**
-- [ ] **Wawancara Kebutuhan Rekruter & UMKM (3–5 Responden):**
-  - Menggali kriteria utama screening CV yang digunakan HR/pemilik usaha saat menyaring pelamar entry-level.
-  - Memvalidasi 5 dimensi penilaian kualitas CV (struktur, kejelasan, pencapaian terukur, relevansi skill, kelengkapan).
-  - **[PIC: Muhammad Gilang Ramadhan & Wira Fikri Ramadanu]**
-
----
-
-### 1.2 Riset Pasar & Benchmarking Kompetitor (*Market Research*)
-- [ ] **Analisis Kompetitor & Solusi Serupa:**
-  - Mempelajari alur dan fitur platform lokal (Jobstreet, Glints, KitaLulus) dan AI resume builder global (Rezi, Teal, Jobscan).
-  - Menentukan pembeda utama (*unique value proposition*) CareerMatch AI: analisis gratis, pembuatan CV otomatis dari kuesioner, dan pencocokan lowongan dua tahap.
-  - **[PIC: Muhammad Gilang Ramadhan]**
-- [ ] **Riset Cakupan Data Lowongan Kerja Eksternal:**
-  - Melakukan uji coba kueri API Jooble untuk wilayah kota-kota besar di Indonesia (Jakarta, Surabaya, Bandung, Yogyakarta, Medan, dsb.).
-  - Memeriksa kelengkapan metadata lowongan: judul posisi, deskripsi, syarat skill, lokasi, dan URL asli lamaran.
-  - **[PIC: Florensius Panca Gati]**
-
----
-
-### 1.3 Riset Teknis AI & Eksplorasi Model (*Technical Spikes*)
+### 1.1 Riset Teknis Backend AI (Florensius Panca Gati)
 - [ ] **Benchmarking Model LLM Gratis (*Free Tier Feasibility*):**
-  - Pengujian performa Google Gemini API (Free Tier: 15 RPM) vs alternatif open-source/free untuk akurasi ekstraksi profil dan kecepatan scoring.
-  - Pengujian prompt AI CV Generator: menguji kualitas resume yang dihasilkan dari sampel jawaban kuesioner dummy.
+  - Menguji latensi, kestabilan rate limit, dan kepatuhan skema JSON terstruktur (*Structured Outputs*) Google Gemini API (Free Tier: 15 RPM).
+  - Melakukan *prompt engineering spike* untuk ekstraksi 5 dimensi nilai CV dan perakitan resume terstruktur dari jawaban kuesioner.
   - **[PIC: Florensius Panca Gati]**
-- [ ] **Riset Model Embedding & Algoritma Vektor:**
-  - Evaluasi akurasi model embedding 1536-dimensi untuk teks dwibahasa (Bahasa Indonesia & Bahasa Inggris).
-  - Pengujian kueri jarak kemiripan cosinus pgvector (`<=>`) pada PostgreSQL lokal.
+- [ ] **Eksplorasi Model Vektor & Embedding Teks:**
+  - Evaluasi akurasi model embedding 1536-dimensi untuk teks dwibahasa (Bahasa Indonesia & Inggris).
+  - Pengujian kueri operator jarak kemiripan kosinus pgvector (`<=>`) pada PostgreSQL.
   - **[PIC: Florensius Panca Gati]**
-- [ ] **Eksplorasi Parser Dokumen CV:**
-  - Menguji pustaka `pypdf` dan `python-docx` terhadap 10 ragam format CV (1 kolom, 2 kolom, tabel, format kreatif) dan mengidentifikasi penanganan file scan foto kosong.
+- [ ] **Spike Parser Dokumen & Deteksi Scan Kosong:**
+  - Uji performa pustaka `pypdf` dan `python-docx` terhadap berbagai tata letak CV (1 kolom, 2 kolom, tabel).
+  - Implementasi deteksi berkas gambar/scan tanpa layer teks digital untuk mencegah pemrosesan sia-sia.
+  - **[PIC: Florensius Panca Gati]**
+- [ ] **Eksplorasi Integrasi Jooble Publisher API:**
+  - Menguji kueri endpoint resmi Jooble untuk lowongan kerja Indonesia (Jakarta, Surabaya, Bandung, remote).
+  - Merancang pemetaan (*mapping*) skema respons Jooble ke skema tabel database `jobs`.
   - **[PIC: Florensius Panca Gati]**
 
 ---
 
-### 1.4 Riset Regulasi & Kepatuhan Hukum UU PDP
-- [ ] **Kajian Kepatuhan UU Perlindungan Data Pribadi (UU No. 27 Tahun 2022):**
-  - Menentukan mekanisme persetujuan eksplisit (*opt-in consent*) saat mengunggah atau membuat CV.
-  - Menetapkan kebijakan sanitasi data sensitif (PII: NIK, nomor telepon, alamat detail) sebelum diteruskan ke API LLM.
-  - Merancang prosedur hak hapus permanen (*Right to be Forgotten*) untuk akun dan berkas CV.
+### 1.2 Riset Teknis Backend API (Muhammad Gilang Ramadhan)
+- [ ] **Eksplorasi Integrasi `pgvector` pada Node.js:**
+  - Uji coba driver `pg` / ORM dengan tipe data `vector(1536)` pada PostgreSQL.
+  - Benchmarking performa kueri similarity menggunakan indeks HNSW vs IVFFlat pada dataset lowongan kerja.
+  - **[PIC: Muhammad Gilang Ramadhan]**
+- [ ] **Arsitektur Pipeline Pemrosesan Asinkron Ringan (*In-Memory Worker*):**
+  - Merancang antrean tugas asinkron ringan (*in-memory job queue* / EventEmitter) di lingkungan Node.js tanpa mewajibkan Redis berbayar.
+  - Menetapkan mekanisme *polling* / webhook internal antara Backend API dan Backend AI FastAPI.
+  - **[PIC: Muhammad Gilang Ramadhan]**
+- [ ] **Implementasi Sanitasi PII & Kepatuhan Teknis UU PDP:**
+  - Pembuatan modul sanitasi regex untuk menyamarkan NIK, nomor telepon, dan email sebelum teks profil dikirim ke LLM eksternal.
+  - Pengujian alur pembuatan *Pre-signed URL* penyimpanan file CV (kedaluwarsa 15 menit) dan verifikasi logika hapus permanen (*hard delete*) pada data relasional serta file storage.
   - **[PIC: Muhammad Gilang Ramadhan]**
 
 ---
@@ -134,18 +118,15 @@ Seluruh infrastruktur dan layanan eksternal MVP dirancang memanfaatkan paket gra
 gantt
     title Roadmap Pengembangan MVP CareerMatch AI (6 Minggu)
     dateFormat  YYYY-MM-DD
-    section Minggu 1: Riset, Setup & Desain
-    Riset Pengguna & Desain Kuesioner (Wira)    :w1_0, 2026-11-10, 3d
-    Riset Pasar Loker & Legal PDP (Gilang)      :w1_0b, 2026-11-10, 3d
-    Riset Model AI & Ekstraksi CV (Panca)       :w1_0c, 2026-11-10, 3d
-    Setup DB pgvector & Storage (Gilang)        :w1_1, after w1_0b, 4d
-    Desain UI Wireframe & Theme Token (Wira)    :w1_2, after w1_0, 4d
-    Setup FastAPI & Router Base (Panca)         :w1_3, after w1_0c, 4d
+    section Minggu 1: Setup & Riset Teknis
+    Riset Teknis pgvector & DB Setup (Gilang)   :w1_1, 2026-11-10, 4d
+    Riset Teknis LLM & Parser CV (Panca)        :w1_2, 2026-11-10, 4d
+    Setup UI Theme & Base Scaffold (Wira)       :w1_3, 2026-11-10, 4d
     section Minggu 2: Core CV Engine
-    Ekstraksi Teks PDF/DOCX (Panca)             :w2_1, after w1_3, 5d
+    Ekstraksi Teks PDF/DOCX (Panca)             :w2_1, after w1_2, 5d
     Prompt Profiling & Scoring LLM (Panca)      :w2_2, after w2_1, 5d
     Auth JWT, RBAC & Consent API (Gilang)       :w2_3, after w1_1, 5d
-    UI Upload Dropzone & Progress (Wira)        :w2_4, after w1_2, 5d
+    UI Upload Dropzone & Kuesioner (Wira)       :w2_4, after w1_3, 5d
     section Minggu 3: Job & Vektor
     CRUD Lowongan & Search Filter (Gilang)      :w3_1, after w2_3, 4d
     Otomasi Embedding & Jooble Client (Panca)   :w3_2, after w2_2, 5d
@@ -173,24 +154,19 @@ gantt
 > **Direktori Kerja:** `frontend/`  
 > **Teknologi:** Next.js (App Router, TypeScript), Tailwind CSS, Lucide Icons, TanStack Query
 
-#### A. Riset Pengguna & Desain Kuesioner (Fase Awal)
-- [ ] Melakukan wawancara singkat ke 10–15 fresh graduate/pencari kerja mengenai kesulitan format CV dan kebiasaan melamar kerja
-- [ ] Menyusun daftar pertanyaan terpandu (*guided questions*) yang ringkas dan efektif untuk pengguna yang tidak memiliki CV
-- [ ] Merancang wireframe low-fidelity alur 2 opsi: "Unggah CV" vs "Isi Kuesioner Terpandu"
-
-#### B. Setup & Desain Sistem UI
+#### A. Setup & Desain Sistem UI
 - [x] Inisialisasi Next.js 14, Tailwind CSS, Lucide React, dan TypeScript config
 - [x] Konfigurasi token warna tema (`primary`, `match-high`, `match-medium`, `match-low`) sesuai `docs/styleguide.md`
 - [ ] Setup HTTP Client (Axios / Fetch wrapper) dengan penanganan token JWT dan error boundary
 - [ ] Implementasi responsivitas mobile-first (touch area minimal $44 \times 44\text{ px}$, drawer/bottom sheet)
 
-#### C. Modul Autentikasi & Akun Pengguna
+#### B. Modul Autentikasi & Akun Pengguna
 - [ ] Halaman Pendaftaran (*Register*) dengan opsi seleksi role: `jobseeker` vs `employer`
 - [ ] Halaman Masuk (*Login*) dengan email/password dan tombol Google OAuth SSO
 - [ ] Modal dialog Persetujuan Consent Pemrosesan Data Pribadi (UU PDP) sebelum unggah CV
 - [ ] Halaman Pengaturan Akun: tombol hapus CV dan tombol hapus akun permanen (*Right to be Forgotten*)
 
-#### D. Modul Pencari Kerja (Job Seeker)
+#### C. Modul Pencari Kerja (Job Seeker)
 - [ ] Komponen Pemilih 2 Pilihan Masuk Awal: "Saya Sudah Punya CV" (Upload) vs "Saya Belum Punya CV" (Kuesioner Terpandu)
 - [ ] Komponen Wizard Kuesioner Pertanyaan Terpandu AI (*Multi-step Form Wizard*: Pendidikan, Skill, Pengalaman Organisasi/Magang/Proyek, Minat Karir)
 - [ ] Komponen Drag-and-Drop Dropzone berkas CV dengan validasi tipe (.pdf / .docx) dan batas ukuran (5 MB)
@@ -205,7 +181,7 @@ gantt
 - [ ] Tombol aksi lamar (*Quick Apply Internal* dan redirect ke portal sumber eksternal)
 - [ ] Fitur simpan/bookmark lowongan untuk dibaca nanti (*Saved Jobs*)
 
-#### E. Modul Pemberi Kerja (Employer)
+#### D. Modul Pemberi Kerja (Employer)
 - [ ] Formulir profil perusahaan (nama, logo, deskripsi, website)
 - [ ] Formulir pembuatan dan pengeditan lowongan pekerjaan (judul, kriteria skill, rentang gaji, lokasi, work type)
 - [ ] Dashboard manajemen daftar lowongan aktif dan status publikasi
@@ -213,7 +189,7 @@ gantt
 - [ ] Kartu ringkasan AI untuk profil pelamar tanpa menampilkan atribut sensitif (gender/foto/usia)
 - [ ] Kontrol pembaruan status pelamar (*Reviewed*, *Shortlisted*, *Rejected*)
 
-#### F. Modul Moderasi Admin
+#### E. Modul Moderasi Admin
 - [ ] Halaman kurasi lowongan baru (tombol Setujui, Tolak, Nonaktifkan lowongan)
 
 ---
@@ -222,10 +198,11 @@ gantt
 > **Direktori Kerja:** `backend-api/`  
 > **Teknologi:** Node.js, Express (TypeScript), PostgreSQL, pgvector, JWT, Helmet, bcryptjs
 
-#### A. Riset Pasar, API Lowongan & Kepatuhan UU PDP (Fase Awal)
-- [ ] Riset integrasi Jooble Publisher API dan verifikasi ketersediaan lowongan kerja wilayah Indonesia
-- [ ] Analisis fitur kompetitor (Jobstreet, Glints, KitaLulus) untuk menentukan skema data lowongan standar
-- [ ] Riset regulasi kepatuhan UU PDP No. 27/2022 terkait batas masa retensi dokumen CV dan audit hak hapus data
+#### A. Riset Teknis Backend API (pgvector & Pipeline Asinkron)
+- [ ] Eksplorasi konektivitas driver `pg` Node.js dengan ekstensi `pgvector` dan perbandingan performa indeks HNSW vs IVFFlat
+- [ ] Riset arsitektur antrean asinkron ringan (*in-memory job queue* / EventEmitter) di Node.js untuk pemrosesan CV & matching
+- [ ] Uji coba sanitasi regex data pribadi (PII masking: NIK, nomor telepon, email) sebelum teks dikirim ke LLM eksternal
+- [ ] Uji coba mekanisme presigned URL upload file privat (kedaluwarsa 15 menit) dan audit trail penghapusan data sesuai UU PDP
 
 #### B. Database & Infrastruktur Penyimpanan
 - [ ] Setup koneksi database PostgreSQL dan eksekusi ekstensi `CREATE EXTENSION IF NOT EXISTS vector;`
@@ -272,11 +249,12 @@ gantt
 > **Direktori Kerja:** `backend-ai/`  
 > **Teknologi:** Python 3.11+, FastAPI, Pydantic v2, PyPDF, python-docx, pgvector, LiteLLM / Gemini SDK / OpenAI SDK
 
-#### A. Riset Model AI, Ekstraksi CV & Prompt Benchmarking (Fase Awal)
-- [ ] Pengujian model Google Gemini API (Free Tier: 15 RPM) untuk latency dan kepatuhan format structured JSON
-- [ ] Eksperimen ekstraksi teks CV berbagai layout (.pdf / .docx) dan deteksi scan foto kosong
+#### A. Riset Teknis Backend AI (LLM, Parser & Embedding)
+- [ ] Pengujian model Google Gemini API (Free Tier: 15 RPM) untuk latency, rate limit, dan kestabilan structured JSON
+- [ ] Eksperimen ekstraksi teks CV berbagai layout (.pdf / .docx) dan logika deteksi scan foto kosong
 - [ ] Perancangan dan pengujian prompt AI CV Generator dari data input kuesioner pertanyaan terpandu
-- [ ] Evaluasi model embedding 1536-dimensi terhadap kueri pencarian kerja berbahasa Indonesia
+- [ ] Evaluasi model embedding 1536-dimensi dwibahasa dan pengujian operator jarak cosinus `pgvector`
+- [ ] Uji coba format kueri dan respons Jooble Publisher API untuk lowongan kerja wilayah Indonesia
 
 #### B. Layanan Ekstraksi Teks Dokumen
 - [x] Inisialisasi FastAPI, struktur Pydantic schemas, dan modul ekstraksi awal
