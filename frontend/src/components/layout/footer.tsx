@@ -4,7 +4,7 @@ import { Compass, ShieldCheck } from "lucide-react";
 export function Footer() {
   return (
     <footer className="border-t border-slate-200 bg-white mt-24">
-      <div className="max-w-6xl mx-auto px-4 py-14 sm:px-6 lg:px-8">
+      <div className="max-w-[1400px] w-full mx-auto px-4 py-14 sm:px-6 lg:px-10">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-10">
           <div className="md:col-span-2 space-y-4">
             <Link href="/" className="flex items-center gap-2 group">

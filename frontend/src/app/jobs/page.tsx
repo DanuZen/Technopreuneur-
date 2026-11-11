@@ -43,7 +43,7 @@ export default function JobsPage() {
   };
 
   return (
-    <main className="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+    <main className="max-w-[1400px] w-full mx-auto px-4 py-8 sm:px-6 lg:px-10 space-y-8 animate-fade-in-up">
       {/* Header */}
       <header className="space-y-2">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">

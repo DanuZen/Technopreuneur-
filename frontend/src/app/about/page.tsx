@@ -3,7 +3,7 @@ import { Compass, Users, Shield, Cpu } from "lucide-react";
 
 export default function AboutPage() {
   return (
-    <main className="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8 space-y-12">
+    <main className="max-w-[1400px] w-full mx-auto px-4 py-12 sm:px-6 lg:px-10 space-y-12 animate-fade-in-up">
       {/* Header */}
       <header className="space-y-3">
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900">
