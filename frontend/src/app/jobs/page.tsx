@@ -294,3 +294,4 @@ const SAMPLE_JOBS: JobItem[] = [
     matchScore: 78,
   },
 ];
+
