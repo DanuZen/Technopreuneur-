@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { SplashScreen } from "@/components/ui/splash-screen";
 
 export const metadata: Metadata = {
   title: "CareerMatch AI: Evaluasi CV & Rekomendasi Karir Presisi",
@@ -16,6 +17,7 @@ export default function RootLayout({
   return (
     <html lang="id">
       <body className="font-sans antialiased text-slate-900 bg-slate-50 min-h-screen flex flex-col justify-between">
+        <SplashScreen />
         <Navbar />
         <div className="flex-1">
           {children}
