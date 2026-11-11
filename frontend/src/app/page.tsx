@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Sparkles, FileText, CheckCircle2, ArrowRight, UploadCloud, HelpCircle } from "lucide-react";
+import { FileText, CheckCircle2, Target, UploadCloud, HelpCircle } from "lucide-react";
 import { CVDropzone } from "@/components/cv/cv-dropzone";
 import { CVQuestionnaireWizard } from "@/components/cv/cv-questionnaire-wizard";
 import { CVAnalysisView } from "@/components/cv/cv-analysis-view";
@@ -20,19 +20,15 @@ export default function Home() {
   };
 
   return (
-    <main className="max-w-5xl mx-auto px-4 py-10 sm:px-6 lg:px-8 space-y-12">
+    <main className="max-w-5xl mx-auto px-4 py-12 sm:px-6 lg:px-8 space-y-12">
       {/* Header & Hero */}
       <header className="text-center space-y-4 max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold">
-          <Sparkles className="w-3.5 h-3.5" />
-          CareerMatch AI Platform · Technopreneurship 2026
-        </div>
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 leading-tight">
           Ukur Kualitas CV Anda. <br className="hidden sm:inline" />
           <span className="text-blue-600">Temukan Karir yang Benar-Benar Cocok.</span>
         </h1>
         <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
-          Punya CV? Unggah untuk evaluasi 5 dimensi objektif. Belum punya CV? Jawab kuesioner singkat agar AI kami yang menyusun CV digital dan mencocokkan lowongan terbaik untuk Anda.
+          Punya CV? Unggah untuk evaluasi 5 dimensi objektif. Belum punya CV? Jawab kuesioner singkat agar AI kami yang menyusun profil digital dan mencocokkan lowongan terbaik untuk Anda.
         </p>
       </header>
 
@@ -104,7 +100,7 @@ export default function Home() {
 
         <div className="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
           <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-4">
-            <ArrowRight className="w-6 h-6" />
+            <Target className="w-6 h-6" aria-hidden="true" />
           </div>
           <h3 className="font-semibold text-slate-900 text-base mb-1.5">Pencocokan Loker Dua Tahap</h3>
           <p className="text-xs text-slate-600 leading-relaxed">

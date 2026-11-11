@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { UploadCloud, FileText, CheckCircle2, AlertCircle, Loader2, Sparkles } from "lucide-react";
+import { UploadCloud, FileText, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import { api } from "@/lib/api";
 import { CVAnalysisResult } from "@/types";
 
@@ -106,12 +106,21 @@ export function CVDropzone({ onAnalysisComplete }: CVDropzoneProps) {
     <div className="space-y-4">
       {/* Drop Area */}
       <div
+        tabIndex={status === "idle" ? 0 : -1}
+        role="button"
+        aria-label="Area pengunggahan berkas CV digital"
+        onKeyDown={(e) => {
+          if (status === "idle" && (e.key === "Enter" || e.key === " ")) {
+            e.preventDefault();
+            fileInputRef.current?.click();
+          }
+        }}
         onDragEnter={handleDrag}
         onDragLeave={handleDrag}
         onDragOver={handleDrag}
         onDrop={handleDrop}
         onClick={() => status === "idle" && fileInputRef.current?.click()}
-        className={`relative p-8 sm:p-10 border-2 border-dashed rounded-2xl text-center transition-all ${
+        className={`relative p-8 sm:p-10 border-2 border-dashed rounded-2xl text-center transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
           dragActive
             ? "border-blue-600 bg-blue-50/50 scale-[1.01]"
             : "border-slate-300 bg-white hover:border-blue-400 hover:bg-slate-50/50"
@@ -200,13 +209,13 @@ export function CVDropzone({ onAnalysisComplete }: CVDropzoneProps) {
             {status === "completed" && (
               <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs flex items-center justify-between">
                 <span className="flex items-center gap-1.5 font-medium">
-                  <Sparkles className="w-4 h-4 text-emerald-600" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" aria-hidden="true" />
                   CV berhasil dianalisa secara objektif!
                 </span>
                 <button
                   type="button"
                   onClick={resetUpload}
-                  className="text-[11px] text-slate-600 underline hover:text-slate-900"
+                  className="text-[11px] text-slate-600 underline hover:text-slate-900 focus-visible:ring-2 focus-visible:ring-blue-600"
                 >
                   Ganti File
                 </button>
@@ -218,3 +227,4 @@ export function CVDropzone({ onAnalysisComplete }: CVDropzoneProps) {
     </div>
   );
 }
+

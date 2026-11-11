@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Sparkles, Mail, Lock, AlertCircle, ArrowRight, Loader2 } from "lucide-react";
+import { Compass, Mail, Lock, AlertCircle, Loader2 } from "lucide-react";
 import { api } from "@/lib/api";
 
 export default function LoginPage() {
@@ -36,7 +36,7 @@ export default function LoginPage() {
         {/* Header */}
         <div className="text-center space-y-2">
           <div className="w-12 h-12 mx-auto rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
-            <Sparkles className="w-6 h-6" />
+            <Compass className="w-6 h-6" aria-hidden="true" />
           </div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900">
             Masuk ke CareerMatch AI
@@ -95,18 +95,15 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm rounded-lg shadow-sm transition flex items-center justify-center gap-2 disabled:opacity-60"
+            className="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm rounded-lg shadow-sm transition flex items-center justify-center gap-2 disabled:opacity-60 min-h-[44px]"
           >
             {loading ? (
               <>
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
                 Memverifikasi...
               </>
             ) : (
-              <>
-                Masuk
-                <ArrowRight className="w-4 h-4" />
-              </>
+              "Masuk ke Akun"
             )}
           </button>
         </form>
@@ -125,3 +122,4 @@ export default function LoginPage() {
     </main>
   );
 }
+

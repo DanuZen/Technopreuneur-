@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Sparkles, ArrowRight, ArrowLeft, CheckCircle2, AlertCircle, Loader2, GraduationCap, Briefcase, Award, FileSpreadsheet } from "lucide-react";
+import { ArrowRight, ArrowLeft, CheckCircle2, AlertCircle, Loader2, GraduationCap, Briefcase, Award, FileSpreadsheet } from "lucide-react";
 import { QuestionnaireData, CVAnalysisResult } from "@/types";
 import { api } from "@/lib/api";
 
@@ -85,8 +85,8 @@ export function CVQuestionnaireWizard({ onComplete }: CVQuestionnaireWizardProps
       <div className="space-y-3 border-b border-slate-100 pb-5">
         <div className="flex items-center justify-between">
           <span className="text-xs font-mono uppercase tracking-wider text-blue-600 font-semibold flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5" />
-            AI Resume Builder · Langkah {step} dari 4
+            <FileSpreadsheet className="w-3.5 h-3.5" aria-hidden="true" />
+            Penyusun Profil Terpandu · Langkah {step} dari 4
           </span>
           <span className="text-xs text-slate-500 font-medium">
             Estimasi waktu: ~3 menit
@@ -313,7 +313,7 @@ export function CVQuestionnaireWizard({ onComplete }: CVQuestionnaireWizardProps
           {/* Review Box */}
           <div className="p-4 bg-blue-50/70 border border-blue-200 rounded-xl space-y-2 text-xs text-blue-900">
             <span className="font-semibold flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+              <CheckCircle2 className="w-3.5 h-3.5 text-blue-600" aria-hidden="true" />
               Siap Disusun oleh CareerMatch AI Engine
             </span>
             <p className="text-blue-800 leading-relaxed">
@@ -372,3 +372,4 @@ export function CVQuestionnaireWizard({ onComplete }: CVQuestionnaireWizardProps
     </div>
   );
 }
+

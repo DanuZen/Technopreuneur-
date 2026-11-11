@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { CheckCircle2, AlertTriangle, Lightbulb, ArrowRight, Sparkles, RefreshCw } from "lucide-react";
+import { CheckCircle2, AlertTriangle, Lightbulb, ShieldCheck, RefreshCw } from "lucide-react";
 import { CVAnalysisResult } from "@/types";
 
 interface CVAnalysisViewProps {
@@ -30,7 +30,7 @@ export function CVAnalysisView({ analysis, onReset }: CVAnalysisViewProps) {
       <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pb-6 border-b border-slate-100">
         <div className="space-y-1 text-center sm:text-left">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold">
-            <Sparkles className="w-3.5 h-3.5" />
+            <ShieldCheck className="w-3.5 h-3.5 text-blue-600" aria-hidden="true" />
             Hasil Evaluasi AI Objektif (Blind Scoring)
           </div>
           <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
@@ -135,10 +135,9 @@ export function CVAnalysisView({ analysis, onReset }: CVAnalysisViewProps) {
 
         <Link
           href="/jobs"
-          className="w-full sm:w-auto px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg shadow-sm flex items-center justify-center gap-2 transition"
+          className="w-full sm:w-auto px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg shadow-sm flex items-center justify-center transition min-h-[44px]"
         >
           Lihat Lowongan Kerja yang Cocok
-          <ArrowRight className="w-4 h-4" />
         </Link>
       </div>
     </div>
@@ -169,3 +168,4 @@ function DimensionBar({
     </div>
   );
 }
+

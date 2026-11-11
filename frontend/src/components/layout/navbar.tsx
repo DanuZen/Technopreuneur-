@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Sparkles, Menu, X, User as UserIcon, LogOut } from "lucide-react";
+import { Compass, Menu, X, User as UserIcon, LogOut } from "lucide-react";
 import { User } from "@/types";
 import { api } from "@/lib/api";
 
@@ -32,16 +32,16 @@ export function Navbar() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo & Brand */}
-          <Link href="/" className="flex items-center gap-2.5 group">
+          <Link href="/" className="flex items-center gap-2.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-lg">
             <div className="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-sm group-hover:bg-blue-700 transition">
-              <Sparkles className="w-5 h-5" />
+              <Compass className="w-5 h-5" aria-hidden="true" />
             </div>
             <div className="flex flex-col">
               <span className="font-bold text-slate-900 tracking-tight text-lg leading-tight">
                 CareerMatch<span className="text-blue-600"> AI</span>
               </span>
-              <span className="text-[10px] text-slate-500 font-mono tracking-wider uppercase">
-                Zero Bias · Free Tier
+              <span className="text-[10px] text-slate-500 tracking-wider">
+                Platform Bimbingan &amp; Loker
               </span>
             </div>
           </Link>
@@ -177,3 +177,4 @@ export function Navbar() {
     </header>
   );
 }
+

@@ -4,8 +4,8 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 
 export const metadata: Metadata = {
-  title: "CareerMatch AI — Analisis CV & Rekomendasi Karir Presisi",
-  description: "Platform analisis kualitas CV berbasis AI dan pencocokan lowongan kerja cerdas untuk fresh graduate dan profesional muda.",
+  title: "CareerMatch AI: Evaluasi CV & Rekomendasi Karir Presisi",
+  description: "Platform evaluasi kualitas CV dan rekomendasi lowongan kerja relevan untuk fresh graduate dan profesional muda.",
 };
 
 export default function RootLayout({
