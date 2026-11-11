@@ -125,13 +125,15 @@ gantt
 - [ ] Halaman Pengaturan Akun: tombol hapus CV dan tombol hapus akun permanen (*Right to be Forgotten*)
 
 #### C. Modul Pencari Kerja (Job Seeker)
+- [ ] Komponen Pemilih 2 Pilihan Masuk Awal: "Saya Sudah Punya CV" (Upload) vs "Saya Belum Punya CV" (Kuesioner Terpandu)
+- [ ] Komponen Wizard Kuesioner Pertanyaan Terpandu AI (*Multi-step Form Wizard*: Pendidikan, Skill, Pengalaman Organisasi/Magang/Proyek, Minat Karir)
 - [ ] Komponen Drag-and-Drop Dropzone berkas CV dengan validasi tipe (.pdf / .docx) dan batas ukuran (5 MB)
 - [ ] Indikator progress bar pengunggahan dan visualisasi tahapan status pemrosesan AI secara real-time
 - [ ] Alert peringatan dokumen terbaca kosong jika pengguna mengunggah hasil scan foto/gambar
 - [ ] Komponen Radial Scorecard untuk skor kualitas CV (0–100) dengan pewarnaan dinamis
 - [ ] Komponen visualisasi 5 dimensi evaluasi (Struktur, Kejelasan, Pencapaian Terukur, Relevansi Skill, Kelengkapan)
 - [ ] Kartu daftar kekuatan resume, kelemahan resume, dan saran perbaikan konkret
-- [ ] Formulir koreksi manual data profil hasil ekstraksi AI (pengguna dapat mengedit sebelum dikunci)
+- [ ] Formulir koreksi manual data profil hasil ekstraksi/generasi AI (pengguna dapat mengedit sebelum dikunci)
 - [ ] Halaman daftar lowongan kerja rekomendasi yang diurutkan berdasarkan persentase kecocokan
 - [ ] Komponen kartu lowongan lengkap dengan badge sumber (*Internal* vs *Jooble ↗*), alasan kecocokan, dan label merah *missing skills*
 - [ ] Tombol aksi lamar (*Quick Apply Internal* dan redirect ke portal sumber eksternal)
@@ -169,6 +171,7 @@ gantt
 - [ ] Middleware otentikasi JWT dan otorisasi role (*Role-Based Access Control / RBAC*)
 - [ ] Middleware proteksi keamanan (*Helmet*, *CORS*, dan *Rate Limiting* pada rute upload & login)
 - [ ] Endpoint pencatatan persetujuan persetujuan data pribadi pengguna (`POST /api/consents`)
+- [ ] Endpoint penerimaan data kuesioner profil bagi pengguna tanpa CV (`POST /api/cvs/from-questionnaire`)
 - [ ] Endpoint penghapusan berkas CV permanen (`DELETE /api/cvs/:id`) yang menghapus data DB dan biner file storage
 - [ ] Endpoint penghapusan akun pengguna menyeluruh (`DELETE /api/users/me`)
 
@@ -209,6 +212,7 @@ gantt
 - [ ] Fungsi pembersih data sensitif (PII Sanitizer): menyamarkan kontak pribadi, NIK, dan alamat detail sebelum teks dikirim ke LLM
 - [ ] Implementasi *AI Blind Scoring*: Menjamin atribut jenis kelamin, agama, suku, status perkawinan, dan usia tidak disertakan dalam prompt evaluasi
 - [ ] Desain System Prompt dan validasi skema JSON terstruktur (*Structured Outputs*) untuk model data profil CV (`CVAnalysisOutput`)
+- [ ] Prompt AI CV Generator: Merangkai profil, narasi pengalaman, dan keahlian terstruktur dari jawaban kuesioner pengguna menjadi resume digital terstandar
 - [ ] Prompt penilaian kualitas CV: menghasilkan skor 0–100 dan pembagian 5 dimensi nilai (struktur, kejelasan, pencapaian terukur, relevansi skill, kelengkapan)
 - [ ] Prompt ekstraksi daftar kelebihan resume, kelemahan, dan rekomendasi langkah perbaikan konkret
 

@@ -32,8 +32,10 @@ Pencarian kerja di Indonesia saat ini tersebar di berbagai platform tanpa standa
 3. **Screening Fatigue pada Employer:** Perusahaan menerima volume pelamar tinggi dengan tingkat relevansi rendah, membuang waktu dan biaya rekrutmen.
 
 ### 2.3 Solusi CareerMatch AI
-- **Analisis CV & Profil Terstruktur:** AI mengekstrak teks, menstandarkan profil, dan memberikan skor 0–100 lengkap dengan aspek struktur, kejelasan, pencapaian terukur, relevansi skill, serta saran perbaikan konkret.
-- **Human-in-the-Loop Verification:** Pengguna dapat meninjau dan mengoreksi profil hasil ekstraksi AI sebelum profil digunakan dalam pencocokan lowongan.
+- **Dua Pilihan Input Profil Kandidat:**
+  1. *Pengguna Ber-CV:* AI mengekstrak teks, menstandarkan profil, dan memberi skor 0–100 lengkap dengan 5 dimensi penilaian serta saran perbaikan.
+  2. *Pengguna Tanpa CV:* Sistem menyediakan kuesioner terpandu (*Guided Smart Questionnaire*) mengenai riwayat pendidikan, skill, pengalaman organisasi/magang/proyek, dan minat karir; AI kemudian otomatis merangkai CV terstruktur siap pakai.
+- **Human-in-the-Loop Verification:** Pengguna dapat meninjau dan mengoreksi profil hasil ekstraksi/generasi AI sebelum profil digunakan dalam pencocokan lowongan.
 - **Two-Stage Matching Engine:** Mengombinasikan pencarian kemiripan vektor (*vector similarity*) pada database lowongan, dilanjutkan dengan evaluasi kontekstual LLM untuk kandidat teratas guna menghasilkan skor kecocokan, alasan, dan daftar *missing skills*.
 - **Fair Recruitment:** Skor kecocokan murni dihitung dari kompetensi, pengalaman, dan portofolio teknis—secara ketat mengesampingkan usia, gender, suku, agama, foto profil, dan status pernikahan.
 
@@ -51,7 +53,7 @@ Pencarian kerja di Indonesia saat ini tersebar di berbagai platform tanpa standa
 
 ### 3.2 Batasan Ruang Lingkup MVP (Out of Scope)
 Hal-hal berikut **TIDAK** masuk dalam lingkup rilis MVP:
-- CV Builder interaktif dari nol (*zero-to-one CV creator*).
+- Desainer template grafis/drag-and-drop CV visual (format PDF siap cetak dengan pilihan layout grafis kompleks ditunda pasca-MVP; MVP berfokus pada konten terstruktur teks digital).
 - Fitur live chat/inbox langsung antara pelamar dan employer.
 - Sistem monetisasi berbayar, paywall, atau langganan payment gateway.
 - Aplikasi mobile native (iOS / Android) — MVP difokuskan pada Progressive/Responsive Web Mobile-First.
@@ -110,6 +112,7 @@ Hal-hal berikut **TIDAK** masuk dalam lingkup rilis MVP:
 | **FR-14** | CV | Koreksi Profil oleh Pengguna | Pengguna dapat mengedit data profil hasil ekstraksi sebelum digunakan oleh sistem matching |
 | **FR-16** | CV | Penghapusan Data Permanen | Pengguna dapat menghapus dokumen CV, teks mentah, profil, dan embedding kapan saja |
 | **FR-17** | CV | Rate Limiting Analisis | Batas analisis CV akun gratis (misal: kuota 5 kali analisis per bulan) |
+| **FR-18** | CV & Form | Kuesioner Pembuatan CV (User Tanpa CV) | Form interaktif terpandu (pendidikan, skill, pengalaman/organisasi/proyek, minat karir); AI otomatis menghasilkan profil & resume terstruktur |
 | **FR-20** | Lowongan | Manajemen Lowongan Employer | Employer dapat membuat (Create), mengubah (Update), dan menutup (Close) lowongan |
 | **FR-21** | Lowongan | Otomasi Embedding Lowongan | Sistem otomatis men-generate embedding vektor saat lowongan baru dipublikasikan |
 | **FR-22** | Lowongan | Pencarian & Filter | Job seeker dapat memfilter lowongan berdasarkan kata kunci, lokasi, tipe kerja (*remote/on-site*) |

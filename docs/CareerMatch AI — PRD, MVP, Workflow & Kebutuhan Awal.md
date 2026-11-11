@@ -144,7 +144,7 @@ Pencari kerja dan employer berjalan di dua alur terpisah, sementara pemrosesan A
 
 ![Alur Pencari Kerja](diagrams/alur-pencari-kerja.svg)
 
-Bila teks CV tidak terbaca (mis. PDF hasil scan), pengguna diminta mengunggah ulang. Profil hasil AI selalu dikoreksi pengguna sebelum dicocokkan dengan lowongan.
+Pencari kerja memiliki **2 opsi**: jika sudah memiliki CV dapat langsung mengunggah berkas PDF/DOCX (maks 5 MB); jika belum memiliki CV, sistem menyediakan kuesioner pertanyaan terpandu (pendidikan, skill, pengalaman/proyek, minat karir) agar AI membuatkan resume dan profil terstruktur secara otomatis. Profil hasil AI selalu dapat dikoreksi oleh pengguna sebelum dicocokkan dengan lowongan kerja.
 
 **Alur employer**
 

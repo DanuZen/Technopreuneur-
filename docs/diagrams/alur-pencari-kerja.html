@@ -61,10 +61,10 @@
       font-size: 0.95rem;
       color: var(--color-muted);
       margin-bottom: 1.5rem;
-      max-width: 820px;
+      max-width: 860px;
     }
 
-    svg { width: 100%; min-width: 1000px; height: auto; display: block; }
+    svg { width: 100%; min-width: 1020px; height: auto; display: block; }
     @media print {
       .diagram-container { overflow-x: visible; }
       svg { min-width: 0; }
@@ -74,13 +74,13 @@
 <body>
   <div class="frame">
     <p class="eyebrow">Flowchart · CareerMatch AI</p>
-    <h1>Alur Pengguna: Pencari Kerja (Job Seeker Journey)</h1>
-    <p class="subtitle">Tahapan mulai dari registrasi akun, persetujuan UU PDP, pengunggahan CV, verifikasi ekstraksi AI, hingga rekomendasi dan pelamaran kerja.</p>
+    <h1>Alur Pengguna: Pencari Kerja (Dua Pilihan Masuk CV)</h1>
+    <p class="subtitle">Mendukung 2 jalur: pengguna yang <strong>sudah memiliki CV</strong> (unggah file PDF/DOCX) dan pengguna yang <strong>belum memiliki CV</strong> (mengisi kuesioner pertanyaan terpandu untuk dibuatkan CV otomatis oleh AI).</p>
 
     <div class="diagram-container">
-      <svg viewBox="0 0 1020 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="jobseeker-flow-title jobseeker-flow-desc">
-        <title id="jobseeker-flow-title">Diagram Alur Pengguna Pencari Kerja</title>
-        <desc id="jobseeker-flow-desc">Flowchart interaktif tahapan lengkap pencari kerja dari registrasi hingga melamar pekerjaan.</desc>
+      <svg viewBox="0 0 1040 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="jobseeker-flow-title jobseeker-flow-desc">
+        <title id="jobseeker-flow-title">Diagram Alur Pengguna Pencari Kerja dengan 2 Pilihan CV</title>
+        <desc id="jobseeker-flow-desc">Flowchart interaktif tahapan pencari kerja dengan 2 opsi: unggah file CV atau jawab pertanyaan kuesioner untuk generate CV baru oleh AI.</desc>
         <defs>
           <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#475569"/></marker>
           <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2563eb"/></marker>
@@ -93,186 +93,217 @@
         <rect width="100%" height="100%" fill="#f8fafc" rx="8"/>
         <rect width="100%" height="100%" fill="url(#grid-dots)" opacity="0.6"/>
 
-        <!-- ROW 1 CONNECTORS (y ~ 75) -->
+        <!-- ROW 1 CONNECTORS (x ~ 40 to 520, y ~ 65) -->
         <!-- Start -> Consent Check -->
-        <path d="M 160,75 H 228" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <path d="M 140,65 H 188" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
 
-        <!-- Consent: Belum -> Modal PDP (Up and right) -->
-        <path d="M 300,50 V 28 Q 300,20 308,20 H 420 Q 428,20 428,28 V 48" fill="none" stroke="#475569" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
-        <rect x="330" y="12" width="60" height="14" rx="2" fill="#f8fafc"/>
-        <text x="360" y="22" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle">BELUM SETUJU</text>
+        <!-- Consent: Belum -> Modal PDP -->
+        <path d="M 250,40 V 22 Q 250,16 258,16 H 310 Q 318,16 318,22 V 42" fill="none" stroke="#475569" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+        <rect x="264" y="10" width="56" height="13" rx="2" fill="#f8fafc"/>
+        <text x="292" y="19" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle">BELUM SETUJU</text>
 
-        <!-- Modal PDP -> Upload Dropzone -->
-        <path d="M 490,75 H 548" fill="none" stroke="#475569" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <!-- Modal PDP -> Decision Punya CV -->
+        <path d="M 370,65 H 418" fill="none" stroke="#475569" stroke-width="1.2" marker-end="url(#arrow)"/>
 
-        <!-- Consent: Sudah -> Upload Dropzone -->
-        <path d="M 370,75 H 548" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
-        <rect x="424" y="67" width="56" height="14" rx="2" fill="#f8fafc"/>
-        <text x="452" y="77" fill="#2563eb" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">SUDAH SETUJU</text>
+        <!-- Consent: Sudah -> Decision Punya CV -->
+        <path d="M 310,65 H 418" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <rect x="340" y="58" width="54" height="13" rx="2" fill="#f8fafc"/>
+        <text x="367" y="67" fill="#2563eb" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">SUDAH SETUJU</text>
 
-        <!-- Upload -> Text Check (Down) -->
-        <path d="M 640,110 V 178" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <!-- DUA JALUR CONNECTORS DARI DECISION PUNYA CV (x: 480, y: 65) -->
+        <!-- JALUR A (PUNYA CV): Ke Kanan -> Unggah File CV -->
+        <path d="M 540,65 H 618" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <rect x="550" y="57" width="56" height="14" rx="2" fill="#f8fafc"/>
+        <text x="578" y="67" fill="#2563eb" font-size="7.5" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">ADA CV</text>
 
-        <!-- ROW 2 CONNECTORS (y ~ 210) -->
-        <!-- Text Check: Kosong/Scan -> Error Alert -> loops to Upload -->
-        <path d="M 570,210 H 482" fill="none" stroke="#ef4444" stroke-width="1.2" marker-end="url(#arrow)"/>
-        <rect x="500" y="202" width="54" height="14" rx="2" fill="#f8fafc"/>
-        <text x="527" y="212" fill="#ef4444" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">SCAN / KOSONG</text>
+        <!-- Unggah -> Validasi Teks -->
+        <path d="M 780,65 H 828" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
 
-        <path d="M 350,210 H 310 Q 302,210 302,202 V 118 Q 302,110 310,110 H 548" fill="none" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+        <!-- Validasi: Kosong/Scan -> Peringatan -->
+        <path d="M 900,40 V 22 Q 900,16 892,16 H 710 Q 702,16 702,24 V 38" fill="none" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+        <rect x="760" y="10" width="70" height="13" rx="2" fill="#f8fafc"/>
+        <text x="795" y="19" fill="#ef4444" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">SCAN / KOSONG</text>
 
-        <!-- Text Check: Valid -> AI Worker Scoring -->
-        <path d="M 710,210 H 778" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
-        <rect x="726" y="202" width="36" height="14" rx="2" fill="#f8fafc"/>
-        <text x="744" y="212" fill="#2563eb" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">SUKSES</text>
+        <!-- Validasi: Sukses -> AI Parser & Scoring (Down) -->
+        <path d="M 900,90 V 138" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <rect x="906" y="104" width="36" height="13" rx="2" fill="#f8fafc"/>
+        <text x="924" y="114" fill="#2563eb" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">SUKSES</text>
 
-        <!-- AI Worker -> Review Score (Down) -->
-        <path d="M 870,245 V 318" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <!-- JALUR B (TIDAK PUNYA CV): Ke Bawah -> Form Kuesioner [FOCAL HIGHLIGHT] -->
+        <path d="M 480,90 V 138" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <rect x="424" y="105" width="54" height="14" rx="2" fill="#f8fafc"/>
+        <text x="451" y="115" fill="#2563eb" font-size="7.5" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">TIDAK ADA</text>
 
-        <!-- ROW 3 CONNECTORS (y ~ 350) -->
-        <!-- Review Score -> Decision Koreksi (Left) -->
-        <path d="M 770,350 H 682" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <!-- Kuesioner -> AI CV Generator & Structuring -->
+        <path d="M 570,165 H 628" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
 
-        <!-- Koreksi Decision: Ya -> Form Edit Profil -->
-        <path d="M 610,320 V 300 Q 610,292 602,292 H 480 Q 472,292 472,300 V 318" fill="none" stroke="#475569" stroke-width="1.2" marker-end="url(#arrow)"/>
-        <rect x="520" y="284" width="40" height="14" rx="2" fill="#f8fafc"/>
-        <text x="540" y="294" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle">PERLU EDIT</text>
+        <!-- PENYATUAN DUA JALUR KE REVIEW SKOR & PROFIL (ROW 3) -->
+        <!-- Jalur A (Parser CV) -> Review Skor & Profil -->
+        <path d="M 900,205 V 270 Q 900,278 892,278 H 862" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
 
-        <!-- Form Edit Profil -> Lock Profil -->
-        <path d="M 400,350 H 350" fill="none" stroke="#475569" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <!-- Jalur B (AI CV Generator) -> Review Skor & Profil -->
+        <path d="M 720,205 V 270 Q 720,278 728,278 H 748" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
 
-        <!-- Koreksi Decision: Tidak -> Lock Profil -->
-        <path d="M 540,350 H 350" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
-        <rect x="420" y="342" width="56" height="14" rx="2" fill="#f8fafc"/>
-        <text x="448" y="352" fill="#2563eb" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">SUDAH SESUAI</text>
+        <!-- ROW 3 CONNECTORS (y ~ 278, Right to Left) -->
+        <!-- Review Skor & Profil -> Decision Koreksi -->
+        <path d="M 750,278 H 592" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
 
-        <!-- Lock Profil -> Two-Stage Matching (Left) -->
-        <path d="M 210,350 H 170 Q 162,350 162,358 V 460 Q 162,468 170,468 H 228" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <!-- Koreksi: Ya -> Form Edit Profil -->
+        <path d="M 530,255 V 238 Q 530,230 522,230 H 420 Q 412,230 412,238 V 258" fill="none" stroke="#475569" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <rect x="444" y="222" width="46" height="14" rx="2" fill="#f8fafc"/>
+        <text x="467" y="232" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle">PERLU EDIT</text>
 
-        <!-- ROW 4 CONNECTORS (y ~ 470) -->
-        <!-- Two-Stage Matching -> Feed Lowongan -->
-        <path d="M 410,470 H 478" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <!-- Form Edit -> Kunci Profil -->
+        <path d="M 330,278 H 252" fill="none" stroke="#475569" stroke-width="1.2" marker-end="url(#arrow)"/>
 
-        <!-- Feed Lowongan -> Decision Aksi Lowongan -->
-        <path d="M 650,470 H 718" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <!-- Koreksi: Tidak -> Kunci Profil -->
+        <path d="M 470,278 H 252" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <rect x="330" y="270" width="56" height="14" rx="2" fill="#f8fafc"/>
+        <text x="358" y="280" fill="#2563eb" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">SUDAH SESUAI</text>
 
-        <!-- Decision Aksi: Internal -> Quick Apply (Up-right) -->
-        <path d="M 790,445 V 428 Q 790,420 798,420 H 848" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
-        <rect x="794" y="412" width="46" height="14" rx="2" fill="#f8fafc"/>
-        <text x="817" y="422" fill="#2563eb" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">INTERNAL</text>
+        <!-- Kunci Profil -> Two-Stage Matching (Down to Row 4) -->
+        <path d="M 170,310 V 430 Q 170,438 178,438 H 218" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
 
-        <!-- Decision Aksi: Eksternal -> Redirect Jooble (Down-right) -->
-        <path d="M 790,495 V 512 Q 790,520 798,520 H 848" fill="none" stroke="#475569" stroke-width="1.2" marker-end="url(#arrow)"/>
-        <rect x="794" y="512" width="48" height="14" rx="2" fill="#f8fafc"/>
-        <text x="818" y="522" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle">EKSTERNAL</text>
+        <!-- ROW 4 CONNECTORS (y ~ 438) -->
+        <!-- Two-Stage Matching -> Feed Rekomendasi Lowongan -->
+        <path d="M 400,438 H 458" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
 
-        <!-- Quick Apply & Redirect -> Terminal Finish -->
-        <path d="M 970,430 H 980 Q 988,430 988,438 V 462 Q 988,470 980,470 H 958" fill="none" stroke="#2563eb" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
-        <path d="M 970,510 H 980 Q 988,510 988,502 V 478 Q 988,470 980,470 H 958" fill="none" stroke="#475569" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <!-- Feed Lowongan -> Decision Aksi Pelamaran -->
+        <path d="M 640,438 H 708" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+
+        <!-- Decision Aksi: Internal -> Quick Apply -->
+        <path d="M 770,413 V 398 Q 770,390 778,390 H 838" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <rect x="774" y="382" width="46" height="14" rx="2" fill="#f8fafc"/>
+        <text x="797" y="392" fill="#2563eb" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">INTERNAL</text>
+
+        <!-- Decision Aksi: Eksternal -> Redirect Jooble -->
+        <path d="M 770,463 V 478 Q 770,486 778,486 H 838" fill="none" stroke="#475569" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <rect x="774" y="478" width="48" height="14" rx="2" fill="#f8fafc"/>
+        <text x="798" y="488" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle">EKSTERNAL</text>
+
+        <!-- Apply Internal & Eksternal -> Selesai -->
+        <path d="M 960,395 H 970 Q 978,395 978,403 V 530 Q 978,538 970,538 H 942" fill="none" stroke="#2563eb" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+        <path d="M 960,480 H 970 Q 978,480 978,488 V 530 Q 978,538 970,538 H 942" fill="none" stroke="#475569" stroke-width="1.2" marker-end="url(#arrow)"/>
 
         <!-- ROW 1 NODES -->
-        <!-- Start Terminal -->
-        <rect x="40" y="50" width="120" height="50" rx="25" fill="#ffffff" stroke="#2563eb" stroke-width="1.4"/>
-        <text x="100" y="74" fill="#0f172a" font-size="11" font-family="'Geist', sans-serif" font-weight="600" text-anchor="middle">Mulai</text>
-        <text x="100" y="87" fill="#64748b" font-size="7.5" font-family="'Geist Mono', monospace" text-anchor="middle">Login / Register</text>
+        <!-- Start Node -->
+        <rect x="30" y="40" width="110" height="50" rx="25" fill="#ffffff" stroke="#2563eb" stroke-width="1.4"/>
+        <text x="85" y="64" fill="#0f172a" font-size="11" font-family="'Geist', sans-serif" font-weight="600" text-anchor="middle">Mulai</text>
+        <text x="85" y="77" fill="#64748b" font-size="7.5" font-family="'Geist Mono', monospace" text-anchor="middle">Login / Register</text>
 
         <!-- Decision 1: Consent PDP -->
-        <polygon points="300,50 370,75 300,100 230,75" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
-        <text x="300" y="72" fill="#0f172a" font-size="9.5" font-family="'Geist', sans-serif" font-weight="600" text-anchor="middle">Consent PDP?</text>
-        <text x="300" y="83" fill="#64748b" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle">Persetujuan Data</text>
+        <polygon points="250,40 310,65 250,90 190,65" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="250" y="62" fill="#0f172a" font-size="9" font-family="'Geist', sans-serif" font-weight="600" text-anchor="middle">Consent PDP?</text>
+        <text x="250" y="73" fill="#64748b" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle">Persetujuan Data</text>
 
-        <!-- Modal Consent PDP -->
-        <rect x="410" y="50" width="80" height="50" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
-        <text x="450" y="73" fill="#0f172a" font-size="9" font-family="'Geist', sans-serif" font-weight="600" text-anchor="middle">Modal PDP</text>
-        <text x="450" y="86" fill="#2563eb" font-size="7.5" font-family="'Geist Mono', monospace" text-anchor="middle">User Setuju</text>
+        <!-- Modal PDP -->
+        <rect x="310" y="45" width="60" height="40" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="340" y="65" fill="#0f172a" font-size="8.5" font-family="'Geist', sans-serif" font-weight="500" text-anchor="middle">Modal PDP</text>
+        <text x="340" y="76" fill="#2563eb" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle">Setuju</text>
 
-        <!-- Step: Upload Dropzone [FOCAL 1] -->
-        <rect x="550" y="45" width="180" height="65" rx="6" fill="rgba(37,99,235,0.06)" stroke="#2563eb" stroke-width="1.4"/>
-        <rect x="560" y="53" width="45" height="12" rx="2" fill="#2563eb"/>
-        <text x="582" y="62" fill="#ffffff" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">UNGGAH</text>
-        <text x="560" y="80" fill="#0f172a" font-size="11" font-family="'Geist', sans-serif" font-weight="600">Unggah Berkas CV</text>
-        <text x="560" y="94" fill="#475569" font-size="8" font-family="'Geist Mono', monospace">PDF / DOCX (Maksimal 5 MB)</text>
-        <text x="560" y="104" fill="#2563eb" font-size="7.5" font-family="'Geist Mono', monospace">Lead: Wira (Frontend)</text>
+        <!-- Decision 2: Sudah Punya CV? (KUNCI PERCABANGAN 2 OPSI) -->
+        <polygon points="480,40 540,65 480,90 420,65" fill="rgba(37,99,235,0.06)" stroke="#2563eb" stroke-width="1.4"/>
+        <text x="480" y="62" fill="#0f172a" font-size="9.5" font-family="'Geist', sans-serif" font-weight="600" text-anchor="middle">Punya CV?</text>
+        <text x="480" y="73" fill="#2563eb" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">2 Pilihan Alur</text>
 
-        <!-- ROW 2 NODES -->
-        <!-- Error Alert: Scan Foto Kosong -->
-        <rect x="350" y="185" width="130" height="50" rx="6" fill="#fff1f2" stroke="#fecdd3" stroke-width="1"/>
-        <text x="415" y="206" fill="#e11d48" font-size="9" font-family="'Geist', sans-serif" font-weight="600" text-anchor="middle">Peringatan Scan</text>
-        <text x="415" y="220" fill="#475569" font-size="7.5" font-family="'Geist Mono', monospace" text-anchor="middle">Unggah File Teks Digital</text>
+        <!-- JALUR A NODES: PUNYA CV -->
+        <!-- Opsi A1: Unggah File CV -->
+        <rect x="620" y="38" width="160" height="55" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <rect x="630" y="45" width="45" height="11" rx="2" fill="rgba(15,23,42,0.06)"/>
+        <text x="652" y="53" fill="#475569" font-size="6.5" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">OPSI A</text>
+        <text x="630" y="70" fill="#0f172a" font-size="10.5" font-family="'Geist', sans-serif" font-weight="600">Unggah Berkas CV</text>
+        <text x="630" y="83" fill="#64748b" font-size="7.5" font-family="'Geist Mono', monospace">PDF / DOCX (maks 5MB)</text>
 
-        <!-- Decision 2: Teks Terbaca? -->
-        <polygon points="640,180 710,210 640,240 570,210" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
-        <text x="640" y="207" fill="#0f172a" font-size="9.5" font-family="'Geist', sans-serif" font-weight="600" text-anchor="middle">Teks Terbaca?</text>
-        <text x="640" y="218" fill="#64748b" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle">Validasi Karakter</text>
+        <!-- Opsi A2: Validasi Teks Terbaca? -->
+        <polygon points="900,40 960,65 900,90 840,65" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="900" y="62" fill="#0f172a" font-size="9" font-family="'Geist', sans-serif" font-weight="600" text-anchor="middle">Teks Terbaca?</text>
+        <text x="900" y="73" fill="#64748b" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle">Deteksi Teks</text>
 
-        <!-- Step: AI Worker Scoring -->
-        <rect x="780" y="180" width="180" height="65" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
-        <rect x="790" y="188" width="55" height="12" rx="2" fill="rgba(15,23,42,0.06)"/>
-        <text x="817" y="197" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">AI WORKER</text>
-        <text x="790" y="215" fill="#0f172a" font-size="11" font-family="'Geist', sans-serif" font-weight="600">Ekstraksi &amp; Scoring</text>
-        <text x="790" y="229" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace">FastAPI · Gemini Free API</text>
-        <text x="790" y="239" fill="#2563eb" font-size="7.5" font-family="'Geist Mono', monospace">Lead: Florensius Panca</text>
+        <!-- Opsi A3: AI Parser & Scoring -->
+        <rect x="820" y="140" width="160" height="65" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <rect x="830" y="148" width="50" height="11" rx="2" fill="rgba(15,23,42,0.06)"/>
+        <text x="855" y="156" fill="#475569" font-size="6.5" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">EKSTRAKSI</text>
+        <text x="830" y="173" fill="#0f172a" font-size="10.5" font-family="'Geist', sans-serif" font-weight="600">AI Parser &amp; Scoring</text>
+        <text x="830" y="186" fill="#64748b" font-size="7.5" font-family="'Geist Mono', monospace">Ekstrak teks CV &amp; skor 5 dimensi</text>
+        <text x="830" y="196" fill="#2563eb" font-size="7" font-family="'Geist Mono', monospace">Lead: Florensius Panca</text>
 
-        <!-- ROW 3 NODES -->
-        <!-- Step: Review Hasil & 5 Dimensi Skor -->
-        <rect x="770" y="320" width="190" height="65" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
-        <rect x="780" y="328" width="55" height="12" rx="2" fill="rgba(15,23,42,0.06)"/>
-        <text x="807" y="337" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">SCORECARD</text>
-        <text x="780" y="355" fill="#0f172a" font-size="11" font-family="'Geist', sans-serif" font-weight="600">Review Skor CV 0-100</text>
-        <text x="780" y="369" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace">5 Dimensi Nilai &amp; Saran AI</text>
+        <!-- JALUR B NODES: TIDAK PUNYA CV [FOCAL 1 - ACCENT] -->
+        <!-- Opsi B1: Form Kuesioner Pertanyaan Terpandu -->
+        <rect x="390" y="140" width="180" height="65" rx="6" fill="rgba(37,99,235,0.06)" stroke="#2563eb" stroke-width="1.4"/>
+        <rect x="400" y="148" width="75" height="11" rx="2" fill="#2563eb"/>
+        <text x="437" y="156" fill="#ffffff" font-size="6.5" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">OPSI B: TANPA CV</text>
+        <text x="400" y="173" fill="#0f172a" font-size="10.5" font-family="'Geist', sans-serif" font-weight="600">Kuesioner Terpandu AI</text>
+        <text x="400" y="186" fill="#475569" font-size="7.5" font-family="'Geist Mono', monospace">Pertanyaan: Edukasi, Skill, Proyek</text>
+        <text x="400" y="196" fill="#2563eb" font-size="7" font-family="'Geist Mono', monospace">Wizard Form · Lead: Wira (FE)</text>
 
-        <!-- Decision 3: Perlu Koreksi Manual? -->
-        <polygon points="610,320 680,350 610,380 540,350" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
-        <text x="610" y="347" fill="#0f172a" font-size="9.5" font-family="'Geist', sans-serif" font-weight="600" text-anchor="middle">Koreksi Data?</text>
-        <text x="610" y="358" fill="#64748b" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle">Periksa Akurasi</text>
+        <!-- Opsi B2: AI Generate CV & Profil Terstruktur -->
+        <rect x="630" y="140" width="180" height="65" rx="6" fill="rgba(37,99,235,0.06)" stroke="#2563eb" stroke-width="1.4"/>
+        <rect x="640" y="148" width="75" height="11" rx="2" fill="#2563eb"/>
+        <text x="677" y="156" fill="#ffffff" font-size="6.5" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">AI GENERATOR</text>
+        <text x="640" y="173" fill="#0f172a" font-size="10.5" font-family="'Geist', sans-serif" font-weight="600">Buat CV Baru Otomatis</text>
+        <text x="640" y="186" fill="#475569" font-size="7.5" font-family="'Geist Mono', monospace">Rangkai narasi &amp; profil terstruktur</text>
+        <text x="640" y="196" fill="#2563eb" font-size="7" font-family="'Geist Mono', monospace">LLM Composer · Lead: Panca</text>
 
-        <!-- Step: Form Koreksi User -->
-        <rect x="400" y="320" width="120" height="60" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
-        <text x="460" y="346" fill="#0f172a" font-size="10" font-family="'Geist', sans-serif" font-weight="600" text-anchor="middle">Edit Form Profil</text>
-        <text x="460" y="360" fill="#64748b" font-size="7.5" font-family="'Geist Mono', monospace" text-anchor="middle">Koreksi Keahlian/Teks</text>
+        <!-- ROW 3 NODES: PENYATUAN, REVIEW & KOREKSI -->
+        <!-- Node Penyatuan: Review Skor & Profil Terstruktur -->
+        <rect x="750" y="248" width="190" height="60" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <rect x="760" y="255" width="55" height="11" rx="2" fill="rgba(15,23,42,0.06)"/>
+        <text x="787" y="263" fill="#475569" font-size="6.5" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">HASIL PROFIL</text>
+        <text x="760" y="280" fill="#0f172a" font-size="11" font-family="'Geist', sans-serif" font-weight="600">Review Skor &amp; Profil</text>
+        <text x="760" y="295" fill="#64748b" font-size="7.5" font-family="'Geist Mono', monospace">Skor 0-100, 5 Aspek &amp; Saran</text>
 
-        <!-- Step: Kunci Profil Final -->
-        <rect x="210" y="320" width="140" height="60" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
-        <rect x="220" y="328" width="50" height="12" rx="2" fill="rgba(15,23,42,0.06)"/>
-        <text x="245" y="337" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">VERIFIKASI</text>
-        <text x="220" y="355" fill="#0f172a" font-size="10.5" font-family="'Geist', sans-serif" font-weight="600">Simpan Profil Final</text>
-        <text x="220" y="369" fill="#10b981" font-size="7.5" font-family="'Geist Mono', monospace">Kunci Embedding Profil</text>
+        <!-- Decision: Koreksi Manual? -->
+        <polygon points="530,250 590,278 530,305 470,278" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="530" y="275" fill="#0f172a" font-size="9" font-family="'Geist', sans-serif" font-weight="600" text-anchor="middle">Koreksi Data?</text>
+        <text x="530" y="286" fill="#64748b" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle">Periksa Akurasi</text>
 
-        <!-- ROW 4 NODES -->
-        <!-- Step: Two-Stage Matching Engine [FOCAL 2] -->
-        <rect x="230" y="440" width="180" height="65" rx="6" fill="rgba(37,99,235,0.06)" stroke="#2563eb" stroke-width="1.4"/>
-        <rect x="240" y="448" width="65" height="12" rx="2" fill="#2563eb"/>
-        <text x="272" y="457" fill="#ffffff" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">AI MATCHING</text>
-        <text x="240" y="475" fill="#0f172a" font-size="11" font-family="'Geist', sans-serif" font-weight="600">Two-Stage Engine</text>
-        <text x="240" y="489" fill="#475569" font-size="8" font-family="'Geist Mono', monospace">1. pgvector Kemiripan</text>
-        <text x="240" y="499" fill="#475569" font-size="8" font-family="'Geist Mono', monospace">2. Evaluasi LLM Gap &amp; Skor</text>
+        <!-- Form Edit User -->
+        <rect x="330" y="250" width="80" height="55" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="370" y="275" fill="#0f172a" font-size="9" font-family="'Geist', sans-serif" font-weight="600" text-anchor="middle">Edit Form</text>
+        <text x="370" y="288" fill="#64748b" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle">Koreksi Manual</text>
 
-        <!-- Step: Feed Rekomendasi Lowongan -->
-        <rect x="480" y="440" width="170" height="65" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
-        <rect x="490" y="448" width="50" height="12" rx="2" fill="rgba(15,23,42,0.06)"/>
-        <text x="515" y="457" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">FEED UI</text>
-        <text x="490" y="475" fill="#0f172a" font-size="11" font-family="'Geist', sans-serif" font-weight="600">Daftar Rekomendasi</text>
-        <text x="490" y="489" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace">Terurut Skor Kecocokan</text>
-        <text x="490" y="499" fill="#ef4444" font-size="7.5" font-family="'Geist Mono', monospace">Label Gap / Missing Skills</text>
+        <!-- Kunci Profil Final -->
+        <rect x="100" y="250" width="150" height="60" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <rect x="110" y="258" width="50" height="11" rx="2" fill="rgba(15,23,42,0.06)"/>
+        <text x="135" y="266" fill="#475569" font-size="6.5" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">VERIFIKASI</text>
+        <text x="110" y="283" fill="#0f172a" font-size="10.5" font-family="'Geist', sans-serif" font-weight="600">Simpan Profil Final</text>
+        <text x="110" y="297" fill="#10b981" font-size="7.5" font-family="'Geist Mono', monospace">Kunci Embedding Profil Vektor</text>
 
-        <!-- Decision 4: Aksi Pelamaran -->
-        <polygon points="755,440 825,470 755,500 685,470" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
-        <text x="755" y="467" fill="#0f172a" font-size="9" font-family="'Geist', sans-serif" font-weight="600" text-anchor="middle">Tipe Lowongan?</text>
-        <text x="755" y="478" fill="#64748b" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle">Pilih Aksi</text>
+        <!-- ROW 4 NODES: MATCHING & PELAMARAN -->
+        <!-- Two-Stage Matching Engine [FOCAL 2 - ACCENT] -->
+        <rect x="220" y="405" width="180" height="65" rx="6" fill="rgba(37,99,235,0.06)" stroke="#2563eb" stroke-width="1.4"/>
+        <rect x="230" y="413" width="65" height="11" rx="2" fill="#2563eb"/>
+        <text x="262" y="421" fill="#ffffff" font-size="6.5" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">AI MATCHING</text>
+        <text x="230" y="438" fill="#0f172a" font-size="11" font-family="'Geist', sans-serif" font-weight="600">Two-Stage Matching</text>
+        <text x="230" y="452" fill="#475569" font-size="7.5" font-family="'Geist Mono', monospace">1. pgvector Cosine Search Top 30</text>
+        <text x="230" y="462" fill="#475569" font-size="7.5" font-family="'Geist Mono', monospace">2. Evaluasi LLM Gap &amp; Skor</text>
 
-        <!-- Step: Quick Apply Internal -->
-        <rect x="850" y="405" width="120" height="46" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
-        <text x="910" y="425" fill="#0f172a" font-size="9.5" font-family="'Geist', sans-serif" font-weight="600" text-anchor="middle">Quick Apply</text>
-        <text x="910" y="438" fill="#2563eb" font-size="7.5" font-family="'Geist Mono', monospace" text-anchor="middle">Kirim ke Employer</text>
+        <!-- Feed Rekomendasi Lowongan -->
+        <rect x="460" y="405" width="180" height="65" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <rect x="470" y="413" width="50" height="11" rx="2" fill="rgba(15,23,42,0.06)"/>
+        <text x="495" y="421" fill="#475569" font-size="6.5" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">FEED UI</text>
+        <text x="470" y="438" fill="#0f172a" font-size="11" font-family="'Geist', sans-serif" font-weight="600">Rekomendasi Loker</text>
+        <text x="470" y="452" fill="#64748b" font-size="7.5" font-family="'Geist Mono', monospace">Terurut skor kecocokan tertinggi</text>
+        <text x="470" y="462" fill="#ef4444" font-size="7.5" font-family="'Geist Mono', monospace">Label Alasan &amp; Missing Skills</text>
 
-        <!-- Step: Redirect Jooble Eksternal -->
-        <rect x="850" y="490" width="120" height="46" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
-        <text x="910" y="510" fill="#0f172a" font-size="9.5" font-family="'Geist', sans-serif" font-weight="600" text-anchor="middle">Lamar di Sumber ↗</text>
-        <text x="910" y="523" fill="#64748b" font-size="7.5" font-family="'Geist Mono', monospace" text-anchor="middle">Buka Portal Jooble</text>
+        <!-- Decision: Tipe Lowongan? -->
+        <polygon points="740,410 800,438 740,465 680,438" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="740" y="435" fill="#0f172a" font-size="9" font-family="'Geist', sans-serif" font-weight="600" text-anchor="middle">Tipe Lowongan?</text>
+        <text x="740" y="446" fill="#64748b" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle">Pilih Aksi</text>
+
+        <!-- Quick Apply Internal -->
+        <rect x="840" y="375" width="120" height="42" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="900" y="395" fill="#0f172a" font-size="9.5" font-family="'Geist', sans-serif" font-weight="600" text-anchor="middle">Quick Apply</text>
+        <text x="900" y="407" fill="#2563eb" font-size="7.5" font-family="'Geist Mono', monospace" text-anchor="middle">Kirim ke Employer</text>
+
+        <!-- Redirect Jooble Eksternal -->
+        <rect x="840" y="465" width="120" height="42" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="900" y="485" fill="#0f172a" font-size="9.5" font-family="'Geist', sans-serif" font-weight="600" text-anchor="middle">Lamar di Sumber ↗</text>
+        <text x="900" y="497" fill="#64748b" font-size="7.5" font-family="'Geist Mono', monospace" text-anchor="middle">Buka Portal Jooble</text>
 
         <!-- Finish Terminal -->
-        <rect x="860" y="560" width="100" height="40" rx="20" fill="#ffffff" stroke="#10b981" stroke-width="1.4"/>
-        <text x="910" y="584" fill="#0f172a" font-size="10" font-family="'Geist', sans-serif" font-weight="600" text-anchor="middle">Selesai</text>
+        <rect x="845" y="520" width="95" height="36" rx="18" fill="#ffffff" stroke="#10b981" stroke-width="1.4"/>
+        <text x="892" y="542" fill="#0f172a" font-size="10" font-family="'Geist', sans-serif" font-weight="600" text-anchor="middle">Selesai</text>
       </svg>
     </div>
   </div>

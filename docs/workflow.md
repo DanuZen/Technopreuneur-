@@ -8,7 +8,11 @@ Dokumen ini mendefinisikan seluruh alur operasional pengguna, rancangan pipeline
 
 ### 1.1 Alur Pencari Kerja (Job Seeker Flow)
 
-Pencari kerja mengunggah CV, meninjau hasil ekstraksi dan skor evaluasi AI, mengoreksi data profil bila diperlukan, lalu menerima rekomendasi lowongan kerja terpersonalisasi.
+Pencari kerja diberikan **2 pilihan metode input profil**:
+1. **Opsi A (Sudah Memiliki CV):** Mengunggah berkas CV format PDF atau DOCX (maks 5 MB). AI worker akan mengekstrak teks, menilai kualitas, dan menyusun profil terstruktur.
+2. **Opsi B (Belum Memiliki CV):** Sistem menyediakan **kuesioner pertanyaan terpandu (*Guided Wizard Form*)** seputar riwayat pendidikan, keahlian utama, pengalaman organisasi/magang/proyek, dan minat karir. AI akan **secara otomatis membuatkan resume/CV terstruktur** berdasarkan jawaban yang diisi.
+
+Kedua opsi bermuara pada profil terstruktur dan skor evaluasi yang dapat ditinjau serta dikoreksi oleh pengguna sebelum dicocokkan dengan lowongan kerja.
 
 > 🎨 **Diagram Desain Interaktif:** [Buka Versi HTML Interaktif](diagrams/alur-pencari-kerja.html) · [Buka Berkas Vektor SVG](diagrams/alur-pencari-kerja.svg)
 
@@ -19,34 +23,42 @@ Pencari kerja mengunggah CV, meninjau hasil ekstraksi dan skor evaluasi AI, meng
 
 ```mermaid
 flowchart TD
-    A([Mulai]) --> B[Registrasi / Login Akun]
-    B --> C{Persetujuan Consent PDP?}
-    C -- Belum Disetujui --> D[Tampilkan Modal Consent UU PDP]
-    D --> E[Pengguna Setuju]
-    E --> F[Halaman Unggah CV]
-    C -- Sudah Disetujui --> F
-    F --> G[Unggah Dokumen CV\nPDF / DOCX maks 5MB]
-    G --> H[Validasi Format & Ukuran File]
-    H -- Tidak Valid --> I[Munculkan Pesan Error]
-    I --> F
-    H -- Valid --> J[Simpan File ke Storage Privat\nBuat Task di Job Queue]
-    J --> K[Worker: Ekstraksi Teks & Panggil LLM]
-    K --> L{Teks Terbaca?}
-    L -- Teks Kosong / Scan --> M[Notifikasi: CV Berupa Scan Gambar,\nSilakan Unggah Versi Teks Digital]
-    M --> F
-    L -- Sukses --> N[Tampilkan Skor CV 0-100\n& Rincian 5 Aspek Analisis]
-    N --> O[Tinjau Data Profil Hasil AI]
-    O --> P{Perlu Koreksi Manual?}
-    P -- Ya --> Q[Formulir Koreksi Profil oleh User]
-    Q --> R[Simpan Profil Final & Update Embedding]
-    P -- Tidak --> R
-    R --> S[Jalankan Engine Matching 2-Tahap]
-    S --> T[Tampilkan Daftar Lowongan Terurut Skor]
-    T --> U{Pilih Aksi Lowongan}
-    U -- Lowongan Internal --> V[Klik 'Lamar Sekarang'\nCV & Profil Dikirim ke Employer]
-    U -- Lowongan Eksternal --> W[Klik 'Lamar di Sumber'\nRedirect ke Portal Mitra Asli]
-    V --> X([Selesai])
-    W --> X
+    A([Mulai: Registrasi / Login]) --> B{Persetujuan Consent PDP?}
+    B -- Belum Disetujui --> C[Tampilkan Modal Consent UU PDP]
+    C --> D[Pengguna Setuju]
+    D --> E{Sudah Memiliki CV?}
+    B -- Sudah Disetujui --> E
+
+    %% JALUR A: PUNYA CV
+    E -- Ya (Opsi A) --> F[Unggah Dokumen CV\nPDF / DOCX maks 5MB]
+    F --> G[Validasi Format & Ukuran File]
+    G -- Tidak Valid --> H[Munculkan Pesan Error]
+    H --> F
+    G -- Valid --> I[Simpan File ke Storage Privat\nBuat Task di Job Queue]
+    I --> J[Worker: Ekstraksi Teks & Panggil LLM]
+    J --> K{Teks Terbaca?}
+    K -- Teks Kosong / Scan --> L[Notifikasi: CV Berupa Scan Gambar,\nSilakan Unggah Versi Teks Digital]
+    L --> F
+    K -- Sukses --> M[AI Ekstraksi Profil & Skor 5 Dimensi]
+
+    %% JALUR B: TIDAK PUNYA CV
+    E -- Tidak (Opsi B) --> N[Kuesioner Pertanyaan Terpandu AI\nPendidikan, Skill, Proyek/Organisasi]
+    N --> O[AI Auto-Generate CV & Profil Terstruktur]
+
+    %% PENYATUAN DUA JALUR
+    M --> P[Tinjau Skor 0-100 & Profil Terstruktur]
+    O --> P
+    P --> Q{Perlu Koreksi Manual?}
+    Q -- Ya --> R[Formulir Koreksi Profil oleh User]
+    R --> S[Simpan Profil Final & Update Embedding]
+    Q -- Tidak --> S
+    S --> T[Jalankan Engine Matching 2-Tahap]
+    T --> U[Tampilkan Daftar Lowongan Terurut Skor]
+    U --> V{Pilih Aksi Lowongan}
+    V -- Lowongan Internal --> W[Klik 'Lamar Sekarang'\nCV & Profil Dikirim ke Employer]
+    V -- Lowongan Eksternal --> X[Klik 'Lamar di Sumber'\nRedirect ke Portal Mitra Asli]
+    W --> Y([Selesai])
+    X --> Y
 ```
 
 </details>
