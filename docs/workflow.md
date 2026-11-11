@@ -283,7 +283,7 @@ erDiagram
         string feature "cv_parse | cv_score | matching"
         int tokens_prompt
         int tokens_completion
-        numeric estimated_cost_idr
+        int quota_used_tokens "audit kuota free tier (Rp 0)"
         timestamp created_at
     }
 ```

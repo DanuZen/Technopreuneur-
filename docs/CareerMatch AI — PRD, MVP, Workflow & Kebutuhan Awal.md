@@ -300,12 +300,12 @@ Tujuh metrik dipantau sejak beta; targetnya adalah titik awal dan disesuaikan se
 | Rekomendasi dinilai relevan (feedback jempol atas) | Minimal 60% |
 | Konversi: analisis ke lamaran atau klik apply | Minimal 25% |
 | Profil yang dikoreksi pengguna (indikator akurasi ekstraksi) | Kurang dari 30% field diubah |
-| Biaya AI per analisis lengkap | Kurang dari Rp 1.500 (dipantau, disesuaikan) |
+| Biaya AI per analisis lengkap | Rp 0 (100% Memanfaatkan Free Tier API) |
 | Employer aktif (pilot) | Minimal 20 |
 
 ## Kebutuhan awal project
 
-Untuk mulai, tim butuh dua sampai tiga orang, beberapa akun layanan, dokumen legal dasar, dan data uji; biaya bulanan awal diperkirakan Rp 150 ribu sampai Rp 1,7 juta.
+Untuk mulai, tim butuh dua sampai tiga orang, beberapa akun layanan gratis (free tier), dokumen legal dasar, dan data uji; seluruh biaya awal adalah Rp 0 (100% gratis memanfaatkan paket free tier).
 
 ### Tim dan peran
 
@@ -318,12 +318,12 @@ Untuk mulai, tim butuh dua sampai tiga orang, beberapa akun layanan, dokumen leg
 ### Akun dan layanan
 
 - [ ] Repository GitHub, aturan branch, dan code review
-- [ ] Domain dan hosting (Vercel, Railway, atau Supabase)
-- [ ] Database PostgreSQL dengan ekstensi pgvector
-- [ ] Storage privat untuk CV
-- [ ] API key LLM dan model embedding, dengan batas anggaran bulanan
-- [ ] API key Jooble (dan Adzuna bila dipakai)
-- [ ] Sentry untuk monitoring dan email transaksional (Resend atau Brevo)
+- [ ] Domain dan hosting (Vercel, Railway, atau Supabase Free Tier)
+- [ ] Database PostgreSQL dengan ekstensi pgvector (Supabase / Neon Free Tier)
+- [ ] Storage privat untuk CV (Supabase Storage / Cloudflare R2 Free Tier)
+- [ ] API key LLM dan model embedding (Google Gemini Free Tier / Hugging Face Free)
+- [ ] API key Jooble (Akses Publisher Gratis)
+- [ ] Sentry untuk monitoring dan email transaksional (Resend Free Plan)
 - [ ] Papan kerja (Trello, Linear, atau GitHub Projects)
 
 ### Dokumen dan legal
@@ -339,14 +339,14 @@ Untuk mulai, tim butuh dua sampai tiga orang, beberapa akun layanan, dokumen leg
 - [ ] Lebih dari 100 lowongan contoh (internal buatan dan hasil Jooble)
 - [ ] Golden set: 20 CV dinilai manusia terhadap lowongan, untuk menguji kualitas matching
 
-### Estimasi biaya bulanan (kasar, perlu diverifikasi)
+### Estimasi biaya bulanan (100% Gratis / Zero Budget Strategy)
 
 | Komponen | Perkiraan |
 | --- | --- |
-| Hosting, database, storage (tier gratis atau murah) | Rp 0 sampai 500 ribu |
-| LLM dan embedding (tergantung volume) | Rp 100 ribu sampai 1 juta |
-| Domain, email, monitoring | Rp 50 sampai 200 ribu |
-| Total awal | Rp 150 ribu sampai 1,7 juta per bulan |
+| Hosting, database, storage (Vercel, Supabase, Cloudflare R2 Free Tier) | Rp 0 |
+| LLM dan embedding (Google Gemini Free Tier, kuota gratis 15 RPM) | Rp 0 |
+| Domain, email, monitoring (Subdomain Vercel, Resend, Sentry Developer Plan) | Rp 0 |
+| Total awal | **Rp 0 (Sepenuhnya Gratis)** |
 
 ## Roadmap MVP
 
@@ -362,7 +362,7 @@ Risiko terbesar adalah kebocoran data CV, kualitas ekstraksi, dan sulitnya menda
 | --- | --- | --- |
 | Ekstraksi CV salah (format tabel atau kolom, PDF scan) | Profil tidak akurat | Langkah koreksi manual; peringatan untuk PDF scan; OCR setelah MVP |
 | Cakupan lowongan Indonesia di API gratis rendah | Rekomendasi sedikit | Dorong lowongan internal; ajukan kerja sama Kemnaker dan portal lokal |
-| Biaya LLM membengkak | Anggaran habis | Matching dua tahap, cache, batas analisis, pantau biaya per pengguna |
+| Kuota gratis LLM tercapai | Layanan AI tertunda sementara | Matching dua tahap, caching respons, batas analisis per pengguna, rotasi API key gratis |
 | Bias atau hasil tidak adil | Reputasi dan risiko hukum | Larang atribut sensitif, jelaskan skor, sediakan jalur pelaporan |
 | Kebocoran data CV | Risiko hukum berat | Storage privat, akses berbasis peran, audit, minimasi data |
 | Lowongan palsu atau penipuan | Merugikan pengguna | Moderasi admin, verifikasi employer, tombol lapor |

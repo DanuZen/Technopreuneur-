@@ -44,13 +44,22 @@ Dokumen ini memuat rincian daftar tugas (*work breakdown structure*), roadmap pe
 
 ---
 
-### 1.5 Estimasi Anggaran Operasional Bulanan Awal
-| Komponen Layanan | Perkiraan Biaya (IDR) | Penanggung Jawab Monitoring |
-| :--- | :--- | :--- |
-| Cloud Hosting, Database PostgreSQL & Storage (Free / Starter Tier) | Rp 0 – Rp 500.000 | Muhammad Gilang Ramadhan |
-| Konsumsi Token LLM & Embedding (Skala Pengujian & Pilot) | Rp 100.000 – Rp 1.000.000 | Florensius Panca Gati |
-| Domain, Email Transaksional & Logging | Rp 50.000 – Rp 200.000 | Muhammad Gilang Ramadhan |
-| **Total Estimasi Biaya Awal** | **Rp 150.000 – Rp 1.700.000 / bulan** | - |
+### 1.5 Strategi Anggaran & Biaya Operasional (100% Gratis / Zero Budget)
+Seluruh infrastruktur dan layanan eksternal MVP dirancang memanfaatkan paket gratis (*Free Tier / Free Community Credits*), sehingga total anggaran operasional adalah **Rp 0 (Sepenuhnya Gratis)**:
+
+| Komponen Layanan | Penyedia Layanan & Skema Gratis | Biaya (IDR) | Penanggung Jawab Monitoring |
+| :--- | :--- | :--- | :--- |
+| **Web Frontend Hosting** | Vercel Hobby Plan (Gratis untuk Next.js) | **Rp 0** | Wira Fikri Ramadanu |
+| **Database & pgvector** | Supabase Free Tier / Neon Postgres Free Tier (Termasuk 500 MB & pgvector) | **Rp 0** | Muhammad Gilang Ramadhan |
+| **File Storage CV** | Supabase Storage Free Tier (Kapasitas 1 GB gratis) / Cloudflare R2 Free (10 GB) | **Rp 0** | Muhammad Gilang Ramadhan |
+| **Backend API Hosting** | Render / Railway / Koyeb Free Tier | **Rp 0** | Muhammad Gilang Ramadhan |
+| **Backend AI Hosting** | Render / Hugging Face Spaces / Lokal Development Free | **Rp 0** | Florensius Panca Gati |
+| **Model AI & Embedding** | Google Gemini API (Free Tier: 15 RPM gratis) & Hugging Face Inference API | **Rp 0** | Florensius Panca Gati |
+| **Job Aggregator API** | Jooble Publisher API (Akses Publisher Gratis dengan API Key) | **Rp 0** | Florensius Panca Gati |
+| **Email Transaksional** | Resend Free Plan (Gratis hingga 3.000 email/bulan) | **Rp 0** | Muhammad Gilang Ramadhan |
+| **Monitoring & Error Logging**| Sentry Developer Plan (Gratis hingga 5.000 event error/bulan) | **Rp 0** | Muhammad Gilang Ramadhan |
+| **Domain & DNS** | Subdomain gratis Vercel (`*.vercel.app`) / GitHub Pages | **Rp 0** | Wira Fikri Ramadanu |
+| **TOTAL BIAYA MVP** | **Zero Budget Strategy (100% Free Tier)** | **Rp 0** | **Seluruh Tim** |
 
 ---
 
@@ -208,7 +217,7 @@ gantt
   - Menghasilkan daftar poin alasan konkret mengapa kandidat cocok
   - Mendeteksi *missing skills* (keahlian yang disyaratkan loker namun belum dimiliki kandidat)
 - [ ] Endpoint eksekusi matching rekomendasi (`POST /api/v1/matching/evaluate`)
-- [ ] Mekanisme caching hasil evaluasi matching dan pencatatan audit biaya token (`ai_usage_logs`)
+- [ ] Mekanisme caching hasil evaluasi matching dan pencatatan kuota pemakaian token gratis (`ai_usage_logs`)
 
 #### E. Adaptor Penarikan Lowongan Eksternal
 - [ ] Implementasi antarmuka klien API resmi Jooble (Jooble Publisher API)
