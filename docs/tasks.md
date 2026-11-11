@@ -175,11 +175,11 @@ gantt
 - [x] Komponen Radial Scorecard untuk skor kualitas CV (0–100) dengan pewarnaan dinamis
 - [x] Komponen visualisasi 5 dimensi evaluasi (Struktur, Kejelasan, Pencapaian Terukur, Relevansi Skill, Kelengkapan)
 - [x] Kartu daftar kekuatan resume, kelemahan resume, dan saran perbaikan konkret
-- [ ] Formulir koreksi manual data profil hasil ekstraksi/generasi AI (pengguna dapat mengedit sebelum dikunci)
-- [ ] Halaman daftar lowongan kerja rekomendasi yang diurutkan berdasarkan persentase kecocokan
-- [ ] Komponen kartu lowongan lengkap dengan badge sumber (*Internal* vs *Jooble ↗*), alasan kecocokan, dan label merah *missing skills*
-- [ ] Tombol aksi lamar (*Quick Apply Internal* dan redirect ke portal sumber eksternal)
-- [ ] Fitur simpan/bookmark lowongan untuk dibaca nanti (*Saved Jobs*)
+- [x] Formulir koreksi manual data profil hasil ekstraksi/generasi AI (pengguna dapat mengedit sebelum dikunci)
+- [x] Halaman daftar lowongan kerja rekomendasi yang diurutkan berdasarkan persentase kecocokan
+- [x] Komponen kartu lowongan lengkap dengan badge sumber (*Internal* vs *Jooble ↗*), alasan kecocokan, dan label merah *missing skills*
+- [x] Tombol aksi lamar (*Quick Apply Internal* dan redirect ke portal sumber eksternal)
+- [x] Fitur simpan/bookmark lowongan untuk dibaca nanti (*Saved Jobs*)
 
 #### D. Modul Pemberi Kerja (Employer)
 - [ ] Formulir profil perusahaan (nama, logo, deskripsi, website)
