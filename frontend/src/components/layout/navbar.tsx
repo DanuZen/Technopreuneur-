@@ -32,15 +32,15 @@ export function Navbar() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo & Brand */}
-          <Link href="/" className="flex items-center gap-2.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-lg">
-            <div className="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-sm group-hover:bg-blue-700 transition">
-              <Compass className="w-5 h-5" aria-hidden="true" />
+          <Link href="/" className="flex items-center gap-2.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 rounded-lg">
+            <div className="w-8 h-8 rounded-lg bg-slate-900 text-white flex items-center justify-center shadow-sm group-hover:bg-slate-800 transition">
+              <Compass className="w-4 h-4" aria-hidden="true" />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-slate-900 tracking-tight text-lg leading-tight">
-                CareerMatch<span className="text-blue-600"> AI</span>
+              <span className="font-bold text-slate-900 tracking-tight text-base sm:text-lg leading-tight">
+                CareerMatch<span className="text-slate-500 font-medium"> AI</span>
               </span>
-              <span className="text-[10px] text-slate-500 tracking-wider">
+              <span className="text-[10px] text-slate-400 tracking-wider">
                 Platform Bimbingan &amp; Loker
               </span>
             </div>
@@ -50,19 +50,19 @@ export function Navbar() {
           <nav className="hidden md:flex items-center gap-6">
             <Link
               href="/"
-              className="text-sm font-medium text-slate-700 hover:text-blue-600 transition"
+              className="text-xs font-semibold text-slate-700 hover:text-slate-900 transition"
             >
               Beranda
             </Link>
             <Link
               href="/jobs"
-              className="text-sm font-medium text-slate-700 hover:text-blue-600 transition"
+              className="text-xs font-semibold text-slate-700 hover:text-slate-900 transition"
             >
               Cari Lowongan
             </Link>
             <Link
               href="/about"
-              className="text-sm font-medium text-slate-700 hover:text-blue-600 transition"
+              className="text-xs font-semibold text-slate-700 hover:text-slate-900 transition"
             >
               Tentang Kami
             </Link>
@@ -73,9 +73,9 @@ export function Navbar() {
             {user ? (
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-2 text-xs bg-slate-100 text-slate-700 px-3 py-1.5 rounded-full border border-slate-200">
-                  <UserIcon className="w-3.5 h-3.5 text-blue-600" />
+                  <UserIcon className="w-3.5 h-3.5 text-slate-700" />
                   <span className="font-medium max-w-[120px] truncate">{user.name}</span>
-                  <span className="uppercase text-[9px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded font-mono font-semibold">
+                  <span className="uppercase text-[9px] bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-mono font-semibold">
                     {user.role}
                   </span>
                 </div>
@@ -91,13 +91,13 @@ export function Navbar() {
               <>
                 <Link
                   href="/login"
-                  className="text-sm font-medium text-slate-700 hover:text-blue-600 px-3 py-2 rounded-lg transition"
+                  className="text-xs font-semibold text-slate-700 hover:text-slate-900 px-3 py-2 rounded-full transition"
                 >
                   Masuk
                 </Link>
                 <Link
                   href="/register"
-                  className="text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-sm transition inline-flex items-center gap-1.5"
+                  className="text-xs font-semibold text-white bg-slate-900 hover:bg-slate-800 px-4 py-2 rounded-full shadow-sm transition min-h-[36px] flex items-center justify-center"
                 >
                   Daftar Akun
                 </Link>

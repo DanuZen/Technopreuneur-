@@ -1,10 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { FileText, CheckCircle2, Target, UploadCloud, HelpCircle } from "lucide-react";
+import { UploadCloud, FileSpreadsheet, CheckCircle, Shield, ArrowDown } from "lucide-react";
 import { CVDropzone } from "@/components/cv/cv-dropzone";
 import { CVQuestionnaireWizard } from "@/components/cv/cv-questionnaire-wizard";
 import { CVAnalysisView } from "@/components/cv/cv-analysis-view";
+import { ProductMockup } from "@/components/landing/product-mockup";
+import { InteractiveWorkflow } from "@/components/landing/interactive-workflow";
+import { PrinciplesGrid } from "@/components/landing/principles-grid";
+import { FeaturesBento } from "@/components/landing/features-bento";
+import { DarkCtaBanner } from "@/components/landing/dark-cta-banner";
 import { CVAnalysisResult } from "@/types";
 
 export default function Home() {
@@ -20,94 +25,125 @@ export default function Home() {
   };
 
   return (
-    <main className="max-w-5xl mx-auto px-4 py-12 sm:px-6 lg:px-8 space-y-12">
-      {/* Header & Hero */}
-      <header className="text-center space-y-4 max-w-3xl mx-auto">
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 leading-tight">
-          Ukur Kualitas CV Anda. <br className="hidden sm:inline" />
-          <span className="text-blue-600">Temukan Karir yang Benar-Benar Cocok.</span>
-        </h1>
-        <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
-          Punya CV? Unggah untuk evaluasi 5 dimensi objektif. Belum punya CV? Jawab kuesioner singkat agar AI kami yang menyusun profil digital dan mencocokkan lowongan terbaik untuk Anda.
-        </p>
-      </header>
+    <div className="space-y-24 pb-20">
+      {/* HERO SECTION */}
+      <section className="relative pt-12 sm:pt-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-8 text-center">
+        {/* Subtle background glow/radial matching reference */}
+        <div
+          className="absolute inset-0 -top-16 -z-10 mx-auto max-w-4xl h-[420px] opacity-40 blur-3xl pointer-events-none"
+          style={{
+            background: "radial-gradient(circle at 50% 30%, rgba(203, 213, 225, 0.45) 0%, transparent 70%)",
+          }}
+          aria-hidden="true"
+        />
 
-      {/* Main Interaction Area */}
-      <section className="max-w-3xl mx-auto">
-        {analysisResult ? (
-          <CVAnalysisView analysis={analysisResult} onReset={handleReset} />
-        ) : (
-          <div className="space-y-6">
-            {/* 2-Option Tabs Switcher */}
-            <div className="grid grid-cols-2 gap-3 p-1.5 bg-slate-100 rounded-2xl border border-slate-200 max-w-lg mx-auto shadow-inner">
-              <button
-                type="button"
-                onClick={() => setActiveTab("upload")}
-                className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs sm:text-sm font-semibold transition ${
-                  activeTab === "upload"
-                    ? "bg-white text-blue-600 shadow-sm"
-                    : "text-slate-600 hover:text-slate-900"
-                }`}
-              >
-                <UploadCloud className="w-4 h-4" />
-                <span>Saya Sudah Punya CV</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab("questionnaire")}
-                className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs sm:text-sm font-semibold transition ${
-                  activeTab === "questionnaire"
-                    ? "bg-white text-blue-600 shadow-sm"
-                    : "text-slate-600 hover:text-slate-900"
-                }`}
-              >
-                <HelpCircle className="w-4 h-4" />
-                <span>Saya Belum Punya CV</span>
-              </button>
+        {/* Hero Title (Cadence inspired by reference "Ask. Discover. Do more") */}
+        <div className="space-y-4 max-w-3xl mx-auto">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 leading-[1.12]">
+            Ukur. Temukan. <br className="hidden sm:inline" />
+            <span className="text-slate-900">Wujudkan Karir Impian.</span>
+          </h1>
+          <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
+            Platform evaluasi CV objektif 5 dimensi dan pencocokan lowongan kerja cerdas untuk fresh graduate dan talenta muda.
+          </p>
+        </div>
+
+        {/* ONBOARDING ACTION CARD (Omnibar inspired floating card) */}
+        <div id="onboarding-section" className="max-w-3xl mx-auto scroll-mt-24 pt-2">
+          {analysisResult ? (
+            <CVAnalysisView analysis={analysisResult} onReset={handleReset} />
+          ) : (
+            <div className="space-y-4 p-2 sm:p-4 rounded-3xl bg-white/90 backdrop-blur-sm border border-slate-200/90 shadow-xl shadow-slate-200/40">
+              {/* Dual-Mode Selector Pills */}
+              <div className="grid grid-cols-2 gap-2 p-1.5 bg-slate-100 rounded-full max-w-md mx-auto">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("upload")}
+                  className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-full text-xs font-semibold transition ${
+                    activeTab === "upload"
+                      ? "bg-slate-900 text-white shadow-sm"
+                      : "text-slate-600 hover:text-slate-900"
+                  }`}
+                >
+                  <UploadCloud className="w-3.5 h-3.5" aria-hidden="true" />
+                  <span>Saya Sudah Punya CV</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("questionnaire")}
+                  className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-full text-xs font-semibold transition ${
+                    activeTab === "questionnaire"
+                      ? "bg-slate-900 text-white shadow-sm"
+                      : "text-slate-600 hover:text-slate-900"
+                  }`}
+                >
+                  <FileSpreadsheet className="w-3.5 h-3.5" aria-hidden="true" />
+                  <span>Saya Belum Punya CV</span>
+                </button>
+              </div>
+
+              {/* Dynamic Interactive Component */}
+              <div className="pt-2">
+                {activeTab === "upload" ? (
+                  <CVDropzone onAnalysisComplete={handleAnalysisSuccess} />
+                ) : (
+                  <CVQuestionnaireWizard onComplete={handleAnalysisSuccess} />
+                )}
+              </div>
             </div>
-
-            {/* Tab Content */}
-            {activeTab === "upload" ? (
-              <CVDropzone onAnalysisComplete={handleAnalysisSuccess} />
-            ) : (
-              <CVQuestionnaireWizard onComplete={handleAnalysisSuccess} />
-            )}
-          </div>
-        )}
-      </section>
-
-      {/* Feature Highlights Grid */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
-        <div className="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
-          <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4">
-            <CheckCircle2 className="w-6 h-6" />
-          </div>
-          <h3 className="font-semibold text-slate-900 text-base mb-1.5">Skor Kualitas 5 Dimensi</h3>
-          <p className="text-xs text-slate-600 leading-relaxed">
-            Evaluasi menyeluruh mencakup struktur format ATS, kejelasan teks, dampak terukur, relevansi keahlian, dan kelengkapan data.
-          </p>
+          )}
         </div>
 
-        <div className="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
-          <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
-            <FileText className="w-6 h-6" />
-          </div>
-          <h3 className="font-semibold text-slate-900 text-base mb-1.5">AI Resume Builder Otomatis</h3>
-          <p className="text-xs text-slate-600 leading-relaxed">
-            Pencari kerja tanpa resume dapat menjawab 4 langkah kuesioner ringkas untuk dirangkai menjadi profil terstandar industri.
+        {/* ECOSYSTEM / TECH BADGES (Truthful technical replacement for fake logos) */}
+        <div className="pt-4 border-t border-slate-100 max-w-3xl mx-auto">
+          <p className="text-[11px] font-mono uppercase tracking-wider text-slate-400 mb-3">
+            Infrastruktur Berbasis Ekosistem Terbuka &amp; Kepatuhan Hukum
           </p>
-        </div>
-
-        <div className="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
-          <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-4">
-            <Target className="w-6 h-6" aria-hidden="true" />
+          <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-slate-600">
+            <span className="px-3 py-1 rounded-full bg-slate-100 border border-slate-200 font-mono text-[11px]">
+              Next.js 14 App Router
+            </span>
+            <span className="px-3 py-1 rounded-full bg-slate-100 border border-slate-200 font-mono text-[11px]">
+              FastAPI AI Service
+            </span>
+            <span className="px-3 py-1 rounded-full bg-slate-100 border border-slate-200 font-mono text-[11px]">
+              PostgreSQL pgvector
+            </span>
+            <span className="px-3 py-1 rounded-full bg-slate-100 border border-slate-200 font-mono text-[11px]">
+              Jooble Publisher API
+            </span>
+            <span className="px-3 py-1 rounded-full bg-slate-100 border border-slate-200 font-mono text-[11px]">
+              UU PDP No. 27/2022
+            </span>
           </div>
-          <h3 className="font-semibold text-slate-900 text-base mb-1.5">Pencocokan Loker Dua Tahap</h3>
-          <p className="text-xs text-slate-600 leading-relaxed">
-            Kombinasi penyaringan semantik pgvector dan re-ranking LLM Gemini menyajikan persentase kecocokan beserta daftar gap skill.
-          </p>
         </div>
       </section>
-    </main>
+
+      {/* PRODUCT MOCKUP / APP PREVIEW (Matching "For building and beyond") */}
+      <section className="px-4 sm:px-6 lg:px-8">
+        <ProductMockup />
+      </section>
+
+      {/* INTERACTIVE WORKFLOW TABS (Matching "Every team gets smarter with X-Ai") */}
+      <section className="px-4 sm:px-6 lg:px-8">
+        <InteractiveWorkflow />
+      </section>
+
+      {/* 5-DIMENSIONS CRITERIA (Matching "Real Stories" slot) */}
+      <section className="px-4 sm:px-6 lg:px-8">
+        <PrinciplesGrid />
+      </section>
+
+      {/* ARCHITECTURE & ETHICS BENTO (Matching "Smarter Help for a Smoother Day") */}
+      <section className="px-4 sm:px-6 lg:px-8">
+        <FeaturesBento />
+      </section>
+
+      {/* PRE-FOOTER DARK ACCENT BANNER (Matching "Ready to Supercharge Your Productivity?") */}
+      <section className="px-4 sm:px-6 lg:px-8">
+        <DarkCtaBanner />
+      </section>
+    </div>
   );
 }
