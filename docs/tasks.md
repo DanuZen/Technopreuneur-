@@ -157,24 +157,24 @@ gantt
 #### A. Setup & Desain Sistem UI
 - [x] Inisialisasi Next.js 14, Tailwind CSS, Lucide React, dan TypeScript config
 - [x] Konfigurasi token warna tema (`primary`, `match-high`, `match-medium`, `match-low`) sesuai `docs/styleguide.md`
-- [ ] Setup HTTP Client (Axios / Fetch wrapper) dengan penanganan token JWT dan error boundary
-- [ ] Implementasi responsivitas mobile-first (touch area minimal $44 \times 44\text{ px}$, drawer/bottom sheet)
+- [x] Setup HTTP Client (`src/lib/api.ts`) dengan penanganan token JWT dan error boundary
+- [x] Implementasi responsivitas mobile-first (touch area minimal $44 \times 44\text{ px}$, navbar drawer/menu)
 
 #### B. Modul Autentikasi & Akun Pengguna
-- [ ] Halaman Pendaftaran (*Register*) dengan opsi seleksi role: `jobseeker` vs `employer`
-- [ ] Halaman Masuk (*Login*) dengan email/password dan tombol Google OAuth SSO
-- [ ] Modal dialog Persetujuan Consent Pemrosesan Data Pribadi (UU PDP) sebelum unggah CV
+- [x] Halaman Pendaftaran (*Register* di `/register`) dengan opsi seleksi role: `jobseeker` vs `employer`
+- [x] Halaman Masuk (*Login* di `/login`) dengan email/password
+- [x] Modal dialog Persetujuan Consent Pemrosesan Data Pribadi (UU PDP) sebelum unggah CV
 - [ ] Halaman Pengaturan Akun: tombol hapus CV dan tombol hapus akun permanen (*Right to be Forgotten*)
 
 #### C. Modul Pencari Kerja (Job Seeker)
-- [ ] Komponen Pemilih 2 Pilihan Masuk Awal: "Saya Sudah Punya CV" (Upload) vs "Saya Belum Punya CV" (Kuesioner Terpandu)
-- [ ] Komponen Wizard Kuesioner Pertanyaan Terpandu AI (*Multi-step Form Wizard*: Pendidikan, Skill, Pengalaman Organisasi/Magang/Proyek, Minat Karir)
-- [ ] Komponen Drag-and-Drop Dropzone berkas CV dengan validasi tipe (.pdf / .docx) dan batas ukuran (5 MB)
-- [ ] Indikator progress bar pengunggahan dan visualisasi tahapan status pemrosesan AI secara real-time
-- [ ] Alert peringatan dokumen terbaca kosong jika pengguna mengunggah hasil scan foto/gambar
-- [ ] Komponen Radial Scorecard untuk skor kualitas CV (0–100) dengan pewarnaan dinamis
-- [ ] Komponen visualisasi 5 dimensi evaluasi (Struktur, Kejelasan, Pencapaian Terukur, Relevansi Skill, Kelengkapan)
-- [ ] Kartu daftar kekuatan resume, kelemahan resume, dan saran perbaikan konkret
+- [x] Komponen Pemilih 2 Pilihan Masuk Awal: "Saya Sudah Punya CV" (Upload) vs "Saya Belum Punya CV" (Kuesioner Terpandu)
+- [x] Komponen Wizard Kuesioner Pertanyaan Terpandu AI (*Multi-step Form Wizard*: Pendidikan, Skill, Pengalaman Organisasi/Magang/Proyek, Minat Karir)
+- [x] Komponen Drag-and-Drop Dropzone berkas CV dengan validasi tipe (.pdf / .docx) dan batas ukuran (5 MB)
+- [x] Indikator progress bar pengunggahan dan visualisasi tahapan status pemrosesan AI secara real-time
+- [x] Alert peringatan dokumen terbaca kosong jika pengguna mengunggah hasil scan foto/gambar
+- [x] Komponen Radial Scorecard untuk skor kualitas CV (0–100) dengan pewarnaan dinamis
+- [x] Komponen visualisasi 5 dimensi evaluasi (Struktur, Kejelasan, Pencapaian Terukur, Relevansi Skill, Kelengkapan)
+- [x] Kartu daftar kekuatan resume, kelemahan resume, dan saran perbaikan konkret
 - [ ] Formulir koreksi manual data profil hasil ekstraksi/generasi AI (pengguna dapat mengedit sebelum dikunci)
 - [ ] Halaman daftar lowongan kerja rekomendasi yang diurutkan berdasarkan persentase kecocokan
 - [ ] Komponen kartu lowongan lengkap dengan badge sumber (*Internal* vs *Jooble ↗*), alasan kecocokan, dan label merah *missing skills*
