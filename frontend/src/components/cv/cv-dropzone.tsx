@@ -1,15 +1,18 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { UploadCloud, FileText, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import { api } from "@/lib/api";
 import { CVAnalysisResult } from "@/types";
 
 interface CVDropzoneProps {
   onAnalysisComplete?: (result: CVAnalysisResult) => void;
+  autoRedirect?: boolean;
 }
 
-export function CVDropzone({ onAnalysisComplete }: CVDropzoneProps) {
+export function CVDropzone({ onAnalysisComplete, autoRedirect = true }: CVDropzoneProps) {
+  const router = useRouter();
   const [dragActive, setDragActive] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [status, setStatus] = useState<"idle" | "uploading" | "extracting" | "scoring" | "completed" | "error">("idle");
@@ -82,6 +85,11 @@ export function CVDropzone({ onAnalysisComplete }: CVDropzoneProps) {
       setStatus("completed");
       if (onAnalysisComplete) {
         onAnalysisComplete(result);
+      }
+
+      if (autoRedirect) {
+        await new Promise((r) => setTimeout(r, 600));
+        router.push("/dashboard");
       }
     } catch (err: unknown) {
       setStatus("error");

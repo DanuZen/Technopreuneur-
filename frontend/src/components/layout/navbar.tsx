@@ -55,6 +55,12 @@ export function Navbar() {
               Beranda
             </Link>
             <Link
+              href="/dashboard"
+              className="text-xs font-semibold text-slate-700 hover:text-slate-900 transition"
+            >
+              Dashboard ATS
+            </Link>
+            <Link
               href="/jobs"
               className="text-xs font-semibold text-slate-700 hover:text-slate-900 transition"
             >
@@ -124,14 +130,21 @@ export function Navbar() {
           <Link
             href="/"
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-slate-700 hover:text-blue-600 py-1"
+            className="block text-sm font-medium text-slate-700 hover:text-slate-900 py-1"
           >
             Beranda
           </Link>
           <Link
+            href="/dashboard"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block text-sm font-medium text-slate-700 hover:text-slate-900 py-1"
+          >
+            Dashboard ATS
+          </Link>
+          <Link
             href="/jobs"
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-slate-700 hover:text-blue-600 py-1"
+            className="block text-sm font-medium text-slate-700 hover:text-slate-900 py-1"
           >
             Cari Lowongan
           </Link>
