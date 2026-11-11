@@ -1,178 +1,230 @@
-# CareerMatch AI — Implementation Tasks & Roadmap
+# CareerMatch AI — Implementation Tasks & Pembagian Tugas Tim
 
-Dokumen ini memuat rincian daftar tugas (*work breakdown structure*), roadmap peluncuran 6 minggu, checklist persiapan legal dan infrastruktur, serta pembagian tiket kerja teknis untuk repositori `frontend`, `backend-api`, dan `backend-ai`.
+Dokumen ini memuat rincian daftar tugas (*work breakdown structure*), roadmap peluncuran 6 minggu, checklist persiapan infrastruktur, dan pembagian tugas per anggota tim:
+- **Wira Fikri Ramadanu (NIM: 23343023)** — *Frontend Lead* (`frontend/`)
+- **Muhammad Gilang Ramadhan (NIM: 23346013)** — *Backend Lead* (`backend-api/`)
+- **Florensius Panca Gati (NIM: 23343006)** — *Backend AI Lead* (`backend-ai/`)
 
 ---
 
-## 1. Kebutuhan Awal & Persiapan Proyek
+## 1. Kebutuhan Awal & Matriks Tanggung Jawab Tim
 
-### 1.1 Tim & Distribusi Peran Proyek
+### 1.1 Profil Tim & Area Tanggung Jawab Utama
 | Anggota Tim | NIM | Peran Utama | Lingkup Tanggung Jawab & Direktori |
 | :--- | :--- | :--- | :--- |
 | **Wira Fikri Ramadanu** | 23343023 | **Frontend Lead** | Direktori `frontend/`: Next.js (TS), Tailwind CSS, UI/UX flow, upload CV, visualisasi skor & rekomendasi loker |
 | **Muhammad Gilang Ramadhan** | 23346013 | **Backend Lead** | Direktori `backend-api/`: Node.js (Express/TypeScript), PostgreSQL pgvector, Auth/RBAC, CRUD loker & lamaran, S3 storage |
 | **Florensius Panca Gati** | 23343006 | **Backend AI Lead** | Direktori `backend-ai/`: Python (FastAPI), ekstraksi dokumen (PDF/DOCX), LLM parsing & scoring, vector embedding, matching engine |
 
-### 1.2 Akun & Kredensial Layanan
-- [ ] Inisialisasi Git Repository, perlindungan branch `main`, dan branching model (`feature/*`, `fix/*`).
-- [ ] Penyediaan database PostgreSQL dengan ekstensi `pgvector` aktif (Supabase / Neon / Railway).
-- [ ] Penyediaan bucket privat Object Storage (Supabase Storage / Cloudflare R2 / AWS S3).
-- [ ] Registrasi API Key penyedia model AI (OpenAI / Gemini / Anthropic) dan model text-embedding.
-- [ ] Pendaftaran API Key Jooble Publisher API (untuk penarikan data lowongan eksternal).
-- [ ] Konfigurasi akun Sentry untuk pelacakan error aplikasi.
-- [ ] Konfigurasi layanan email transaksional (Resend / Brevo) untuk verifikasi dan reset password.
-- [ ] Pembuatan papan kerja tugas (Linear, GitHub Projects, atau Trello).
+---
 
-### 1.3 Dokumen Legal, Etika & Kepatuhan
-- [ ] Draf teks Kebijakan Privasi (*Privacy Policy*) dan Syarat Ketentuan (*Terms of Service*) berstandar UU PDP.
-- [ ] Draf teks persetujuan eksplisit (*Consent Form*) saat pertama kali pengguna mengunggah dokumen CV.
-- [ ] Pedoman moderasi konten lowongan kerja untuk mencegah lowongan palsu, penipuan, atau pungutan liar.
-- [ ] Surat permohonan penjajakan integrasi data ke Pasker ID / Kemnaker RI.
-
-### 1.4 Penyusunan Data Uji (*Test Datasets*)
-- [ ] Kumpulan 30–50 file CV anonim / sintetis (format PDF dan DOCX, bahasa Indonesia dan Inggris, lintas level pengalaman).
-- [ ] Kumpulan 100+ data lowongan kerja uji coba (kombinasi data buatan dan respons API eksternal).
-- [ ] **Golden Dataset:** 20 CV yang telah diberi skor manual oleh manusia terhadap 5 lowongan berbeda untuk mengevaluasi kualitas prompt matching LLM.
-
-### 1.5 Estimasi Anggaran Operasional Bulanan Awal
-| Komponen Layanan | Perkiraan Biaya (IDR) |
-| :--- | :--- |
-| Cloud Hosting, Database PostgreSQL & Storage (Free / Starter Tier) | Rp 0 – Rp 500.000 |
-| Konsumsi Token LLM & Embedding (Skala Pengujian & Pilot) | Rp 100.000 – Rp 1.000.000 |
-| Domain, Email Transaksional & Logging | Rp 50.000 – Rp 200.000 |
-| **Total Estimasi Biaya Awal** | **Rp 150.000 – Rp 1.700.000 / bulan** |
+### 1.2 Persiapan Akun & Layanan Eksternal (PIC Ditugaskan)
+- [x] Inisialisasi Git Repository, setup `.gitignore`, dan baseline project **[PIC: Seluruh Tim]**
+- [ ] Penyediaan database PostgreSQL dengan ekstensi `pgvector` aktif (Supabase / Neon / Railway) **[PIC: Muhammad Gilang Ramadhan]**
+- [ ] Penyediaan bucket privat Object Storage (Supabase Storage / Cloudflare R2 / AWS S3) **[PIC: Muhammad Gilang Ramadhan]**
+- [ ] Konfigurasi akun Sentry (error tracking) dan Resend/Brevo (email transaksional) **[PIC: Muhammad Gilang Ramadhan]**
+- [ ] Registrasi API Key penyedia model AI (OpenAI / Gemini / Anthropic) dan embedding **[PIC: Florensius Panca Gati]**
+- [ ] Pendaftaran API Key Jooble Publisher API untuk agregasi lowongan kerja **[PIC: Florensius Panca Gati]**
+- [ ] Setup board manajemen tugas (GitHub Projects / Trello / Linear) **[PIC: Wira Fikri Ramadanu]**
 
 ---
 
-## 2. Roadmap MVP (Timeline 6 Minggu)
+### 1.3 Dokumen Legal, Privasi & Kepatuhan UU PDP
+- [ ] Draf teks Kebijakan Privasi (*Privacy Policy*) & Syarat Ketentuan (*ToS*) berstandar UU PDP **[PIC: Muhammad Gilang Ramadhan & Wira Fikri Ramadanu]**
+- [ ] Draf formulir persetujuan eksplisit (*Consent Form*) saat pertama kali pengguna mengunggah CV **[PIC: Wira Fikri Ramadanu]**
+- [ ] Aturan moderasi konten lowongan kerja untuk mencegah loker palsu/penipuan **[PIC: Muhammad Gilang Ramadhan]**
+- [ ] Surat permohonan kemitraan data resmi ke Pasker ID / Kemnaker RI **[PIC: Seluruh Tim]**
+
+---
+
+### 1.4 Penyusunan Data Uji (*Test Datasets*)
+- [ ] Pengumpulan 30–50 contoh berkas CV anonim/sintetis (.pdf dan .docx, ID & EN) **[PIC: Florensius Panca Gati]**
+- [ ] Pengumpulan 100+ sampel data lowongan kerja (internal & hasil Jooble) **[PIC: Florensius Panca Gati]**
+- [ ] **Golden Dataset:** 20 CV yang dinilai manual oleh manusia untuk benchmarking akurasi matching AI **[PIC: Seluruh Tim]**
+
+---
+
+### 1.5 Estimasi Anggaran Operasional Bulanan Awal
+| Komponen Layanan | Perkiraan Biaya (IDR) | Penanggung Jawab Monitoring |
+| :--- | :--- | :--- |
+| Cloud Hosting, Database PostgreSQL & Storage (Free / Starter Tier) | Rp 0 – Rp 500.000 | Muhammad Gilang Ramadhan |
+| Konsumsi Token LLM & Embedding (Skala Pengujian & Pilot) | Rp 100.000 – Rp 1.000.000 | Florensius Panca Gati |
+| Domain, Email Transaksional & Logging | Rp 50.000 – Rp 200.000 | Muhammad Gilang Ramadhan |
+| **Total Estimasi Biaya Awal** | **Rp 150.000 – Rp 1.700.000 / bulan** | - |
+
+---
+
+## 2. Roadmap MVP & Pembagian Milestones (6 Minggu)
 
 ```mermaid
 gantt
     title Roadmap Pengembangan MVP CareerMatch AI (6 Minggu)
     dateFormat  YYYY-MM-DD
-    section Minggu 1: Setup & Desain
-    Setup Repo, DB pgvector, Queue & Env        :w1_1, 2026-11-10, 4d
-    Desain UI/UX & Wireframe Komponen Kunci     :w1_2, 2026-11-10, 6d
-    section Minggu 2: CV Engine
-    Worker Ekstraksi Teks (PDF/DOCX)            :w2_1, after w1_1, 5d
-    Prompt LLM Profiling, Scoring & Validasi    :w2_2, after w2_1, 5d
+    section Minggu 1: Setup & Fondasi
+    Setup DB pgvector & Storage (Gilang)        :w1_1, 2026-11-10, 4d
+    Desain UI Wireframe & Theme Token (Wira)    :w1_2, 2026-11-10, 5d
+    Setup FastAPI & Router Base (Panca)         :w1_3, 2026-11-10, 4d
+    section Minggu 2: Core CV Engine
+    Ekstraksi Teks PDF/DOCX (Panca)             :w2_1, after w1_3, 5d
+    Prompt Profiling & Scoring LLM (Panca)      :w2_2, after w2_1, 5d
+    Auth JWT, RBAC & Consent API (Gilang)       :w2_3, after w1_1, 5d
+    UI Upload Dropzone & Progress (Wira)        :w2_4, after w1_2, 5d
     section Minggu 3: Job & Vektor
-    Job Management API & Schema Ingestion       :w3_1, after w2_2, 4d
-    Adaptor Jooble API & Otomasi Embedding      :w3_2, after w3_1, 4d
+    CRUD Lowongan & Search Filter (Gilang)      :w3_1, after w2_3, 4d
+    Otomasi Embedding & Jooble Client (Panca)   :w3_2, after w2_2, 5d
+    UI Scorecard CV & 5 Dimensi (Wira)          :w3_3, after w2_4, 4d
     section Minggu 4: Matching System
-    Matching 2-Tahap (pgvector + LLM Eval)      :w4_1, after w3_2, 5d
-    Koreksi Profil & UI Hasil Rekomendasi       :w4_2, after w4_1, 4d
+    Matching 2-Tahap Vector + LLM (Panca)       :w4_1, after w3_2, 5d
+    UI Koreksi Profil & Feed Rekomendasi (Wira) :w4_2, after w3_3, 5d
+    Application & Saved Jobs API (Gilang)       :w4_3, after w3_1, 4d
     section Minggu 5: Employer & Admin
-    Dashboard Employer, Review Pelamar & Status :w5_1, after w4_2, 5d
-    Dashboard Moderasi Admin                    :w5_2, after w5_1, 3d
+    Dashboard Employer & Review Pelamar (Wira)  :w5_1, after w4_2, 5d
+    API Status Pelamar & Moderasi Loker (Gilang):w5_2, after w4_3, 4d
+    Sanitasi PII & Proteksi UU PDP (Gilang/Panca):w5_3, after w4_1, 4d
     section Minggu 6: Uji Coba & Launch
-    Uji Golden Dataset & Sanitasi UU PDP        :w6_1, after w5_2, 4d
-    Peluncuran Beta Tertutup (Closed Pilot)     :milestone, after w6_1, 0d
+    Benchmarking Golden Dataset (Seluruh Tim)   :w6_1, after w5_1, 4d
+    Peluncuran Beta Tertutup / Closed Pilot     :milestone, after w6_1, 0d
 ```
 
-### Kriteria Kelulusan Rilis Beta Tertutup (*Go-Live Gate*)
-1. P95 latensi pemrosesan CV di bawah 60 detik.
-2. Tidak ada kebocoran file CV (akses mutlak hanya melalui pre-signed URL terproteksi).
-3. Pengujian Golden Dataset menunjukkan akurasi relevansi evaluasi LLM minimal 70%.
-4. Alur hapus akun dan hapus CV terbukti membersihkan seluruh data terkait di database dan storage.
+---
+
+## 3. Checklist Tugas Rinci per Anggota Tim
+
+### 3.1 Wira Fikri Ramadanu (NIM: 23343023) — *Frontend Lead*
+> **Direktori Kerja:** `frontend/`  
+> **Teknologi:** Next.js (App Router, TypeScript), Tailwind CSS, Lucide Icons, TanStack Query
+
+#### A. Setup & Desain Sistem UI
+- [x] Inisialisasi Next.js 14, Tailwind CSS, Lucide React, dan TypeScript config
+- [x] Konfigurasi token warna tema (`primary`, `match-high`, `match-medium`, `match-low`) sesuai `docs/styleguide.md`
+- [ ] Setup HTTP Client (Axios / Fetch wrapper) dengan penanganan token JWT dan error boundary
+- [ ] Implementasi responsivitas mobile-first (touch area minimal $44 \times 44\text{ px}$, drawer/bottom sheet)
+
+#### B. Modul Autentikasi & Akun Pengguna
+- [ ] Halaman Pendaftaran (*Register*) dengan opsi seleksi role: `jobseeker` vs `employer`
+- [ ] Halaman Masuk (*Login*) dengan email/password dan tombol Google OAuth SSO
+- [ ] Modal dialog Persetujuan Consent Pemrosesan Data Pribadi (UU PDP) sebelum unggah CV
+- [ ] Halaman Pengaturan Akun: tombol hapus CV dan tombol hapus akun permanen (*Right to be Forgotten*)
+
+#### C. Modul Pencari Kerja (Job Seeker)
+- [ ] Komponen Drag-and-Drop Dropzone berkas CV dengan validasi tipe (.pdf / .docx) dan batas ukuran (5 MB)
+- [ ] Indikator progress bar pengunggahan dan visualisasi tahapan status pemrosesan AI secara real-time
+- [ ] Alert peringatan dokumen terbaca kosong jika pengguna mengunggah hasil scan foto/gambar
+- [ ] Komponen Radial Scorecard untuk skor kualitas CV (0–100) dengan pewarnaan dinamis
+- [ ] Komponen visualisasi 5 dimensi evaluasi (Struktur, Kejelasan, Pencapaian Terukur, Relevansi Skill, Kelengkapan)
+- [ ] Kartu daftar kekuatan resume, kelemahan resume, dan saran perbaikan konkret
+- [ ] Formulir koreksi manual data profil hasil ekstraksi AI (pengguna dapat mengedit sebelum dikunci)
+- [ ] Halaman daftar lowongan kerja rekomendasi yang diurutkan berdasarkan persentase kecocokan
+- [ ] Komponen kartu lowongan lengkap dengan badge sumber (*Internal* vs *Jooble ↗*), alasan kecocokan, dan label merah *missing skills*
+- [ ] Tombol aksi lamar (*Quick Apply Internal* dan redirect ke portal sumber eksternal)
+- [ ] Fitur simpan/bookmark lowongan untuk dibaca nanti (*Saved Jobs*)
+
+#### D. Modul Pemberi Kerja (Employer)
+- [ ] Formulir profil perusahaan (nama, logo, deskripsi, website)
+- [ ] Formulir pembuatan dan pengeditan lowongan pekerjaan (judul, kriteria skill, rentang gaji, lokasi, work type)
+- [ ] Dashboard manajemen daftar lowongan aktif dan status publikasi
+- [ ] Halaman daftar pelamar masuk yang diurutkan otomatis berdasarkan skor kecocokan tertinggi
+- [ ] Kartu ringkasan AI untuk profil pelamar tanpa menampilkan atribut sensitif (gender/foto/usia)
+- [ ] Kontrol pembaruan status pelamar (*Reviewed*, *Shortlisted*, *Rejected*)
+
+#### E. Modul Moderasi Admin
+- [ ] Halaman kurasi lowongan baru (tombol Setujui, Tolak, Nonaktifkan lowongan)
 
 ---
 
-## 3. Checklist Tugas Teknis per Direktori Proyek
+### 3.2 Muhammad Gilang Ramadhan (NIM: 23346013) — *Backend Lead*
+> **Direktori Kerja:** `backend-api/`  
+> **Teknologi:** Node.js, Express (TypeScript), PostgreSQL, pgvector, JWT, Helmet, bcryptjs
 
-### 3.1 Direktori `frontend/` (Aplikasi Antarmuka Pengguna)
-- [ ] **Setup Proyek & Styling:**
-  - [ ] Inisialisasi Next.js (App Router, TypeScript) dengan Tailwind CSS dan Lucide Icons.
-  - [ ] Implementasi token tema warna dan tipografi sesuai `docs/styleguide.md`.
-  - [ ] Setup state management dan HTTP client (Axios / TanStack Query).
-- [ ] **Autentikasi & Akun:**
-  - [ ] Halaman Registrasi (pemilihan role `jobseeker` vs `employer`).
-  - [ ] Halaman Login (Email/Password dan tombol Google OAuth).
-  - [ ] Modal/Persetujuan Consent UU PDP sebelum aksi pengunggahan CV.
-- [ ] **Modul Pencari Kerja (Job Seeker):**
-  - [ ] Komponen drag-and-drop file upload CV dengan validasi format (.pdf/.docx, maks 5 MB).
-  - [ ] Indikator progress bar pengunggahan dan status pemrosesan AI secara real-time.
-  - [ ] Alert peringatan dokumen terbaca kosong jika pengguna mengunggah hasil scan foto.
-  - [ ] Kartu visualisasi skor CV radial dengan rincian 5 dimensi evaluasi.
-  - [ ] Kartu kelebihan, kelemahan, dan saran perbaikan resume.
-  - [ ] Formulir koreksi manual profil hasil ekstraksi AI sebelum profil dikunci.
-  - [ ] Halaman daftar lowongan rekomendasi berurut skor dengan kartu gap analysis (*missing skills*).
-  - [ ] Tombol aksi lamar lowongan (*Quick Apply Internal* dan *Lamar di Sumber Eksternal*).
-  - [ ] Halaman pengaturan akun untuk fitur hapus CV dan hapus akun permanen.
-- [ ] **Modul Pemberi Kerja (Employer):**
-  - [ ] Halaman profil perusahaan.
-  - [ ] Formulir buat dan edit lowongan pekerjaan (judul, kriteria, gaji, lokasi, status kerja).
-  - [ ] Dashboard lowongan aktif dan status publikasi.
-  - [ ] Halaman daftar pelamar per lowongan yang diurutkan berdasarkan skor kecocokan tertinggi beserta ringkasan AI.
-  - [ ] Kontrol perubahan status pelamar (*Reviewed*, *Shortlisted*, *Rejected*).
-- [ ] **Modul Moderasi Admin:**
-  - [ ] Antarmuka kurasi lowongan masuk (tombol Setujui, Tolak, Nonaktifkan).
+#### A. Database & Infrastruktur Penyimpanan
+- [ ] Setup koneksi database PostgreSQL dan eksekusi ekstensi `CREATE EXTENSION IF NOT EXISTS vector;`
+- [ ] Pembuatan skrip migrasi untuk 10 tabel inti sesuai `docs/workflow.md`:
+  - `users`, `consents`, `cvs`, `cv_profiles`, `companies`, `jobs`, `matches`, `applications`, `saved_jobs`, `ai_usage_logs`
+- [ ] Konfigurasi indeks relasional (B-Tree) pada `jobs(status, expires_at)` dan indeks vektor HNSW pada kolom `embedding`
+- [ ] Setup koneksi Object Storage (S3 / Cloudflare R2 / Supabase Storage) dengan bucket privat
+- [ ] Service generator Pre-signed URL aman (kedaluwarsa 15 menit) untuk upload dan akses file CV
 
----
+#### B. Keamanan, Autentikasi & Kepatuhan PDP
+- [ ] Implementasi hashing kata sandi aman menggunakan `bcryptjs` / `argon2`
+- [ ] Endpoint pendaftaran pengguna (`POST /api/auth/register`) dengan validasi role (`jobseeker`, `employer`)
+- [ ] Endpoint masuk pengguna (`POST /api/auth/login`) yang menghasilkan token JWT terproteksi
+- [ ] Middleware otentikasi JWT dan otorisasi role (*Role-Based Access Control / RBAC*)
+- [ ] Middleware proteksi keamanan (*Helmet*, *CORS*, dan *Rate Limiting* pada rute upload & login)
+- [ ] Endpoint pencatatan persetujuan persetujuan data pribadi pengguna (`POST /api/consents`)
+- [ ] Endpoint penghapusan berkas CV permanen (`DELETE /api/cvs/:id`) yang menghapus data DB dan biner file storage
+- [ ] Endpoint penghapusan akun pengguna menyeluruh (`DELETE /api/users/me`)
 
-### 3.2 Direktori `backend-api/` (Layanan Server & Database)
-- [ ] **Setup Database & Migrasi:**
-  - [ ] Setup koneksi PostgreSQL dan eksekusi ekstensi `CREATE EXTENSION IF NOT EXISTS vector;`.
-  - [ ] Pembuatan skrip migrasi 10 tabel inti sesuai `docs/workflow.md` (`users`, `consents`, `cvs`, `cv_profiles`, `companies`, `jobs`, `matches`, `applications`, `saved_jobs`, `ai_usage_logs`).
-  - [ ] Pembuatan indeks relasional dan indeks vektor HNSW pada kolom `embedding`.
-- [ ] **Autentikasi, Otorisasi & Keamanan:**
-  - [ ] Implementasi hashing kata sandi aman (bcrypt / Argon2).
-  - [ ] Middleware proteksi endpoint berbasis JWT / sesi dan role (`jobseeker`, `employer`, `admin`).
-  - [ ] Middleware rate limiting pada endpoint upload file dan autentikasi login.
-  - [ ] Endpoint pencatatan persetujuan consent pengguna (`/api/consents`).
-- [ ] **Penyimpanan Berkas (Storage Service):**
-  - [ ] Klien object storage dengan kredensial privat.
-  - [ ] Generator Pre-signed URL aman berumur terbatas (15 menit) untuk upload dan download file CV.
-  - [ ] Validasi keamanan MIME type berkas sebelum disimpan ke bucket.
-- [ ] **Endpoint Lowongan & Lamaran:**
-  - [ ] Endpoint CRUD lowongan untuk employer (`/api/jobs`).
-  - [ ] Endpoint pencarian lowongan dengan filter kata kunci, tipe kerja, dan lokasi.
-  - [ ] Endpoint pengajuan lamaran kerja internal (`/api/applications`).
-  - [ ] Endpoint pembaruan status pelamar oleh employer.
-- [ ] **Kepatuhan Privasi (Right to be Forgotten):**
-  - [ ] Endpoint penghapusan CV permanen (`DELETE /api/cvs/:id`) yang menghapus record DB dan file fisik storage.
-  - [ ] Endpoint penghapusan akun pengguna menyeluruh (`DELETE /api/users/me`).
+#### C. API Manajemen Lowongan Kerja (Jobs API)
+- [ ] Endpoint pembuatan lowongan kerja oleh employer (`POST /api/jobs`)
+- [ ] Endpoint pembacaan daftar lowongan dengan filter kata kunci, lokasi, dan tipe kerja (`GET /api/jobs`)
+- [ ] Endpoint detail lowongan (`GET /api/jobs/:id`)
+- [ ] Endpoint pembaruan dan penutupan lowongan (`PUT /api/jobs/:id`, `PATCH /api/jobs/:id/close`)
+- [ ] Logika deduplikasi lowongan eksternal (mencegah duplikasi judul + perusahaan + lokasi)
+- [ ] Scheduled job auto-hide untuk lowongan yang telah kedaluwarsa (`expires_at`)
+
+#### D. API Pengajuan Lamaran & Employer Review
+- [ ] Endpoint pengajuan lamaran kerja internal (`POST /api/applications`)
+- [ ] Endpoint peninjauan daftar pelamar per lowongan terurut skor kecocokan (`GET /api/applications/job/:jobId`)
+- [ ] Endpoint pengubahan status pelamar oleh employer (`PATCH /api/applications/:id/status`)
+- [ ] Endpoint daftar lamaran yang diajukan oleh job seeker (`GET /api/applications/me`)
+- [ ] Endpoint simpan dan hapus bookmark lowongan (`POST/DELETE /api/saved-jobs/:jobId`)
+
+#### E. API Moderasi Admin
+- [ ] Endpoint daftar review lowongan masuk (`GET /api/admin/jobs/pending`)
+- [ ] Endpoint persetujuan/penolakan lowongan (`PATCH /api/admin/jobs/:id/moderate`)
+- [ ] Endpoint nonaktifkan akun pengguna bermasalah (`PATCH /api/admin/users/:id/suspend`)
 
 ---
 
-### 3.3 Direktori `backend-ai/` (Worker Pipeline & AI Service)
-- [ ] **Infrastruktur Job Queue:**
-  - [ ] Inisialisasi engine antrean latar belakang (`pg-boss` atau `BullMQ`).
-  - [ ] Konfigurasi mekanisme auto-retry (maksimal 3 kali) dengan *exponential backoff*.
-  - [ ] Pencatatan log aktivitas pemrosesan task ke database.
-- [ ] **Layanan Ekstraksi Dokumen:**
-  - [ ] Modul parser teks PDF menggunakan `pdf-parse` / `pdfjs-dist`.
-  - [ ] Modul parser teks DOCX menggunakan `mammoth`.
-  - [ ] Logika pengecekan teks kosong (mendeteksi dokumen scan gambar) untuk mengembalikan notifikasi error edukatif.
-- [ ] **Layanan LLM Profiling & Scoring:**
-  - [ ] Integrasi SDK penyedia LLM (OpenAI / Gemini / Anthropic).
-  - [ ] Desain prompt ekstraksi profil CV dengan sanitasi atribut sensitif (tanpa gender, foto, agama, usia).
-  - [ ] Enforcing skema JSON terstruktur (*structured outputs*) sesuai kontrak di `docs/workflow.md`.
-  - [ ] Prompt penilaian kualitas CV (skor 0–100 dan pembagian 5 sub-aspek).
-- [ ] **Layanan Vektor & Embedding:**
-  - [ ] Modul pembuat vektor dari teks ringkasan profil menggunakan model embedding 1536-dimensi.
-  - [ ] Modul pembuat vektor deskripsi dan kualifikasi lowongan pekerjaan baru.
-  - [ ] Kueri kalkulasi jarak kemiripan cosinus pgvector (`<=>`) untuk mengambil Top 20–50 kandidat.
-- [ ] **Engine Rekomendasi 2-Tahap (Matching Engine):**
-  - [ ] Worker pipeline penggabungan Tahap 1 (Vektor) dan Tahap 2 (Evaluasi LLM).
-  - [ ] Prompt evaluasi kecocokan kandidat: menghasilkan skor, narasi alasan, dan identifikasi *missing skills*.
-  - [ ] Penyimpanan hasil evaluasi ke tabel `matches` dan caching respons.
-- [ ] **Adaptor Sumber Lowongan Eksternal:**
-  - [ ] Implementasi interface `JobSourceAdapter` untuk Jooble API.
-  - [ ] Worker terjadwal (*cron job*) untuk menarik data lowongan baru secara periodik, menormalisasi data, dan men-generate vektor embedding.
+### 3.3 Florensius Panca Gati (NIM: 23343006) — *Backend AI Lead*
+> **Direktori Kerja:** `backend-ai/`  
+> **Teknologi:** Python 3.11+, FastAPI, Pydantic v2, PyPDF, python-docx, pgvector, LiteLLM / Gemini SDK / OpenAI SDK
+
+#### A. Layanan Ekstraksi Teks Dokumen
+- [x] Inisialisasi FastAPI, struktur Pydantic schemas, dan modul ekstraksi awal
+- [ ] Modul pembaca berkas PDF menggunakan `pypdf` / `pdfplumber`
+- [ ] Modul pembaca berkas DOCX menggunakan `python-docx`
+- [ ] Logika deteksi dokumen kosong (mendeteksi jika CV berupa scan foto tanpa layer teks digital)
+- [ ] Endpoint ekstraksi dokumen (`POST /api/v1/extract-cv`) dengan balikan JSON teks bersih
+
+#### B. Sanitasi PII & Desain Prompt AI Bebas Bias
+- [ ] Fungsi pembersih data sensitif (PII Sanitizer): menyamarkan kontak pribadi, NIK, dan alamat detail sebelum teks dikirim ke LLM
+- [ ] Implementasi *AI Blind Scoring*: Menjamin atribut jenis kelamin, agama, suku, status perkawinan, dan usia tidak disertakan dalam prompt evaluasi
+- [ ] Desain System Prompt dan validasi skema JSON terstruktur (*Structured Outputs*) untuk model data profil CV (`CVAnalysisOutput`)
+- [ ] Prompt penilaian kualitas CV: menghasilkan skor 0–100 dan pembagian 5 dimensi nilai (struktur, kejelasan, pencapaian terukur, relevansi skill, kelengkapan)
+- [ ] Prompt ekstraksi daftar kelebihan resume, kelemahan, dan rekomendasi langkah perbaikan konkret
+
+#### C. Layanan Vektor & Text Embedding
+- [ ] Klien model embedding teks 1536-dimensi (`text-embedding-3-small` atau setara)
+- [ ] Endpoint pembuatan vektor embedding untuk teks ringkasan kompetensi profil CV (`POST /api/v1/embeddings/profile`)
+- [ ] Endpoint pembuatan vektor embedding untuk teks kualifikasi lowongan baru (`POST /api/v1/embeddings/job`)
+- [ ] Fungsi eksekusi kueri jarak kemiripan kosinus pgvector (`<=>`) untuk mengambil Top 20–50 lowongan kandidat
+
+#### D. Mesin Pencocokan Dua Tahap (Two-Stage Matching Engine)
+- [ ] **Tahap 1 (Vektor Filter):** Mengambil lowongan teratas dari database berdasarkan kedekatan semantik profil kandidat
+- [ ] **Tahap 2 (LLM Re-Ranking & Evaluator):**
+  - Menganalisis kecocokan profil kandidat terhadap syarat lowongan terpilih
+  - Menghitung persentase skor kecocokan (0–100) dan menentukan status *verdict* (`sangat_cocok`, `cocok`, `cukup`, `kurang_cocok`)
+  - Menghasilkan daftar poin alasan konkret mengapa kandidat cocok
+  - Mendeteksi *missing skills* (keahlian yang disyaratkan loker namun belum dimiliki kandidat)
+- [ ] Endpoint eksekusi matching rekomendasi (`POST /api/v1/matching/evaluate`)
+- [ ] Mekanisme caching hasil evaluasi matching dan pencatatan audit biaya token (`ai_usage_logs`)
+
+#### E. Adaptor Penarikan Lowongan Eksternal
+- [ ] Implementasi antarmuka klien API resmi Jooble (Jooble Publisher API)
+- [ ] Modul normalisasi data respons Jooble ke format skema standar lowongan platform
+- [ ] Script sinkronisasi periodik (cron job) penarikan lowongan Indonesia dan pembuatan vektor otomatis
 
 ---
 
-## 4. Keputusan Mendesak & Tindakan Minggu Ini
+## 4. Keputusan Kunci & Tindakan Minggu Ini
 
-### 4.1 Keputusan Kunci yang Harus Disepakati Tim
-1. **Segmen Pasar Awal:** Memutuskan apakah peluncuran awal berfokus pada bidang teknologi/IT untuk fresh graduate atau terbuka umum ke seluruh bidang kerja.
-2. **Aturan Verifikasi Employer:** Menentukan apakah akun employer wajib diverifikasi dokumen resmi (NIB/surat izin) sebelum diperbolehkan memasang lowongan internal.
-3. **Masa Retensi CV:** Menyepakati batas waktu penyimpanan file CV pengguna non-aktif (usulan: 12 bulan sebelum auto-purge dengan notifikasi peringatan).
+### 4.1 Keputusan Prioritas Tim
+1. **Segmen Pasar Awal:** Memutuskan apakah peluncuran awal berfokus pada satu niche (misal: IT & Software Engineer untuk fresh graduate) atau terbuka untuk seluruh bidang.
+2. **Aturan Verifikasi Employer:** Menentukan apakah akun employer wajib diverifikasi dokumen resmi (NIB/surat izin) sebelum diperbolehkan memasang lowongan.
+3. **Masa Retensi CV:** Menentukan batas waktu penyimpanan berkas CV pengguna tidak aktif (usulan: 12 bulan sebelum auto-purge dengan email peringatan).
 
-### 4.2 Tindakan Langsung Minggu Ini
-- [ ] Tim menyelesaikan kesepakatan terhadap 3 keputusan kunci di atas.
-- [ ] Push struktur repositori awal untuk `frontend/`, `backend-api/`, dan `backend-ai/`.
-- [ ] Uji coba API Key Jooble untuk memeriksa volume lowongan yang tersedia di wilayah Indonesia.
-- [ ] Rancang wireframe komponen UI kunci: upload CV, hasil evaluasi, dan kartu rekomendasi loker.
-
+### 4.2 Tindakan Langsung Minggu Ini (Checklist per Anggota)
+- [ ] **Wira Fikri Ramadanu:** Mulai menggarap komponen formulir registrasi/login dan komponen Dropzone unggah CV di `frontend/src/app/`.
+- [ ] **Muhammad Gilang Ramadhan:** Melakukan setup koneksi database PostgreSQL lokal/cloud dengan ekstensi `pgvector` dan skrip migrasi 10 tabel.
+- [ ] **Florensius Panca Gati:** Menyiapkan API key model LLM dan menguji coba endpoint ekstraksi teks PDF/DOCX dengan 5 sampel CV uji coba.
