@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pipeline Pemrosesan AI Asinkron — CareerMatch AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:       #f8fafc;
+      --color-paper-2:     #ffffff;
+      --color-ink:         #0f172a;
+      --color-muted:       #475569;
+      --color-soft:        #64748b;
+      --color-accent:      #2563eb;
+      --color-accent-tint: rgba(37, 99, 235, 0.08);
+      --color-link:        #2563eb;
+      --color-rule:        rgba(15, 23, 42, 0.12);
+      --color-rule-solid:  #cbd5e1;
+      --font-sans:         'Geist', system-ui, sans-serif;
+      --font-serif:        'Instrument Serif', Georgia, serif;
+      --font-mono:         'Geist Mono', ui-monospace, monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 1.5rem;
+    }
+
+    .frame { max-width: 1140px; width: 100%; }
+    .diagram-container { width: 100%; overflow-x: auto; background: var(--color-paper); border-radius: 12px; border: 1px solid var(--color-rule-solid); padding: 1.5rem; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 0.35rem;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 2.2vw + 0.8rem, 2.25rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: var(--color-ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: var(--color-muted);
+      margin-bottom: 1.5rem;
+      max-width: 840px;
+    }
+
+    svg { width: 100%; min-width: 1000px; height: auto; display: block; }
+    @media print {
+      .diagram-container { overflow-x: visible; }
+      svg { min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Data Flow &amp; Process Diagram · CareerMatch AI</p>
+    <h1>Pipeline AI Asinkron: Ekstraksi, Embedding &amp; Two-Stage Matching</h1>
+    <p class="subtitle">Tiga alur komputasi latar belakang yang memisahkan pembacaan CV, ingest database lowongan, dan pencocokan semantik dua tahap (pgvector + LLM evaluator).</p>
+
+    <div class="diagram-container">
+      <svg viewBox="0 0 1020 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ai-pipe-title ai-pipe-desc">
+        <title id="ai-pipe-title">Pipeline Pemrosesan AI CareerMatch AI</title>
+        <desc id="ai-pipe-desc">Diagram alur 3 jalur: Pemrosesan CV, Ingest Lowongan, dan Two-Stage Matching Engine.</desc>
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#475569"/></marker>
+          <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2563eb"/></marker>
+
+          <pattern id="grid-dots" width="20" height="20" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1" fill="rgba(15,23,42,0.06)"/>
+          </pattern>
+        </defs>
+
+        <rect width="100%" height="100%" fill="#f8fafc" rx="8"/>
+        <rect width="100%" height="100%" fill="url(#grid-dots)" opacity="0.6"/>
+
+        <!-- LANE 1: JALUR 1 - PEMROSESAN CV -->
+        <rect x="30" y="30" width="960" height="160" rx="8" fill="rgba(15,23,42,0.02)" stroke="rgba(15,23,42,0.12)" stroke-width="0.8"/>
+        <rect x="42" y="34" width="230" height="14" rx="2" fill="#f8fafc"/>
+        <text x="157" y="45" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle" letter-spacing="0.12em">JALUR 1: PEMROSESAN CV PENCARI KERJA</text>
+
+        <!-- LANE 2: JALUR 2 - INGEST & EMBEDDING LOWONGAN -->
+        <rect x="30" y="210" width="960" height="150" rx="8" fill="rgba(15,23,42,0.02)" stroke="rgba(15,23,42,0.12)" stroke-width="0.8"/>
+        <rect x="42" y="214" width="220" height="14" rx="2" fill="#f8fafc"/>
+        <text x="152" y="225" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle" letter-spacing="0.12em">JALUR 2: INGEST LOWONGAN &amp; EMBEDDING</text>
+
+        <!-- LANE 3: JALUR 3 - MATCHING 2-TAHAP -->
+        <rect x="30" y="380" width="960" height="210" rx="8" fill="rgba(15,23,42,0.02)" stroke="rgba(15,23,42,0.12)" stroke-width="0.8"/>
+        <rect x="42" y="384" width="240" height="14" rx="2" fill="#f8fafc"/>
+        <text x="162" y="395" fill="#2563eb" font-size="8" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle" letter-spacing="0.12em">JALUR 3: TWO-STAGE MATCHING ENGINE</text>
+
+        <!-- CONNECTORS LANE 1 -->
+        <path d="M 190,110 H 230" fill="none" stroke="#475569" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <path d="M 390,110 H 430" fill="none" stroke="#475569" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <path d="M 610,110 H 650" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <path d="M 810,110 H 842" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+
+        <!-- CONNECTORS LANE 2 -->
+        <path d="M 190,285 H 230" fill="none" stroke="#475569" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <path d="M 400,285 H 440" fill="none" stroke="#475569" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <path d="M 630,285 H 670" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <path d="M 830,285 H 852" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+
+        <!-- CONNECTORS LANE 3 -->
+        <!-- DB to Vector search -->
+        <path d="M 910,165 V 450 H 582" fill="none" stroke="#475569" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+        <path d="M 910,325 V 470 H 582" fill="none" stroke="#475569" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+
+        <!-- Flow Lane 3 horizontal -->
+        <path d="M 190,480 H 350" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <path d="M 580,480 H 640" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <rect x="588" y="472" width="46" height="14" rx="2" fill="#f8fafc"/>
+        <text x="611" y="482" fill="#2563eb" font-size="7.5" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">TOP 20-50</text>
+
+        <path d="M 830,480 H 870" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+
+        <!-- NODES LANE 1 -->
+        <!-- Step 1.1: Upload CV -->
+        <rect x="50" y="70" width="140" height="80" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <rect x="60" y="80" width="45" height="12" rx="2" fill="rgba(15,23,42,0.06)"/>
+        <text x="82" y="89" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">INPUT</text>
+        <text x="60" y="110" fill="#0f172a" font-size="11" font-family="'Geist', sans-serif" font-weight="600">Unggah File CV</text>
+        <text x="60" y="125" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace">PDF / DOCX (maks 5MB)</text>
+        <text x="60" y="137" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace">Validasi Tipe &amp; Ukuran</text>
+
+        <!-- Step 1.2: Worker Extraction -->
+        <rect x="230" y="70" width="160" height="80" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <rect x="240" y="80" width="55" height="12" rx="2" fill="rgba(15,23,42,0.06)"/>
+        <text x="267" y="89" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">EXTRACT</text>
+        <text x="240" y="110" fill="#0f172a" font-size="11" font-family="'Geist', sans-serif" font-weight="600">Parser Teks CV</text>
+        <text x="240" y="125" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace">pypdf &amp; python-docx</text>
+        <text x="240" y="137" fill="#2563eb" font-size="8" font-family="'Geist Mono', monospace">Deteksi scan foto kosong</text>
+
+        <!-- Step 1.3: LLM Parsing & Scoring [Focal] -->
+        <rect x="430" y="70" width="180" height="80" rx="6" fill="rgba(37,99,235,0.06)" stroke="#2563eb" stroke-width="1.4"/>
+        <rect x="440" y="80" width="60" height="12" rx="2" fill="#2563eb"/>
+        <text x="470" y="89" fill="#ffffff" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">LLM CORE</text>
+        <text x="440" y="110" fill="#0f172a" font-size="11" font-family="'Geist', sans-serif" font-weight="600">Profiling &amp; Skor CV</text>
+        <text x="440" y="125" fill="#475569" font-size="8" font-family="'Geist Mono', monospace">Skor 0-100 &amp; 5 Dimensi</text>
+        <text x="440" y="137" fill="#475569" font-size="8" font-family="'Geist Mono', monospace">Blind Scoring (Tanpa PII)</text>
+
+        <!-- Step 1.4: Embedding -->
+        <rect x="650" y="70" width="160" height="80" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <rect x="660" y="80" width="60" height="12" rx="2" fill="rgba(15,23,42,0.06)"/>
+        <text x="690" y="89" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">EMBEDDING</text>
+        <text x="660" y="110" fill="#0f172a" font-size="11" font-family="'Geist', sans-serif" font-weight="600">Vector Profil</text>
+        <text x="660" y="125" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace">Dimensi 1536 (Gemini)</text>
+        <text x="660" y="137" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace">Vektor ringkasan keahlian</text>
+
+        <!-- Step 1.5: DB Storage -->
+        <rect x="850" y="70" width="120" height="80" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <rect x="860" y="80" width="50" height="12" rx="2" fill="rgba(15,23,42,0.06)"/>
+        <text x="885" y="89" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">STORAGE</text>
+        <text x="860" y="110" fill="#0f172a" font-size="11" font-family="'Geist', sans-serif" font-weight="600">cv_profiles</text>
+        <text x="860" y="125" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace">JSON terstruktur</text>
+        <text x="860" y="137" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace">PostgreSQL + Vector</text>
+
+        <!-- NODES LANE 2 -->
+        <!-- Step 2.1: Ingestion Sources -->
+        <rect x="50" y="245" width="140" height="80" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <rect x="60" y="255" width="55" height="12" rx="2" fill="rgba(15,23,42,0.06)"/>
+        <text x="87" y="264" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">SOURCES</text>
+        <text x="60" y="285" fill="#0f172a" font-size="11" font-family="'Geist', sans-serif" font-weight="600">Input Lowongan</text>
+        <text x="60" y="300" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace">1. Employer Internal</text>
+        <text x="60" y="312" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace">2. API Resmi Jooble</text>
+
+        <!-- Step 2.2: Normalizer -->
+        <rect x="230" y="245" width="170" height="80" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <rect x="240" y="255" width="65" height="12" rx="2" fill="rgba(15,23,42,0.06)"/>
+        <text x="272" y="264" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">ADAPTER</text>
+        <text x="240" y="285" fill="#0f172a" font-size="11" font-family="'Geist', sans-serif" font-weight="600">JobSourceAdapter</text>
+        <text x="240" y="300" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace">Standarisasi Format Data</text>
+        <text x="240" y="312" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace">Deduplikasi Judul &amp; Kota</text>
+
+        <!-- Step 2.3: Job Embedding -->
+        <rect x="440" y="245" width="190" height="80" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <rect x="450" y="255" width="60" height="12" rx="2" fill="rgba(15,23,42,0.06)"/>
+        <text x="480" y="264" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">EMBEDDING</text>
+        <text x="450" y="285" fill="#0f172a" font-size="11" font-family="'Geist', sans-serif" font-weight="600">Vector Kualifikasi Loker</text>
+        <text x="450" y="300" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace">Dimensi 1536</text>
+        <text x="450" y="312" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace">Deskripsi, Skill, Pengalaman</text>
+
+        <!-- Step 2.4: Jobs Storage -->
+        <rect x="670" y="245" width="160" height="80" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <rect x="680" y="255" width="50" height="12" rx="2" fill="rgba(15,23,42,0.06)"/>
+        <text x="705" y="264" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">STORAGE</text>
+        <text x="680" y="285" fill="#0f172a" font-size="11" font-family="'Geist', sans-serif" font-weight="600">Tabel jobs</text>
+        <text x="680" y="300" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace">pgvector HNSW Index</text>
+        <text x="680" y="312" fill="#10b981" font-size="8" font-family="'Geist Mono', monospace">Status: active</text>
+
+        <!-- NODES LANE 3: TWO-STAGE MATCHING -->
+        <!-- Step 3.1: Trigger -->
+        <rect x="50" y="440" width="140" height="80" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <rect x="60" y="450" width="55" height="12" rx="2" fill="rgba(15,23,42,0.06)"/>
+        <text x="87" y="459" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">TRIGGER</text>
+        <text x="60" y="480" fill="#0f172a" font-size="11" font-family="'Geist', sans-serif" font-weight="600">Kandidat Terverifikasi</text>
+        <text x="60" y="495" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace">Profil telah disetujui /</text>
+        <text x="60" y="507" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace">dikoreksi oleh pencari kerja</text>
+
+        <!-- Step 3.2: Tahap 1 Vector Cosine -->
+        <rect x="350" y="435" width="230" height="90" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <rect x="360" y="445" width="70" height="12" rx="2" fill="rgba(15,23,42,0.06)"/>
+        <text x="395" y="454" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">TAHAP 1: VECTOR</text>
+        <text x="360" y="475" fill="#0f172a" font-size="12" font-family="'Geist', sans-serif" font-weight="600">Pencarian Kemiripan pgvector</text>
+        <text x="360" y="492" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">Kueri Jarak Cosinus (&lt;=&gt;)</text>
+        <text x="360" y="506" fill="#10b981" font-size="8.5" font-family="'Geist Mono', monospace">Menyaring puluhan ribu $\rightarrow$ Top 20-50</text>
+        <text x="360" y="518" fill="#475569" font-size="8" font-family="'Geist Mono', monospace">Latensi sangat cepat (&lt; 100ms)</text>
+
+        <!-- Step 3.3: Tahap 2 LLM Evaluator [Focal 2] -->
+        <rect x="640" y="435" width="190" height="90" rx="6" fill="rgba(37,99,235,0.06)" stroke="#2563eb" stroke-width="1.4"/>
+        <rect x="650" y="445" width="80" height="12" rx="2" fill="#2563eb"/>
+        <text x="690" y="454" fill="#ffffff" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">TAHAP 2: LLM EVAL</text>
+        <text x="650" y="475" fill="#0f172a" font-size="12" font-family="'Geist', sans-serif" font-weight="600">Re-Ranking &amp; Gap Analysis</text>
+        <text x="650" y="492" fill="#475569" font-size="8.5" font-family="'Geist Mono', monospace">Skor Kecocokan 0-100</text>
+        <text x="650" y="506" fill="#2563eb" font-size="8.5" font-family="'Geist Mono', monospace">Poin Konkret Alasan Relevan</text>
+        <text x="650" y="518" fill="#ef4444" font-size="8.5" font-family="'Geist Mono', monospace">Daftar Tag Missing Skills</text>
+
+        <!-- Step 3.4: Output UI -->
+        <rect x="870" y="440" width="110" height="80" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <rect x="880" y="450" width="45" height="12" rx="2" fill="rgba(15,23,42,0.06)"/>
+        <text x="902" y="459" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">HASIL</text>
+        <text x="880" y="480" fill="#0f172a" font-size="11" font-family="'Geist', sans-serif" font-weight="600">Rekomendasi</text>
+        <text x="880" y="495" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace">Feed Terurut</text>
+        <text x="880" y="507" fill="#10b981" font-size="8" font-family="'Geist Mono', monospace">Tersimpan Cache</text>
+      </svg>
+    </div>
+  </div>
+</body>
+</html>

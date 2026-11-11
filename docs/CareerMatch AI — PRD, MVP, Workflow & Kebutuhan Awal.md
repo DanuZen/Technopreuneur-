@@ -140,13 +140,17 @@ Pencari kerja dan employer berjalan di dua alur terpisah, sementara pemrosesan A
 
 **Alur pencari kerja**
 
-&#91;embedded content: alur pencari kerja · 9 langkah, 1 keputusan\]
+> 🎨 **Diagram Desain Interaktif:** [Buka Versi HTML Interaktif](diagrams/alur-pencari-kerja.html) · [Buka Berkas Vektor SVG](diagrams/alur-pencari-kerja.svg)
+
+![Alur Pencari Kerja](diagrams/alur-pencari-kerja.svg)
 
 Bila teks CV tidak terbaca (mis. PDF hasil scan), pengguna diminta mengunggah ulang. Profil hasil AI selalu dikoreksi pengguna sebelum dicocokkan dengan lowongan.
 
 **Alur employer**
 
-&#91;embedded content: alur employer · 7 langkah, 1 keputusan\]
+> 🎨 **Diagram Desain Interaktif:** [Buka Versi HTML Interaktif](diagrams/alur-employer.html) · [Buka Berkas Vektor SVG](diagrams/alur-employer.svg)
+
+![Alur Employer](diagrams/alur-employer.svg)
 
 Lowongan yang ditolak admin kembali ke employer untuk direvisi; lowongan yang disetujui otomatis dibuatkan embedding-nya.
 
@@ -154,7 +158,9 @@ Lowongan yang ditolak admin kembali ke employer untuk direvisi; lowongan yang di
 
 Unggahan CV memicu job di antrean; worker mengekstrak teks, memanggil LLM, dan menyimpan profil. Matching berjalan dua tahap, dan sumber eksternal ditarik secara terjadwal.
 
-&#91;embedded content: pipeline AI · 3 jalur, 14 langkah\]
+> 🎨 **Diagram Desain Interaktif:** [Buka Versi HTML Interaktif](diagrams/pipeline-ai.html) · [Buka Berkas Vektor SVG](diagrams/pipeline-ai.svg)
+
+![Pipeline AI Asinkron](diagrams/pipeline-ai.svg)
 
 LLM hanya menilai 20 sampai 50 lowongan teratas dari pencarian vektor, sehingga biaya dan waktu pemrosesan tetap terkendali.
 
@@ -162,7 +168,9 @@ LLM hanya menilai 20 sampai 50 lowongan teratas dari pencarian vektor, sehingga 
 
 Satu aplikasi Next.js, database PostgreSQL dengan pgvector, dan satu worker antrean sudah cukup untuk MVP; stack final mengikuti keahlian tim.
 
-&#91;embedded content: arsitektur · 8 komponen\]
+> 🎨 **Diagram Desain Interaktif:** [Buka Versi HTML Interaktif](diagrams/arsitektur-sistem.html) · [Buka Berkas Vektor SVG](diagrams/arsitektur-sistem.svg)
+
+![Arsitektur Sistem](diagrams/arsitektur-sistem.svg)
 
 Web app hanya menerima permintaan dan mengantrekan pekerjaan berat. Worker yang membaca CV, memanggil LLM, dan menarik lowongan dari API eksternal.
 
@@ -352,7 +360,9 @@ Untuk mulai, tim butuh dua sampai tiga orang, beberapa akun layanan gratis (free
 
 MVP dirancang selesai dalam sekitar 6 minggu dan ditutup dengan beta tertutup setelah empat kriteria selesai terpenuhi.
 
-&#91;embedded content: roadmap · 6 minggu, 1 gerbang\]
+> 🎨 **Diagram Desain Interaktif:** [Buka Versi HTML Interaktif](diagrams/roadmap-mvp.html) · [Buka Berkas Vektor SVG](diagrams/roadmap-mvp.svg)
+
+![Roadmap MVP](diagrams/roadmap-mvp.svg)
 
 ## Risiko & mitigasi
 

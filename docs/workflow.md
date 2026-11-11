@@ -10,6 +10,13 @@ Dokumen ini mendefinisikan seluruh alur operasional pengguna, rancangan pipeline
 
 Pencari kerja mengunggah CV, meninjau hasil ekstraksi dan skor evaluasi AI, mengoreksi data profil bila diperlukan, lalu menerima rekomendasi lowongan kerja terpersonalisasi.
 
+> 🎨 **Diagram Desain Interaktif:** [Buka Versi HTML Interaktif](diagrams/alur-pencari-kerja.html) · [Buka Berkas Vektor SVG](diagrams/alur-pencari-kerja.svg)
+
+![Alur Pencari Kerja](diagrams/alur-pencari-kerja.svg)
+
+<details>
+<summary>Lihat Notasi Kode Alur (Mermaid Flowchart)</summary>
+
 ```mermaid
 flowchart TD
     A([Mulai]) --> B[Registrasi / Login Akun]
@@ -42,11 +49,20 @@ flowchart TD
     W --> X
 ```
 
+</details>
+
 ---
 
 ### 1.2 Alur Pemberi Kerja (Employer Flow)
 
 Employer mendaftarkan profil perusahaan, mempublikasikan lowongan pekerjaan baru, dan meninjau pelamar yang telah diperingkat oleh AI.
+
+> 🎨 **Diagram Desain Interaktif:** [Buka Versi HTML Interaktif](diagrams/alur-employer.html) · [Buka Berkas Vektor SVG](diagrams/alur-employer.svg)
+
+![Alur Pemberi Kerja](diagrams/alur-employer.svg)
+
+<details>
+<summary>Lihat Notasi Kode Alur (Mermaid Flowchart)</summary>
 
 ```mermaid
 flowchart TD
@@ -68,11 +84,20 @@ flowchart TD
     O --> P([Selesai])
 ```
 
+</details>
+
 ---
 
 ## 2. Pipeline AI Asinkron (AI Async Processing)
 
 Untuk menjamin performa responsif tanpa memblokir koneksi HTTP pengguna, seluruh komputasi intensif (ekstraksi teks, request LLM, dan kalkulasi vektor) didelegasikan ke antrean latar belakang (*background job queue*).
+
+> 🎨 **Diagram Desain Interaktif:** [Buka Versi HTML Interaktif](diagrams/pipeline-ai.html) · [Buka Berkas Vektor SVG](diagrams/pipeline-ai.svg)
+
+![Pipeline AI Asinkron](diagrams/pipeline-ai.svg)
+
+<details>
+<summary>Lihat Notasi Kode Pipeline (Mermaid Flowchart)</summary>
 
 ```mermaid
 flowchart LR
@@ -99,6 +124,8 @@ flowchart LR
     end
 ```
 
+</details>
+
 ### Mekanisme Matching Dua Tahap (*Two-Stage Matching*)
 1. **Tahap 1 (Vektor Kemiripan - Filter Cepat & Murah):**
    - Menggunakan model *text embedding* (misal: `text-embedding-3-small` atau sekelasnya) berdimensi 1536.
@@ -112,6 +139,13 @@ flowchart LR
 ## 3. Arsitektur Sistem & Tech Stack
 
 Platform mengusung arsitektur monolit modular (atau modular micro-service) yang efisien untuk skala MVP hingga ribuan pengguna aktif:
+
+> 🎨 **Diagram Desain Interaktif:** [Buka Versi HTML Interaktif](diagrams/arsitektur-sistem.html) · [Buka Berkas Vektor SVG](diagrams/arsitektur-sistem.svg)
+
+![Arsitektur Sistem](diagrams/arsitektur-sistem.svg)
+
+<details>
+<summary>Lihat Notasi Kode Arsitektur (Mermaid Flowchart)</summary>
 
 ```mermaid
 flowchart TD
@@ -131,6 +165,8 @@ flowchart TD
         Worker <--> Storage
     end
 ```
+
+</details>
 
 ### Detail Pilihan Teknologi (Final Stack Sesuai Peran Tim)
 - **Frontend (`frontend/` - Wira Fikri Ramadanu):**
@@ -152,6 +188,13 @@ flowchart TD
 ## 4. Model Data & Skema Database
 
 Sistem tersusun atas 10 tabel relasional utama:
+
+> 🎨 **Diagram Desain Interaktif:** [Buka Versi HTML Interaktif](diagrams/model-data-erd.html) · [Buka Berkas Vektor SVG](diagrams/model-data-erd.svg)
+
+![Model Data ERD](diagrams/model-data-erd.svg)
+
+<details>
+<summary>Lihat Notasi Kode ERD (Mermaid ER Diagram)</summary>
 
 ```mermaid
 erDiagram
@@ -287,6 +330,8 @@ erDiagram
         timestamp created_at
     }
 ```
+
+</details>
 
 ---
 

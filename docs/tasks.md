@@ -65,6 +65,13 @@ Seluruh infrastruktur dan layanan eksternal MVP dirancang memanfaatkan paket gra
 
 ## 2. Roadmap MVP & Pembagian Milestones (6 Minggu)
 
+> 🎨 **Diagram Desain Interaktif:** [Buka Versi HTML Interaktif](diagrams/roadmap-mvp.html) · [Buka Berkas Vektor SVG](diagrams/roadmap-mvp.svg)
+
+![Roadmap MVP 6 Minggu](diagrams/roadmap-mvp.svg)
+
+<details>
+<summary>Lihat Notasi Kode Gantt (Mermaid Timeline)</summary>
+
 ```mermaid
 gantt
     title Roadmap Pengembangan MVP CareerMatch AI (6 Minggu)
@@ -94,6 +101,8 @@ gantt
     Benchmarking Golden Dataset (Seluruh Tim)   :w6_1, after w5_1, 4d
     Peluncuran Beta Tertutup / Closed Pilot     :milestone, after w6_1, 0d
 ```
+
+</details>
 
 ---
 

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entity-Relationship Diagram (ERD) — CareerMatch AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:       #f8fafc;
+      --color-paper-2:     #ffffff;
+      --color-ink:         #0f172a;
+      --color-muted:       #475569;
+      --color-soft:        #64748b;
+      --color-accent:      #2563eb;
+      --color-accent-tint: rgba(37, 99, 235, 0.08);
+      --color-link:        #2563eb;
+      --color-rule:        rgba(15, 23, 42, 0.12);
+      --color-rule-solid:  #cbd5e1;
+      --font-sans:         'Geist', system-ui, sans-serif;
+      --font-serif:        'Instrument Serif', Georgia, serif;
+      --font-mono:         'Geist Mono', ui-monospace, monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 1.5rem;
+    }
+
+    .frame { max-width: 1140px; width: 100%; }
+    .diagram-container { width: 100%; overflow-x: auto; background: var(--color-paper); border-radius: 12px; border: 1px solid var(--color-rule-solid); padding: 1.5rem; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 0.35rem;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 2.2vw + 0.8rem, 2.25rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: var(--color-ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: var(--color-muted);
+      margin-bottom: 1.5rem;
+      max-width: 820px;
+    }
+
+    svg { width: 100%; min-width: 1040px; height: auto; display: block; }
+    @media print {
+      .diagram-container { overflow-x: visible; }
+      svg { min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">ER / Data Model · CareerMatch AI</p>
+    <h1>Model Data Relasional &amp; Vektor (10 Tabel Database)</h1>
+    <p class="subtitle">Skema relasional PostgreSQL dengan pgvector mencakup relasi otentikasi, dokumen CV, profil terstruktur, lowongan kerja, riwayat lamaran, dan hasil matching AI.</p>
+
+    <div class="diagram-container">
+      <svg viewBox="0 0 1060 680" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="erd-title erd-desc">
+        <title id="erd-title">Entity-Relationship Diagram CareerMatch AI</title>
+        <desc id="erd-desc">ERD menunjukkan 10 entitas utama: users, consents, cvs, cv_profiles, companies, jobs, matches, applications, saved_jobs, dan ai_usage_logs.</desc>
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#475569"/></marker>
+          <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2563eb"/></marker>
+
+          <pattern id="grid-dots" width="20" height="20" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1" fill="rgba(15,23,42,0.06)"/>
+          </pattern>
+        </defs>
+
+        <rect width="100%" height="100%" fill="#f8fafc" rx="8"/>
+        <rect width="100%" height="100%" fill="url(#grid-dots)" opacity="0.6"/>
+
+        <!-- RELATIONSHIP LINES (Drawn behind entity boxes) -->
+        <!-- users -> consents (1:N) -->
+        <path d="M 230,110 H 272" fill="none" stroke="#475569" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <!-- users -> ai_usage_logs (1:N) -->
+        <path d="M 230,130 H 462" fill="none" stroke="#475569" stroke-width="1.2" marker-end="url(#arrow)"/>
+        <!-- users -> companies (1:1) -->
+        <path d="M 230,90 H 712" fill="none" stroke="#475569" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+        <!-- users -> cvs (1:N) -->
+        <path d="M 130,225 V 282" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <!-- cvs -> cv_profiles (1:1) -->
+        <path d="M 220,360 H 262" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+
+        <!-- companies -> jobs (1:N) -->
+        <path d="M 810,185 V 252" fill="none" stroke="#475569" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+        <!-- cv_profiles -> matches (1:N) -->
+        <path d="M 460,370 H 482" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <!-- jobs -> matches (1:N) -->
+        <path d="M 720,370 H 688" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+
+        <!-- jobs -> applications (1:N) -->
+        <path d="M 810,435 V 502" fill="none" stroke="#475569" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+        <!-- users -> saved_jobs (1:N) -->
+        <path d="M 120,225 V 560 H 262" fill="none" stroke="#475569" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+        <!-- jobs -> saved_jobs (1:N) -->
+        <path d="M 720,410 H 470 Q 462,410 462,418 V 560 H 458" fill="none" stroke="#475569" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+
+        <!-- ENTITY 1: users [FOCAL AGGREGATE ROOT] -->
+        <rect x="40" y="70" width="190" height="155" rx="6" fill="rgba(37,99,235,0.06)" stroke="#2563eb" stroke-width="1.4"/>
+        <rect x="50" y="78" width="55" height="12" rx="2" fill="#2563eb"/>
+        <text x="77" y="87" fill="#ffffff" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">ENTITY</text>
+        <text x="50" y="105" fill="#0f172a" font-size="12" font-family="'Geist', sans-serif" font-weight="600">users</text>
+        <text x="50" y="125" fill="#2563eb" font-size="8.5" font-family="'Geist Mono', monospace"># id : uuid (PK)</text>
+        <text x="50" y="140" fill="#0f172a" font-size="8.5" font-family="'Geist Mono', monospace">  email : string (UK)</text>
+        <text x="50" y="155" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">  password_hash : string</text>
+        <text x="50" y="170" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">  role : enum (role)</text>
+        <text x="50" y="185" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">  full_name : string</text>
+        <text x="50" y="200" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">  created_at, deleted_at</text>
+
+        <!-- ENTITY 2: consents -->
+        <rect x="270" y="70" width="170" height="105" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <rect x="280" y="78" width="55" height="12" rx="2" fill="rgba(15,23,42,0.06)"/>
+        <text x="307" y="87" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">ENTITY</text>
+        <text x="280" y="105" fill="#0f172a" font-size="12" font-family="'Geist', sans-serif" font-weight="600">consents (UU PDP)</text>
+        <text x="280" y="125" fill="#2563eb" font-size="8.5" font-family="'Geist Mono', monospace"># id : uuid (PK)</text>
+        <text x="280" y="140" fill="#475569" font-size="8.5" font-family="'Geist Mono', monospace">&#8594; user_id : uuid (FK)</text>
+        <text x="280" y="155" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">  type, policy_version</text>
+        <text x="280" y="167" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">  accepted_at</text>
+
+        <!-- ENTITY 3: ai_usage_logs -->
+        <rect x="470" y="70" width="180" height="115" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <rect x="480" y="78" width="55" height="12" rx="2" fill="rgba(15,23,42,0.06)"/>
+        <text x="507" y="87" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">ENTITY</text>
+        <text x="480" y="105" fill="#0f172a" font-size="12" font-family="'Geist', sans-serif" font-weight="600">ai_usage_logs</text>
+        <text x="480" y="125" fill="#2563eb" font-size="8.5" font-family="'Geist Mono', monospace"># id : uuid (PK)</text>
+        <text x="480" y="140" fill="#475569" font-size="8.5" font-family="'Geist Mono', monospace">&#8594; user_id : uuid (FK)</text>
+        <text x="480" y="155" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">  feature, tokens_in/out</text>
+        <text x="480" y="170" fill="#10b981" font-size="8" font-family="'Geist Mono', monospace">  quota_used (Rp 0 Free)</text>
+
+        <!-- ENTITY 4: companies -->
+        <rect x="720" y="70" width="190" height="115" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <rect x="730" y="78" width="55" height="12" rx="2" fill="rgba(15,23,42,0.06)"/>
+        <text x="757" y="87" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">ENTITY</text>
+        <text x="730" y="105" fill="#0f172a" font-size="12" font-family="'Geist', sans-serif" font-weight="600">companies</text>
+        <text x="730" y="125" fill="#2563eb" font-size="8.5" font-family="'Geist Mono', monospace"># id : uuid (PK)</text>
+        <text x="730" y="140" fill="#475569" font-size="8.5" font-family="'Geist Mono', monospace">&#8594; owner_user_id : uuid (FK)</text>
+        <text x="730" y="155" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">  name, description, website</text>
+        <text x="730" y="170" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">  is_verified : boolean</text>
+
+        <!-- ENTITY 5: cvs -->
+        <rect x="40" y="290" width="180" height="130" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <rect x="50" y="298" width="55" height="12" rx="2" fill="rgba(15,23,42,0.06)"/>
+        <text x="77" y="307" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">ENTITY</text>
+        <text x="50" y="325" fill="#0f172a" font-size="12" font-family="'Geist', sans-serif" font-weight="600">cvs (Dokumen)</text>
+        <text x="50" y="345" fill="#2563eb" font-size="8.5" font-family="'Geist Mono', monospace"># id : uuid (PK)</text>
+        <text x="50" y="360" fill="#475569" font-size="8.5" font-family="'Geist Mono', monospace">&#8594; user_id : uuid (FK)</text>
+        <text x="50" y="375" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">  file_path : string (S3)</text>
+        <text x="50" y="390" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">  file_type (.pdf/.docx)</text>
+        <text x="50" y="405" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">  status, uploaded_at</text>
+
+        <!-- ENTITY 6: cv_profiles [FOCAL 2] -->
+        <rect x="270" y="280" width="190" height="185" rx="6" fill="rgba(37,99,235,0.06)" stroke="#2563eb" stroke-width="1.4"/>
+        <rect x="280" y="288" width="55" height="12" rx="2" fill="#2563eb"/>
+        <text x="307" y="297" fill="#ffffff" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">ENTITY</text>
+        <text x="280" y="315" fill="#0f172a" font-size="12" font-family="'Geist', sans-serif" font-weight="600">cv_profiles</text>
+        <text x="280" y="335" fill="#2563eb" font-size="8.5" font-family="'Geist Mono', monospace"># id : uuid (PK)</text>
+        <text x="280" y="350" fill="#475569" font-size="8.5" font-family="'Geist Mono', monospace">&#8594; cv_id : uuid (FK)</text>
+        <text x="280" y="365" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">  summary, skills (jsonb)</text>
+        <text x="280" y="380" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">  experiences, education</text>
+        <text x="280" y="395" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">  score : int, breakdown</text>
+        <text x="280" y="410" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">  strengths, suggestions</text>
+        <text x="280" y="425" fill="#2563eb" font-size="8" font-family="'Geist Mono', monospace">  embedding : vector(1536)</text>
+        <text x="280" y="440" fill="#10b981" font-size="8" font-family="'Geist Mono', monospace">  verified_by_user : bool</text>
+
+        <!-- ENTITY 7: jobs [FOCAL 3] -->
+        <rect x="720" y="260" width="200" height="180" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <rect x="730" y="268" width="55" height="12" rx="2" fill="rgba(15,23,42,0.06)"/>
+        <text x="757" y="277" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">ENTITY</text>
+        <text x="730" y="295" fill="#0f172a" font-size="12" font-family="'Geist', sans-serif" font-weight="600">jobs (Lowongan)</text>
+        <text x="730" y="315" fill="#2563eb" font-size="8.5" font-family="'Geist Mono', monospace"># id : uuid (PK)</text>
+        <text x="730" y="330" fill="#475569" font-size="8.5" font-family="'Geist Mono', monospace">&#8594; company_id : uuid (FK)</text>
+        <text x="730" y="345" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">  source : internal | jooble</text>
+        <text x="730" y="360" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">  title, description, skills</text>
+        <text x="730" y="375" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">  location, work_type, salary</text>
+        <text x="730" y="390" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">  status : active | closed</text>
+        <text x="730" y="405" fill="#2563eb" font-size="8" font-family="'Geist Mono', monospace">  embedding : vector(1536)</text>
+        <text x="730" y="420" fill="#10b981" font-size="8" font-family="'Geist Mono', monospace">  HNSW Index on embedding</text>
+
+        <!-- ENTITY 8: matches -->
+        <rect x="490" y="320" width="190" height="145" rx="6" fill="#ffffff" stroke="#2563eb" stroke-width="1.2"/>
+        <rect x="500" y="328" width="55" height="12" rx="2" fill="rgba(37,99,235,0.08)"/>
+        <text x="527" y="337" fill="#2563eb" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">MATCHING</text>
+        <text x="500" y="355" fill="#0f172a" font-size="12" font-family="'Geist', sans-serif" font-weight="600">matches (AI Eval)</text>
+        <text x="500" y="375" fill="#2563eb" font-size="8.5" font-family="'Geist Mono', monospace"># id : uuid (PK)</text>
+        <text x="500" y="390" fill="#475569" font-size="8.5" font-family="'Geist Mono', monospace">&#8594; cv_profile_id : uuid (FK)</text>
+        <text x="500" y="405" fill="#475569" font-size="8.5" font-family="'Geist Mono', monospace">&#8594; job_id : uuid (FK)</text>
+        <text x="500" y="420" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">  vector_score : float</text>
+        <text x="500" y="435" fill="#2563eb" font-size="8.5" font-family="'Geist Mono', monospace">  llm_score : int, verdict</text>
+        <text x="500" y="450" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace">  reasons, missing_skills</text>
+
+        <!-- ENTITY 9: applications -->
+        <rect x="720" y="510" width="200" height="120" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <rect x="730" y="518" width="55" height="12" rx="2" fill="rgba(15,23,42,0.06)"/>
+        <text x="757" y="527" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">ENTITY</text>
+        <text x="730" y="545" fill="#0f172a" font-size="12" font-family="'Geist', sans-serif" font-weight="600">applications</text>
+        <text x="730" y="565" fill="#2563eb" font-size="8.5" font-family="'Geist Mono', monospace"># id : uuid (PK)</text>
+        <text x="730" y="580" fill="#475569" font-size="8.5" font-family="'Geist Mono', monospace">&#8594; job_id, user_id, cv_id</text>
+        <text x="730" y="595" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">  status: submitted|shortlisted</text>
+        <text x="730" y="610" fill="#64748b" font-size="8.5" font-family="'Geist Mono', monospace">  match_score, created_at</text>
+
+        <!-- ENTITY 10: saved_jobs -->
+        <rect x="270" y="510" width="180" height="95" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+        <rect x="280" y="518" width="55" height="12" rx="2" fill="rgba(15,23,42,0.06)"/>
+        <text x="307" y="527" fill="#475569" font-size="7" font-family="'Geist Mono', monospace" font-weight="600" text-anchor="middle">BOOKMARK</text>
+        <text x="280" y="545" fill="#0f172a" font-size="12" font-family="'Geist', sans-serif" font-weight="600">saved_jobs</text>
+        <text x="280" y="565" fill="#475569" font-size="8.5" font-family="'Geist Mono', monospace">&#8594; user_id : uuid (PK/FK)</text>
+        <text x="280" y="580" fill="#475569" font-size="8.5" font-family="'Geist Mono', monospace">&#8594; job_id : uuid (PK/FK)</text>
+        <text x="280" y="593" fill="#64748b" font-size="8" font-family="'Geist Mono', monospace">  created_at : timestamp</text>
+      </svg>
+    </div>
+  </div>
+</body>
+</html>
