@@ -3,8 +3,22 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { UploadCloud, FileSpreadsheet, ArrowRight, ShieldCheck, CheckCircle2, Sparkles, ArrowLeft } from "lucide-react";
+import {
+  UploadCloud,
+  FileSpreadsheet,
+  ArrowRight,
+  ShieldCheck,
+  CheckCircle2,
+  Sparkles,
+  ArrowLeft,
+  FileText,
+} from "lucide-react";
 import { CVDropzone } from "@/components/cv/cv-dropzone";
+import { AtsOnboardingWizard } from "@/components/dashboard/ats-onboarding-wizard";
+import { AmbientBackground } from "@/components/evaluate/ambient-background";
+import { HeroGreeting } from "@/components/evaluate/hero-greeting";
+import { QuickScenarioChips } from "@/components/evaluate/quick-scenario-chips";
+import { BentoFeatureCards } from "@/components/evaluate/bento-feature-cards";
 import { CVAnalysisResult } from "@/types";
 import { api } from "@/lib/api";
 
@@ -12,6 +26,7 @@ function EvaluateContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState<"upload" | "questionnaire">("upload");
+  const [isProcessingDemo, setIsProcessingDemo] = useState(false);
 
   useEffect(() => {
     const tabParam = searchParams.get("tab");
@@ -27,126 +42,140 @@ function EvaluateContent() {
     router.push("/dashboard");
   };
 
+  const handleRunDemoSample = async () => {
+    if (isProcessingDemo) return;
+    setIsProcessingDemo(true);
+    try {
+      const demoFile = new File(
+        ["Contoh Dokumen Resume Standar ATS 1-Kolom Wira Fikri"],
+        "CV_Wira_Fikri_ATS_Standard.pdf",
+        { type: "application/pdf" }
+      );
+      const result = await api.uploadCV(demoFile);
+      handleAnalysisSuccess(result);
+    } catch {
+      setIsProcessingDemo(false);
+    }
+  };
+
   return (
-    <main className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-10 py-10 sm:py-16 space-y-10 animate-fade-in-up">
-      {/* Back to Home Link */}
-      <div>
-        <Link
-          href="/"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-primary transition"
-        >
-          <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
-          <span>Kembali ke Beranda</span>
-        </Link>
-      </div>
+    <div className="relative min-h-[calc(100vh-4rem)] flex flex-col justify-between overflow-hidden">
+      {/* Redam-style Ambient Node & Mesh Background */}
+      <AmbientBackground />
 
-      {/* Page Title & Context */}
-      <div className="max-w-3xl mx-auto text-center space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs font-semibold">
-          <Sparkles className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
-          <span>Pasbana AI: Evaluasi Kesiapan Karir &amp; Standar ATS</span>
-        </div>
+      <main className="relative z-10 max-w-[1360px] w-full mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-16 space-y-8 animate-fade-in-up">
+        {/* Navigation Bar / Breadcrumb */}
+        <div className="flex items-center justify-between">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-xs font-bold text-slate-600 hover:text-primary transition bg-white/80 hover:bg-white px-3.5 py-1.5 rounded-full border border-slate-200 shadow-xs"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
+            <span>Kembali ke Beranda</span>
+          </Link>
 
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-primary leading-tight">
-          Ukur Kualitas CV Anda Secara Objektif
-        </h1>
-
-        <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
-          Pilih metode evaluasi: unggah berkas resume digital untuk dipindai atau gunakan alur onboarding mandiri jika Anda belum memiliki berkas CV.
-        </p>
-      </div>
-
-      {/* CORE ACTION CARD (The Standalone Card) */}
-      <div className="max-w-3xl mx-auto">
-        <div className="space-y-6 p-4 sm:p-8 rounded-3xl bg-gradient-to-br from-white via-blue-50/40 to-slate-50 border-2 border-blue-200/80 shadow-2xl shadow-primary/10 hover:border-primary/50 transition-all duration-300">
-          {/* Dual-Mode Selector Pills */}
-          <div className="grid grid-cols-2 gap-2 p-1.5 bg-blue-100/70 rounded-full max-w-md mx-auto border border-blue-200">
-            <button
-              type="button"
-              onClick={() => setActiveTab("upload")}
-              className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-full text-xs font-semibold transition-all duration-200 ${
-                activeTab === "upload"
-                  ? "bg-primary text-white shadow-md shadow-primary/25"
-                  : "text-primary hover:text-secondary font-medium"
-              }`}
-            >
-              <UploadCloud className="w-3.5 h-3.5" aria-hidden="true" />
-              <span>Saya Sudah Punya CV</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveTab("questionnaire")}
-              className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-full text-xs font-semibold transition-all duration-200 ${
-                activeTab === "questionnaire"
-                  ? "bg-primary text-white shadow-md shadow-primary/25"
-                  : "text-primary hover:text-secondary font-medium"
-              }`}
-            >
-              <FileSpreadsheet className="w-3.5 h-3.5" aria-hidden="true" />
-              <span>Saya Belum Punya CV</span>
-            </button>
-          </div>
-
-          {/* Dynamic Component Area */}
-          <div key={activeTab} className="pt-2 animate-fade-in-up">
-            {activeTab === "upload" ? (
-              <CVDropzone onAnalysisComplete={handleAnalysisSuccess} />
-            ) : (
-              <div className="p-6 sm:p-8 bg-gradient-to-br from-blue-50/90 via-white to-rose-50/50 rounded-2xl border border-blue-200 shadow-sm text-center space-y-4">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#0f2c56] to-[#163861] text-white flex items-center justify-center mx-auto shadow-lg shadow-primary/20">
-                  <FileSpreadsheet className="w-7 h-7" aria-hidden="true" />
-                </div>
-
-                <div className="space-y-1.5 max-w-lg mx-auto">
-                  <h2 className="text-base sm:text-lg font-bold text-primary">
-                    Belum Memiliki Berkas CV Siap Pakai?
-                  </h2>
-                  <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                    Sistem kami memandu Anda menyusun resume berstandar industri ATS (1-kolom, ramah parser mesin rekrutmen) melalui alur onboarding 5 tahap terstruktur.
-                  </p>
-                </div>
-
-                <div className="pt-2 flex items-center justify-center">
-                  <button
-                    type="button"
-                    onClick={() => router.push("/dashboard?onboarding=true")}
-                    className="w-full sm:w-auto px-7 py-3.5 bg-secondary hover:bg-secondary-700 text-white text-xs sm:text-sm font-semibold rounded-full shadow-lg shadow-secondary/25 transition flex items-center justify-center gap-2 min-h-[44px]"
-                  >
-                    <span>Mulai Onboarding CV ATS di Dashboard</span>
-                    <ArrowRight className="w-4 h-4" aria-hidden="true" />
-                  </button>
-                </div>
-              </div>
-            )}
+          <div className="inline-flex items-center gap-1.5 text-xs text-primary font-bold bg-blue-100/70 border border-blue-200 px-3.5 py-1.5 rounded-full">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>Format ATS Terverifikasi</span>
           </div>
         </div>
-      </div>
 
-      {/* TECH & LEGAL BADGES */}
-      <div className="pt-6 border-t border-slate-100 max-w-4xl mx-auto text-center space-y-3">
-        <p className="text-[11px] font-mono uppercase tracking-wider text-slate-400">
-          Infrastruktur Berbasis Ekosistem Terbuka &amp; Kepatuhan Hukum
-        </p>
-        <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-slate-600">
-          <span className="px-3.5 py-1.5 rounded-full bg-slate-100/90 border border-slate-200 font-mono text-[11px]">
-            Next.js 14 App Router
-          </span>
-          <span className="px-3.5 py-1.5 rounded-full bg-slate-100/90 border border-slate-200 font-mono text-[11px]">
-            FastAPI AI Service
-          </span>
-          <span className="px-3.5 py-1.5 rounded-full bg-slate-100/90 border border-slate-200 font-mono text-[11px]">
-            PostgreSQL pgvector
-          </span>
-          <span className="px-3.5 py-1.5 rounded-full bg-slate-100/90 border border-slate-200 font-mono text-[11px]">
-            Jooble Publisher API
-          </span>
-          <span className="px-3.5 py-1.5 rounded-full bg-slate-100/90 border border-slate-200 font-mono text-[11px]">
-            UU PDP No. 27/2022
-          </span>
+        {/* HERO GREETING (Redam Pattern: Brand Avatar + Speech Bubble + Prompt Question) */}
+        <div className="max-w-3xl mx-auto">
+          <HeroGreeting />
         </div>
-      </div>
-    </main>
+
+        {/* FLOATING ACTION STAGE CARD (Redam Pattern: Rounded tactile well card) */}
+        <div className="max-w-4xl mx-auto w-full">
+          <div className="rounded-[32px] sm:rounded-[36px] clay-card border-2 border-blue-200/80 p-5 sm:p-9 space-y-6">
+            {/* Dual-Mode Selector Pills (Well Container) */}
+            <div className="grid grid-cols-2 gap-2 p-1.5 bg-[#edf2f9] rounded-full max-w-md mx-auto border border-blue-200/80 shadow-[inset_0_2px_4px_rgba(15,44,86,0.06)]">
+              <button
+                type="button"
+                onClick={() => setActiveTab("upload")}
+                className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-full text-xs font-bold transition-all duration-200 ${
+                  activeTab === "upload"
+                    ? "bg-primary text-white shadow-md shadow-primary/25"
+                    : "text-primary hover:text-secondary font-semibold"
+                }`}
+              >
+                <UploadCloud className="w-4 h-4" aria-hidden="true" />
+                <span>Saya Sudah Punya CV</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveTab("questionnaire")}
+                className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-full text-xs font-bold transition-all duration-200 ${
+                  activeTab === "questionnaire"
+                    ? "bg-primary text-white shadow-md shadow-primary/25"
+                    : "text-primary hover:text-secondary font-semibold"
+                }`}
+              >
+                <FileSpreadsheet className="w-4 h-4" aria-hidden="true" />
+                <span>Saya Belum Punya CV</span>
+              </button>
+            </div>
+
+            {/* Dynamic Interactive Stage Area */}
+            <div key={activeTab} className="pt-1 animate-fade-in-up">
+              {activeTab === "upload" ? (
+                <div className="space-y-4">
+                  <CVDropzone onAnalysisComplete={handleAnalysisSuccess} />
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <AtsOnboardingWizard onComplete={handleAnalysisSuccess} />
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* QUICK SCENARIO CHIPS (Redam Pattern: Quick Action Carousel) */}
+          <QuickScenarioChips
+            sedangMemproses={isProcessingDemo}
+            onPilihSampel={handleRunDemoSample}
+            onPilihWizard={() => setActiveTab("questionnaire")}
+            onPilihInfoATS={() => setActiveTab("upload")}
+          />
+        </div>
+
+        {/* ASYMMETRIC BENTO FEATURE CARDS (Redam Pattern: 7-5 Composition) */}
+        <div className="max-w-4xl mx-auto w-full pt-4">
+          <BentoFeatureCards
+            onSelectFeature={(target) => {
+              if (target === "upload") setActiveTab("upload");
+              if (target === "wizard") setActiveTab("questionnaire");
+              if (target === "matching") router.push("/jobs");
+            }}
+          />
+        </div>
+
+        {/* TECH & LEGAL BADGES */}
+        <div className="pt-8 border-t border-slate-200/80 max-w-4xl mx-auto text-center space-y-3">
+          <p className="text-[11px] font-mono uppercase tracking-wider text-slate-500 font-semibold">
+            Infrastruktur Berbasis Ekosistem Terbuka &amp; Kepatuhan Hukum
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-slate-700">
+            <span className="px-3.5 py-1.5 rounded-full bg-blue-50/80 border border-blue-200 font-mono text-[11px] text-primary font-medium">
+              Next.js 14 App Router
+            </span>
+            <span className="px-3.5 py-1.5 rounded-full bg-rose-50/80 border border-rose-200 font-mono text-[11px] text-secondary font-medium">
+              FastAPI AI Service
+            </span>
+            <span className="px-3.5 py-1.5 rounded-full bg-blue-50/80 border border-blue-200 font-mono text-[11px] text-primary font-medium">
+              PostgreSQL pgvector
+            </span>
+            <span className="px-3.5 py-1.5 rounded-full bg-emerald-50/80 border border-emerald-200 font-mono text-[11px] text-emerald-800 font-medium">
+              Jooble Publisher API
+            </span>
+            <span className="px-3.5 py-1.5 rounded-full bg-amber-50/80 border border-amber-200 font-mono text-[11px] text-amber-900 font-medium">
+              UU PDP No. 27/2022
+            </span>
+          </div>
+        </div>
+      </main>
+    </div>
   );
 }
 
@@ -163,4 +192,3 @@ export default function EvaluatePage() {
     </Suspense>
   );
 }
-
