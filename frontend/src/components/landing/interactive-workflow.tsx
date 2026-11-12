@@ -82,7 +82,7 @@ export function InteractiveWorkflow() {
     <section className="space-y-8">
       {/* Header */}
       <div className="text-center space-y-2 max-w-2xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
+        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-primary">
           Alur Pemrosesan Cerdas &amp; Terstruktur
         </h2>
         <p className="text-sm text-slate-600">
@@ -90,7 +90,7 @@ export function InteractiveWorkflow() {
         </p>
       </div>
 
-      {/* Pill Selector (like reference) */}
+      {/* Pill Selector */}
       <div className="flex flex-wrap items-center justify-center gap-2 max-w-xl mx-auto">
         {STEPS.map((step) => {
           const isActive = step.id === activeStepId;
@@ -101,8 +101,8 @@ export function InteractiveWorkflow() {
               onClick={() => setActiveStepId(step.id)}
               className={`px-4 py-2 rounded-full text-xs font-semibold transition border min-h-[40px] ${
                 isActive
-                  ? "bg-slate-900 text-white border-slate-900 shadow-sm"
-                  : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:text-slate-900"
+                  ? "bg-primary text-white border-primary shadow-md shadow-primary/20"
+                  : "bg-white/90 text-primary border-blue-200/80 hover:border-primary hover:bg-blue-50/50"
               }`}
             >
               {step.badge}
@@ -111,51 +111,56 @@ export function InteractiveWorkflow() {
         })}
       </div>
 
-      {/* Card Showcase Container (like reference with minimal margin) */}
-      <div className="p-6 sm:p-10 rounded-3xl bg-white border border-slate-200/90 shadow-md hover:shadow-xl hover:border-slate-300 transition-all duration-500 max-w-6xl mx-auto">
+      {/* Card Showcase Container with Ambient Gradient */}
+      <div className="p-6 sm:p-10 rounded-3xl bg-gradient-to-br from-white via-blue-50/40 to-slate-50 border border-blue-200/80 shadow-lg hover:shadow-2xl hover:border-primary/50 transition-all duration-500 max-w-6xl mx-auto">
         <div key={activeStepId} className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center animate-fade-in-up">
           {/* Left Text Column */}
           <div className="space-y-4">
-            <span className="text-[11px] font-mono uppercase tracking-wider text-blue-600 font-semibold bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-secondary font-bold bg-rose-50 px-3 py-1 rounded-full border border-rose-200 inline-block">
               {activeStep.badge}
             </span>
-            <h3 className="text-xl sm:text-2xl font-bold text-slate-900 leading-snug">
+            <h3 className="text-xl sm:text-2xl font-bold text-primary leading-snug">
               {activeStep.title}
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
               {activeStep.description}
             </p>
 
-            <ul className="space-y-2 text-xs text-slate-700 pt-2">
+            <ul className="space-y-2.5 text-xs text-slate-800 pt-2">
               {activeStep.bulletPoints.map((point, i) => (
-                <li key={i} className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0" />
-                  <span>{point}</span>
+                <li key={i} className="flex items-center gap-2.5">
+                  <span className="w-2 h-2 rounded-full bg-secondary shrink-0" />
+                  <span className="font-medium">{point}</span>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Right Preview Card */}
-          <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-4 shadow-inner">
-            <div className="flex items-center justify-between border-b border-slate-200 pb-2.5">
+          {/* Right Preview Card: Deep Navy Command Card */}
+          <div className="p-6 rounded-2xl bg-gradient-to-br from-[#0f2c56] via-[#163861] to-[#0f2c56] text-white border border-primary-700/80 space-y-4 shadow-xl">
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <div className="space-y-0.5">
-                <p className="text-xs font-bold text-slate-900">{activeStep.mockTitle}</p>
-                <p className="text-[10px] text-slate-500 font-mono">{activeStep.mockSub}</p>
+                <p className="text-xs font-bold text-white">{activeStep.mockTitle}</p>
+                <p className="text-[10px] text-slate-300 font-mono">{activeStep.mockSub}</p>
               </div>
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800">
+                  ONLINE
+                </span>
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              </div>
             </div>
 
-            <div className="p-4 bg-white rounded-xl border border-slate-200 text-xs text-slate-700 leading-relaxed space-y-2">
-              <p className="font-medium text-slate-900">Output Pemrosesan:</p>
-              <p className="text-slate-600 font-mono text-[11px] bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+            <div className="p-4 bg-white/10 backdrop-blur-sm rounded-xl border border-white/15 text-xs text-slate-100 leading-relaxed space-y-2">
+              <p className="font-semibold text-white">Output Pemrosesan:</p>
+              <p className="text-slate-200 font-mono text-[11px] bg-black/20 p-2.5 rounded-lg border border-white/10">
                 {activeStep.mockContent}
               </p>
             </div>
 
-            <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1">
+            <div className="flex items-center justify-between text-[11px] text-slate-300 pt-1">
               <span>Status: Siap Produksi</span>
-              <span className="font-semibold text-emerald-600">Verifikasi Sukses</span>
+              <span className="font-bold text-emerald-300">Verifikasi Sukses</span>
             </div>
           </div>
         </div>
