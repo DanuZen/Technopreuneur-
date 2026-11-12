@@ -9,34 +9,34 @@ export function ProductMockup() {
   return (
     <section className="space-y-6">
       <div className="text-center space-y-2 max-w-2xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
+        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-primary">
           Antarmuka Analisis &amp; Rekomendasi Presisi
         </h2>
         <p className="text-sm text-slate-600">
-          Visualisasi real-time bagaimana CareerMatch AI mengevaluasi resume Anda secara objektif dan memetakan lowongan kerja yang relevan.
+          Visualisasi real-time bagaimana Pasbana AI mengevaluasi resume Anda secara objektif dan memetakan lowongan kerja yang relevan.
         </p>
       </div>
 
       {/* Browser Window Frame with Minimal Margin & Hover Elevation */}
-      <div className="rounded-3xl border border-slate-200/90 bg-white shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:border-slate-300 transition-all duration-500 overflow-hidden max-w-6xl mx-auto">
-        {/* Browser Top Bar */}
-        <div className="bg-slate-50/90 border-b border-slate-200 px-5 py-3.5 flex items-center justify-between">
+      <div className="rounded-3xl border border-blue-200/90 bg-white shadow-2xl shadow-primary/10 hover:shadow-primary/20 hover:border-primary/50 transition-all duration-500 overflow-hidden max-w-6xl mx-auto">
+        {/* Browser Top Bar in Brand Navy */}
+        <div className="bg-[#0f2c56] border-b border-[#163861] px-5 py-3.5 flex items-center justify-between text-white">
           <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-slate-300 inline-block" />
-            <span className="w-3 h-3 rounded-full bg-slate-300 inline-block" />
-            <span className="w-3 h-3 rounded-full bg-slate-300 inline-block" />
-            <span className="text-xs font-mono text-slate-400 ml-2 hidden sm:inline">
-              careermatch.ai/dashboard/candidate
+            <span className="w-3 h-3 rounded-full bg-[#ce2731] inline-block shadow-sm" />
+            <span className="w-3 h-3 rounded-full bg-amber-400 inline-block shadow-sm" />
+            <span className="w-3 h-3 rounded-full bg-emerald-400 inline-block shadow-sm" />
+            <span className="text-xs font-mono text-slate-300 ml-2 hidden sm:inline">
+              pasbana.ai/dashboard/candidate
             </span>
           </div>
-          <div className="flex items-center gap-2 bg-white border border-slate-200 px-3 py-1 rounded-full text-[11px] font-medium text-slate-700 shadow-xs">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-beacon shrink-0" aria-hidden="true" />
+          <div className="flex items-center gap-2 bg-white/10 border border-white/20 px-3 py-1 rounded-full text-[11px] font-medium text-white shadow-xs">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-beacon shrink-0" aria-hidden="true" />
             <span>Blind Scoring Aktif</span>
           </div>
         </div>
 
         {/* Dashboard Content Container */}
-        <div className="p-5 sm:p-8 space-y-6 bg-slate-50/30">
+        <div className="p-5 sm:p-8 space-y-6 bg-gradient-to-br from-slate-50/70 via-blue-50/30 to-white">
           {/* Sub-nav inside dashboard */}
           <div className="flex items-center justify-between border-b border-slate-200 pb-3">
             <div className="flex items-center gap-2">
@@ -45,8 +45,8 @@ export function ProductMockup() {
                 onClick={() => setActiveTab("analysis")}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
                   activeTab === "analysis"
-                    ? "bg-slate-900 text-white"
-                    : "text-slate-600 hover:text-slate-900 bg-white border border-slate-200"
+                    ? "bg-primary text-white shadow-sm"
+                    : "text-primary hover:text-primary bg-white border border-slate-200"
                 }`}
               >
                 Skor 5 Dimensi
@@ -56,8 +56,8 @@ export function ProductMockup() {
                 onClick={() => setActiveTab("matching")}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
                   activeTab === "matching"
-                    ? "bg-slate-900 text-white"
-                    : "text-slate-600 hover:text-slate-900 bg-white border border-slate-200"
+                    ? "bg-primary text-white shadow-sm"
+                    : "text-slate-600 hover:text-primary bg-white border border-slate-200"
                 }`}
               >
                 Rekomendasi Loker (92%)
@@ -67,8 +67,8 @@ export function ProductMockup() {
                 onClick={() => setActiveTab("skills")}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
                   activeTab === "skills"
-                    ? "bg-slate-900 text-white"
-                    : "text-slate-600 hover:text-slate-900 bg-white border border-slate-200"
+                    ? "bg-primary text-white shadow-sm"
+                    : "text-slate-600 hover:text-primary bg-white border border-slate-200"
                 }`}
               >
                 Analisis Gap Skill
@@ -84,34 +84,34 @@ export function ProductMockup() {
             {activeTab === "analysis" && (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {/* Radial / Score overview card */}
-                <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col items-center justify-center text-center space-y-2">
-                  <div className="w-20 h-20 rounded-full border-4 border-emerald-500/20 border-t-emerald-500 flex flex-col items-center justify-center">
-                    <span className="text-2xl font-black text-slate-900">88</span>
-                    <span className="text-[9px] uppercase font-mono text-slate-500 font-semibold">Skor ATS</span>
+                <div className="bg-gradient-to-br from-[#0f2c56] via-[#163861] to-[#0f2c56] text-white p-5 rounded-2xl border border-primary-700 shadow-md flex flex-col items-center justify-center text-center space-y-2">
+                  <div className="w-20 h-20 rounded-full border-4 border-emerald-400/30 border-t-emerald-400 flex flex-col items-center justify-center shadow-inner">
+                    <span className="text-2xl font-black text-white">88</span>
+                    <span className="text-[9px] uppercase font-mono text-emerald-300 font-semibold">Skor ATS</span>
                   </div>
                   <div className="pt-2">
-                    <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                    <span className="text-xs font-semibold text-emerald-300 bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-500/40">
                       Sangat Kompetitif
                     </span>
-                    <p className="text-[11px] text-slate-500 mt-1">
+                    <p className="text-[11px] text-slate-200 mt-1">
                       Format terstruktur dan siap lolos screening ATS industri.
                     </p>
                   </div>
                 </div>
 
                 {/* Dimension breakdown bars */}
-                <div className="md:col-span-2 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-3">
-                  <div className="flex items-center justify-between text-xs font-semibold text-slate-700">
+                <div className="md:col-span-2 bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm space-y-3">
+                  <div className="flex items-center justify-between text-xs font-semibold text-primary">
                     <span>Distribusi Kualitas 5 Dimensi</span>
                     <span className="text-[11px] text-slate-400 font-normal">Standar HR &amp; Recruiter</span>
                   </div>
 
                   <div className="space-y-2.5">
-                    <MockupBar label="Struktur & Format ATS" score={94} color="bg-emerald-500" />
-                    <MockupBar label="Kejelasan Deskripsi Karir" score={85} color="bg-emerald-500" />
+                    <MockupBar label="Struktur & Format ATS" score={94} color="bg-primary" />
+                    <MockupBar label="Kejelasan Deskripsi Karir" score={85} color="bg-sky-500" />
                     <MockupBar label="Pencapaian Terukur (Action Verbs)" score={82} color="bg-emerald-500" />
-                    <MockupBar label="Relevansi Skill Teknis" score={90} color="bg-emerald-500" />
-                    <MockupBar label="Kelengkapan Informasi Kontak &amp; Edu" score={89} color="bg-emerald-500" />
+                    <MockupBar label="Relevansi Skill Teknis" score={90} color="bg-[#ce2731]" />
+                    <MockupBar label="Kelengkapan Informasi Kontak &amp; Edu" score={89} color="bg-amber-500" />
                   </div>
                 </div>
               </div>
