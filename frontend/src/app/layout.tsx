@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Poppins } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
+import { AppShell } from "@/components/layout/app-shell";
 import { SplashScreen } from "@/components/ui/splash-screen";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -31,13 +30,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id" className={`${plusJakartaSans.variable} ${poppins.variable}`}>
-      <body className="font-sans antialiased text-primary bg-[#fefefd] min-h-screen flex flex-col justify-between">
+      <body className="font-sans antialiased text-primary bg-[#edf2f9] min-h-screen overflow-hidden">
         <SplashScreen />
-        <Navbar />
-        <div className="flex-1">
-          {children}
-        </div>
-        <Footer />
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );
