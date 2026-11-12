@@ -128,11 +128,11 @@ export function CVDropzone({ onAnalysisComplete, autoRedirect = true }: CVDropzo
         onDragOver={handleDrag}
         onDrop={handleDrop}
         onClick={() => status === "idle" && fileInputRef.current?.click()}
-        className={`relative p-8 sm:p-10 border-2 border-dashed rounded-2xl text-center transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
+        className={`relative p-8 sm:p-12 border-2 border-dashed rounded-3xl text-center transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
           dragActive
-            ? "border-blue-600 bg-blue-50/50 scale-[1.01]"
-            : "border-slate-300 bg-white hover:border-blue-400 hover:bg-slate-50/50"
-        } ${status === "idle" ? "cursor-pointer" : "cursor-default"} shadow-sm`}
+            ? "border-secondary bg-rose-50/60 scale-[1.01]"
+            : "border-blue-300 bg-gradient-to-br from-blue-50/60 via-white to-rose-50/30 hover:border-primary hover:bg-blue-50/80"
+        } ${status === "idle" ? "cursor-pointer" : "cursor-default"} shadow-md`}
       >
         <input
           ref={fileInputRef}
@@ -144,20 +144,20 @@ export function CVDropzone({ onAnalysisComplete, autoRedirect = true }: CVDropzo
         />
 
         {status === "idle" && (
-          <div className="space-y-3">
-            <div className="w-16 h-16 mx-auto rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shadow-inner">
+          <div className="space-y-4">
+            <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-[#0f2c56] to-[#163861] text-white flex items-center justify-center shadow-lg shadow-primary/25">
               <UploadCloud className="w-8 h-8" />
             </div>
             <div>
-              <h3 className="text-base sm:text-lg font-semibold text-slate-900">
-                Tarik file CV Anda ke sini atau <span className="text-blue-600 underline">klik untuk memilih</span>
+              <h3 className="text-base sm:text-lg font-bold text-primary">
+                Tarik file CV Anda ke sini atau <span className="text-secondary underline">klik untuk memilih</span>
               </h3>
-              <p className="text-xs sm:text-sm text-slate-500 mt-1">
+              <p className="text-xs sm:text-sm text-slate-600 mt-1">
                 Mendukung format PDF atau DOCX (Maksimal 5 MB)
               </p>
             </div>
-            <div className="inline-flex items-center gap-1.5 text-xs text-amber-700 bg-amber-50 px-3 py-1.5 rounded-lg border border-amber-200">
-              <AlertCircle className="w-4 h-4 shrink-0" />
+            <div className="inline-flex items-center gap-1.5 text-xs text-amber-900 bg-amber-50/90 px-3.5 py-1.5 rounded-xl border border-amber-300 font-medium">
+              <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
               <span>Pastikan berkas berbasis teks digital, bukan hasil foto/scan gambar dokumen.</span>
             </div>
           </div>
