@@ -18,7 +18,6 @@ import { AtsOnboardingWizard } from "@/components/dashboard/ats-onboarding-wizar
 import { AmbientBackground } from "@/components/evaluate/ambient-background";
 import { HeroGreeting } from "@/components/evaluate/hero-greeting";
 import { QuickScenarioChips } from "@/components/evaluate/quick-scenario-chips";
-import { BentoFeatureCards } from "@/components/evaluate/bento-feature-cards";
 import { CVAnalysisResult } from "@/types";
 import { api } from "@/lib/api";
 
@@ -138,41 +137,6 @@ function EvaluateContent() {
             onPilihWizard={() => setActiveTab("questionnaire")}
             onPilihInfoATS={() => setActiveTab("upload")}
           />
-        </div>
-
-        {/* ASYMMETRIC BENTO FEATURE CARDS (Redam Pattern: 7-5 Composition) */}
-        <div className="max-w-4xl mx-auto w-full pt-4">
-          <BentoFeatureCards
-            onSelectFeature={(target) => {
-              if (target === "upload") setActiveTab("upload");
-              if (target === "wizard") setActiveTab("questionnaire");
-              if (target === "matching") router.push("/jobs");
-            }}
-          />
-        </div>
-
-        {/* TECH & LEGAL BADGES */}
-        <div className="pt-8 border-t border-slate-200/80 max-w-4xl mx-auto text-center space-y-3">
-          <p className="text-[11px] font-mono uppercase tracking-wider text-slate-500 font-semibold">
-            Infrastruktur Berbasis Ekosistem Terbuka &amp; Kepatuhan Hukum
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-slate-700">
-            <span className="px-3.5 py-1.5 rounded-full bg-blue-50/80 border border-blue-200 font-mono text-[11px] text-primary font-medium">
-              Next.js 14 App Router
-            </span>
-            <span className="px-3.5 py-1.5 rounded-full bg-rose-50/80 border border-rose-200 font-mono text-[11px] text-secondary font-medium">
-              FastAPI AI Service
-            </span>
-            <span className="px-3.5 py-1.5 rounded-full bg-blue-50/80 border border-blue-200 font-mono text-[11px] text-primary font-medium">
-              PostgreSQL pgvector
-            </span>
-            <span className="px-3.5 py-1.5 rounded-full bg-emerald-50/80 border border-emerald-200 font-mono text-[11px] text-emerald-800 font-medium">
-              Jooble Publisher API
-            </span>
-            <span className="px-3.5 py-1.5 rounded-full bg-amber-50/80 border border-amber-200 font-mono text-[11px] text-amber-900 font-medium">
-              UU PDP No. 27/2022
-            </span>
-          </div>
         </div>
       </main>
     </div>
