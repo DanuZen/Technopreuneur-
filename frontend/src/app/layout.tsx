@@ -37,7 +37,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id" className={`${plusJakartaSans.variable} ${poppins.variable}`}>
-      <body className="font-sans antialiased text-primary bg-[#edf2f9] min-h-screen overflow-hidden">
+      <body className="font-sans antialiased text-primary bg-[#fefefd] min-h-screen">
         <SplashScreen />
         <AppShell>{children}</AppShell>
       </body>
