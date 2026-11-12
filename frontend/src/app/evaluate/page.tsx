@@ -44,7 +44,7 @@ function EvaluateContent() {
       <div className="max-w-3xl mx-auto text-center space-y-4">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs font-semibold">
           <Sparkles className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
-          <span>Evaluasi Kesiapan Karir &amp; Standar ATS</span>
+          <span>Pasbana AI: Evaluasi Kesiapan Karir &amp; Standar ATS</span>
         </div>
 
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-primary leading-tight">

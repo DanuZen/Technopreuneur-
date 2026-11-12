@@ -24,7 +24,7 @@ export default function Home() {
         <div className="space-y-5 max-w-4xl mx-auto animate-fade-in-up">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs font-semibold">
             <Sparkles className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
-            <span>Platform Evaluasi CV &amp; Bimbingan Karir Cerdas</span>
+            <span>Pasbana AI: Karir yang Baik Dimulai dari Pertemuan yang Pas Bana</span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-primary leading-[1.12]">
