@@ -55,7 +55,10 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-sans)", "Inter", "Plus Jakarta Sans", "system-ui", "sans-serif"],
+        sans: ["var(--font-plus-jakarta)", "Plus Jakarta Sans", "system-ui", "sans-serif"],
+        heading: ["var(--font-poppins)", "Poppins", "sans-serif"],
+        jakarta: ["var(--font-plus-jakarta)", "Plus Jakarta Sans", "sans-serif"],
+        poppins: ["var(--font-poppins)", "Poppins", "sans-serif"],
         mono: ["var(--font-mono)", "JetBrains Mono", "monospace"],
       },
     },

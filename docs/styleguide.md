@@ -59,10 +59,11 @@ Digunakan khusus untuk indikator visual skor CV dan tingkat kecocokan lowongan:
 
 ## 3. Tipografi (Typography)
 
-Menggunakan keluarga font sans-serif modern yang nyaman dibaca pada layar kecil, dipadukan dengan font monospace untuk skor angka dan cuplikan data teknis.
+Sistem tipografi resmi Pasbana AI memadukan dua keluarga font modern: **Poppins** untuk judul yang berkarakter ramah dan berani, serta **Plus Jakarta Sans** untuk kenyamanan membaca teks antarmuka.
 
-- **Primary Font Family:** `Inter`, `Plus Jakarta Sans`, atau sistem sans-serif native (`system-ui, -apple-system, sans-serif`).
-- **Monospace Font Family:** `JetBrains Mono`, `Fira Code`, atau monospace native.
+- **Heading & Display Font:** `Poppins` (Google Fonts: weights 500, 600, 700, 800) untuk seluruh elemen judul (H1, H2, H3, H4), tombol aksi, dan display banner.
+- **Body & Interface Font:** `Plus Jakarta Sans` (Google Fonts: weights 400, 500, 600, 700) untuk teks body, deskripsi lowongan, formulir input, dan kartu informasi.
+- **Monospace Font:** `JetBrains Mono` untuk angka skor, metrik persentase, kode teknis, dan ID berkas.
 
 ### Skala Tipografi
 | Tingkat | Ukuran (px / rem) | Weight | Line Height | Penggunaan |

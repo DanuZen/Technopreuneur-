@@ -13,7 +13,12 @@
 body {
   color: #0f2c56;
   background-color: #fefefd;
+  font-family: var(--font-plus-jakarta), 'Plus Jakarta Sans', system-ui, sans-serif;
   min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
 }
 
 /* Purposeful, Non-Generic Micro-Animations */
