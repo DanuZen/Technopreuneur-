@@ -58,16 +58,16 @@ function EvaluateContent() {
 
       {/* CORE ACTION CARD (The Standalone Card) */}
       <div className="max-w-3xl mx-auto">
-        <div className="space-y-6 p-4 sm:p-8 rounded-3xl bg-[#fefefd] border border-slate-200/90 shadow-xl shadow-slate-200/40 hover:border-slate-300 transition-all duration-300">
+        <div className="space-y-6 p-4 sm:p-8 rounded-3xl bg-gradient-to-br from-white via-blue-50/40 to-slate-50 border-2 border-blue-200/80 shadow-2xl shadow-primary/10 hover:border-primary/50 transition-all duration-300">
           {/* Dual-Mode Selector Pills */}
-          <div className="grid grid-cols-2 gap-2 p-1.5 bg-slate-100 rounded-full max-w-md mx-auto">
+          <div className="grid grid-cols-2 gap-2 p-1.5 bg-blue-100/70 rounded-full max-w-md mx-auto border border-blue-200">
             <button
               type="button"
               onClick={() => setActiveTab("upload")}
               className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-full text-xs font-semibold transition-all duration-200 ${
                 activeTab === "upload"
-                  ? "bg-primary text-white shadow-sm"
-                  : "text-slate-600 hover:text-primary"
+                  ? "bg-primary text-white shadow-md shadow-primary/25"
+                  : "text-primary hover:text-secondary font-medium"
               }`}
             >
               <UploadCloud className="w-3.5 h-3.5" aria-hidden="true" />
@@ -79,8 +79,8 @@ function EvaluateContent() {
               onClick={() => setActiveTab("questionnaire")}
               className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-full text-xs font-semibold transition-all duration-200 ${
                 activeTab === "questionnaire"
-                  ? "bg-primary text-white shadow-sm"
-                  : "text-slate-600 hover:text-primary"
+                  ? "bg-primary text-white shadow-md shadow-primary/25"
+                  : "text-primary hover:text-secondary font-medium"
               }`}
             >
               <FileSpreadsheet className="w-3.5 h-3.5" aria-hidden="true" />
@@ -93,16 +93,16 @@ function EvaluateContent() {
             {activeTab === "upload" ? (
               <CVDropzone onAnalysisComplete={handleAnalysisSuccess} />
             ) : (
-              <div className="p-6 sm:p-8 bg-white rounded-2xl border border-slate-200/90 shadow-sm text-center space-y-4">
-                <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mx-auto">
-                  <FileSpreadsheet className="w-6 h-6" aria-hidden="true" />
+              <div className="p-6 sm:p-8 bg-gradient-to-br from-blue-50/90 via-white to-rose-50/50 rounded-2xl border border-blue-200 shadow-sm text-center space-y-4">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#0f2c56] to-[#163861] text-white flex items-center justify-center mx-auto shadow-lg shadow-primary/20">
+                  <FileSpreadsheet className="w-7 h-7" aria-hidden="true" />
                 </div>
 
                 <div className="space-y-1.5 max-w-lg mx-auto">
                   <h2 className="text-base sm:text-lg font-bold text-primary">
                     Belum Memiliki Berkas CV Siap Pakai?
                   </h2>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
                     Sistem kami memandu Anda menyusun resume berstandar industri ATS (1-kolom, ramah parser mesin rekrutmen) melalui alur onboarding 5 tahap terstruktur.
                   </p>
                 </div>
@@ -111,7 +111,7 @@ function EvaluateContent() {
                   <button
                     type="button"
                     onClick={() => router.push("/dashboard?onboarding=true")}
-                    className="w-full sm:w-auto px-6 py-3 bg-primary hover:bg-[#163861] text-white text-xs sm:text-sm font-semibold rounded-full shadow-md transition flex items-center justify-center gap-2 min-h-[44px]"
+                    className="w-full sm:w-auto px-7 py-3.5 bg-secondary hover:bg-secondary-700 text-white text-xs sm:text-sm font-semibold rounded-full shadow-lg shadow-secondary/25 transition flex items-center justify-center gap-2 min-h-[44px]"
                   >
                     <span>Mulai Onboarding CV ATS di Dashboard</span>
                     <ArrowRight className="w-4 h-4" aria-hidden="true" />
