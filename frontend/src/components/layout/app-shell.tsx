@@ -73,8 +73,15 @@ export function AppShell({ children }: AppShellProps) {
           onToggleDesktopCollapse={handleToggleDesktopCollapse}
         />
 
-        {/* Scrollable Viewport Content */}
-        <main id="konten-utama" className="flex-1 overflow-y-auto scrollbar-halus">
+        {/* Viewport Content: Non-scrollable on evaluation stage (/evaluate), smooth scroll on dashboard analysis */}
+        <main
+          id="konten-utama"
+          className={`flex-1 ${
+            pathname.startsWith("/evaluate")
+              ? "overflow-hidden h-full flex flex-col"
+              : "overflow-y-auto scrollbar-halus"
+          }`}
+        >
           {children}
         </main>
       </div>

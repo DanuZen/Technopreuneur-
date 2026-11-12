@@ -58,79 +58,77 @@ function EvaluateContent() {
   };
 
   return (
-    <div className="relative min-h-[calc(100vh-4rem)] flex flex-col justify-between overflow-hidden">
+    <div className="relative h-full w-full flex flex-col justify-between items-center overflow-hidden py-3 sm:py-4 px-3 sm:px-6 select-none">
       {/* Redam-style Ambient Node & Mesh Background */}
       <AmbientBackground />
 
-      <main className="relative z-10 max-w-[1360px] w-full mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-16 space-y-8 animate-fade-in-up">
-        {/* Navigation Bar / Breadcrumb */}
-        <div className="flex items-center justify-between">
+      <main className="relative z-10 max-w-4xl w-full flex flex-col justify-between h-full my-auto gap-2 sm:gap-3 animate-fade-in-up">
+        {/* Navigation Bar / Breadcrumb (Compact) */}
+        <div className="flex items-center justify-between shrink-0">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-xs font-bold text-slate-600 hover:text-primary transition bg-white/80 hover:bg-white px-3.5 py-1.5 rounded-full border border-slate-200 shadow-xs"
+            className="inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-600 hover:text-primary transition bg-white/80 hover:bg-white px-3 py-1 rounded-full border border-slate-200 shadow-xs"
           >
-            <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
+            <ArrowLeft className="w-3 h-3" aria-hidden="true" />
             <span>Kembali ke Beranda</span>
           </Link>
 
-          <div className="inline-flex items-center gap-1.5 text-xs text-primary font-bold bg-blue-100/70 border border-blue-200 px-3.5 py-1.5 rounded-full">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <div className="inline-flex items-center gap-1.5 text-[11px] text-primary font-bold bg-blue-100/70 border border-blue-200 px-3 py-1 rounded-full">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             <span>Format ATS Terverifikasi</span>
           </div>
         </div>
 
-        {/* HERO GREETING (Redam Pattern: Brand Avatar + Speech Bubble + Prompt Question) */}
-        <div className="max-w-3xl mx-auto">
+        {/* HERO GREETING (Compact) */}
+        <div className="shrink-0">
           <HeroGreeting />
         </div>
 
-        {/* FLOATING ACTION STAGE CARD (Redam Pattern: Rounded tactile well card) */}
-        <div className="max-w-4xl mx-auto w-full">
-          <div className="rounded-[32px] sm:rounded-[36px] clay-card border-2 border-blue-200/80 p-5 sm:p-9 space-y-6">
+        {/* FLOATING ACTION STAGE CARD (Fitted & Responsive) */}
+        <div className="shrink-0 w-full space-y-2 sm:space-y-2.5">
+          <div className="rounded-[24px] sm:rounded-[30px] clay-card border border-blue-200/80 p-3.5 sm:p-5 space-y-3 shadow-xl">
             {/* Dual-Mode Selector Pills (Well Container) */}
-            <div className="grid grid-cols-2 gap-2 p-1.5 bg-[#edf2f9] rounded-full max-w-md mx-auto border border-blue-200/80 shadow-[inset_0_2px_4px_rgba(15,44,86,0.06)]">
+            <div className="grid grid-cols-2 gap-1.5 p-1 bg-[#edf2f9] rounded-full max-w-sm mx-auto border border-blue-200/80 shadow-[inset_0_2px_4px_rgba(15,44,86,0.06)]">
               <button
                 type="button"
                 onClick={() => setActiveTab("upload")}
-                className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-full text-xs font-bold transition-all duration-200 ${
+                className={`flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-full text-xs font-bold transition-all duration-200 ${
                   activeTab === "upload"
-                    ? "bg-primary text-white shadow-md shadow-primary/25"
+                    ? "bg-primary text-white shadow-xs shadow-primary/25"
                     : "text-primary hover:text-secondary font-semibold"
                 }`}
               >
-                <UploadCloud className="w-4 h-4" aria-hidden="true" />
+                <UploadCloud className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>Saya Sudah Punya CV</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setActiveTab("questionnaire")}
-                className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-full text-xs font-bold transition-all duration-200 ${
+                className={`flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-full text-xs font-bold transition-all duration-200 ${
                   activeTab === "questionnaire"
-                    ? "bg-primary text-white shadow-md shadow-primary/25"
+                    ? "bg-primary text-white shadow-xs shadow-primary/25"
                     : "text-primary hover:text-secondary font-semibold"
                 }`}
               >
-                <FileSpreadsheet className="w-4 h-4" aria-hidden="true" />
+                <FileSpreadsheet className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>Saya Belum Punya CV</span>
               </button>
             </div>
 
             {/* Dynamic Interactive Stage Area */}
-            <div key={activeTab} className="pt-1 animate-fade-in-up">
+            <div key={activeTab} className="pt-0.5">
               {activeTab === "upload" ? (
-                <div className="space-y-4">
-                  <CVDropzone onAnalysisComplete={handleAnalysisSuccess} />
-                </div>
+                <CVDropzone onAnalysisComplete={handleAnalysisSuccess} />
               ) : (
-                <div className="space-y-4">
+                <div className="max-h-[38vh] sm:max-h-[44vh] overflow-y-auto scrollbar-halus pr-1">
                   <AtsOnboardingWizard onComplete={handleAnalysisSuccess} />
                 </div>
               )}
             </div>
           </div>
 
-          {/* QUICK SCENARIO CHIPS (Redam Pattern: Quick Action Carousel) */}
+          {/* QUICK SCENARIO CHIPS */}
           <QuickScenarioChips
             sedangMemproses={isProcessingDemo}
             onPilihSampel={handleRunDemoSample}

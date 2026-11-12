@@ -128,7 +128,7 @@ export function CVDropzone({ onAnalysisComplete, autoRedirect = true }: CVDropzo
         onDragOver={handleDrag}
         onDrop={handleDrop}
         onClick={() => status === "idle" && fileInputRef.current?.click()}
-        className={`relative p-8 sm:p-12 border-2 border-dashed rounded-[28px] text-center transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+        className={`relative p-5 sm:p-7 border-2 border-dashed rounded-2xl text-center transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
           dragActive
             ? "border-secondary bg-rose-50/70 scale-[1.01] shadow-lg shadow-secondary/15"
             : "border-blue-300/80 bg-gradient-to-b from-[#f3f7fc] via-[#edf2f9] to-[#f4f7fb] hover:border-primary hover:bg-blue-50/70 clay-well"
@@ -144,20 +144,20 @@ export function CVDropzone({ onAnalysisComplete, autoRedirect = true }: CVDropzo
         />
 
         {status === "idle" && (
-          <div className="space-y-4">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-3xl bg-gradient-to-br from-[#0f2c56] via-[#163861] to-[#0f2c56] text-white flex items-center justify-center shadow-xl shadow-primary/25 border-2 border-white/30 transition-transform duration-200 group-hover:scale-105">
-              <UploadCloud className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
+          <div className="space-y-2.5 sm:space-y-3">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto rounded-2xl bg-gradient-to-br from-[#0f2c56] via-[#163861] to-[#0f2c56] text-white flex items-center justify-center shadow-md shadow-primary/25 border border-white/30 transition-transform duration-200 group-hover:scale-105">
+              <UploadCloud className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
             </div>
             <div>
-              <h3 className="text-base sm:text-xl font-bold text-primary font-heading">
+              <h3 className="text-sm sm:text-base font-bold text-primary font-heading">
                 Tarik file CV Anda ke sini atau <span className="text-secondary underline decoration-2 underline-offset-4 hover:opacity-85">klik untuk memilih</span>
               </h3>
-              <p className="text-xs sm:text-sm text-slate-500 mt-1 font-medium">
+              <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5 font-medium">
                 Mendukung format PDF atau DOCX (Maksimal 5 MB)
               </p>
             </div>
-            <div className="inline-flex items-center gap-2 text-xs text-amber-900 bg-amber-50/95 px-4 py-2 rounded-xl border border-amber-300/80 font-medium shadow-xs max-w-lg">
-              <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
+            <div className="inline-flex items-center gap-1.5 text-[11px] text-amber-900 bg-amber-50/95 px-3 py-1.5 rounded-xl border border-amber-300/80 font-medium shadow-xs max-w-lg">
+              <AlertCircle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
               <span>Pastikan berkas berbasis teks digital, bukan hasil foto/scan gambar dokumen.</span>
             </div>
           </div>
