@@ -21,6 +21,13 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Pasbana AI: Evaluasi CV & Rekomendasi Karir Presisi",
   description: "Pasbana (bahasa Minang: 'sangat pas'): Platform evaluasi kualitas CV dan pencocokan lowongan kerja cerdas untuk fresh graduate dan talenta muda.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    apple: "/apple-icon.png",
+  },
 };
 
 export default function RootLayout({
