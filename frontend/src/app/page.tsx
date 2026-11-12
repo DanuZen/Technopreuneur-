@@ -57,40 +57,85 @@ export default function Home() {
         </div>
 
         {/* TRUST HIGHLIGHT BADGES */}
-        <div className="pt-2 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-600">
-          <div className="flex items-center gap-1.5">
+        <div className="pt-2 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-700">
+          <div className="flex items-center gap-2 bg-emerald-50/80 px-3 py-1.5 rounded-full border border-emerald-200">
             <CheckCircle2 className="w-4 h-4 text-emerald-600" aria-hidden="true" />
-            <span className="font-medium">Format ATS Terverifikasi</span>
+            <span className="font-semibold text-emerald-900">Format ATS Terverifikasi</span>
           </div>
-          <div className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600" aria-hidden="true" />
-            <span className="font-medium">Analisis 5 Dimensi Objektif</span>
+          <div className="flex items-center gap-2 bg-blue-50/80 px-3 py-1.5 rounded-full border border-blue-200">
+            <CheckCircle2 className="w-4 h-4 text-primary" aria-hidden="true" />
+            <span className="font-semibold text-primary">Analisis 5 Dimensi Objektif</span>
           </div>
-          <div className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600" aria-hidden="true" />
-            <span className="font-medium">Privasi Kepatuhan UU PDP</span>
+          <div className="flex items-center gap-2 bg-rose-50/80 px-3 py-1.5 rounded-full border border-rose-200">
+            <CheckCircle2 className="w-4 h-4 text-secondary" aria-hidden="true" />
+            <span className="font-semibold text-secondary">Privasi Kepatuhan UU PDP</span>
+          </div>
+        </div>
+
+        {/* 3 HERO VALUE CARDS (Colorful Brand Pillars) */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto pt-4 text-left">
+          <div className="p-5 rounded-2xl bg-gradient-to-br from-[#0f2c56] to-[#163861] text-white shadow-lg border border-primary-700/60 flex flex-col justify-between">
+            <div className="space-y-1">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-blue-200 font-bold">Pilar 1</span>
+              <h3 className="text-sm font-bold text-white">Standar ATS 1-Kolom</h3>
+              <p className="text-xs text-slate-200 leading-relaxed">
+                Optimasi tata letak berkas digital agar 100% terbaca sistem filter recruiter.
+              </p>
+            </div>
+            <div className="pt-3 text-[11px] font-mono text-blue-200 flex items-center justify-between">
+              <span>Akurasi Parsing</span>
+              <span className="font-bold text-white">99.2%</span>
+            </div>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-gradient-to-br from-[#ce2731] to-[#a31b23] text-white shadow-lg border border-red-400/30 flex flex-col justify-between">
+            <div className="space-y-1">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-rose-200 font-bold">Pilar 2</span>
+              <h3 className="text-sm font-bold text-white">Pencocokan Pas Bana</h3>
+              <p className="text-xs text-rose-100 leading-relaxed">
+                Pencocokan semantik cerdas mempertemukan kompetensi Anda dengan lowongan yang paling cocok.
+              </p>
+            </div>
+            <div className="pt-3 text-[11px] font-mono text-rose-200 flex items-center justify-between">
+              <span>Two-Stage Match</span>
+              <span className="font-bold text-white">pgvector + LLM</span>
+            </div>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-gradient-to-br from-emerald-700 to-teal-800 text-white shadow-lg border border-emerald-500/40 flex flex-col justify-between">
+            <div className="space-y-1">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-200 font-bold">Pilar 3</span>
+              <h3 className="text-sm font-bold text-white">100% Bebas Biaya</h3>
+              <p className="text-xs text-emerald-100 leading-relaxed">
+                Seluruh fitur evaluasi resume dan bimbingan karir dapat diakses gratis tanpa langganan.
+              </p>
+            </div>
+            <div className="pt-3 text-[11px] font-mono text-emerald-200 flex items-center justify-between">
+              <span>Arsitektur</span>
+              <span className="font-bold text-white">Zero Budget (Rp 0)</span>
+            </div>
           </div>
         </div>
 
         {/* ECOSYSTEM / TECH BADGES (Truthful technical replacement for fake logos) */}
-        <div className="pt-8 border-t border-slate-100 max-w-4xl mx-auto">
-          <p className="text-[11px] font-mono uppercase tracking-wider text-slate-400 mb-3">
+        <div className="pt-8 border-t border-slate-200/80 max-w-4xl mx-auto">
+          <p className="text-[11px] font-mono uppercase tracking-wider text-slate-500 mb-3 font-semibold">
             Infrastruktur Berbasis Ekosistem Terbuka &amp; Kepatuhan Hukum
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-slate-600">
-            <span className="px-3.5 py-1.5 rounded-full bg-slate-100/90 hover:bg-slate-200/80 border border-slate-200 font-mono text-[11px] transition-colors">
+          <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-slate-700">
+            <span className="px-3.5 py-1.5 rounded-full bg-blue-50/80 hover:bg-blue-100/80 border border-blue-200 font-mono text-[11px] text-primary font-medium transition-colors">
               Next.js 14 App Router
             </span>
-            <span className="px-3.5 py-1.5 rounded-full bg-slate-100/90 hover:bg-slate-200/80 border border-slate-200 font-mono text-[11px] transition-colors">
+            <span className="px-3.5 py-1.5 rounded-full bg-rose-50/80 hover:bg-rose-100/80 border border-rose-200 font-mono text-[11px] text-secondary font-medium transition-colors">
               FastAPI AI Service
             </span>
-            <span className="px-3.5 py-1.5 rounded-full bg-slate-100/90 hover:bg-slate-200/80 border border-slate-200 font-mono text-[11px] transition-colors">
+            <span className="px-3.5 py-1.5 rounded-full bg-blue-50/80 hover:bg-blue-100/80 border border-blue-200 font-mono text-[11px] text-primary font-medium transition-colors">
               PostgreSQL pgvector
             </span>
-            <span className="px-3.5 py-1.5 rounded-full bg-slate-100/90 hover:bg-slate-200/80 border border-slate-200 font-mono text-[11px] transition-colors">
+            <span className="px-3.5 py-1.5 rounded-full bg-emerald-50/80 hover:bg-emerald-100/80 border border-emerald-200 font-mono text-[11px] text-emerald-800 font-medium transition-colors">
               Jooble Publisher API
             </span>
-            <span className="px-3.5 py-1.5 rounded-full bg-slate-100/90 hover:bg-slate-200/80 border border-slate-200 font-mono text-[11px] transition-colors">
+            <span className="px-3.5 py-1.5 rounded-full bg-amber-50/80 hover:bg-amber-100/80 border border-amber-200 font-mono text-[11px] text-amber-900 font-medium transition-colors">
               UU PDP No. 27/2022
             </span>
           </div>
