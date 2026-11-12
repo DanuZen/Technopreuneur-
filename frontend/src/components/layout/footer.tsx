@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Compass, ShieldCheck } from "lucide-react";
+import Image from "next/image";
+import { ShieldCheck } from "lucide-react";
 
 export function Footer() {
   return (
@@ -8,11 +9,15 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-10">
           <div className="md:col-span-2 space-y-4">
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-7 h-7 rounded-lg bg-slate-900 text-white flex items-center justify-center">
-                <Compass className="w-4 h-4" aria-hidden="true" />
-              </div>
-              <span className="font-bold text-slate-900 tracking-tight text-base">
-                CareerMatch AI
+              <Image
+                src="/logo-app-navy.png"
+                alt="CareerMatch AI Logo"
+                width={28}
+                height={28}
+                className="rounded-md object-contain shrink-0"
+              />
+              <span className="font-bold text-primary tracking-tight text-base">
+                CareerMatch<span className="text-[#ce2731]"> AI</span>
               </span>
             </Link>
             <p className="text-xs text-slate-600 max-w-sm leading-relaxed">

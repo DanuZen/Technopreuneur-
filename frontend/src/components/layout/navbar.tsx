@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Compass, Menu, X, User as UserIcon, LogOut } from "lucide-react";
+import { Menu, X, User as UserIcon, LogOut } from "lucide-react";
 import { User } from "@/types";
 import { api } from "@/lib/api";
 
@@ -32,15 +33,22 @@ export function Navbar() {
       <div className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-10">
         <div className="flex items-center justify-between h-16">
           {/* Logo & Brand */}
-          <Link href="/" className="flex items-center gap-2.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 rounded-lg">
-            <div className="w-8 h-8 rounded-lg bg-slate-900 text-white flex items-center justify-center shadow-sm group-hover:bg-slate-800 transition">
-              <Compass className="w-4 h-4" aria-hidden="true" />
+          <Link href="/" className="flex items-center gap-2.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg">
+            <div className="relative w-8 h-8 flex items-center justify-center shrink-0">
+              <Image
+                src="/logo-app-navy.png"
+                alt="CareerMatch AI Logo"
+                width={32}
+                height={32}
+                className="rounded-lg object-contain shadow-sm group-hover:scale-105 transition-transform"
+                priority
+              />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-slate-900 tracking-tight text-base sm:text-lg leading-tight">
-                CareerMatch<span className="text-slate-500 font-medium"> AI</span>
+              <span className="font-bold text-primary tracking-tight text-base sm:text-lg leading-tight">
+                CareerMatch<span className="text-[#ce2731] font-bold"> AI</span>
               </span>
-              <span className="text-[10px] text-slate-400 tracking-wider">
+              <span className="text-[10px] text-slate-500 tracking-wider">
                 Platform Bimbingan &amp; Loker
               </span>
             </div>
@@ -103,7 +111,7 @@ export function Navbar() {
                 </Link>
                 <Link
                   href="/register"
-                  className="text-xs font-semibold text-white bg-slate-900 hover:bg-slate-800 px-4 py-2 rounded-full shadow-sm transition min-h-[36px] flex items-center justify-center"
+                  className="text-xs font-semibold text-white bg-primary hover:bg-[#163861] px-4 py-2 rounded-full shadow-sm transition min-h-[36px] flex items-center justify-center"
                 >
                   Daftar Akun
                 </Link>
