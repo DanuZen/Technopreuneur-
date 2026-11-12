@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Compass, Mail, Lock, User as UserIcon, Building2, ShieldCheck, AlertCircle, Loader2 } from "lucide-react";
+import Image from "next/image";
+import { Mail, Lock, User as UserIcon, Building2, ShieldCheck, AlertCircle, Loader2 } from "lucide-react";
 import { UserRole } from "@/types";
 import { api } from "@/lib/api";
 
@@ -53,30 +54,36 @@ export default function RegisterPage() {
   };
 
   return (
-    <main className="max-w-md mx-auto px-4 py-12 sm:px-6">
-      <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+    <main className="max-w-md mx-auto px-4 py-12 sm:px-6 animate-fade-in-up">
+      <div className="bg-gradient-to-br from-white via-blue-50/40 to-slate-50 p-8 rounded-3xl border-2 border-blue-200/85 shadow-xl space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
-          <div className="w-12 h-12 mx-auto rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
-            <Compass className="w-6 h-6" aria-hidden="true" />
+          <div className="relative w-14 h-14 mx-auto flex items-center justify-center">
+            <Image
+              src="/logo-app-navy.webp"
+              alt="Pasbana AI"
+              width={56}
+              height={56}
+              className="object-contain"
+            />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-            Daftar Akun Baru
+          <h1 className="text-2xl font-bold tracking-tight text-primary">
+            Daftar ke Pasbana<span className="text-[#ce2731]"> AI</span>
           </h1>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-600">
             Mulai eksplorasi peluang karir atau publikasikan lowongan kerja Anda.
           </p>
         </div>
 
         {/* Role Switcher */}
-        <div className="grid grid-cols-2 gap-2 p-1 bg-slate-100 rounded-xl">
+        <div className="grid grid-cols-2 gap-2 p-1.5 bg-blue-100/70 rounded-2xl border border-blue-200">
           <button
             type="button"
             onClick={() => setRole("jobseeker")}
-            className={`flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-semibold transition ${
+            className={`flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-semibold transition ${
               role === "jobseeker"
-                ? "bg-white text-blue-600 shadow-sm"
-                : "text-slate-600 hover:text-slate-900"
+                ? "bg-primary text-white shadow-sm"
+                : "text-primary hover:text-secondary font-medium"
             }`}
           >
             <UserIcon className="w-3.5 h-3.5" />
@@ -85,10 +92,10 @@ export default function RegisterPage() {
           <button
             type="button"
             onClick={() => setRole("employer")}
-            className={`flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-xs font-semibold transition ${
+            className={`flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-semibold transition ${
               role === "employer"
-                ? "bg-white text-blue-600 shadow-sm"
-                : "text-slate-600 hover:text-slate-900"
+                ? "bg-primary text-white shadow-sm"
+                : "text-primary hover:text-secondary font-medium"
             }`}
           >
             <Building2 className="w-3.5 h-3.5" />
@@ -176,21 +183,21 @@ export default function RegisterPage() {
           </div>
 
           {/* UU PDP Consent Box */}
-          <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+          <div className="p-3.5 bg-blue-50/80 border border-blue-200 rounded-2xl space-y-2">
             <div className="flex items-start gap-2.5">
               <input
                 type="checkbox"
                 id="pdp-consent"
                 checked={pdpConsent}
                 onChange={(e) => setPdpConsent(e.target.checked)}
-                className="mt-0.5 w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500"
+                className="mt-0.5 w-4 h-4 text-primary rounded border-slate-300 focus:ring-primary"
               />
-              <label htmlFor="pdp-consent" className="text-xs text-slate-600 leading-snug">
-                Saya memberikan persetujuan eksplisit untuk pengolahan data profil/CV saya sesuai dengan <span className="font-semibold text-slate-800">UU Pelindungan Data Pribadi (UU No. 27/2022)</span>. Data Anda tidak akan dibagikan ke pihak ketiga tanpa izin.
+              <label htmlFor="pdp-consent" className="text-xs text-slate-700 leading-snug">
+                Saya memberikan persetujuan eksplisit untuk pengolahan data profil/CV saya sesuai dengan <span className="font-semibold text-primary">UU Pelindungan Data Pribadi (UU No. 27/2022)</span>. Data Anda tidak akan dibagikan ke pihak ketiga tanpa izin.
               </label>
             </div>
-            <div className="flex items-center gap-1.5 text-[11px] text-emerald-700 font-medium">
-              <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
+            <div className="flex items-center gap-1.5 text-[11px] text-emerald-800 font-semibold">
+              <ShieldCheck className="w-3.5 h-3.5 shrink-0 text-emerald-600" />
               <span>Hak hapus data (Right to be Forgotten) dapat diakses kapan saja.</span>
             </div>
           </div>
@@ -198,7 +205,7 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm rounded-lg shadow-sm transition flex items-center justify-center gap-2 disabled:opacity-60 min-h-[44px]"
+            className="w-full py-3 px-4 bg-secondary hover:bg-secondary-700 text-white font-semibold text-sm rounded-full shadow-lg shadow-secondary/25 transition flex items-center justify-center gap-2 disabled:opacity-60 min-h-[44px]"
           >
             {loading ? (
               <>
@@ -212,11 +219,11 @@ export default function RegisterPage() {
         </form>
 
         {/* Footer Link */}
-        <div className="pt-4 border-t border-slate-100 text-center text-xs text-slate-500">
+        <div className="pt-4 border-t border-slate-200 text-center text-xs text-slate-600">
           Sudah punya akun?{" "}
           <Link
             href="/login"
-            className="text-blue-600 font-semibold hover:underline"
+            className="text-primary font-bold hover:underline"
           >
             Masuk Sekarang
           </Link>

@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Compass, Mail, Lock, AlertCircle, Loader2 } from "lucide-react";
+import Image from "next/image";
+import { Mail, Lock, AlertCircle, Loader2 } from "lucide-react";
 import { api } from "@/lib/api";
 
 export default function LoginPage() {
@@ -31,24 +32,30 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="max-w-md mx-auto px-4 py-12 sm:px-6">
-      <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+    <main className="max-w-md mx-auto px-4 py-12 sm:px-6 animate-fade-in-up">
+      <div className="bg-gradient-to-br from-white via-blue-50/40 to-slate-50 p-8 rounded-3xl border-2 border-blue-200/85 shadow-xl space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
-          <div className="w-12 h-12 mx-auto rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
-            <Compass className="w-6 h-6" aria-hidden="true" />
+          <div className="relative w-14 h-14 mx-auto flex items-center justify-center">
+            <Image
+              src="/logo-app-navy.webp"
+              alt="Pasbana AI"
+              width={56}
+              height={56}
+              className="object-contain"
+            />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-            Masuk ke CareerMatch AI
+          <h1 className="text-2xl font-bold tracking-tight text-primary">
+            Masuk ke Pasbana<span className="text-[#ce2731]"> AI</span>
           </h1>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-600">
             Akses analisa CV, kuesioner terpandu, dan rekomendasi lowongan presisi.
           </p>
         </div>
 
         {/* Error Alert */}
         {error && (
-          <div className="p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
+          <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{error}</span>
           </div>
@@ -57,7 +64,7 @@ export default function LoginPage() {
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+            <label className="block text-xs font-semibold text-primary uppercase tracking-wider mb-1">
               Alamat Email
             </label>
             <div className="relative">
@@ -68,14 +75,14 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="nama@email.com"
-                className="w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-9 pr-3 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white"
               />
             </div>
           </div>
 
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
+              <label className="block text-xs font-semibold text-primary uppercase tracking-wider">
                 Kata Sandi
               </label>
             </div>
@@ -87,7 +94,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-9 pr-3 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white"
               />
             </div>
           </div>
@@ -95,7 +102,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm rounded-lg shadow-sm transition flex items-center justify-center gap-2 disabled:opacity-60 min-h-[44px]"
+            className="w-full py-3 px-4 bg-primary hover:bg-[#163861] text-white font-semibold text-sm rounded-full shadow-md shadow-primary/25 transition flex items-center justify-center gap-2 disabled:opacity-60 min-h-[44px]"
           >
             {loading ? (
               <>
@@ -109,11 +116,11 @@ export default function LoginPage() {
         </form>
 
         {/* Footer Link */}
-        <div className="pt-4 border-t border-slate-100 text-center text-xs text-slate-500">
+        <div className="pt-4 border-t border-slate-200 text-center text-xs text-slate-600">
           Belum punya akun?{" "}
           <Link
             href="/register"
-            className="text-blue-600 font-semibold hover:underline"
+            className="text-secondary font-bold hover:underline"
           >
             Daftar Sekarang
           </Link>
