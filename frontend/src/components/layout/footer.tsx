@@ -10,7 +10,7 @@ export function Footer() {
           <div className="md:col-span-2 space-y-4">
             <Link href="/" className="flex items-center gap-2 group">
               <Image
-                src="/logo-app-navy.png"
+                src="/logo-app-navy.webp"
                 alt="CareerMatch AI Logo"
                 width={28}
                 height={28}

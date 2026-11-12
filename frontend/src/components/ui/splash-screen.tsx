@@ -54,7 +54,7 @@ export function SplashScreen() {
     >
       <video
         ref={videoRef}
-        src="/splash-screen.mp4"
+        src="/splash-screen.webm"
         autoPlay
         muted
         playsInline
@@ -62,7 +62,9 @@ export function SplashScreen() {
         onEnded={dismissSplash}
         onError={dismissSplash}
         className="absolute inset-0 w-full h-full object-cover"
-      />
+      >
+        <source src="/splash-screen.webm" type="video/webm" />
+      </video>
     </div>
   );
 }

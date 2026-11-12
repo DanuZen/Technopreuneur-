@@ -36,7 +36,7 @@ export function Navbar() {
           <Link href="/" className="flex items-center gap-2.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg">
             <div className="relative w-8 h-8 flex items-center justify-center shrink-0">
               <Image
-                src="/logo-app-navy.png"
+                src="/logo-app-navy.webp"
                 alt="CareerMatch AI Logo"
                 width={32}
                 height={32}
