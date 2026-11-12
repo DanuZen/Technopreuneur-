@@ -50,13 +50,14 @@ function DashboardContent() {
     if (current) {
       setAnalysis(current);
       if (queryOnboarding) {
-        setIsOnboarding(true);
-      } else {
-        setIsOnboarding(false);
+        router.replace("/evaluate?tab=questionnaire");
+        return;
       }
+      setIsOnboarding(false);
     } else {
-      // Belum ada CV terunggah/dianalisis: otomatis arahkan ke tahap onboarding
-      setIsOnboarding(true);
+      // Belum ada CV terunggah/dianalisis: otomatis arahkan ke rute evaluasi yang benar (/evaluate)
+      router.replace("/evaluate");
+      return;
     }
 
     // Load initial jobs
