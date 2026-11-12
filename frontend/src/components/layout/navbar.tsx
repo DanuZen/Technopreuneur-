@@ -37,7 +37,7 @@ export function Navbar() {
             <div className="relative w-8 h-8 flex items-center justify-center shrink-0">
               <Image
                 src="/logo-app-navy.webp"
-                alt="CareerMatch AI Logo"
+                alt="Pasbana AI Logo"
                 width={32}
                 height={32}
                 className="rounded-lg object-contain shadow-sm group-hover:scale-105 transition-transform"
@@ -46,10 +46,10 @@ export function Navbar() {
             </div>
             <div className="flex flex-col">
               <span className="font-bold text-primary tracking-tight text-base sm:text-lg leading-tight">
-                CareerMatch<span className="text-[#ce2731] font-bold"> AI</span>
+                Pasbana<span className="text-[#ce2731] font-bold"> AI</span>
               </span>
               <span className="text-[10px] text-slate-500 tracking-wider">
-                Platform Bimbingan &amp; Loker
+                Karir yang Pas Bana
               </span>
             </div>
           </Link>

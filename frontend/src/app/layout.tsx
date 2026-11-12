@@ -5,8 +5,8 @@ import { Footer } from "@/components/layout/footer";
 import { SplashScreen } from "@/components/ui/splash-screen";
 
 export const metadata: Metadata = {
-  title: "CareerMatch AI: Evaluasi CV & Rekomendasi Karir Presisi",
-  description: "Platform evaluasi kualitas CV dan rekomendasi lowongan kerja relevan untuk fresh graduate dan profesional muda.",
+  title: "Pasbana AI: Evaluasi CV & Rekomendasi Karir Presisi",
+  description: "Pasbana (bahasa Minang: 'sangat pas'): Platform evaluasi kualitas CV dan pencocokan lowongan kerja cerdas untuk fresh graduate dan talenta muda.",
 };
 
 export default function RootLayout({

@@ -11,17 +11,17 @@ export function Footer() {
             <Link href="/" className="flex items-center gap-2 group">
               <Image
                 src="/logo-app-navy.webp"
-                alt="CareerMatch AI Logo"
+                alt="Pasbana AI Logo"
                 width={28}
                 height={28}
                 className="rounded-md object-contain shrink-0"
               />
               <span className="font-bold text-primary tracking-tight text-base">
-                CareerMatch<span className="text-[#ce2731]"> AI</span>
+                Pasbana<span className="text-[#ce2731]"> AI</span>
               </span>
             </Link>
             <p className="text-xs text-slate-600 max-w-sm leading-relaxed">
-              Platform bimbingan karir dan pencocokan lowongan kerja objektif berbasis pencarian semantik vektor dan re-ranking cerdas.
+              Berasal dari bahasa Minang &quot;pas bana&quot; (sangat cocok). Menghubungkan potensi talenta dengan kebutuhan spesifik industri secara presisi melalui evaluasi CV objektif dan pencocokan cerdas.
             </p>
             <div className="inline-flex items-center gap-1.5 text-[11px] text-slate-700 bg-slate-100 px-2.5 py-1 rounded-full border border-slate-200 font-medium">
               <ShieldCheck className="w-3.5 h-3.5 text-slate-900" aria-hidden="true" />
