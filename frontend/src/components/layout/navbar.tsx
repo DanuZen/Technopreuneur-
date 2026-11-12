@@ -29,14 +29,14 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80 transition-all">
+    <header className="sticky top-0 z-40 bg-primary/95 backdrop-blur-md border-b border-primary-800 text-white shadow-lg transition-all">
       <div className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-10">
         <div className="flex items-center justify-between h-16">
           {/* Logo & Brand */}
-          <Link href="/" className="flex items-center gap-2.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg">
+          <Link href="/" className="flex items-center gap-2.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-lg">
             <div className="relative w-8 h-8 flex items-center justify-center shrink-0">
               <Image
-                src="/logo-app-navy.webp"
+                src="/logo-app-white.webp"
                 alt="Pasbana AI Logo"
                 width={32}
                 height={32}
@@ -45,10 +45,10 @@ export function Navbar() {
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-primary tracking-tight text-base sm:text-lg leading-tight">
+              <span className="font-bold text-white tracking-tight text-base sm:text-lg leading-tight">
                 Pasbana<span className="text-[#ce2731] font-bold"> AI</span>
               </span>
-              <span className="text-[10px] text-slate-500 tracking-wider">
+              <span className="text-[10px] text-slate-300 tracking-wider">
                 Karir yang Pas Bana
               </span>
             </div>
@@ -58,31 +58,31 @@ export function Navbar() {
           <nav className="hidden md:flex items-center gap-6">
             <Link
               href="/"
-              className="text-xs font-semibold text-slate-700 hover:text-primary transition"
+              className="text-xs font-semibold text-slate-200 hover:text-white transition"
             >
               Beranda
             </Link>
             <Link
               href="/evaluate"
-              className="text-xs font-semibold text-slate-700 hover:text-primary transition"
+              className="text-xs font-semibold text-slate-200 hover:text-white transition"
             >
               Evaluasi CV
             </Link>
             <Link
               href="/dashboard"
-              className="text-xs font-semibold text-slate-700 hover:text-primary transition"
+              className="text-xs font-semibold text-slate-200 hover:text-white transition"
             >
               Dashboard ATS
             </Link>
             <Link
               href="/jobs"
-              className="text-xs font-semibold text-slate-700 hover:text-primary transition"
+              className="text-xs font-semibold text-slate-200 hover:text-white transition"
             >
               Cari Lowongan
             </Link>
             <Link
               href="/about"
-              className="text-xs font-semibold text-slate-700 hover:text-primary transition"
+              className="text-xs font-semibold text-slate-200 hover:text-white transition"
             >
               Tentang Kami
             </Link>
@@ -92,16 +92,16 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-3">
             {user ? (
               <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2 text-xs bg-slate-100 text-slate-700 px-3 py-1.5 rounded-full border border-slate-200">
-                  <UserIcon className="w-3.5 h-3.5 text-slate-700" />
+                <div className="flex items-center gap-2 text-xs bg-white/10 text-white px-3 py-1.5 rounded-full border border-white/20">
+                  <UserIcon className="w-3.5 h-3.5 text-slate-300" />
                   <span className="font-medium max-w-[120px] truncate">{user.name}</span>
-                  <span className="uppercase text-[9px] bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-mono font-semibold">
+                  <span className="uppercase text-[9px] bg-secondary text-white px-1.5 py-0.5 rounded font-mono font-semibold">
                     {user.role}
                   </span>
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="p-1.5 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition"
+                  className="p-1.5 text-slate-300 hover:text-rose-400 hover:bg-white/10 rounded-lg transition"
                   title="Keluar"
                 >
                   <LogOut className="w-4 h-4" />
@@ -111,13 +111,13 @@ export function Navbar() {
               <>
                 <Link
                   href="/login"
-                  className="text-xs font-semibold text-slate-700 hover:text-slate-900 px-3 py-2 rounded-full transition"
+                  className="text-xs font-semibold text-slate-200 hover:text-white px-3 py-2 rounded-full transition"
                 >
                   Masuk
                 </Link>
                 <Link
                   href="/register"
-                  className="text-xs font-semibold text-white bg-primary hover:bg-[#163861] px-4 py-2 rounded-full shadow-sm transition min-h-[36px] flex items-center justify-center"
+                  className="text-xs font-semibold text-white bg-secondary hover:bg-secondary-700 px-4 py-2 rounded-full shadow-md shadow-secondary/25 transition min-h-[36px] flex items-center justify-center"
                 >
                   Daftar Akun
                 </Link>
@@ -129,7 +129,7 @@ export function Navbar() {
           <div className="flex md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-600 hover:bg-slate-100"
+              className="p-2 rounded-lg text-slate-200 hover:bg-white/10"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -140,70 +140,70 @@ export function Navbar() {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-slate-200 bg-white px-4 pt-2 pb-4 space-y-3">
+        <div className="md:hidden border-b border-primary-800 bg-primary px-4 pt-2 pb-4 space-y-3">
           <Link
             href="/"
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-slate-700 hover:text-primary py-1"
+            className="block text-sm font-medium text-slate-200 hover:text-white py-1"
           >
             Beranda
           </Link>
           <Link
             href="/evaluate"
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-slate-700 hover:text-primary py-1"
+            className="block text-sm font-medium text-slate-200 hover:text-white py-1"
           >
             Evaluasi CV
           </Link>
           <Link
             href="/dashboard"
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-slate-700 hover:text-primary py-1"
+            className="block text-sm font-medium text-slate-200 hover:text-white py-1"
           >
             Dashboard ATS
           </Link>
           <Link
             href="/jobs"
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-slate-700 hover:text-slate-900 py-1"
+            className="block text-sm font-medium text-slate-200 hover:text-white py-1"
           >
             Cari Lowongan
           </Link>
           <Link
             href="/about"
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-slate-700 hover:text-blue-600 py-1"
+            className="block text-sm font-medium text-slate-200 hover:text-white py-1"
           >
             Tentang Kami
           </Link>
-          <div className="pt-2 border-t border-slate-100 flex flex-col gap-2">
+          <div className="pt-2 border-t border-primary-800 flex flex-col gap-2">
             {user ? (
               <div className="flex items-center justify-between">
-                <span className="text-xs text-slate-600 font-medium">{user.name} ({user.role})</span>
+                <span className="text-xs text-slate-300 font-medium">{user.name} ({user.role})</span>
                 <button
                   onClick={handleLogout}
-                  className="text-xs text-rose-600 font-medium py-1"
+                  className="text-xs text-rose-400 font-medium py-1"
                 >
                   Keluar
                 </button>
               </div>
             ) : (
-              <>
+              <div className="flex flex-col gap-2 pt-1">
                 <Link
                   href="/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-center text-sm font-medium text-slate-700 border border-slate-200 py-2 rounded-lg"
+                  className="text-center text-sm font-medium text-slate-200 border border-white/20 py-2 rounded-full"
                 >
                   Masuk
                 </Link>
                 <Link
                   href="/register"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-center text-sm font-medium text-white bg-blue-600 py-2 rounded-lg"
+                  className="text-center text-sm font-medium text-white bg-secondary hover:bg-secondary-700 py-2 rounded-full shadow"
                 >
                   Daftar Akun
                 </Link>
-              </>
+              </div>
             )}
           </div>
         </div>
@@ -211,4 +211,3 @@ export function Navbar() {
     </header>
   );
 }
-
