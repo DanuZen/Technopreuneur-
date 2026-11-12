@@ -1,14 +1,15 @@
-# CareerMatch AI: Design System & Style Guide
+# Pasbana AI: Design System & Style Guide
 
-Panduan desain visual, komponen antarmuka (UI), prinsip aksesibilitas, dan standar komunikasi (*tone of voice*) untuk platform **CareerMatch AI**.
+Panduan desain visual, komponen antarmuka (UI), prinsip aksesibilitas, dan standar komunikasi (*tone of voice*) untuk platform **Pasbana AI**.
 
 ---
 
 ## 1. Identitas Brand & Prinsip Desain
 
-### 1.1 Brand Identity
-- **Nama Produk (Sementara):** CareerMatch AI
-- **Esensi Produk:** *Clarity in Career, Precision in Hiring.*
+### 1.1 Brand Identity & Filosofi Nama
+- **Nama Brand Resmi:** Pasbana (Pasbana AI)
+- **Asal-Usul & Makna Nama:** Berasal dari ungkapan bahasa Minang *"pas bana"* yang bermakna *"sangat pas"* atau *"sangat cocok"*. Filosofi ini menjadi inti dari setiap solusi: mempertemukan potensi terbaik pencari kerja dengan kebutuhan spesifik industri secara presisi.
+- **Esensi Produk (Tagline):** *Karir yang Baik Dimulai dari Pertemuan yang Pas Bana.*
 - **Karakter Visual:** Modern, bersih, terpercaya, humanis, dan berorientasi data tanpa kesan kaku atau mengintimidasi.
 
 ### 1.2 Prinsip Desain Utama
@@ -21,7 +22,7 @@ Panduan desain visual, komponen antarmuka (UI), prinsip aksesibilitas, dan stand
 
 ## 2. Palet Warna (Color System)
 
-Sistem warna resmi CareerMatch AI berakar pada tiga pilar warna identitas dengan rasio kontras tinggi (WCAG AA/AAA):
+Sistem warna resmi Pasbana AI berakar pada tiga pilar warna identitas dengan rasio kontras tinggi (WCAG AA/AAA):
 
 ### 2.1 Brand Core Colors
 | Peran Warna | Hex Code | Token Tailwind | Karakter & Penggunaan |
