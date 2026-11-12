@@ -21,12 +21,16 @@ import {
   Layers,
   ArrowRight,
   UploadCloud,
+  FileSpreadsheet,
 } from "lucide-react";
 import { api } from "@/lib/api";
 import { CVAnalysisResult, JobItem } from "@/types";
 import { AtsOnboardingWizard } from "@/components/dashboard/ats-onboarding-wizard";
 import { AtsCvPreview } from "@/components/dashboard/ats-cv-preview";
 import { CVDropzone } from "@/components/cv/cv-dropzone";
+import { AmbientBackground } from "@/components/evaluate/ambient-background";
+import { HeroGreeting } from "@/components/evaluate/hero-greeting";
+import { QuickScenarioChips } from "@/components/evaluate/quick-scenario-chips";
 
 function DashboardContent() {
   const searchParams = useSearchParams();
@@ -108,71 +112,103 @@ function DashboardContent() {
   // Tampilan 1: Mode Onboarding (Bagi pengguna yang belum punya CV atau memilih onboarding ATS)
   if (isOnboarding || !analysis) {
     return (
-      <main className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-10 py-10 space-y-8 animate-fade-in-up">
-        {/* Onboarding Welcome Header */}
-        <div className="max-w-3xl mx-auto text-center space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs font-semibold">
-            <Sparkles className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
-            <span>Penyusunan CV Standar Industri ATS</span>
-          </div>
+      <div className="relative min-h-[calc(100vh-4rem)] flex flex-col justify-between overflow-hidden">
+        <AmbientBackground />
 
-          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-primary">
-            Onboarding Pembuatan CV Standar ATS
-          </h1>
-
-          <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-            Belum memiliki berkas CV? Lengkapi 5 bagian esensial di bawah ini. Sistem cerdas Pasbana AI akan langsung menyusun dokumen CV berformat 1-kolom ramah mesin ATS dan mengukur skor kesiapan kerja Anda secara instan.
-          </p>
-
-          {/* Quick Choice: Wizard vs Drop File */}
-          <div className="pt-2 flex flex-wrap items-center justify-center gap-2">
-            <button
-              type="button"
-              onClick={() => setOnboardingMode("wizard")}
-              className={`px-5 py-2 text-xs font-semibold rounded-full border transition ${
-                onboardingMode === "wizard"
-                  ? "bg-primary text-white border-primary shadow-md shadow-primary/25"
-                  : "bg-white text-primary border-blue-200 hover:bg-blue-50/50"
-              }`}
+        <main className="relative z-10 max-w-[1360px] w-full mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-16 space-y-8 animate-fade-in-up">
+          {/* Top Bar Link */}
+          <div className="flex items-center justify-between">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 text-xs font-bold text-slate-600 hover:text-primary transition bg-white/80 hover:bg-white px-3.5 py-1.5 rounded-full border border-slate-200 shadow-xs"
             >
-              Isi Formulir Terpandu (Rekomendasi)
-            </button>
-            <button
-              type="button"
-              onClick={() => setOnboardingMode("dropzone")}
-              className={`px-5 py-2 text-xs font-semibold rounded-full border transition ${
-                onboardingMode === "dropzone"
-                  ? "bg-primary text-white border-primary shadow-md shadow-primary/25"
-                  : "bg-white text-primary border-blue-200 hover:bg-blue-50/50"
-              }`}
-            >
-              Saya Punya Berkas PDF / DOCX
-            </button>
-          </div>
-        </div>
+              <ArrowRight className="w-3.5 h-3.5 rotate-180" aria-hidden="true" />
+              <span>Kembali ke Beranda</span>
+            </Link>
 
-        {/* Content Body */}
-        <div className="max-w-3xl mx-auto">
-          {onboardingMode === "wizard" ? (
-            <AtsOnboardingWizard onComplete={handleOnboardingComplete} />
-          ) : (
-            <div className="p-8 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-4">
-              <div className="text-center space-y-1">
-                <h3 className="text-base font-bold text-slate-900">
-                  Unggah Berkas CV Anda
-                </h3>
-                <p className="text-xs text-slate-600">
-                  Format didukung: PDF atau DOCX (maksimal 5 MB).
-                </p>
-              </div>
-              <CVDropzone
-                autoRedirect={false}
-                onAnalysisComplete={handleDropzoneComplete}
-              />
+            <div className="inline-flex items-center gap-1.5 text-xs text-primary font-bold bg-blue-100/70 border border-blue-200 px-3.5 py-1.5 rounded-full">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Mode Onboarding ATS</span>
             </div>
-          )}
-        </div>
-      </main>
+          </div>
+
+          {/* Hero Greeting Component */}
+          <div className="max-w-3xl mx-auto">
+            <HeroGreeting />
+          </div>
+
+          {/* Floating Stage Card */}
+          <div className="max-w-4xl mx-auto w-full">
+            <div className="rounded-[32px] sm:rounded-[36px] clay-card border-2 border-blue-200/80 p-5 sm:p-9 space-y-6">
+              {/* Dual-Mode Selector Pills */}
+              <div className="grid grid-cols-2 gap-2 p-1.5 bg-[#edf2f9] rounded-full max-w-md mx-auto border border-blue-200/80 shadow-[inset_0_2px_4px_rgba(15,44,86,0.06)]">
+                <button
+                  type="button"
+                  onClick={() => setOnboardingMode("wizard")}
+                  className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-full text-xs font-bold transition-all duration-200 ${
+                    onboardingMode === "wizard"
+                      ? "bg-primary text-white shadow-md shadow-primary/25"
+                      : "text-primary hover:text-secondary font-semibold"
+                  }`}
+                >
+                  <FileSpreadsheet className="w-4 h-4" aria-hidden="true" />
+                  <span>Isi Formulir Terpandu</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setOnboardingMode("dropzone")}
+                  className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-full text-xs font-bold transition-all duration-200 ${
+                    onboardingMode === "dropzone"
+                      ? "bg-primary text-white shadow-md shadow-primary/25"
+                      : "text-primary hover:text-secondary font-semibold"
+                  }`}
+                >
+                  <UploadCloud className="w-4 h-4" aria-hidden="true" />
+                  <span>Unggah Berkas PDF/DOCX</span>
+                </button>
+              </div>
+
+              {/* Content Body */}
+              <div key={onboardingMode} className="pt-1 animate-fade-in-up">
+                {onboardingMode === "wizard" ? (
+                  <AtsOnboardingWizard onComplete={handleOnboardingComplete} />
+                ) : (
+                  <div className="p-4 sm:p-6 bg-white rounded-3xl border border-blue-100 shadow-sm space-y-4">
+                    <div className="text-center space-y-1">
+                      <h3 className="text-base font-bold text-primary">
+                        Unggah Berkas CV Anda
+                      </h3>
+                      <p className="text-xs text-slate-600">
+                        Format didukung: PDF atau DOCX (maksimal 5 MB).
+                      </p>
+                    </div>
+                    <CVDropzone
+                      autoRedirect={false}
+                      onAnalysisComplete={handleDropzoneComplete}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Quick Scenario Chips */}
+            <QuickScenarioChips
+              onPilihSampel={async () => {
+                const demoFile = new File(
+                  ["Contoh Dokumen Resume Standar ATS 1-Kolom Wira Fikri"],
+                  "CV_Wira_Fikri_ATS_Standard.pdf",
+                  { type: "application/pdf" }
+                );
+                const result = await api.uploadCV(demoFile);
+                handleDropzoneComplete(result);
+              }}
+              onPilihWizard={() => setOnboardingMode("wizard")}
+              onPilihInfoATS={() => setOnboardingMode("dropzone")}
+            />
+          </div>
+        </main>
+      </div>
     );
   }
 
