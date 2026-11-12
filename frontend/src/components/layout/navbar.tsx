@@ -58,25 +58,31 @@ export function Navbar() {
           <nav className="hidden md:flex items-center gap-6">
             <Link
               href="/"
-              className="text-xs font-semibold text-slate-700 hover:text-slate-900 transition"
+              className="text-xs font-semibold text-slate-700 hover:text-primary transition"
             >
               Beranda
             </Link>
             <Link
+              href="/evaluate"
+              className="text-xs font-semibold text-slate-700 hover:text-primary transition"
+            >
+              Evaluasi CV
+            </Link>
+            <Link
               href="/dashboard"
-              className="text-xs font-semibold text-slate-700 hover:text-slate-900 transition"
+              className="text-xs font-semibold text-slate-700 hover:text-primary transition"
             >
               Dashboard ATS
             </Link>
             <Link
               href="/jobs"
-              className="text-xs font-semibold text-slate-700 hover:text-slate-900 transition"
+              className="text-xs font-semibold text-slate-700 hover:text-primary transition"
             >
               Cari Lowongan
             </Link>
             <Link
               href="/about"
-              className="text-xs font-semibold text-slate-700 hover:text-slate-900 transition"
+              className="text-xs font-semibold text-slate-700 hover:text-primary transition"
             >
               Tentang Kami
             </Link>
@@ -138,14 +144,21 @@ export function Navbar() {
           <Link
             href="/"
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-slate-700 hover:text-slate-900 py-1"
+            className="block text-sm font-medium text-slate-700 hover:text-primary py-1"
           >
             Beranda
           </Link>
           <Link
+            href="/evaluate"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block text-sm font-medium text-slate-700 hover:text-primary py-1"
+          >
+            Evaluasi CV
+          </Link>
+          <Link
             href="/dashboard"
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-slate-700 hover:text-slate-900 py-1"
+            className="block text-sm font-medium text-slate-700 hover:text-primary py-1"
           >
             Dashboard ATS
           </Link>

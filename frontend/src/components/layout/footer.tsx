@@ -35,14 +35,14 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 text-xs text-slate-600">
               <li>
-                <a href="#onboarding-section" className="hover:text-slate-900 transition">
+                <Link href="/evaluate" className="hover:text-primary transition">
                   Evaluasi CV Digital
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#onboarding-section" className="hover:text-slate-900 transition">
+                <Link href="/evaluate?tab=questionnaire" className="hover:text-primary transition">
                   Kuesioner Terpandu
-                </a>
+                </Link>
               </li>
               <li>
                 <Link href="/jobs" className="hover:text-slate-900 transition">
