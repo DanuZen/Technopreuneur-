@@ -83,27 +83,27 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
   };
 
   return (
-    <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-10 shadow-xl shadow-slate-200/40 space-y-8 animate-fade-in-up max-w-3xl mx-auto">
+    <div className="bg-[#edf2f9]/70 rounded-[28px] border border-blue-200/80 p-6 sm:p-9 clay-well space-y-8 animate-fade-in-up max-w-3xl mx-auto">
       {/* Header & ATS Standards Indicator */}
-      <div className="space-y-4 border-b border-slate-100 pb-6">
+      <div className="space-y-4 border-b border-blue-100 pb-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
-            <span className="text-[11px] font-mono uppercase tracking-wider text-blue-600 font-semibold bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-primary font-bold bg-blue-100/80 px-3 py-1 rounded-full border border-blue-200">
               Onboarding Mandiri Standar ATS
             </span>
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mt-2">
+            <h2 className="text-xl sm:text-2xl font-bold text-primary mt-2">
               Lengkapi Data Profil CV Anda
             </h2>
           </div>
-          <span className="text-xs text-slate-500 font-medium">
+          <span className="text-xs text-primary font-bold bg-white px-3 py-1 rounded-full border border-blue-200 shadow-xs">
             Langkah {step} dari 5
           </span>
         </div>
 
         {/* Step Progress Bar */}
-        <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+        <div className="w-full bg-blue-100 h-2.5 rounded-full overflow-hidden">
           <div
-            className="bg-slate-900 h-full transition-all duration-300 rounded-full"
+            className="bg-gradient-to-r from-primary via-blue-600 to-secondary h-full transition-all duration-300 rounded-full"
             style={{ width: `${(step / 5) * 100}%` }}
           />
         </div>
@@ -138,7 +138,7 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
                 value={formData.fullName}
                 onChange={(e) => updateField("fullName", e.target.value)}
                 placeholder="Contoh: Wira Fikri Ramadanu"
-                className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-900"
+                className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               />
             </div>
 
@@ -151,7 +151,7 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
                 value={formData.email}
                 onChange={(e) => updateField("email", e.target.value)}
                 placeholder="nama@email.com"
-                className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-900"
+                className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               />
             </div>
 
@@ -164,7 +164,7 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
                 value={formData.phone || ""}
                 onChange={(e) => updateField("phone", e.target.value)}
                 placeholder="+62 812-3456-7890"
-                className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-900"
+                className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               />
             </div>
 
@@ -177,7 +177,7 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
                 value={formData.portfolioLink || ""}
                 onChange={(e) => updateField("portfolioLink", e.target.value)}
                 placeholder="https://linkedin.com/in/..."
-                className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-900"
+                className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               />
             </div>
           </div>
@@ -203,7 +203,7 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
               <select
                 value={formData.educationLevel}
                 onChange={(e) => updateField("educationLevel", e.target.value as QuestionnaireData["educationLevel"])}
-                className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-900 cursor-pointer"
+                className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary cursor-pointer"
               >
                 <option value="SMK">SMK / SMA</option>
                 <option value="D3">Diploma (D3)</option>
@@ -222,7 +222,7 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
                 value={formData.institution}
                 onChange={(e) => updateField("institution", e.target.value)}
                 placeholder="Contoh: Universitas Negeri Padang"
-                className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-900"
+                className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               />
             </div>
           </div>
@@ -237,7 +237,7 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
                 value={formData.major}
                 onChange={(e) => updateField("major", e.target.value)}
                 placeholder="Contoh: Teknik Informatika / Sistem Informasi"
-                className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-900"
+                className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               />
             </div>
 
@@ -250,7 +250,7 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
                 value={formData.graduationYear}
                 onChange={(e) => updateField("graduationYear", e.target.value)}
                 placeholder="2026"
-                className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-900"
+                className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               />
             </div>
           </div>
@@ -277,7 +277,7 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
               value={formData.targetRole}
               onChange={(e) => updateField("targetRole", e.target.value)}
               placeholder="Contoh: Junior Frontend Developer / UI Engineer"
-              className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-900"
+              className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
             />
             <p className="text-[11px] text-slate-400 mt-1.5">
               Gunakan nama peran standar industri untuk meningkatkan skor kecocokan kata kunci.
@@ -306,7 +306,7 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
               value={formData.technicalSkills}
               onChange={(e) => updateField("technicalSkills", e.target.value)}
               placeholder="Contoh: React, Next.js, TypeScript, Tailwind CSS, Git, REST API, Figma"
-              className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-900"
+              className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
             />
             <p className="text-[11px] text-slate-400 mt-1">
               Pisahkan setiap keahlian dengan tanda koma.
@@ -322,7 +322,7 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
               value={formData.softSkills}
               onChange={(e) => updateField("softSkills", e.target.value)}
               placeholder="Contoh: Problem Solving, Komunikasi Tim, Berpikir Analitis"
-              className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-900"
+              className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
             />
           </div>
         </div>
@@ -348,7 +348,7 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
               value={formData.experienceSummary}
               onChange={(e) => updateField("experienceSummary", e.target.value)}
               placeholder="Contoh: Memimpin tim 4 orang dalam merancang aplikasi antrean web tugas akhir kampus dengan Next.js. Mengoptimasi query database sehingga respon halaman meningkat 40%."
-              className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-900"
+              className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
             />
           </div>
 
@@ -362,13 +362,13 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
       )}
 
       {/* Wizard Footer Controls */}
-      <div className="flex items-center justify-between pt-6 border-t border-slate-100">
+      <div className="flex items-center justify-between pt-6 border-t border-slate-200">
         {step > 1 ? (
           <button
             type="button"
             onClick={handleBack}
             disabled={loading}
-            className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 transition min-h-[40px]"
+            className="px-5 py-2.5 text-xs font-semibold text-slate-700 hover:text-primary border border-slate-300 rounded-full hover:bg-slate-50 transition min-h-[40px]"
           >
             Kembali
           </button>
@@ -380,7 +380,7 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
           <button
             type="button"
             onClick={handleNext}
-            className="px-6 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-full shadow-sm transition min-h-[40px]"
+            className="px-7 py-2.5 bg-primary hover:bg-[#163861] text-white text-xs font-bold rounded-full shadow-md shadow-primary/25 transition min-h-[40px]"
           >
             Lanjut
           </button>
@@ -389,7 +389,7 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
             type="button"
             onClick={handleSubmit}
             disabled={loading}
-            className="px-6 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-full shadow-sm transition flex items-center gap-2 min-h-[44px] disabled:opacity-60"
+            className="px-7 py-3 bg-secondary hover:bg-secondary-700 text-white text-xs font-bold rounded-full shadow-lg shadow-secondary/30 transition flex items-center gap-2 min-h-[44px] disabled:opacity-60"
           >
             {loading ? (
               <>
@@ -398,7 +398,7 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
               </>
             ) : (
               <>
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" aria-hidden="true" />
+                <CheckCircle2 className="w-4 h-4 text-white" aria-hidden="true" />
                 <span>Buat CV Standar ATS &amp; Masuk Dashboard</span>
               </>
             )}
