@@ -12,12 +12,12 @@ export function DarkCtaBanner() {
         </p>
 
         <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
-          <a
-            href="#onboarding-section"
+          <Link
+            href="/evaluate"
             className="w-full sm:w-auto px-6 py-3 bg-secondary hover:bg-secondary-700 text-white text-xs sm:text-sm font-semibold rounded-full shadow-lg transition min-h-[44px] flex items-center justify-center"
           >
             Mulai Evaluasi CV Gratis
-          </a>
+          </Link>
           <Link
             href="/jobs"
             className="w-full sm:w-auto px-6 py-3 bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-semibold rounded-full border border-white/20 transition min-h-[44px] flex items-center justify-center"
