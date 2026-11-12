@@ -221,7 +221,7 @@ function DashboardContent() {
               <button
                 type="button"
                 onClick={() => setActiveTab("preview")}
-                className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-full shadow-sm transition flex items-center gap-1.5 min-h-[38px]"
+                className="px-4 py-2 bg-primary hover:bg-[#163861] text-white text-xs font-semibold rounded-full shadow-sm transition flex items-center gap-1.5 min-h-[38px]"
               >
                 <FileText className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>Lihat Dokumen CV ATS</span>
@@ -230,7 +230,7 @@ function DashboardContent() {
               <button
                 type="button"
                 onClick={handleResetToOnboarding}
-                className="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-full border border-slate-200 transition flex items-center gap-1.5 min-h-[38px]"
+                className="px-4 py-2 bg-white hover:bg-slate-50 text-primary text-xs font-semibold rounded-full border border-slate-200 transition flex items-center gap-1.5 min-h-[38px]"
               >
                 <RotateCcw className="w-3.5 h-3.5 text-slate-500" aria-hidden="true" />
                 <span>Ubah Data Onboarding</span>
@@ -240,9 +240,9 @@ function DashboardContent() {
 
           {/* ATS Overall Score Metric Box */}
           <div className="flex items-center gap-4 sm:gap-6 bg-slate-50 p-5 sm:p-6 rounded-2xl border border-slate-200">
-            <div className="relative flex items-center justify-center w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-white border-4 border-slate-900 shadow-sm">
+            <div className="relative flex items-center justify-center w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-white border-4 border-primary shadow-sm">
               <div className="text-center">
-                <span className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                <span className="text-2xl sm:text-3xl font-black text-primary tracking-tight">
                   {score}
                 </span>
                 <span className="block text-[10px] uppercase font-bold text-slate-500 tracking-wider">
@@ -255,7 +255,7 @@ function DashboardContent() {
               <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 font-semibold">
                 Skor Kesiapan ATS
               </span>
-              <p className="text-sm font-bold text-slate-900">
+              <p className="text-sm font-bold text-primary">
                 {isHighReady ? "Sangat Kompetitif" : "Cukup Siap Kerja"}
               </p>
               <p className="text-xs text-slate-600 leading-snug">
@@ -276,8 +276,8 @@ function DashboardContent() {
             onClick={() => setActiveTab("dimensions")}
             className={`px-4 py-2.5 rounded-t-xl text-xs sm:text-sm font-semibold transition-all border-b-2 flex items-center gap-2 ${
               activeTab === "dimensions"
-                ? "border-slate-900 text-slate-900 bg-white"
-                : "border-transparent text-slate-600 hover:text-slate-900 hover:border-slate-300"
+                ? "border-primary text-primary bg-white"
+                : "border-transparent text-slate-600 hover:text-primary hover:border-slate-300"
             }`}
           >
             <Target className="w-4 h-4" aria-hidden="true" />
@@ -289,8 +289,8 @@ function DashboardContent() {
             onClick={() => setActiveTab("preview")}
             className={`px-4 py-2.5 rounded-t-xl text-xs sm:text-sm font-semibold transition-all border-b-2 flex items-center gap-2 ${
               activeTab === "preview"
-                ? "border-slate-900 text-slate-900 bg-white"
-                : "border-transparent text-slate-600 hover:text-slate-900 hover:border-slate-300"
+                ? "border-primary text-primary bg-white"
+                : "border-transparent text-slate-600 hover:text-primary hover:border-slate-300"
             }`}
           >
             <FileText className="w-4 h-4" aria-hidden="true" />
@@ -302,13 +302,13 @@ function DashboardContent() {
             onClick={() => setActiveTab("jobs")}
             className={`px-4 py-2.5 rounded-t-xl text-xs sm:text-sm font-semibold transition-all border-b-2 flex items-center gap-2 ${
               activeTab === "jobs"
-                ? "border-slate-900 text-slate-900 bg-white"
-                : "border-transparent text-slate-600 hover:text-slate-900 hover:border-slate-300"
+                ? "border-primary text-primary bg-white"
+                : "border-transparent text-slate-600 hover:text-primary hover:border-slate-300"
             }`}
           >
             <Briefcase className="w-4 h-4" aria-hidden="true" />
             <span>Lowongan Kerja Cocok</span>
-            <span className="text-[10px] font-mono bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded-full font-bold">
+            <span className="text-[10px] font-mono bg-slate-100 text-primary px-1.5 py-0.5 rounded-full font-bold">
               {jobs.length}
             </span>
           </button>
@@ -318,8 +318,8 @@ function DashboardContent() {
             onClick={() => setActiveTab("upload")}
             className={`px-4 py-2.5 rounded-t-xl text-xs sm:text-sm font-semibold transition-all border-b-2 flex items-center gap-2 ${
               activeTab === "upload"
-                ? "border-slate-900 text-slate-900 bg-white"
-                : "border-transparent text-slate-600 hover:text-slate-900 hover:border-slate-300"
+                ? "border-primary text-primary bg-white"
+                : "border-transparent text-slate-600 hover:text-primary hover:border-slate-300"
             }`}
           >
             <UploadCloud className="w-4 h-4" aria-hidden="true" />
@@ -356,7 +356,7 @@ function DashboardContent() {
                 </div>
                 <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
                   <div
-                    className="bg-slate-900 h-full rounded-full"
+                    className="bg-primary h-full rounded-full"
                     style={{ width: `${analysis.dimensions.structure}%` }}
                   />
                 </div>
@@ -378,7 +378,7 @@ function DashboardContent() {
                 </div>
                 <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
                   <div
-                    className="bg-slate-900 h-full rounded-full"
+                    className="bg-primary h-full rounded-full"
                     style={{ width: `${analysis.dimensions.clarity}%` }}
                   />
                 </div>
@@ -400,7 +400,7 @@ function DashboardContent() {
                 </div>
                 <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
                   <div
-                    className="bg-slate-900 h-full rounded-full"
+                    className="bg-primary h-full rounded-full"
                     style={{ width: `${analysis.dimensions.measurableImpact}%` }}
                   />
                 </div>
@@ -422,7 +422,7 @@ function DashboardContent() {
                 </div>
                 <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
                   <div
-                    className="bg-slate-900 h-full rounded-full"
+                    className="bg-primary h-full rounded-full"
                     style={{ width: `${analysis.dimensions.skillRelevance}%` }}
                   />
                 </div>
@@ -444,7 +444,7 @@ function DashboardContent() {
                 </div>
                 <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
                   <div
-                    className="bg-slate-900 h-full rounded-full"
+                    className="bg-primary h-full rounded-full"
                     style={{ width: `${analysis.dimensions.completeness}%` }}
                   />
                 </div>

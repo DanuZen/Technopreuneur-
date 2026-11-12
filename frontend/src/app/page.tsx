@@ -34,16 +34,16 @@ export default function Home() {
         <div
           className="absolute inset-0 -top-16 -z-10 mx-auto max-w-5xl h-[460px] opacity-40 blur-3xl pointer-events-none animate-hero-mesh"
           style={{
-            background: "radial-gradient(circle at 50% 30%, rgba(203, 213, 225, 0.55) 0%, transparent 70%)",
+            background: "radial-gradient(circle at 50% 30%, rgba(15, 44, 86, 0.16) 0%, rgba(206, 39, 49, 0.08) 50%, transparent 80%)",
           }}
           aria-hidden="true"
         />
 
         {/* Hero Title (Cadence inspired by reference "Ask. Discover. Do more") */}
         <div className="space-y-4 max-w-4xl mx-auto animate-fade-in-up">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 leading-[1.12]">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-primary leading-[1.12]">
             Ukur. Temukan. <br className="hidden sm:inline" />
-            <span className="text-slate-900">Wujudkan Karir Impian.</span>
+            <span className="text-[#ce2731]">Wujudkan Karir Impian.</span>
           </h1>
           <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
             Platform evaluasi CV objektif 5 dimensi dan pencocokan lowongan kerja cerdas untuk fresh graduate dan talenta muda.
@@ -55,7 +55,7 @@ export default function Home() {
           {analysisResult ? (
             <CVAnalysisView analysis={analysisResult} onReset={handleReset} />
           ) : (
-            <div className="space-y-4 p-3 sm:p-6 rounded-3xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl shadow-slate-200/40 hover:border-slate-300 transition-all duration-300">
+            <div className="space-y-4 p-3 sm:p-6 rounded-3xl bg-[#fefefd]/95 backdrop-blur-md border border-slate-200/90 shadow-xl shadow-slate-200/40 hover:border-slate-300 transition-all duration-300">
               {/* Dual-Mode Selector Pills */}
               <div className="grid grid-cols-2 gap-2 p-1.5 bg-slate-100 rounded-full max-w-md mx-auto">
                 <button
@@ -63,8 +63,8 @@ export default function Home() {
                   onClick={() => setActiveTab("upload")}
                   className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-full text-xs font-semibold transition-all duration-200 ${
                     activeTab === "upload"
-                      ? "bg-slate-900 text-white shadow-sm"
-                      : "text-slate-600 hover:text-slate-900"
+                      ? "bg-primary text-white shadow-sm"
+                      : "text-slate-600 hover:text-primary"
                   }`}
                 >
                   <UploadCloud className="w-3.5 h-3.5" aria-hidden="true" />
@@ -76,8 +76,8 @@ export default function Home() {
                   onClick={() => setActiveTab("questionnaire")}
                   className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-full text-xs font-semibold transition-all duration-200 ${
                     activeTab === "questionnaire"
-                      ? "bg-slate-900 text-white shadow-sm"
-                      : "text-slate-600 hover:text-slate-900"
+                      ? "bg-primary text-white shadow-sm"
+                      : "text-slate-600 hover:text-primary"
                   }`}
                 >
                   <FileSpreadsheet className="w-3.5 h-3.5" aria-hidden="true" />
@@ -91,12 +91,12 @@ export default function Home() {
                   <CVDropzone onAnalysisComplete={handleAnalysisSuccess} />
                 ) : (
                   <div className="p-6 sm:p-8 bg-white rounded-2xl border border-slate-200/90 shadow-sm text-center space-y-4">
-                    <div className="w-12 h-12 rounded-2xl bg-slate-100 text-slate-900 flex items-center justify-center mx-auto">
+                    <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mx-auto">
                       <FileSpreadsheet className="w-6 h-6" aria-hidden="true" />
                     </div>
 
                     <div className="space-y-1.5 max-w-lg mx-auto">
-                      <h3 className="text-base sm:text-lg font-bold text-slate-900">
+                      <h3 className="text-base sm:text-lg font-bold text-primary">
                         Belum Memiliki Berkas CV Siap Pakai?
                       </h3>
                       <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
@@ -108,7 +108,7 @@ export default function Home() {
                       <button
                         type="button"
                         onClick={() => router.push("/dashboard?onboarding=true")}
-                        className="w-full sm:w-auto px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-semibold rounded-full shadow-md transition flex items-center justify-center gap-2 min-h-[44px]"
+                        className="w-full sm:w-auto px-6 py-3 bg-primary hover:bg-[#163861] text-white text-xs sm:text-sm font-semibold rounded-full shadow-md transition flex items-center justify-center gap-2 min-h-[44px]"
                       >
                         <span>Mulai Onboarding CV ATS di Dashboard</span>
                         <ArrowRight className="w-4 h-4" aria-hidden="true" />
