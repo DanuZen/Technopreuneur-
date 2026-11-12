@@ -1,4 +1,4 @@
-# CareerMatch AI — Design System & Style Guide
+# CareerMatch AI: Design System & Style Guide
 
 Panduan desain visual, komponen antarmuka (UI), prinsip aksesibilitas, dan standar komunikasi (*tone of voice*) untuk platform **CareerMatch AI**.
 
@@ -21,30 +21,38 @@ Panduan desain visual, komponen antarmuka (UI), prinsip aksesibilitas, dan stand
 
 ## 2. Palet Warna (Color System)
 
-Sistem warna dioptimalkan untuk rasio kontras tinggi (WCAG AA/AAA) baik pada mode terang (*light mode*) maupun mode gelap (*dark mode*).
+Sistem warna resmi CareerMatch AI berakar pada tiga pilar warna identitas dengan rasio kontras tinggi (WCAG AA/AAA):
 
-### 2.1 Brand & Neutral Colors
+### 2.1 Brand Core Colors
+| Peran Warna | Hex Code | Token Tailwind | Karakter & Penggunaan |
+| :--- | :--- | :--- | :--- |
+| **Primary** | `#0f2c56` | `primary`, `brand-primary` | Deep Navy: Tombol aksi utama, header navigasi, display typography, border kontras |
+| **Secondary** | `#ce2731` | `secondary`, `brand-secondary` | Crimson Red: Aksen visual, sorotan status, CTA perhatian tinggi, badge penanda |
+| **Third (Surface)** | `#fefefd` | `surface-0`, `brand-third` | Warm Soft White: Latar belakang kanvas, kartu putih lembut, kontras teks optimal |
+
+### 2.2 Brand & Neutral Palette
 | Token | Hex (Light) | Hex (Dark) | Kegunaan |
 | :--- | :--- | :--- | :--- |
-| `primary-600` | `#2563EB` | `#3B82F6` | Warna utama tombol aksi (CTA), link aktif, status fokus |
-| `primary-700` | `#1D4ED8` | `#60A5FA` | State hover tombol primary |
-| `primary-50` | `#EFF6FF` | `#1E293B` | Background highlight komponen terpilih |
-| `surface-0` | `#FFFFFF` | `#0F172A` | Background kanvas dasar halaman |
-| `surface-50` | `#F8FAFC` | `#1E293B` | Background kartu, section alternate, input form |
-| `surface-100` | `#F1F5F9` | `#334155` | Border kartu, garis pembatas (divider) |
-| `text-primary`| `#0F172A` | `#F8FAFC` | Teks judul utama, teks isi penting |
-| `text-secondary`| `#475569` | `#94A3B8` | Subtitle, deskripsi panjang, label metadata |
-| `text-muted` | `#94A3B8` | `#64748B` | Placeholder form, tanggal relatif, teks disclaimer |
+| `primary` | `#0f2c56` | `#8eb3d6` | Warna utama identitas brand dan teks judul |
+| `primary-hover` | `#163861` | `#bad0e6` | State hover tombol primary |
+| `secondary` | `#ce2731` | `#f57579` | Warna aksen sekunder dan highlight aktif |
+| `secondary-hover` | `#b01e27` | `#faa9ab` | State hover elemen secondary |
+| `surface-0` | `#fefefd` | `#081b37` | Background kanvas dasar halaman |
+| `surface-50` | `#f8f9fa` | `#0f2c56` | Background kartu, section alternate, input form |
+| `surface-100` | `#f1f3f5` | `#163861` | Border kartu, garis pembatas (divider) |
+| `text-primary`| `#0f2c56` | `#fefefd` | Teks judul utama, teks isi penting |
+| `text-secondary`| `#475569` | `#dbe5f2` | Subtitle, deskripsi panjang, label metadata |
+| `text-muted` | `#94a3b8` | `#8eb3d6` | Placeholder form, tanggal relatif, teks disclaimer |
 
-### 2.2 Semantic & Scoring Colors
+### 2.3 Semantic & Scoring Colors
 Digunakan khusus untuk indikator visual skor CV dan tingkat kecocokan lowongan:
 
 | Kategori | Range Skor | Hex Warna | Token Tailwind | Konteks Penggunaan |
 | :--- | :--- | :--- | :--- | :--- |
-| **Sangat Cocok / Unggul** | $80 - 100$ | `#10B981` | `emerald-500` | Badge skor tinggi, kelebihan CV, skill terpenuhi |
-| **Cocok / Cukup** | $60 - 79$ | `#F59E0B` | `amber-500` | Skor moderat, saran perbaikan minor |
-| **Perlu Peningkatan / Gap** | $0 - 59$ | `#EF4444` | `rose-500` | Missing skills, kelemahan format CV, status ditolak |
-| **Info / Netral** | - | `#0EA5E9` | `sky-500` | Badge sumber lowongan (Internal/Eksternal) |
+| **Sangat Cocok / Unggul** | 80 - 100 | `#10B981` | `emerald-500` | Badge skor tinggi, kelebihan CV, skill terpenuhi |
+| **Cocok / Cukup** | 60 - 79 | `#F59E0B` | `amber-500` | Skor moderat, saran perbaikan minor |
+| **Perlu Peningkatan / Gap** | 0 - 59 | `#ce2731` | `secondary` | Missing skills, kelemahan format CV, status penolakan |
+| **Info / Netral** | - | `#0f2c56` | `primary` | Badge sumber lowongan resmi |
 
 ---
 
@@ -79,13 +87,13 @@ Komponen sentral di halaman awal pencari kerja:
 - **Error / Scan Warning Alert:** Panel peringatan berwarna kuning `amber-50` bertuliskan: *"Dokumen terbaca kosong. CV Anda terdeteksi sebagai scan gambar. Unggah file dokumen teks digital agar AI dapat membaca isinya."*
 
 ### 4.2 Kartu Visualisasi Skor CV (Scorecard)
-- **Ringkasan Skor:** Lingkaran skor radial (*radial progress ring*) besar menampilkan angka 0–100 dengan warna dinamis (merah/kuning/hijau).
+- **Ringkasan Skor:** Lingkaran skor radial (*radial progress ring*) besar menampilkan angka 0-100 dengan warna dinamis (merah/kuning/hijau).
 - **Breakdown 5 Dimensi:**
-  1. *Struktur Dokumen* (0–20 pt)
-  2. *Kejelasan Narasi* (0–20 pt)
-  3. *Pencapaian Terukur & Angka* (0–20 pt)
-  4. *Relevansi Keahlian* (0–20 pt)
-  5. *Kelengkapan Informasi* (0–20 pt)
+  1. *Struktur Dokumen* (0-20 pt)
+  2. *Kejelasan Narasi* (0-20 pt)
+  3. *Pencapaian Terukur & Angka* (0-20 pt)
+  4. *Relevansi Keahlian* (0-20 pt)
+  5. *Kelengkapan Informasi* (0-20 pt)
 - Disajikan dalam bentuk horizontal bar meter dengan nilai per aspek.
 - **Section Kekuatan & Kelemahan:**
   - *Kekuatan:* Menggunakan icon centang hijau (`CheckCircle2`) dengan kalimat penjelas.
@@ -124,7 +132,7 @@ Format kartu lowongan yang dirancang mudah dibaca cepat:
 - **Spasi Konsisten (Spacing Scale):**
   - Spasi antar elemen mikro: `gap-2` (8px), `gap-3` (12px)
   - Padding kartu standar: `p-4` (16px pada mobile), `p-6` (24px pada desktop)
-  - Spasi antar section utama: `py-8` hingga `py-12` (32px – 48px)
+  - Spasi antar section utama: `py-8` hingga `py-12` (32px sampai 48px)
 - **Komponen Mobile:**
   - Modal dialog pada mobile beralih fungsi menjadi *Bottom Sheet* / drawer yang bisa digeser dengan mudah menggunakan jempol.
   - Tabel data pelamar pada layar sempit diubah menjadi list kartu (*card stack*) untuk mencegah scrolling horizontal yang merepotkan.
