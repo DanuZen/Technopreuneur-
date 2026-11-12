@@ -111,17 +111,17 @@ function DashboardContent() {
       <main className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-10 py-10 space-y-8 animate-fade-in-up">
         {/* Onboarding Welcome Header */}
         <div className="max-w-3xl mx-auto text-center space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-800">
-            <Sparkles className="w-3.5 h-3.5 text-slate-700" aria-hidden="true" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs font-semibold">
+            <Sparkles className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
             <span>Penyusunan CV Standar Industri ATS</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
+          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-primary">
             Onboarding Pembuatan CV Standar ATS
           </h1>
 
           <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-            Belum memiliki berkas CV? Lengkapi 5 bagian esensial di bawah ini. Sistem cerdas CareerMatch akan langsung menyusun dokumen CV berformat 1-kolom ramah mesin ATS dan mengukur skor kesiapan kerja Anda secara instan.
+            Belum memiliki berkas CV? Lengkapi 5 bagian esensial di bawah ini. Sistem cerdas Pasbana AI akan langsung menyusun dokumen CV berformat 1-kolom ramah mesin ATS dan mengukur skor kesiapan kerja Anda secara instan.
           </p>
 
           {/* Quick Choice: Wizard vs Drop File */}
@@ -129,10 +129,10 @@ function DashboardContent() {
             <button
               type="button"
               onClick={() => setOnboardingMode("wizard")}
-              className={`px-4 py-2 text-xs font-semibold rounded-full border transition ${
+              className={`px-5 py-2 text-xs font-semibold rounded-full border transition ${
                 onboardingMode === "wizard"
-                  ? "bg-slate-900 text-white border-slate-900 shadow-sm"
-                  : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"
+                  ? "bg-primary text-white border-primary shadow-md shadow-primary/25"
+                  : "bg-white text-primary border-blue-200 hover:bg-blue-50/50"
               }`}
             >
               Isi Formulir Terpandu (Rekomendasi)
@@ -140,10 +140,10 @@ function DashboardContent() {
             <button
               type="button"
               onClick={() => setOnboardingMode("dropzone")}
-              className={`px-4 py-2 text-xs font-semibold rounded-full border transition ${
+              className={`px-5 py-2 text-xs font-semibold rounded-full border transition ${
                 onboardingMode === "dropzone"
-                  ? "bg-slate-900 text-white border-slate-900 shadow-sm"
-                  : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"
+                  ? "bg-primary text-white border-primary shadow-md shadow-primary/25"
+                  : "bg-white text-primary border-blue-200 hover:bg-blue-50/50"
               }`}
             >
               Saya Punya Berkas PDF / DOCX
@@ -183,30 +183,36 @@ function DashboardContent() {
   return (
     <main className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-10 py-8 space-y-8 animate-fade-in-up">
       {/* CANDIDATE HEADER HERO CARD */}
-      <section className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 shadow-sm">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+      <section className="bg-gradient-to-br from-[#0f2c56] via-[#163861] to-[#0a1e3b] text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-primary-700/60 relative overflow-hidden">
+        {/* Subtle decorative glow */}
+        <div
+          className="absolute -right-20 -top-20 w-80 h-80 bg-white/5 rounded-full blur-3xl pointer-events-none"
+          aria-hidden="true"
+        />
+
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
           {/* Profile Identity Details */}
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-semibold">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-xs font-semibold backdrop-blur-sm">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
                 Format ATS Terverifikasi
               </span>
-              <span className="text-xs text-slate-500 font-mono">
+              <span className="text-xs text-slate-300 font-mono bg-white/10 px-2.5 py-0.5 rounded-full border border-white/15">
                 ID Dokumen: {analysis.cvId}
               </span>
             </div>
 
             <div>
-              <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900">
+              <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
                 {analysis.profile.fullName}
               </h1>
-              <p className="text-sm sm:text-base font-semibold text-slate-700 mt-0.5">
+              <p className="text-sm sm:text-base font-semibold text-slate-200 mt-0.5">
                 {analysis.profile.headline || "Kandidat Profesional Muda"}
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-4 text-xs text-slate-600">
+            <div className="flex flex-wrap items-center gap-4 text-xs text-slate-300">
               {analysis.profile.contactEmail && (
                 <span>Email: {analysis.profile.contactEmail}</span>
               )}
@@ -221,44 +227,44 @@ function DashboardContent() {
               <button
                 type="button"
                 onClick={() => setActiveTab("preview")}
-                className="px-4 py-2 bg-primary hover:bg-[#163861] text-white text-xs font-semibold rounded-full shadow-sm transition flex items-center gap-1.5 min-h-[38px]"
+                className="px-5 py-2.5 bg-white hover:bg-slate-100 text-primary text-xs font-bold rounded-full shadow-md transition flex items-center gap-1.5 min-h-[38px]"
               >
-                <FileText className="w-3.5 h-3.5" aria-hidden="true" />
+                <FileText className="w-3.5 h-3.5 text-secondary" aria-hidden="true" />
                 <span>Lihat Dokumen CV ATS</span>
               </button>
 
               <button
                 type="button"
                 onClick={handleResetToOnboarding}
-                className="px-4 py-2 bg-white hover:bg-slate-50 text-primary text-xs font-semibold rounded-full border border-slate-200 transition flex items-center gap-1.5 min-h-[38px]"
+                className="px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white text-xs font-semibold rounded-full border border-white/20 backdrop-blur-sm transition flex items-center gap-1.5 min-h-[38px]"
               >
-                <RotateCcw className="w-3.5 h-3.5 text-slate-500" aria-hidden="true" />
+                <RotateCcw className="w-3.5 h-3.5 text-slate-300" aria-hidden="true" />
                 <span>Ubah Data Onboarding</span>
               </button>
             </div>
           </div>
 
           {/* ATS Overall Score Metric Box */}
-          <div className="flex items-center gap-4 sm:gap-6 bg-slate-50 p-5 sm:p-6 rounded-2xl border border-slate-200">
-            <div className="relative flex items-center justify-center w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-white border-4 border-primary shadow-sm">
+          <div className="flex items-center gap-4 sm:gap-6 bg-white/10 backdrop-blur-md p-5 sm:p-6 rounded-2xl border border-white/20 shadow-inner">
+            <div className="relative flex items-center justify-center w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-white/15 border-4 border-emerald-400 shadow-lg">
               <div className="text-center">
-                <span className="text-2xl sm:text-3xl font-black text-primary tracking-tight">
+                <span className="text-2xl sm:text-3xl font-black text-white tracking-tight">
                   {score}
                 </span>
-                <span className="block text-[10px] uppercase font-bold text-slate-500 tracking-wider">
+                <span className="block text-[10px] uppercase font-bold text-emerald-300 tracking-wider">
                   / 100
                 </span>
               </div>
             </div>
 
             <div className="space-y-1.5 max-w-[200px]">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 font-semibold">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-slate-300 font-semibold">
                 Skor Kesiapan ATS
               </span>
-              <p className="text-sm font-bold text-primary">
+              <p className="text-sm font-bold text-emerald-300">
                 {isHighReady ? "Sangat Kompetitif" : "Cukup Siap Kerja"}
               </p>
-              <p className="text-xs text-slate-600 leading-snug">
+              <p className="text-xs text-slate-200 leading-snug">
                 {isHighReady
                   ? "Struktur berkas siap dipindai sistem parser lowongan kerja tanpa hambatan."
                   : "Terapkan rekomendasi optimasi untuk memaksimalkan peluang panggilan wawancara."}
@@ -343,112 +349,112 @@ function DashboardContent() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-              {/* Dimensi 1: Struktur ATS */}
-              <div className="p-4 bg-white rounded-2xl border border-slate-200/90 shadow-sm space-y-2">
-                <span className="text-[11px] font-mono uppercase text-slate-500 font-semibold">
+              {/* Dimensi 1: Struktur ATS (Navy / Blue) */}
+              <div className="p-4 bg-gradient-to-br from-blue-50/90 via-indigo-50/40 to-white rounded-2xl border border-blue-200/90 shadow-sm space-y-2">
+                <span className="text-[11px] font-mono uppercase text-primary font-bold">
                   1. Struktur ATS
                 </span>
                 <div className="flex items-baseline justify-between">
-                  <span className="text-2xl font-black text-slate-900">
+                  <span className="text-2xl font-black text-primary">
                     {analysis.dimensions.structure}
                   </span>
-                  <span className="text-xs text-slate-500 font-semibold">/ 100</span>
+                  <span className="text-xs text-primary/70 font-semibold">/ 100</span>
                 </div>
-                <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                <div className="w-full bg-blue-100 h-2 rounded-full overflow-hidden">
                   <div
                     className="bg-primary h-full rounded-full"
                     style={{ width: `${analysis.dimensions.structure}%` }}
                   />
                 </div>
-                <p className="text-[11px] text-slate-600 leading-tight">
+                <p className="text-[11px] text-slate-700 leading-tight">
                   Format 1-kolom bersih bebas tabel rumit dan teks kotak tak terbaca.
                 </p>
               </div>
 
-              {/* Dimensi 2: Kejelasan Bahasa */}
-              <div className="p-4 bg-white rounded-2xl border border-slate-200/90 shadow-sm space-y-2">
-                <span className="text-[11px] font-mono uppercase text-slate-500 font-semibold">
+              {/* Dimensi 2: Kejelasan Bahasa (Sky / Cyan) */}
+              <div className="p-4 bg-gradient-to-br from-sky-50/90 via-cyan-50/40 to-white rounded-2xl border border-sky-200/90 shadow-sm space-y-2">
+                <span className="text-[11px] font-mono uppercase text-sky-800 font-bold">
                   2. Kejelasan Bahasa
                 </span>
                 <div className="flex items-baseline justify-between">
-                  <span className="text-2xl font-black text-slate-900">
+                  <span className="text-2xl font-black text-sky-900">
                     {analysis.dimensions.clarity}
                   </span>
-                  <span className="text-xs text-slate-500 font-semibold">/ 100</span>
+                  <span className="text-xs text-sky-700 font-semibold">/ 100</span>
                 </div>
-                <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                <div className="w-full bg-sky-100 h-2 rounded-full overflow-hidden">
                   <div
-                    className="bg-primary h-full rounded-full"
+                    className="bg-sky-600 h-full rounded-full"
                     style={{ width: `${analysis.dimensions.clarity}%` }}
                   />
                 </div>
-                <p className="text-[11px] text-slate-600 leading-tight">
+                <p className="text-[11px] text-slate-700 leading-tight">
                   Kalimat aksi langsung, lugas, dan bebas kesalahan ejaan mendasar.
                 </p>
               </div>
 
-              {/* Dimensi 3: Dampak Terukur */}
-              <div className="p-4 bg-white rounded-2xl border border-slate-200/90 shadow-sm space-y-2">
-                <span className="text-[11px] font-mono uppercase text-slate-500 font-semibold">
+              {/* Dimensi 3: Dampak Terukur (Emerald / Teal) */}
+              <div className="p-4 bg-gradient-to-br from-emerald-50/90 via-teal-50/40 to-white rounded-2xl border border-emerald-200/90 shadow-sm space-y-2">
+                <span className="text-[11px] font-mono uppercase text-emerald-800 font-bold">
                   3. Dampak Terukur
                 </span>
                 <div className="flex items-baseline justify-between">
-                  <span className="text-2xl font-black text-slate-900">
+                  <span className="text-2xl font-black text-emerald-950">
                     {analysis.dimensions.measurableImpact}
                   </span>
-                  <span className="text-xs text-slate-500 font-semibold">/ 100</span>
+                  <span className="text-xs text-emerald-700 font-semibold">/ 100</span>
                 </div>
-                <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                <div className="w-full bg-emerald-100 h-2 rounded-full overflow-hidden">
                   <div
-                    className="bg-primary h-full rounded-full"
+                    className="bg-emerald-600 h-full rounded-full"
                     style={{ width: `${analysis.dimensions.measurableImpact}%` }}
                   />
                 </div>
-                <p className="text-[11px] text-slate-600 leading-tight">
+                <p className="text-[11px] text-slate-700 leading-tight">
                   Kuantifikasi hasil capaian kerja dengan angka dan persentase nyata.
                 </p>
               </div>
 
-              {/* Dimensi 4: Relevansi Skill */}
-              <div className="p-4 bg-white rounded-2xl border border-slate-200/90 shadow-sm space-y-2">
-                <span className="text-[11px] font-mono uppercase text-slate-500 font-semibold">
+              {/* Dimensi 4: Relevansi Skill (Crimson / Rose) */}
+              <div className="p-4 bg-gradient-to-br from-rose-50/90 via-red-50/40 to-white rounded-2xl border border-rose-200/90 shadow-sm space-y-2">
+                <span className="text-[11px] font-mono uppercase text-secondary font-bold">
                   4. Relevansi Skill
                 </span>
                 <div className="flex items-baseline justify-between">
-                  <span className="text-2xl font-black text-slate-900">
+                  <span className="text-2xl font-black text-secondary">
                     {analysis.dimensions.skillRelevance}
                   </span>
-                  <span className="text-xs text-slate-500 font-semibold">/ 100</span>
+                  <span className="text-xs text-secondary/70 font-semibold">/ 100</span>
                 </div>
-                <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                <div className="w-full bg-rose-100 h-2 rounded-full overflow-hidden">
                   <div
-                    className="bg-primary h-full rounded-full"
+                    className="bg-secondary h-full rounded-full"
                     style={{ width: `${analysis.dimensions.skillRelevance}%` }}
                   />
                 </div>
-                <p className="text-[11px] text-slate-600 leading-tight">
+                <p className="text-[11px] text-slate-700 leading-tight">
                   Kesesuaian kata kunci teknis dengan kebutuhan rekrutmen terkini.
                 </p>
               </div>
 
-              {/* Dimensi 5: Kelengkapan Profil */}
-              <div className="p-4 bg-white rounded-2xl border border-slate-200/90 shadow-sm space-y-2">
-                <span className="text-[11px] font-mono uppercase text-slate-500 font-semibold">
+              {/* Dimensi 5: Kelengkapan Profil (Amber / Orange) */}
+              <div className="p-4 bg-gradient-to-br from-amber-50/90 via-yellow-50/40 to-white rounded-2xl border border-amber-200/90 shadow-sm space-y-2">
+                <span className="text-[11px] font-mono uppercase text-amber-800 font-bold">
                   5. Kelengkapan Profil
                 </span>
                 <div className="flex items-baseline justify-between">
-                  <span className="text-2xl font-black text-slate-900">
+                  <span className="text-2xl font-black text-amber-950">
                     {analysis.dimensions.completeness}
                   </span>
-                  <span className="text-xs text-slate-500 font-semibold">/ 100</span>
+                  <span className="text-xs text-amber-700 font-semibold">/ 100</span>
                 </div>
-                <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                <div className="w-full bg-amber-100 h-2 rounded-full overflow-hidden">
                   <div
-                    className="bg-primary h-full rounded-full"
+                    className="bg-amber-600 h-full rounded-full"
                     style={{ width: `${analysis.dimensions.completeness}%` }}
                   />
                 </div>
-                <p className="text-[11px] text-slate-600 leading-tight">
+                <p className="text-[11px] text-slate-700 leading-tight">
                   Kelengkapan data kontak resmi, riwayat pendidikan, dan portofolio.
                 </p>
               </div>
@@ -457,39 +463,39 @@ function DashboardContent() {
 
           {/* STRENGTHS & RECOMMENDATIONS TWO-COLUMN CARD */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Strengths */}
-            <div className="p-6 bg-white rounded-3xl border border-slate-200/90 shadow-sm space-y-4">
+            {/* Strengths (Emerald Tinted) */}
+            <div className="p-6 bg-gradient-to-br from-emerald-50/90 via-teal-50/40 to-white rounded-3xl border border-emerald-200/90 shadow-sm space-y-4">
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" aria-hidden="true" />
-                <h3 className="text-sm font-bold text-slate-900">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-600" aria-hidden="true" />
+                <h3 className="text-sm font-bold text-emerald-950">
                   Kekuatan Utama Dokumen CV Anda
                 </h3>
               </div>
 
               <ul className="space-y-3">
                 {analysis.strengths.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-700">
+                  <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-800">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" aria-hidden="true" />
-                    <span className="leading-relaxed">{item}</span>
+                    <span className="leading-relaxed font-medium">{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Recommendations for Improvement */}
-            <div className="p-6 bg-white rounded-3xl border border-slate-200/90 shadow-sm space-y-4">
+            {/* Recommendations for Improvement (Amber Tinted) */}
+            <div className="p-6 bg-gradient-to-br from-amber-50/90 via-orange-50/40 to-white rounded-3xl border border-amber-200/90 shadow-sm space-y-4">
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-amber-500" aria-hidden="true" />
-                <h3 className="text-sm font-bold text-slate-900">
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-600" aria-hidden="true" />
+                <h3 className="text-sm font-bold text-amber-950">
                   Peluang Optimasi &amp; Rekomendasi
                 </h3>
               </div>
 
               <ul className="space-y-3">
                 {analysis.recommendations.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-700">
+                  <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-800">
                     <ChevronRight className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" aria-hidden="true" />
-                    <span className="leading-relaxed">{item}</span>
+                    <span className="leading-relaxed font-medium">{item}</span>
                   </li>
                 ))}
               </ul>
