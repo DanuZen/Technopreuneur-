@@ -67,13 +67,13 @@ function EvaluateContent() {
         <div className="flex items-center justify-between shrink-0">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-600 hover:text-primary transition bg-white/80 hover:bg-white px-3 py-1 rounded-full border border-slate-200 shadow-xs"
+            className="inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-600 hover:text-primary transition bg-white/90 hover:bg-white px-3 py-1 rounded-full shadow-xs"
           >
             <ArrowLeft className="w-3 h-3" aria-hidden="true" />
             <span>Kembali ke Beranda</span>
           </Link>
 
-          <div className="inline-flex items-center gap-1.5 text-[11px] text-primary font-bold bg-blue-100/70 border border-blue-200 px-3 py-1 rounded-full">
+          <div className="inline-flex items-center gap-1.5 text-[11px] text-primary font-bold bg-blue-100/70 px-3 py-1 rounded-full shadow-2xs">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             <span>Format ATS Terverifikasi</span>
           </div>
@@ -86,9 +86,9 @@ function EvaluateContent() {
 
         {/* FLOATING ACTION STAGE CARD (Fitted & Responsive) */}
         <div className="shrink-0 w-full space-y-2 sm:space-y-2.5">
-          <div className="rounded-[24px] sm:rounded-[30px] clay-card border border-blue-200/80 p-3.5 sm:p-5 space-y-3 shadow-xl">
+          <div className="rounded-[24px] sm:rounded-[30px] clay-card p-3.5 sm:p-5 space-y-3 shadow-xl">
             {/* Dual-Mode Selector Pills (Well Container) */}
-            <div className="grid grid-cols-2 gap-1.5 p-1 bg-[#edf2f9] rounded-full max-w-sm mx-auto border border-blue-200/80 shadow-[inset_0_2px_4px_rgba(15,44,86,0.06)]">
+            <div className="grid grid-cols-2 gap-1.5 p-1 bg-[#edf2f9] rounded-full max-w-sm mx-auto shadow-[inset_0_2px_4px_rgba(15,44,86,0.06)]">
               <button
                 type="button"
                 onClick={() => setActiveTab("upload")}

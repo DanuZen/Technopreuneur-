@@ -73,14 +73,14 @@ export function AppHeader({
   };
 
   return (
-    <header className="sticky top-0 z-30 flex min-h-[58px] sm:min-h-[64px] w-full shrink-0 items-center justify-between gap-3 bg-white/90 backdrop-blur-md px-3.5 sm:px-6 py-2 border-b border-blue-200/70 shadow-2xs">
+    <header className="sticky top-0 z-30 flex min-h-[58px] sm:min-h-[64px] w-full shrink-0 items-center justify-between gap-3 bg-white/95 backdrop-blur-md px-3.5 sm:px-6 py-2 shadow-2xs">
       {/* Left: Toggles & Title */}
       <div className="flex items-center gap-2.5 min-w-0">
         {/* Mobile Hamburger Toggle */}
         <button
           type="button"
           onClick={onToggleMobile}
-          className="flex lg:hidden h-10 w-10 items-center justify-center rounded-xl bg-white hover:bg-blue-50 text-primary border border-blue-200/80 shadow-xs cursor-pointer"
+          className="flex lg:hidden h-10 w-10 items-center justify-center rounded-xl bg-white hover:bg-blue-50 text-primary shadow-xs cursor-pointer"
           aria-label="Buka menu samping navigasi"
         >
           <Menu className="w-4 h-4" />
@@ -90,7 +90,7 @@ export function AppHeader({
         <button
           type="button"
           onClick={onToggleDesktopCollapse}
-          className="hidden lg:flex h-10 w-10 items-center justify-center rounded-xl bg-white hover:bg-blue-50 text-slate-600 hover:text-primary border border-blue-200/80 shadow-xs transition-colors cursor-pointer"
+          className="hidden lg:flex h-10 w-10 items-center justify-center rounded-xl bg-white hover:bg-blue-50 text-slate-600 hover:text-primary shadow-xs transition-colors cursor-pointer"
           title={isDesktopCollapsed ? "Perluas menu samping" : "Lipat menu samping (Rail mode)"}
           aria-label="Buka/tutup menu samping"
         >
@@ -129,7 +129,7 @@ export function AppHeader({
             <button
               type="button"
               onClick={() => setMenuOpen((s) => !s)}
-              className="flex items-center gap-2 py-1.5 px-2.5 rounded-full bg-white hover:bg-blue-50 border border-blue-200/80 shadow-xs text-xs font-bold text-primary transition-all cursor-pointer"
+              className="flex items-center gap-2 py-1.5 px-2.5 rounded-full bg-white hover:bg-blue-50 shadow-xs text-xs font-bold text-primary transition-all cursor-pointer"
               aria-expanded={menuOpen}
               aria-haspopup="menu"
             >
@@ -141,8 +141,8 @@ export function AppHeader({
             </button>
 
             {menuOpen && (
-              <div className="absolute right-0 mt-2 w-56 rounded-2xl bg-white border border-blue-200/90 shadow-xl py-2 z-50 animate-fade-in-up">
-                <div className="px-4 py-2 border-b border-slate-100">
+              <div className="absolute right-0 mt-2 w-56 rounded-2xl bg-white shadow-xl py-2 z-50 animate-fade-in-up">
+                <div className="px-4 py-2 bg-slate-50/70">
                   <p className="text-xs font-bold text-primary truncate">{user.name}</p>
                   <p className="text-[11px] text-slate-500 truncate">{user.email}</p>
                 </div>
@@ -164,7 +164,7 @@ export function AppHeader({
                     <span>Rekomendasi Karir</span>
                   </Link>
                 </div>
-                <div className="pt-1 border-t border-slate-100">
+                <div className="pt-1 bg-slate-50/50">
                   <button
                     type="button"
                     onClick={handleLogout}
@@ -181,7 +181,7 @@ export function AppHeader({
           <div className="flex items-center gap-2">
             <Link
               href="/login"
-              className="inline-flex items-center gap-1.5 py-1.5 px-3.5 rounded-full bg-white hover:bg-blue-50 text-primary border border-blue-200 text-xs font-bold shadow-xs transition"
+              className="inline-flex items-center gap-1.5 py-1.5 px-3.5 rounded-full bg-white hover:bg-blue-50 text-primary text-xs font-bold shadow-xs transition"
             >
               <UserIcon className="w-3.5 h-3.5" />
               <span>Masuk</span>

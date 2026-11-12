@@ -55,7 +55,7 @@ export default function JobsPage() {
       </header>
 
       {/* Search & Filter Bar */}
-      <form onSubmit={handleSearch} className="p-5 bg-gradient-to-br from-white via-blue-50/30 to-slate-50 rounded-2xl border-2 border-blue-200/80 shadow-md space-y-3">
+      <form onSubmit={handleSearch} className="p-5 bg-gradient-to-br from-white via-blue-50/30 to-slate-50 rounded-2xl shadow-md space-y-3">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div className="relative">
             <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
@@ -64,7 +64,7 @@ export default function JobsPage() {
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
               placeholder="Posisi, keahlian, atau perusahaan..."
-              className="w-full pl-9 pr-3 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white"
+              className="w-full pl-9 pr-3 py-2.5 text-sm rounded-xl shadow-xs focus:outline-none focus:ring-2 focus:ring-primary bg-white"
             />
           </div>
 
@@ -75,7 +75,7 @@ export default function JobsPage() {
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               placeholder="Kota (Jakarta, Bandung, Remote)..."
-              className="w-full pl-9 pr-3 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white"
+              className="w-full pl-9 pr-3 py-2.5 text-sm rounded-xl shadow-xs focus:outline-none focus:ring-2 focus:ring-primary bg-white"
             />
           </div>
 
@@ -85,7 +85,7 @@ export default function JobsPage() {
               <select
                 value={workType}
                 onChange={(e) => setWorkType(e.target.value)}
-                className="w-full pl-9 pr-3 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer bg-white"
+                className="w-full pl-9 pr-3 py-2.5 text-sm rounded-xl shadow-xs focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer bg-white"
               >
                 <option value="">Semua Tipe Kerja</option>
                 <option value="full-time">Full-time</option>
@@ -154,16 +154,16 @@ function JobCard({ job }: { job: JobItem }) {
   const [saved, setSaved] = useState(false);
 
   return (
-    <article className="p-6 bg-gradient-to-br from-white via-blue-50/20 to-slate-50 rounded-2xl border-2 border-blue-200/70 shadow-sm hover:border-primary hover:shadow-lg transition space-y-4">
+    <article className="p-6 bg-gradient-to-br from-white via-blue-50/20 to-slate-50 rounded-2xl shadow-sm hover:shadow-lg transition space-y-4">
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <h2 className="text-lg font-bold text-primary">{job.title}</h2>
             <span
-              className={`text-[10px] font-mono px-2.5 py-0.5 rounded-full font-bold ${
+              className={`text-[10px] font-mono px-2.5 py-0.5 rounded-full font-bold shadow-2xs ${
                 job.source === "internal"
-                  ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
-                  : "bg-blue-100 text-primary border border-blue-200"
+                  ? "bg-emerald-100 text-emerald-800"
+                  : "bg-blue-100 text-primary"
               }`}
             >
               {job.source === "internal" ? "Mitra Terverifikasi" : "Sumber: Jooble"}
@@ -190,7 +190,7 @@ function JobCard({ job }: { job: JobItem }) {
 
         {/* Match Score Badge (if computed) */}
         {job.matchScore !== undefined && (
-          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs font-bold self-start">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 text-emerald-800 rounded-xl text-xs font-bold self-start shadow-xs">
             <CheckCircle2 className="w-4 h-4 text-emerald-600" aria-hidden="true" />
             <span>Kecocokan {job.matchScore}%</span>
           </div>
@@ -206,7 +206,7 @@ function JobCard({ job }: { job: JobItem }) {
         {job.requiredSkills.map((skill, idx) => (
           <span
             key={idx}
-            className="text-[11px] px-2.5 py-0.5 rounded-md bg-white text-primary border border-blue-200 font-medium"
+            className="text-[11px] px-2.5 py-0.5 rounded-md bg-white text-primary shadow-2xs font-medium"
           >
             {skill}
           </span>
@@ -214,14 +214,14 @@ function JobCard({ job }: { job: JobItem }) {
       </div>
 
       {/* Actions */}
-      <div className="flex items-center justify-between pt-3 border-t border-slate-200">
+      <div className="flex items-center justify-between pt-3">
         <button
           type="button"
           onClick={() => setSaved(!saved)}
-          className={`text-xs font-semibold px-3 py-1.5 rounded-lg border transition flex items-center gap-1.5 min-h-[36px] ${
+          className={`text-xs font-semibold px-3 py-1.5 rounded-lg shadow-xs transition flex items-center gap-1.5 min-h-[36px] ${
             saved
-              ? "bg-amber-100 border-amber-300 text-amber-900"
-              : "border-slate-300 text-slate-700 hover:bg-slate-100"
+              ? "bg-amber-100 text-amber-900"
+              : "bg-white text-slate-700 hover:bg-slate-100"
           }`}
           aria-label={saved ? "Hapus dari simpanan" : "Simpan lowongan ini"}
         >

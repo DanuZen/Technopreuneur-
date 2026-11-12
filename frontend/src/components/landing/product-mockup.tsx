@@ -18,9 +18,9 @@ export function ProductMockup() {
       </div>
 
       {/* Browser Window Frame with Minimal Margin & Hover Elevation */}
-      <div className="rounded-3xl border border-blue-200/90 bg-white shadow-2xl shadow-primary/10 hover:shadow-primary/20 hover:border-primary/50 transition-all duration-500 overflow-hidden max-w-6xl mx-auto">
+      <div className="rounded-3xl bg-white shadow-2xl shadow-primary/10 hover:shadow-primary/20 transition-all duration-500 overflow-hidden max-w-6xl mx-auto">
         {/* Browser Top Bar in Brand Navy */}
-        <div className="bg-[#0f2c56] border-b border-[#163861] px-5 py-3.5 flex items-center justify-between text-white">
+        <div className="bg-[#0f2c56] px-5 py-3.5 flex items-center justify-between text-white">
           <div className="flex items-center gap-2">
             <span className="w-3 h-3 rounded-full bg-[#ce2731] inline-block shadow-sm" />
             <span className="w-3 h-3 rounded-full bg-amber-400 inline-block shadow-sm" />
@@ -29,7 +29,7 @@ export function ProductMockup() {
               pasbana.ai/dashboard/candidate
             </span>
           </div>
-          <div className="flex items-center gap-2 bg-white/10 border border-white/20 px-3 py-1 rounded-full text-[11px] font-medium text-white shadow-xs">
+          <div className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-[11px] font-medium text-white shadow-xs">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-beacon shrink-0" aria-hidden="true" />
             <span>Blind Scoring Aktif</span>
           </div>
@@ -38,15 +38,15 @@ export function ProductMockup() {
         {/* Dashboard Content Container */}
         <div className="p-5 sm:p-8 space-y-6 bg-gradient-to-br from-slate-50/70 via-blue-50/30 to-white">
           {/* Sub-nav inside dashboard */}
-          <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+          <div className="flex items-center justify-between pb-3">
             <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={() => setActiveTab("analysis")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition shadow-xs ${
                   activeTab === "analysis"
-                    ? "bg-primary text-white shadow-sm"
-                    : "text-primary hover:text-primary bg-white border border-slate-200"
+                    ? "bg-primary text-white"
+                    : "text-primary hover:text-primary bg-white"
                 }`}
               >
                 Skor 5 Dimensi
@@ -54,10 +54,10 @@ export function ProductMockup() {
               <button
                 type="button"
                 onClick={() => setActiveTab("matching")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition shadow-xs ${
                   activeTab === "matching"
-                    ? "bg-primary text-white shadow-sm"
-                    : "text-slate-600 hover:text-primary bg-white border border-slate-200"
+                    ? "bg-primary text-white"
+                    : "text-slate-600 hover:text-primary bg-white"
                 }`}
               >
                 Rekomendasi Loker (92%)
@@ -65,10 +65,10 @@ export function ProductMockup() {
               <button
                 type="button"
                 onClick={() => setActiveTab("skills")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition shadow-xs ${
                   activeTab === "skills"
-                    ? "bg-primary text-white shadow-sm"
-                    : "text-slate-600 hover:text-primary bg-white border border-slate-200"
+                    ? "bg-primary text-white"
+                    : "text-slate-600 hover:text-primary bg-white"
                 }`}
               >
                 Analisis Gap Skill
@@ -84,13 +84,13 @@ export function ProductMockup() {
             {activeTab === "analysis" && (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {/* Radial / Score overview card */}
-                <div className="bg-gradient-to-br from-[#0f2c56] via-[#163861] to-[#0f2c56] text-white p-5 rounded-2xl border border-primary-700 shadow-md flex flex-col items-center justify-center text-center space-y-2">
+                <div className="bg-gradient-to-br from-[#0f2c56] via-[#163861] to-[#0f2c56] text-white p-5 rounded-2xl shadow-md flex flex-col items-center justify-center text-center space-y-2">
                   <div className="w-20 h-20 rounded-full border-4 border-emerald-400/30 border-t-emerald-400 flex flex-col items-center justify-center shadow-inner">
                     <span className="text-2xl font-black text-white">88</span>
                     <span className="text-[9px] uppercase font-mono text-emerald-300 font-semibold">Skor ATS</span>
                   </div>
                   <div className="pt-2">
-                    <span className="text-xs font-semibold text-emerald-300 bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-500/40">
+                    <span className="text-xs font-semibold text-emerald-300 bg-emerald-950/60 px-2.5 py-0.5 rounded-full shadow-2xs">
                       Sangat Kompetitif
                     </span>
                     <p className="text-[11px] text-slate-200 mt-1">
@@ -119,12 +119,12 @@ export function ProductMockup() {
 
             {/* TAB 2: MATCHING SAMPLE VIEW */}
             {activeTab === "matching" && (
-              <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+              <div className="bg-white p-5 rounded-2xl shadow-sm space-y-4">
                 <div className="flex items-start justify-between">
                   <div>
                     <div className="flex items-center gap-2">
                       <h3 className="text-base font-bold text-slate-900">Junior Frontend Engineer</h3>
-                      <span className="text-[10px] bg-blue-50 text-blue-700 px-2 py-0.5 rounded font-mono font-medium border border-blue-200">
+                      <span className="text-[10px] bg-blue-50 text-blue-700 px-2 py-0.5 rounded font-mono font-medium shadow-2xs">
                         Pencocokan Dua Tahap
                       </span>
                     </div>
@@ -136,7 +136,7 @@ export function ProductMockup() {
                   </div>
                 </div>
 
-                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-600 space-y-1">
+                <div className="p-3 bg-slate-50 rounded-xl shadow-xs text-xs text-slate-600 space-y-1">
                   <p className="font-semibold text-slate-800">Alasan Kesesuaian AI:</p>
                   <p>
                     Pengalaman Anda dalam proyek web Next.js dan Tailwind CSS memenuhi 4 dari 5 kualifikasi utama lowongan ini.
@@ -145,16 +145,16 @@ export function ProductMockup() {
 
                 <div className="flex flex-wrap items-center gap-1.5 text-xs">
                   <span className="text-[11px] font-medium text-slate-500">Skill Cocok:</span>
-                  <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px]">React / Next.js</span>
-                  <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px]">TypeScript</span>
-                  <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px]">Tailwind CSS</span>
+                  <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 shadow-2xs text-[11px]">React / Next.js</span>
+                  <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 shadow-2xs text-[11px]">TypeScript</span>
+                  <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 shadow-2xs text-[11px]">Tailwind CSS</span>
                 </div>
               </div>
             )}
 
             {/* TAB 3: SKILLS GAP ANALYSIS */}
             {activeTab === "skills" && (
-              <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-3">
+              <div className="bg-white p-5 rounded-2xl shadow-sm space-y-3">
                 <h3 className="text-xs font-semibold text-slate-700 uppercase tracking-wider font-mono">
                   Identifikasi Kesenjangan Keahlian (Skills Gap)
                 </h3>
@@ -162,13 +162,13 @@ export function ProductMockup() {
                   AI mendeteksi beberapa keahlian yang sering dicari oleh perusahaan di bidang impian Anda tetapi belum tertera di CV:
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                  <div className="p-3 rounded-xl bg-amber-50/70 border border-amber-200/80 space-y-1">
+                  <div className="p-3 rounded-xl bg-amber-50/70 shadow-xs space-y-1">
                     <span className="text-xs font-bold text-amber-900">State Management (Zustand / Redux)</span>
                     <p className="text-[11px] text-amber-800">
                       Sangat dianjurkan untuk ditambahkan jika pernah menggunakannya pada proyek akhir kuliah.
                     </p>
                   </div>
-                  <div className="p-3 rounded-xl bg-blue-50/70 border border-blue-200/80 space-y-1">
+                  <div className="p-3 rounded-xl bg-blue-50/70 shadow-xs space-y-1">
                     <span className="text-xs font-bold text-blue-900">Unit Testing (Jest / Vitest)</span>
                     <p className="text-[11px] text-blue-800">
                       Nilai tambah penting untuk posisi developer entry-level modern.

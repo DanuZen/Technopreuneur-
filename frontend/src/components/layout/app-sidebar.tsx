@@ -175,7 +175,7 @@ export function AppSidebar({
       {/* Sidebar Container */}
       <aside
         aria-label="Navigasi aplikasi dan riwayat evaluasi"
-        className={`fixed top-0 bottom-0 left-0 z-50 flex shrink-0 flex-col bg-[#edf2f9] text-primary border-r border-blue-200/80 overflow-hidden lg:static transition-[width,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`fixed top-0 bottom-0 left-0 z-50 flex shrink-0 flex-col bg-[#edf2f9] text-primary overflow-hidden lg:static transition-[width,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isMobileOpen
             ? "translate-x-0 shadow-2xl w-[280px]"
             : "-translate-x-full lg:translate-x-0"
@@ -198,7 +198,7 @@ export function AppSidebar({
               <button
                 type="button"
                 onClick={onToggleDesktopCollapse}
-                className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white hover:bg-blue-50 border border-blue-200/80 shadow-xs transition-transform hover:scale-105"
+                className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white hover:bg-blue-50 shadow-xs transition-transform hover:scale-105"
                 title="Buka panel samping Pasbana AI"
                 aria-label="Buka panel samping"
               >
@@ -225,7 +225,7 @@ export function AppSidebar({
               </button>
 
               {/* Quick Nav Icons */}
-              <div className="w-full flex flex-col items-center gap-1.5 pt-2 border-t border-blue-200/60">
+              <div className="w-full flex flex-col items-center gap-1.5 pt-2">
                 {navLinks.map((item) => {
                   const isActive = pathname === item.href;
                   const Icon = item.icon;
@@ -269,7 +269,7 @@ export function AppSidebar({
               ) : (
                 <Link
                   href="/login"
-                  className="flex h-9 w-9 items-center justify-center rounded-xl bg-white hover:bg-blue-50 text-primary border border-blue-200/80 shadow-xs"
+                  className="flex h-9 w-9 items-center justify-center rounded-xl bg-white hover:bg-blue-50 text-primary shadow-xs"
                   title="Masuk Akun"
                 >
                   <UserIcon className="w-4 h-4" aria-hidden="true" />
@@ -289,7 +289,7 @@ export function AppSidebar({
             }`}
           >
             {/* Header: Brand Logo & Collapse Button */}
-            <div className="shrink-0 px-4 pt-4 pb-3 border-b border-blue-200/70 bg-[#edf2f9]">
+            <div className="shrink-0 px-4 pt-4 pb-2 bg-[#edf2f9]">
               <div className="flex items-center justify-between gap-2">
                 <Link
                   href="/"
@@ -379,7 +379,7 @@ export function AppSidebar({
               </div>
 
               {/* Riwayat Evaluasi CV (Like ChatGPT Chats!) */}
-              <div className="pt-2 border-t border-blue-200/70 space-y-2">
+              <div className="pt-2 space-y-2">
                 <div className="flex items-center justify-between px-2">
                   <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 font-bold">
                     Riwayat Sesi ({daftarRiwayat.length})
@@ -401,7 +401,7 @@ export function AppSidebar({
                 {/* Filter Search Input */}
                 {cariTerbuka && (
                   <div className="relative px-1">
-                    <div className="flex items-center gap-1.5 rounded-xl bg-white px-2.5 py-1.5 border border-blue-200 shadow-xs">
+                    <div className="flex items-center gap-1.5 rounded-xl bg-white px-2.5 py-1.5 shadow-xs">
                       <Search className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                       <input
                         type="text"
@@ -441,7 +441,7 @@ export function AppSidebar({
                         onKeyDown={(e) => {
                           if (e.key === "Enter" || e.key === " ") handlePilihRiwayat();
                         }}
-                        className="group flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-xs bg-white/60 hover:bg-white text-slate-700 hover:text-primary border border-transparent hover:border-blue-200/80 shadow-2xs transition-all cursor-pointer"
+                        className="group flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-xs bg-white/60 hover:bg-white text-slate-700 hover:text-primary shadow-2xs transition-all cursor-pointer"
                       >
                         <div className="flex items-center gap-2 min-w-0">
                           <Sparkles className="w-3.5 h-3.5 text-secondary shrink-0" />
@@ -468,8 +468,8 @@ export function AppSidebar({
               </div>
 
               {/* Standar & Privasi Pill */}
-              <div className="pt-2 border-t border-blue-200/70">
-                <div className="p-3 rounded-2xl bg-white/80 border border-blue-200/80 space-y-2">
+              <div className="pt-2">
+                <div className="p-3 rounded-2xl bg-white/80 space-y-1.5 shadow-xs">
                   <div className="flex items-center gap-1.5 text-xs font-bold text-primary">
                     <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>Privasi &amp; Kepatuhan</span>
@@ -482,7 +482,7 @@ export function AppSidebar({
             </div>
 
             {/* Bottom Footer Section: User Profile & Account */}
-            <div className="shrink-0 p-3 bg-white/90 border-t border-blue-200/80 space-y-2">
+            <div className="shrink-0 p-3 bg-white/80 space-y-2">
               {user ? (
                 <div className="space-y-2">
                   <div className="flex items-center justify-between gap-2">
@@ -511,7 +511,7 @@ export function AppSidebar({
                       <span>Keluar Akun</span>
                     </button>
                   ) : (
-                    <div className="p-2 rounded-xl bg-rose-50 border border-rose-200 space-y-1.5 text-center">
+                    <div className="p-2 rounded-xl bg-rose-50 space-y-1.5 text-center shadow-xs">
                       <p className="text-[11px] font-bold text-rose-900">Yakin ingin keluar?</p>
                       <div className="flex gap-1.5">
                         <button
@@ -546,7 +546,7 @@ export function AppSidebar({
                   <Link
                     href="/login"
                     onClick={onCloseMobile}
-                    className="inline-flex items-center gap-1 text-xs font-bold text-secondary bg-rose-50 hover:bg-rose-100 border border-rose-200 px-2.5 py-1.5 rounded-xl transition"
+                    className="inline-flex items-center gap-1 text-xs font-bold text-secondary bg-rose-50 hover:bg-rose-100 px-2.5 py-1.5 rounded-xl transition shadow-xs"
                   >
                     <span>Masuk</span>
                     <ChevronRight className="w-3.5 h-3.5" />

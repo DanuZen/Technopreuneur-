@@ -131,7 +131,7 @@ export function CVDropzone({ onAnalysisComplete, autoRedirect = true }: CVDropzo
         className={`relative p-5 sm:p-7 border-2 border-dashed rounded-2xl text-center transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
           dragActive
             ? "border-secondary bg-rose-50/70 scale-[1.01] shadow-lg shadow-secondary/15"
-            : "border-blue-300/80 bg-gradient-to-b from-[#f3f7fc] via-[#edf2f9] to-[#f4f7fb] hover:border-primary hover:bg-blue-50/70 clay-well"
+            : "border-blue-300/40 bg-gradient-to-b from-[#f3f7fc] via-[#edf2f9] to-[#f4f7fb] hover:border-primary/50 hover:bg-blue-50/70 clay-well"
         } ${status === "idle" ? "cursor-pointer group" : "cursor-default"}`}
       >
         <input
@@ -145,7 +145,7 @@ export function CVDropzone({ onAnalysisComplete, autoRedirect = true }: CVDropzo
 
         {status === "idle" && (
           <div className="space-y-2.5 sm:space-y-3">
-            <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto rounded-2xl bg-gradient-to-br from-[#0f2c56] via-[#163861] to-[#0f2c56] text-white flex items-center justify-center shadow-md shadow-primary/25 border border-white/30 transition-transform duration-200 group-hover:scale-105">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto rounded-2xl bg-gradient-to-br from-[#0f2c56] via-[#163861] to-[#0f2c56] text-white flex items-center justify-center shadow-md shadow-primary/25 transition-transform duration-200 group-hover:scale-105">
               <UploadCloud className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
             </div>
             <div>
@@ -156,7 +156,7 @@ export function CVDropzone({ onAnalysisComplete, autoRedirect = true }: CVDropzo
                 Mendukung format PDF atau DOCX (Maksimal 5 MB)
               </p>
             </div>
-            <div className="inline-flex items-center gap-1.5 text-[11px] text-amber-900 bg-amber-50/95 px-3 py-1.5 rounded-xl border border-amber-300/80 font-medium shadow-xs max-w-lg">
+            <div className="inline-flex items-center gap-1.5 text-[11px] text-amber-900 bg-amber-50/95 px-3 py-1.5 rounded-xl font-medium shadow-xs max-w-lg">
               <AlertCircle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
               <span>Pastikan berkas berbasis teks digital, bukan hasil foto/scan gambar dokumen.</span>
             </div>
@@ -165,7 +165,7 @@ export function CVDropzone({ onAnalysisComplete, autoRedirect = true }: CVDropzo
 
         {status !== "idle" && file && (
           <div className="space-y-4 max-w-md mx-auto">
-            <div className="flex items-center justify-center gap-3 p-3 bg-slate-50 rounded-xl border border-slate-200 text-left">
+            <div className="flex items-center justify-center gap-3 p-3 bg-white/90 rounded-xl shadow-xs text-left">
               <div className="w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
                 <FileText className="w-5 h-5" />
               </div>

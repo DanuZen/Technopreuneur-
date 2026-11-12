@@ -22,7 +22,7 @@ export default function Home() {
 
         {/* Hero Title & Subtitle */}
         <div className="space-y-5 max-w-4xl mx-auto animate-fade-in-up">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs font-semibold">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-semibold shadow-2xs">
             <Sparkles className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
             <span>Pasbana AI: Karir yang Baik Dimulai dari Pertemuan yang Pas Bana</span>
           </div>
@@ -49,7 +49,7 @@ export default function Home() {
 
           <Link
             href="/evaluate?tab=questionnaire"
-            className="w-full sm:w-auto px-6 py-3.5 bg-white hover:bg-slate-50 text-primary border border-slate-200 text-sm font-semibold rounded-full shadow-sm transition-all flex items-center justify-center gap-2 min-h-[46px]"
+            className="w-full sm:w-auto px-6 py-3.5 bg-white hover:bg-slate-50 text-primary text-sm font-semibold rounded-full shadow-sm transition-all flex items-center justify-center gap-2 min-h-[46px]"
           >
             <FileSpreadsheet className="w-4 h-4 text-[#ce2731]" aria-hidden="true" />
             <span>Saya Belum Punya CV</span>
@@ -58,15 +58,15 @@ export default function Home() {
 
         {/* TRUST HIGHLIGHT BADGES */}
         <div className="pt-2 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-700">
-          <div className="flex items-center gap-2 bg-emerald-50/80 px-3 py-1.5 rounded-full border border-emerald-200">
+          <div className="flex items-center gap-2 bg-emerald-50/90 px-3.5 py-1.5 rounded-full shadow-xs">
             <CheckCircle2 className="w-4 h-4 text-emerald-600" aria-hidden="true" />
             <span className="font-semibold text-emerald-900">Format ATS Terverifikasi</span>
           </div>
-          <div className="flex items-center gap-2 bg-blue-50/80 px-3 py-1.5 rounded-full border border-blue-200">
+          <div className="flex items-center gap-2 bg-blue-50/90 px-3.5 py-1.5 rounded-full shadow-xs">
             <CheckCircle2 className="w-4 h-4 text-primary" aria-hidden="true" />
             <span className="font-semibold text-primary">Analisis 5 Dimensi Objektif</span>
           </div>
-          <div className="flex items-center gap-2 bg-rose-50/80 px-3 py-1.5 rounded-full border border-rose-200">
+          <div className="flex items-center gap-2 bg-rose-50/90 px-3.5 py-1.5 rounded-full shadow-xs">
             <CheckCircle2 className="w-4 h-4 text-secondary" aria-hidden="true" />
             <span className="font-semibold text-secondary">Privasi Kepatuhan UU PDP</span>
           </div>
@@ -74,7 +74,7 @@ export default function Home() {
 
         {/* 3 HERO VALUE CARDS (Colorful Brand Pillars) */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto pt-4 text-left">
-          <div className="p-5 rounded-2xl bg-gradient-to-br from-[#0f2c56] to-[#163861] text-white shadow-lg border border-primary-700/60 flex flex-col justify-between">
+          <div className="p-5 rounded-2xl bg-gradient-to-br from-[#0f2c56] to-[#163861] text-white shadow-lg flex flex-col justify-between">
             <div className="space-y-1">
               <span className="text-[10px] font-mono uppercase tracking-wider text-blue-200 font-bold">Pilar 1</span>
               <h3 className="text-sm font-bold text-white">Standar ATS 1-Kolom</h3>
@@ -88,7 +88,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="p-5 rounded-2xl bg-gradient-to-br from-[#ce2731] to-[#a31b23] text-white shadow-lg border border-red-400/30 flex flex-col justify-between">
+          <div className="p-5 rounded-2xl bg-gradient-to-br from-[#ce2731] to-[#a31b23] text-white shadow-lg flex flex-col justify-between">
             <div className="space-y-1">
               <span className="text-[10px] font-mono uppercase tracking-wider text-rose-200 font-bold">Pilar 2</span>
               <h3 className="text-sm font-bold text-white">Pencocokan Pas Bana</h3>
@@ -102,7 +102,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="p-5 rounded-2xl bg-gradient-to-br from-emerald-700 to-teal-800 text-white shadow-lg border border-emerald-500/40 flex flex-col justify-between">
+          <div className="p-5 rounded-2xl bg-gradient-to-br from-emerald-700 to-teal-800 text-white shadow-lg flex flex-col justify-between">
             <div className="space-y-1">
               <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-200 font-bold">Pilar 3</span>
               <h3 className="text-sm font-bold text-white">100% Bebas Biaya</h3>
@@ -118,24 +118,24 @@ export default function Home() {
         </div>
 
         {/* ECOSYSTEM / TECH BADGES (Truthful technical replacement for fake logos) */}
-        <div className="pt-8 border-t border-slate-200/80 max-w-4xl mx-auto">
+        <div className="pt-8 max-w-4xl mx-auto">
           <p className="text-[11px] font-mono uppercase tracking-wider text-slate-500 mb-3 font-semibold">
             Infrastruktur Berbasis Ekosistem Terbuka &amp; Kepatuhan Hukum
           </p>
           <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-slate-700">
-            <span className="px-3.5 py-1.5 rounded-full bg-blue-50/80 hover:bg-blue-100/80 border border-blue-200 font-mono text-[11px] text-primary font-medium transition-colors">
+            <span className="px-3.5 py-1.5 rounded-full bg-blue-50/90 hover:bg-blue-100/90 font-mono text-[11px] text-primary font-medium transition-colors shadow-2xs">
               Next.js 14 App Router
             </span>
-            <span className="px-3.5 py-1.5 rounded-full bg-rose-50/80 hover:bg-rose-100/80 border border-rose-200 font-mono text-[11px] text-secondary font-medium transition-colors">
+            <span className="px-3.5 py-1.5 rounded-full bg-rose-50/90 hover:bg-rose-100/90 font-mono text-[11px] text-secondary font-medium transition-colors shadow-2xs">
               FastAPI AI Service
             </span>
-            <span className="px-3.5 py-1.5 rounded-full bg-blue-50/80 hover:bg-blue-100/80 border border-blue-200 font-mono text-[11px] text-primary font-medium transition-colors">
+            <span className="px-3.5 py-1.5 rounded-full bg-blue-50/90 hover:bg-blue-100/90 font-mono text-[11px] text-primary font-medium transition-colors shadow-2xs">
               PostgreSQL pgvector
             </span>
-            <span className="px-3.5 py-1.5 rounded-full bg-emerald-50/80 hover:bg-emerald-100/80 border border-emerald-200 font-mono text-[11px] text-emerald-800 font-medium transition-colors">
+            <span className="px-3.5 py-1.5 rounded-full bg-emerald-50/90 hover:bg-emerald-100/90 font-mono text-[11px] text-emerald-800 font-medium transition-colors shadow-2xs">
               Jooble Publisher API
             </span>
-            <span className="px-3.5 py-1.5 rounded-full bg-amber-50/80 hover:bg-amber-100/80 border border-amber-200 font-mono text-[11px] text-amber-900 font-medium transition-colors">
+            <span className="px-3.5 py-1.5 rounded-full bg-amber-50/90 hover:bg-amber-100/90 font-mono text-[11px] text-amber-900 font-medium transition-colors shadow-2xs">
               UU PDP No. 27/2022
             </span>
           </div>

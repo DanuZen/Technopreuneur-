@@ -66,7 +66,7 @@ export function AppShell({ children }: AppShellProps) {
       />
 
       {/* Main Workspace Stage (Rounded Clay Stage on Desktop) */}
-      <div className="flex flex-1 flex-col overflow-hidden bg-[#fefefd] clay-stage lg:my-2 lg:mr-2 lg:rounded-[32px] relative isolate border border-blue-200/60 shadow-2xl shadow-primary/10">
+      <div className="flex flex-1 flex-col overflow-hidden bg-[#fefefd] clay-stage lg:my-2 lg:mr-2 lg:rounded-[32px] relative isolate shadow-2xl shadow-primary/10">
         <AppHeader
           onToggleMobile={() => setIsMobileOpen((s) => !s)}
           isDesktopCollapsed={isDesktopCollapsed}

@@ -16,13 +16,13 @@ export function BentoFeatureCards({ onSelectFeature }: BentoFeatureCardsProps) {
       {/* Block 1 (Col-span-7): Large Navy Block */}
       <div
         onClick={() => onSelectFeature?.("upload")}
-        className="group md:col-span-7 flex flex-col justify-between rounded-3xl bg-gradient-to-br from-[#0f2c56] via-[#14345f] to-[#0a1e3b] p-6 sm:p-8 text-white shadow-xl shadow-primary/20 hover:shadow-2xl hover:border-primary-400 border border-primary-700/60 transition-all duration-300 cursor-pointer"
+        className="group md:col-span-7 flex flex-col justify-between rounded-3xl bg-gradient-to-br from-[#0f2c56] via-[#14345f] to-[#0a1e3b] p-6 sm:p-8 text-white shadow-xl shadow-primary/20 hover:shadow-2xl transition-all duration-300 cursor-pointer"
       >
         <div className="flex items-center justify-between gap-3">
           <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-secondary text-white shadow-md shadow-secondary/30">
             <GitCompare className="h-5 w-5" aria-hidden="true" />
           </span>
-          <span className="rounded-full bg-white/15 backdrop-blur-sm border border-white/20 px-3 py-1 text-xs font-bold text-white font-mono">
+          <span className="rounded-full bg-white/20 backdrop-blur-sm px-3 py-1 text-xs font-bold text-white font-mono">
             Tahap 1 • Fokus Berkas
           </span>
         </div>
@@ -48,7 +48,7 @@ export function BentoFeatureCards({ onSelectFeature }: BentoFeatureCardsProps) {
         {/* Card 2: Tahap 2 */}
         <div
           onClick={() => onSelectFeature?.("wizard")}
-          className="group flex flex-1 items-start gap-4 rounded-3xl bg-gradient-to-br from-blue-50/90 via-white to-indigo-50/40 p-5 text-left border border-blue-200/90 shadow-sm hover:border-primary hover:shadow-md transition-all duration-300 cursor-pointer"
+          className="group flex flex-1 items-start gap-4 rounded-3xl bg-gradient-to-br from-blue-50/90 via-white to-indigo-50/40 p-5 text-left shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer"
         >
           <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-primary text-white shadow-md shadow-primary/25">
             <BookOpenCheck className="h-5 w-5" aria-hidden="true" />
@@ -69,7 +69,7 @@ export function BentoFeatureCards({ onSelectFeature }: BentoFeatureCardsProps) {
         {/* Card 3: Tahap 3 */}
         <div
           onClick={() => onSelectFeature?.("matching")}
-          className="group flex flex-1 items-start gap-4 rounded-3xl bg-gradient-to-br from-rose-50/90 via-white to-red-50/40 p-5 text-left border border-rose-200/90 shadow-sm hover:border-secondary hover:shadow-md transition-all duration-300 cursor-pointer"
+          className="group flex flex-1 items-start gap-4 rounded-3xl bg-gradient-to-br from-rose-50/90 via-white to-red-50/40 p-5 text-left shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer"
         >
           <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-secondary text-white shadow-md shadow-secondary/25">
             <Target className="h-5 w-5" aria-hidden="true" />
