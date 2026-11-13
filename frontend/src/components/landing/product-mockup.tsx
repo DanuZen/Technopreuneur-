@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle2, AlertCircle, FileText, Briefcase, Target, Shield } from "lucide-react";
 
 export function ProductMockup() {
   const [activeTab, setActiveTab] = useState<"analysis" | "matching" | "skills">("analysis");
@@ -100,7 +99,7 @@ export function ProductMockup() {
                 </div>
 
                 {/* Dimension breakdown bars */}
-                <div className="md:col-span-2 bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm space-y-3">
+                <div className="md:col-span-2 bg-white p-5 rounded-2xl shadow-sm space-y-3">
                   <div className="flex items-center justify-between text-xs font-semibold text-primary">
                     <span>Distribusi Kualitas 5 Dimensi</span>
                     <span className="text-[11px] text-slate-400 font-normal">Standar HR &amp; Recruiter</span>

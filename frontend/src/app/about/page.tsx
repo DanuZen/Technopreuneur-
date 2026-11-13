@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Compass, Users, Shield, Cpu, BookOpen, ArrowLeft } from "lucide-react";
+import { Compass, Users, Shield, Cpu, ArrowLeft } from "lucide-react";
 
 export default function AboutPage() {
   return (
@@ -27,15 +27,9 @@ export default function AboutPage() {
 
       {/* Brand Philosophy Section: Pasbana */}
       <section className="bg-gradient-to-br from-blue-50/90 via-white to-rose-50/60 rounded-3xl p-6 sm:p-10 shadow-lg space-y-6">
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/15 text-secondary text-xs font-semibold shadow-2xs">
-            <BookOpen className="w-3.5 h-3.5 text-secondary" aria-hidden="true" />
-            <span>Filosofi &amp; Asal-Usul Nama</span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-black text-primary">
-            Dari Bahasa Minang &quot;Pas Bana&quot;: Sangat Pas, Sangat Cocok
-          </h2>
-        </div>
+        <h2 className="text-2xl sm:text-3xl font-black text-primary">
+          Dari Bahasa Minang &quot;Pas Bana&quot;: Sangat Pas, Sangat Cocok
+        </h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-sm text-slate-800 leading-relaxed">
           <p className="text-justify bg-white/80 p-5 rounded-2xl shadow-xs">

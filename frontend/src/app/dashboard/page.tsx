@@ -5,20 +5,14 @@ import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   CheckCircle2,
-  AlertCircle,
   FileText,
   Briefcase,
   Target,
   RotateCcw,
-  Printer,
   ExternalLink,
   ChevronRight,
-  ShieldCheck,
-  Building2,
   MapPin,
-  Clock,
-  Layers,
-  ArrowRight,
+  ArrowLeft,
   UploadCloud,
   FileSpreadsheet,
 } from "lucide-react";
@@ -122,7 +116,7 @@ function DashboardContent() {
               href="/"
               className="inline-flex items-center gap-2 text-xs font-bold text-slate-600 hover:text-primary transition bg-white/90 hover:bg-white px-3.5 py-1.5 rounded-full shadow-xs"
             >
-              <ArrowRight className="w-3.5 h-3.5 rotate-180" aria-hidden="true" />
+              <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
               <span>Kembali ke Beranda</span>
             </Link>
 
@@ -565,10 +559,9 @@ function DashboardContent() {
 
             <Link
               href="/jobs"
-              className="text-xs font-semibold text-slate-900 hover:underline flex items-center gap-1 self-start sm:self-auto"
+              className="text-xs font-semibold text-slate-900 hover:underline self-start sm:self-auto"
             >
               <span>Jelajahi Semua Lowongan</span>
-              <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
             </Link>
           </div>
 

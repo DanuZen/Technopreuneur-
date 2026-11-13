@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FileSpreadsheet, CheckCircle2, Shield, Compass } from "lucide-react";
+import { FileSpreadsheet, CheckCircle2 } from "lucide-react";
 import { ProductMockup } from "@/components/landing/product-mockup";
 import { InteractiveWorkflow } from "@/components/landing/interactive-workflow";
 import { PrinciplesGrid } from "@/components/landing/principles-grid";

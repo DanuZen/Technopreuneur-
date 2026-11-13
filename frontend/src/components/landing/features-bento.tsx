@@ -1,4 +1,4 @@
-import { Shield, Database, Layers, CheckCircle } from "lucide-react";
+import { Shield, CheckCircle } from "lucide-react";
 
 export function FeaturesBento() {
   return (
