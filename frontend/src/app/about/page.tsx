@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Compass, Users, Shield, Cpu, Sparkles, ArrowLeft } from "lucide-react";
+import { Compass, Users, Shield, Cpu, BookOpen, ArrowLeft } from "lucide-react";
 
 export default function AboutPage() {
   return (
@@ -17,10 +17,6 @@ export default function AboutPage() {
 
       {/* Header */}
       <header className="space-y-3">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-semibold shadow-2xs">
-          <Compass className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
-          <span>Proyek Technopreneurship 2026</span>
-        </div>
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-primary">
           Tentang Pasbana AI
         </h1>
@@ -33,7 +29,7 @@ export default function AboutPage() {
       <section className="bg-gradient-to-br from-blue-50/90 via-white to-rose-50/60 rounded-3xl p-6 sm:p-10 shadow-lg space-y-6">
         <div className="space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/15 text-secondary text-xs font-semibold shadow-2xs">
-            <Sparkles className="w-3.5 h-3.5 text-secondary" aria-hidden="true" />
+            <BookOpen className="w-3.5 h-3.5 text-secondary" aria-hidden="true" />
             <span>Filosofi &amp; Asal-Usul Nama</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-black text-primary">

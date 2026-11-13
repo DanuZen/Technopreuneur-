@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { FileCheck, Sparkles, ShieldCheck, FileSpreadsheet } from "lucide-react";
+import { FileCheck, ShieldCheck, FileSpreadsheet } from "lucide-react";
 
 interface QuickScenarioChipsProps {
   onPilihSampel: () => void;
@@ -30,7 +30,7 @@ export function QuickScenarioChips({
           className="inline-flex min-h-[36px] items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#0f2c56] to-[#163861] text-white text-xs font-bold shadow-xs hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all disabled:opacity-50"
           title="Uji langsung dengan berkas contoh resume standar ATS"
         >
-          <Sparkles className="w-3.5 h-3.5 text-amber-300 shrink-0" aria-hidden="true" />
+          <FileCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" aria-hidden="true" />
           <span>Uji Berkas Contoh ATS</span>
           <span className="px-1.5 py-0.5 rounded bg-white/20 text-white text-[9px] font-mono font-bold">
             Demo

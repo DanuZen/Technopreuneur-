@@ -11,7 +11,6 @@ import {
   Target,
   RotateCcw,
   Printer,
-  Sparkles,
   ExternalLink,
   ChevronRight,
   ShieldCheck,
@@ -663,10 +662,9 @@ function DashboardContent() {
                     ) : (
                       <Link
                         href={`/jobs`}
-                        className="w-full py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition flex items-center justify-center gap-1.5 min-h-[36px]"
+                        className="w-full py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition flex items-center justify-center min-h-[36px]"
                       >
                         <span>Kirim Lamaran Profil</span>
-                        <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                       </Link>
                     )}
                   </div>

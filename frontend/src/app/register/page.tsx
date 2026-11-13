@@ -55,7 +55,7 @@ export default function RegisterPage() {
 
   return (
     <main className="max-w-md mx-auto px-4 py-12 sm:px-6 animate-fade-in-up">
-      <div className="bg-gradient-to-br from-white via-blue-50/40 to-slate-50 p-8 rounded-3xl border-2 border-blue-200/85 shadow-xl space-y-6">
+      <div className="bg-white p-8 rounded-3xl clay-card shadow-2xl space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
           <div className="relative w-14 h-14 mx-auto flex items-center justify-center">
@@ -76,7 +76,7 @@ export default function RegisterPage() {
         </div>
 
         {/* Role Switcher */}
-        <div className="grid grid-cols-2 gap-2 p-1.5 bg-blue-100/70 rounded-2xl border border-blue-200">
+        <div className="grid grid-cols-2 gap-2 p-1.5 bg-[#edf2f9] rounded-2xl shadow-inner">
           <button
             type="button"
             onClick={() => setRole("jobseeker")}
@@ -105,7 +105,7 @@ export default function RegisterPage() {
 
         {/* Error Alert */}
         {error && (
-          <div className="p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
+          <div className="p-3 rounded-lg bg-rose-50 text-rose-700 text-xs flex items-center gap-2 shadow-xs">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{error}</span>
           </div>
@@ -114,76 +114,80 @@ export default function RegisterPage() {
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+            <label htmlFor="register-name" className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
               {role === "employer" ? "Nama Perusahaan / Rekruter" : "Nama Lengkap"}
             </label>
             <div className="relative">
-              <UserIcon className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <UserIcon className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
               <input
+                id="register-name"
                 type="text"
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder={role === "employer" ? "PT Solusi Digital Indonesia" : "Wira Fikri Ramadanu"}
-                className="w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-9 pr-3 py-2.5 text-sm bg-[#edf2f9] rounded-xl shadow-xs border-0 focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+            <label htmlFor="register-email" className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
               Alamat Email
             </label>
             <div className="relative">
-              <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
               <input
+                id="register-email"
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="nama@domain.com"
-                className="w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-9 pr-3 py-2.5 text-sm bg-[#edf2f9] rounded-xl shadow-xs border-0 focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+            <label htmlFor="register-password" className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
               Kata Sandi
             </label>
             <div className="relative">
-              <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
               <input
+                id="register-password"
                 type="password"
                 required
                 minLength={6}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Minimal 6 karakter"
-                className="w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-9 pr-3 py-2.5 text-sm bg-[#edf2f9] rounded-xl shadow-xs border-0 focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+            <label htmlFor="register-confirm-password" className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
               Konfirmasi Kata Sandi
             </label>
             <div className="relative">
-              <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
               <input
+                id="register-confirm-password"
                 type="password"
                 required
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Ulangi kata sandi"
-                className="w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-9 pr-3 py-2.5 text-sm bg-[#edf2f9] rounded-xl shadow-xs border-0 focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
           </div>
 
           {/* UU PDP Consent Box */}
-          <div className="p-3.5 bg-blue-50/80 border border-blue-200 rounded-2xl space-y-2">
+          <div className="p-3.5 bg-blue-50/80 rounded-2xl space-y-2 shadow-xs">
             <div className="flex items-start gap-2.5">
               <input
                 type="checkbox"
@@ -219,7 +223,7 @@ export default function RegisterPage() {
         </form>
 
         {/* Footer Link */}
-        <div className="pt-4 border-t border-slate-200 text-center text-xs text-slate-600">
+        <div className="pt-4 text-center text-xs text-slate-600">
           Sudah punya akun?{" "}
           <Link
             href="/login"

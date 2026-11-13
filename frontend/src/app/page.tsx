@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, FileSpreadsheet, CheckCircle2, Sparkles, Shield, Compass } from "lucide-react";
+import { FileSpreadsheet, CheckCircle2, Shield, Compass } from "lucide-react";
 import { ProductMockup } from "@/components/landing/product-mockup";
 import { InteractiveWorkflow } from "@/components/landing/interactive-workflow";
 import { PrinciplesGrid } from "@/components/landing/principles-grid";
@@ -21,12 +21,7 @@ export default function Home() {
         />
 
         {/* Hero Title & Subtitle */}
-        <div className="space-y-5 max-w-4xl mx-auto animate-fade-in-up">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-semibold shadow-2xs">
-            <Sparkles className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
-            <span>Pasbana AI: Karir yang Baik Dimulai dari Pertemuan yang Pas Bana</span>
-          </div>
-
+        <div className="space-y-4 max-w-4xl mx-auto animate-fade-in-up">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-primary leading-[1.12]">
             Ukur. Temukan. <br className="hidden sm:inline" />
             <span className="text-[#ce2731]">Wujudkan Karir Impian.</span>
@@ -41,10 +36,9 @@ export default function Home() {
         <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3.5 max-w-md mx-auto animate-fade-in-up">
           <Link
             href="/evaluate"
-            className="w-full sm:w-auto px-8 py-3.5 bg-primary hover:bg-[#163861] text-white text-sm font-semibold rounded-full shadow-lg shadow-primary/25 transition-all flex items-center justify-center gap-2 min-h-[46px] group"
+            className="w-full sm:w-auto px-8 py-3.5 bg-primary hover:bg-[#163861] text-white text-sm font-semibold rounded-full shadow-lg shadow-primary/25 transition-all flex items-center justify-center min-h-[46px]"
           >
             <span>Evaluasi CV Saya</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
           </Link>
 
           <Link

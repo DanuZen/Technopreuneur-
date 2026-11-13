@@ -9,7 +9,6 @@ import {
   ArrowRight,
   ShieldCheck,
   CheckCircle2,
-  Sparkles,
   ArrowLeft,
   FileText,
 } from "lucide-react";

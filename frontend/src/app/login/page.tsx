@@ -33,7 +33,7 @@ export default function LoginPage() {
 
   return (
     <main className="max-w-md mx-auto px-4 py-12 sm:px-6 animate-fade-in-up">
-      <div className="bg-gradient-to-br from-white via-blue-50/40 to-slate-50 p-8 rounded-3xl border-2 border-blue-200/85 shadow-xl space-y-6">
+      <div className="bg-white p-8 rounded-3xl clay-card shadow-2xl space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
           <div className="relative w-14 h-14 mx-auto flex items-center justify-center">
@@ -55,7 +55,7 @@ export default function LoginPage() {
 
         {/* Error Alert */}
         {error && (
-          <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
+          <div className="p-3 rounded-xl bg-rose-50 text-rose-700 text-xs flex items-center gap-2 shadow-xs">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{error}</span>
           </div>
@@ -64,37 +64,39 @@ export default function LoginPage() {
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-primary uppercase tracking-wider mb-1">
+            <label htmlFor="login-email" className="block text-xs font-semibold text-primary uppercase tracking-wider mb-1">
               Alamat Email
             </label>
             <div className="relative">
-              <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
               <input
+                id="login-email"
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="nama@email.com"
-                className="w-full pl-9 pr-3 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white"
+                className="w-full pl-9 pr-3 py-2.5 text-sm bg-[#edf2f9] rounded-xl shadow-xs border-0 focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
           </div>
 
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="block text-xs font-semibold text-primary uppercase tracking-wider">
+              <label htmlFor="login-password" className="block text-xs font-semibold text-primary uppercase tracking-wider">
                 Kata Sandi
               </label>
             </div>
             <div className="relative">
-              <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
               <input
+                id="login-password"
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-9 pr-3 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white"
+                className="w-full pl-9 pr-3 py-2.5 text-sm bg-[#edf2f9] rounded-xl shadow-xs border-0 focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
           </div>
@@ -116,7 +118,7 @@ export default function LoginPage() {
         </form>
 
         {/* Footer Link */}
-        <div className="pt-4 border-t border-slate-200 text-center text-xs text-slate-600">
+        <div className="pt-4 text-center text-xs text-slate-600">
           Belum punya akun?{" "}
           <Link
             href="/register"

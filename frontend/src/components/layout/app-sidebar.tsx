@@ -16,7 +16,6 @@ import {
   LogOut,
   ChevronRight,
   X,
-  Sparkles,
   PanelLeftClose,
   PanelLeftOpen,
   Trash2,
@@ -444,7 +443,7 @@ export function AppSidebar({
                         className="group flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-xs bg-white/60 hover:bg-white text-slate-700 hover:text-primary shadow-2xs transition-all cursor-pointer"
                       >
                         <div className="flex items-center gap-2 min-w-0">
-                          <Sparkles className="w-3.5 h-3.5 text-secondary shrink-0" />
+                          <FileCheck className="w-3.5 h-3.5 text-primary shrink-0" />
                           <span className="truncate font-medium">{item.judul}</span>
                         </div>
                         <div className="flex items-center gap-1 shrink-0">

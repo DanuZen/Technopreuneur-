@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle2, AlertCircle, FileText, Briefcase, Target, Shield, Sparkles } from "lucide-react";
+import { CheckCircle2, AlertCircle, FileText, Briefcase, Target, Shield } from "lucide-react";
 
 export function ProductMockup() {
   const [activeTab, setActiveTab] = useState<"analysis" | "matching" | "skills">("analysis");

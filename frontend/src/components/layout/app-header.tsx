@@ -10,7 +10,7 @@ import {
   User as UserIcon,
   LogOut,
   ChevronDown,
-  Sparkles,
+  Briefcase,
   ShieldCheck,
   FileCheck,
 } from "lucide-react";
@@ -118,7 +118,7 @@ export function AppHeader({
             href="/evaluate"
             className="hidden sm:inline-flex items-center gap-1.5 py-1.5 px-3.5 rounded-full bg-gradient-to-r from-[#0f2c56] to-[#163861] text-white text-xs font-bold shadow-xs hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all"
           >
-            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+            <FileCheck className="w-3.5 h-3.5 text-emerald-400" />
             <span>Mulai Evaluasi</span>
           </Link>
         )}
@@ -160,7 +160,7 @@ export function AppHeader({
                     onClick={() => setMenuOpen(false)}
                     className="flex items-center gap-2 px-4 py-2 text-xs text-slate-700 hover:bg-blue-50 hover:text-primary transition"
                   >
-                    <Sparkles className="w-4 h-4 text-secondary" />
+                    <Briefcase className="w-4 h-4 text-secondary" />
                     <span>Rekomendasi Karir</span>
                   </Link>
                 </div>
