@@ -514,7 +514,7 @@ export default function HomePage() {
                 and Slide 1 Stage Card with Interactive ATS Previews
                 ================================================================= */}
             <div className="lg:col-span-6 h-[52%] sm:h-[56%] lg:h-full relative">
-              {/* SLIDE 0 HERO RIGHT STAGE: Live Simulated ATS Inspection & Match Showcase */}
+              {/* SLIDE 0 HERO RIGHT STAGE: Live Simulated ATS Inspection & Small Bento Highlights */}
               <div
                 className={`absolute inset-0 flex items-center justify-center p-3 sm:p-6 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                   activeSlide === 0
@@ -522,55 +522,76 @@ export default function HomePage() {
                     : "opacity-0 scale-95 pointer-events-none"
                 }`}
               >
-                {/* Floating Interactive Product Card */}
-                <div className="relative z-20 w-full max-w-md rounded-3xl bg-[#0e2647]/85 backdrop-blur-xl border border-white/15 p-5 sm:p-6 shadow-2xl text-white space-y-4">
-                  {/* Card Header with Active Pulse */}
-                  <div className="flex items-center justify-between pb-3 border-b border-white/10">
-                    <div className="flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                      <span className="text-xs font-bold text-white tracking-wide">Simulasi Evaluasi ATS</span>
+                <div className="relative z-20 w-full max-w-lg space-y-3">
+                  {/* Floating Interactive Product Card */}
+                  <div className="w-full rounded-3xl bg-[#0e2647]/85 backdrop-blur-xl border border-white/15 p-4 sm:p-5 shadow-2xl text-white space-y-3.5">
+                    {/* Card Header with Active Pulse */}
+                    <div className="flex items-center justify-between pb-2.5 border-b border-white/10">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                        <span className="text-xs font-bold text-white tracking-wide">Simulasi Evaluasi ATS</span>
+                      </div>
+                      <span className="text-[10px] font-mono font-bold bg-[#ce2731] text-white px-2.5 py-0.5 rounded-full">
+                        Skor 88/100
+                      </span>
                     </div>
-                    <span className="text-[10px] font-mono font-bold bg-[#ce2731] text-white px-2 py-0.5 rounded-full">
-                      Skor 88/100
-                    </span>
+
+                    {/* Candidate File Preview Pill */}
+                    <div className="p-2.5 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between">
+                      <div className="space-y-0.5 min-w-0">
+                        <div className="text-xs font-bold text-white truncate">Resume_Standar_ATS.pdf</div>
+                        <div className="text-[10px] text-slate-300">Format 1-Kolom • 14 Kata Kerja Aktif</div>
+                      </div>
+                      <span className="text-[10px] font-bold text-emerald-300 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded-full shrink-0">
+                        Lolos Parsing
+                      </span>
+                    </div>
+
+                    {/* 5-Dimension Mini Progress Bars */}
+                    <div className="space-y-2 pt-0.5">
+                      <div className="flex items-center justify-between text-[11px] font-semibold text-slate-200">
+                        <span>Struktur &amp; Keterbacaan Mesin</span>
+                        <span className="text-[#ce2731] font-mono font-bold">94%</span>
+                      </div>
+                      <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                        <div className="w-[94%] h-full bg-[#ce2731] rounded-full" />
+                      </div>
+
+                      <div className="flex items-center justify-between text-[11px] font-semibold text-slate-200 pt-1">
+                        <span>Kesesuaian Kualifikasi Lowongan</span>
+                        <span className="text-emerald-400 font-mono font-bold">92%</span>
+                      </div>
+                      <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                        <div className="w-[92%] h-full bg-emerald-400 rounded-full" />
+                      </div>
+                    </div>
+
+                    {/* Bottom Recommendation Pill */}
+                    <div className="p-2.5 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-between text-xs">
+                      <span className="text-slate-200">Target Karir Terdeteksi</span>
+                      <span className="font-bold text-white bg-white/15 px-2.5 py-0.5 rounded-full text-[11px]">
+                        Product &amp; Tech Role
+                      </span>
+                    </div>
                   </div>
 
-                  {/* Candidate File Preview Pill */}
-                  <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between">
-                    <div className="space-y-0.5 min-w-0">
-                      <div className="text-xs font-bold text-white truncate">Resume_Standar_ATS.pdf</div>
-                      <div className="text-[10px] text-slate-300">Format 1-Kolom • 14 Kata Kerja Aktif</div>
+                  {/* Small Bento Row (3 Compact Micro Cards) */}
+                  <div className="grid grid-cols-3 gap-2.5">
+                    <div className="rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 p-3 text-white space-y-1">
+                      <FileCheck className="w-4 h-4 text-emerald-400" />
+                      <div className="text-xs font-black">1-Kolom ATS</div>
+                      <div className="text-[10px] text-slate-300 leading-tight">Format rapi siap seleksi</div>
                     </div>
-                    <span className="text-[10px] font-bold text-emerald-300 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded-full shrink-0">
-                      Lolos Parsing
-                    </span>
-                  </div>
-
-                  {/* 5-Dimension Mini Progress Bars */}
-                  <div className="space-y-2 pt-1">
-                    <div className="flex items-center justify-between text-[11px] font-semibold text-slate-200">
-                      <span>Struktur &amp; Keterbacaan Mesin</span>
-                      <span className="text-[#ce2731] font-mono font-bold">94%</span>
+                    <div className="rounded-2xl bg-[#ce2731] border border-white/15 p-3 text-white space-y-1 shadow-lg">
+                      <Target className="w-4 h-4 text-white" />
+                      <div className="text-xs font-black">5 Dimensi</div>
+                      <div className="text-[10px] text-[#fde6e6] leading-tight">Skor &amp; saran revisi</div>
                     </div>
-                    <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
-                      <div className="w-[94%] h-full bg-[#ce2731] rounded-full" />
+                    <div className="rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 p-3 text-white space-y-1">
+                      <Briefcase className="w-4 h-4 text-sky-300" />
+                      <div className="text-xs font-black">92% Akurat</div>
+                      <div className="text-[10px] text-slate-300 leading-tight">Rekomendasi loker</div>
                     </div>
-
-                    <div className="flex items-center justify-between text-[11px] font-semibold text-slate-200 pt-1">
-                      <span>Kesesuaian Kualifikasi Lowongan</span>
-                      <span className="text-emerald-400 font-mono font-bold">92%</span>
-                    </div>
-                    <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
-                      <div className="w-[92%] h-full bg-emerald-400 rounded-full" />
-                    </div>
-                  </div>
-
-                  {/* Bottom Recommendation Pill */}
-                  <div className="p-2.5 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-between text-xs">
-                    <span className="text-slate-200">Target Karir Terdeteksi</span>
-                    <span className="font-bold text-white bg-white/15 px-2.5 py-0.5 rounded-full text-[11px]">
-                      Product &amp; Tech Role
-                    </span>
                   </div>
                 </div>
               </div>
@@ -663,16 +684,16 @@ export default function HomePage() {
                     {activeWorkflowIdx === 3 && (
                       <div className="bg-[#fefefd] text-[#0f2c56] rounded-3xl p-4 sm:p-5 shadow-xl space-y-2.5">
                         <div className="flex items-center justify-between">
-                          <span className="text-xs font-black text-[#0f2c56]">Mode Penilaian Anonim</span>
+                          <span className="text-xs font-black text-[#0f2c56]">Penilaian Berbasis Kompetensi</span>
                           <span className="text-[10px] font-bold bg-[#fdf2f2] text-[#ce2731] px-2 py-0.5 rounded-full">
-                            Identitas Terlindungi
+                            Objektif 100%
                           </span>
                         </div>
                         <p className="text-xs text-slate-600 leading-relaxed">
-                          Foto, gender, usia, dan nama disembunyikan agar evaluasi berfokus murni pada kualifikasi dan portofolio.
+                          Evaluasi berfokus murni pada keahlian teknis, pengalaman proyek, dan dampak kerja agar setiap kandidat mendapat penilaian yang adil.
                         </p>
                         <div className="p-2 rounded-2xl bg-[#0f2c56] text-[#fefefd] text-[10px] font-bold flex items-center justify-between">
-                          <span>Evaluasi Objektif 100%</span>
+                          <span>Berbasis Portofolio &amp; Skill</span>
                           <span className="text-[#faa9ab]">Standar HRD</span>
                         </div>
                       </div>
@@ -732,17 +753,35 @@ export default function HomePage() {
 
                     {activeWorkflowIdx === 3 && (
                       <div className="bg-[#0f2c56]/90 border border-white/15 rounded-3xl p-4 shadow-xl space-y-2 text-white">
-                        <div className="text-[11px] font-bold text-slate-200 uppercase tracking-wider">Sanitasi Data PII</div>
+                        <div className="text-[11px] font-bold text-slate-200 uppercase tracking-wider">Fokus Evaluasi</div>
                         <div className="space-y-1.5 text-[11px]">
-                          <div className="p-2 rounded-xl bg-emerald-950/60 border border-emerald-500/20 text-emerald-300 font-bold">
-                            Identitas Terenkripsi
+                          <div className="p-2 rounded-xl bg-white/5 flex items-center justify-between">
+                            <span>Keahlian Teknis</span>
+                            <span className="text-emerald-400 font-bold">Prioritas</span>
                           </div>
-                          <div className="p-2 rounded-xl bg-white/5 text-slate-200">
-                            Patuh UU PDP No. 27/2022
+                          <div className="p-2 rounded-xl bg-white/5 flex items-center justify-between">
+                            <span>Pengalaman Proyek</span>
+                            <span className="text-emerald-400 font-bold">Terukur</span>
                           </div>
                         </div>
                       </div>
                     )}
+                  </div>
+                </div>
+
+                {/* Small Bento Quick-Metrics Strip */}
+                <div className="relative z-20 grid grid-cols-3 gap-2.5">
+                  <div className="rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 p-3">
+                    <div className="text-[10px] text-[#fde6e6] font-semibold">Waktu Proses</div>
+                    <div className="text-xs sm:text-sm font-black text-white mt-0.5">~30 Detik</div>
+                  </div>
+                  <div className="rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 p-3">
+                    <div className="text-[10px] text-[#fde6e6] font-semibold">Input Fleksibel</div>
+                    <div className="text-xs sm:text-sm font-black text-white mt-0.5">PDF / Kuesioner</div>
+                  </div>
+                  <div className="rounded-2xl bg-[#0f2c56] border border-white/15 p-3">
+                    <div className="text-[10px] text-slate-300 font-semibold">Akses Penuh</div>
+                    <div className="text-xs sm:text-sm font-black text-white mt-0.5">Gratis Selamanya</div>
                   </div>
                 </div>
 
@@ -813,12 +852,12 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Target Job Matching Snapshot Card */}
-              <div className="sm:col-span-5 space-y-2.5">
-                <div className="bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 space-y-2">
+              {/* Target Job Matching Small Bento Grid */}
+              <div className="sm:col-span-5 grid grid-cols-2 gap-2.5">
+                <div className="col-span-2 bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 space-y-2">
                   <div className="flex items-center justify-between text-xs">
                     <span className="font-bold text-[#fefefd]">Rekomendasi Utama</span>
-                    <span className="bg-[#ce2731] text-white text-[10px] font-black px-2 py-0.5 rounded-full">
+                    <span className="bg-[#0f2c56] text-white text-[10px] font-black px-2.5 py-0.5 rounded-full">
                       94% Cocok
                     </span>
                   </div>
@@ -830,9 +869,13 @@ export default function HomePage() {
                     <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded-md font-mono text-white">Next.js</span>
                   </div>
                 </div>
-                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/15 text-xs text-[#fde6e6] flex items-center justify-between">
-                  <span>Status Kesiapan</span>
-                  <span className="font-bold text-emerald-300">Siap Kirim ke HRD</span>
+                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/15 space-y-0.5">
+                  <div className="text-[10px] text-[#fde6e6]">Kalimat Aktif</div>
+                  <div className="text-sm font-black text-white">+18 Frasa</div>
+                </div>
+                <div className="bg-[#0f2c56] rounded-2xl p-3 border border-white/15 space-y-0.5">
+                  <div className="text-[10px] text-slate-300">Kesiapan Berkas</div>
+                  <div className="text-sm font-black text-emerald-300">Siap Kirim</div>
                 </div>
               </div>
             </div>
@@ -906,6 +949,28 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
+
+            {/* Small Bento Quick-Entry Tiles */}
+            <div className="grid grid-cols-2 gap-2.5 pt-1">
+              <Link
+                href="/evaluate?tab=questionnaire"
+                className="rounded-2xl bg-[#fdf2f2] border border-[#fde6e6] p-3 hover:border-[#ce2731]/40 transition group"
+              >
+                <div className="text-[10px] font-bold text-[#ce2731] uppercase">Belum Punya CV</div>
+                <div className="text-xs font-black text-[#0f2c56] mt-0.5 group-hover:text-[#ce2731] transition">
+                  Buat via Kuesioner →
+                </div>
+              </Link>
+              <Link
+                href="/evaluate"
+                className="rounded-2xl bg-[#0f2c56] p-3 text-white hover:bg-[#163861] transition"
+              >
+                <div className="text-[10px] font-bold text-slate-300 uppercase">Sudah Punya PDF</div>
+                <div className="text-xs font-black text-white mt-0.5">
+                  Cek Skor Instan →
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -965,7 +1030,7 @@ export default function HomePage() {
                 </span>
               </div>
 
-              <svg viewBox="0 0 460 110" className="w-full h-28 sm:h-36 my-auto">
+              <svg viewBox="0 0 460 110" className="w-full h-28 sm:h-32 my-auto">
                 <path
                   d="M0 92 Q80 80, 150 58 T290 36 T390 18 T450 10 L450 110 L0 110 Z"
                   fill="rgba(206,39,49,0.08)"
@@ -981,6 +1046,22 @@ export default function HomePage() {
                 <circle cx="290" cy="36" r="5" fill="#0f2c56" />
                 <circle cx="450" cy="10" r="6" fill="#ce2731" />
               </svg>
+
+              {/* Small Bento Score Progression Strip */}
+              <div className="grid grid-cols-3 gap-2.5">
+                <div className="rounded-2xl bg-white border border-[#fde6e6] p-3">
+                  <div className="text-[10px] font-semibold text-slate-500">Draf Awal</div>
+                  <div className="text-sm sm:text-base font-black text-[#0f2c56] mt-0.5">64 / 100</div>
+                </div>
+                <div className="rounded-2xl bg-[#0f2c56] p-3 text-white">
+                  <div className="text-[10px] font-semibold text-slate-300">Setelah Revisi</div>
+                  <div className="text-sm sm:text-base font-black text-white mt-0.5">88 / 100</div>
+                </div>
+                <div className="rounded-2xl bg-white border border-[#fde6e6] p-3">
+                  <div className="text-[10px] font-semibold text-slate-500">Peningkatan</div>
+                  <div className="text-sm sm:text-base font-black text-[#ce2731] mt-0.5">+24 Poin</div>
+                </div>
+              </div>
 
               <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[#fcd0d1]/60">
                 <span className="text-xs font-bold text-[#0f2c56]">
@@ -1100,15 +1181,15 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Right 6 Cols: Primary (#0f2c56) & Second (#ce2731) Blind Scoring Stage */}
+          {/* Right 6 Cols: Primary (#0f2c56) & Second (#ce2731) Objective Evaluation Stage */}
           <div
             className={`lg:col-span-6 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-8 text-[#fefefd] flex flex-col justify-between relative overflow-hidden bg-[#0f2c56] lg:bg-transparent shadow-2xl lg:shadow-none border border-white/10 lg:border-transparent origin-right ${getChildAnimClass(4, "right", "delay-150")}`}
           >
             <div className="flex items-center justify-between relative z-20">
               <span className="px-3.5 py-1 rounded-full bg-[#ce2731] text-[#fefefd] text-xs font-black">
-                Bebas Bias Rekrutmen
+                Penilaian Berbasis Skill
               </span>
-              <span className="text-xs font-mono font-bold text-[#fde6e6]">BLIND SCORING</span>
+              <span className="text-xs font-mono font-bold text-[#fde6e6]">EVALUASI OBJEKTIF</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center my-auto relative z-20">
@@ -1130,36 +1211,36 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* PII Masking Live Status Card */}
-              <div className="sm:col-span-5 space-y-2">
-                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15 space-y-2.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-bold text-white flex items-center gap-1.5">
-                      <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                      Blind Scoring
+              {/* Varied Small Bento Grid (Replacing redundant Blind Scoring / UU PDP card) */}
+              <div className="sm:col-span-5 grid grid-cols-2 gap-2.5">
+                <div className="col-span-2 bg-white/10 backdrop-blur-md rounded-2xl p-3.5 border border-white/15 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-white flex items-center gap-1.5">
+                      <BarChart3 className="w-4 h-4 text-emerald-400" />
+                      Evaluasi 5 Dimensi
                     </span>
-                    <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-mono px-2 py-0.5 rounded-full font-bold">
-                      UU PDP No. 27/2022
-                    </span>
+                    <span className="text-[10px] font-mono font-bold text-emerald-300">Terukur</span>
                   </div>
-                  <div className="space-y-1.5 text-xs text-[#fde6e6]">
-                    <div className="p-2 rounded-xl bg-white/5 flex items-center justify-between">
-                      <span>Foto &amp; Penampilan</span>
-                      <span className="text-[10px] font-mono font-bold text-emerald-300 bg-emerald-950/60 px-2 py-0.5 rounded">
-                        Disamarkan
-                      </span>
-                    </div>
-                    <div className="p-2 rounded-xl bg-white/5 flex items-center justify-between">
-                      <span>Usia &amp; Gender</span>
-                      <span className="text-[10px] font-mono font-bold text-emerald-300 bg-emerald-950/60 px-2 py-0.5 rounded">
-                        Disamarkan
-                      </span>
-                    </div>
-                    <div className="p-2 rounded-xl bg-white/5 flex items-center justify-between">
-                      <span>Fokus Evaluasi</span>
-                      <span className="text-[10px] font-bold text-white">Kompetensi Murni</span>
-                    </div>
-                  </div>
+                  <p className="text-[11px] text-slate-200 leading-snug">
+                    Struktur, keahlian, dampak kerja, dan kecocokan posisi dinilai transparan.
+                  </p>
+                </div>
+                <div className="bg-[#ce2731] rounded-2xl p-3 border border-white/15 space-y-0.5">
+                  <div className="text-lg font-black text-white">94%</div>
+                  <div className="text-[10px] text-[#fde6e6] leading-tight">Struktur ATS</div>
+                </div>
+                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/15 space-y-0.5">
+                  <div className="text-lg font-black text-white">90%</div>
+                  <div className="text-[10px] text-slate-200 leading-tight">Relevansi Skill</div>
+                </div>
+                <div className="col-span-2 bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/15 flex items-center justify-between text-xs">
+                  <span className="text-slate-200 flex items-center gap-1.5">
+                    <Lock className="w-3.5 h-3.5 text-emerald-400" />
+                    Kendali Data Penuh
+                  </span>
+                  <span className="text-[10px] font-bold text-white bg-white/15 px-2 py-0.5 rounded-full">
+                    Hapus Kapan Saja
+                  </span>
                 </div>
               </div>
             </div>
@@ -1207,9 +1288,9 @@ export default function HomePage() {
             </span>
           </div>
 
-          {/* Open 12-Col Architectural Steps */}
-          <div className="my-auto py-2 px-4 sm:px-8">
-            <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 ${getChildAnimClass(5, "up", "delay-150")}`}>
+          {/* Open 12-Col Architectural Steps + Small Bento Summary */}
+          <div className="my-auto py-2 px-4 sm:px-8 space-y-4">
+            <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 ${getChildAnimClass(5, "up", "delay-150")}`}>
               {[
                 {
                   step: "01",
@@ -1217,6 +1298,7 @@ export default function HomePage() {
                   bar: "bg-[#ce2731]",
                   title: "Unggah CV atau Isi Kuesioner",
                   desc: "Sudah punya file CV? Unggah langsung. Belum punya CV? Jawab kuesioner singkat dan sistem akan menyusun CV standar ATS untuk Anda.",
+                  output: "Draf CV 1-Kolom Siap ATS",
                 },
                 {
                   step: "02",
@@ -1224,6 +1306,7 @@ export default function HomePage() {
                   bar: "bg-[#0f2c56]",
                   title: "Terima Skor 5D & Saran Revisi",
                   desc: "Dapatkan rincian skor kesiapan kerja beserta rekomendasi kalimat aktif untuk memperkuat deskripsi pengalaman dan keahlian Anda.",
+                  output: "Skor 5 Dimensi + Saran Kalimat",
                 },
                 {
                   step: "03",
@@ -1231,21 +1314,62 @@ export default function HomePage() {
                   bar: "bg-[#ce2731]",
                   title: "Lamar Lowongan yang Pas Bana",
                   desc: "Pilih posisi kerja aktif dengan persentase kecocokan tertinggi dan kirim lamaran Anda dengan penuh percaya diri.",
+                  output: "Daftar Loker Cocok (>85%)",
                 },
               ].map((item) => (
-                <div key={item.step} className="space-y-3 relative p-6 rounded-3xl bg-slate-50/70 border border-slate-100">
-                  <div className={`text-5xl sm:text-6xl font-black tracking-tighter ${item.accent}`}>
-                    {item.step}
+                <div key={item.step} className="space-y-3 relative p-5 rounded-3xl bg-slate-50/70 border border-slate-100 flex flex-col justify-between">
+                  <div className="space-y-2.5">
+                    <div className={`text-4xl sm:text-5xl font-black tracking-tighter ${item.accent}`}>
+                      {item.step}
+                    </div>
+                    <div className={`w-12 h-1.5 rounded-full ${item.bar}`} />
+                    <h3 className="text-base sm:text-lg font-black text-[#0f2c56] pt-0.5">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs text-slate-600 leading-relaxed">
+                      {item.desc}
+                    </p>
                   </div>
-                  <div className={`w-14 h-1.5 rounded-full ${item.bar}`} />
-                  <h3 className="text-lg sm:text-xl font-black text-[#0f2c56] pt-1">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                    {item.desc}
-                  </p>
+                  <div className="pt-2">
+                    <div className="rounded-xl bg-white border border-slate-200/80 px-3 py-2 text-[11px] font-bold text-[#0f2c56] flex items-center justify-between">
+                      <span className="text-slate-400 font-semibold">Hasil:</span>
+                      <span>{item.output}</span>
+                    </div>
+                  </div>
                 </div>
               ))}
+            </div>
+
+            {/* Small Bento Summary Bar */}
+            <div className={`grid grid-cols-2 sm:grid-cols-4 gap-3 ${getChildAnimClass(5, "up", "delay-200")}`}>
+              <div className="rounded-2xl bg-[#fdf2f2] border border-[#fde6e6] p-3 flex items-center gap-3">
+                <Clock className="w-4 h-4 text-[#ce2731] shrink-0" />
+                <div>
+                  <div className="text-xs font-black text-[#0f2c56]">~30 Detik</div>
+                  <div className="text-[10px] text-slate-600">Waktu Analisis</div>
+                </div>
+              </div>
+              <div className="rounded-2xl bg-slate-50 border border-slate-200/70 p-3 flex items-center gap-3">
+                <FileSpreadsheet className="w-4 h-4 text-[#0f2c56] shrink-0" />
+                <div>
+                  <div className="text-xs font-black text-[#0f2c56]">PDF / Form</div>
+                  <div className="text-[10px] text-slate-600">Input Fleksibel</div>
+                </div>
+              </div>
+              <div className="rounded-2xl bg-slate-50 border border-slate-200/70 p-3 flex items-center gap-3">
+                <Target className="w-4 h-4 text-[#ce2731] shrink-0" />
+                <div>
+                  <div className="text-xs font-black text-[#0f2c56]">5 Dimensi</div>
+                  <div className="text-[10px] text-slate-600">Evaluasi Objektif</div>
+                </div>
+              </div>
+              <div className="rounded-2xl bg-[#0f2c56] p-3 flex items-center gap-3 text-white">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <div>
+                  <div className="text-xs font-black">100% Gratis</div>
+                  <div className="text-[10px] text-slate-300">Tanpa Langganan</div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -1309,17 +1433,23 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Value Assurance Card */}
-            <div className="hidden lg:flex lg:col-span-4 flex-col gap-3 relative z-20">
+            {/* Small Bento Grid (Right 4 Cols) */}
+            <div className="hidden lg:grid lg:col-span-4 grid-cols-2 gap-2.5 relative z-20">
               <div className="p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 space-y-1">
-                <div className="text-xs font-black text-white">Analisis Instan 30 Detik</div>
-                <div className="text-[11px] text-[#fde6e6] leading-relaxed">
-                  Langsung dapatkan evaluasi 5 dimensi dan rekomendasi perbaikan kalimat pengalaman.
+                <div className="text-lg font-black text-white">30 Detik</div>
+                <div className="text-[11px] text-[#fde6e6] leading-snug">
+                  Evaluasi cepat 5 dimensi ATS.
                 </div>
               </div>
               <div className="p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 space-y-1">
-                <div className="text-xs font-black text-white">100% Akses Terbuka</div>
-                <div className="text-[11px] text-[#fde6e6] leading-relaxed">
+                <div className="text-lg font-black text-white">92%</div>
+                <div className="text-[11px] text-[#fde6e6] leading-snug">
+                  Akurasi pencocokan karir.
+                </div>
+              </div>
+              <div className="col-span-2 p-4 rounded-2xl bg-[#0f2c56] border border-white/15 space-y-1 shadow-lg">
+                <div className="text-xs font-black text-white">100% Akses Terbuka &amp; Gratis</div>
+                <div className="text-[11px] text-slate-200 leading-relaxed">
                   Tanpa biaya berlangganan, didedikasikan untuk seluruh talenta dan pencari kerja Indonesia.
                 </div>
               </div>
