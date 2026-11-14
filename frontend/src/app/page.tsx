@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import {
   ArrowUpRight,
   CheckCircle2,
@@ -25,7 +24,6 @@ interface WorkflowStepItem {
   description: string;
   ctaText: string;
   ctaHref: string;
-  mascotSrc: string;
 }
 
 const WORKFLOW_STEPS: WorkflowStepItem[] = [
@@ -39,7 +37,6 @@ const WORKFLOW_STEPS: WorkflowStepItem[] = [
       "Banyak kandidat gugur bukan karena kurang kompeten, melainkan karena susunan CV gagal dibaca sistem HR. Pasbana AI memeriksa struktur 1-kolom dan kelengkapan profil Anda secara instan.",
     ctaText: "Coba Evaluasi CV",
     ctaHref: "/evaluate",
-    mascotSrc: "/mascot/mascot-power.webp",
   },
   {
     id: 1,
@@ -51,7 +48,6 @@ const WORKFLOW_STEPS: WorkflowStepItem[] = [
       "Dapatkan penilaian terukur pada 5 aspek utama mulai dari keterbacaan format, kata kerja aktif, hingga dampak pencapaian, lengkap dengan panduan kalimat yang siap disalin.",
     ctaText: "Lihat Simulasi Skor",
     ctaHref: "/evaluate",
-    mascotSrc: "/mascot/mascot-idea.webp",
   },
   {
     id: 2,
@@ -63,7 +59,6 @@ const WORKFLOW_STEPS: WorkflowStepItem[] = [
       "Tidak perlu lagi menebak posisi mana yang cocok. Berdasarkan keahlian dan pengalaman di CV Anda, dapatkan rekomendasi lowongan terbaik beserta panduan skill yang perlu ditingkatkan.",
     ctaText: "Temukan Lowongan Cocok",
     ctaHref: "/jobs",
-    mascotSrc: "/mascot/mascot-celebrate.webp",
   },
   {
     id: 3,
@@ -75,7 +70,6 @@ const WORKFLOW_STEPS: WorkflowStepItem[] = [
       "Evaluasi berfokus sepenuhnya pada keahlian, pengalaman proyek, dan kesiapan kerja tanpa bias nama, gender, maupun latar belakang pribadi. Anda memegang kendali penuh atas data CV.",
     ctaText: "Pelajari Prinsip Kami",
     ctaHref: "/about",
-    mascotSrc: "/mascot/mascot-shield.webp",
   },
 ];
 
@@ -426,34 +420,76 @@ export default function HomePage() {
             </div>
 
             {/* =================================================================
-                RIGHT 6 COLS: Transitions between Slide 0 Hero Action Mascot
-                and Slide 1 Stage Card with Power Mascot & Live Previews
+                RIGHT 6 COLS: Transitions between Slide 0 Hero Live Inspector Card
+                and Slide 1 Stage Card with Interactive ATS Previews
                 ================================================================= */}
             <div className="lg:col-span-6 h-[52%] sm:h-[56%] lg:h-full relative">
-              {/* SLIDE 0 HERO RIGHT STAGE: Spotlight Glow + Action Mascot */}
+              {/* SLIDE 0 HERO RIGHT STAGE: Live Simulated ATS Inspection & Match Showcase */}
               <div
-                className={`absolute inset-0 flex items-center justify-center p-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                className={`absolute inset-0 flex items-center justify-center p-3 sm:p-6 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                   activeSlide === 0
                     ? "opacity-100 scale-100 pointer-events-auto"
                     : "opacity-0 scale-95 pointer-events-none"
                 }`}
               >
                 <div
-                  className="absolute w-80 sm:w-96 lg:w-[480px] h-80 sm:h-96 lg:h-[480px] rounded-full bg-radial from-[#ce2731]/30 via-[#275992]/25 to-transparent blur-3xl pointer-events-none"
+                  className="absolute w-80 sm:w-96 lg:w-[480px] h-80 sm:h-96 lg:h-[480px] rounded-full bg-radial from-[#ce2731]/25 via-[#275992]/20 to-transparent blur-3xl pointer-events-none"
                   aria-hidden="true"
                 />
-                <div className="relative w-[280px] sm:w-[350px] lg:w-[410px] xl:w-[450px] h-[320px] sm:h-[420px] lg:h-[500px] xl:h-[540px] z-20 pointer-events-none animate-float">
-                  <Image
-                    src="/mascot/mascot-action.webp"
-                    alt="Maskot Pasbana AI"
-                    fill
-                    className="object-contain object-bottom drop-shadow-[0_28px_40px_rgba(0,0,0,0.45)]"
-                    priority
-                  />
+                {/* Floating Interactive Product Card */}
+                <div className="relative z-20 w-full max-w-md rounded-3xl bg-[#0e2647]/85 backdrop-blur-xl border border-white/15 p-5 sm:p-6 shadow-2xl text-white space-y-4">
+                  {/* Card Header with Active Pulse */}
+                  <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                      <span className="text-xs font-bold text-white tracking-wide">Simulasi Evaluasi ATS</span>
+                    </div>
+                    <span className="text-[10px] font-mono font-bold bg-[#ce2731] text-white px-2 py-0.5 rounded-full">
+                      Skor 88/100
+                    </span>
+                  </div>
+
+                  {/* Candidate File Preview Pill */}
+                  <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between">
+                    <div className="space-y-0.5 min-w-0">
+                      <div className="text-xs font-bold text-white truncate">Resume_Standar_ATS.pdf</div>
+                      <div className="text-[10px] text-slate-300">Format 1-Kolom • 14 Kata Kerja Aktif</div>
+                    </div>
+                    <span className="text-[10px] font-bold text-emerald-300 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded-full shrink-0">
+                      Lolos Parsing
+                    </span>
+                  </div>
+
+                  {/* 5-Dimension Mini Progress Bars */}
+                  <div className="space-y-2 pt-1">
+                    <div className="flex items-center justify-between text-[11px] font-semibold text-slate-200">
+                      <span>Struktur &amp; Keterbacaan Mesin</span>
+                      <span className="text-[#ce2731] font-mono font-bold">94%</span>
+                    </div>
+                    <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                      <div className="w-[94%] h-full bg-[#ce2731] rounded-full" />
+                    </div>
+
+                    <div className="flex items-center justify-between text-[11px] font-semibold text-slate-200 pt-1">
+                      <span>Kesesuaian Kualifikasi Lowongan</span>
+                      <span className="text-emerald-400 font-mono font-bold">92%</span>
+                    </div>
+                    <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                      <div className="w-[92%] h-full bg-emerald-400 rounded-full" />
+                    </div>
+                  </div>
+
+                  {/* Bottom Recommendation Pill */}
+                  <div className="p-2.5 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-between text-xs">
+                    <span className="text-slate-200">Target Karir Terdeteksi</span>
+                    <span className="font-bold text-white bg-white/15 px-2.5 py-0.5 rounded-full text-[11px]">
+                      Product &amp; Tech Role
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              {/* SLIDE 1 STAGE RIGHT CONTENT: Interactive Stage + Power Mascot */}
+              {/* SLIDE 1 STAGE RIGHT CONTENT: Interactive Stage + Live Previews */}
               <div
                 className={`absolute inset-0 flex flex-col justify-between p-4 sm:p-7 text-[#fefefd] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                   activeSlide === 1
@@ -471,7 +507,7 @@ export default function HomePage() {
                   </span>
                 </div>
 
-                {/* Center Live Previews + Power Mascot */}
+                {/* Center Live Previews + Validation Inspector */}
                 <div className="relative z-20 grid grid-cols-1 sm:grid-cols-12 gap-4 items-center my-auto">
                   <div className="sm:col-span-7">
                     {activeWorkflowIdx === 0 && (
@@ -557,16 +593,70 @@ export default function HomePage() {
                     )}
                   </div>
 
-                  {/* Power Pose Mascot */}
-                  <div className="sm:col-span-5 flex items-center justify-center">
-                    <div className="relative w-[180px] sm:w-[220px] lg:w-[260px] xl:w-[290px] h-[220px] sm:h-[260px] lg:h-[320px] xl:h-[350px]">
-                      <Image
-                        src="/mascot/mascot-power.webp"
-                        alt="Maskot Pasbana AI Power Pose"
-                        fill
-                        className="object-contain object-bottom drop-shadow-[0_24px_32px_rgba(0,0,0,0.5)]"
-                      />
-                    </div>
+                  {/* Complementary Validation Inspector Panel */}
+                  <div className="sm:col-span-5 space-y-2.5">
+                    {activeWorkflowIdx === 0 && (
+                      <div className="bg-[#0f2c56]/90 border border-white/15 rounded-3xl p-4 shadow-xl space-y-2 text-white">
+                        <div className="text-[11px] font-bold text-slate-200 uppercase tracking-wider">Parameter Standar ATS</div>
+                        <div className="space-y-1.5 text-[11px]">
+                          <div className="flex items-center justify-between p-2 rounded-xl bg-white/5">
+                            <span>Format 1-Kolom Simetris</span>
+                            <span className="text-emerald-400 font-bold">Lolos</span>
+                          </div>
+                          <div className="flex items-center justify-between p-2 rounded-xl bg-white/5">
+                            <span>Tipografi Bersih (11pt)</span>
+                            <span className="text-emerald-400 font-bold">Lolos</span>
+                          </div>
+                          <div className="flex items-center justify-between p-2 rounded-xl bg-white/5">
+                            <span>Bebas Simbol Kompleks</span>
+                            <span className="text-emerald-400 font-bold">Lolos</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {activeWorkflowIdx === 1 && (
+                      <div className="bg-[#0f2c56]/90 border border-white/15 rounded-3xl p-4 shadow-xl space-y-2 text-white">
+                        <div className="text-[11px] font-bold text-slate-200 uppercase tracking-wider">Analisis Dampak Karir</div>
+                        <div className="space-y-1.5 text-[11px]">
+                          <div className="p-2 rounded-xl bg-white/5">
+                            <div className="text-[10px] text-slate-300">Kata Kerja Aktif</div>
+                            <div className="font-bold text-emerald-300 text-xs mt-0.5">18 Frasa Terdeteksi</div>
+                          </div>
+                          <div className="p-2 rounded-xl bg-white/5">
+                            <div className="text-[10px] text-slate-300">Peluang Lolos Seleksi</div>
+                            <div className="font-bold text-white text-xs mt-0.5">+24% Poin Tambahan</div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {activeWorkflowIdx === 2 && (
+                      <div className="bg-[#0f2c56]/90 border border-white/15 rounded-3xl p-4 shadow-xl space-y-2 text-white">
+                        <div className="text-[11px] font-bold text-slate-200 uppercase tracking-wider">Keahlian Terpetakan</div>
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                          {["Next.js", "TypeScript", "Tailwind CSS", "REST API", "Git"].map((sk) => (
+                            <span key={sk} className="text-[10px] font-mono font-bold bg-white/10 px-2 py-1 rounded-lg text-white">
+                              {sk}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {activeWorkflowIdx === 3 && (
+                      <div className="bg-[#0f2c56]/90 border border-white/15 rounded-3xl p-4 shadow-xl space-y-2 text-white">
+                        <div className="text-[11px] font-bold text-slate-200 uppercase tracking-wider">Sanitasi Data PII</div>
+                        <div className="space-y-1.5 text-[11px]">
+                          <div className="p-2 rounded-xl bg-emerald-950/60 border border-emerald-500/20 text-emerald-300 font-bold">
+                            Identitas Terenkripsi
+                          </div>
+                          <div className="p-2 rounded-xl bg-white/5 text-slate-200">
+                            Patuh UU PDP No. 27/2022
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -613,7 +703,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Center Area inside Card: Metrics & Tags on Left + Large Mascot on Right */}
+            {/* Center Area inside Card: Metrics & Tags on Left + Live Job Snapshot on Right */}
             <div className="my-auto grid grid-cols-1 sm:grid-cols-12 gap-5 items-center py-2 relative z-10">
               {/* Metric & Career Match Tags */}
               <div className="sm:col-span-7 space-y-3.5">
@@ -645,15 +735,26 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Large Mascot Power Pose */}
-              <div className="sm:col-span-5 flex items-center justify-center">
-                <div className="w-48 sm:w-56 lg:w-60 h-52 sm:h-64 lg:h-72 relative animate-float">
-                  <Image
-                    src="/mascot/mascot-power.webp"
-                    alt="Maskot Kandidat Siap Kerja"
-                    fill
-                    className="object-contain object-bottom drop-shadow-[0_24px_36px_rgba(0,0,0,0.5)]"
-                  />
+              {/* Target Job Matching Snapshot Card */}
+              <div className="sm:col-span-5 space-y-2.5">
+                <div className="bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 space-y-2">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-bold text-[#fefefd]">Rekomendasi Utama</span>
+                    <span className="bg-[#ce2731] text-white text-[10px] font-black px-2 py-0.5 rounded-full">
+                      94% Cocok
+                    </span>
+                  </div>
+                  <div className="text-sm font-black text-white">Junior Frontend Developer</div>
+                  <div className="text-[11px] text-[#fde6e6]">PT Teknologi Berdaya Nusantara</div>
+                  <div className="pt-1 flex flex-wrap gap-1">
+                    <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded-md font-mono text-white">React</span>
+                    <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded-md font-mono text-white">TypeScript</span>
+                    <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded-md font-mono text-white">Next.js</span>
+                  </div>
+                </div>
+                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/15 text-xs text-[#fde6e6] flex items-center justify-between">
+                  <span>Status Kesiapan</span>
+                  <span className="font-bold text-emerald-300">Siap Kirim ke HRD</span>
                 </div>
               </div>
             </div>
@@ -766,7 +867,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Bottom Split: Left Trend Visualization (7 Cols) + Right Second (#ce2731) Assistant Card with Mascot (5 Cols) */}
+          {/* Bottom Split: Left Trend Visualization (7 Cols) + Right Second (#ce2731) Assistant Card (5 Cols) */}
           <div className="flex-1 min-h-0 w-full grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
             {/* Left 7 Cols: Clean Soft-Rose (#fdf2f2) & Navy Trend Visualization */}
             <div
@@ -817,12 +918,12 @@ export default function HomePage() {
                   href="/evaluate"
                   className="px-5 py-2.5 rounded-full bg-[#0f2c56] hover:bg-[#163861] text-[#fefefd] text-xs font-bold transition"
                 >
-                  Buka Ruang Evaluasi →
+                  Buka Ruang Evaluasi
                 </Link>
               </div>
             </div>
 
-            {/* Right 5 Cols: Bold Second (#ce2731) Card + Large Mascot Idea Pose */}
+            {/* Right 5 Cols: Bold Second (#ce2731) Card + Before-After Active Voice Comparison */}
             <div
               className={`lg:col-span-5 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-7 text-[#fefefd] flex flex-col justify-between relative overflow-hidden shadow-xl origin-bottom-right border border-white/10 ${getChildAnimClass(3, "right", "delay-200")}`}
               style={{
@@ -838,24 +939,25 @@ export default function HomePage() {
                 </h3>
               </div>
 
-              <div className="grid grid-cols-12 gap-3 items-center my-auto relative z-20">
-                <div className="col-span-7 bg-[#fefefd] text-[#0f2c56] rounded-2xl p-4 shadow-lg space-y-2">
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-[#ce2731]">
-                    Contoh Perbaikan
-                  </p>
-                  <p className="text-xs font-semibold leading-relaxed">
-                    &quot;<strong className="text-[#ce2731]">Mengelola</strong> acara kampus dengan <strong className="text-[#0f2c56]">350+ peserta</strong> dan tingkat kepuasan 94%.&quot;
+              {/* Before vs After Active Voice Showcase */}
+              <div className="space-y-2.5 my-auto relative z-20">
+                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/15 space-y-1">
+                  <div className="flex items-center justify-between text-[10px] font-bold uppercase text-[#faa9ab]">
+                    <span>Sebelum (Pasif &amp; Standar)</span>
+                    <span className="text-rose-300 font-mono">Skor 45</span>
+                  </div>
+                  <p className="text-xs text-slate-200 line-through opacity-75">
+                    &quot;Membantu mengurus acara dan kegiatan mahasiswa di kampus.&quot;
                   </p>
                 </div>
-                <div className="col-span-5 flex items-center justify-center">
-                  <div className="w-32 h-44 sm:w-36 sm:h-48 relative animate-float">
-                    <Image
-                      src="/mascot/mascot-idea.webp"
-                      alt="Maskot Ide Kalimat Aktif"
-                      fill
-                      className="object-contain drop-shadow-xl"
-                    />
+                <div className="bg-[#fefefd] text-[#0f2c56] rounded-2xl p-3.5 shadow-lg space-y-1 border border-white">
+                  <div className="flex items-center justify-between text-[10px] font-bold uppercase text-[#ce2731]">
+                    <span>Sesudah Pasbana AI (Aktif &amp; Terukur)</span>
+                    <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-black font-mono">Skor 92</span>
                   </div>
+                  <p className="text-xs font-semibold leading-relaxed">
+                    &quot;<strong className="text-[#ce2731]">Menginisiasi &amp; mengelola</strong> seminar karir dengan <strong className="text-[#0f2c56]">350+ peserta</strong> serta kepuasan 94%.&quot;
+                  </p>
                 </div>
               </div>
 
@@ -871,7 +973,7 @@ export default function HomePage() {
       </section>
 
       {/* =====================================================================
-          SLIDE 4: OPEN 5D RADAR ON #FEFEFD + PRIMARY/SECOND BLIND SCORING STAGE WITH MASCOT SHIELD
+          SLIDE 4: OPEN 5D RADAR ON #FEFEFD + PRIMARY/SECOND BLIND SCORING STAGE
           ===================================================================== */}
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(4)}`}
@@ -929,7 +1031,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Right 6 Cols: Primary (#0f2c56) & Second (#ce2731) Blind Scoring Stage with Large Mascot Shield */}
+          {/* Right 6 Cols: Primary (#0f2c56) & Second (#ce2731) Blind Scoring Stage */}
           <div
             className={`lg:col-span-6 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-8 text-[#fefefd] flex flex-col justify-between relative overflow-hidden shadow-2xl border border-white/10 origin-right ${getChildAnimClass(4, "right", "delay-150")}`}
             style={{
@@ -962,14 +1064,36 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="sm:col-span-5 flex items-center justify-center">
-                <div className="w-44 h-56 sm:w-52 sm:h-64 relative animate-float">
-                  <Image
-                    src="/mascot/mascot-shield.webp"
-                    alt="Maskot Penilaian Objektif"
-                    fill
-                    className="object-contain drop-shadow-[0_22px_32px_rgba(8,27,55,0.5)]"
-                  />
+              {/* PII Masking Live Status Card */}
+              <div className="sm:col-span-5 space-y-2">
+                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15 space-y-2.5">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-bold text-white flex items-center gap-1.5">
+                      <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                      Blind Scoring
+                    </span>
+                    <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-mono px-2 py-0.5 rounded-full font-bold">
+                      UU PDP No. 27/2022
+                    </span>
+                  </div>
+                  <div className="space-y-1.5 text-xs text-[#fde6e6]">
+                    <div className="p-2 rounded-xl bg-white/5 flex items-center justify-between">
+                      <span>Foto &amp; Penampilan</span>
+                      <span className="text-[10px] font-mono font-bold text-emerald-300 bg-emerald-950/60 px-2 py-0.5 rounded">
+                        Disamarkan
+                      </span>
+                    </div>
+                    <div className="p-2 rounded-xl bg-white/5 flex items-center justify-between">
+                      <span>Usia &amp; Gender</span>
+                      <span className="text-[10px] font-mono font-bold text-emerald-300 bg-emerald-950/60 px-2 py-0.5 rounded">
+                        Disamarkan
+                      </span>
+                    </div>
+                    <div className="p-2 rounded-xl bg-white/5 flex items-center justify-between">
+                      <span>Fokus Evaluasi</span>
+                      <span className="text-[10px] font-bold text-white">Kompetensi Murni</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -993,7 +1117,7 @@ export default function HomePage() {
       </section>
 
       {/* =====================================================================
-          SLIDE 5: OPEN ARCHITECTURAL 3-STEP TIMELINE ON #FEFEFD (NO CARD BOXES) + MASCOT
+          SLIDE 5: OPEN ARCHITECTURAL 3-STEP TIMELINE ON #FEFEFD (NO CARD BOXES)
           ===================================================================== */}
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(5)}`}
@@ -1017,9 +1141,9 @@ export default function HomePage() {
             </span>
           </div>
 
-          {/* Open 12-Col Architectural Steps + Large Mascot Walk Companion */}
-          <div className="my-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center py-2">
-            <div className={`lg:col-span-9 grid grid-cols-1 md:grid-cols-3 gap-8 ${getChildAnimClass(5, "left", "delay-150")}`}>
+          {/* Open 12-Col Architectural Steps */}
+          <div className="my-auto py-2">
+            <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 ${getChildAnimClass(5, "up", "delay-150")}`}>
               {[
                 {
                   step: "01",
@@ -1043,7 +1167,7 @@ export default function HomePage() {
                   desc: "Pilih posisi kerja aktif dengan persentase kecocokan tertinggi dan kirim lamaran Anda dengan penuh percaya diri.",
                 },
               ].map((item) => (
-                <div key={item.step} className="space-y-3 relative">
+                <div key={item.step} className="space-y-3 relative p-6 rounded-3xl bg-slate-50/70 border border-slate-100">
                   <div className={`text-5xl sm:text-6xl font-black tracking-tighter ${item.accent}`}>
                     {item.step}
                   </div>
@@ -1056,18 +1180,6 @@ export default function HomePage() {
                   </p>
                 </div>
               ))}
-            </div>
-
-            {/* Large Mascot Walking Forward on Right 3 Cols */}
-            <div className={`hidden lg:flex lg:col-span-3 items-center justify-center ${getChildAnimClass(5, "right", "delay-200")}`}>
-              <div className="w-52 h-64 xl:w-60 xl:h-72 relative animate-float">
-                <Image
-                  src="/mascot/mascot-walk.webp"
-                  alt="Maskot Langkah Karir Pasbana AI"
-                  fill
-                  className="object-contain drop-shadow-[0_20px_28px_rgba(15,44,86,0.22)]"
-                />
-              </div>
             </div>
           </div>
 
@@ -1100,7 +1212,7 @@ export default function HomePage() {
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(6)}`}
       >
         <div className="w-full h-full mx-auto flex flex-col justify-between gap-3 py-1">
-          {/* Top Closing Stage in Second (#ce2731) & Primary (#0f2c56) with Large Celebrating Mascot */}
+          {/* Top Closing Stage in Second (#ce2731) & Primary (#0f2c56) with Value Assurance */}
           <div
             className={`flex-1 min-h-0 w-full rounded-[26px] sm:rounded-[34px] px-6 sm:px-12 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center relative overflow-hidden shadow-2xl border border-white/10 origin-center ${getChildAnimClass(6, "down", "delay-75")}`}
             style={{
@@ -1134,14 +1246,19 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="hidden lg:flex lg:col-span-4 items-center justify-center relative z-20">
-              <div className="w-52 h-60 xl:w-60 xl:h-68 relative animate-float">
-                <Image
-                  src="/mascot/mascot-celebrate.webp"
-                  alt="Maskot Selebrasi Pasbana AI"
-                  fill
-                  className="object-contain drop-shadow-[0_24px_34px_rgba(8,27,55,0.5)]"
-                />
+            {/* Value Assurance Card */}
+            <div className="hidden lg:flex lg:col-span-4 flex-col gap-3 relative z-20">
+              <div className="p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 space-y-1">
+                <div className="text-xs font-black text-white">Analisis Instan 30 Detik</div>
+                <div className="text-[11px] text-[#fde6e6] leading-relaxed">
+                  Langsung dapatkan evaluasi 5 dimensi dan rekomendasi perbaikan kalimat pengalaman.
+                </div>
+              </div>
+              <div className="p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 space-y-1">
+                <div className="text-xs font-black text-white">100% Akses Terbuka</div>
+                <div className="text-[11px] text-[#fde6e6] leading-relaxed">
+                  Tanpa biaya berlangganan, didedikasikan untuk seluruh talenta dan pencari kerja Indonesia.
+                </div>
               </div>
             </div>
           </div>

@@ -438,20 +438,30 @@ export default function LoginPage() {
               background: "linear-gradient(145deg, #0f2c56 0%, #163861 48%, #ce2731 100%)",
             }}
           >
-            {/* Subtle Geometric Grid */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff12_1px,transparent_1px),linear-gradient(to_bottom,#ffffff12_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
-
             {/* Centered Graphic Showcase */}
             <div className="relative z-10 my-auto text-center space-y-6 py-8 max-w-lg mx-auto">
-              {/* Large Proportional Mascot Showcase */}
-              <div className="w-56 h-72 xl:w-64 xl:h-80 mx-auto relative drop-shadow-[0_28px_44px_rgba(8,27,55,0.55)] animate-float-slow">
-                <Image
-                  src="/mascot/mascot-hero.webp"
-                  alt="Maskot Pasbana AI"
-                  fill
-                  className="object-contain"
-                  priority
-                />
+              {/* Product Value Badges */}
+              <div className="p-6 rounded-3xl bg-white/10 backdrop-blur-xl border border-white/15 space-y-3.5 shadow-xl text-left">
+                <div className="flex items-center justify-between pb-2 border-b border-white/10">
+                  <span className="text-xs font-bold text-white">Standar Evaluasi Resume</span>
+                  <span className="text-[10px] font-mono font-bold bg-[#ce2731] text-white px-2 py-0.5 rounded-full">
+                    ATS HRD 2026
+                  </span>
+                </div>
+                <div className="space-y-2 text-xs text-[#fde6e6]">
+                  <div className="flex items-center gap-2.5 p-2 rounded-xl bg-white/5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Format 1-Kolom &amp; Tipografi Bebas Risiko Parsing</span>
+                  </div>
+                  <div className="flex items-center gap-2.5 p-2 rounded-xl bg-white/5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Evaluasi 5 Dimensi Objektif &amp; Saran Kalimat Aktif</span>
+                  </div>
+                  <div className="flex items-center gap-2.5 p-2 rounded-xl bg-white/5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Pencocokan Lowongan Relevan dengan Akurasi Tinggi</span>
+                  </div>
+                </div>
               </div>
 
               <div className="space-y-3 animate-fade-in-up delay-200">

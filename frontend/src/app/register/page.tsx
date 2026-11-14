@@ -338,17 +338,29 @@ export default function RegisterPage() {
               background: "linear-gradient(145deg, #ce2731 0%, #b01e27 48%, #0f2c56 100%)",
             }}
           >
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff12_1px,transparent_1px),linear-gradient(to_bottom,#ffffff12_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
-
             <div className="relative z-10 my-auto text-center space-y-6 py-8 max-w-lg mx-auto">
-              <div className="w-56 h-72 xl:w-64 xl:h-80 mx-auto relative drop-shadow-[0_28px_44px_rgba(8,27,55,0.55)] animate-float-slow">
-                <Image
-                  src="/mascot/mascot-celebrate.webp"
-                  alt="Maskot Pasbana AI"
-                  fill
-                  className="object-contain"
-                  priority
-                />
+              {/* Product Value Badges */}
+              <div className="p-6 rounded-3xl bg-white/10 backdrop-blur-xl border border-white/15 space-y-3.5 shadow-xl text-left">
+                <div className="flex items-center justify-between pb-2 border-b border-white/10">
+                  <span className="text-xs font-bold text-white">Komitmen Karir Pas Bana</span>
+                  <span className="text-[10px] font-mono font-bold bg-[#0f2c56] text-white px-2 py-0.5 rounded-full">
+                    Akses Gratis
+                  </span>
+                </div>
+                <div className="space-y-2 text-xs text-[#fde6e6]">
+                  <div className="flex items-center gap-2.5 p-2 rounded-xl bg-white/5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Evaluasi Resume Standar ATS 1-Kolom Instan</span>
+                  </div>
+                  <div className="flex items-center gap-2.5 p-2 rounded-xl bg-white/5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Bimbingan Pembuatan CV Standar HRD via Kuesioner</span>
+                  </div>
+                  <div className="flex items-center gap-2.5 p-2 rounded-xl bg-white/5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Pencocokan Lowongan Relevan Tanpa Biaya Tersembunyi</span>
+                  </div>
+                </div>
               </div>
 
               <div className="space-y-3 animate-fade-in-up delay-200">

@@ -63,8 +63,6 @@ export function SplashScreen({
       {/* Soft Ambient Glow Halo */}
       <div className="absolute inset-0 pointer-events-none opacity-50 bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.45)_0%,transparent_70%)] animate-pulse-glow" />
 
-      {/* Grid Mesh Pattern Overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
 
       {/* Main Splash Content */}
       <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-sm mx-auto space-y-6">
