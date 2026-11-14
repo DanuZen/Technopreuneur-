@@ -433,17 +433,17 @@ export default function HomePage() {
 
               {/* SLIDE 1 WORKFLOW EDITORIAL (Navy & Red on White #fefefd Canvas) */}
               <div
-                className={`absolute inset-0 h-full flex flex-col justify-between py-2 sm:py-5 px-3 sm:px-8 lg:px-12 text-left transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                className={`absolute inset-0 h-full flex flex-col justify-center gap-4 sm:gap-5 py-4 sm:py-6 px-4 sm:px-8 lg:px-10 text-left transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                   activeSlide === 1
                     ? "opacity-100 translate-x-0 scale-100 pointer-events-auto delay-100"
                     : "opacity-0 -translate-x-12 scale-95 pointer-events-none"
                 }`}
               >
-                <div className="space-y-1 sm:space-y-2">
-                  <span className="text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
+                <div className="space-y-2">
+                  <span className="inline-block text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
                     Tahapan Evaluasi Cerdas
                   </span>
-                  <h2 className="text-xl sm:text-3xl lg:text-4xl font-black tracking-tight text-[#0f2c56] leading-tight">
+                  <h2 className="text-xl sm:text-3xl lg:text-[34px] font-black tracking-tight text-[#0f2c56] leading-[1.12]">
                     Otomasi evaluasi berkas,{" "}
                     <span className="text-[#ce2731]">temukan karir dalam hitungan detik.</span>
                   </h2>
@@ -460,7 +460,7 @@ export default function HomePage() {
                         onClick={() => setActiveWorkflowIdx(tab.id)}
                         className="text-left group cursor-pointer focus:outline-none"
                       >
-                        <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden mb-1.5 sm:mb-2.5">
+                        <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden mb-1.5 sm:mb-2">
                           <div
                             className={`h-full rounded-full transition-all duration-500 ${
                               isActive ? "w-full bg-[#ce2731]" : "w-0 group-hover:w-full group-hover:bg-[#0f2c56]/40"
@@ -481,31 +481,15 @@ export default function HomePage() {
                   })}
                 </div>
 
-                {/* 3 Standalone Small Bento Highlights on White Canvas */}
-                <div className="grid grid-cols-3 gap-2.5 pt-1">
-                  <div className="rounded-2xl bg-slate-50 border border-slate-200/80 p-3">
-                    <div className="text-[10px] font-bold text-slate-500">Format CV</div>
-                    <div className="text-xs sm:text-sm font-black text-[#0f2c56] mt-0.5">1-Kolom ATS</div>
-                  </div>
-                  <div className="rounded-2xl bg-[#fdf2f2] border border-[#fde6e6] p-3">
-                    <div className="text-[10px] font-bold text-[#ce2731]">Evaluasi</div>
-                    <div className="text-xs sm:text-sm font-black text-[#0f2c56] mt-0.5">Skor 5 Dimensi</div>
-                  </div>
-                  <div className="rounded-2xl bg-[#0f2c56] p-3 text-white">
-                    <div className="text-[10px] font-bold text-slate-300">Pencocokan</div>
-                    <div className="text-xs sm:text-sm font-black mt-0.5">92% Akurat</div>
-                  </div>
-                </div>
-
-                <div className="space-y-2 sm:space-y-3 pt-1">
-                  <h3 className="text-lg sm:text-2xl font-black text-[#0f2c56]">
+                <div className="space-y-2.5 pt-2 border-t border-slate-200/80">
+                  <h3 className="text-base sm:text-xl font-black text-[#0f2c56]">
                     {activeWorkflow.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-lg">
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-xl">
                     {activeWorkflow.description}
                   </p>
 
-                  <div className="flex items-center gap-3 pt-1">
+                  <div className="flex flex-wrap items-center gap-3 pt-1">
                     <Link
                       href={activeWorkflow.ctaHref}
                       className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#ce2731] hover:bg-[#b01e27] text-[#fefefd] text-xs font-bold shadow-md transition"
@@ -520,6 +504,26 @@ export default function HomePage() {
                     >
                       Tahap Berikutnya →
                     </button>
+                  </div>
+                </div>
+
+                {/* 4 Standalone Small Bento Cards on White Canvas */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
+                  <div className="rounded-2xl bg-slate-50 border border-slate-200/80 p-3">
+                    <div className="text-[10px] font-bold text-slate-500">Format CV</div>
+                    <div className="text-xs font-black text-[#0f2c56] mt-0.5">1-Kolom ATS</div>
+                  </div>
+                  <div className="rounded-2xl bg-[#fdf2f2] border border-[#fde6e6] p-3">
+                    <div className="text-[10px] font-bold text-[#ce2731]">Evaluasi</div>
+                    <div className="text-xs font-black text-[#0f2c56] mt-0.5">Skor 5 Dimensi</div>
+                  </div>
+                  <div className="rounded-2xl bg-slate-50 border border-slate-200/80 p-3">
+                    <div className="text-[10px] font-bold text-slate-500">Kecepatan</div>
+                    <div className="text-xs font-black text-[#0f2c56] mt-0.5">~30 Detik</div>
+                  </div>
+                  <div className="rounded-2xl bg-[#0f2c56] p-3 text-white">
+                    <div className="text-[10px] font-bold text-slate-300">Pencocokan</div>
+                    <div className="text-xs font-black mt-0.5">92% Akurat</div>
                   </div>
                 </div>
               </div>
@@ -918,24 +922,24 @@ export default function HomePage() {
 
           {/* Col 2 (5 Cols): Open Editorial & Feature List on the RIGHT */}
           <div
-            className={`lg:col-span-5 h-full flex flex-col justify-between py-3 sm:py-5 px-4 sm:px-8 origin-right ${getChildAnimClass(2, "right", "delay-150")}`}
+            className={`lg:col-span-5 h-full flex flex-col justify-center gap-4 py-4 sm:py-6 px-4 sm:px-8 origin-right ${getChildAnimClass(2, "right", "delay-150")}`}
           >
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#fdf2f2] text-[#ce2731] text-xs font-bold">
                 <span className="w-2 h-2 rounded-full bg-[#ce2731]" />
                 <span>Ekosistem Persiapan Karir</span>
               </span>
-              <h2 className="text-2xl sm:text-4xl font-black tracking-tight text-[#0f2c56] leading-[1.1]">
+              <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-black tracking-tight text-[#0f2c56] leading-[1.12]">
                 Platform Lengkap untuk{" "}
                 <span className="text-[#ce2731]">Persiapan Karir Anda.</span>
               </h2>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-lg">
                 Sudah punya CV maupun belum, Anda bisa mengukur kesiapan kerja dan menyusun resume standar HRD dalam satu alur terpadu.
               </p>
             </div>
 
             {/* Open Unboxed List with Crimson Second (#ce2731) Accents */}
-            <div className="space-y-4 my-auto py-3">
+            <div className="space-y-3.5 py-1">
               {[
                 {
                   num: "01",
@@ -1161,25 +1165,25 @@ export default function HomePage() {
       >
         <div className="w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
           {/* Left 6 Cols: Open 5-Dimension Radar & Competency Breakdown (No Outer Card) */}
-          <div className={`lg:col-span-6 h-full flex flex-col justify-between py-3 sm:py-5 px-4 sm:px-8 lg:px-12 ${getChildAnimClass(4, "left", "delay-75")}`}>
-            <div className="space-y-2">
+          <div className={`lg:col-span-6 h-full flex flex-col justify-center gap-5 py-4 sm:py-6 px-4 sm:px-8 lg:px-10 ${getChildAnimClass(4, "left", "delay-75")}`}>
+            <div className="space-y-2.5">
               <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#fdf2f2] text-[#ce2731] text-xs font-bold">
                 <ShieldCheck className="w-4 h-4 text-[#ce2731]" />
                 <span>Standar Penilaian Adil &amp; Analitik 5D</span>
               </span>
-              <h2 className="text-2xl sm:text-4xl font-black tracking-tight text-[#0f2c56] leading-[1.1]">
+              <h2 className="text-2xl sm:text-3xl lg:text-[36px] font-black tracking-tight text-[#0f2c56] leading-[1.12]">
                 Peta Kekuatan CV &amp;{" "}
                 <span className="text-[#ce2731]">Rekrutmen Bebas Bias.</span>
               </h2>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-lg">
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-xl">
                 Ketahui aspek resume yang sudah kuat dan bagian yang masih perlu ditingkatkan melalui pemetaan 5 dimensi yang transparan.
               </p>
             </div>
 
             {/* Open Radar Visualization + Dimension Scores */}
-            <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center pt-1">
+            <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
               <div className="sm:col-span-6 flex justify-center">
-                <svg viewBox="0 0 200 140" className="w-full max-w-[240px] h-40">
+                <svg viewBox="0 0 200 140" className="w-full max-w-[230px] h-36">
                   <polygon points="100,14 148,42 148,96 100,124 52,96 52,42" fill="none" stroke="#cbd5e1" strokeWidth="1.2" />
                   <polygon points="100,32 132,50 132,86 100,104 68,86 68,50" fill="none" stroke="#e2e8f0" strokeWidth="1.2" />
                   <polygon
@@ -1211,19 +1215,23 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Standalone Small Bento Row on White Canvas */}
-            <div className="grid grid-cols-3 gap-2.5 pt-1">
+            {/* Standalone 4 Small Bento Cards on White Canvas */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
               <div className="rounded-2xl bg-slate-50 border border-slate-200/80 p-3">
-                <div className="text-base sm:text-lg font-black text-[#0f2c56]">94%</div>
-                <div className="text-[10px] text-slate-600 font-semibold">Format &amp; Struktur ATS</div>
+                <div className="text-base font-black text-[#0f2c56]">94%</div>
+                <div className="text-[10px] text-slate-600 font-semibold">Struktur ATS</div>
               </div>
               <div className="rounded-2xl bg-[#fdf2f2] border border-[#fde6e6] p-3">
-                <div className="text-base sm:text-lg font-black text-[#ce2731]">90%</div>
+                <div className="text-base font-black text-[#ce2731]">90%</div>
                 <div className="text-[10px] text-slate-600 font-semibold">Relevansi Skill</div>
               </div>
+              <div className="rounded-2xl bg-slate-50 border border-slate-200/80 p-3">
+                <div className="text-base font-black text-[#0f2c56]">84%</div>
+                <div className="text-[10px] text-slate-600 font-semibold">Dampak Kerja</div>
+              </div>
               <div className="rounded-2xl bg-[#0f2c56] p-3 text-white">
-                <div className="text-base sm:text-lg font-black">84%</div>
-                <div className="text-[10px] text-slate-300 font-semibold">Dampak Pencapaian</div>
+                <div className="text-base font-black">0% Bias</div>
+                <div className="text-[10px] text-slate-300 font-semibold">Fokus Kompetensi</div>
               </div>
             </div>
           </div>
@@ -1323,24 +1331,27 @@ export default function HomePage() {
         <div className="w-full h-full mx-auto flex flex-col justify-between py-2 lg:py-0">
           {/* Open Header Row */}
           <div
-            className={`w-full flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-3 px-4 sm:px-8 border-b-2 border-[#0f2c56]/10 ${getChildAnimClass(5, "down", "delay-75")}`}
+            className={`w-full flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-3 px-4 sm:px-8 lg:px-10 border-b-2 border-[#0f2c56]/10 ${getChildAnimClass(5, "down", "delay-75")}`}
           >
-            <div>
+            <div className="space-y-1">
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
                 Alur Cepat &amp; Terpandu
               </span>
-              <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-black tracking-tight text-[#0f2c56] mt-1">
+              <h2 className="text-2xl sm:text-3xl lg:text-[38px] font-black tracking-tight text-[#0f2c56] leading-[1.12]">
                 Siapkan Karir Impian dalam{" "}
                 <span className="text-[#ce2731]">3 Langkah Sederhana.</span>
               </h2>
+              <p className="text-xs sm:text-sm text-slate-600 max-w-2xl">
+                Mulai dari unggah berkas hingga menemukan lowongan yang paling sesuai, semua terarah dalam satu halaman.
+              </p>
             </div>
-            <span className="px-4 py-1.5 rounded-full bg-[#ce2731] text-[#fefefd] text-xs font-bold self-start sm:self-auto">
+            <span className="px-4 py-1.5 rounded-full bg-[#ce2731] text-[#fefefd] text-xs font-bold self-start sm:self-auto shrink-0">
               Gratis Selamanya
             </span>
           </div>
 
           {/* Open 12-Col Architectural Steps + Small Bento Summary */}
-          <div className="my-auto py-2 px-4 sm:px-8 space-y-4">
+          <div className="flex-1 flex flex-col justify-center py-2 px-4 sm:px-8 lg:px-10 space-y-4">
             <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 ${getChildAnimClass(5, "up", "delay-150")}`}>
               {[
                 {
