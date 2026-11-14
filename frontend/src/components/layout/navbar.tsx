@@ -29,22 +29,22 @@ export function Navbar() {
   };
 
   return (
-    <header className="fixed top-3 sm:top-4 inset-x-0 z-50 flex flex-col items-center px-3 sm:px-6 pointer-events-none">
-      {/* Main Floating Pill Navbar */}
-      <div className="pointer-events-auto w-full max-w-5xl bg-[#0e2647]/95 backdrop-blur-xl text-white rounded-full shadow-xl shadow-[#0a1d37]/20 px-3 sm:px-5 py-2 transition-all">
+    <header className="w-full shrink-0 z-50 pt-2.5 sm:pt-3 pb-1 px-3 sm:px-6 flex flex-col items-center">
+      {/* Single Clean Pill Navbar (No Nested Pill-in-Pill) */}
+      <div className="w-full max-w-5xl bg-[#0e2647] text-white rounded-full shadow-md shadow-[#0a1d37]/15 px-3.5 sm:px-5 py-2 transition-all">
         <div className="flex items-center justify-between gap-2 sm:gap-4">
           {/* Logo & Brand */}
           <Link
             href="/"
             className="flex items-center gap-2.5 pl-1 pr-2 py-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full shrink-0"
           >
-            <div className="relative w-8 h-8 flex items-center justify-center shrink-0">
+            <div className="relative w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center shrink-0">
               <Image
                 src="/logo-app-white.webp"
                 alt="Pasbana AI Logo"
                 width={32}
                 height={32}
-                className="rounded-full object-contain shadow-sm group-hover:scale-105 transition-transform"
+                className="rounded-full object-contain group-hover:scale-105 transition-transform"
                 priority
               />
             </div>
@@ -58,44 +58,39 @@ export function Navbar() {
             </div>
           </Link>
 
-          {/* Desktop Navigation with Integrated Center Pill */}
+          {/* Desktop Navigation (Single Flat Row Inside Pill) */}
           <nav className="hidden md:flex items-center gap-1 lg:gap-2">
             <Link
               href="/"
-              className="text-xs font-semibold text-slate-200 hover:text-white hover:bg-white/10 px-3 py-1.5 rounded-full transition"
+              className="text-xs font-medium text-slate-200 hover:text-white hover:bg-white/10 px-3 py-1.5 rounded-full transition"
             >
               Beranda
             </Link>
-
-            {/* Inner Segmented Pill Widget */}
-            <div className="inline-flex items-center gap-1 p-1 bg-[#081830]/80 text-white rounded-full shadow-inner select-none">
-              <Link
-                href="/evaluate"
-                className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 hover:bg-white/25 text-white text-xs font-semibold transition shadow-2xs"
-                title="Evaluasi CV &amp; Skor ATS"
-              >
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-beacon shrink-0" aria-hidden="true" />
-                <span>Skor ATS</span>
-              </Link>
-              <Link
-                href="/jobs"
-                className="flex items-center gap-1 px-3 py-1 rounded-full text-slate-200 hover:text-white hover:bg-white/10 text-xs font-medium transition"
-                title="Pencocokan Lowongan AI"
-              >
-                <span>Pencocokan AI</span>
-              </Link>
-              <Link
-                href="/evaluate"
-                className="flex items-center gap-1 px-3 py-1 rounded-full text-slate-200 hover:text-white hover:bg-white/10 text-xs font-medium transition"
-                title="Blind Scoring Bebas Bias"
-              >
-                <span>Blind Scoring</span>
-              </Link>
-            </div>
-
+            <Link
+              href="/evaluate"
+              className="flex items-center gap-1.5 text-xs font-medium text-slate-200 hover:text-white hover:bg-white/10 px-3 py-1.5 rounded-full transition"
+              title="Evaluasi CV &amp; Skor ATS"
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-beacon shrink-0" aria-hidden="true" />
+              <span>Skor ATS</span>
+            </Link>
+            <Link
+              href="/jobs"
+              className="text-xs font-medium text-slate-200 hover:text-white hover:bg-white/10 px-3 py-1.5 rounded-full transition"
+              title="Pencocokan Lowongan AI"
+            >
+              Pencocokan AI
+            </Link>
+            <Link
+              href="/evaluate"
+              className="text-xs font-medium text-slate-200 hover:text-white hover:bg-white/10 px-3 py-1.5 rounded-full transition"
+              title="Blind Scoring Bebas Bias"
+            >
+              Blind Scoring
+            </Link>
             <Link
               href="/about"
-              className="text-xs font-semibold text-slate-200 hover:text-white hover:bg-white/10 px-3 py-1.5 rounded-full transition"
+              className="text-xs font-medium text-slate-200 hover:text-white hover:bg-white/10 px-3 py-1.5 rounded-full transition"
             >
               Tentang Kami
             </Link>
@@ -131,7 +126,7 @@ export function Navbar() {
                 </Link>
                 <Link
                   href="/register"
-                  className="text-xs font-semibold text-white bg-secondary hover:bg-secondary-700 px-4 py-1.5 rounded-full shadow-md shadow-secondary/25 transition flex items-center justify-center"
+                  className="text-xs font-semibold text-white bg-secondary hover:bg-secondary-700 px-4 py-1.5 rounded-full shadow-sm transition flex items-center justify-center"
                 >
                   Daftar Akun
                 </Link>
