@@ -1,10 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  distDir: process.env.NEXT_DIST_DIR || '.next',
   reactStrictMode: true,
   trailingSlash: false,
   experimental: {
     workerThreads: false,
     cpus: 1,
+  },
+  webpack: (config, { dev }) => {
+    if (dev) {
+      // Hindari korupsi cache webpack berbasis file di Windows yang memicu error './682.js'
+      config.cache = { type: 'memory' };
+    }
+    return config;
   },
   async redirects() {
     return [
