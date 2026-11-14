@@ -5,81 +5,114 @@ import Link from "next/link";
 import {
   ArrowUpRight,
   CheckCircle2,
-  FileCheck,
-  FileSpreadsheet,
-  ShieldCheck,
-  Target,
+  Eye,
+  Calendar,
+  Play,
+  TrendingUp,
+  Bell,
+  Plus,
+  Minus,
+  FileText,
   Briefcase,
-  BarChart3,
-  Clock,
-  Lock,
+  ShieldCheck,
+  UserCheck,
 } from "lucide-react";
 
-interface WorkflowStepItem {
+const TOTAL_SLIDES = 7;
+
+interface FeatureGridItem {
   id: number;
-  num: string;
-  tabLabel: string;
-  tabSub: string;
+  badgeType: "eye" | "calendar" | "video" | "rocket" | "score" | "bell";
   title: string;
-  description: string;
-  ctaText: string;
-  ctaHref: string;
+  desc: string;
 }
 
-const WORKFLOW_STEPS: WorkflowStepItem[] = [
+const FEATURE_GRID_ITEMS: FeatureGridItem[] = [
   {
     id: 0,
-    num: "01",
-    tabLabel: "Cek Format ATS",
-    tabSub: "Bebas Gagal Baca",
-    title: "Pastikan CV Terbaca Sistem Seleksi",
-    description:
-      "Banyak kandidat gugur bukan karena kurang kompeten, melainkan karena susunan CV gagal dibaca sistem HR. Pasbana AI memeriksa struktur 1-kolom dan kelengkapan profil Anda secara instan.",
-    ctaText: "Coba Evaluasi CV",
-    ctaHref: "/evaluate",
+    badgeType: "eye",
+    title: "Analisis struktur dan keterbacaan CV dalam satu klik",
+    desc: "Ketahui bagian format yang menghambat sistem ATS dan tingkatkan kesiapan berkas Anda secara instan.",
   },
   {
     id: 1,
-    num: "02",
-    tabLabel: "Skor 5 Dimensi",
-    tabSub: "Saran Perbaikan",
-    title: "Ketahui Letak Kekuatan & Celah CV",
-    description:
-      "Dapatkan penilaian terukur pada 5 aspek utama mulai dari keterbacaan format, kata kerja aktif, hingga dampak pencapaian, lengkap dengan panduan kalimat yang siap disalin.",
-    ctaText: "Lihat Simulasi Skor",
-    ctaHref: "/evaluate",
+    badgeType: "calendar",
+    title: "Peta kekuatan resume dalam 5 dimensi utama",
+    desc: "Berhenti menebak letak kelemahan CV. Ukur struktur, keahlian teknis, dan dampak pengalaman secara objektif.",
   },
   {
     id: 2,
-    num: "03",
-    tabLabel: "Pencocokan Karir",
-    tabSub: "Loker Pas Bana",
-    title: "Lowongan yang Sesuai Keahlian",
-    description:
-      "Tidak perlu lagi menebak posisi mana yang cocok. Berdasarkan keahlian dan pengalaman di CV Anda, dapatkan rekomendasi lowongan terbaik beserta panduan skill yang perlu ditingkatkan.",
-    ctaText: "Temukan Lowongan Cocok",
-    ctaHref: "/jobs",
+    badgeType: "video",
+    title: "Pahami kalimat aktif dan kata kunci yang dicari HRD",
+    desc: "Ubah deskripsi tugas pasif menjadi pencapaian terukur tanpa harus menghabiskan waktu berjam-jam di depan layar.",
   },
   {
     id: 3,
-    num: "04",
-    tabLabel: "Penilaian Adil",
-    tabSub: "Objektif & Aman",
-    title: "Dinilai Murni dari Kompetensi",
-    description:
-      "Evaluasi berfokus sepenuhnya pada keahlian, pengalaman proyek, dan kesiapan kerja tanpa bias nama, gender, maupun latar belakang pribadi. Anda memegang kendali penuh atas data CV.",
-    ctaText: "Pelajari Prinsip Kami",
-    ctaHref: "/about",
+    badgeType: "rocket",
+    title: "Dapatkan informasi lengkap kesiapan profil dan portofolio",
+    desc: "Ketahui aspek mana yang sudah kompetitif dan bagian mana yang masih perlu ditingkatkan sebelum melamar.",
+  },
+  {
+    id: 4,
+    badgeType: "score",
+    title: "Ketahui berapa poin peningkatan dari setiap revisi",
+    desc: "Pantau kenaikan skor ATS secara langsung setiap kali Anda memperbaiki struktur dan deskripsi pengalaman kerja.",
+  },
+  {
+    id: 5,
+    badgeType: "bell",
+    title: "Rekomendasi otomatis untuk lowongan yang paling pas bana",
+    desc: "Temukan posisi kerja aktif dengan persentase kecocokan tertinggi berdasarkan keahlian di resume Anda.",
   },
 ];
 
-const TOTAL_SLIDES = 7;
+interface AccordionItem {
+  id: number;
+  question: string;
+  answer: string;
+}
+
+const ACCORDION_ITEMS: AccordionItem[] = [
+  {
+    id: 0,
+    question: "Dapatkan analisis komprehensif 5 dimensi untuk CV Anda",
+    answer:
+      "Pasbana AI memeriksa keterbacaan format 1-kolom, kejelasan deskripsi karir, penggunaan kata kerja aktif, relevansi keahlian teknis, serta kelengkapan profil dalam waktu sekitar 30 detik.",
+  },
+  {
+    id: 1,
+    question: "Gunakan kuesioner terpandu jika Anda belum memiliki file CV",
+    answer:
+      "Cukup jawab pertanyaan singkat mengenai riwayat pendidikan, pengalaman organisasi atau proyek, serta keahlian Anda. Sistem akan menyusun draf CV standar ATS secara otomatis.",
+  },
+  {
+    id: 2,
+    question: "Pahami kalimat aktif dan kata kunci yang meningkatkan peluang lolos",
+    answer:
+      "Asisten kalimat memberikan contoh perbaikan langsung dari kalimat pasif menjadi kalimat berdampak lengkap dengan metrik pencapaian yang disukai perekrut.",
+  },
+  {
+    id: 3,
+    question: "Temukan lowongan kerja aktif yang paling sesuai dengan kompetensi Anda",
+    answer:
+      "Sistem memetakan keahlian di resume Anda terhadap kualifikasi lowongan kerja dan menampilkan persentase kecocokan beserta analisis celah keahlian.",
+  },
+  {
+    id: 4,
+    question: "Nikmati evaluasi objektif 100% gratis tanpa biaya berlangganan",
+    answer:
+      "Seluruh fitur evaluasi CV, penyusunan resume via kuesioner, dan pencocokan lowongan didedikasikan secara terbuka untuk mahasiswa dan pencari kerja.",
+  },
+];
 
 export default function HomePage() {
   const [activeSlide, setActiveSlide] = useState<number>(0);
   const [prevSlide, setPrevSlide] = useState<number>(0);
   const [scrollDir, setScrollDir] = useState<"down" | "up">("down");
-  const [activeWorkflowIdx, setActiveWorkflowIdx] = useState<number>(0);
+  const [activeFeatureIdx, setActiveFeatureIdx] = useState<number>(0);
+  const [sliderStep, setSliderStep] = useState<number>(5);
+  const [inputMode, setInputMode] = useState<"pdf" | "questionnaire">("pdf");
+  const [openAccordionId, setOpenAccordionId] = useState<number | null>(0);
 
   const isAnimatingRef = useRef<boolean>(false);
   const touchStartYRef = useRef<number | null>(null);
@@ -202,113 +235,90 @@ export default function HomePage() {
     }
     if (index === prevSlide) {
       return scrollDir === "down"
-        ? "opacity-0 -translate-y-12 scale-[0.96] z-[15] pointer-events-none"
-        : "opacity-0 translate-y-12 scale-[0.96] z-[15] pointer-events-none";
+        ? "opacity-0 -translate-y-12 scale-[0.97] z-[15] pointer-events-none"
+        : "opacity-0 translate-y-12 scale-[0.97] z-[15] pointer-events-none";
     }
     return index < activeSlide
-      ? "opacity-0 -translate-y-16 scale-[0.94] z-0 pointer-events-none"
-      : "opacity-0 translate-y-16 scale-[0.94] z-0 pointer-events-none";
+      ? "opacity-0 -translate-y-16 scale-[0.95] z-0 pointer-events-none"
+      : "opacity-0 translate-y-16 scale-[0.95] z-0 pointer-events-none";
   };
-
-  const getHeroMorphSectionAnimClass = () => {
-    if (activeSlide === 0 || activeSlide === 1) {
-      return "opacity-100 translate-y-0 scale-100 z-20 pointer-events-auto";
-    }
-    if (prevSlide === 0 || prevSlide === 1) {
-      return scrollDir === "down"
-        ? "opacity-0 -translate-y-12 scale-[0.96] z-[15] pointer-events-none"
-        : "opacity-0 translate-y-12 scale-[0.96] z-[15] pointer-events-none";
-    }
-    return activeSlide > 1
-      ? "opacity-0 -translate-y-16 scale-[0.94] z-0 pointer-events-none"
-      : "opacity-0 translate-y-16 scale-[0.94] z-0 pointer-events-none";
-  };
-
-  const getChildAnimClass = (
-    slideIndex: number,
-    enterFrom: "up" | "down" | "left" | "right" = "up",
-    delayClass: string = "delay-100"
-  ) => {
-    const isActive = activeSlide === slideIndex;
-    if (isActive) {
-      return `opacity-100 translate-x-0 translate-y-0 scale-100 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${delayClass}`;
-    }
-    const offsetMap = {
-      up: "translate-y-10 scale-[0.97]",
-      down: "-translate-y-10 scale-[0.97]",
-      left: "-translate-x-10 scale-[0.97]",
-      right: "translate-x-10 scale-[0.97]",
-    };
-    return `opacity-0 ${offsetMap[enterFrom]} transition-all duration-500 ease-in`;
-  };
-
-  const activeWorkflow = WORKFLOW_STEPS[activeWorkflowIdx];
 
   const getGlobalMorphStyle = (slide: number): React.CSSProperties => {
     switch (slide) {
       case 0:
         return {
-          top: "0px",
-          left: "0px",
-          width: "100%",
-          height: "100%",
-          borderRadius: "34px",
-          backgroundColor: "#0f2c56",
+          top: "12%",
+          left: "54%",
+          width: "44%",
+          height: "76%",
+          borderRadius: "40px",
+          backgroundColor: "#fdf2f2",
+          opacity: 0.65,
         };
       case 1:
         return {
-          top: "0px",
-          left: "calc(50% + 16px)",
-          width: "calc(50% - 16px)",
-          height: "100%",
-          borderRadius: "34px",
-          backgroundColor: "#ce2731",
+          top: "8px",
+          left: "0px",
+          width: "100%",
+          height: "calc(100% - 16px)",
+          borderRadius: "40px",
+          backgroundColor: "#f4f5f7",
+          opacity: 1,
         };
       case 2:
         return {
-          top: "0px",
-          left: "0px",
-          width: "calc(58.333333% - 13.33px)",
-          height: "100%",
-          borderRadius: "34px",
-          backgroundColor: "#ce2731",
+          top: "12%",
+          left: "52%",
+          width: "46%",
+          height: "76%",
+          borderRadius: "40px",
+          backgroundColor: "#fdf2f2",
+          opacity: 0.6,
         };
       case 3:
         return {
-          top: "120px",
-          left: "calc(58.333333% + 11.67px)",
-          width: "calc(41.666667% - 11.67px)",
-          height: "calc(100% - 120px)",
-          borderRadius: "34px",
-          backgroundColor: "#ce2731",
-        };
-      case 4:
-        return {
-          top: "0px",
-          left: "calc(50% + 16px)",
-          width: "calc(50% - 16px)",
-          height: "100%",
-          borderRadius: "34px",
-          backgroundColor: "#0f2c56",
-        };
-      case 5:
-        return {
-          top: "calc(100% - 88px)",
+          top: "8px",
           left: "0px",
           width: "100%",
-          height: "88px",
-          borderRadius: "28px",
+          height: "calc(100% - 16px)",
+          borderRadius: "40px",
           backgroundColor: "#0f2c56",
+          opacity: 1,
+        };
+      case 4: {
+        const col = activeFeatureIdx % 3;
+        const row = Math.floor(activeFeatureIdx / 3);
+        return {
+          top: row === 0 ? "136px" : "calc(50% + 42px)",
+          left: `${col * 33.3333}%`,
+          width: "31.5%",
+          height: "calc(42% - 24px)",
+          borderRadius: "28px",
+          backgroundColor: "#ffffff",
+          opacity: 1,
+          boxShadow: "0 24px 60px rgba(15, 44, 86, 0.08)",
+        };
+      }
+      case 5:
+        return {
+          top: "8px",
+          left: "0px",
+          width: "100%",
+          height: "calc(100% - 16px)",
+          borderRadius: "40px",
+          backgroundColor: "#0f2c56",
+          opacity: 1,
         };
       case 6:
       default:
         return {
-          top: "0px",
+          top: "calc(100% - 68px)",
           left: "0px",
           width: "100%",
-          height: "calc(100% - 144px)",
-          borderRadius: "34px",
-          backgroundColor: "#ce2731",
+          height: "60px",
+          borderRadius: "24px",
+          backgroundColor: "#f8fafc",
+          opacity: 1,
         };
     }
   };
@@ -319,1248 +329,734 @@ export default function HomePage() {
       onTouchEnd={handleTouchEnd}
       className="h-full w-full relative overflow-hidden bg-[#fefefd] text-[#0f2c56] select-none"
     >
-      {/* GLOBAL PERSISTENT MORPHING CARD STAGE (Desktop lg+): Shape-shifts smoothly across ALL 7 slides */}
+      {/* GLOBAL PERSISTENT MORPHING CARD STAGE (Desktop lg+) */}
       <div
-        className="hidden lg:block absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 pointer-events-none z-10"
+        className="hidden lg:block absolute inset-0 py-2 px-4 sm:px-8 pointer-events-none z-10"
         aria-hidden="true"
       >
-        <div className="relative w-full h-full">
+        <div className="relative w-full h-full max-w-7xl mx-auto">
           <div
-            className="absolute shadow-2xl border border-white/15 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+            className="absolute transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
             style={getGlobalMorphStyle(activeSlide)}
           />
         </div>
       </div>
 
       {/* =====================================================================
-          SLIDE 0 & 1: HERO MORPHING STAGE (CARD SHAPE-SHIFTS TO ADAPT TO NEXT SECTION)
+          SLIDE 0 (#beranda): HERO SECTION (Matching Video 00:00 - 00:03)
+          Open White Canvas + Inline Red Pill Icon H1 + Isometric Illustration
           ===================================================================== */}
       <section
-        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getHeroMorphSectionAnimClass()}`}
+        className={`absolute inset-0 py-3 px-4 sm:px-8 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(0)}`}
       >
-        <div className="w-full h-full mx-auto relative">
-          {/* MOBILE/TABLET LOCAL MORPHING CARD (lg+ uses Global Persistent Morphing Card above) */}
-          <div
-            className={`lg:hidden absolute rounded-[26px] sm:rounded-[34px] overflow-hidden shadow-2xl border transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] z-10 ${
-              activeSlide === 0
-                ? "inset-0 w-full h-full border-white/15"
-                : "top-[48%] sm:top-[44%] lg:top-0 bottom-0 right-0 left-0 lg:left-[calc(50%+10px)] xl:left-[calc(50%+16px)] w-full lg:w-[calc(50%-10px)] xl:w-[calc(50%-16px)] h-[52%] sm:h-[56%] lg:h-full border-white/10"
-            }`}
-          >
-            {/* Morphing Background Layer 1: Slide 0 Deep Navy Solid */}
-            <div
-              className={`absolute inset-0 transition-opacity duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                activeSlide === 0 ? "opacity-100" : "opacity-0 pointer-events-none"
-              }`}
-              style={{
-                backgroundColor: "#0f2c56",
-              }}
-            />
+        <div className="w-full h-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+          {/* Left 6 Cols: Editorial Headline with Inline Red Pill Icon Badge */}
+          <div className="lg:col-span-6 space-y-5 sm:space-y-6 text-left">
+            <h1 className="text-3xl sm:text-5xl xl:text-[54px] font-bold tracking-tight text-[#0f2c56] leading-[1.12]">
+              Hemat waktu evaluasi
+              <br />
+              dan{" "}
+              <span className="inline-flex items-center justify-center align-middle w-14 sm:w-20 h-8 sm:h-11 rounded-full bg-[#ce2731] mx-1 shadow-md shadow-[#ce2731]/25">
+                <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 border-white/80 flex items-center justify-center">
+                  <Play className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white fill-white ml-0.5" />
+                </span>
+              </span>{" "}
+              temukan
+              <br />
+              Karir Pas Bana
+            </h1>
 
-            {/* Morphing Background Layer 2: Slide 1 Crimson Second Palette Solid */}
-            <div
-              className={`absolute inset-0 transition-opacity duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                activeSlide === 1 ? "opacity-100" : "opacity-0 pointer-events-none"
-              }`}
-              style={{
-                backgroundColor: "#ce2731",
-              }}
-            />
-          </div>
+            <p className="text-xs sm:text-base text-slate-500 max-w-md leading-relaxed">
+              Dapatkan analisis objektif 5 dimensi terhadap kesiapan CV Anda dan rekomendasi lowongan kerja secara otomatis!
+            </p>
 
-          {/* 12-COLUMN CONTENT GRID IN FRONT OF MORPHING CARD */}
-          <div className="w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-stretch relative z-20">
-            {/* =================================================================
-                LEFT 6 COLS: Transitions between Hero White Text (Slide 0) and
-                Open Workflow Editorial on #fefefd Canvas (Slide 1)
-                ================================================================= */}
-            <div className="lg:col-span-6 h-[48%] sm:h-[44%] lg:h-full relative">
-              {/* SLIDE 0 HERO EDITORIAL (White on Navy) */}
-              <div
-                className={`absolute inset-0 h-full flex flex-col justify-center py-2 sm:py-5 px-3 sm:px-8 lg:px-12 space-y-4 sm:space-y-5 text-left transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                  activeSlide === 0
-                    ? "opacity-100 translate-x-0 scale-100 pointer-events-auto"
-                    : "opacity-0 -translate-x-12 scale-95 pointer-events-none"
-                }`}
+            <div className="pt-1 flex flex-wrap items-center gap-3">
+              <Link
+                href="/evaluate"
+                className="px-7 py-3.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold shadow-md transition-all hover:-translate-y-0.5"
               >
-                <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-bold text-[#fefefd] self-start">
-                  <span className="w-2 h-2 rounded-full bg-[#ce2731]" />
-                  <span>Pasbana AI • Standar Evaluasi ATS &amp; HRD</span>
-                </div>
-
-                <h1 className="text-2xl sm:text-4xl xl:text-[54px] font-black tracking-tight text-white leading-[1.08]">
-                  Autopilot Evaluasi CV &amp;{" "}
-                  <span className="text-[#ce2731]">Pencocokan Karir Impian.</span>
-                </h1>
-
-                <p className="text-xs sm:text-base text-slate-200 max-w-xl leading-relaxed font-normal">
-                  Ukur kesiapan resume Anda secara objektif dalam 5 dimensi dan temukan lowongan yang paling pas bana dalam hitungan detik, tanpa biaya berlangganan.
-                </p>
-
-                <div className="pt-1 sm:pt-2 flex flex-wrap items-center gap-3">
-                  <Link
-                    href="/evaluate"
-                    className="inline-flex items-center gap-3 pl-6 pr-2.5 py-2.5 bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold rounded-full shadow-lg shadow-[#ce2731]/35 transition-all hover:-translate-y-0.5"
-                  >
-                    <span>Evaluasi CV Saya</span>
-                    <span className="w-7 h-7 rounded-full bg-white text-[#ce2731] flex items-center justify-center">
-                      <ArrowUpRight className="w-4 h-4" />
-                    </span>
-                  </Link>
-                  <Link
-                    href="/evaluate?tab=questionnaire"
-                    className="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs sm:text-sm font-bold rounded-full shadow-sm transition-all"
-                  >
-                    Saya Belum Punya CV
-                  </Link>
-                </div>
-
-                <div className="pt-2 sm:pt-4 border-t border-white/15 grid grid-cols-3 gap-4 max-w-lg">
-                  <div>
-                    <div className="text-lg sm:text-2xl font-black text-white">88/100</div>
-                    <div className="text-[10px] sm:text-[11px] text-slate-300 font-medium">Simulasi Skor ATS</div>
-                  </div>
-                  <div>
-                    <div className="text-lg sm:text-2xl font-black text-white">92%</div>
-                    <div className="text-[10px] sm:text-[11px] text-slate-300 font-medium">Akurasi Loker Cocok</div>
-                  </div>
-                  <div>
-                    <div className="text-lg sm:text-2xl font-black text-white">5D</div>
-                    <div className="text-[10px] sm:text-[11px] text-slate-300 font-medium">Dimensi Objektif</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* SLIDE 1 WORKFLOW EDITORIAL (Navy & Red on White #fefefd Canvas) */}
-              <div
-                className={`absolute inset-0 h-full flex flex-col justify-center gap-4 sm:gap-5 py-4 sm:py-6 px-4 sm:px-8 lg:px-10 text-left transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                  activeSlide === 1
-                    ? "opacity-100 translate-x-0 scale-100 pointer-events-auto delay-100"
-                    : "opacity-0 -translate-x-12 scale-95 pointer-events-none"
-                }`}
-              >
-                <div className="space-y-2">
-                  <span className="inline-block text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
-                    Tahapan Evaluasi Cerdas
-                  </span>
-                  <h2 className="text-xl sm:text-3xl lg:text-[34px] font-black tracking-tight text-[#0f2c56] leading-[1.12]">
-                    Otomasi evaluasi berkas,{" "}
-                    <span className="text-[#ce2731]">temukan karir dalam hitungan detik.</span>
-                  </h2>
-                </div>
-
-                {/* 4 Interactive Progress Tabs */}
-                <div className="grid grid-cols-4 gap-2 sm:gap-3 pt-1">
-                  {WORKFLOW_STEPS.map((tab) => {
-                    const isActive = activeWorkflowIdx === tab.id;
-                    return (
-                      <button
-                        key={tab.id}
-                        type="button"
-                        onClick={() => setActiveWorkflowIdx(tab.id)}
-                        className="text-left group cursor-pointer focus:outline-none"
-                      >
-                        <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden mb-1.5 sm:mb-2">
-                          <div
-                            className={`h-full rounded-full transition-all duration-500 ${
-                              isActive ? "w-full bg-[#ce2731]" : "w-0 group-hover:w-full group-hover:bg-[#0f2c56]/40"
-                            }`}
-                          />
-                        </div>
-                        <div className={`text-[10px] sm:text-[11px] font-black tracking-wide ${isActive ? "text-[#ce2731]" : "text-slate-400 group-hover:text-[#0f2c56]"}`}>
-                          0{tab.id + 1}
-                        </div>
-                        <div className={`text-[11px] sm:text-xs font-bold leading-snug line-clamp-1 ${isActive ? "text-[#0f2c56]" : "text-slate-500 group-hover:text-[#0f2c56]"}`}>
-                          {tab.tabLabel}
-                        </div>
-                        <div className="text-[10px] text-slate-400 line-clamp-1 hidden sm:block">
-                          {tab.tabSub}
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div className="space-y-2.5 pt-2 border-t border-slate-200/80">
-                  <h3 className="text-base sm:text-xl font-black text-[#0f2c56]">
-                    {activeWorkflow.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-xl">
-                    {activeWorkflow.description}
-                  </p>
-
-                  <div className="flex flex-wrap items-center gap-3 pt-1">
-                    <Link
-                      href={activeWorkflow.ctaHref}
-                      className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#ce2731] hover:bg-[#b01e27] text-[#fefefd] text-xs font-bold shadow-md transition"
-                    >
-                      <span>{activeWorkflow.ctaText}</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </Link>
-                    <button
-                      type="button"
-                      onClick={() => setActiveWorkflowIdx((prev) => (prev + 1) % WORKFLOW_STEPS.length)}
-                      className="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full border border-[#0f2c56]/20 hover:border-[#0f2c56] text-[#0f2c56] text-xs font-bold transition cursor-pointer"
-                    >
-                      Tahap Berikutnya →
-                    </button>
-                  </div>
-                </div>
-
-                {/* 4 Standalone Small Bento Cards on White Canvas */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
-                  <div className="rounded-2xl bg-slate-50 border border-slate-200/80 p-3">
-                    <div className="text-[10px] font-bold text-slate-500">Format CV</div>
-                    <div className="text-xs font-black text-[#0f2c56] mt-0.5">1-Kolom ATS</div>
-                  </div>
-                  <div className="rounded-2xl bg-[#fdf2f2] border border-[#fde6e6] p-3">
-                    <div className="text-[10px] font-bold text-[#ce2731]">Evaluasi</div>
-                    <div className="text-xs font-black text-[#0f2c56] mt-0.5">Skor 5 Dimensi</div>
-                  </div>
-                  <div className="rounded-2xl bg-slate-50 border border-slate-200/80 p-3">
-                    <div className="text-[10px] font-bold text-slate-500">Kecepatan</div>
-                    <div className="text-xs font-black text-[#0f2c56] mt-0.5">~30 Detik</div>
-                  </div>
-                  <div className="rounded-2xl bg-[#0f2c56] p-3 text-white">
-                    <div className="text-[10px] font-bold text-slate-300">Pencocokan</div>
-                    <div className="text-xs font-black mt-0.5">92% Akurat</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* =================================================================
-                RIGHT 6 COLS: Transitions between Slide 0 Hero Live Inspector Card
-                and Slide 1 Stage Card with Interactive ATS Previews
-                ================================================================= */}
-            <div className="lg:col-span-6 h-[52%] sm:h-[56%] lg:h-full relative">
-              {/* SLIDE 0 HERO RIGHT STAGE: Single-Level Small Bento Grid (No Card-in-Card) */}
-              <div
-                className={`absolute inset-0 flex items-center justify-center p-3 sm:p-6 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                  activeSlide === 0
-                    ? "opacity-100 scale-100 pointer-events-auto"
-                    : "opacity-0 scale-95 pointer-events-none"
-                }`}
-              >
-                <div className="relative z-20 w-full max-w-lg grid grid-cols-2 gap-3 text-white">
-                  {/* Main Preview Bento Tile (Flat rows, no nested cards) */}
-                  <div className="col-span-2 rounded-3xl bg-[#0e2647]/90 border border-white/15 p-4 sm:p-5 shadow-2xl space-y-3">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                        <span className="text-xs font-bold text-white tracking-wide">Simulasi Evaluasi ATS</span>
-                      </div>
-                      <span className="text-[10px] font-mono font-bold bg-[#ce2731] text-white px-2.5 py-0.5 rounded-full">
-                        Skor 88/100
-                      </span>
-                    </div>
-
-                    <div className="py-2.5 border-y border-white/10 flex items-center justify-between gap-2">
-                      <div className="space-y-0.5 min-w-0">
-                        <div className="text-xs font-bold text-white truncate">Resume_Standar_ATS.pdf</div>
-                        <div className="text-[10px] text-slate-300">Format 1-Kolom • 14 Kata Kerja Aktif</div>
-                      </div>
-                      <span className="text-[10px] font-bold text-emerald-300 shrink-0">
-                        Lolos Parsing
-                      </span>
-                    </div>
-
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between text-[11px] font-semibold text-slate-200">
-                        <span>Struktur &amp; Keterbacaan Mesin</span>
-                        <span className="text-[#ce2731] font-mono font-bold">94%</span>
-                      </div>
-                      <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
-                        <div className="w-[94%] h-full bg-[#ce2731] rounded-full" />
-                      </div>
-
-                      <div className="flex items-center justify-between text-[11px] font-semibold text-slate-200 pt-1">
-                        <span>Kesesuaian Kualifikasi Lowongan</span>
-                        <span className="text-emerald-400 font-mono font-bold">92%</span>
-                      </div>
-                      <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
-                        <div className="w-[92%] h-full bg-emerald-400 rounded-full" />
-                      </div>
-                    </div>
-
-                    <div className="pt-2 border-t border-white/10 flex items-center justify-between text-xs">
-                      <span className="text-slate-300">Target Karir Terdeteksi</span>
-                      <span className="font-bold text-white">Product &amp; Tech Role</span>
-                    </div>
-                  </div>
-
-                  {/* Compact Bento Tiles (1-Level) */}
-                  <div className="rounded-2xl bg-[#0e2647]/90 border border-white/15 p-3.5 space-y-1">
-                    <FileCheck className="w-4 h-4 text-emerald-400" />
-                    <div className="text-xs font-black">1-Kolom ATS</div>
-                    <div className="text-[10px] text-slate-300 leading-tight">Format rapi siap seleksi</div>
-                  </div>
-                  <div className="rounded-2xl bg-[#ce2731] border border-white/15 p-3.5 space-y-1 shadow-lg">
-                    <Target className="w-4 h-4 text-white" />
-                    <div className="text-xs font-black">5 Dimensi Objektif</div>
-                    <div className="text-[10px] text-[#fde6e6] leading-tight">Skor &amp; saran revisi</div>
-                  </div>
-                  <div className="col-span-2 rounded-2xl bg-[#0e2647]/90 border border-white/15 px-4 py-3 flex items-center justify-between">
-                    <div className="flex items-center gap-2.5">
-                      <Briefcase className="w-4 h-4 text-sky-300 shrink-0" />
-                      <span className="text-xs font-bold text-white">Rekomendasi Lowongan Pas Bana</span>
-                    </div>
-                    <span className="text-xs font-black text-emerald-300">92% Akurat</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* SLIDE 1 STAGE RIGHT CONTENT: Interactive Stage + Live Previews */}
-              <div
-                className={`absolute inset-0 flex flex-col justify-between p-4 sm:p-7 text-[#fefefd] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                  activeSlide === 1
-                    ? "opacity-100 scale-100 pointer-events-auto delay-100"
-                    : "opacity-0 scale-95 pointer-events-none"
-                }`}
-              >
-                {/* Top Badges */}
-                <div className="relative z-20 flex items-center justify-between">
-                  <span className="px-3.5 py-1 rounded-full bg-[#fefefd]/15 backdrop-blur-md text-xs font-bold text-[#fefefd]">
-                    Tahap {activeWorkflow.num} • {activeWorkflow.tabLabel}
-                  </span>
-                  <span className="text-xs font-mono font-bold text-[#fde6e6]">
-                    {activeWorkflow.tabSub}
-                  </span>
-                </div>
-
-                {/* Center Live Previews + Validation Inspector (Flat directly on Crimson Stage, No Card-in-Card) */}
-                <div className="relative z-20 grid grid-cols-1 sm:grid-cols-12 gap-5 items-start my-auto sm:divide-x sm:divide-white/15">
-                  <div className="sm:col-span-7 sm:pr-4 space-y-3">
-                    {activeWorkflowIdx === 0 && (
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between pb-2 border-b border-white/15">
-                          <span className="text-sm font-black text-white">Pemeriksa Struktur CV</span>
-                          <span className="text-[10px] font-bold bg-[#0f2c56] text-white px-2.5 py-0.5 rounded-full">
-                            94% Lolos
-                          </span>
-                        </div>
-                        <p className="text-xs sm:text-sm text-[#fde6e6] leading-relaxed">
-                          Susunan 1-kolom terverifikasi. Bagian pendidikan, pengalaman, dan keahlian siap dibaca sistem ATS.
-                        </p>
-                        <div className="pt-1 flex items-center gap-2 text-xs font-bold text-white">
-                          <CheckCircle2 className="w-4 h-4 text-emerald-300 shrink-0" />
-                          <span>Bebas Risiko Gagal Parsing</span>
-                        </div>
-                      </div>
-                    )}
-
-                    {activeWorkflowIdx === 1 && (
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between pb-2 border-b border-white/15">
-                          <span className="text-sm font-black text-white">Rincian 5 Dimensi</span>
-                          <span className="text-sm font-black text-white">88 / 100</span>
-                        </div>
-                        {[
-                          { label: "Format & Keterbacaan ATS", val: "94%", w: "w-[94%]", c: "bg-white" },
-                          { label: "Relevansi Keahlian", val: "90%", w: "w-[90%]", c: "bg-[#0f2c56]" },
-                          { label: "Dampak & Pencapaian", val: "84%", w: "w-[84%]", c: "bg-emerald-300" },
-                        ].map((row) => (
-                          <div key={row.label} className="space-y-1 text-xs">
-                            <div className="flex justify-between font-bold text-white">
-                              <span>{row.label}</span>
-                              <span>{row.val}</span>
-                            </div>
-                            <div className="w-full h-1.5 bg-black/20 rounded-full overflow-hidden">
-                              <div className={`${row.w} h-full ${row.c} rounded-full`} />
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-
-                    {activeWorkflowIdx === 2 && (
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between pb-2 border-b border-white/15">
-                          <span className="text-sm font-black text-white">Loker Paling Pas Bana</span>
-                          <span className="text-[10px] font-bold bg-[#0f2c56] text-white px-2.5 py-0.5 rounded-full">
-                            Skor &gt; 90%
-                          </span>
-                        </div>
-                        <div className="divide-y divide-white/15">
-                          {[
-                            { title: "Product Operations Analyst", match: "94% Cocok" },
-                            { title: "Junior Management Trainee", match: "92% Cocok" },
-                          ].map((job) => (
-                            <div key={job.title} className="py-2.5 flex items-center justify-between gap-2">
-                              <span className="text-xs font-bold text-white">{job.title}</span>
-                              <span className="text-[10px] font-black text-[#ce2731] bg-white px-2 py-0.5 rounded-full shrink-0">
-                                {job.match}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {activeWorkflowIdx === 3 && (
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between pb-2 border-b border-white/15">
-                          <span className="text-sm font-black text-white">Penilaian Berbasis Kompetensi</span>
-                          <span className="text-[10px] font-bold bg-[#0f2c56] text-white px-2.5 py-0.5 rounded-full">
-                            Objektif 100%
-                          </span>
-                        </div>
-                        <p className="text-xs sm:text-sm text-[#fde6e6] leading-relaxed">
-                          Evaluasi berfokus murni pada keahlian teknis, pengalaman proyek, dan dampak kerja agar setiap kandidat mendapat penilaian yang adil.
-                        </p>
-                        <div className="pt-1 flex items-center justify-between text-xs font-bold text-white">
-                          <span>Berbasis Portofolio &amp; Skill</span>
-                          <span className="text-[#fde6e6]">Standar HRD</span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Complementary Validation Inspector (Flat directly on Crimson Stage) */}
-                  <div className="sm:col-span-5 sm:pl-4 space-y-2.5">
-                    {activeWorkflowIdx === 0 && (
-                      <div className="space-y-2 text-white">
-                        <div className="text-[11px] font-bold text-[#fde6e6] uppercase tracking-wider">Parameter Standar ATS</div>
-                        <div className="divide-y divide-white/15 text-xs">
-                          <div className="flex items-center justify-between py-2">
-                            <span>Format 1-Kolom Simetris</span>
-                            <span className="text-emerald-300 font-bold">Lolos</span>
-                          </div>
-                          <div className="flex items-center justify-between py-2">
-                            <span>Tipografi Bersih (11pt)</span>
-                            <span className="text-emerald-300 font-bold">Lolos</span>
-                          </div>
-                          <div className="flex items-center justify-between py-2">
-                            <span>Bebas Simbol Kompleks</span>
-                            <span className="text-emerald-300 font-bold">Lolos</span>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {activeWorkflowIdx === 1 && (
-                      <div className="space-y-2 text-white">
-                        <div className="text-[11px] font-bold text-[#fde6e6] uppercase tracking-wider">Analisis Dampak Karir</div>
-                        <div className="divide-y divide-white/15 text-xs">
-                          <div className="py-2">
-                            <div className="text-[10px] text-[#fde6e6]">Kata Kerja Aktif</div>
-                            <div className="font-bold text-emerald-300 mt-0.5">18 Frasa Terdeteksi</div>
-                          </div>
-                          <div className="py-2">
-                            <div className="text-[10px] text-[#fde6e6]">Peluang Lolos Seleksi</div>
-                            <div className="font-bold text-white mt-0.5">+24% Poin Tambahan</div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {activeWorkflowIdx === 2 && (
-                      <div className="space-y-2 text-white">
-                        <div className="text-[11px] font-bold text-[#fde6e6] uppercase tracking-wider">Keahlian Terpetakan</div>
-                        <div className="flex flex-wrap gap-1.5 pt-1">
-                          {["Next.js", "TypeScript", "Tailwind CSS", "REST API", "Git"].map((sk) => (
-                            <span key={sk} className="text-[10px] font-mono font-bold bg-white/15 px-2.5 py-1 rounded-full text-white">
-                              {sk}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {activeWorkflowIdx === 3 && (
-                      <div className="space-y-2 text-white">
-                        <div className="text-[11px] font-bold text-[#fde6e6] uppercase tracking-wider">Fokus Evaluasi</div>
-                        <div className="divide-y divide-white/15 text-xs">
-                          <div className="py-2 flex items-center justify-between">
-                            <span>Keahlian Teknis</span>
-                            <span className="text-emerald-300 font-bold">Prioritas</span>
-                          </div>
-                          <div className="py-2 flex items-center justify-between">
-                            <span>Pengalaman Proyek</span>
-                            <span className="text-emerald-300 font-bold">Terukur</span>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Open Typographic Metrics Strip (No Card-in-Card) */}
-                <div className="relative z-20 grid grid-cols-3 divide-x divide-white/15 border-t border-white/15 pt-3">
-                  <div className="pr-3">
-                    <div className="text-[10px] text-[#fde6e6] font-semibold">Waktu Proses</div>
-                    <div className="text-xs sm:text-sm font-black text-white mt-0.5">~30 Detik</div>
-                  </div>
-                  <div className="px-3">
-                    <div className="text-[10px] text-[#fde6e6] font-semibold">Input Fleksibel</div>
-                    <div className="text-xs sm:text-sm font-black text-white mt-0.5">PDF / Kuesioner</div>
-                  </div>
-                  <div className="pl-3">
-                    <div className="text-[10px] text-[#fde6e6] font-semibold">Akses Penuh</div>
-                    <div className="text-xs sm:text-sm font-black text-white mt-0.5">Gratis Selamanya</div>
-                  </div>
-                </div>
-
-                {/* Bottom Tags */}
-                <div className="relative z-20 flex items-center justify-between text-[11px] text-[#fde6e6] pt-1">
-                  <span>Filosofi Karir yang Pas Bana</span>
-                  <span className="font-semibold">Gratis untuk Pencari Kerja</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* =====================================================================
-          SLIDE 2: 1 SINGLE SECOND (#CE2731) CARD ON LEFT + OPEN EDITORIAL ON RIGHT
-          ===================================================================== */}
-      <section
-        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(2)}`}
-      >
-        <div className="w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-stretch">
-          {/* Col 1 (7 Cols): ONE Single Bold Second (#ce2731) Stage Card ON THE LEFT */}
-          <div
-            className={`lg:col-span-7 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-8 text-[#fefefd] flex flex-col justify-between relative overflow-hidden bg-[#ce2731] lg:bg-transparent shadow-2xl lg:shadow-none border border-white/10 lg:border-transparent origin-left ${getChildAnimClass(2, "left", "delay-100")}`}
-          >
-
-            {/* Top Bar inside Card */}
-            <div className="flex items-center justify-between relative z-10">
-              <span className="px-3.5 py-1 rounded-full bg-[#fefefd] text-[#ce2731] text-xs font-black shadow-xs">
-                Kandidat Siap Kerja
-              </span>
-              <div className="flex items-center gap-2.5 bg-black/20 backdrop-blur-md px-3.5 py-1 rounded-full border border-white/10 text-xs">
-                <span className="font-black text-[#fde6e6]">+24 Poin Skor</span>
-                <span className="w-1 h-1 rounded-full bg-white/60" />
-                <span className="font-bold text-white">92% Pas Bana</span>
-              </div>
-            </div>
-
-            {/* Center Area inside Card: Metrics & Tags on Left + Live Job Snapshot on Right */}
-            <div className="my-auto grid grid-cols-1 sm:grid-cols-12 gap-5 items-center py-2 relative z-10">
-              {/* Metric & Career Match Tags */}
-              <div className="sm:col-span-7 space-y-3.5">
-                <div className="space-y-1">
-                  <div className="text-4xl sm:text-5xl font-black text-[#fefefd] tracking-tight">
-                    92%
-                  </div>
-                  <p className="text-xs font-extrabold uppercase tracking-wider text-[#fde6e6]">
-                    Akurasi Kecocokan Karir Pas Bana
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-1.5 pt-0.5">
-                  {["Product Analyst", "Management Trainee", "Project Officer", "UI/UX Engineer"].map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-3 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/10 text-[11px] font-bold text-[#fefefd]"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="pt-1 flex items-start gap-2.5 text-xs text-[#fde6e6]">
-                  <CheckCircle2 className="w-4 h-4 text-[#faa9ab] shrink-0 mt-0.5" />
-                  <p className="leading-snug">
-                    Format dan kalimat pengalaman otomatis diselaraskan dengan kriteria seleksi posisi target.
-                  </p>
-                </div>
-              </div>
-
-              {/* Target Job Matching Open Summary (Flat directly on Crimson Stage, No Card-in-Card) */}
-              <div className="sm:col-span-5 sm:border-l sm:border-white/20 sm:pl-5 space-y-4">
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-bold text-[#fde6e6]">Rekomendasi Utama</span>
-                    <span className="bg-[#0f2c56] text-white text-[10px] font-black px-2.5 py-0.5 rounded-full">
-                      94% Cocok
-                    </span>
-                  </div>
-                  <div className="text-base font-black text-white">Junior Frontend Developer</div>
-                  <div className="text-[11px] text-[#fde6e6]">PT Teknologi Berdaya Nusantara</div>
-                  <div className="pt-1 flex flex-wrap gap-1">
-                    <span className="text-[10px] bg-white/15 px-2 py-0.5 rounded-full font-mono text-white">React</span>
-                    <span className="text-[10px] bg-white/15 px-2 py-0.5 rounded-full font-mono text-white">TypeScript</span>
-                    <span className="text-[10px] bg-white/15 px-2 py-0.5 rounded-full font-mono text-white">Next.js</span>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3 pt-3 border-t border-white/15">
-                  <div>
-                    <div className="text-[10px] text-[#fde6e6]">Kalimat Aktif</div>
-                    <div className="text-sm font-black text-white">+18 Frasa</div>
-                  </div>
-                  <div>
-                    <div className="text-[10px] text-[#fde6e6]">Kesiapan Berkas</div>
-                    <div className="text-sm font-black text-emerald-300">Siap Kirim</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Bar inside Card */}
-            <div className="pt-3 border-t border-white/15 grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
-              <div className="space-y-1">
-                <h3 className="text-sm font-black text-[#fefefd]">
-                  Uji &amp; Perbaiki Seketika
-                </h3>
-                <p className="text-xs text-[#fde6e6] leading-relaxed">
-                  Dapatkan rekomendasi kalimat aktif yang langsung meningkatkan peluang lolos seleksi HRD.
-                </p>
-              </div>
-              <div className="space-y-1">
-                <h3 className="text-sm font-black text-[#fefefd]">
-                  Hemat Waktu Melamar
-                </h3>
-                <p className="text-xs text-[#fde6e6] leading-relaxed">
-                  Fokus pada lowongan terkurasi yang benar-benar relevan dengan profil Anda.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Col 2 (5 Cols): Open Editorial & Feature List on the RIGHT */}
-          <div
-            className={`lg:col-span-5 h-full flex flex-col justify-center gap-4 py-4 sm:py-6 px-4 sm:px-8 origin-right ${getChildAnimClass(2, "right", "delay-150")}`}
-          >
-            <div className="space-y-2.5">
-              <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#fdf2f2] text-[#ce2731] text-xs font-bold">
-                <span className="w-2 h-2 rounded-full bg-[#ce2731]" />
-                <span>Ekosistem Persiapan Karir</span>
-              </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-black tracking-tight text-[#0f2c56] leading-[1.12]">
-                Platform Lengkap untuk{" "}
-                <span className="text-[#ce2731]">Persiapan Karir Anda.</span>
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-lg">
-                Sudah punya CV maupun belum, Anda bisa mengukur kesiapan kerja dan menyusun resume standar HRD dalam satu alur terpadu.
-              </p>
-            </div>
-
-            {/* Open Unboxed List with Crimson Second (#ce2731) Accents */}
-            <div className="space-y-3.5 py-1">
-              {[
-                {
-                  num: "01",
-                  title: "Evaluasi & Kuesioner Pembuat CV",
-                  desc: "Unggah PDF CV Anda atau buat CV standar ATS dari nol lewat panduan kuesioner.",
-                },
-                {
-                  num: "02",
-                  title: "Analisis 5 Dimensi & Kalimat Aktif",
-                  desc: "Ukur struktur, relevansi keahlian, dan dampak pengalaman secara objektif.",
-                },
-                {
-                  num: "03",
-                  title: "Rekomendasi Lowongan Presisi",
-                  desc: "Temukan posisi kerja aktif yang paling pas dengan kompetensi Anda.",
-                },
-              ].map((item) => (
-                <div key={item.num} className="flex items-start gap-3.5 border-b border-slate-200/80 pb-3.5 last:border-none last:pb-0">
-                  <span className="px-2.5 py-1 rounded-lg bg-[#ce2731] text-[#fefefd] font-mono text-xs font-black shrink-0 mt-0.5">
-                    {item.num}
-                  </span>
-                  <div>
-                    <h3 className="text-sm sm:text-base font-black text-[#0f2c56]">{item.title}</h3>
-                    <p className="text-xs text-slate-600 mt-0.5 leading-relaxed">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Small Bento Stats + Quick-Entry Tiles on White Canvas */}
-            <div className="space-y-2.5 pt-1">
-              <div className="grid grid-cols-3 gap-2.5">
-                <div className="rounded-2xl bg-slate-50 border border-slate-200/80 p-2.5">
-                  <div className="text-sm font-black text-[#0f2c56]">88/100</div>
-                  <div className="text-[10px] text-slate-500">Rata-rata Skor</div>
-                </div>
-                <div className="rounded-2xl bg-slate-50 border border-slate-200/80 p-2.5">
-                  <div className="text-sm font-black text-[#ce2731]">5D</div>
-                  <div className="text-[10px] text-slate-500">Aspek Evaluasi</div>
-                </div>
-                <div className="rounded-2xl bg-slate-50 border border-slate-200/80 p-2.5">
-                  <div className="text-sm font-black text-[#0f2c56]">+24 Poin</div>
-                  <div className="text-[10px] text-slate-500">Efek Revisi</div>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-2.5">
+                Evaluasi CV Saya
+              </Link>
               <Link
                 href="/evaluate?tab=questionnaire"
-                className="rounded-2xl bg-[#fdf2f2] border border-[#fde6e6] p-3 hover:border-[#ce2731]/40 transition group"
+                className="px-6 py-3.5 rounded-xl border border-slate-200 hover:border-[#0f2c56] text-[#0f2c56] text-xs sm:text-sm font-bold transition-all"
               >
-                <div className="text-[10px] font-bold text-[#ce2731] uppercase">Belum Punya CV</div>
-                <div className="text-xs font-black text-[#0f2c56] mt-0.5 group-hover:text-[#ce2731] transition">
-                  Buat via Kuesioner →
-                </div>
+                Belum Punya CV
               </Link>
-              <Link
-                href="/evaluate"
-                className="rounded-2xl bg-[#0f2c56] p-3 text-white hover:bg-[#163861] transition"
-              >
-                <div className="text-[10px] font-bold text-slate-300 uppercase">Sudah Punya PDF</div>
-                <div className="text-xs font-black text-white mt-0.5">
-                  Cek Skor Instan →
-                </div>
-              </Link>
-              </div>
             </div>
+          </div>
+
+          {/* Right 6 Cols: Isometric Vector UI Illustration (Matching Video 00:00 - 00:03) */}
+          <div className="lg:col-span-6 flex items-center justify-center">
+            <svg
+              viewBox="0 0 560 420"
+              className="w-full max-w-[540px] h-auto drop-shadow-sm"
+              role="img"
+              aria-label="Ilustrasi Isometrik Evaluasi CV dan Pencocokan Karir"
+            >
+              {/* Isometric Subtle Reference Lines */}
+              <line x1="80" y1="310" x2="360" y2="150" stroke="#e2e8f0" strokeWidth="1" strokeDasharray="4 4" />
+              <line x1="180" y1="370" x2="460" y2="210" stroke="#e2e8f0" strokeWidth="1" strokeDasharray="4 4" />
+              <line x1="120" y1="170" x2="420" y2="340" stroke="#e2e8f0" strokeWidth="1" strokeDasharray="4 4" />
+
+              {/* Main Isometric Tablet / Dashboard Board */}
+              <polygon
+                points="190,195 365,95 495,170 320,270"
+                fill="#fdf2f2"
+                stroke="#f5d0d2"
+                strokeWidth="2"
+              />
+              <polygon
+                points="190,187 365,87 495,162 320,262"
+                fill="#ffffff"
+                stroke="#0f2c56"
+                strokeWidth="1.6"
+              />
+              {/* Accent Red Bar inside Main Isometric Tablet */}
+              <polygon
+                points="280,195 385,135 425,158 320,218"
+                fill="#ce2731"
+                opacity="0.85"
+              />
+              {/* Candidate Silhouette / Analytics Graphic on Main Tablet */}
+              <circle cx="340" cy="145" r="14" fill="#ffffff" stroke="#0f2c56" strokeWidth="1.5" />
+              <path
+                d="M312,182 C312,164 368,164 368,182"
+                fill="#faa9ab"
+                stroke="#0f2c56"
+                strokeWidth="1.5"
+              />
+
+              {/* Floating Top-Right Mini Isometric Card */}
+              <polygon
+                points="405,68 465,34 510,60 450,94"
+                fill="#ffffff"
+                stroke="#94a3b8"
+                strokeWidth="1.3"
+              />
+              <line x1="428" y1="66" x2="462" y2="47" stroke="#0f2c56" strokeWidth="2" strokeLinecap="round" />
+              <line x1="436" y1="74" x2="478" y2="50" stroke="#cbd5e1" strokeWidth="2" strokeLinecap="round" />
+
+              {/* Floating Top-Left Mini Isometric Card */}
+              <polygon
+                points="275,92 322,65 356,85 309,112"
+                fill="#ffffff"
+                stroke="#94a3b8"
+                strokeWidth="1.2"
+              />
+              <circle cx="315" cy="88" r="4" fill="#ce2731" />
+
+              {/* Floating Mid-Left Isometric Card with Play / ATS Badge */}
+              <polygon
+                points="145,245 225,198 285,233 205,280"
+                fill="#ffffff"
+                stroke="#0f2c56"
+                strokeWidth="1.4"
+              />
+              <circle cx="205" cy="232" r="7" fill="#ce2731" />
+              <line x1="218" y1="226" x2="250" y2="208" stroke="#0f2c56" strokeWidth="2" strokeLinecap="round" />
+              <line x1="185" y1="254" x2="235" y2="225" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" />
+
+              {/* Bottom-Left Small Isometric Tile */}
+              <polygon
+                points="85,325 132,298 168,319 121,346"
+                fill="#ffffff"
+                stroke="#94a3b8"
+                strokeWidth="1.3"
+              />
+
+              {/* Bottom-Center Isometric Card */}
+              <polygon
+                points="240,340 305,302 355,331 290,369"
+                fill="#ffffff"
+                stroke="#0f2c56"
+                strokeWidth="1.4"
+              />
+              <line x1="268" y1="336" x2="305" y2="315" stroke="#0f2c56" strokeWidth="2.5" strokeLinecap="round" />
+              <line x1="278" y1="345" x2="322" y2="320" stroke="#cbd5e1" strokeWidth="2" strokeLinecap="round" />
+
+              {/* Right Isometric Cylinder Column (Red Accent) */}
+              <ellipse cx="485" cy="275" rx="34" ry="18" fill="#fdf2f2" />
+              <path
+                d="M451,215 L451,275 A34,18 0 0,0 519,275 L519,215 Z"
+                fill="#faa9ab"
+                opacity="0.55"
+              />
+              <ellipse cx="485" cy="215" rx="34" ry="18" fill="#ce2731" opacity="0.75" />
+
+              {/* Bottom-Right Isometric Pie / Disc Badges */}
+              <ellipse cx="430" cy="292" rx="18" ry="10" fill="#0f2c56" />
+              <ellipse cx="430" cy="288" rx="18" ry="10" fill="#94a3b8" />
+              <ellipse cx="385" cy="348" rx="28" ry="15" fill="#ce2731" opacity="0.85" />
+              <path d="M385,348 L413,348 A28,15 0 0,0 395,334 Z" fill="#ffffff" />
+            </svg>
           </div>
         </div>
       </section>
 
       {/* =====================================================================
-          SLIDE 3: OPEN HEADER & METRICS + TREND CHART + SECOND (#CE2731) ASSISTANT STAGE
+          SLIDE 1 (#fitur): SOFT CONTAINER SECTION (Matching Video 00:04 - 00:05)
+          Cropped Device Frame + Circular Red Gauge on Left, Clean Copy on Right
           ===================================================================== */}
       <section
-        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(3)}`}
+        className={`absolute inset-0 py-2 px-4 sm:px-8 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(1)}`}
       >
-        <div className="w-full h-full mx-auto flex flex-col justify-between gap-4 py-1.5 lg:py-0">
-          {/* Top Open Editorial Row + Open Typographic Metrics (No Card Boxes) */}
-          <div
-            className={`w-full flex flex-col lg:flex-row lg:items-end justify-between gap-4 pb-3 border-b border-slate-200/80 px-4 sm:px-8 shrink-0 lg:h-[104px] ${getChildAnimClass(3, "down", "delay-75")}`}
-          >
-            <div className="space-y-1.5">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
-                Pantauan Skor &amp; Asisten Kalimat
-              </span>
-              <h2 className="text-2xl sm:text-4xl font-black tracking-tight text-[#0f2c56]">
-                Cepat Digunakan, <span className="text-[#ce2731]">Mudah Dipahami.</span>
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-4 gap-5 sm:gap-8">
-              {[
-                { val: "88/100", label: "Skor ATS Total", color: "text-[#0f2c56]" },
-                { val: "5 Dimensi", label: "Aspek Dinilai", color: "text-[#ce2731]" },
-                { val: "12 Posisi", label: "Loker Aktif", color: "text-[#0f2c56]" },
-                { val: "+24 Poin", label: "Rata-rata Revisi", color: "text-[#ce2731]" },
-              ].map((stat) => (
-                <div key={stat.label} className="text-left">
-                  <div className={`text-lg sm:text-2xl font-black ${stat.color}`}>{stat.val}</div>
-                  <div className="text-[11px] font-semibold text-slate-500">{stat.label}</div>
+        <div className="w-full h-full max-w-7xl mx-auto rounded-[36px] sm:rounded-[40px] bg-[#f4f5f7] lg:bg-transparent px-6 sm:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center overflow-hidden">
+          {/* Left 6 Cols: Cropped Device Frame Rising from Bottom + Overlapping Red Circular Gauge */}
+          <div className="lg:col-span-6 h-full flex items-end justify-center pt-8 relative">
+            <div className="relative w-full max-w-[380px] h-[86%] bg-white rounded-t-[36px] border-t-2 border-x-2 border-slate-300 shadow-sm px-6 pt-6 flex flex-col gap-5">
+              {/* Top 3 Circular Indicators inside Frame (Matching Video 00:05) */}
+              <div className="rounded-2xl bg-[#f4f5f7] p-4 flex items-center justify-around">
+                <div className="w-11 h-11 rounded-full bg-[#0f2c56] flex items-center justify-center text-white text-xs font-black">
+                  94%
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Bottom Split: Left Trend Visualization (7 Cols) + Right Second (#ce2731) Assistant Card (5 Cols) */}
-          <div className="flex-1 min-h-0 w-full grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-            {/* Left 7 Cols: Clean Soft-Rose (#fdf2f2) & Navy Trend Visualization */}
-            <div
-              className={`lg:col-span-7 h-full rounded-[26px] sm:rounded-[34px] bg-[#fdf2f2] border border-[#fde6e6] p-6 sm:p-7 flex flex-col justify-between origin-bottom-left shadow-lg ${getChildAnimClass(3, "left", "delay-150")}`}
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-lg sm:text-xl font-black text-[#0f2c56]">
-                    Tren Kenaikan Skor Kesiapan Resume
-                  </h3>
-                  <p className="text-xs text-slate-600">
-                    Perbandingan skor CV sebelum dan sesudah menerapkan saran kalimat aktif
-                  </p>
+                <div className="w-11 h-11 rounded-full bg-slate-300 flex items-center justify-center text-[#0f2c56] text-xs font-black">
+                  5D
                 </div>
-                <span className="px-3.5 py-1 rounded-full bg-[#ce2731] text-[#fefefd] text-xs font-bold">
-                  +24 Poin Revisi
-                </span>
-              </div>
-
-              <svg viewBox="0 0 460 110" className="w-full h-28 sm:h-32 my-auto">
-                <path
-                  d="M0 92 Q80 80, 150 58 T290 36 T390 18 T450 10 L450 110 L0 110 Z"
-                  fill="rgba(206,39,49,0.08)"
-                />
-                <path
-                  d="M0 92 Q80 80, 150 58 T290 36 T390 18 T450 10"
-                  fill="none"
-                  stroke="#ce2731"
-                  strokeWidth="4"
-                  strokeLinecap="round"
-                />
-                <circle cx="150" cy="58" r="5" fill="#0f2c56" />
-                <circle cx="290" cy="36" r="5" fill="#0f2c56" />
-                <circle cx="450" cy="10" r="6" fill="#ce2731" />
-              </svg>
-
-              {/* Open Score Progression Strip (No Card-in-Card) */}
-              <div className="grid grid-cols-3 divide-x divide-[#fcd0d1] py-2 border-t border-[#fcd0d1]/60">
-                <div className="pr-3">
-                  <div className="text-[10px] font-semibold text-slate-500">Draf Awal</div>
-                  <div className="text-sm sm:text-base font-black text-[#0f2c56] mt-0.5">64 / 100</div>
-                </div>
-                <div className="px-3">
-                  <div className="text-[10px] font-semibold text-slate-500">Setelah Revisi</div>
-                  <div className="text-sm sm:text-base font-black text-[#0f2c56] mt-0.5">88 / 100</div>
-                </div>
-                <div className="pl-3">
-                  <div className="text-[10px] font-semibold text-slate-500">Peningkatan</div>
-                  <div className="text-sm sm:text-base font-black text-[#ce2731] mt-0.5">+24 Poin</div>
+                <div className="w-11 h-11 rounded-full bg-[#ce2731] flex items-center justify-center text-white text-xs font-black">
+                  88
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[#fcd0d1]/60">
-                <span className="text-xs font-bold text-[#0f2c56]">
-                  Pantau perkembangan skor ATS dari draf awal hingga siap kirim ke HRD.
-                </span>
-                <Link
-                  href="/evaluate"
-                  className="px-5 py-2.5 rounded-full bg-[#0f2c56] hover:bg-[#163861] text-[#fefefd] text-xs font-bold transition"
-                >
-                  Buka Ruang Evaluasi
-                </Link>
-              </div>
-            </div>
-
-            {/* Right 5 Cols: Bold Second (#ce2731) Card + Flat Before-After Active Voice Comparison */}
-            <div
-              className={`lg:col-span-5 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-7 text-[#fefefd] flex flex-col justify-between relative overflow-hidden bg-[#ce2731] lg:bg-transparent shadow-xl lg:shadow-none origin-bottom-right border border-white/10 lg:border-transparent ${getChildAnimClass(3, "right", "delay-200")}`}
-            >
-              <div className="space-y-2 relative z-20">
-                <span className="px-3 py-1 rounded-full bg-[#fefefd]/15 text-xs font-bold text-[#fefefd]">
-                  Saran Kalimat Aktif
-                </span>
-                <h3 className="text-xl sm:text-2xl font-black text-[#fefefd] leading-tight">
-                  Ubah Pengalaman Biasa Jadi Berdampak
-                </h3>
-              </div>
-
-              {/* Before vs After Active Voice Showcase (Flat Typographic Blocks, No Card-in-Card) */}
-              <div className="space-y-4 my-auto relative z-20">
-                <div className="border-l-2 border-white/30 pl-3.5 space-y-1">
-                  <div className="flex items-center justify-between text-[10px] font-bold uppercase text-[#faa9ab]">
-                    <span>Sebelum (Pasif &amp; Standar)</span>
-                    <span className="text-rose-200 font-mono">Skor 45</span>
+              {/* Clean CV Skeleton Preview Card inside Frame */}
+              <div className="flex-1 rounded-t-2xl bg-[#f4f5f7] p-5 space-y-3">
+                <div className="w-3/4 h-2.5 rounded-full bg-slate-300" />
+                <div className="w-1/2 h-2.5 rounded-full bg-slate-200" />
+                <div className="mt-4 h-24 rounded-xl bg-white border border-slate-200/80 flex items-center justify-center gap-3 px-4">
+                  <span className="w-8 h-8 rounded-lg bg-[#ce2731] text-white flex items-center justify-center shrink-0">
+                    <Play className="w-3.5 h-3.5 fill-white ml-0.5" />
+                  </span>
+                  <div className="flex-1 space-y-1.5">
+                    <div className="text-[11px] font-bold text-[#0f2c56]">Resume_Standar_ATS.pdf</div>
+                    <div className="text-[10px] text-slate-500">Struktur 1-Kolom Terverifikasi</div>
                   </div>
-                  <p className="text-xs text-slate-200 line-through opacity-80">
-                    &quot;Membantu mengurus acara dan kegiatan mahasiswa di kampus.&quot;
-                  </p>
                 </div>
-                <div className="border-l-4 border-white pl-3.5 space-y-1">
-                  <div className="flex items-center justify-between text-[10px] font-bold uppercase text-white">
-                    <span>Sesudah Pasbana AI (Aktif &amp; Terukur)</span>
-                    <span className="text-[#0f2c56] bg-white px-2 py-0.5 rounded-full font-black font-mono">Skor 92</span>
-                  </div>
-                  <p className="text-xs sm:text-sm font-semibold text-white leading-relaxed">
-                    &quot;Menginisiasi &amp; mengelola seminar karir dengan 350+ peserta serta kepuasan 94%.&quot;
-                  </p>
-                </div>
+                <div className="w-full h-2 rounded-full bg-slate-300" />
+                <div className="w-2/3 h-2 rounded-full bg-slate-200" />
               </div>
 
-              <Link
-                href="/evaluate"
-                className="relative z-20 w-full py-3 rounded-full bg-[#fefefd] text-[#ce2731] hover:bg-[#fdf2f2] text-xs font-black text-center shadow-md transition"
-              >
-                Uji Kalimat CV Sekarang
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* =====================================================================
-          SLIDE 4: OPEN 5D RADAR ON #FEFEFD + PRIMARY/SECOND BLIND SCORING STAGE
-          ===================================================================== */}
-      <section
-        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(4)}`}
-      >
-        <div className="w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
-          {/* Left 6 Cols: Open 5-Dimension Radar & Competency Breakdown (No Outer Card) */}
-          <div className={`lg:col-span-6 h-full flex flex-col justify-center gap-5 py-4 sm:py-6 px-4 sm:px-8 lg:px-10 ${getChildAnimClass(4, "left", "delay-75")}`}>
-            <div className="space-y-2.5">
-              <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#fdf2f2] text-[#ce2731] text-xs font-bold">
-                <ShieldCheck className="w-4 h-4 text-[#ce2731]" />
-                <span>Standar Penilaian Adil &amp; Analitik 5D</span>
-              </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-[36px] font-black tracking-tight text-[#0f2c56] leading-[1.12]">
-                Peta Kekuatan CV &amp;{" "}
-                <span className="text-[#ce2731]">Rekrutmen Bebas Bias.</span>
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-xl">
-                Ketahui aspek resume yang sudah kuat dan bagian yang masih perlu ditingkatkan melalui pemetaan 5 dimensi yang transparan.
-              </p>
-            </div>
-
-            {/* Open Radar Visualization + Dimension Scores */}
-            <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
-              <div className="sm:col-span-6 flex justify-center">
-                <svg viewBox="0 0 200 140" className="w-full max-w-[230px] h-36">
-                  <polygon points="100,14 148,42 148,96 100,124 52,96 52,42" fill="none" stroke="#cbd5e1" strokeWidth="1.2" />
-                  <polygon points="100,32 132,50 132,86 100,104 68,86 68,50" fill="none" stroke="#e2e8f0" strokeWidth="1.2" />
-                  <polygon
-                    points="100,18 142,46 138,90 100,114 60,88 64,44"
-                    fill="rgba(206,39,49,0.16)"
-                    stroke="#ce2731"
-                    strokeWidth="2.8"
-                  />
-                  <text x="100" y="9" textAnchor="middle" fontSize="8.5" fontWeight="bold" fill="#0f2c56">Format ATS (94%)</text>
-                  <text x="155" y="45" textAnchor="start" fontSize="8.5" fontWeight="bold" fill="#0f2c56">Struktur</text>
-                  <text x="155" y="96" textAnchor="start" fontSize="8.5" fontWeight="bold" fill="#ce2731">Dampak</text>
-                  <text x="44" y="96" textAnchor="end" fontSize="8.5" fontWeight="bold" fill="#0f2c56">Keahlian</text>
-                  <text x="44" y="45" textAnchor="end" fontSize="8.5" fontWeight="bold" fill="#0f2c56">Profil</text>
+              {/* Overlapping Circular Red Gauge Timer on Right Edge (Matching Video 00:05) */}
+              <div className="hidden sm:flex absolute -right-14 bottom-10 w-44 h-44 rounded-full bg-white border-2 border-slate-300 shadow-xl items-center justify-center p-2.5">
+                <svg viewBox="0 0 120 120" className="w-full h-full">
+                  <circle cx="60" cy="60" r="52" fill="#ce2731" opacity="0.85" />
+                  <path d="M60,60 L60,8 A52,52 0 0,1 108,80 Z" fill="#ce2731" />
+                  <line x1="60" y1="8" x2="60" y2="15" stroke="#ffffff" strokeWidth="2" />
+                  <line x1="112" y1="60" x2="105" y2="60" stroke="#ffffff" strokeWidth="2" />
+                  <line x1="60" y1="112" x2="60" y2="105" stroke="#ffffff" strokeWidth="2" />
+                  <line x1="8" y1="60" x2="15" y2="60" stroke="#ffffff" strokeWidth="2" />
+                  <line x1="60" y1="60" x2="34" y2="34" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" />
+                  <circle cx="60" cy="60" r="4" fill="#ffffff" />
                 </svg>
               </div>
-              <div className="sm:col-span-6 space-y-2.5 text-xs">
-                <div className="border-l-4 border-[#ce2731] pl-3 py-0.5">
-                  <p className="font-black text-[#0f2c56]">0% Bias Data Pribadi</p>
-                  <p className="text-slate-600 text-[11px]">Tanpa penilaian foto wajah, gender, maupun usia.</p>
-                </div>
-                <div className="border-l-4 border-[#0f2c56] pl-3 py-0.5">
-                  <p className="font-black text-[#0f2c56]">5 Dimensi Standar HRD</p>
-                  <p className="text-slate-600 text-[11px]">Dinilai murni dari keahlian, pengalaman, dan hasil kerja.</p>
-                </div>
-                <div className="border-l-4 border-[#ce2731] pl-3 py-0.5">
-                  <p className="font-black text-[#0f2c56]">Kendali Privasi Penuh</p>
-                  <p className="text-slate-600 text-[11px]">Hapus berkas dan riwayat evaluasi kapan saja.</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Standalone 4 Small Bento Cards on White Canvas */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-              <div className="rounded-2xl bg-slate-50 border border-slate-200/80 p-3">
-                <div className="text-base font-black text-[#0f2c56]">94%</div>
-                <div className="text-[10px] text-slate-600 font-semibold">Struktur ATS</div>
-              </div>
-              <div className="rounded-2xl bg-[#fdf2f2] border border-[#fde6e6] p-3">
-                <div className="text-base font-black text-[#ce2731]">90%</div>
-                <div className="text-[10px] text-slate-600 font-semibold">Relevansi Skill</div>
-              </div>
-              <div className="rounded-2xl bg-slate-50 border border-slate-200/80 p-3">
-                <div className="text-base font-black text-[#0f2c56]">84%</div>
-                <div className="text-[10px] text-slate-600 font-semibold">Dampak Kerja</div>
-              </div>
-              <div className="rounded-2xl bg-[#0f2c56] p-3 text-white">
-                <div className="text-base font-black">0% Bias</div>
-                <div className="text-[10px] text-slate-300 font-semibold">Fokus Kompetensi</div>
-              </div>
             </div>
           </div>
 
-          {/* Right 6 Cols: Primary (#0f2c56) & Second (#ce2731) Objective Evaluation Stage */}
-          <div
-            className={`lg:col-span-6 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-8 text-[#fefefd] flex flex-col justify-between relative overflow-hidden bg-[#0f2c56] lg:bg-transparent shadow-2xl lg:shadow-none border border-white/10 lg:border-transparent origin-right ${getChildAnimClass(4, "right", "delay-150")}`}
-          >
-            <div className="flex items-center justify-between relative z-20">
-              <span className="px-3.5 py-1 rounded-full bg-[#ce2731] text-[#fefefd] text-xs font-black">
-                Penilaian Berbasis Skill
-              </span>
-              <span className="text-xs font-mono font-bold text-[#fde6e6]">EVALUASI OBJEKTIF</span>
+          {/* Right 6 Cols: Clean Uncluttered Editorial Copy (Matching Video 00:05) */}
+          <div className="lg:col-span-6 space-y-4 sm:space-y-5 text-left lg:pl-8">
+            <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-bold tracking-tight text-[#0f2c56] leading-[1.15]">
+              Berhenti mengirim CV
+              <br />
+              yang gagal dibaca sistem
+            </h2>
+            <p className="text-xs sm:text-base text-slate-500 max-w-md leading-relaxed">
+              Banyak kandidat gugur saat melamar kerja bukan karena kurang kompeten, melainkan karena susunan resume gagal dipahami mesin ATS. Ketahui letak celah CV Anda dan ikuti alur perbaikannya secara instan!
+            </p>
+            <div className="pt-1">
+              <Link
+                href="/evaluate"
+                className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#ce2731] hover:text-[#0f2c56] transition"
+              >
+                <span>Coba Pemeriksa Struktur ATS</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </Link>
             </div>
+          </div>
+        </div>
+      </section>
 
-            <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center my-auto relative z-20">
-              <div className="sm:col-span-7 space-y-3">
-                <h3 className="text-2xl sm:text-3xl font-black text-[#fefefd] leading-tight">
-                  Fokus Murni pada Kompetensi Anda
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
-                  Pasbana AI menyaring resume berdasarkan keahlian, pengalaman proyek, dan dampak kerja nyata agar setiap talenta muda mendapat kesempatan yang setara.
-                </p>
-                <div className="pt-2">
-                  <Link
-                    href="/evaluate"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#ce2731] hover:bg-[#b01e27] text-[#fefefd] text-xs sm:text-sm font-bold shadow-lg transition"
-                  >
-                    <span>Uji CV Secara Objektif</span>
-                    <ArrowUpRight className="w-4 h-4" />
-                  </Link>
+      {/* =====================================================================
+          SLIDE 2 (#persiapan): OPEN WHITE CANVAS (Matching Video 00:06 - 00:08)
+          Left Clean Editorial + Right Isometric Clock & Dot-Matrix Calendar
+          ===================================================================== */}
+      <section
+        className={`absolute inset-0 py-3 px-4 sm:px-8 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(2)}`}
+      >
+        <div className="w-full h-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+          {/* Left 6 Cols: Clean Bold Heading & Subtitle (Matching Video 00:07) */}
+          <div className="lg:col-span-6 space-y-4 sm:space-y-5 text-left">
+            <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-bold tracking-tight text-[#0f2c56] leading-[1.15]">
+              Tingkatkan peluang lolos
+              <br />
+              dengan kesiapan berkas
+              <br />
+              yang paling optimal!
+            </h2>
+            <p className="text-xs sm:text-base text-slate-500 max-w-md leading-relaxed">
+              Baik sudah memiliki file PDF maupun belum punya CV sama sekali, ukur 5 dimensi kualitas resume Anda pada waktu yang tepat untuk hasil seleksi terbaik!
+            </p>
+            <div className="pt-1 flex flex-wrap items-center gap-3">
+              <Link
+                href="/evaluate?tab=questionnaire"
+                className="px-6 py-3 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition"
+              >
+                Buat CV via Kuesioner
+              </Link>
+              <Link
+                href="/evaluate"
+                className="px-5 py-3 rounded-xl border border-slate-200 hover:border-[#ce2731] text-[#0f2c56] text-xs sm:text-sm font-bold transition"
+              >
+                Unggah PDF CV
+              </Link>
+            </div>
+          </div>
+
+          {/* Right 6 Cols: Isometric Gauge Disc + Dot-Matrix Board (Matching Video 00:06 - 00:08) */}
+          <div className="lg:col-span-6 flex items-center justify-center">
+            <svg
+              viewBox="0 0 560 400"
+              className="w-full max-w-[540px] h-auto"
+              role="img"
+              aria-label="Ilustrasi Isometrik Kesiapan Karir dan Pemetaan Jadwal"
+            >
+              {/* Isometric Grid Reference Lines */}
+              <line x1="70" y1="260" x2="350" y2="100" stroke="#e2e8f0" strokeWidth="1" strokeDasharray="4 4" />
+              <line x1="170" y1="340" x2="470" y2="170" stroke="#e2e8f0" strokeWidth="1" strokeDasharray="4 4" />
+              <line x1="140" y1="140" x2="450" y2="320" stroke="#e2e8f0" strokeWidth="1" strokeDasharray="4 4" />
+
+              {/* Top-Left Isometric 3D Red Gauge / Clock Cylinder */}
+              <ellipse cx="220" cy="162" rx="76" ry="42" fill="#f1f5f9" stroke="#cbd5e1" strokeWidth="1.4" />
+              <ellipse cx="220" cy="146" rx="76" ry="42" fill="#ce2731" opacity="0.82" stroke="#0f2c56" strokeWidth="1.4" />
+              <path d="M220,146 L220,104 A76,42 0 0,1 286,166 Z" fill="#faa9ab" />
+              <line x1="220" y1="146" x2="220" y2="108" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" />
+              <line x1="220" y1="146" x2="268" y2="162" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" />
+
+              {/* Right Standing Isometric Dot-Matrix Board (Matching Video 00:07) */}
+              <polygon
+                points="360,115 475,180 475,275 360,210"
+                fill="#ffffff"
+                stroke="#0f2c56"
+                strokeWidth="1.5"
+              />
+              {/* Dots inside Isometric Board */}
+              <circle cx="385" cy="155" r="5" fill="#e2e8f0" />
+              <circle cx="405" cy="166" r="5" fill="#e2e8f0" />
+              <circle cx="425" cy="177" r="5" fill="#cbd5e1" />
+              <circle cx="445" cy="188" r="5" fill="#e2e8f0" />
+
+              <circle cx="385" cy="178" r="5" fill="#e2e8f0" />
+              <circle cx="405" cy="189" r="6" fill="#ce2731" />
+              <circle cx="425" cy="200" r="6" fill="#0f2c56" />
+              <circle cx="445" cy="211" r="5" fill="#cbd5e1" />
+
+              <circle cx="385" cy="201" r="5" fill="#cbd5e1" />
+              <circle cx="405" cy="212" r="5" fill="#e2e8f0" />
+              <circle cx="425" cy="223" r="5" fill="#e2e8f0" />
+              <circle cx="445" cy="234" r="5" fill="#e2e8f0" />
+
+              {/* Center Isometric Soft Red Pill Bar */}
+              <polygon
+                points="285,220 315,202 415,260 385,278"
+                fill="#ce2731"
+                opacity="0.65"
+              />
+
+              {/* Bottom-Left Isometric Card with Bullet & Lines */}
+              <polygon
+                points="170,255 240,215 360,285 290,325"
+                fill="#ffffff"
+                stroke="#0f2c56"
+                strokeWidth="1.4"
+              />
+              <circle cx="225" cy="252" r="6" fill="#ffffff" stroke="#0f2c56" strokeWidth="1.5" />
+              <line x1="242" y1="262" x2="310" y2="302" stroke="#0f2c56" strokeWidth="2" strokeLinecap="round" />
+              <line x1="232" y1="270" x2="285" y2="301" stroke="#cbd5e1" strokeWidth="2" strokeLinecap="round" />
+
+              {/* Bottom-Right Small Isometric Tile */}
+              <polygon
+                points="425,305 468,280 508,303 465,328"
+                fill="#ffffff"
+                stroke="#94a3b8"
+                strokeWidth="1.3"
+              />
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      {/* =====================================================================
+          SLIDE 3 (#asisten): DARK ROUNDED CONTAINER (Matching Video 00:09 - 00:10)
+          Cropped Frame + Eye Badge + Up Arrow on Left, Clean White Text on Right
+          ===================================================================== */}
+      <section
+        className={`absolute inset-0 py-2 px-4 sm:px-8 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(3)}`}
+      >
+        <div className="w-full h-full max-w-7xl mx-auto rounded-[36px] sm:rounded-[40px] bg-[#0f2c56] lg:bg-transparent px-6 sm:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center text-white overflow-hidden">
+          {/* Left 6 Cols: Cropped White Wireframe Rising from Bottom + Eye Badge + Upward Arrow */}
+          <div className="lg:col-span-6 h-full flex items-end justify-center pt-8 relative">
+            <div className="relative w-full max-w-[380px] h-[86%] bg-white rounded-t-[36px] border-t-4 border-x-4 border-slate-200 px-6 pt-6 flex flex-col gap-4 text-[#0f2c56]">
+              {/* Card 1 inside Device Frame: Before / Passive */}
+              <div className="rounded-2xl bg-[#f4f5f7] border border-slate-200 p-4 space-y-2.5">
+                <div className="w-2/3 h-2 rounded-full bg-slate-300" />
+                <div className="w-1/2 h-2 rounded-full bg-slate-200" />
+                <div className="h-16 rounded-xl bg-white border border-slate-200/80 flex items-center justify-between px-4">
+                  <div className="space-y-1">
+                    <div className="text-[10px] font-bold uppercase text-slate-400">Kalimat Awal</div>
+                    <div className="text-xs font-semibold text-slate-500 line-through">
+                      Membantu kegiatan acara kampus
+                    </div>
+                  </div>
+                  <span className="w-7 h-7 rounded-md bg-[#ce2731] text-white flex items-center justify-center shrink-0">
+                    <Play className="w-3 h-3 fill-white ml-0.5" />
+                  </span>
                 </div>
               </div>
 
-              {/* Flat Objective Metrics (No Card-in-Card) */}
-              <div className="sm:col-span-5 sm:border-l sm:border-white/15 sm:pl-5 space-y-4">
-                <div className="space-y-1">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-white flex items-center gap-1.5">
-                      <BarChart3 className="w-4 h-4 text-emerald-400" />
-                      Evaluasi 5 Dimensi
-                    </span>
-                    <span className="text-[10px] font-mono font-bold text-emerald-300">Terukur</span>
+              {/* Card 2 inside Device Frame: After / Active Impact */}
+              <div className="flex-1 rounded-t-2xl bg-[#f4f5f7] border-t border-x border-slate-200 p-4 space-y-2.5">
+                <div className="w-3/4 h-2 rounded-full bg-slate-300" />
+                <div className="h-16 rounded-xl bg-white border border-slate-200/80 flex items-center justify-between px-4">
+                  <div className="space-y-1">
+                    <div className="text-[10px] font-bold uppercase text-[#ce2731]">Saran Pasbana AI (+24 Poin)</div>
+                    <div className="text-xs font-bold text-[#0f2c56]">
+                      Mengelola seminar 350+ peserta
+                    </div>
                   </div>
-                  <p className="text-[11px] text-slate-300 leading-snug">
-                    Struktur, keahlian, dampak kerja, dan kecocokan posisi dinilai transparan.
+                  <span className="w-7 h-7 rounded-md bg-[#ce2731] text-white flex items-center justify-center shrink-0">
+                    <Play className="w-3 h-3 fill-white ml-0.5" />
+                  </span>
+                </div>
+              </div>
+
+              {/* Overlapping White Circle with Red Eye Badge on Right Edge (Matching Video 00:10) */}
+              <div className="hidden sm:flex absolute -right-12 bottom-16 w-32 h-32 rounded-full bg-white border-2 border-slate-300 shadow-2xl items-center justify-center">
+                <div className="w-24 h-24 rounded-full bg-[#fdf2f2] flex items-center justify-center">
+                  <Eye className="w-10 h-10 text-[#ce2731]" />
+                </div>
+              </div>
+
+              {/* Upward Outline Arrow Next to Badge (Matching Video 00:10) */}
+              <svg
+                viewBox="0 0 48 110"
+                className="hidden sm:block absolute -right-24 bottom-24 w-10 h-24 text-white/40"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              >
+                <path d="M24,6 L42,28 L30,28 L30,104 L18,104 L18,28 L6,28 Z" />
+              </svg>
+            </div>
+          </div>
+
+          {/* Right 6 Cols: Bold White Heading & Clean Muted Subtitle (Matching Video 00:10) */}
+          <div className="lg:col-span-6 space-y-4 sm:space-y-5 text-left lg:pl-10">
+            <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-bold tracking-tight text-white leading-[1.15]">
+              Pahami bagaimana Struktur
+              <br />
+              dan Kalimat Aktif memengaruhi
+              <br />
+              penilaian HRD
+            </h2>
+            <p className="text-xs sm:text-base text-slate-300 max-w-md leading-relaxed">
+              Lihat perubahan skor kesiapan secara langsung setelah Anda mengganti kalimat pasif menjadi pencapaian terukur, struktur yang rapi, dan kata kunci keahlian yang tepat.
+            </p>
+            <div className="pt-1">
+              <Link
+                href="/evaluate"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition"
+              >
+                <span>Uji Kalimat CV Sekarang</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =====================================================================
+          SLIDE 4 (#prinsip): 3x2 FEATURE BENTO GRID (Matching Video 00:11 - 00:13)
+          Open White Canvas + 1 Elevated White Card + 5 Clean Open Items
+          ===================================================================== */}
+      <section
+        className={`absolute inset-0 py-3 px-4 sm:px-8 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(4)}`}
+      >
+        <div className="w-full h-full max-w-7xl mx-auto flex flex-col justify-center gap-6">
+          {/* Top-Left Section Header (Matching Video 00:11) */}
+          <div className="space-y-1.5 text-left max-w-xl">
+            <span className="text-xs font-bold text-[#ce2731]">Fitur &amp; Prinsip</span>
+            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#0f2c56] leading-[1.15]">
+              Optimalkan kesiapan karir Anda
+              <br />
+              dengan perangkat evaluasi presisi
+            </h2>
+          </div>
+
+          {/* 3 Columns x 2 Rows Feature Grid (Matching Video 00:11 - 00:13) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-5">
+            {FEATURE_GRID_ITEMS.map((item, idx) => {
+              const isSelected = activeFeatureIdx === idx;
+              return (
+                <div
+                  key={item.id}
+                  onMouseEnter={() => setActiveFeatureIdx(idx)}
+                  onClick={() => setActiveFeatureIdx(idx)}
+                  className={`p-5 sm:p-6 rounded-[28px] text-left transition-all duration-300 cursor-pointer ${
+                    isSelected
+                      ? "bg-white lg:bg-transparent shadow-[0_20px_50px_rgba(15,44,86,0.08)] lg:shadow-none border border-slate-100 lg:border-transparent"
+                      : "hover:bg-slate-50/60"
+                  }`}
+                >
+                  {/* Custom Mini UI Illustration Badge at Top (Matching Video 00:11 - 00:13) */}
+                  <div className="h-11 flex items-center mb-3">
+                    {item.badgeType === "eye" && (
+                      <div className="px-4 py-1.5 rounded-full bg-[#fdf2f2] border border-[#f5d0d2] inline-flex items-center justify-center">
+                        <Eye className="w-5 h-5 text-[#ce2731]" />
+                      </div>
+                    )}
+                    {item.badgeType === "calendar" && (
+                      <div className="px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 inline-flex items-center gap-1.5">
+                        <Calendar className="w-4 h-4 text-[#0f2c56]" />
+                        <span className="w-2 h-2 rounded-full bg-[#ce2731]" />
+                        <span className="w-2 h-2 rounded-full bg-slate-300" />
+                      </div>
+                    )}
+                    {item.badgeType === "video" && (
+                      <div className="px-4 py-2 rounded-xl bg-slate-50 border border-slate-300 inline-flex items-center gap-2">
+                        <span className="w-5 h-3.5 rounded bg-[#ce2731] flex items-center justify-center">
+                          <Play className="w-2.5 h-2.5 text-white fill-white" />
+                        </span>
+                        <span className="w-6 h-1.5 rounded-full bg-slate-300" />
+                      </div>
+                    )}
+                    {item.badgeType === "rocket" && (
+                      <div className="w-10 h-10 rounded-full bg-[#fdf2f2] border border-[#f5d0d2] inline-flex items-center justify-center">
+                        <TrendingUp className="w-4 h-4 text-[#ce2731]" />
+                      </div>
+                    )}
+                    {item.badgeType === "score" && (
+                      <div className="px-3.5 py-1.5 rounded-xl bg-slate-50 border border-slate-300 inline-flex items-center gap-2">
+                        <span className="text-xs font-black text-[#ce2731] bg-[#fdf2f2] px-2 py-0.5 rounded-md">
+                          +24
+                        </span>
+                        <span className="w-5 h-1.5 rounded-full bg-slate-300" />
+                      </div>
+                    )}
+                    {item.badgeType === "bell" && (
+                      <div className="relative w-10 h-10 rounded-full bg-slate-50 border border-slate-300 inline-flex items-center justify-center">
+                        <Bell className="w-4 h-4 text-[#0f2c56]" />
+                        <span className="absolute top-1.5 right-2 w-2 h-2 rounded-full bg-[#ce2731]" />
+                      </div>
+                    )}
+                  </div>
+
+                  <h3 className="text-sm sm:text-base font-bold text-[#0f2c56] leading-snug mb-1.5">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs text-slate-500 leading-relaxed">
+                    {item.desc}
                   </p>
                 </div>
-
-                <div className="grid grid-cols-2 gap-3 py-3 border-y border-white/15">
-                  <div>
-                    <div className="text-xl font-black text-white">94%</div>
-                    <div className="text-[10px] text-slate-300">Struktur ATS</div>
-                  </div>
-                  <div>
-                    <div className="text-xl font-black text-[#faa9ab]">90%</div>
-                    <div className="text-[10px] text-slate-300">Relevansi Skill</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-slate-200 flex items-center gap-1.5">
-                    <Lock className="w-3.5 h-3.5 text-emerald-400" />
-                    Kendali Data Penuh
-                  </span>
-                  <span className="text-[10px] font-bold text-white bg-white/15 px-2.5 py-0.5 rounded-full">
-                    Hapus Kapan Saja
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative z-20 grid grid-cols-3 gap-3 pt-3 border-t border-white/15 text-center">
-              <div>
-                <div className="text-lg font-black text-[#fefefd]">100%</div>
-                <div className="text-[10px] text-slate-200">Objektif</div>
-              </div>
-              <div>
-                <div className="text-lg font-black text-[#faa9ab]">Aman</div>
-                <div className="text-[10px] text-slate-200">Privasi Terjaga</div>
-              </div>
-              <div>
-                <div className="text-lg font-black text-[#fefefd]">Gratis</div>
-                <div className="text-[10px] text-slate-200">Tanpa Biaya</div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* =====================================================================
-          SLIDE 5: OPEN ARCHITECTURAL 3-STEP TIMELINE ON #FEFEFD (NO CARD BOXES)
+          SLIDE 5 (#cara-kerja): DARK INTERACTIVE SPLIT CARD (Matching Video 00:14)
+          Left Interactive Slider & Mode Toggles + Right Single Clean White Card
           ===================================================================== */}
       <section
-        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(5)}`}
+        className={`absolute inset-0 py-2 px-4 sm:px-8 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(5)}`}
       >
-        <div className="w-full h-full mx-auto flex flex-col justify-between py-2 lg:py-0">
-          {/* Open Header Row */}
-          <div
-            className={`w-full flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-3 px-4 sm:px-8 lg:px-10 border-b-2 border-[#0f2c56]/10 ${getChildAnimClass(5, "down", "delay-75")}`}
-          >
-            <div className="space-y-1">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
-                Alur Cepat &amp; Terpandu
-              </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-[38px] font-black tracking-tight text-[#0f2c56] leading-[1.12]">
-                Siapkan Karir Impian dalam{" "}
-                <span className="text-[#ce2731]">3 Langkah Sederhana.</span>
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-600 max-w-2xl">
-                Mulai dari unggah berkas hingga menemukan lowongan yang paling sesuai, semua terarah dalam satu halaman.
-              </p>
-            </div>
-            <span className="px-4 py-1.5 rounded-full bg-[#ce2731] text-[#fefefd] text-xs font-bold self-start sm:self-auto shrink-0">
-              Gratis Selamanya
-            </span>
-          </div>
-
-          {/* Open 12-Col Architectural Steps + Small Bento Summary */}
-          <div className="flex-1 flex flex-col justify-center py-2 px-4 sm:px-8 lg:px-10 space-y-4">
-            <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 ${getChildAnimClass(5, "up", "delay-150")}`}>
-              {[
-                {
-                  step: "01",
-                  accent: "text-[#ce2731]",
-                  bar: "bg-[#ce2731]",
-                  title: "Unggah CV atau Isi Kuesioner",
-                  desc: "Sudah punya file CV? Unggah langsung. Belum punya CV? Jawab kuesioner singkat dan sistem akan menyusun CV standar ATS untuk Anda.",
-                  output: "Draf CV 1-Kolom Siap ATS",
-                },
-                {
-                  step: "02",
-                  accent: "text-[#0f2c56]",
-                  bar: "bg-[#0f2c56]",
-                  title: "Terima Skor 5D & Saran Revisi",
-                  desc: "Dapatkan rincian skor kesiapan kerja beserta rekomendasi kalimat aktif untuk memperkuat deskripsi pengalaman dan keahlian Anda.",
-                  output: "Skor 5 Dimensi + Saran Kalimat",
-                },
-                {
-                  step: "03",
-                  accent: "text-[#ce2731]",
-                  bar: "bg-[#ce2731]",
-                  title: "Lamar Lowongan yang Pas Bana",
-                  desc: "Pilih posisi kerja aktif dengan persentase kecocokan tertinggi dan kirim lamaran Anda dengan penuh percaya diri.",
-                  output: "Daftar Loker Cocok (>85%)",
-                },
-              ].map((item) => (
-                <div key={item.step} className="space-y-3 relative p-5 rounded-3xl bg-slate-50/70 border border-slate-100 flex flex-col justify-between">
-                  <div className="space-y-2.5">
-                    <div className={`text-4xl sm:text-5xl font-black tracking-tighter ${item.accent}`}>
-                      {item.step}
-                    </div>
-                    <div className={`w-12 h-1.5 rounded-full ${item.bar}`} />
-                    <h3 className="text-base sm:text-lg font-black text-[#0f2c56] pt-0.5">
-                      {item.title}
-                    </h3>
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      {item.desc}
-                    </p>
-                  </div>
-                  <div className="pt-2.5 border-t border-slate-200/80 text-[11px] font-bold text-[#0f2c56] flex items-center justify-between">
-                    <span className="text-slate-400 font-semibold">Hasil:</span>
-                    <span>{item.output}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Small Bento Summary Bar */}
-            <div className={`grid grid-cols-2 sm:grid-cols-4 gap-3 ${getChildAnimClass(5, "up", "delay-200")}`}>
-              <div className="rounded-2xl bg-[#fdf2f2] border border-[#fde6e6] p-3 flex items-center gap-3">
-                <Clock className="w-4 h-4 text-[#ce2731] shrink-0" />
-                <div>
-                  <div className="text-xs font-black text-[#0f2c56]">~30 Detik</div>
-                  <div className="text-[10px] text-slate-600">Waktu Analisis</div>
-                </div>
-              </div>
-              <div className="rounded-2xl bg-slate-50 border border-slate-200/70 p-3 flex items-center gap-3">
-                <FileSpreadsheet className="w-4 h-4 text-[#0f2c56] shrink-0" />
-                <div>
-                  <div className="text-xs font-black text-[#0f2c56]">PDF / Form</div>
-                  <div className="text-[10px] text-slate-600">Input Fleksibel</div>
-                </div>
-              </div>
-              <div className="rounded-2xl bg-slate-50 border border-slate-200/70 p-3 flex items-center gap-3">
-                <Target className="w-4 h-4 text-[#ce2731] shrink-0" />
-                <div>
-                  <div className="text-xs font-black text-[#0f2c56]">5 Dimensi</div>
-                  <div className="text-[10px] text-slate-600">Evaluasi Objektif</div>
-                </div>
-              </div>
-              <div className="rounded-2xl bg-[#0f2c56] p-3 flex items-center gap-3 text-white">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <div>
-                  <div className="text-xs font-black">100% Gratis</div>
-                  <div className="text-[10px] text-slate-300">Tanpa Langganan</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom Action Strip in Primary (#0f2c56) */}
-          <div
-            className={`w-full shrink-0 lg:h-[88px] rounded-[22px] sm:rounded-[28px] bg-[#0f2c56] lg:bg-transparent text-[#fefefd] p-4 sm:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${getChildAnimClass(5, "up", "delay-200")}`}
-          >
-            <div className="space-y-0.5">
-              <p className="text-sm sm:text-base font-black text-[#fefefd]">
-                Belum punya CV? Jangan khawatir!
-              </p>
+        <div className="w-full h-full max-w-7xl mx-auto rounded-[36px] sm:rounded-[40px] bg-[#0f2c56] lg:bg-transparent px-6 sm:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center text-white overflow-hidden">
+          {/* Left 6 Cols: Subtitle, Bold Title, Interactive Range Slider, 2 Toggle Buttons (Matching Video 00:14) */}
+          <div className="lg:col-span-6 space-y-5 text-left">
+            <div className="space-y-2">
               <p className="text-xs text-slate-300">
-                Susun resume 1-kolom berstandar ATS dari nol hanya dalam beberapa menit lewat kuesioner terpandu.
+                Berhenti membuang waktu, biarkan sistem mengevaluasi secara otomatis
+              </p>
+              <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-white leading-[1.15]">
+                Dapatkan analisis terbaik
+                <br />
+                untuk kesiapan karir Anda!
+              </h2>
+            </div>
+
+            {/* Interactive Dimension / Step Slider (Matching Video 00:14: "5 ----o---- 10") */}
+            <div className="space-y-2 max-w-md pt-1">
+              <div className="flex items-center gap-4">
+                <span className="text-xs font-bold text-slate-300">1</span>
+                <input
+                  type="range"
+                  min={1}
+                  max={5}
+                  value={sliderStep}
+                  onChange={(e) => setSliderStep(Number(e.target.value))}
+                  aria-label="Jumlah dimensi evaluasi"
+                  className="w-full accent-white cursor-pointer h-1.5 bg-white/20 rounded-lg"
+                />
+                <span className="text-xs font-bold text-slate-300">5</span>
+              </div>
+              <p className="text-xs text-slate-300">
+                Berdasarkan evaluasi {sliderStep} dimensi utama standar HRD
               </p>
             </div>
-            <Link
-              href="/evaluate?tab=questionnaire"
-              className="shrink-0 px-6 py-2.5 rounded-full bg-[#ce2731] hover:bg-[#b01e27] text-[#fefefd] text-xs sm:text-sm font-bold shadow-lg transition"
-            >
-              Buat CV dari Kuesioner →
-            </Link>
+
+            {/* 2 Mode Toggle Buttons (Matching Video 00:14 "Billed Monthly / Billed Yearly") */}
+            <div className="flex items-center gap-3 pt-1">
+              <button
+                type="button"
+                onClick={() => setInputMode("pdf")}
+                className={`px-5 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+                  inputMode === "pdf"
+                    ? "bg-white text-[#0f2c56]"
+                    : "border border-white/30 text-white hover:border-white"
+                }`}
+              >
+                Unggah File PDF
+              </button>
+              <button
+                type="button"
+                onClick={() => setInputMode("questionnaire")}
+                className={`px-5 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+                  inputMode === "questionnaire"
+                    ? "bg-white text-[#0f2c56]"
+                    : "border border-white/30 text-white hover:border-white"
+                }`}
+              >
+                Isi Kuesioner CV
+              </button>
+            </div>
+          </div>
+
+          {/* Right 6 Cols: Single Clean White Card (Matching Video 00:14) */}
+          <div className="lg:col-span-6">
+            <div className="bg-white text-[#0f2c56] rounded-[32px] p-6 sm:p-9 shadow-2xl space-y-5 max-w-lg mx-auto">
+              <h3 className="text-lg sm:text-2xl font-bold text-[#0f2c56] leading-snug">
+                Satu alur terpadu yang menjawab seluruh kebutuhan persiapan karir Anda
+              </h3>
+
+              <ul className="space-y-2 text-xs sm:text-sm text-slate-500">
+                <li className="flex items-start gap-2">
+                  <span className="text-[#0f2c56] font-bold">•</span>
+                  <span>Evaluasi mendalam {sliderStep} dimensi kesiapan ATS dan standar HRD</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#0f2c56] font-bold">•</span>
+                  <span>
+                    {inputMode === "pdf"
+                      ? "Pemeriksaan instan struktur 1-kolom dan perbaikan kalimat aktif dari PDF Anda"
+                      : "Penyusunan draf CV 1-kolom otomatis dari nol melalui kuesioner terpandu"}
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#0f2c56] font-bold">•</span>
+                  <span>Rekomendasi lowongan kerja aktif yang paling relevan dengan keahlian Anda</span>
+                </li>
+              </ul>
+
+              <div className="pt-2 flex flex-wrap items-center justify-between gap-4">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl sm:text-5xl font-black text-[#0f2c56]">Gratis</span>
+                  <span className="text-xs text-slate-400 font-semibold">Rp 0 / Selamanya</span>
+                </div>
+
+                <Link
+                  href={inputMode === "pdf" ? "/evaluate" : "/evaluate?tab=questionnaire"}
+                  className="px-7 py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold shadow-md transition"
+                >
+                  Mulai Sekarang
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* =====================================================================
-          SLIDE 6: BOLD SECOND (#CE2731) & PRIMARY (#0F2C56) CTA STAGE + OPEN FOOTER
+          SLIDE 6 (#mulai): ACCORDION LIST & MINIMAL FOOTER (Matching Video 00:15 - 00:16)
+          Open White Canvas + 5 Horizontal Expandable Rows + Clean Footer
           ===================================================================== */}
       <section
-        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(6)}`}
+        className={`absolute inset-0 py-3 px-4 sm:px-8 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(6)}`}
       >
-        <div className="w-full h-full mx-auto flex flex-col justify-between gap-3 py-1 lg:py-0">
-          {/* Top Closing Stage in Second (#ce2731) with Value Assurance */}
-          <div
-            className={`flex-1 min-h-0 w-full rounded-[26px] sm:rounded-[34px] px-6 sm:px-12 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center relative overflow-hidden bg-[#ce2731] lg:bg-transparent shadow-2xl lg:shadow-none border border-white/10 lg:border-transparent origin-center ${getChildAnimClass(6, "down", "delay-75")}`}
-          >
+        <div className="w-full h-full max-w-7xl mx-auto flex flex-col justify-between">
+          {/* Top Heading + 5 Expandable Horizontal Rows (Matching Video 00:15) */}
+          <div className="my-auto space-y-5">
+            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#0f2c56] leading-[1.15] max-w-xl text-left">
+              Seluruh perangkat cerdas ini juga
+              <br />
+              siap memetakan peluang karir terbaik Anda
+            </h2>
 
-            <div className="lg:col-span-8 space-y-4 text-left relative z-20">
-              <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#fefefd] text-[#ce2731] text-xs font-black shadow-xs">
-                <span>100% Gratis untuk Mahasiswa &amp; Pencari Kerja</span>
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-black text-[#fefefd] tracking-tight leading-[1.08]">
-                Mulai Bersama Pasbana AI Sekarang.
-              </h2>
-              <p className="text-xs sm:text-base text-[#fde6e6] max-w-xl leading-relaxed font-medium">
-                Siap meningkatkan kualitas CV, memperbaiki kalimat pengalaman, dan menemukan peluang kerja yang paling pas bana?
-              </p>
-              <div className="pt-1 flex flex-wrap items-center gap-3.5">
-                <Link
-                  href="/evaluate"
-                  className="px-7 py-3.5 rounded-full bg-[#fefefd] hover:bg-[#fdf2f2] text-[#ce2731] text-xs sm:text-sm font-black shadow-lg transition-all hover:-translate-y-0.5"
-                >
-                  Evaluasi CV Sekarang
-                </Link>
-                <Link
-                  href="/jobs"
-                  className="px-6 py-3.5 rounded-full bg-[#0f2c56] hover:bg-[#163861] text-[#fefefd] text-xs sm:text-sm font-bold shadow-md transition-all"
-                >
-                  Lihat Lowongan Kerja
-                </Link>
-              </div>
-            </div>
-
-            {/* Flat Stat Highlights (Right 4 Cols, No Card-in-Card) */}
-            <div className="hidden lg:flex lg:col-span-4 flex-col justify-center gap-4 lg:border-l lg:border-white/20 lg:pl-7 relative z-20">
-              <div className="grid grid-cols-2 gap-4 pb-4 border-b border-white/15">
-                <div>
-                  <div className="text-2xl font-black text-white">30 Detik</div>
-                  <div className="text-[11px] text-[#fde6e6] leading-snug mt-0.5">
-                    Evaluasi cepat 5 dimensi ATS.
+            <div className="border-t border-slate-200">
+              {ACCORDION_ITEMS.map((item) => {
+                const isOpen = openAccordionId === item.id;
+                return (
+                  <div key={item.id} className="border-b border-slate-200">
+                    <button
+                      type="button"
+                      onClick={() => setOpenAccordionId(isOpen ? null : item.id)}
+                      className="w-full py-3 sm:py-3.5 flex items-center justify-between gap-4 text-left cursor-pointer group"
+                    >
+                      <span className="text-xs sm:text-sm font-semibold text-[#0f2c56] group-hover:text-[#ce2731] transition">
+                        {item.question}
+                      </span>
+                      <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-slate-300 group-hover:border-[#0f2c56] flex items-center justify-center text-slate-500 shrink-0 transition">
+                        {isOpen ? <Minus className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
+                      </span>
+                    </button>
+                    {isOpen && (
+                      <div className="pb-3.5 pr-10 text-xs text-slate-500 leading-relaxed max-w-3xl">
+                        {item.answer}
+                      </div>
+                    )}
                   </div>
-                </div>
-                <div>
-                  <div className="text-2xl font-black text-white">92%</div>
-                  <div className="text-[11px] text-[#fde6e6] leading-snug mt-0.5">
-                    Akurasi pencocokan karir.
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-1">
-                <div className="text-xs font-black text-white">100% Akses Terbuka &amp; Gratis</div>
-                <div className="text-[11px] text-[#fde6e6] leading-relaxed">
-                  Tanpa biaya berlangganan, didedikasikan untuk seluruh talenta dan pencari kerja Indonesia.
-                </div>
-              </div>
+                );
+              })}
             </div>
           </div>
 
-          {/* Bottom Open Editorial Footer Directly on #fefefd Canvas (No Card Wrapper) */}
-          <footer
-            className={`shrink-0 lg:h-[132px] w-full pt-1 px-4 sm:px-8 ${getChildAnimClass(6, "up", "delay-150")}`}
-          >
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pb-3 border-b border-slate-200/80 text-xs">
-              <div className="col-span-2 sm:col-span-1 space-y-1.5">
-                <div className="font-black text-base text-[#0f2c56]">
-                  Pasbana<span className="text-[#ce2731]"> AI</span>
-                </div>
-                <p className="text-[11px] text-slate-600 leading-relaxed">
-                  Karir yang Baik Dimulai dari Pertemuan yang Pas Bana.
-                </p>
-              </div>
-
-              <div className="space-y-1.5">
-                <p className="font-bold text-[#0f2c56]">Fitur Utama</p>
-                <ul className="space-y-1 text-slate-600">
-                  <li><Link href="/evaluate" className="hover:text-[#ce2731] transition">Evaluasi CV 5D</Link></li>
-                  <li><Link href="/evaluate?tab=questionnaire" className="hover:text-[#ce2731] transition">Kuesioner ATS</Link></li>
-                  <li><Link href="/jobs" className="hover:text-[#ce2731] transition">Pencocokan Karir</Link></li>
-                </ul>
-              </div>
-
-              <div className="space-y-1.5">
-                <p className="font-bold text-[#0f2c56]">Platform</p>
-                <ul className="space-y-1 text-slate-600">
-                  <li><Link href="/dashboard" className="hover:text-[#ce2731] transition">Dashboard ATS</Link></li>
-                  <li><Link href="/about" className="hover:text-[#ce2731] transition">Tentang Kami</Link></li>
-                </ul>
-              </div>
-
-              <div className="space-y-1.5">
-                <p className="font-bold text-[#0f2c56]">Akun</p>
-                <ul className="space-y-1 text-slate-600">
-                  <li><Link href="/login" className="hover:text-[#ce2731] transition">Masuk</Link></li>
-                  <li><Link href="/register" className="hover:text-[#ce2731] transition">Daftar Akun</Link></li>
-                </ul>
-              </div>
+          {/* Bottom Minimal Footer (Matching Video 00:16) */}
+          <footer className="relative z-20 h-[60px] px-4 flex items-center justify-between text-xs">
+            <div className="flex items-center gap-2 font-black text-base text-[#0f2c56]">
+              <span className="w-6 h-6 rounded-full bg-[#ce2731] inline-flex items-center justify-center text-white text-[11px]">
+                P
+              </span>
+              <span>
+                Pasbana<span className="text-[#ce2731]"> AI</span>
+              </span>
             </div>
 
-            <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-400">
-              <span>© 2026 Pasbana AI. All rights reserved.</span>
-              <span>Standar Evaluasi Objektif &amp; Bebas Bias</span>
+            <div className="flex items-center gap-2.5">
+              <Link
+                href="/evaluate"
+                title="Evaluasi CV"
+                className="w-8 h-8 rounded-full bg-[#0f2c56] hover:bg-[#ce2731] text-white flex items-center justify-center transition"
+              >
+                <FileText className="w-3.5 h-3.5" />
+              </Link>
+              <Link
+                href="/jobs"
+                title="Lowongan Kerja"
+                className="w-8 h-8 rounded-full bg-[#0f2c56] hover:bg-[#ce2731] text-white flex items-center justify-center transition"
+              >
+                <Briefcase className="w-3.5 h-3.5" />
+              </Link>
+              <Link
+                href="/about"
+                title="Tentang Kami"
+                className="w-8 h-8 rounded-full bg-[#0f2c56] hover:bg-[#ce2731] text-white flex items-center justify-center transition"
+              >
+                <ShieldCheck className="w-3.5 h-3.5" />
+              </Link>
+              <Link
+                href="/login"
+                title="Masuk Akun"
+                className="w-8 h-8 rounded-full bg-[#0f2c56] hover:bg-[#ce2731] text-white flex items-center justify-center transition"
+              >
+                <UserCheck className="w-3.5 h-3.5" />
+              </Link>
             </div>
           </footer>
         </div>
