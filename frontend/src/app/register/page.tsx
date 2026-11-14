@@ -200,7 +200,7 @@ export default function RegisterPage() {
                     <CheckCircle2 className="w-3.5 h-3.5" />
                   </div>
                 )}
-                <div className="absolute -bottom-[1px] left-2 right-2 h-[2px] rounded-full bg-gradient-to-r from-[#2563EB] via-[#8EC5FF] to-[#2563EB] scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out origin-center pointer-events-none" />
+                <div className="absolute -bottom-[1px] left-2 right-2 h-[2px] rounded-full bg-[#ce2731] scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out origin-center pointer-events-none" />
               </div>
 
               {/* Email Input */}
@@ -223,7 +223,7 @@ export default function RegisterPage() {
                   placeholder="nama@email.com"
                   className="w-full text-xs sm:text-sm font-semibold text-slate-900 placeholder:text-slate-300 bg-transparent focus:outline-none"
                 />
-                <div className="absolute -bottom-[1px] left-2 right-2 h-[2px] rounded-full bg-gradient-to-r from-[#2563EB] via-[#8EC5FF] to-[#2563EB] scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out origin-center pointer-events-none" />
+                <div className="absolute -bottom-[1px] left-2 right-2 h-[2px] rounded-full bg-[#ce2731] scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out origin-center pointer-events-none" />
               </div>
 
               {/* Password & Confirm Password Grid */}
@@ -335,7 +335,7 @@ export default function RegisterPage() {
           <div
             className="relative w-full h-full rounded-[32px] xl:rounded-[40px] flex flex-col justify-center p-12 xl:p-16 text-[#fefefd] overflow-hidden shadow-2xl"
             style={{
-              background: "linear-gradient(145deg, #ce2731 0%, #b01e27 48%, #0f2c56 100%)",
+              backgroundColor: "#ce2731",
             }}
           >
             <div className="relative z-10 my-auto text-center space-y-6 py-8 max-w-lg mx-auto">

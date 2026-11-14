@@ -103,7 +103,7 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
         {/* Step Progress Bar */}
         <div className="w-full bg-blue-100/80 h-2.5 rounded-full overflow-hidden shadow-inner">
           <div
-            className="bg-gradient-to-r from-primary via-blue-600 to-secondary h-full transition-all duration-300 rounded-full"
+            className="bg-[#ce2731] h-full transition-all duration-300 rounded-full"
             style={{ width: `${(step / 5) * 100}%` }}
           />
         </div>

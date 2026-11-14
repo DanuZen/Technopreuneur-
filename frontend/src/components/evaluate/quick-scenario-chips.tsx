@@ -27,7 +27,7 @@ export function QuickScenarioChips({
           type="button"
           disabled={sedangMemproses}
           onClick={onPilihSampel}
-          className="inline-flex min-h-[36px] items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#0f2c56] to-[#163861] text-white text-xs font-bold shadow-xs hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all disabled:opacity-50"
+          className="inline-flex min-h-[36px] items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs font-bold shadow-xs hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all disabled:opacity-50"
           title="Uji langsung dengan berkas contoh resume standar ATS"
         >
           <FileCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" aria-hidden="true" />

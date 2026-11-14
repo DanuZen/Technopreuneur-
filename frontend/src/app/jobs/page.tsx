@@ -55,7 +55,7 @@ export default function JobsPage() {
       </header>
 
       {/* Search & Filter Bar */}
-      <form onSubmit={handleSearch} className="p-5 bg-gradient-to-br from-white via-blue-50/30 to-slate-50 rounded-2xl shadow-md space-y-3">
+      <form onSubmit={handleSearch} className="p-5 bg-white border border-slate-200/80 rounded-2xl shadow-sm space-y-3">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div className="relative">
             <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
@@ -154,7 +154,7 @@ function JobCard({ job }: { job: JobItem }) {
   const [saved, setSaved] = useState(false);
 
   return (
-    <article className="p-6 bg-gradient-to-br from-white via-blue-50/20 to-slate-50 rounded-2xl shadow-sm hover:shadow-lg transition space-y-4">
+    <article className="p-6 bg-white border border-slate-200/80 rounded-2xl shadow-sm hover:shadow-md transition space-y-4">
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
         <div className="space-y-1">
           <div className="flex items-center gap-2">

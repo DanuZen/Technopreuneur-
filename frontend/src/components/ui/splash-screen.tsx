@@ -56,14 +56,10 @@ export function SplashScreen({
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-gradient-to-br from-[#070e1d] via-[#0b1b38] to-[#07132a] text-white overflow-hidden transition-all ${
+      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0f2c56] text-white overflow-hidden transition-all ${
         fade ? "splash-fade-out" : "splash-fade-in"
       }`}
     >
-      {/* Soft Ambient Glow Halo */}
-      <div className="absolute inset-0 pointer-events-none opacity-50 bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.45)_0%,transparent_70%)] animate-pulse-glow" />
-
-
       {/* Main Splash Content */}
       <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-sm mx-auto space-y-6">
         {/* Floating Logo with Blue Glow */}
@@ -91,7 +87,7 @@ export function SplashScreen({
         <div className="w-full space-y-2.5 pt-2">
           <div className="w-48 sm:w-56 h-1.5 mx-auto bg-white/10 rounded-full overflow-hidden backdrop-blur-xs relative">
             <div
-              className="h-full bg-gradient-to-r from-blue-600 via-sky-400 to-white rounded-full transition-all duration-75 ease-out"
+              className="h-full bg-[#ce2731] rounded-full transition-all duration-75 ease-out"
               style={{ width: `${progress}%` }}
             />
           </div>

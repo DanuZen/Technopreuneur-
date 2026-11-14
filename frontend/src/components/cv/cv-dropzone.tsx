@@ -131,7 +131,7 @@ export function CVDropzone({ onAnalysisComplete, autoRedirect = true }: CVDropzo
         className={`relative p-5 sm:p-7 border-2 border-dashed rounded-2xl text-center transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
           dragActive
             ? "border-secondary bg-rose-50/70 scale-[1.01] shadow-lg shadow-secondary/15"
-            : "border-blue-300/40 bg-gradient-to-b from-[#f3f7fc] via-[#edf2f9] to-[#f4f7fb] hover:border-primary/50 hover:bg-blue-50/70 clay-well"
+            : "border-slate-300 bg-slate-50/80 hover:border-primary/50 hover:bg-slate-100"
         } ${status === "idle" ? "cursor-pointer group" : "cursor-default"}`}
       >
         <input
@@ -145,7 +145,7 @@ export function CVDropzone({ onAnalysisComplete, autoRedirect = true }: CVDropzo
 
         {status === "idle" && (
           <div className="space-y-2.5 sm:space-y-3">
-            <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto rounded-2xl bg-gradient-to-br from-[#0f2c56] via-[#163861] to-[#0f2c56] text-white flex items-center justify-center shadow-md shadow-primary/25 transition-transform duration-200 group-hover:scale-105">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto rounded-2xl bg-primary text-white flex items-center justify-center shadow-md shadow-primary/25 transition-transform duration-200 group-hover:scale-105">
               <UploadCloud className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
             </div>
             <div>

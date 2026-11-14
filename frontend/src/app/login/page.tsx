@@ -316,8 +316,8 @@ export default function LoginPage() {
                   </div>
                 )}
 
-                {/* Laser Accent Line */}
-                <div className="absolute -bottom-[1px] left-2 right-2 h-[2px] rounded-full bg-gradient-to-r from-[#2563EB] via-[#8EC5FF] to-[#2563EB] scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out origin-center pointer-events-none" />
+                {/* Accent Line */}
+                <div className="absolute -bottom-[1px] left-2 right-2 h-[2px] rounded-full bg-[#ce2731] scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out origin-center pointer-events-none" />
               </div>
 
               {/* Password Input Box */}
@@ -352,8 +352,8 @@ export default function LoginPage() {
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
 
-                {/* Laser Accent Line */}
-                <div className="absolute -bottom-[1px] left-2 right-2 h-[2px] rounded-full bg-gradient-to-r from-[#2563EB] via-[#8EC5FF] to-[#2563EB] scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out origin-center pointer-events-none" />
+                {/* Accent Line */}
+                <div className="absolute -bottom-[1px] left-2 right-2 h-[2px] rounded-full bg-[#ce2731] scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out origin-center pointer-events-none" />
               </div>
 
               {/* Submit Button */}
@@ -435,7 +435,7 @@ export default function LoginPage() {
           <div
             className="relative w-full h-full rounded-[32px] xl:rounded-[40px] flex flex-col justify-center p-12 xl:p-16 text-[#fefefd] overflow-hidden shadow-2xl"
             style={{
-              background: "linear-gradient(145deg, #0f2c56 0%, #163861 48%, #ce2731 100%)",
+              backgroundColor: "#0f2c56",
             }}
           >
             {/* Centered Graphic Showcase */}

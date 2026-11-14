@@ -213,7 +213,7 @@ function DashboardContent() {
   return (
     <main className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-10 py-8 space-y-8 animate-fade-in-up">
       {/* CANDIDATE HEADER HERO CARD */}
-      <section className="bg-gradient-to-br from-[#0f2c56] via-[#163861] to-[#0a1e3b] text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+      <section className="bg-[#0f2c56] text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
         {/* Subtle decorative glow */}
         <div
           className="absolute -right-20 -top-20 w-80 h-80 bg-white/5 rounded-full blur-3xl pointer-events-none"
@@ -380,7 +380,7 @@ function DashboardContent() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
               {/* Dimensi 1: Struktur ATS (Navy / Blue) */}
-              <div className="p-4 bg-gradient-to-br from-blue-50/90 via-indigo-50/40 to-white rounded-2xl shadow-sm space-y-2">
+              <div className="p-4 bg-slate-50 border border-slate-200/80 rounded-2xl shadow-xs space-y-2">
                 <span className="text-[11px] font-mono uppercase text-primary font-bold">
                   1. Struktur ATS
                 </span>
@@ -390,7 +390,7 @@ function DashboardContent() {
                   </span>
                   <span className="text-xs text-primary/70 font-semibold">/ 100</span>
                 </div>
-                <div className="w-full bg-blue-100 h-2 rounded-full overflow-hidden">
+                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
                   <div
                     className="bg-primary h-full rounded-full"
                     style={{ width: `${analysis.dimensions.structure}%` }}
@@ -402,7 +402,7 @@ function DashboardContent() {
               </div>
 
               {/* Dimensi 2: Kejelasan Bahasa (Sky / Cyan) */}
-              <div className="p-4 bg-gradient-to-br from-sky-50/90 via-cyan-50/40 to-white rounded-2xl shadow-sm space-y-2">
+              <div className="p-4 bg-slate-50 border border-slate-200/80 rounded-2xl shadow-xs space-y-2">
                 <span className="text-[11px] font-mono uppercase text-sky-800 font-bold">
                   2. Kejelasan Bahasa
                 </span>
@@ -412,7 +412,7 @@ function DashboardContent() {
                   </span>
                   <span className="text-xs text-sky-700 font-semibold">/ 100</span>
                 </div>
-                <div className="w-full bg-sky-100 h-2 rounded-full overflow-hidden">
+                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
                   <div
                     className="bg-sky-600 h-full rounded-full"
                     style={{ width: `${analysis.dimensions.clarity}%` }}
@@ -424,7 +424,7 @@ function DashboardContent() {
               </div>
 
               {/* Dimensi 3: Dampak Terukur (Emerald / Teal) */}
-              <div className="p-4 bg-gradient-to-br from-emerald-50/90 via-teal-50/40 to-white rounded-2xl shadow-sm space-y-2">
+              <div className="p-4 bg-slate-50 border border-slate-200/80 rounded-2xl shadow-xs space-y-2">
                 <span className="text-[11px] font-mono uppercase text-emerald-800 font-bold">
                   3. Dampak Terukur
                 </span>
@@ -434,7 +434,7 @@ function DashboardContent() {
                   </span>
                   <span className="text-xs text-emerald-700 font-semibold">/ 100</span>
                 </div>
-                <div className="w-full bg-emerald-100 h-2 rounded-full overflow-hidden">
+                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
                   <div
                     className="bg-emerald-600 h-full rounded-full"
                     style={{ width: `${analysis.dimensions.measurableImpact}%` }}
@@ -446,7 +446,7 @@ function DashboardContent() {
               </div>
 
               {/* Dimensi 4: Relevansi Skill (Crimson / Rose) */}
-              <div className="p-4 bg-gradient-to-br from-rose-50/90 via-red-50/40 to-white rounded-2xl shadow-sm space-y-2">
+              <div className="p-4 bg-slate-50 border border-slate-200/80 rounded-2xl shadow-xs space-y-2">
                 <span className="text-[11px] font-mono uppercase text-secondary font-bold">
                   4. Relevansi Skill
                 </span>
@@ -456,7 +456,7 @@ function DashboardContent() {
                   </span>
                   <span className="text-xs text-secondary/70 font-semibold">/ 100</span>
                 </div>
-                <div className="w-full bg-rose-100 h-2 rounded-full overflow-hidden">
+                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
                   <div
                     className="bg-secondary h-full rounded-full"
                     style={{ width: `${analysis.dimensions.skillRelevance}%` }}
@@ -468,7 +468,7 @@ function DashboardContent() {
               </div>
 
               {/* Dimensi 5: Kelengkapan Profil (Amber / Orange) */}
-              <div className="p-4 bg-gradient-to-br from-amber-50/90 via-yellow-50/40 to-white rounded-2xl shadow-sm space-y-2">
+              <div className="p-4 bg-slate-50 border border-slate-200/80 rounded-2xl shadow-xs space-y-2">
                 <span className="text-[11px] font-mono uppercase text-amber-800 font-bold">
                   5. Kelengkapan Profil
                 </span>
@@ -478,7 +478,7 @@ function DashboardContent() {
                   </span>
                   <span className="text-xs text-amber-700 font-semibold">/ 100</span>
                 </div>
-                <div className="w-full bg-amber-100 h-2 rounded-full overflow-hidden">
+                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
                   <div
                     className="bg-amber-600 h-full rounded-full"
                     style={{ width: `${analysis.dimensions.completeness}%` }}
@@ -494,7 +494,7 @@ function DashboardContent() {
           {/* STRENGTHS & RECOMMENDATIONS TWO-COLUMN CARD */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Strengths (Emerald Tinted) */}
-            <div className="p-6 bg-gradient-to-br from-emerald-50/90 via-teal-50/40 to-white rounded-3xl shadow-sm space-y-4">
+            <div className="p-6 bg-emerald-50/40 border border-emerald-100 rounded-3xl shadow-xs space-y-4">
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-600" aria-hidden="true" />
                 <h3 className="text-sm font-bold text-emerald-950">
@@ -513,7 +513,7 @@ function DashboardContent() {
             </div>
 
             {/* Recommendations for Improvement (Amber Tinted) */}
-            <div className="p-6 bg-gradient-to-br from-amber-50/90 via-orange-50/40 to-white rounded-3xl shadow-sm space-y-4">
+            <div className="p-6 bg-amber-50/40 border border-amber-100 rounded-3xl shadow-xs space-y-4">
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-amber-600" aria-hidden="true" />
                 <h3 className="text-sm font-bold text-amber-950">

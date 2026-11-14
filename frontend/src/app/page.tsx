@@ -245,37 +245,25 @@ export default function HomePage() {
                 : "top-[48%] sm:top-[44%] lg:top-0 bottom-0 right-0 left-0 lg:left-[calc(50%+10px)] xl:left-[calc(50%+16px)] w-full lg:w-[calc(50%-10px)] xl:w-[calc(50%-16px)] h-[52%] sm:h-[56%] lg:h-full border-white/10"
             }`}
           >
-            {/* Morphing Background Layer 1: Slide 0 Deep Navy Gradient */}
+            {/* Morphing Background Layer 1: Slide 0 Deep Navy Solid */}
             <div
               className={`absolute inset-0 transition-opacity duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                 activeSlide === 0 ? "opacity-100" : "opacity-0 pointer-events-none"
               }`}
               style={{
-                background:
-                  "linear-gradient(155deg, #07172e 0%, #0e2647 50%, #153866 100%)",
+                backgroundColor: "#0f2c56",
               }}
-            >
-              <div
-                className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#ce2731]/20 blur-3xl pointer-events-none"
-                aria-hidden="true"
-              />
-              <div
-                className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#275992]/30 blur-3xl pointer-events-none"
-                aria-hidden="true"
-              />
-            </div>
+            />
 
-            {/* Morphing Background Layer 2: Slide 1 Crimson Second Palette Gradient */}
+            {/* Morphing Background Layer 2: Slide 1 Crimson Second Palette Solid */}
             <div
               className={`absolute inset-0 transition-opacity duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                 activeSlide === 1 ? "opacity-100" : "opacity-0 pointer-events-none"
               }`}
               style={{
-                background:
-                  "linear-gradient(145deg, #ce2731 0%, #b01e27 48%, #0f2c56 100%)",
+                backgroundColor: "#ce2731",
               }}
-            >
-            </div>
+            />
           </div>
 
           {/* 12-COLUMN CONTENT GRID IN FRONT OF MORPHING CARD */}
@@ -432,10 +420,6 @@ export default function HomePage() {
                     : "opacity-0 scale-95 pointer-events-none"
                 }`}
               >
-                <div
-                  className="absolute w-80 sm:w-96 lg:w-[480px] h-80 sm:h-96 lg:h-[480px] rounded-full bg-radial from-[#ce2731]/25 via-[#275992]/20 to-transparent blur-3xl pointer-events-none"
-                  aria-hidden="true"
-                />
                 {/* Floating Interactive Product Card */}
                 <div className="relative z-20 w-full max-w-md rounded-3xl bg-[#0e2647]/85 backdrop-blur-xl border border-white/15 p-5 sm:p-6 shadow-2xl text-white space-y-4">
                   {/* Card Header with Active Pulse */}
@@ -682,14 +666,9 @@ export default function HomePage() {
           <div
             className={`lg:col-span-7 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-8 text-[#fefefd] flex flex-col justify-between relative overflow-hidden shadow-2xl border border-white/10 origin-left ${getChildAnimClass(2, "left", "delay-100")}`}
             style={{
-              background: "linear-gradient(155deg, #ce2731 0%, #b01e27 52%, #0f2c56 100%)",
+              backgroundColor: "#ce2731",
             }}
           >
-            {/* Geometric Grid Pattern & Glow */}
-            <div
-              className="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-[#0f2c56]/40 blur-3xl pointer-events-none"
-              aria-hidden="true"
-            />
 
             {/* Top Bar inside Card */}
             <div className="flex items-center justify-between relative z-10">
@@ -888,15 +867,9 @@ export default function HomePage() {
               </div>
 
               <svg viewBox="0 0 460 110" className="w-full h-28 sm:h-36 my-auto">
-                <defs>
-                  <linearGradient id="crimsonAreaGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#ce2731" stopOpacity="0.28" />
-                    <stop offset="100%" stopColor="#ce2731" stopOpacity="0.0" />
-                  </linearGradient>
-                </defs>
                 <path
                   d="M0 92 Q80 80, 150 58 T290 36 T390 18 T450 10 L450 110 L0 110 Z"
-                  fill="url(#crimsonAreaGrad)"
+                  fill="rgba(206,39,49,0.08)"
                 />
                 <path
                   d="M0 92 Q80 80, 150 58 T290 36 T390 18 T450 10"
@@ -927,7 +900,7 @@ export default function HomePage() {
             <div
               className={`lg:col-span-5 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-7 text-[#fefefd] flex flex-col justify-between relative overflow-hidden shadow-xl origin-bottom-right border border-white/10 ${getChildAnimClass(3, "right", "delay-200")}`}
               style={{
-                background: "linear-gradient(150deg, #ce2731 0%, #b01e27 55%, #0f2c56 100%)",
+                backgroundColor: "#ce2731",
               }}
             >
               <div className="space-y-2 relative z-20">
@@ -1035,7 +1008,7 @@ export default function HomePage() {
           <div
             className={`lg:col-span-6 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-8 text-[#fefefd] flex flex-col justify-between relative overflow-hidden shadow-2xl border border-white/10 origin-right ${getChildAnimClass(4, "right", "delay-150")}`}
             style={{
-              background: "linear-gradient(145deg, #0f2c56 0%, #163861 52%, #ce2731 100%)",
+              backgroundColor: "#0f2c56",
             }}
           >
             <div className="flex items-center justify-between relative z-20">
@@ -1216,7 +1189,7 @@ export default function HomePage() {
           <div
             className={`flex-1 min-h-0 w-full rounded-[26px] sm:rounded-[34px] px-6 sm:px-12 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center relative overflow-hidden shadow-2xl border border-white/10 origin-center ${getChildAnimClass(6, "down", "delay-75")}`}
             style={{
-              background: "linear-gradient(135deg, #ce2731 0%, #b01e27 52%, #0f2c56 100%)",
+              backgroundColor: "#ce2731",
             }}
           >
 
