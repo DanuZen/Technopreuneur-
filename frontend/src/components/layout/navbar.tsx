@@ -2,14 +2,25 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { Menu, X, User as UserIcon, LogOut } from "lucide-react";
+import { useEffect, useState, useRef } from "react";
+import {
+  Menu,
+  X,
+  User as UserIcon,
+  LogOut,
+  ChevronDown,
+  LayoutDashboard,
+  FileCheck,
+  Briefcase,
+} from "lucide-react";
 import { User } from "@/types";
 import { api } from "@/lib/api";
 
 export function Navbar({ floating = false }: { floating?: boolean }) {
   const [user, setUser] = useState<User | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("cm_user");
@@ -20,6 +31,19 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
         // ignore parse error
       }
     }
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setUserDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleLogout = () => {
@@ -75,7 +99,7 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
             <Link
               href="/evaluate"
               className="flex items-center gap-1.5 text-xs font-medium text-slate-200 hover:text-white hover:bg-white/10 px-3 py-1.5 rounded-full transition"
-              title="Evaluasi CV &amp; Skor ATS"
+              title="Evaluasi CV & Skor ATS"
             >
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-beacon shrink-0" aria-hidden="true" />
               <span>Skor ATS</span>
@@ -103,24 +127,87 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
           </nav>
 
           {/* Desktop Actions */}
-          <div className="hidden md:flex items-center gap-1.5 shrink-0">
+          <div className="hidden md:flex items-center gap-1.5 shrink-0 relative" ref={dropdownRef}>
             {user ? (
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-2 text-xs bg-white/10 text-white px-3 py-1.5 rounded-full">
-                  <UserIcon className="w-3.5 h-3.5 text-slate-300" />
-                  <span className="font-medium max-w-[110px] truncate">{user.name}</span>
-                  <span className="uppercase text-[9px] bg-secondary text-white px-1.5 py-0.5 rounded-full font-mono font-semibold">
-                    {user.role}
-                  </span>
-                </div>
+              <div className="relative">
+                {/* Trigger Pill Button with Chevron */}
                 <button
                   type="button"
-                  onClick={handleLogout}
-                  className="p-2 text-slate-300 hover:text-rose-400 hover:bg-white/10 rounded-full transition cursor-pointer"
-                  title="Keluar"
+                  onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                  className="flex items-center gap-2 text-xs bg-white/10 hover:bg-white/15 text-white px-3.5 py-1.5 rounded-full border border-white/10 transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                  aria-expanded={userDropdownOpen}
                 >
-                  <LogOut className="w-4 h-4" />
+                  <UserIcon className="w-3.5 h-3.5 text-slate-300" />
+                  <span className="font-semibold max-w-[120px] truncate">{user.name}</span>
+                  <span className="uppercase text-[9px] bg-[#ce2731] text-white px-1.5 py-0.5 rounded-full font-mono font-bold">
+                    {user.role}
+                  </span>
+                  <ChevronDown
+                    className={`w-3.5 h-3.5 text-slate-300 transition-transform duration-200 ${
+                      userDropdownOpen ? "rotate-180" : ""
+                    }`}
+                  />
                 </button>
+
+                {/* Floating User Dropdown Menu */}
+                {userDropdownOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-64 rounded-2xl bg-[#0e2647]/95 backdrop-blur-2xl border border-white/15 text-white shadow-2xl p-2 z-50">
+                    {/* User Profile Header */}
+                    <div className="px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 mb-1.5">
+                      <div className="text-xs font-bold text-white truncate">{user.name}</div>
+                      <div className="text-[11px] text-slate-300 truncate mt-0.5">
+                        {user.email || "Akun Terverifikasi"}
+                      </div>
+                      <span className="inline-block mt-1.5 uppercase text-[9px] bg-[#ce2731] text-white px-2 py-0.5 rounded-full font-mono font-bold">
+                        Role: {user.role}
+                      </span>
+                    </div>
+
+                    {/* Navigation Links */}
+                    <div className="space-y-0.5">
+                      <Link
+                        href="/dashboard"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-200 hover:text-white hover:bg-white/10 transition"
+                      >
+                        <LayoutDashboard className="w-4 h-4 text-[#faa9ab]" />
+                        <span>Dashboard ATS</span>
+                      </Link>
+                      <Link
+                        href="/evaluate"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-200 hover:text-white hover:bg-white/10 transition"
+                      >
+                        <FileCheck className="w-4 h-4 text-emerald-400" />
+                        <span>Evaluasi CV 5D</span>
+                      </Link>
+                      <Link
+                        href="/jobs"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-200 hover:text-white hover:bg-white/10 transition"
+                      >
+                        <Briefcase className="w-4 h-4 text-sky-400" />
+                        <span>Pencocokan Lowongan</span>
+                      </Link>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="my-1.5 border-t border-white/10" />
+
+                    {/* Logout Option */}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setUserDropdownOpen(false);
+                        handleLogout();
+                      }}
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-rose-300 hover:text-rose-100 hover:bg-rose-500/20 transition cursor-pointer"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      <span>Keluar dari Akun</span>
+                    </button>
+                  </div>
+                )}
               </div>
             ) : (
               <>
@@ -132,7 +219,7 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
                 </Link>
                 <Link
                   href="/register"
-                  className="text-xs font-semibold text-white bg-secondary hover:bg-secondary-700 px-4 py-1.5 rounded-full shadow-sm transition flex items-center justify-center"
+                  className="text-xs font-semibold text-white bg-[#ce2731] hover:bg-[#b01e27] px-4 py-1.5 rounded-full shadow-sm transition flex items-center justify-center font-bold"
                 >
                   Daftar Akun
                 </Link>
@@ -218,7 +305,7 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
                 <Link
                   href="/register"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-center text-sm font-medium text-white bg-secondary hover:bg-secondary-700 py-2 rounded-full shadow"
+                  className="text-center text-sm font-medium text-white bg-[#ce2731] hover:bg-[#b01e27] py-2 rounded-full shadow font-bold"
                 >
                   Daftar Akun
                 </Link>
