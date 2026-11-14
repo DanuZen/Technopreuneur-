@@ -51,10 +51,10 @@ export function AppShell({ children }: AppShellProps) {
     return <main className="min-h-dvh w-full bg-white text-primary">{children}</main>;
   }
 
-  // Halaman beranda (/): Terkunci 1 layar penuh, belakang pill Navbar transparan mengikuti background utama (#f4f9fe), dan card di bawahnya tidak naik menabrak navbar
+  // Halaman beranda (/): Terkunci 1 layar penuh, belakang pill Navbar transparan mengikuti background utama (#f0f4f9), dan card di bawahnya tidak naik menabrak navbar
   if (pathname === "/") {
     return (
-      <div className="h-dvh w-full overflow-hidden flex flex-col bg-[#f4f9fe] text-primary select-none">
+      <div className="h-dvh w-full overflow-hidden flex flex-col bg-[#f0f4f9] text-primary select-none">
         <Navbar />
         <main className="flex-1 min-h-0 w-full overflow-hidden relative">{children}</main>
       </div>
