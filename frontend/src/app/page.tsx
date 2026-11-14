@@ -9,13 +9,12 @@ import {
   Briefcase,
   Target,
   Shield,
+  ShieldCheck,
+  BarChart3,
+  Layers,
 } from "lucide-react";
-import { ProductMockup } from "@/components/landing/product-mockup";
-import { PrinciplesGrid } from "@/components/landing/principles-grid";
-import { FeaturesBento } from "@/components/landing/features-bento";
-import { DarkCtaBanner } from "@/components/landing/dark-cta-banner";
 
-interface WorkflowStageData {
+interface StageTabItem {
   stepIndex: number;
   tabLabel: string;
   tabSub: string;
@@ -25,7 +24,8 @@ interface WorkflowStageData {
   ctaHref: string;
 }
 
-const WORKFLOW_TABS: WorkflowStageData[] = [
+// SECTION 2 (Slides 1..4): 4 Tahap Alur Kerja Utama
+const WORKFLOW_TABS: StageTabItem[] = [
   {
     stepIndex: 1,
     tabLabel: "Cek Format ATS",
@@ -68,53 +68,52 @@ const WORKFLOW_TABS: WorkflowStageData[] = [
   },
 ];
 
-function ScrollRevealSection({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const [visible, setVisible] = useState(false);
+// SECTION 3 (Slides 5..7): 3 Keunggulan & Simulasi Antarmuka
+const BENEFIT_TABS: StageTabItem[] = [
+  {
+    stepIndex: 5,
+    tabLabel: "Simulasi Skor",
+    tabSub: "Standar HRD",
+    title: "Rincian Nilai yang Transparan",
+    description:
+      "Setiap bagian resume diukur dengan bobot yang jelas: Struktur & Keterbacaan ATS (25%), Dampak Terukur & Kalimat Aktif (30%), serta Kesesuaian Keahlian (45%).",
+    ctaText: "Simulasikan CV Saya",
+    ctaHref: "/evaluate",
+  },
+  {
+    stepIndex: 6,
+    tabLabel: "Peluang Loker",
+    tabSub: "Siap Melamar",
+    title: "Dari Evaluasi Langsung Melamar",
+    description:
+      "Tidak berhenti di skor CV. Begitu resume Anda siap, sistem langsung memetakan lowongan kerja aktif yang paling cocok dengan profil dan keahlian Anda.",
+    ctaText: "Lihat Lowongan Aktif",
+    ctaHref: "/jobs",
+  },
+  {
+    stepIndex: 7,
+    tabLabel: "100% Gratis",
+    tabSub: "Tanpa Langganan",
+    title: "Akses Terbuka untuk Talenta Muda",
+    description:
+      "Seluruh mahasiswa, fresh graduate, dan pencari kerja dapat mengevaluasi CV, membuat resume lewat kuesioner, dan mencari lowongan tanpa biaya sepeser pun.",
+    ctaText: "Buat CV dari Kuesioner",
+    ctaHref: "/evaluate?tab=questionnaire",
+  },
+];
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-        }
-      },
-      { threshold: 0.18 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div
-      ref={ref}
-      className={`min-h-[calc(100dvh-64px)] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-        visible
-          ? "opacity-100 translate-y-0 blur-0"
-          : "opacity-0 translate-y-12 blur-xs"
-      } ${className}`}
-    >
-      {children}
-    </div>
-  );
-}
+// Total 9 slides (0..8) mapped along native vertical scroll:
+// 0     = Full-Screen Sky Hero + Rising Board ATS
+// 1..4  = Shrunk 32% Sky Banner ("Otomasi evaluasi berkas...") + 2-Col Workflow Stage (Tabs 1..4)
+// 5..7  = Shrunk 32% Sky Banner ("Mengapa ribuan talenta muda...") + 2-Col Benefits & Simulation Stage (Tabs 5..7)
+// 8     = Full-Screen Sky Closing CTA + Rolling Hill + Integrated Footer Pill
+const TOTAL_SLIDES = 9;
 
 export default function Home() {
-  // 0 = Full-Screen Hero + Rising Board ATS
-  // 1..4 = Shrunk 33% Sky Banner + 2-Column Interactive Workflow Tabs 1..4
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [heroBoardTab, setHeroBoardTab] = useState<"ats" | "match" | "gap">("ats");
   const stickyTrackRef = useRef<HTMLDivElement | null>(null);
 
-  // Sync sticky stage step (0..4) with native browser scroll (works with touchpad, wheel, scrollbar, keyboard)
   useEffect(() => {
     const handleScroll = () => {
       const track = stickyTrackRef.current;
@@ -126,17 +125,11 @@ export default function Home() {
       const scrolled = Math.max(0, Math.min(scrollableDistance, -rect.top));
       const progress = scrolled / scrollableDistance; // 0.0 -> 1.0
 
-      if (progress < 0.18) {
-        setCurrentSlide(0);
-      } else if (progress < 0.39) {
-        setCurrentSlide(1);
-      } else if (progress < 0.60) {
-        setCurrentSlide(2);
-      } else if (progress < 0.81) {
-        setCurrentSlide(3);
-      } else {
-        setCurrentSlide(4);
-      }
+      const rawIndex = Math.min(
+        TOTAL_SLIDES - 1,
+        Math.floor(progress * TOTAL_SLIDES)
+      );
+      setCurrentSlide(rawIndex);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -144,36 +137,44 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const jumpToWorkflowTab = (stepIndex: number) => {
-    setCurrentSlide(stepIndex);
+  const jumpToSlide = (targetSlide: number) => {
+    setCurrentSlide(targetSlide);
     const track = stickyTrackRef.current;
     if (!track) return;
     const scrollableDistance = track.offsetHeight - window.innerHeight;
-    const targetProgress = [0, 0.24, 0.45, 0.66, 0.88][stepIndex] ?? 0.24;
-    const trackTop = track.offsetTop;
+    const targetProgress = (targetSlide + 0.35) / TOTAL_SLIDES;
     window.scrollTo({
-      top: trackTop + scrollableDistance * targetProgress,
+      top: track.offsetTop + scrollableDistance * targetProgress,
       behavior: "smooth",
     });
   };
 
-  const isHeroStage = currentSlide === 0;
-  const activeWorkflow =
-    WORKFLOW_TABS[(currentSlide >= 1 && currentSlide <= 4 ? currentSlide : 1) - 1];
+  const isFullSkyStage = currentSlide === 0 || currentSlide === 8;
+  const isWorkflowSection = currentSlide >= 1 && currentSlide <= 4;
+  const isBenefitSection = currentSlide >= 5 && currentSlide <= 7;
+
+  const activeStageItem = isWorkflowSection
+    ? WORKFLOW_TABS[currentSlide - 1]
+    : isBenefitSection
+    ? BENEFIT_TABS[currentSlide - 5]
+    : WORKFLOW_TABS[0];
 
   return (
     <div className="bg-[#fefefd] text-primary">
       {/* =====================================================================
-          SECTION 1 & 2 (STICKY SCROLL-CHOREOGRAPHED DRIBBBLE STAGE)
-          Scroll 0%: Full-screen Sky Container + Hero + Rising Board ATS
-          Scroll 20%-100%: Sky Container shrinks to 33% + 2-Column 4-Step Workflow
+          UNIFIED STICKY DRIBBBLE SCROLL TRACK (Covers All Sections 0..8)
+          Works 100% with laptop touchpad, mouse wheel, scrollbar, and keyboard
           ===================================================================== */}
-      <div ref={stickyTrackRef} className="relative h-[420vh]">
+      <div ref={stickyTrackRef} className="relative h-[760vh]">
         <div className="sticky top-[60px] h-[calc(100dvh-60px)] w-full px-2.5 sm:px-4 pb-2.5 sm:pb-4 pt-1 flex flex-col overflow-hidden select-none">
-          {/* TOP MORPHING SKY CONTAINER (100% height on Slide 0, 33% on Slides 1..4) */}
+          {/* =================================================================
+              TOP MORPHING SKY CONTAINER
+              - 100% height on Slide 0 (Hero) & Slide 8 (Closing CTA)
+              - 32% height on Slides 1..4 (Workflow) & Slides 5..7 (Benefits)
+              ================================================================= */}
           <div
             className={`relative w-full rounded-[26px] sm:rounded-[34px] overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] shrink-0 ${
-              isHeroStage ? "h-full" : "h-[30%] sm:h-[33%]"
+              isFullSkyStage ? "h-full" : "h-[30%] sm:h-[32%]"
             }`}
             style={{
               background:
@@ -190,10 +191,12 @@ export default function Home() {
               aria-hidden="true"
             />
 
-            {/* SLIDE 0 CONTENT: HERO HEADLINE + RISING BOARD ATS MOCKUP */}
+            {/* ---------------------------------------------------------------
+                SLIDE 0: HERO HEADLINE + RISING BOARD ATS MOCKUP
+                --------------------------------------------------------------- */}
             <div
               className={`absolute inset-0 flex flex-col justify-between items-center text-center px-4 pt-6 sm:pt-10 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                isHeroStage
+                currentSlide === 0
                   ? "opacity-100 translate-y-0 blur-0 pointer-events-auto"
                   : "opacity-0 -translate-y-12 blur-md pointer-events-none"
               }`}
@@ -234,12 +237,11 @@ export default function Home() {
               {/* Bottom Rising White Dashboard Card (Matches Dribbble 00:01-00:02 Board CRM) */}
               <div
                 className={`relative z-10 w-full max-w-4xl mx-auto bg-white/95 backdrop-blur-md rounded-t-[28px] sm:rounded-t-[36px] shadow-2xl p-4 sm:p-7 pb-10 sm:pb-14 text-left transition-all duration-700 delay-75 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                  isHeroStage
+                  currentSlide === 0
                     ? "translate-y-0 opacity-100 scale-100"
                     : "translate-y-28 opacity-0 scale-95"
                 }`}
               >
-                {/* Card Header: Candidate Profile Left, Board Title Right */}
                 <div className="flex items-center justify-between pb-4">
                   <div className="flex items-center gap-3">
                     <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#0f2c56] to-[#1d4576] text-white font-bold text-xs flex items-center justify-center shadow-xs">
@@ -287,7 +289,6 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Card Body: Left Metrics & Right Live Feed */}
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
                   <div className="md:col-span-5 space-y-3">
                     <p className="text-[10px] font-mono uppercase tracking-wider text-slate-400">
@@ -412,10 +413,12 @@ export default function Home() {
               </div>
             </div>
 
-            {/* SLIDES 1..4 COMPACT SKY BANNER HEADLINE (Matches Frame 00:04-00:08) */}
+            {/* ---------------------------------------------------------------
+                SLIDES 1..4 COMPACT SKY BANNER HEADLINE (Workflow Section)
+                --------------------------------------------------------------- */}
             <div
               className={`absolute inset-0 flex flex-col items-center justify-center text-center px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                !isHeroStage
+                isWorkflowSection
                   ? "opacity-100 translate-y-0 blur-0 pointer-events-auto"
                   : "opacity-0 translate-y-8 blur-md pointer-events-none"
               }`}
@@ -425,74 +428,193 @@ export default function Home() {
                 temukan karir dalam hitungan detik
               </h2>
             </div>
+
+            {/* ---------------------------------------------------------------
+                SLIDES 5..7 COMPACT SKY BANNER HEADLINE (Benefits & Simulation)
+                --------------------------------------------------------------- */}
+            <div
+              className={`absolute inset-0 flex flex-col items-center justify-center text-center px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                isBenefitSection
+                  ? "opacity-100 translate-y-0 blur-0 pointer-events-auto"
+                  : "opacity-0 translate-y-8 blur-md pointer-events-none"
+              }`}
+            >
+              <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-extrabold tracking-tight text-primary max-w-2xl leading-[1.12]">
+                Mengapa ribuan talenta muda <br />
+                memilih Pasbana AI?
+              </h2>
+            </div>
+
+            {/* ---------------------------------------------------------------
+                SLIDE 8: FULL-SCREEN CLOSING CTA + ROLLING HILL + FOOTER PILL
+                --------------------------------------------------------------- */}
+            <div
+              className={`absolute inset-0 flex flex-col justify-between items-center text-center px-4 py-8 sm:py-10 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                currentSlide === 8
+                  ? "opacity-100 translate-y-0 blur-0 pointer-events-auto"
+                  : "opacity-0 translate-y-12 blur-md pointer-events-none"
+              }`}
+            >
+              <div className="my-auto max-w-2xl mx-auto space-y-5 z-20">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/85 backdrop-blur-md shadow-xs text-xs font-semibold text-primary">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600" aria-hidden="true" />
+                  <span>100% Gratis • Tanpa Biaya Langganan</span>
+                </div>
+
+                <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-primary leading-[1.1]">
+                  Siap Mengetahui Kualitas <br className="hidden sm:inline" />
+                  <span className="text-[#ce2731]">CV Anda Sekarang?</span>
+                </h2>
+
+                <p className="text-xs sm:text-base text-slate-700 leading-relaxed max-w-xl mx-auto">
+                  Dapatkan skor ATS objektif 5 dimensi, perbaikan kata kerja aktif, serta rekomendasi lowongan kerja yang pas bana.
+                </p>
+
+                <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <Link
+                    href="/evaluate"
+                    className="w-full sm:w-auto px-8 py-3.5 bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold rounded-full shadow-xl transition-all hover:-translate-y-0.5"
+                  >
+                    Mulai Evaluasi CV Gratis
+                  </Link>
+                  <Link
+                    href="/jobs"
+                    className="w-full sm:w-auto px-7 py-3.5 bg-white/90 hover:bg-white text-primary text-xs sm:text-sm font-semibold rounded-full shadow-md transition-all"
+                  >
+                    Eksplorasi Lowongan Kerja
+                  </Link>
+                </div>
+              </div>
+
+              {/* Integrated Compact Footer Pill inside Final Slide */}
+              <footer className="w-full max-w-5xl mx-auto bg-white/90 backdrop-blur-md rounded-full px-6 py-3 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600 z-20">
+                <div className="flex items-center gap-2 font-bold text-primary">
+                  <span>Pasbana<span className="text-[#ce2731]"> AI</span></span>
+                  <span className="text-slate-300">|</span>
+                  <span className="font-normal text-[11px] text-slate-500">
+                    Karir yang Baik Dimulai dari Pertemuan yang Pas Bana
+                  </span>
+                </div>
+                <div className="flex flex-wrap items-center justify-center gap-4 text-[11px] font-semibold text-slate-600">
+                  <Link href="/evaluate" className="hover:text-primary transition">Evaluasi CV</Link>
+                  <Link href="/evaluate?tab=questionnaire" className="hover:text-primary transition">Kuesioner</Link>
+                  <Link href="/jobs" className="hover:text-primary transition">Lowongan</Link>
+                  <Link href="/about" className="hover:text-primary transition">Tentang Kami</Link>
+                  <Link href="/login" className="hover:text-primary transition">Masuk</Link>
+                </div>
+              </footer>
+            </div>
           </div>
 
-          {/* BOTTOM SPLIT INTERACTIVE STAGE (Visible on Slides 1..4, 67% height) */}
+          {/* =================================================================
+              BOTTOM 2-COLUMN DRIBBBLE STAGE (Visible on Slides 1..7, 68% height)
+              - Slides 1..4: 4-Tab Workflow Stage
+              - Slides 5..7: 3-Tab Benefits & Interactive Simulation Stage
+              ================================================================= */}
           <div
             className={`w-full transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] overflow-hidden ${
-              isHeroStage
+              isFullSkyStage
                 ? "h-0 opacity-0 pointer-events-none mt-0"
                 : "flex-1 opacity-100 pointer-events-auto mt-3 sm:mt-4"
             }`}
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 h-full">
-              {/* LEFT COLUMN: 4 Horizontal Tabs at Top + Animated Title/Desc/CTA at Bottom */}
+              {/* LEFT COLUMN: Horizontal Step Tabs at Top + Animated Title/Desc/CTA at Bottom */}
               <div className="lg:col-span-6 flex flex-col justify-between p-3 sm:p-6 h-full">
-                {/* Top 4-Tab Row with Top Progress Indicator Lines */}
-                <div className="grid grid-cols-4 gap-2 sm:gap-4">
-                  {WORKFLOW_TABS.map((tab) => {
-                    const isActive = currentSlide === tab.stepIndex;
-                    const isPassed = currentSlide > tab.stepIndex;
-                    return (
-                      <button
-                        key={tab.stepIndex}
-                        type="button"
-                        onClick={() => jumpToWorkflowTab(tab.stepIndex)}
-                        className="text-left group cursor-pointer focus-visible:outline-none"
-                      >
-                        <div className="h-[2px] w-full bg-slate-200 rounded-full overflow-hidden mb-2">
-                          <div
-                            className={`h-full transition-all duration-500 ${
-                              isActive
-                                ? "w-full bg-primary"
-                                : isPassed
-                                ? "w-full bg-primary/40"
-                                : "w-0 bg-primary"
-                            }`}
-                          />
-                        </div>
-                        <p
-                          className={`text-xs sm:text-sm font-bold transition-colors truncate ${
-                            isActive ? "text-primary" : "text-slate-400 group-hover:text-slate-600"
-                          }`}
+                {/* Top Tab Row with Progress Indicator Lines */}
+                {isWorkflowSection ? (
+                  <div className="grid grid-cols-4 gap-2 sm:gap-4">
+                    {WORKFLOW_TABS.map((tab) => {
+                      const isActive = currentSlide === tab.stepIndex;
+                      const isPassed = currentSlide > tab.stepIndex;
+                      return (
+                        <button
+                          key={tab.stepIndex}
+                          type="button"
+                          onClick={() => jumpToSlide(tab.stepIndex)}
+                          className="text-left group cursor-pointer focus-visible:outline-none"
                         >
-                          {tab.tabLabel}
-                        </p>
-                        <p className="text-[10px] text-slate-400 truncate hidden sm:block">
-                          {tab.tabSub}
-                        </p>
-                      </button>
-                    );
-                  })}
-                </div>
+                          <div className="h-[2px] w-full bg-slate-200 rounded-full overflow-hidden mb-2">
+                            <div
+                              className={`h-full transition-all duration-500 ${
+                                isActive
+                                  ? "w-full bg-primary"
+                                  : isPassed
+                                  ? "w-full bg-primary/40"
+                                  : "w-0 bg-primary"
+                              }`}
+                            />
+                          </div>
+                          <p
+                            className={`text-xs sm:text-sm font-bold transition-colors truncate ${
+                              isActive ? "text-primary" : "text-slate-400 group-hover:text-slate-600"
+                            }`}
+                          >
+                            {tab.tabLabel}
+                          </p>
+                          <p className="text-[10px] text-slate-400 truncate hidden sm:block">
+                            {tab.tabSub}
+                          </p>
+                        </button>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-3 gap-3 sm:gap-5">
+                    {BENEFIT_TABS.map((tab) => {
+                      const isActive = currentSlide === tab.stepIndex;
+                      const isPassed = currentSlide > tab.stepIndex;
+                      return (
+                        <button
+                          key={tab.stepIndex}
+                          type="button"
+                          onClick={() => jumpToSlide(tab.stepIndex)}
+                          className="text-left group cursor-pointer focus-visible:outline-none"
+                        >
+                          <div className="h-[2px] w-full bg-slate-200 rounded-full overflow-hidden mb-2">
+                            <div
+                              className={`h-full transition-all duration-500 ${
+                                isActive
+                                  ? "w-full bg-secondary"
+                                  : isPassed
+                                  ? "w-full bg-secondary/40"
+                                  : "w-0 bg-secondary"
+                              }`}
+                            />
+                          </div>
+                          <p
+                            className={`text-xs sm:text-sm font-bold transition-colors truncate ${
+                              isActive ? "text-primary" : "text-slate-400 group-hover:text-slate-600"
+                            }`}
+                          >
+                            {tab.tabLabel}
+                          </p>
+                          <p className="text-[10px] text-slate-400 truncate hidden sm:block">
+                            {tab.tabSub}
+                          </p>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
 
-                {/* Bottom-Left Animated Feature Copy & CTA */}
+                {/* Bottom-Left Animated Feature Copy & CTA (Blur-Slide Transition) */}
                 <div
-                  key={activeWorkflow.stepIndex}
+                  key={activeStageItem.stepIndex}
                   className="space-y-3 sm:space-y-4 my-auto lg:my-0 pt-2 animate-fade-in-up"
                 >
                   <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-primary leading-tight">
-                    {activeWorkflow.title}
+                    {activeStageItem.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-600 max-w-md leading-relaxed">
-                    {activeWorkflow.description}
+                    {activeStageItem.description}
                   </p>
                   <div className="pt-1">
                     <Link
-                      href={activeWorkflow.ctaHref}
+                      href={activeStageItem.ctaHref}
                       className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#0f2c56] hover:bg-[#163861] text-white text-xs font-bold shadow-lg shadow-primary/20 transition-all hover:-translate-y-0.5"
                     >
-                      {activeWorkflow.ctaText}
+                      {activeStageItem.ctaText}
                     </Link>
                   </div>
                 </div>
@@ -550,11 +672,12 @@ export default function Home() {
                   </svg>
                 </div>
 
-                {/* FLOATING INTERACTIVE CARD ABOVE THE STONE PEDESTAL */}
+                {/* FLOATING INTERACTIVE CARD ABOVE THE STONE PEDESTAL (Morphs for Slides 1..7) */}
                 <div
                   key={currentSlide}
                   className="relative z-20 w-full max-w-md mb-8 sm:mb-10 animate-fade-in-up"
                 >
+                  {/* SLIDE 1: Cek Format ATS */}
                   {currentSlide <= 1 && (
                     <div className="bg-white/95 backdrop-blur-md rounded-3xl p-5 shadow-2xl space-y-3.5 text-left">
                       <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-slate-100 text-slate-600">
@@ -588,6 +711,7 @@ export default function Home() {
                     </div>
                   )}
 
+                  {/* SLIDE 2: Skor 5 Dimensi */}
                   {currentSlide === 2 && (
                     <div className="bg-white/95 backdrop-blur-md rounded-3xl p-5 shadow-2xl space-y-3 text-left">
                       <div className="flex items-center justify-between">
@@ -618,6 +742,7 @@ export default function Home() {
                     </div>
                   )}
 
+                  {/* SLIDE 3: 6-Tile Benefits Grid + Floating Pill */}
                   {currentSlide === 3 && (
                     <div className="space-y-3">
                       <div className="grid grid-cols-2 gap-2.5 text-left">
@@ -653,6 +778,7 @@ export default function Home() {
                     </div>
                   )}
 
+                  {/* SLIDE 4: Penilaian Adil & Aman */}
                   {currentSlide === 4 && (
                     <div className="bg-white/95 backdrop-blur-md rounded-3xl p-5 shadow-2xl space-y-3 text-left">
                       <div className="flex items-center justify-between">
@@ -687,34 +813,118 @@ export default function Home() {
                       </div>
                     </div>
                   )}
+
+                  {/* SLIDE 5: 3 Pilar Bobot Evaluasi */}
+                  {currentSlide === 5 && (
+                    <div className="bg-white/95 backdrop-blur-md rounded-3xl p-5 shadow-2xl space-y-2.5 text-left">
+                      <div className="flex items-center justify-between pb-1">
+                        <span className="text-xs font-bold text-primary">Bobot Standar Evaluasi HRD</span>
+                        <span className="text-[10px] font-mono font-bold text-primary bg-blue-50 px-2.5 py-0.5 rounded-full">
+                          Total 100%
+                        </span>
+                      </div>
+                      <div className="p-3 rounded-2xl bg-blue-50/70 flex items-center justify-between">
+                        <div className="flex items-center gap-2.5">
+                          <FileCheck className="w-4 h-4 text-primary shrink-0" />
+                          <div>
+                            <p className="text-xs font-bold text-primary">1. Struktur &amp; Format ATS</p>
+                            <p className="text-[10px] text-slate-600">Keterbacaan dokumen 1-kolom standar HR</p>
+                          </div>
+                        </div>
+                        <span className="text-xs font-black text-primary">25%</span>
+                      </div>
+                      <div className="p-3 rounded-2xl bg-rose-50/70 flex items-center justify-between">
+                        <div className="flex items-center gap-2.5">
+                          <BarChart3 className="w-4 h-4 text-secondary shrink-0" />
+                          <div>
+                            <p className="text-xs font-bold text-secondary">2. Dampak &amp; Kalimat Aktif</p>
+                            <p className="text-[10px] text-slate-600">Capaian terukur pada pengalaman &amp; proyek</p>
+                          </div>
+                        </div>
+                        <span className="text-xs font-black text-secondary">30%</span>
+                      </div>
+                      <div className="p-3 rounded-2xl bg-emerald-50/70 flex items-center justify-between">
+                        <div className="flex items-center gap-2.5">
+                          <Target className="w-4 h-4 text-emerald-700 shrink-0" />
+                          <div>
+                            <p className="text-xs font-bold text-emerald-900">3. Relevansi Keahlian</p>
+                            <p className="text-[10px] text-slate-600">Kecocokan kompetensi dengan kebutuhan industri</p>
+                          </div>
+                        </div>
+                        <span className="text-xs font-black text-emerald-800">45%</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* SLIDE 6: Simulasi Rekomendasi Loker */}
+                  {currentSlide === 6 && (
+                    <div className="bg-white/95 backdrop-blur-md rounded-3xl p-5 shadow-2xl space-y-3 text-left">
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full">
+                            Rekomendasi Teratas
+                          </span>
+                          <h4 className="text-sm font-black text-primary mt-1">
+                            Management Trainee &amp; Business Analyst
+                          </h4>
+                          <p className="text-[11px] text-slate-500">
+                            PT Nusantara Inovasi Mandiri • Jakarta &amp; Padang
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <span className="text-lg font-black text-emerald-600">92%</span>
+                          <p className="text-[9px] text-slate-400 uppercase font-mono">Kecocokan</p>
+                        </div>
+                      </div>
+                      <div className="p-3 rounded-2xl bg-slate-50 text-[11px] text-slate-600 leading-relaxed">
+                        Pengalaman magang, kepemimpinan organisasi, dan keahlian analisis data Anda memenuhi kualifikasi utama posisi ini.
+                      </div>
+                      <div className="flex flex-wrap gap-1.5">
+                        <span className="px-2.5 py-1 rounded-full bg-blue-50 text-primary text-[10px] font-bold">
+                          Analisis Data
+                        </span>
+                        <span className="px-2.5 py-1 rounded-full bg-blue-50 text-primary text-[10px] font-bold">
+                          Manajemen Proyek
+                        </span>
+                        <span className="px-2.5 py-1 rounded-full bg-blue-50 text-primary text-[10px] font-bold">
+                          Komunikasi Tim
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* SLIDE 7: 100% Gratis & Kuesioner Tanpa CV */}
+                  {currentSlide === 7 && (
+                    <div className="bg-white/95 backdrop-blur-md rounded-3xl p-5 shadow-2xl space-y-3 text-left">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Layers className="w-4 h-4 text-emerald-600" />
+                          <span className="text-xs font-bold text-primary">Akses Penuh Tanpa Biaya</span>
+                        </div>
+                        <span className="text-[10px] font-bold bg-emerald-50 text-emerald-700 px-2.5 py-0.5 rounded-full">
+                          Rp 0 / Selamanya
+                        </span>
+                      </div>
+                      <div className="p-3.5 rounded-2xl bg-emerald-50/70 space-y-1">
+                        <p className="text-xs font-bold text-emerald-950">
+                          Sudah Punya CV maupun Belum, Semua Bisa!
+                        </p>
+                        <p className="text-[11px] text-slate-700 leading-relaxed">
+                          Unggah berkas CV lama Anda atau susun CV standar ATS baru dari nol hanya dengan mengisi kuesioner terpandu.
+                        </p>
+                      </div>
+                      <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1">
+                        <span>Tanpa Batas Evaluasi</span>
+                        <span className="font-bold text-primary">Siap Unduh &amp; Lamar</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* =====================================================================
-          SECTION 3 (FULL PAGE): INTERACTIVE PRODUCT MOCKUP SHOWCASE
-          ===================================================================== */}
-      <ScrollRevealSection>
-        <ProductMockup />
-      </ScrollRevealSection>
-
-      {/* =====================================================================
-          SECTION 4 (FULL PAGE): 3 CORE EVALUATION PRINCIPLES & WEIGHTS
-          ===================================================================== */}
-      <ScrollRevealSection>
-        <PrinciplesGrid />
-      </ScrollRevealSection>
-
-      {/* =====================================================================
-          SECTION 5 (FULL PAGE): KEY BENEFITS BENTO & FINAL CTA BANNER
-          ===================================================================== */}
-      <ScrollRevealSection className="space-y-12 pb-16">
-        <FeaturesBento />
-        <DarkCtaBanner />
-      </ScrollRevealSection>
     </div>
   );
 }

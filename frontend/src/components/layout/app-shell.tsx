@@ -51,13 +51,13 @@ export function AppShell({ children }: AppShellProps) {
     return <main className="min-h-dvh w-full bg-white text-primary">{children}</main>;
   }
 
-  // Tampilan halaman publik (/, /jobs, /about, /apply): Pill Navbar + Konten + Footer
+  // Tampilan halaman publik (/, /jobs, /about, /apply): Pill Navbar + Konten (+ Footer pada halaman selain /)
   if (!isDashboardWorkspace) {
     return (
       <div className="min-h-screen flex flex-col justify-between bg-[#fefefd] text-primary">
         <Navbar />
         <main className="flex-1">{children}</main>
-        <Footer />
+        {pathname !== "/" && <Footer />}
       </div>
     );
   }
