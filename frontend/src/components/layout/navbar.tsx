@@ -54,32 +54,41 @@ export function Navbar() {
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
+          {/* Desktop Navigation with Integrated Center Island Pill */}
+          <nav className="hidden md:flex items-center gap-3 lg:gap-5">
             <Link
               href="/"
               className="text-xs font-semibold text-slate-200 hover:text-white transition"
             >
               Beranda
             </Link>
-            <Link
-              href="/evaluate"
-              className="text-xs font-semibold text-slate-200 hover:text-white transition"
-            >
-              Evaluasi CV
-            </Link>
-            <Link
-              href="/dashboard"
-              className="text-xs font-semibold text-slate-200 hover:text-white transition"
-            >
-              Dashboard ATS
-            </Link>
-            <Link
-              href="/jobs"
-              className="text-xs font-semibold text-slate-200 hover:text-white transition"
-            >
-              Cari Lowongan
-            </Link>
+
+            {/* Floating Island Pill Widget (Integrated to Nav) */}
+            <div className="inline-flex items-center gap-1 p-1 bg-[#0a1f3a] text-white rounded-full shadow-md select-none border border-white/10">
+              <Link
+                href="/evaluate"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/15 hover:bg-white/25 text-white text-xs font-semibold transition shadow-2xs"
+                title="Evaluasi CV &amp; Skor ATS"
+              >
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-beacon shrink-0" aria-hidden="true" />
+                <span>Skor ATS</span>
+              </Link>
+              <Link
+                href="/jobs"
+                className="flex items-center gap-1 px-3 py-1.5 rounded-full text-slate-200 hover:text-white hover:bg-white/10 text-xs font-medium transition"
+                title="Pencocokan Lowongan AI"
+              >
+                <span>Pencocokan AI</span>
+              </Link>
+              <Link
+                href="/evaluate"
+                className="flex items-center gap-1 px-3 py-1.5 rounded-full text-slate-200 hover:text-white hover:bg-white/10 text-xs font-medium transition"
+                title="Blind Scoring Bebas Bias"
+              >
+                <span>Blind Scoring</span>
+              </Link>
+            </div>
+
             <Link
               href="/about"
               className="text-xs font-semibold text-slate-200 hover:text-white transition"
