@@ -43,7 +43,15 @@ export function AppShell({ children }: AppShellProps) {
     });
   };
 
-  // Tampilan halaman publik (/, /jobs, /about, /login, /register): Pill Navbar + Konten + Footer
+  const isAuthPage =
+    pathname.startsWith("/login") || pathname.startsWith("/register");
+
+  // Halaman autentikasi (/login dan /register): Tampilan split-screen penuh ala isi-learning-hub
+  if (isAuthPage) {
+    return <main className="min-h-dvh w-full bg-white text-primary">{children}</main>;
+  }
+
+  // Tampilan halaman publik (/, /jobs, /about, /apply): Pill Navbar + Konten + Footer
   if (!isDashboardWorkspace) {
     return (
       <div className="min-h-screen flex flex-col justify-between bg-[#fefefd] text-primary">

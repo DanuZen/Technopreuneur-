@@ -127,6 +127,184 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   animation: tabProgressBar 5s linear forwards;
 }
 
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(1.5deg);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes splashFadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes splashFadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes loginSlideInFromRight {
+  0% {
+    opacity: 0;
+    transform: translate3d(76px, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes loginSlideInFromLeft {
+  0% {
+    opacity: 0;
+    transform: translate3d(-76px, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes loginSlideOutToLeft {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-88px, 0, 0);
+  }
+}
+
+@keyframes loginSlideOutToRight {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(88px, 0, 0);
+  }
+}
+
+@keyframes loginShowcaseFollowRight {
+  0% {
+    opacity: 0;
+    transform: translate3d(48px, 0, 0) scale(0.985);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes loginShowcaseFollowLeft {
+  0% {
+    opacity: 0;
+    transform: translate3d(-48px, 0, 0) scale(0.985);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.animate-float-slow {
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-scale-up {
+  animation: scaleUp 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: top right;
+}
+
+.splash-fade-in {
+  animation: splashFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.splash-fade-out {
+  animation: splashFadeOut 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  pointer-events: none;
+}
+
+.login-slide-in-right {
+  animation: loginSlideInFromRight 0.52s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.login-slide-in-left {
+  animation: loginSlideInFromLeft 0.52s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.login-slide-out-left {
+  animation: loginSlideOutToLeft 0.36s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: none;
+}
+
+.login-slide-out-right {
+  animation: loginSlideOutToRight 0.36s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: none;
+}
+
+.login-showcase-in-right {
+  animation: loginShowcaseFollowRight 0.62s cubic-bezier(0.22, 1, 0.36, 1) 65ms backwards;
+}
+
+.login-showcase-in-left {
+  animation: loginShowcaseFollowLeft 0.62s cubic-bezier(0.22, 1, 0.36, 1) 65ms backwards;
+}
+
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 /* ============================================================================
    Pasbana AI Claymorphism System (Redam Architecture Reference)
    Hierarki 3 tingkat: Recessed Well -> Sculpted Clay Card -> Tactile Clay CTA
