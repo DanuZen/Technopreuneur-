@@ -336,11 +336,11 @@ export default function HomePage() {
           SLIDE 1: OPEN LEFT WORKFLOW EDITORIAL + BOLD SECOND (#CE2731) STAGE CARD RIGHT
           ===================================================================== */}
       <section
-        className={`absolute inset-0 pt-2 sm:pt-3 pb-4 sm:pb-6 px-4 sm:px-8 lg:px-14 flex items-center transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(1)}`}
+        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(1)}`}
       >
-        <div className="max-w-[1380px] w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
+        <div className="w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-stretch">
           {/* Left 6 Cols: Open Unboxed Workflow Tabs & Editorial Content */}
-          <div className={`lg:col-span-6 flex flex-col justify-between h-[86%] py-2 ${getChildAnimClass(1, "left", "delay-75")}`}>
+          <div className={`lg:col-span-6 h-full flex flex-col justify-between py-3 sm:py-5 px-4 sm:px-8 lg:px-12 ${getChildAnimClass(1, "left", "delay-75")}`}>
             <div className="space-y-2">
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
                 Tahapan Evaluasi Cerdas
@@ -412,9 +412,9 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Right 6 Cols: Bold Second (#ce2731) & Primary (#0f2c56) Stage Card with Large Mascot */}
+          {/* Right 6 Cols: Bold Second (#ce2731) Stage Card Matching Hero Height Exactly */}
           <div
-            className={`lg:col-span-6 h-[86%] rounded-[32px] sm:rounded-[40px] relative overflow-hidden p-6 sm:p-8 flex flex-col justify-between text-[#fefefd] shadow-2xl ${getChildAnimClass(1, "right", "delay-150")}`}
+            className={`lg:col-span-6 h-full rounded-[26px] sm:rounded-[34px] relative overflow-hidden p-6 sm:p-8 flex flex-col justify-between text-[#fefefd] shadow-2xl border border-white/10 ${getChildAnimClass(1, "right", "delay-150")}`}
             style={{
               background: "linear-gradient(145deg, #ce2731 0%, #b01e27 48%, #0f2c56 100%)",
             }}
@@ -543,12 +543,12 @@ export default function HomePage() {
           SLIDE 2: OPEN EDITORIAL COLUMN + SECOND (#CE2731) CARD + PRIMARY (#0F2C56) CARD
           ===================================================================== */}
       <section
-        className={`absolute inset-0 pt-2 sm:pt-3 pb-4 sm:pb-6 px-4 sm:px-8 lg:px-14 flex items-center transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(2)}`}
+        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(2)}`}
       >
-        <div className="max-w-[1380px] w-full h-[86%] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        <div className="w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
           {/* Col 1 (5 Cols): Open Editorial & Feature List (No Card Wrapper) */}
           <div
-            className={`lg:col-span-5 flex flex-col justify-between py-2 pr-2 ${getChildAnimClass(2, "left", "delay-75")}`}
+            className={`lg:col-span-5 h-full flex flex-col justify-between py-3 sm:py-5 px-4 sm:px-8 ${getChildAnimClass(2, "left", "delay-75")}`}
           >
             <div className="space-y-3">
               <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#fdf2f2] text-[#ce2731] text-xs font-bold">
@@ -598,7 +598,7 @@ export default function HomePage() {
 
           {/* Col 2 (4 Cols): Bold Second (#ce2731) Card with Large Mascot Power Pose */}
           <div
-            className={`lg:col-span-4 h-full rounded-[32px] p-6 sm:p-7 text-[#fefefd] flex flex-col justify-between relative overflow-hidden shadow-xl ${getChildAnimClass(2, "up", "delay-150")}`}
+            className={`lg:col-span-4 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-7 text-[#fefefd] flex flex-col justify-between relative overflow-hidden shadow-xl ${getChildAnimClass(2, "up", "delay-150")}`}
             style={{
               background: "linear-gradient(160deg, #ce2731 0%, #b01e27 65%, #911d24 100%)",
             }}
@@ -633,7 +633,7 @@ export default function HomePage() {
 
           {/* Col 3 (3 Cols): Primary (#0f2c56) Card with Second (#ce2731) Highlights */}
           <div
-            className={`lg:col-span-3 h-full rounded-[32px] bg-[#0f2c56] text-[#fefefd] p-6 sm:p-7 flex flex-col justify-between shadow-xl ${getChildAnimClass(2, "right", "delay-200")}`}
+            className={`lg:col-span-3 h-full rounded-[26px] sm:rounded-[34px] bg-[#0f2c56] text-[#fefefd] p-6 sm:p-7 flex flex-col justify-between shadow-xl ${getChildAnimClass(2, "right", "delay-200")}`}
           >
             <div className="flex items-center justify-between">
               <span className="px-3 py-1 rounded-full bg-[#ce2731] text-[#fefefd] text-xs font-bold">
@@ -675,12 +675,12 @@ export default function HomePage() {
           SLIDE 3: OPEN HEADER & METRICS + TREND CHART + SECOND (#CE2731) ASSISTANT STAGE
           ===================================================================== */}
       <section
-        className={`absolute inset-0 pt-2 sm:pt-3 pb-4 sm:pb-6 px-4 sm:px-8 lg:px-14 flex items-center transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(3)}`}
+        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(3)}`}
       >
-        <div className="max-w-[1380px] w-full h-[86%] mx-auto flex flex-col justify-between gap-5">
+        <div className="w-full h-full mx-auto flex flex-col justify-between gap-4 py-1.5">
           {/* Top Open Editorial Row + Open Typographic Metrics (No Card Boxes) */}
           <div
-            className={`w-full flex flex-col lg:flex-row lg:items-end justify-between gap-4 pb-4 border-b border-slate-200/80 shrink-0 ${getChildAnimClass(3, "down", "delay-75")}`}
+            className={`w-full flex flex-col lg:flex-row lg:items-end justify-between gap-4 pb-3 border-b border-slate-200/80 px-4 sm:px-8 shrink-0 ${getChildAnimClass(3, "down", "delay-75")}`}
           >
             <div className="space-y-1.5">
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
@@ -707,10 +707,10 @@ export default function HomePage() {
           </div>
 
           {/* Bottom Split: Left Trend Visualization (7 Cols) + Right Second (#ce2731) Assistant Card with Mascot (5 Cols) */}
-          <div className="flex-1 min-h-0 w-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          <div className="flex-1 min-h-0 w-full grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
             {/* Left 7 Cols: Clean Soft-Rose (#fdf2f2) & Navy Trend Visualization */}
             <div
-              className={`lg:col-span-7 h-full rounded-[32px] bg-[#fdf2f2] border border-[#fde6e6] p-6 sm:p-8 flex flex-col justify-between ${getChildAnimClass(3, "left", "delay-150")}`}
+              className={`lg:col-span-7 h-full rounded-[26px] sm:rounded-[34px] bg-[#fdf2f2] border border-[#fde6e6] p-6 sm:p-7 flex flex-col justify-between ${getChildAnimClass(3, "left", "delay-150")}`}
             >
               <div className="flex items-center justify-between">
                 <div>
@@ -764,7 +764,7 @@ export default function HomePage() {
 
             {/* Right 5 Cols: Bold Second (#ce2731) Card + Large Mascot Idea Pose */}
             <div
-              className={`lg:col-span-5 h-full rounded-[32px] p-6 sm:p-7 text-[#fefefd] flex flex-col justify-between relative overflow-hidden shadow-xl ${getChildAnimClass(3, "right", "delay-200")}`}
+              className={`lg:col-span-5 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-7 text-[#fefefd] flex flex-col justify-between relative overflow-hidden shadow-xl ${getChildAnimClass(3, "right", "delay-200")}`}
               style={{
                 background: "linear-gradient(150deg, #ce2731 0%, #b01e27 55%, #0f2c56 100%)",
               }}
@@ -814,11 +814,11 @@ export default function HomePage() {
           SLIDE 4: OPEN 5D RADAR ON #FEFEFD + PRIMARY/SECOND BLIND SCORING STAGE WITH MASCOT SHIELD
           ===================================================================== */}
       <section
-        className={`absolute inset-0 pt-2 sm:pt-3 pb-4 sm:pb-6 px-4 sm:px-8 lg:px-14 flex items-center transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(4)}`}
+        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(4)}`}
       >
-        <div className="max-w-[1380px] w-full h-[86%] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
           {/* Left 6 Cols: Open 5-Dimension Radar & Competency Breakdown (No Outer Card) */}
-          <div className={`lg:col-span-6 space-y-5 ${getChildAnimClass(4, "left", "delay-75")}`}>
+          <div className={`lg:col-span-6 h-full flex flex-col justify-between py-3 sm:py-5 px-4 sm:px-8 lg:px-12 ${getChildAnimClass(4, "left", "delay-75")}`}>
             <div className="space-y-2">
               <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#fdf2f2] text-[#ce2731] text-xs font-bold">
                 <ShieldCheck className="w-4 h-4 text-[#ce2731]" />
@@ -871,7 +871,7 @@ export default function HomePage() {
 
           {/* Right 6 Cols: Primary (#0f2c56) & Second (#ce2731) Blind Scoring Stage with Large Mascot Shield */}
           <div
-            className={`lg:col-span-6 h-full rounded-[34px] p-6 sm:p-9 text-[#fefefd] flex flex-col justify-between relative overflow-hidden shadow-2xl ${getChildAnimClass(4, "right", "delay-150")}`}
+            className={`lg:col-span-6 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-8 text-[#fefefd] flex flex-col justify-between relative overflow-hidden shadow-2xl border border-white/10 ${getChildAnimClass(4, "right", "delay-150")}`}
             style={{
               background: "linear-gradient(145deg, #0f2c56 0%, #163861 52%, #ce2731 100%)",
             }}
@@ -936,12 +936,12 @@ export default function HomePage() {
           SLIDE 5: OPEN ARCHITECTURAL 3-STEP TIMELINE ON #FEFEFD (NO CARD BOXES) + MASCOT
           ===================================================================== */}
       <section
-        className={`absolute inset-0 pt-2 sm:pt-3 pb-4 sm:pb-6 px-4 sm:px-8 lg:px-14 flex items-center transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(5)}`}
+        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(5)}`}
       >
-        <div className="max-w-[1380px] w-full h-[86%] mx-auto flex flex-col justify-between">
+        <div className="w-full h-full mx-auto flex flex-col justify-between py-2 px-4 sm:px-8">
           {/* Open Header Row */}
           <div
-            className={`w-full flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-4 border-b-2 border-[#0f2c56]/10 ${getChildAnimClass(5, "down", "delay-75")}`}
+            className={`w-full flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-3 border-b-2 border-[#0f2c56]/10 ${getChildAnimClass(5, "down", "delay-75")}`}
           >
             <div>
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
@@ -958,7 +958,7 @@ export default function HomePage() {
           </div>
 
           {/* Open 12-Col Architectural Steps + Large Mascot Walk Companion */}
-          <div className="my-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center py-4">
+          <div className="my-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center py-2">
             <div className={`lg:col-span-9 grid grid-cols-1 md:grid-cols-3 gap-8 ${getChildAnimClass(5, "left", "delay-150")}`}>
               {[
                 {
@@ -1013,7 +1013,7 @@ export default function HomePage() {
 
           {/* Bottom Action Strip in Second (#ce2731) & Primary (#0f2c56) */}
           <div
-            className={`w-full rounded-3xl bg-[#0f2c56] text-[#fefefd] p-5 sm:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${getChildAnimClass(5, "up", "delay-200")}`}
+            className={`w-full rounded-[22px] sm:rounded-[28px] bg-[#0f2c56] text-[#fefefd] p-4 sm:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${getChildAnimClass(5, "up", "delay-200")}`}
           >
             <div className="space-y-0.5">
               <p className="text-sm sm:text-base font-black text-[#fefefd]">
@@ -1025,7 +1025,7 @@ export default function HomePage() {
             </div>
             <Link
               href="/evaluate?tab=questionnaire"
-              className="shrink-0 px-6 py-3 rounded-full bg-[#ce2731] hover:bg-[#b01e27] text-[#fefefd] text-xs sm:text-sm font-bold shadow-lg transition"
+              className="shrink-0 px-6 py-2.5 rounded-full bg-[#ce2731] hover:bg-[#b01e27] text-[#fefefd] text-xs sm:text-sm font-bold shadow-lg transition"
             >
               Buat CV dari Kuesioner →
             </Link>
@@ -1037,12 +1037,12 @@ export default function HomePage() {
           SLIDE 6: BOLD SECOND (#CE2731) & PRIMARY (#0F2C56) CTA STAGE + OPEN FOOTER
           ===================================================================== */}
       <section
-        className={`absolute inset-0 pt-2 sm:pt-3 pb-4 sm:pb-6 px-4 sm:px-8 lg:px-14 flex flex-col justify-between transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(6)}`}
+        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(6)}`}
       >
-        <div className="max-w-[1380px] w-full h-full mx-auto flex flex-col justify-between gap-5">
+        <div className="w-full h-full mx-auto flex flex-col justify-between gap-3 py-1">
           {/* Top Closing Stage in Second (#ce2731) & Primary (#0f2c56) with Large Celebrating Mascot */}
           <div
-            className={`flex-1 min-h-0 w-full rounded-[32px] sm:rounded-[40px] px-6 sm:px-12 py-6 sm:py-8 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center relative overflow-hidden shadow-2xl ${getChildAnimClass(6, "down", "delay-75")}`}
+            className={`flex-1 min-h-0 w-full rounded-[26px] sm:rounded-[34px] px-6 sm:px-12 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center relative overflow-hidden shadow-2xl border border-white/10 ${getChildAnimClass(6, "down", "delay-75")}`}
             style={{
               background: "linear-gradient(135deg, #ce2731 0%, #b01e27 52%, #0f2c56 100%)",
             }}
@@ -1092,9 +1092,9 @@ export default function HomePage() {
 
           {/* Bottom Open Editorial Footer Directly on #fefefd Canvas (No Card Wrapper) */}
           <footer
-            className={`shrink-0 w-full pt-2 px-2 ${getChildAnimClass(6, "up", "delay-150")}`}
+            className={`shrink-0 w-full pt-1 px-4 sm:px-8 ${getChildAnimClass(6, "up", "delay-150")}`}
           >
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pb-4 border-b border-slate-200/80 text-xs">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pb-3 border-b border-slate-200/80 text-xs">
               <div className="col-span-2 sm:col-span-1 space-y-1.5">
                 <div className="font-black text-base text-[#0f2c56]">
                   Pasbana<span className="text-[#ce2731]"> AI</span>
@@ -1130,7 +1130,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="pt-3 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-400">
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-400">
               <span>© 2026 Pasbana AI. All rights reserved.</span>
               <span>Standar Evaluasi Objektif &amp; Bebas Bias</span>
             </div>
