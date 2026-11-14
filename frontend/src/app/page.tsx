@@ -514,7 +514,7 @@ export default function HomePage() {
                 and Slide 1 Stage Card with Interactive ATS Previews
                 ================================================================= */}
             <div className="lg:col-span-6 h-[52%] sm:h-[56%] lg:h-full relative">
-              {/* SLIDE 0 HERO RIGHT STAGE: Live Simulated ATS Inspection & Small Bento Highlights */}
+              {/* SLIDE 0 HERO RIGHT STAGE: Single-Level Small Bento Grid (No Card-in-Card) */}
               <div
                 className={`absolute inset-0 flex items-center justify-center p-3 sm:p-6 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                   activeSlide === 0
@@ -522,11 +522,10 @@ export default function HomePage() {
                     : "opacity-0 scale-95 pointer-events-none"
                 }`}
               >
-                <div className="relative z-20 w-full max-w-lg space-y-3">
-                  {/* Floating Interactive Product Card */}
-                  <div className="w-full rounded-3xl bg-[#0e2647]/85 backdrop-blur-xl border border-white/15 p-4 sm:p-5 shadow-2xl text-white space-y-3.5">
-                    {/* Card Header with Active Pulse */}
-                    <div className="flex items-center justify-between pb-2.5 border-b border-white/10">
+                <div className="relative z-20 w-full max-w-lg grid grid-cols-2 gap-3 text-white">
+                  {/* Main Preview Bento Tile (Flat rows, no nested cards) */}
+                  <div className="col-span-2 rounded-3xl bg-[#0e2647]/90 border border-white/15 p-4 sm:p-5 shadow-2xl space-y-3">
+                    <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
                         <span className="text-xs font-bold text-white tracking-wide">Simulasi Evaluasi ATS</span>
@@ -536,19 +535,17 @@ export default function HomePage() {
                       </span>
                     </div>
 
-                    {/* Candidate File Preview Pill */}
-                    <div className="p-2.5 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between">
+                    <div className="py-2.5 border-y border-white/10 flex items-center justify-between gap-2">
                       <div className="space-y-0.5 min-w-0">
                         <div className="text-xs font-bold text-white truncate">Resume_Standar_ATS.pdf</div>
                         <div className="text-[10px] text-slate-300">Format 1-Kolom • 14 Kata Kerja Aktif</div>
                       </div>
-                      <span className="text-[10px] font-bold text-emerald-300 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded-full shrink-0">
+                      <span className="text-[10px] font-bold text-emerald-300 shrink-0">
                         Lolos Parsing
                       </span>
                     </div>
 
-                    {/* 5-Dimension Mini Progress Bars */}
-                    <div className="space-y-2 pt-0.5">
+                    <div className="space-y-2">
                       <div className="flex items-center justify-between text-[11px] font-semibold text-slate-200">
                         <span>Struktur &amp; Keterbacaan Mesin</span>
                         <span className="text-[#ce2731] font-mono font-bold">94%</span>
@@ -566,32 +563,29 @@ export default function HomePage() {
                       </div>
                     </div>
 
-                    {/* Bottom Recommendation Pill */}
-                    <div className="p-2.5 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-between text-xs">
-                      <span className="text-slate-200">Target Karir Terdeteksi</span>
-                      <span className="font-bold text-white bg-white/15 px-2.5 py-0.5 rounded-full text-[11px]">
-                        Product &amp; Tech Role
-                      </span>
+                    <div className="pt-2 border-t border-white/10 flex items-center justify-between text-xs">
+                      <span className="text-slate-300">Target Karir Terdeteksi</span>
+                      <span className="font-bold text-white">Product &amp; Tech Role</span>
                     </div>
                   </div>
 
-                  {/* Small Bento Row (3 Compact Micro Cards) */}
-                  <div className="grid grid-cols-3 gap-2.5">
-                    <div className="rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 p-3 text-white space-y-1">
-                      <FileCheck className="w-4 h-4 text-emerald-400" />
-                      <div className="text-xs font-black">1-Kolom ATS</div>
-                      <div className="text-[10px] text-slate-300 leading-tight">Format rapi siap seleksi</div>
+                  {/* Compact Bento Tiles (1-Level) */}
+                  <div className="rounded-2xl bg-[#0e2647]/90 border border-white/15 p-3.5 space-y-1">
+                    <FileCheck className="w-4 h-4 text-emerald-400" />
+                    <div className="text-xs font-black">1-Kolom ATS</div>
+                    <div className="text-[10px] text-slate-300 leading-tight">Format rapi siap seleksi</div>
+                  </div>
+                  <div className="rounded-2xl bg-[#ce2731] border border-white/15 p-3.5 space-y-1 shadow-lg">
+                    <Target className="w-4 h-4 text-white" />
+                    <div className="text-xs font-black">5 Dimensi Objektif</div>
+                    <div className="text-[10px] text-[#fde6e6] leading-tight">Skor &amp; saran revisi</div>
+                  </div>
+                  <div className="col-span-2 rounded-2xl bg-[#0e2647]/90 border border-white/15 px-4 py-3 flex items-center justify-between">
+                    <div className="flex items-center gap-2.5">
+                      <Briefcase className="w-4 h-4 text-sky-300 shrink-0" />
+                      <span className="text-xs font-bold text-white">Rekomendasi Lowongan Pas Bana</span>
                     </div>
-                    <div className="rounded-2xl bg-[#ce2731] border border-white/15 p-3 text-white space-y-1 shadow-lg">
-                      <Target className="w-4 h-4 text-white" />
-                      <div className="text-xs font-black">5 Dimensi</div>
-                      <div className="text-[10px] text-[#fde6e6] leading-tight">Skor &amp; saran revisi</div>
-                    </div>
-                    <div className="rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 p-3 text-white space-y-1">
-                      <Briefcase className="w-4 h-4 text-sky-300" />
-                      <div className="text-xs font-black">92% Akurat</div>
-                      <div className="text-[10px] text-slate-300 leading-tight">Rekomendasi loker</div>
-                    </div>
+                    <span className="text-xs font-black text-emerald-300">92% Akurat</span>
                   </div>
                 </div>
               </div>
@@ -614,44 +608,44 @@ export default function HomePage() {
                   </span>
                 </div>
 
-                {/* Center Live Previews + Validation Inspector */}
-                <div className="relative z-20 grid grid-cols-1 sm:grid-cols-12 gap-4 items-center my-auto">
-                  <div className="sm:col-span-7">
+                {/* Center Live Previews + Validation Inspector (Flat directly on Crimson Stage, No Card-in-Card) */}
+                <div className="relative z-20 grid grid-cols-1 sm:grid-cols-12 gap-5 items-start my-auto sm:divide-x sm:divide-white/15">
+                  <div className="sm:col-span-7 sm:pr-4 space-y-3">
                     {activeWorkflowIdx === 0 && (
-                      <div className="bg-[#fefefd] text-[#0f2c56] rounded-3xl p-4 sm:p-5 shadow-xl space-y-3">
-                        <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-                          <span className="text-xs font-black text-[#0f2c56]">Pemeriksa Struktur CV</span>
-                          <span className="text-[10px] font-bold bg-[#fdf2f2] text-[#ce2731] px-2.5 py-0.5 rounded-full">
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between pb-2 border-b border-white/15">
+                          <span className="text-sm font-black text-white">Pemeriksa Struktur CV</span>
+                          <span className="text-[10px] font-bold bg-[#0f2c56] text-white px-2.5 py-0.5 rounded-full">
                             94% Lolos
                           </span>
                         </div>
-                        <p className="text-xs text-slate-600 leading-relaxed">
+                        <p className="text-xs sm:text-sm text-[#fde6e6] leading-relaxed">
                           Susunan 1-kolom terverifikasi. Bagian pendidikan, pengalaman, dan keahlian siap dibaca sistem ATS.
                         </p>
-                        <div className="p-2.5 rounded-2xl bg-[#0f2c56] text-[#fefefd] text-[11px] font-bold flex items-center gap-2">
-                          <CheckCircle2 className="w-4 h-4 text-[#faa9ab] shrink-0" />
+                        <div className="pt-1 flex items-center gap-2 text-xs font-bold text-white">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-300 shrink-0" />
                           <span>Bebas Risiko Gagal Parsing</span>
                         </div>
                       </div>
                     )}
 
                     {activeWorkflowIdx === 1 && (
-                      <div className="bg-[#fefefd] text-[#0f2c56] rounded-3xl p-4 sm:p-5 shadow-xl space-y-2.5">
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs font-black text-[#0f2c56]">Rincian 5 Dimensi</span>
-                          <span className="text-xs font-black text-[#ce2731]">88 / 100</span>
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between pb-2 border-b border-white/15">
+                          <span className="text-sm font-black text-white">Rincian 5 Dimensi</span>
+                          <span className="text-sm font-black text-white">88 / 100</span>
                         </div>
                         {[
-                          { label: "Format & Keterbacaan ATS", val: "94%", w: "w-[94%]", c: "bg-[#0f2c56]" },
-                          { label: "Relevansi Keahlian", val: "90%", w: "w-[90%]", c: "bg-[#ce2731]" },
-                          { label: "Dampak & Pencapaian", val: "84%", w: "w-[84%]", c: "bg-[#0f2c56]" },
+                          { label: "Format & Keterbacaan ATS", val: "94%", w: "w-[94%]", c: "bg-white" },
+                          { label: "Relevansi Keahlian", val: "90%", w: "w-[90%]", c: "bg-[#0f2c56]" },
+                          { label: "Dampak & Pencapaian", val: "84%", w: "w-[84%]", c: "bg-emerald-300" },
                         ].map((row) => (
-                          <div key={row.label} className="space-y-1 text-[11px]">
-                            <div className="flex justify-between font-bold">
+                          <div key={row.label} className="space-y-1 text-xs">
+                            <div className="flex justify-between font-bold text-white">
                               <span>{row.label}</span>
-                              <span className="text-[#ce2731]">{row.val}</span>
+                              <span>{row.val}</span>
                             </div>
-                            <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                            <div className="w-full h-1.5 bg-black/20 rounded-full overflow-hidden">
                               <div className={`${row.w} h-full ${row.c} rounded-full`} />
                             </div>
                           </div>
@@ -660,90 +654,92 @@ export default function HomePage() {
                     )}
 
                     {activeWorkflowIdx === 2 && (
-                      <div className="bg-[#fefefd] text-[#0f2c56] rounded-3xl p-4 sm:p-5 shadow-xl space-y-2.5">
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs font-black text-[#0f2c56]">Loker Paling Pas Bana</span>
-                          <span className="text-[10px] font-bold text-[#ce2731] bg-[#fdf2f2] px-2 py-0.5 rounded-full">
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between pb-2 border-b border-white/15">
+                          <span className="text-sm font-black text-white">Loker Paling Pas Bana</span>
+                          <span className="text-[10px] font-bold bg-[#0f2c56] text-white px-2.5 py-0.5 rounded-full">
                             Skor &gt; 90%
                           </span>
                         </div>
-                        {[
-                          { title: "Product Operations Analyst", match: "94% Cocok" },
-                          { title: "Junior Management Trainee", match: "92% Cocok" },
-                        ].map((job) => (
-                          <div key={job.title} className="p-2.5 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-between">
-                            <span className="text-xs font-bold text-[#0f2c56]">{job.title}</span>
-                            <span className="text-[10px] font-black text-[#ce2731] bg-[#fdf2f2] px-2 py-0.5 rounded-full shrink-0">
-                              {job.match}
-                            </span>
-                          </div>
-                        ))}
+                        <div className="divide-y divide-white/15">
+                          {[
+                            { title: "Product Operations Analyst", match: "94% Cocok" },
+                            { title: "Junior Management Trainee", match: "92% Cocok" },
+                          ].map((job) => (
+                            <div key={job.title} className="py-2.5 flex items-center justify-between gap-2">
+                              <span className="text-xs font-bold text-white">{job.title}</span>
+                              <span className="text-[10px] font-black text-[#ce2731] bg-white px-2 py-0.5 rounded-full shrink-0">
+                                {job.match}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     )}
 
                     {activeWorkflowIdx === 3 && (
-                      <div className="bg-[#fefefd] text-[#0f2c56] rounded-3xl p-4 sm:p-5 shadow-xl space-y-2.5">
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs font-black text-[#0f2c56]">Penilaian Berbasis Kompetensi</span>
-                          <span className="text-[10px] font-bold bg-[#fdf2f2] text-[#ce2731] px-2 py-0.5 rounded-full">
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between pb-2 border-b border-white/15">
+                          <span className="text-sm font-black text-white">Penilaian Berbasis Kompetensi</span>
+                          <span className="text-[10px] font-bold bg-[#0f2c56] text-white px-2.5 py-0.5 rounded-full">
                             Objektif 100%
                           </span>
                         </div>
-                        <p className="text-xs text-slate-600 leading-relaxed">
+                        <p className="text-xs sm:text-sm text-[#fde6e6] leading-relaxed">
                           Evaluasi berfokus murni pada keahlian teknis, pengalaman proyek, dan dampak kerja agar setiap kandidat mendapat penilaian yang adil.
                         </p>
-                        <div className="p-2 rounded-2xl bg-[#0f2c56] text-[#fefefd] text-[10px] font-bold flex items-center justify-between">
+                        <div className="pt-1 flex items-center justify-between text-xs font-bold text-white">
                           <span>Berbasis Portofolio &amp; Skill</span>
-                          <span className="text-[#faa9ab]">Standar HRD</span>
+                          <span className="text-[#fde6e6]">Standar HRD</span>
                         </div>
                       </div>
                     )}
                   </div>
 
-                  {/* Complementary Validation Inspector Panel */}
-                  <div className="sm:col-span-5 space-y-2.5">
+                  {/* Complementary Validation Inspector (Flat directly on Crimson Stage) */}
+                  <div className="sm:col-span-5 sm:pl-4 space-y-2.5">
                     {activeWorkflowIdx === 0 && (
-                      <div className="bg-[#0f2c56]/90 border border-white/15 rounded-3xl p-4 shadow-xl space-y-2 text-white">
-                        <div className="text-[11px] font-bold text-slate-200 uppercase tracking-wider">Parameter Standar ATS</div>
-                        <div className="space-y-1.5 text-[11px]">
-                          <div className="flex items-center justify-between p-2 rounded-xl bg-white/5">
+                      <div className="space-y-2 text-white">
+                        <div className="text-[11px] font-bold text-[#fde6e6] uppercase tracking-wider">Parameter Standar ATS</div>
+                        <div className="divide-y divide-white/15 text-xs">
+                          <div className="flex items-center justify-between py-2">
                             <span>Format 1-Kolom Simetris</span>
-                            <span className="text-emerald-400 font-bold">Lolos</span>
+                            <span className="text-emerald-300 font-bold">Lolos</span>
                           </div>
-                          <div className="flex items-center justify-between p-2 rounded-xl bg-white/5">
+                          <div className="flex items-center justify-between py-2">
                             <span>Tipografi Bersih (11pt)</span>
-                            <span className="text-emerald-400 font-bold">Lolos</span>
+                            <span className="text-emerald-300 font-bold">Lolos</span>
                           </div>
-                          <div className="flex items-center justify-between p-2 rounded-xl bg-white/5">
+                          <div className="flex items-center justify-between py-2">
                             <span>Bebas Simbol Kompleks</span>
-                            <span className="text-emerald-400 font-bold">Lolos</span>
+                            <span className="text-emerald-300 font-bold">Lolos</span>
                           </div>
                         </div>
                       </div>
                     )}
 
                     {activeWorkflowIdx === 1 && (
-                      <div className="bg-[#0f2c56]/90 border border-white/15 rounded-3xl p-4 shadow-xl space-y-2 text-white">
-                        <div className="text-[11px] font-bold text-slate-200 uppercase tracking-wider">Analisis Dampak Karir</div>
-                        <div className="space-y-1.5 text-[11px]">
-                          <div className="p-2 rounded-xl bg-white/5">
-                            <div className="text-[10px] text-slate-300">Kata Kerja Aktif</div>
-                            <div className="font-bold text-emerald-300 text-xs mt-0.5">18 Frasa Terdeteksi</div>
+                      <div className="space-y-2 text-white">
+                        <div className="text-[11px] font-bold text-[#fde6e6] uppercase tracking-wider">Analisis Dampak Karir</div>
+                        <div className="divide-y divide-white/15 text-xs">
+                          <div className="py-2">
+                            <div className="text-[10px] text-[#fde6e6]">Kata Kerja Aktif</div>
+                            <div className="font-bold text-emerald-300 mt-0.5">18 Frasa Terdeteksi</div>
                           </div>
-                          <div className="p-2 rounded-xl bg-white/5">
-                            <div className="text-[10px] text-slate-300">Peluang Lolos Seleksi</div>
-                            <div className="font-bold text-white text-xs mt-0.5">+24% Poin Tambahan</div>
+                          <div className="py-2">
+                            <div className="text-[10px] text-[#fde6e6]">Peluang Lolos Seleksi</div>
+                            <div className="font-bold text-white mt-0.5">+24% Poin Tambahan</div>
                           </div>
                         </div>
                       </div>
                     )}
 
                     {activeWorkflowIdx === 2 && (
-                      <div className="bg-[#0f2c56]/90 border border-white/15 rounded-3xl p-4 shadow-xl space-y-2 text-white">
-                        <div className="text-[11px] font-bold text-slate-200 uppercase tracking-wider">Keahlian Terpetakan</div>
+                      <div className="space-y-2 text-white">
+                        <div className="text-[11px] font-bold text-[#fde6e6] uppercase tracking-wider">Keahlian Terpetakan</div>
                         <div className="flex flex-wrap gap-1.5 pt-1">
                           {["Next.js", "TypeScript", "Tailwind CSS", "REST API", "Git"].map((sk) => (
-                            <span key={sk} className="text-[10px] font-mono font-bold bg-white/10 px-2 py-1 rounded-lg text-white">
+                            <span key={sk} className="text-[10px] font-mono font-bold bg-white/15 px-2.5 py-1 rounded-full text-white">
                               {sk}
                             </span>
                           ))}
@@ -752,16 +748,16 @@ export default function HomePage() {
                     )}
 
                     {activeWorkflowIdx === 3 && (
-                      <div className="bg-[#0f2c56]/90 border border-white/15 rounded-3xl p-4 shadow-xl space-y-2 text-white">
-                        <div className="text-[11px] font-bold text-slate-200 uppercase tracking-wider">Fokus Evaluasi</div>
-                        <div className="space-y-1.5 text-[11px]">
-                          <div className="p-2 rounded-xl bg-white/5 flex items-center justify-between">
+                      <div className="space-y-2 text-white">
+                        <div className="text-[11px] font-bold text-[#fde6e6] uppercase tracking-wider">Fokus Evaluasi</div>
+                        <div className="divide-y divide-white/15 text-xs">
+                          <div className="py-2 flex items-center justify-between">
                             <span>Keahlian Teknis</span>
-                            <span className="text-emerald-400 font-bold">Prioritas</span>
+                            <span className="text-emerald-300 font-bold">Prioritas</span>
                           </div>
-                          <div className="p-2 rounded-xl bg-white/5 flex items-center justify-between">
+                          <div className="py-2 flex items-center justify-between">
                             <span>Pengalaman Proyek</span>
-                            <span className="text-emerald-400 font-bold">Terukur</span>
+                            <span className="text-emerald-300 font-bold">Terukur</span>
                           </div>
                         </div>
                       </div>
@@ -769,18 +765,18 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* Small Bento Quick-Metrics Strip */}
-                <div className="relative z-20 grid grid-cols-3 gap-2.5">
-                  <div className="rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 p-3">
+                {/* Open Typographic Metrics Strip (No Card-in-Card) */}
+                <div className="relative z-20 grid grid-cols-3 divide-x divide-white/15 border-t border-white/15 pt-3">
+                  <div className="pr-3">
                     <div className="text-[10px] text-[#fde6e6] font-semibold">Waktu Proses</div>
                     <div className="text-xs sm:text-sm font-black text-white mt-0.5">~30 Detik</div>
                   </div>
-                  <div className="rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 p-3">
+                  <div className="px-3">
                     <div className="text-[10px] text-[#fde6e6] font-semibold">Input Fleksibel</div>
                     <div className="text-xs sm:text-sm font-black text-white mt-0.5">PDF / Kuesioner</div>
                   </div>
-                  <div className="rounded-2xl bg-[#0f2c56] border border-white/15 p-3">
-                    <div className="text-[10px] text-slate-300 font-semibold">Akses Penuh</div>
+                  <div className="pl-3">
+                    <div className="text-[10px] text-[#fde6e6] font-semibold">Akses Penuh</div>
                     <div className="text-xs sm:text-sm font-black text-white mt-0.5">Gratis Selamanya</div>
                   </div>
                 </div>
@@ -844,7 +840,7 @@ export default function HomePage() {
                   ))}
                 </div>
 
-                <div className="p-3 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 flex items-start gap-2.5 text-xs text-[#fde6e6]">
+                <div className="pt-1 flex items-start gap-2.5 text-xs text-[#fde6e6]">
                   <CheckCircle2 className="w-4 h-4 text-[#faa9ab] shrink-0 mt-0.5" />
                   <p className="leading-snug">
                     Format dan kalimat pengalaman otomatis diselaraskan dengan kriteria seleksi posisi target.
@@ -852,30 +848,33 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Target Job Matching Small Bento Grid */}
-              <div className="sm:col-span-5 grid grid-cols-2 gap-2.5">
-                <div className="col-span-2 bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 space-y-2">
+              {/* Target Job Matching Open Summary (Flat directly on Crimson Stage, No Card-in-Card) */}
+              <div className="sm:col-span-5 sm:border-l sm:border-white/20 sm:pl-5 space-y-4">
+                <div className="space-y-1.5">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-bold text-[#fefefd]">Rekomendasi Utama</span>
+                    <span className="font-bold text-[#fde6e6]">Rekomendasi Utama</span>
                     <span className="bg-[#0f2c56] text-white text-[10px] font-black px-2.5 py-0.5 rounded-full">
                       94% Cocok
                     </span>
                   </div>
-                  <div className="text-sm font-black text-white">Junior Frontend Developer</div>
+                  <div className="text-base font-black text-white">Junior Frontend Developer</div>
                   <div className="text-[11px] text-[#fde6e6]">PT Teknologi Berdaya Nusantara</div>
                   <div className="pt-1 flex flex-wrap gap-1">
-                    <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded-md font-mono text-white">React</span>
-                    <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded-md font-mono text-white">TypeScript</span>
-                    <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded-md font-mono text-white">Next.js</span>
+                    <span className="text-[10px] bg-white/15 px-2 py-0.5 rounded-full font-mono text-white">React</span>
+                    <span className="text-[10px] bg-white/15 px-2 py-0.5 rounded-full font-mono text-white">TypeScript</span>
+                    <span className="text-[10px] bg-white/15 px-2 py-0.5 rounded-full font-mono text-white">Next.js</span>
                   </div>
                 </div>
-                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/15 space-y-0.5">
-                  <div className="text-[10px] text-[#fde6e6]">Kalimat Aktif</div>
-                  <div className="text-sm font-black text-white">+18 Frasa</div>
-                </div>
-                <div className="bg-[#0f2c56] rounded-2xl p-3 border border-white/15 space-y-0.5">
-                  <div className="text-[10px] text-slate-300">Kesiapan Berkas</div>
-                  <div className="text-sm font-black text-emerald-300">Siap Kirim</div>
+
+                <div className="grid grid-cols-2 gap-3 pt-3 border-t border-white/15">
+                  <div>
+                    <div className="text-[10px] text-[#fde6e6]">Kalimat Aktif</div>
+                    <div className="text-sm font-black text-white">+18 Frasa</div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] text-[#fde6e6]">Kesiapan Berkas</div>
+                    <div className="text-sm font-black text-emerald-300">Siap Kirim</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1047,17 +1046,17 @@ export default function HomePage() {
                 <circle cx="450" cy="10" r="6" fill="#ce2731" />
               </svg>
 
-              {/* Small Bento Score Progression Strip */}
-              <div className="grid grid-cols-3 gap-2.5">
-                <div className="rounded-2xl bg-white border border-[#fde6e6] p-3">
+              {/* Open Score Progression Strip (No Card-in-Card) */}
+              <div className="grid grid-cols-3 divide-x divide-[#fcd0d1] py-2 border-t border-[#fcd0d1]/60">
+                <div className="pr-3">
                   <div className="text-[10px] font-semibold text-slate-500">Draf Awal</div>
                   <div className="text-sm sm:text-base font-black text-[#0f2c56] mt-0.5">64 / 100</div>
                 </div>
-                <div className="rounded-2xl bg-[#0f2c56] p-3 text-white">
-                  <div className="text-[10px] font-semibold text-slate-300">Setelah Revisi</div>
-                  <div className="text-sm sm:text-base font-black text-white mt-0.5">88 / 100</div>
+                <div className="px-3">
+                  <div className="text-[10px] font-semibold text-slate-500">Setelah Revisi</div>
+                  <div className="text-sm sm:text-base font-black text-[#0f2c56] mt-0.5">88 / 100</div>
                 </div>
-                <div className="rounded-2xl bg-white border border-[#fde6e6] p-3">
+                <div className="pl-3">
                   <div className="text-[10px] font-semibold text-slate-500">Peningkatan</div>
                   <div className="text-sm sm:text-base font-black text-[#ce2731] mt-0.5">+24 Poin</div>
                 </div>
@@ -1076,7 +1075,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right 5 Cols: Bold Second (#ce2731) Card + Before-After Active Voice Comparison */}
+            {/* Right 5 Cols: Bold Second (#ce2731) Card + Flat Before-After Active Voice Comparison */}
             <div
               className={`lg:col-span-5 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-7 text-[#fefefd] flex flex-col justify-between relative overflow-hidden bg-[#ce2731] lg:bg-transparent shadow-xl lg:shadow-none origin-bottom-right border border-white/10 lg:border-transparent ${getChildAnimClass(3, "right", "delay-200")}`}
             >
@@ -1089,24 +1088,24 @@ export default function HomePage() {
                 </h3>
               </div>
 
-              {/* Before vs After Active Voice Showcase */}
-              <div className="space-y-2.5 my-auto relative z-20">
-                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/15 space-y-1">
+              {/* Before vs After Active Voice Showcase (Flat Typographic Blocks, No Card-in-Card) */}
+              <div className="space-y-4 my-auto relative z-20">
+                <div className="border-l-2 border-white/30 pl-3.5 space-y-1">
                   <div className="flex items-center justify-between text-[10px] font-bold uppercase text-[#faa9ab]">
                     <span>Sebelum (Pasif &amp; Standar)</span>
-                    <span className="text-rose-300 font-mono">Skor 45</span>
+                    <span className="text-rose-200 font-mono">Skor 45</span>
                   </div>
-                  <p className="text-xs text-slate-200 line-through opacity-75">
+                  <p className="text-xs text-slate-200 line-through opacity-80">
                     &quot;Membantu mengurus acara dan kegiatan mahasiswa di kampus.&quot;
                   </p>
                 </div>
-                <div className="bg-[#fefefd] text-[#0f2c56] rounded-2xl p-3.5 shadow-lg space-y-1 border border-white">
-                  <div className="flex items-center justify-between text-[10px] font-bold uppercase text-[#ce2731]">
+                <div className="border-l-4 border-white pl-3.5 space-y-1">
+                  <div className="flex items-center justify-between text-[10px] font-bold uppercase text-white">
                     <span>Sesudah Pasbana AI (Aktif &amp; Terukur)</span>
-                    <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-black font-mono">Skor 92</span>
+                    <span className="text-[#0f2c56] bg-white px-2 py-0.5 rounded-full font-black font-mono">Skor 92</span>
                   </div>
-                  <p className="text-xs font-semibold leading-relaxed">
-                    &quot;<strong className="text-[#ce2731]">Menginisiasi &amp; mengelola</strong> seminar karir dengan <strong className="text-[#0f2c56]">350+ peserta</strong> serta kepuasan 94%.&quot;
+                  <p className="text-xs sm:text-sm font-semibold text-white leading-relaxed">
+                    &quot;Menginisiasi &amp; mengelola seminar karir dengan 350+ peserta serta kepuasan 94%.&quot;
                   </p>
                 </div>
               </div>
@@ -1211,9 +1210,9 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Varied Small Bento Grid (Replacing redundant Blind Scoring / UU PDP card) */}
-              <div className="sm:col-span-5 grid grid-cols-2 gap-2.5">
-                <div className="col-span-2 bg-white/10 backdrop-blur-md rounded-2xl p-3.5 border border-white/15 space-y-1">
+              {/* Flat Objective Metrics (No Card-in-Card) */}
+              <div className="sm:col-span-5 sm:border-l sm:border-white/15 sm:pl-5 space-y-4">
+                <div className="space-y-1">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-white flex items-center gap-1.5">
                       <BarChart3 className="w-4 h-4 text-emerald-400" />
@@ -1221,24 +1220,28 @@ export default function HomePage() {
                     </span>
                     <span className="text-[10px] font-mono font-bold text-emerald-300">Terukur</span>
                   </div>
-                  <p className="text-[11px] text-slate-200 leading-snug">
+                  <p className="text-[11px] text-slate-300 leading-snug">
                     Struktur, keahlian, dampak kerja, dan kecocokan posisi dinilai transparan.
                   </p>
                 </div>
-                <div className="bg-[#ce2731] rounded-2xl p-3 border border-white/15 space-y-0.5">
-                  <div className="text-lg font-black text-white">94%</div>
-                  <div className="text-[10px] text-[#fde6e6] leading-tight">Struktur ATS</div>
+
+                <div className="grid grid-cols-2 gap-3 py-3 border-y border-white/15">
+                  <div>
+                    <div className="text-xl font-black text-white">94%</div>
+                    <div className="text-[10px] text-slate-300">Struktur ATS</div>
+                  </div>
+                  <div>
+                    <div className="text-xl font-black text-[#faa9ab]">90%</div>
+                    <div className="text-[10px] text-slate-300">Relevansi Skill</div>
+                  </div>
                 </div>
-                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/15 space-y-0.5">
-                  <div className="text-lg font-black text-white">90%</div>
-                  <div className="text-[10px] text-slate-200 leading-tight">Relevansi Skill</div>
-                </div>
-                <div className="col-span-2 bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/15 flex items-center justify-between text-xs">
+
+                <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-200 flex items-center gap-1.5">
                     <Lock className="w-3.5 h-3.5 text-emerald-400" />
                     Kendali Data Penuh
                   </span>
-                  <span className="text-[10px] font-bold text-white bg-white/15 px-2 py-0.5 rounded-full">
+                  <span className="text-[10px] font-bold text-white bg-white/15 px-2.5 py-0.5 rounded-full">
                     Hapus Kapan Saja
                   </span>
                 </div>
@@ -1330,11 +1333,9 @@ export default function HomePage() {
                       {item.desc}
                     </p>
                   </div>
-                  <div className="pt-2">
-                    <div className="rounded-xl bg-white border border-slate-200/80 px-3 py-2 text-[11px] font-bold text-[#0f2c56] flex items-center justify-between">
-                      <span className="text-slate-400 font-semibold">Hasil:</span>
-                      <span>{item.output}</span>
-                    </div>
+                  <div className="pt-2.5 border-t border-slate-200/80 text-[11px] font-bold text-[#0f2c56] flex items-center justify-between">
+                    <span className="text-slate-400 font-semibold">Hasil:</span>
+                    <span>{item.output}</span>
                   </div>
                 </div>
               ))}
@@ -1433,23 +1434,25 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Small Bento Grid (Right 4 Cols) */}
-            <div className="hidden lg:grid lg:col-span-4 grid-cols-2 gap-2.5 relative z-20">
-              <div className="p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 space-y-1">
-                <div className="text-lg font-black text-white">30 Detik</div>
-                <div className="text-[11px] text-[#fde6e6] leading-snug">
-                  Evaluasi cepat 5 dimensi ATS.
+            {/* Flat Stat Highlights (Right 4 Cols, No Card-in-Card) */}
+            <div className="hidden lg:flex lg:col-span-4 flex-col justify-center gap-4 lg:border-l lg:border-white/20 lg:pl-7 relative z-20">
+              <div className="grid grid-cols-2 gap-4 pb-4 border-b border-white/15">
+                <div>
+                  <div className="text-2xl font-black text-white">30 Detik</div>
+                  <div className="text-[11px] text-[#fde6e6] leading-snug mt-0.5">
+                    Evaluasi cepat 5 dimensi ATS.
+                  </div>
+                </div>
+                <div>
+                  <div className="text-2xl font-black text-white">92%</div>
+                  <div className="text-[11px] text-[#fde6e6] leading-snug mt-0.5">
+                    Akurasi pencocokan karir.
+                  </div>
                 </div>
               </div>
-              <div className="p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 space-y-1">
-                <div className="text-lg font-black text-white">92%</div>
-                <div className="text-[11px] text-[#fde6e6] leading-snug">
-                  Akurasi pencocokan karir.
-                </div>
-              </div>
-              <div className="col-span-2 p-4 rounded-2xl bg-[#0f2c56] border border-white/15 space-y-1 shadow-lg">
+              <div className="space-y-1">
                 <div className="text-xs font-black text-white">100% Akses Terbuka &amp; Gratis</div>
-                <div className="text-[11px] text-slate-200 leading-relaxed">
+                <div className="text-[11px] text-[#fde6e6] leading-relaxed">
                   Tanpa biaya berlangganan, didedikasikan untuk seluruh talenta dan pencari kerja Indonesia.
                 </div>
               </div>
