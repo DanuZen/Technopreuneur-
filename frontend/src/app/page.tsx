@@ -99,6 +99,7 @@ export default function HomePage() {
     isAnimatingRef.current = true;
     activeSlideRef.current = clamped;
     setActiveSlide(clamped);
+    window.dispatchEvent(new CustomEvent("pasbana:activeSlide", { detail: clamped }));
 
     setTimeout(() => {
       isAnimatingRef.current = false;
@@ -106,20 +107,39 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
+    const hashMap: Record<string, number> = {
+      "": 0,
+      "#": 0,
+      "#beranda": 0,
+      "#fitur": 1,
+      "#persiapan": 2,
+      "#asisten": 3,
+      "#prinsip": 4,
+      "#cara-kerja": 5,
+      "#mulai": 6,
+    };
+
     const syncSlideFromHash = () => {
-      const hash = window.location.hash;
-      if (hash === "#fitur") {
-        goToSlide(1);
-      } else if (hash === "#cara-kerja") {
-        goToSlide(3);
-      } else if (hash === "#prinsip") {
-        goToSlide(4);
+      const target = hashMap[window.location.hash];
+      if (typeof target === "number") {
+        goToSlide(target);
+      }
+    };
+
+    const handleSlideEvent = (e: Event) => {
+      const customEvent = e as CustomEvent<number>;
+      if (typeof customEvent.detail === "number") {
+        goToSlide(customEvent.detail);
       }
     };
 
     syncSlideFromHash();
     window.addEventListener("hashchange", syncSlideFromHash);
-    return () => window.removeEventListener("hashchange", syncSlideFromHash);
+    window.addEventListener("pasbana:slide", handleSlideEvent);
+    return () => {
+      window.removeEventListener("hashchange", syncSlideFromHash);
+      window.removeEventListener("pasbana:slide", handleSlideEvent);
+    };
   }, [goToSlide]);
 
   useEffect(() => {

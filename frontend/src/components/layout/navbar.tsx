@@ -17,12 +17,50 @@ import {
 import { User } from "@/types";
 import { api } from "@/lib/api";
 
+const LANDING_SECTIONS = [
+  { label: "Beranda", href: "/", slide: 0 },
+  { label: "Fitur", href: "/#fitur", slide: 1 },
+  { label: "Persiapan", href: "/#persiapan", slide: 2 },
+  { label: "Asisten", href: "/#asisten", slide: 3 },
+  { label: "Prinsip", href: "/#prinsip", slide: 4 },
+  { label: "Cara Kerja", href: "/#cara-kerja", slide: 5 },
+];
+
 export function Navbar({ floating = false }: { floating?: boolean }) {
   const pathname = usePathname();
   const [user, setUser] = useState<User | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [activeLandingSlide, setActiveLandingSlide] = useState<number>(0);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleActiveSlide = (e: Event) => {
+      const customEvent = e as CustomEvent<number>;
+      if (typeof customEvent.detail === "number") {
+        setActiveLandingSlide(customEvent.detail);
+      }
+    };
+    window.addEventListener("pasbana:activeSlide", handleActiveSlide);
+    return () => window.removeEventListener("pasbana:activeSlide", handleActiveSlide);
+  }, []);
+
+  const handleSectionClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+    slide: number
+  ) => {
+    setMobileMenuOpen(false);
+    if (pathname === "/") {
+      e.preventDefault();
+      if (slide === 0) {
+        window.history.replaceState(null, "", "/");
+      } else {
+        window.history.replaceState(null, "", href);
+      }
+      window.dispatchEvent(new CustomEvent("pasbana:slide", { detail: slide }));
+    }
+  };
 
   useEffect(() => {
     const storedUser = localStorage.getItem("cm_user");
@@ -91,20 +129,27 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
           </Link>
 
           {/* Desktop Navigation (Single Flat Row Inside Pill) */}
-          <nav className="hidden md:flex items-center gap-1 lg:gap-1.5">
-            <Link
-              href="/"
-              className={`text-xs font-medium px-3 py-1.5 rounded-full transition ${
-                pathname === "/"
-                  ? "bg-white/15 text-white font-semibold"
-                  : "text-slate-200 hover:text-white hover:bg-white/10"
-              }`}
-            >
-              Beranda
-            </Link>
+          <nav className="hidden lg:flex items-center gap-1">
+            {LANDING_SECTIONS.map((item) => {
+              const isActive = pathname === "/" && activeLandingSlide === item.slide;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={(e) => handleSectionClick(e, item.href, item.slide)}
+                  className={`text-xs font-medium px-2.5 py-1.5 rounded-full transition whitespace-nowrap ${
+                    isActive
+                      ? "bg-white/15 text-white font-semibold"
+                      : "text-slate-200 hover:text-white hover:bg-white/10"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
             <Link
               href="/jobs"
-              className={`text-xs font-medium px-3 py-1.5 rounded-full transition ${
+              className={`text-xs font-medium px-2.5 py-1.5 rounded-full transition whitespace-nowrap ${
                 pathname === "/jobs"
                   ? "bg-white/15 text-white font-semibold"
                   : "text-slate-200 hover:text-white hover:bg-white/10"
@@ -115,7 +160,7 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
             </Link>
             <Link
               href="/about"
-              className={`text-xs font-medium px-3 py-1.5 rounded-full transition ${
+              className={`text-xs font-medium px-2.5 py-1.5 rounded-full transition whitespace-nowrap ${
                 pathname === "/about"
                   ? "bg-white/15 text-white font-semibold"
                   : "text-slate-200 hover:text-white hover:bg-white/10"
@@ -126,7 +171,7 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
           </nav>
 
           {/* Desktop Actions */}
-          <div className="hidden md:flex items-center gap-1.5 shrink-0 relative" ref={dropdownRef}>
+          <div className="hidden lg:flex items-center gap-1.5 shrink-0 relative" ref={dropdownRef}>
             {user ? (
               <div className="relative">
                 {/* Trigger Pill Button with Chevron */}
@@ -227,7 +272,7 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex md:hidden">
+          <div className="flex lg:hidden">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -242,14 +287,22 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
 
       {/* Mobile Menu Floating Dropdown Card */}
       {mobileMenuOpen && (
-        <div className="pointer-events-auto md:hidden mt-2 w-full max-w-sm rounded-3xl bg-[#0e2647]/95 backdrop-blur-xl text-white shadow-2xl px-5 py-4 space-y-2.5">
-          <Link
-            href="/"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-slate-200 hover:text-white py-1"
-          >
-            Beranda
-          </Link>
+        <div className="pointer-events-auto lg:hidden mt-2 w-full max-w-sm rounded-3xl bg-[#0e2647]/95 backdrop-blur-xl text-white shadow-2xl px-5 py-4 space-y-2.5">
+          {LANDING_SECTIONS.map((item) => {
+            const isActive = pathname === "/" && activeLandingSlide === item.slide;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={(e) => handleSectionClick(e, item.href, item.slide)}
+                className={`block text-sm font-medium py-1 ${
+                  isActive ? "text-white font-semibold" : "text-slate-200 hover:text-white"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
           <Link
             href="/jobs"
             onClick={() => setMobileMenuOpen(false)}
