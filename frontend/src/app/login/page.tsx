@@ -430,20 +430,21 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* RIGHT COLUMN (50% Width): Rounded Box Showcase (Adapted from isi-learning-hub) */}
-        <div className={`hidden lg:flex w-1/2 min-h-screen p-4 xl:p-6 bg-white ${showcaseSlideClass}`}>
-          <div className="relative w-full h-full rounded-[32px] xl:rounded-[40px] bg-gradient-to-br from-[#061026] via-[#12387a] to-[#5aa7ff] flex flex-col justify-center p-12 xl:p-16 text-white overflow-hidden">
-            {/* Soft Sky-Blue (#8EC5FF) Radial Ambient Glow */}
-            <div className="absolute inset-0 pointer-events-none opacity-55 bg-[radial-gradient(ellipse_at_center,rgba(142,197,255,0.55)_0%,transparent_72%)] animate-pulse-glow" />
-            <div className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#8EC5FF]/35 blur-3xl pointer-events-none" />
-
+        {/* RIGHT COLUMN (50% Width): Rounded Box Showcase */}
+        <div className={`hidden lg:flex w-1/2 min-h-screen p-4 xl:p-6 bg-[#fefefd] ${showcaseSlideClass}`}>
+          <div
+            className="relative w-full h-full rounded-[32px] xl:rounded-[40px] flex flex-col justify-center p-12 xl:p-16 text-[#fefefd] overflow-hidden shadow-2xl"
+            style={{
+              background: "linear-gradient(145deg, #0f2c56 0%, #163861 48%, #ce2731 100%)",
+            }}
+          >
             {/* Subtle Geometric Grid */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0d_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0d_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff12_1px,transparent_1px),linear-gradient(to_bottom,#ffffff12_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
 
             {/* Centered Graphic Showcase */}
-            <div className="relative z-10 my-auto text-center space-y-6 py-12 max-w-lg mx-auto">
-              {/* Floating Mascot & Brand Emblem Showcase */}
-              <div className="w-40 h-52 mx-auto relative drop-shadow-[0_25px_50px_rgba(142,197,255,0.45)] animate-float-slow">
+            <div className="relative z-10 my-auto text-center space-y-6 py-8 max-w-lg mx-auto">
+              {/* Large Proportional Mascot Showcase */}
+              <div className="w-56 h-72 xl:w-64 xl:h-80 mx-auto relative drop-shadow-[0_28px_44px_rgba(8,27,55,0.55)] animate-float-slow">
                 <Image
                   src="/mascot/mascot-hero.webp"
                   alt="Maskot Pasbana AI"
@@ -454,10 +455,10 @@ export default function LoginPage() {
               </div>
 
               <div className="space-y-3 animate-fade-in-up delay-200">
-                <h2 className="text-3xl xl:text-4xl font-black tracking-tight text-white leading-tight uppercase">
+                <h2 className="text-3xl xl:text-4xl font-black tracking-tight text-[#fefefd] leading-tight uppercase">
                   PASBANA AI • KARIR PAS BANA
                 </h2>
-                <p className="text-sm text-blue-50/95 font-medium leading-relaxed">
+                <p className="text-sm text-[#fde6e6] font-medium leading-relaxed">
                   Platform Evaluasi CV Objektif 5 Dimensi, Panduan Kuesioner Standar ATS &amp; Rekomendasi Lowongan Kerja Terintegrasi untuk Talenta Muda Indonesia.
                 </p>
               </div>
