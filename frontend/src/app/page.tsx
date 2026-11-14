@@ -11,10 +11,6 @@ import {
   Bell,
   Plus,
   Minus,
-  FileText,
-  Briefcase,
-  ShieldCheck,
-  UserCheck,
 } from "lucide-react";
 
 const TOTAL_SLIDES = 7;
@@ -349,12 +345,13 @@ export default function HomePage() {
       case 6:
       default:
         return {
-          top: "calc(100% - 76px)",
-          left: "0px",
-          width: "100%",
-          height: "76px",
+          top: "100%",
+          left: "20%",
+          width: "60%",
+          height: "0px",
           borderRadius: "28px",
           backgroundColor: "#0f2c56",
+          opacity: 0,
         };
     }
   };
@@ -1043,14 +1040,14 @@ export default function HomePage() {
       </section>
 
       {/* =====================================================================
-          SLIDE 6 (#mulai): ACCORDION LIST & MORPHED NAVY FOOTER BAR (Matching Video 00:15 - 00:16)
+          SLIDE 6 (#mulai): ACCORDION LIST ON OPEN WHITE CANVAS (Matching Video 00:15)
           ===================================================================== */}
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(6)}`}
       >
-        <div className="w-full h-full mx-auto flex flex-col justify-between">
+        <div className="w-full h-full mx-auto flex flex-col justify-center">
           {/* Top Heading + 5 Expandable Horizontal Rows on Open White Canvas */}
-          <div className={`my-auto px-4 sm:px-8 space-y-5 ${getChildAnimClass(6, "down", "delay-75")}`}>
+          <div className={`px-4 sm:px-8 space-y-6 ${getChildAnimClass(6, "down", "delay-75")}`}>
             <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#0f2c56] leading-[1.14] max-w-xl text-left">
               Seluruh perangkat cerdas ini juga
               <br />
@@ -1065,7 +1062,7 @@ export default function HomePage() {
                     <button
                       type="button"
                       onClick={() => setOpenAccordionId(isOpen ? null : item.id)}
-                      className="w-full py-3 sm:py-3.5 flex items-center justify-between gap-4 text-left cursor-pointer group"
+                      className="w-full py-3.5 sm:py-4 flex items-center justify-between gap-4 text-left cursor-pointer group"
                     >
                       <span className="text-xs sm:text-sm font-semibold text-[#0f2c56] group-hover:text-[#ce2731] transition">
                         {item.question}
@@ -1075,7 +1072,7 @@ export default function HomePage() {
                       </span>
                     </button>
                     {isOpen && (
-                      <div className="pb-3.5 pr-10 text-xs text-slate-500 leading-relaxed max-w-3xl">
+                      <div className="pb-4 pr-10 text-xs text-slate-600 leading-relaxed max-w-3xl">
                         {item.answer}
                       </div>
                     )}
@@ -1084,54 +1081,6 @@ export default function HomePage() {
               })}
             </div>
           </div>
-
-          {/* Bottom Minimal Footer inside Morphed Navy Bar */}
-          <footer
-            className={`relative z-20 h-[68px] lg:h-[76px] rounded-[24px] sm:rounded-[28px] bg-[#0f2c56] lg:bg-transparent px-6 sm:px-8 flex items-center justify-between text-xs text-white ${getChildAnimClass(6, "up", "delay-150")}`}
-          >
-            <div className="flex items-center gap-2.5 font-black text-base text-white">
-              <span className="w-7 h-7 rounded-full bg-[#ce2731] inline-flex items-center justify-center text-white text-xs">
-                P
-              </span>
-              <span>
-                Pasbana<span className="text-[#ce2731]"> AI</span>
-              </span>
-              <span className="hidden sm:inline text-xs font-normal text-slate-300 ml-3">
-                © 2026 Karir yang Pas Bana
-              </span>
-            </div>
-
-            <div className="flex items-center gap-2.5">
-              <Link
-                href="/evaluate"
-                title="Evaluasi CV"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#ce2731] text-white flex items-center justify-center transition"
-              >
-                <FileText className="w-4 h-4" />
-              </Link>
-              <Link
-                href="/jobs"
-                title="Lowongan Kerja"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#ce2731] text-white flex items-center justify-center transition"
-              >
-                <Briefcase className="w-4 h-4" />
-              </Link>
-              <Link
-                href="/about"
-                title="Tentang Kami"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#ce2731] text-white flex items-center justify-center transition"
-              >
-                <ShieldCheck className="w-4 h-4" />
-              </Link>
-              <Link
-                href="/login"
-                title="Masuk Akun"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#ce2731] text-white flex items-center justify-center transition"
-              >
-                <UserCheck className="w-4 h-4" />
-              </Link>
-            </div>
-          </footer>
         </div>
       </section>
     </div>
