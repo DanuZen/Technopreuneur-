@@ -51,12 +51,14 @@ export function AppShell({ children }: AppShellProps) {
     return <main className="min-h-dvh w-full bg-white text-primary">{children}</main>;
   }
 
-  // Halaman beranda (/): Terkunci 1 layar penuh (tanpa scroll geser ke bawah), transisi animasi antar-bagian
+  // Halaman beranda (/): Terkunci 1 layar penuh (tanpa scroll geser ke bawah), Navbar melayang di dalam atas frame seperti referensi Dribbble
   if (pathname === "/") {
     return (
-      <div className="h-dvh w-full overflow-hidden flex flex-col bg-[#fefefd] text-primary select-none">
-        <Navbar />
-        <main className="flex-1 overflow-hidden relative">{children}</main>
+      <div className="h-dvh w-full overflow-hidden relative bg-[#fefefd] text-primary select-none">
+        <div className="absolute top-4 sm:top-5 inset-x-0 z-50 pointer-events-none">
+          <Navbar floating />
+        </div>
+        <main className="h-full w-full overflow-hidden relative">{children}</main>
       </div>
     );
   }
