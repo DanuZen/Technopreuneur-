@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import {
   FileSpreadsheet,
@@ -112,41 +112,86 @@ const TOTAL_SLIDES = 9;
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [heroBoardTab, setHeroBoardTab] = useState<"ats" | "match" | "gap">("ats");
-  const stickyTrackRef = useRef<HTMLDivElement | null>(null);
+  const isAnimatingRef = useRef<boolean>(false);
+  const wheelDeltaRef = useRef<number>(0);
+  const wheelResetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const touchStartYRef = useRef<number | null>(null);
 
+  const goToSlide = useCallback(
+    (target: number) => {
+      const clamped = Math.max(0, Math.min(TOTAL_SLIDES - 1, target));
+      if (clamped === currentSlide || isAnimatingRef.current) return;
+      isAnimatingRef.current = true;
+      wheelDeltaRef.current = 0;
+      setCurrentSlide(clamped);
+      setTimeout(() => {
+        isAnimatingRef.current = false;
+        wheelDeltaRef.current = 0;
+      }, 680);
+    },
+    [currentSlide]
+  );
+
+  // Wheel / Trackpad accumulator + Keyboard navigation (100% locked viewport, zero vertical scrollbar)
   useEffect(() => {
-    const handleScroll = () => {
-      const track = stickyTrackRef.current;
-      if (!track) return;
-      const rect = track.getBoundingClientRect();
-      const scrollableDistance = track.offsetHeight - window.innerHeight;
-      if (scrollableDistance <= 0) return;
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      if (isAnimatingRef.current) return;
 
-      const scrolled = Math.max(0, Math.min(scrollableDistance, -rect.top));
-      const progress = scrolled / scrollableDistance; // 0.0 -> 1.0
+      wheelDeltaRef.current += e.deltaY;
+      if (wheelResetTimerRef.current) {
+        clearTimeout(wheelResetTimerRef.current);
+      }
+      wheelResetTimerRef.current = setTimeout(() => {
+        wheelDeltaRef.current = 0;
+      }, 180);
 
-      const rawIndex = Math.min(
-        TOTAL_SLIDES - 1,
-        Math.floor(progress * TOTAL_SLIDES)
-      );
-      setCurrentSlide(rawIndex);
+      if (Math.abs(wheelDeltaRef.current) >= 32) {
+        if (wheelDeltaRef.current > 0) {
+          goToSlide(currentSlide + 1);
+        } else {
+          goToSlide(currentSlide - 1);
+        }
+      }
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (isAnimatingRef.current) return;
+      if (e.key === "ArrowDown" || e.key === "PageDown") {
+        e.preventDefault();
+        goToSlide(currentSlide + 1);
+      } else if (e.key === "ArrowUp" || e.key === "PageUp") {
+        e.preventDefault();
+        goToSlide(currentSlide - 1);
+      }
+    };
 
-  const jumpToSlide = (targetSlide: number) => {
-    setCurrentSlide(targetSlide);
-    const track = stickyTrackRef.current;
-    if (!track) return;
-    const scrollableDistance = track.offsetHeight - window.innerHeight;
-    const targetProgress = (targetSlide + 0.35) / TOTAL_SLIDES;
-    window.scrollTo({
-      top: track.offsetTop + scrollableDistance * targetProgress,
-      behavior: "smooth",
-    });
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("keydown", handleKeyDown);
+      if (wheelResetTimerRef.current) {
+        clearTimeout(wheelResetTimerRef.current);
+      }
+    };
+  }, [currentSlide, goToSlide]);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartYRef.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartYRef.current === null || isAnimatingRef.current) return;
+    const deltaY = touchStartYRef.current - e.changedTouches[0].clientY;
+    if (Math.abs(deltaY) > 36) {
+      if (deltaY > 0) {
+        goToSlide(currentSlide + 1);
+      } else {
+        goToSlide(currentSlide - 1);
+      }
+    }
+    touchStartYRef.current = null;
   };
 
   const isFullSkyStage = currentSlide === 0 || currentSlide === 8;
@@ -160,13 +205,11 @@ export default function Home() {
     : WORKFLOW_TABS[0];
 
   return (
-    <div className="bg-[#fefefd] text-primary">
-      {/* =====================================================================
-          UNIFIED STICKY DRIBBBLE SCROLL TRACK (Covers All Sections 0..8)
-          Works 100% with laptop touchpad, mouse wheel, scrollbar, and keyboard
-          ===================================================================== */}
-      <div ref={stickyTrackRef} className="relative h-[760vh]">
-        <div className="sticky top-[60px] h-[calc(100dvh-60px)] w-full px-2.5 sm:px-4 pb-2.5 sm:pb-4 pt-1 flex flex-col overflow-hidden select-none">
+    <div
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      className="h-full w-full px-2.5 sm:px-4 pb-2.5 sm:pb-4 pt-1 flex flex-col bg-[#fefefd] text-primary overflow-hidden select-none"
+    >
           {/* =================================================================
               TOP MORPHING SKY CONTAINER
               - 100% height on Slide 0 (Hero) & Slide 8 (Closing CTA)
@@ -531,7 +574,7 @@ export default function Home() {
                         <button
                           key={tab.stepIndex}
                           type="button"
-                          onClick={() => jumpToSlide(tab.stepIndex)}
+                          onClick={() => goToSlide(tab.stepIndex)}
                           className="text-left group cursor-pointer focus-visible:outline-none"
                         >
                           <div className="h-[2px] w-full bg-slate-200 rounded-full overflow-hidden mb-2">
@@ -568,7 +611,7 @@ export default function Home() {
                         <button
                           key={tab.stepIndex}
                           type="button"
-                          onClick={() => jumpToSlide(tab.stepIndex)}
+                          onClick={() => goToSlide(tab.stepIndex)}
                           className="text-left group cursor-pointer focus-visible:outline-none"
                         >
                           <div className="h-[2px] w-full bg-slate-200 rounded-full overflow-hidden mb-2">
@@ -923,8 +966,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
     </div>
   );
 }

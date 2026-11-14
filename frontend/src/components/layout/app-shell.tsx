@@ -51,13 +51,23 @@ export function AppShell({ children }: AppShellProps) {
     return <main className="min-h-dvh w-full bg-white text-primary">{children}</main>;
   }
 
-  // Tampilan halaman publik (/, /jobs, /about, /apply): Pill Navbar + Konten (+ Footer pada halaman selain /)
+  // Halaman beranda (/): Terkunci 1 layar penuh (tanpa scroll geser ke bawah), transisi animasi antar-bagian
+  if (pathname === "/") {
+    return (
+      <div className="h-dvh w-full overflow-hidden flex flex-col bg-[#fefefd] text-primary select-none">
+        <Navbar />
+        <main className="flex-1 overflow-hidden relative">{children}</main>
+      </div>
+    );
+  }
+
+  // Tampilan halaman publik lainnya (/jobs, /about, /apply): Pill Navbar + Konten + Footer
   if (!isDashboardWorkspace) {
     return (
       <div className="min-h-screen flex flex-col justify-between bg-[#fefefd] text-primary">
         <Navbar />
         <main className="flex-1">{children}</main>
-        {pathname !== "/" && <Footer />}
+        <Footer />
       </div>
     );
   }
