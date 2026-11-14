@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import {
   ArrowUpRight,
-  CheckCircle2,
   Eye,
   Calendar,
   Play,
@@ -235,90 +234,114 @@ export default function HomePage() {
     }
     if (index === prevSlide) {
       return scrollDir === "down"
-        ? "opacity-0 -translate-y-12 scale-[0.97] z-[15] pointer-events-none"
-        : "opacity-0 translate-y-12 scale-[0.97] z-[15] pointer-events-none";
+        ? "opacity-0 -translate-y-12 scale-[0.96] z-[15] pointer-events-none"
+        : "opacity-0 translate-y-12 scale-[0.96] z-[15] pointer-events-none";
     }
     return index < activeSlide
-      ? "opacity-0 -translate-y-16 scale-[0.95] z-0 pointer-events-none"
-      : "opacity-0 translate-y-16 scale-[0.95] z-0 pointer-events-none";
+      ? "opacity-0 -translate-y-16 scale-[0.94] z-0 pointer-events-none"
+      : "opacity-0 translate-y-16 scale-[0.94] z-0 pointer-events-none";
+  };
+
+  const getChildAnimClass = (
+    slideIndex: number,
+    enterFrom: "up" | "down" | "left" | "right" = "up",
+    delayClass: string = "delay-100"
+  ) => {
+    const isActive = activeSlide === slideIndex;
+    if (isActive) {
+      return `opacity-100 translate-x-0 translate-y-0 scale-100 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${delayClass}`;
+    }
+    const offsetMap = {
+      up: "translate-y-10 scale-[0.97]",
+      down: "-translate-y-10 scale-[0.97]",
+      left: "-translate-x-10 scale-[0.97]",
+      right: "translate-x-10 scale-[0.97]",
+    };
+    return `opacity-0 ${offsetMap[enterFrom]} transition-all duration-500 ease-in`;
   };
 
   const getGlobalMorphStyle = (slide: number): React.CSSProperties => {
     switch (slide) {
       case 0:
         return {
-          top: "12%",
-          left: "54%",
-          width: "44%",
-          height: "76%",
-          borderRadius: "40px",
+          top: "0px",
+          left: "calc(50% + 12px)",
+          width: "calc(50% - 12px)",
+          height: "100%",
+          borderRadius: "34px",
           backgroundColor: "#fdf2f2",
-          opacity: 0.65,
+          border: "1px solid #f5d0d2",
+          boxShadow: "0 20px 50px rgba(206, 39, 49, 0.08)",
         };
       case 1:
         return {
-          top: "8px",
+          top: "0px",
           left: "0px",
           width: "100%",
-          height: "calc(100% - 16px)",
-          borderRadius: "40px",
+          height: "100%",
+          borderRadius: "34px",
           backgroundColor: "#f4f5f7",
-          opacity: 1,
+          border: "1px solid #e2e8f0",
+          boxShadow: "0 24px 60px rgba(15, 44, 86, 0.07)",
         };
       case 2:
         return {
-          top: "12%",
-          left: "52%",
-          width: "46%",
-          height: "76%",
-          borderRadius: "40px",
-          backgroundColor: "#fdf2f2",
-          opacity: 0.6,
+          top: "0px",
+          left: "calc(50% + 12px)",
+          width: "calc(50% - 12px)",
+          height: "100%",
+          borderRadius: "34px",
+          backgroundColor: "#0f2c56",
+          border: "1px solid rgba(255, 255, 255, 0.15)",
+          boxShadow: "0 25px 60px rgba(15, 44, 86, 0.22)",
         };
       case 3:
         return {
-          top: "8px",
+          top: "0px",
           left: "0px",
           width: "100%",
-          height: "calc(100% - 16px)",
-          borderRadius: "40px",
+          height: "100%",
+          borderRadius: "34px",
           backgroundColor: "#0f2c56",
-          opacity: 1,
+          border: "1px solid rgba(255, 255, 255, 0.15)",
+          boxShadow: "0 25px 60px rgba(15, 44, 86, 0.25)",
         };
       case 4: {
         const col = activeFeatureIdx % 3;
         const row = Math.floor(activeFeatureIdx / 3);
         return {
-          top: row === 0 ? "136px" : "calc(50% + 42px)",
-          left: `${col * 33.3333}%`,
-          width: "31.5%",
-          height: "calc(42% - 24px)",
+          top: row === 0 ? "132px" : "calc(50% + 44px)",
+          left: `calc(${col * 33.3333}% + 16px)`,
+          width: "calc(33.3333% - 32px)",
+          height: "calc(43% - 20px)",
           borderRadius: "28px",
           backgroundColor: "#ffffff",
-          opacity: 1,
-          boxShadow: "0 24px 60px rgba(15, 44, 86, 0.08)",
+          border: "1px solid #e2e8f0",
+          boxShadow: "0 24px 60px rgba(15, 44, 86, 0.12)",
         };
       }
       case 5:
         return {
-          top: "8px",
+          top: "0px",
           left: "0px",
           width: "100%",
-          height: "calc(100% - 16px)",
-          borderRadius: "40px",
+          height: "100%",
+          borderRadius: "34px",
           backgroundColor: "#0f2c56",
-          opacity: 1,
+          border: "1px solid rgba(255, 255, 255, 0.15)",
+          boxShadow: "0 25px 60px rgba(15, 44, 86, 0.25)",
         };
       case 6:
       default:
         return {
-          top: "calc(100% - 68px)",
+          top: "calc(100% - 76px)",
           left: "0px",
           width: "100%",
-          height: "60px",
-          borderRadius: "24px",
-          backgroundColor: "#f8fafc",
-          opacity: 1,
+          height: "76px",
+          borderRadius: "28px",
+          backgroundColor: "#0f2c56",
+          border: "1px solid rgba(255, 255, 255, 0.15)",
+          boxShadow: "0 20px 50px rgba(15, 44, 86, 0.22)",
         };
     }
   };
@@ -329,12 +352,12 @@ export default function HomePage() {
       onTouchEnd={handleTouchEnd}
       className="h-full w-full relative overflow-hidden bg-[#fefefd] text-[#0f2c56] select-none"
     >
-      {/* GLOBAL PERSISTENT MORPHING CARD STAGE (Desktop lg+) */}
+      {/* GLOBAL PERSISTENT MORPHING CARD STAGE (Desktop lg+): Edge-to-edge tight gap matching Navbar */}
       <div
-        className="hidden lg:block absolute inset-0 py-2 px-4 sm:px-8 pointer-events-none z-10"
+        className="hidden lg:block absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 pointer-events-none z-10"
         aria-hidden="true"
       >
-        <div className="relative w-full h-full max-w-7xl mx-auto">
+        <div className="relative w-full h-full">
           <div
             className="absolute transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
             style={getGlobalMorphStyle(activeSlide)}
@@ -344,15 +367,22 @@ export default function HomePage() {
 
       {/* =====================================================================
           SLIDE 0 (#beranda): HERO SECTION (Matching Video 00:00 - 00:03)
-          Open White Canvas + Inline Red Pill Icon H1 + Isometric Illustration
+          Tight Edge-to-Edge Gap + Left Headline + Right Morphing Isometric Stage
           ===================================================================== */}
       <section
-        className={`absolute inset-0 py-3 px-4 sm:px-8 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(0)}`}
+        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(0)}`}
       >
-        <div className="w-full h-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+        <div className="w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-center">
           {/* Left 6 Cols: Editorial Headline with Inline Red Pill Icon Badge */}
-          <div className="lg:col-span-6 space-y-5 sm:space-y-6 text-left">
-            <h1 className="text-3xl sm:text-5xl xl:text-[54px] font-bold tracking-tight text-[#0f2c56] leading-[1.12]">
+          <div
+            className={`lg:col-span-6 px-4 sm:px-8 lg:px-12 space-y-5 sm:space-y-6 text-left ${getChildAnimClass(0, "left", "delay-75")}`}
+          >
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#fdf2f2] border border-[#f5d0d2] text-xs font-bold text-[#ce2731]">
+              <span className="w-2 h-2 rounded-full bg-[#ce2731]" />
+              <span>Pasbana AI • Evaluasi CV &amp; Karir</span>
+            </div>
+
+            <h1 className="text-3xl sm:text-5xl xl:text-[56px] font-bold tracking-tight text-[#0f2c56] leading-[1.1]">
               Hemat waktu evaluasi
               <br />
               dan{" "}
@@ -366,7 +396,7 @@ export default function HomePage() {
               Karir Pas Bana
             </h1>
 
-            <p className="text-xs sm:text-base text-slate-500 max-w-md leading-relaxed">
+            <p className="text-xs sm:text-base text-slate-500 max-w-lg leading-relaxed">
               Dapatkan analisis objektif 5 dimensi terhadap kesiapan CV Anda dan rekomendasi lowongan kerja secara otomatis!
             </p>
 
@@ -386,53 +416,52 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Right 6 Cols: Isometric Vector UI Illustration (Matching Video 00:00 - 00:03) */}
-          <div className="lg:col-span-6 flex items-center justify-center">
+          {/* Right 6 Cols: Isometric Vector UI Illustration inside Morphing Right Stage */}
+          <div
+            className={`lg:col-span-6 h-full rounded-[28px] sm:rounded-[34px] bg-[#fdf2f2] lg:bg-transparent border border-[#f5d0d2] lg:border-transparent p-4 sm:p-8 flex items-center justify-center ${getChildAnimClass(0, "right", "delay-150")}`}
+          >
             <svg
               viewBox="0 0 560 420"
-              className="w-full max-w-[540px] h-auto drop-shadow-sm"
+              className="w-full max-w-[540px] h-auto"
               role="img"
               aria-label="Ilustrasi Isometrik Evaluasi CV dan Pencocokan Karir"
             >
-              {/* Isometric Subtle Reference Lines */}
-              <line x1="80" y1="310" x2="360" y2="150" stroke="#e2e8f0" strokeWidth="1" strokeDasharray="4 4" />
-              <line x1="180" y1="370" x2="460" y2="210" stroke="#e2e8f0" strokeWidth="1" strokeDasharray="4 4" />
-              <line x1="120" y1="170" x2="420" y2="340" stroke="#e2e8f0" strokeWidth="1" strokeDasharray="4 4" />
+              <line x1="80" y1="310" x2="360" y2="150" stroke="#e2cbd0" strokeWidth="1" strokeDasharray="4 4" />
+              <line x1="180" y1="370" x2="460" y2="210" stroke="#e2cbd0" strokeWidth="1" strokeDasharray="4 4" />
+              <line x1="120" y1="170" x2="420" y2="340" stroke="#e2cbd0" strokeWidth="1" strokeDasharray="4 4" />
 
               {/* Main Isometric Tablet / Dashboard Board */}
               <polygon
                 points="190,195 365,95 495,170 320,270"
-                fill="#fdf2f2"
-                stroke="#f5d0d2"
+                fill="#f5d0d2"
+                stroke="#e2b4b7"
                 strokeWidth="2"
               />
               <polygon
                 points="190,187 365,87 495,162 320,262"
                 fill="#ffffff"
                 stroke="#0f2c56"
-                strokeWidth="1.6"
+                strokeWidth="1.8"
               />
-              {/* Accent Red Bar inside Main Isometric Tablet */}
               <polygon
                 points="280,195 385,135 425,158 320,218"
                 fill="#ce2731"
-                opacity="0.85"
+                opacity="0.9"
               />
-              {/* Candidate Silhouette / Analytics Graphic on Main Tablet */}
-              <circle cx="340" cy="145" r="14" fill="#ffffff" stroke="#0f2c56" strokeWidth="1.5" />
+              <circle cx="340" cy="145" r="14" fill="#ffffff" stroke="#0f2c56" strokeWidth="1.6" />
               <path
                 d="M312,182 C312,164 368,164 368,182"
                 fill="#faa9ab"
                 stroke="#0f2c56"
-                strokeWidth="1.5"
+                strokeWidth="1.6"
               />
 
               {/* Floating Top-Right Mini Isometric Card */}
               <polygon
                 points="405,68 465,34 510,60 450,94"
                 fill="#ffffff"
-                stroke="#94a3b8"
-                strokeWidth="1.3"
+                stroke="#0f2c56"
+                strokeWidth="1.4"
               />
               <line x1="428" y1="66" x2="462" y2="47" stroke="#0f2c56" strokeWidth="2" strokeLinecap="round" />
               <line x1="436" y1="74" x2="478" y2="50" stroke="#cbd5e1" strokeWidth="2" strokeLinecap="round" />
@@ -441,17 +470,17 @@ export default function HomePage() {
               <polygon
                 points="275,92 322,65 356,85 309,112"
                 fill="#ffffff"
-                stroke="#94a3b8"
-                strokeWidth="1.2"
+                stroke="#0f2c56"
+                strokeWidth="1.3"
               />
-              <circle cx="315" cy="88" r="4" fill="#ce2731" />
+              <circle cx="315" cy="88" r="4.5" fill="#ce2731" />
 
               {/* Floating Mid-Left Isometric Card with Play / ATS Badge */}
               <polygon
                 points="145,245 225,198 285,233 205,280"
                 fill="#ffffff"
                 stroke="#0f2c56"
-                strokeWidth="1.4"
+                strokeWidth="1.5"
               />
               <circle cx="205" cy="232" r="7" fill="#ce2731" />
               <line x1="218" y1="226" x2="250" y2="208" stroke="#0f2c56" strokeWidth="2" strokeLinecap="round" />
@@ -461,7 +490,7 @@ export default function HomePage() {
               <polygon
                 points="85,325 132,298 168,319 121,346"
                 fill="#ffffff"
-                stroke="#94a3b8"
+                stroke="#0f2c56"
                 strokeWidth="1.3"
               />
 
@@ -470,24 +499,24 @@ export default function HomePage() {
                 points="240,340 305,302 355,331 290,369"
                 fill="#ffffff"
                 stroke="#0f2c56"
-                strokeWidth="1.4"
+                strokeWidth="1.5"
               />
               <line x1="268" y1="336" x2="305" y2="315" stroke="#0f2c56" strokeWidth="2.5" strokeLinecap="round" />
               <line x1="278" y1="345" x2="322" y2="320" stroke="#cbd5e1" strokeWidth="2" strokeLinecap="round" />
 
-              {/* Right Isometric Cylinder Column (Red Accent) */}
-              <ellipse cx="485" cy="275" rx="34" ry="18" fill="#fdf2f2" />
+              {/* Right Isometric Cylinder Column */}
+              <ellipse cx="485" cy="275" rx="34" ry="18" fill="#f5d0d2" />
               <path
                 d="M451,215 L451,275 A34,18 0 0,0 519,275 L519,215 Z"
                 fill="#faa9ab"
-                opacity="0.55"
+                opacity="0.7"
               />
-              <ellipse cx="485" cy="215" rx="34" ry="18" fill="#ce2731" opacity="0.75" />
+              <ellipse cx="485" cy="215" rx="34" ry="18" fill="#ce2731" />
 
               {/* Bottom-Right Isometric Pie / Disc Badges */}
               <ellipse cx="430" cy="292" rx="18" ry="10" fill="#0f2c56" />
               <ellipse cx="430" cy="288" rx="18" ry="10" fill="#94a3b8" />
-              <ellipse cx="385" cy="348" rx="28" ry="15" fill="#ce2731" opacity="0.85" />
+              <ellipse cx="385" cy="348" rx="28" ry="15" fill="#ce2731" />
               <path d="M385,348 L413,348 A28,15 0 0,0 395,334 Z" fill="#ffffff" />
             </svg>
           </div>
@@ -495,17 +524,19 @@ export default function HomePage() {
       </section>
 
       {/* =====================================================================
-          SLIDE 1 (#fitur): SOFT CONTAINER SECTION (Matching Video 00:04 - 00:05)
+          SLIDE 1 (#fitur): FULL-WIDTH MORPHED SOFT CONTAINER (Matching Video 00:04 - 00:05)
           Cropped Device Frame + Circular Red Gauge on Left, Clean Copy on Right
           ===================================================================== */}
       <section
-        className={`absolute inset-0 py-2 px-4 sm:px-8 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(1)}`}
+        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(1)}`}
       >
-        <div className="w-full h-full max-w-7xl mx-auto rounded-[36px] sm:rounded-[40px] bg-[#f4f5f7] lg:bg-transparent px-6 sm:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center overflow-hidden">
+        <div className="w-full h-full mx-auto rounded-[28px] sm:rounded-[34px] bg-[#f4f5f7] lg:bg-transparent px-6 sm:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center overflow-hidden">
           {/* Left 6 Cols: Cropped Device Frame Rising from Bottom + Overlapping Red Circular Gauge */}
-          <div className="lg:col-span-6 h-full flex items-end justify-center pt-8 relative">
-            <div className="relative w-full max-w-[380px] h-[86%] bg-white rounded-t-[36px] border-t-2 border-x-2 border-slate-300 shadow-sm px-6 pt-6 flex flex-col gap-5">
-              {/* Top 3 Circular Indicators inside Frame (Matching Video 00:05) */}
+          <div
+            className={`lg:col-span-6 h-full flex items-end justify-center pt-8 relative ${getChildAnimClass(1, "up", "delay-100")}`}
+          >
+            <div className="relative w-full max-w-[390px] h-[88%] bg-white rounded-t-[36px] border-t-2 border-x-2 border-slate-300 shadow-sm px-6 pt-6 flex flex-col gap-5">
+              {/* Top 3 Circular Indicators inside Frame */}
               <div className="rounded-2xl bg-[#f4f5f7] p-4 flex items-center justify-around">
                 <div className="w-11 h-11 rounded-full bg-[#0f2c56] flex items-center justify-center text-white text-xs font-black">
                   94%
@@ -518,7 +549,7 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Clean CV Skeleton Preview Card inside Frame */}
+              {/* Clean CV Skeleton Preview inside Frame */}
               <div className="flex-1 rounded-t-2xl bg-[#f4f5f7] p-5 space-y-3">
                 <div className="w-3/4 h-2.5 rounded-full bg-slate-300" />
                 <div className="w-1/2 h-2.5 rounded-full bg-slate-200" />
@@ -526,8 +557,8 @@ export default function HomePage() {
                   <span className="w-8 h-8 rounded-lg bg-[#ce2731] text-white flex items-center justify-center shrink-0">
                     <Play className="w-3.5 h-3.5 fill-white ml-0.5" />
                   </span>
-                  <div className="flex-1 space-y-1.5">
-                    <div className="text-[11px] font-bold text-[#0f2c56]">Resume_Standar_ATS.pdf</div>
+                  <div className="flex-1 space-y-1">
+                    <div className="text-xs font-bold text-[#0f2c56]">Resume_Standar_ATS.pdf</div>
                     <div className="text-[10px] text-slate-500">Struktur 1-Kolom Terverifikasi</div>
                   </div>
                 </div>
@@ -535,8 +566,8 @@ export default function HomePage() {
                 <div className="w-2/3 h-2 rounded-full bg-slate-200" />
               </div>
 
-              {/* Overlapping Circular Red Gauge Timer on Right Edge (Matching Video 00:05) */}
-              <div className="hidden sm:flex absolute -right-14 bottom-10 w-44 h-44 rounded-full bg-white border-2 border-slate-300 shadow-xl items-center justify-center p-2.5">
+              {/* Overlapping Circular Red Gauge Timer on Right Edge */}
+              <div className="hidden sm:flex absolute -right-14 bottom-12 w-44 h-44 rounded-full bg-white border-2 border-slate-300 shadow-xl items-center justify-center p-2.5">
                 <svg viewBox="0 0 120 120" className="w-full h-full">
                   <circle cx="60" cy="60" r="52" fill="#ce2731" opacity="0.85" />
                   <path d="M60,60 L60,8 A52,52 0 0,1 108,80 Z" fill="#ce2731" />
@@ -551,20 +582,25 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Right 6 Cols: Clean Uncluttered Editorial Copy (Matching Video 00:05) */}
-          <div className="lg:col-span-6 space-y-4 sm:space-y-5 text-left lg:pl-8">
-            <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-bold tracking-tight text-[#0f2c56] leading-[1.15]">
+          {/* Right 6 Cols: Clean Uncluttered Editorial Copy */}
+          <div
+            className={`lg:col-span-6 space-y-4 sm:space-y-5 text-left lg:pl-8 ${getChildAnimClass(1, "right", "delay-150")}`}
+          >
+            <span className="inline-block text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
+              Pemeriksa Format ATS
+            </span>
+            <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-[#0f2c56] leading-[1.14]">
               Berhenti mengirim CV
               <br />
               yang gagal dibaca sistem
             </h2>
-            <p className="text-xs sm:text-base text-slate-500 max-w-md leading-relaxed">
+            <p className="text-xs sm:text-base text-slate-600 max-w-lg leading-relaxed">
               Banyak kandidat gugur saat melamar kerja bukan karena kurang kompeten, melainkan karena susunan resume gagal dipahami mesin ATS. Ketahui letak celah CV Anda dan ikuti alur perbaikannya secara instan!
             </p>
             <div className="pt-1">
               <Link
                 href="/evaluate"
-                className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#ce2731] hover:text-[#0f2c56] transition"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition shadow-md"
               >
                 <span>Coba Pemeriksa Struktur ATS</span>
                 <ArrowUpRight className="w-4 h-4" />
@@ -575,69 +611,73 @@ export default function HomePage() {
       </section>
 
       {/* =====================================================================
-          SLIDE 2 (#persiapan): OPEN WHITE CANVAS (Matching Video 00:06 - 00:08)
-          Left Clean Editorial + Right Isometric Clock & Dot-Matrix Calendar
+          SLIDE 2 (#persiapan): OPEN LEFT + MORPHED NAVY STAGE ON RIGHT (Matching Video 00:06 - 00:08)
           ===================================================================== */}
       <section
-        className={`absolute inset-0 py-3 px-4 sm:px-8 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(2)}`}
+        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(2)}`}
       >
-        <div className="w-full h-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
-          {/* Left 6 Cols: Clean Bold Heading & Subtitle (Matching Video 00:07) */}
-          <div className="lg:col-span-6 space-y-4 sm:space-y-5 text-left">
-            <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-bold tracking-tight text-[#0f2c56] leading-[1.15]">
+        <div className="w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-center">
+          {/* Left 6 Cols: Clean Bold Heading & Subtitle on Open White Canvas */}
+          <div
+            className={`lg:col-span-6 px-4 sm:px-8 lg:px-12 space-y-4 sm:space-y-5 text-left ${getChildAnimClass(2, "left", "delay-75")}`}
+          >
+            <span className="inline-block text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
+              Ekosistem Persiapan Karir
+            </span>
+            <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-[#0f2c56] leading-[1.14]">
               Tingkatkan peluang lolos
               <br />
               dengan kesiapan berkas
               <br />
               yang paling optimal!
             </h2>
-            <p className="text-xs sm:text-base text-slate-500 max-w-md leading-relaxed">
+            <p className="text-xs sm:text-base text-slate-500 max-w-lg leading-relaxed">
               Baik sudah memiliki file PDF maupun belum punya CV sama sekali, ukur 5 dimensi kualitas resume Anda pada waktu yang tepat untuk hasil seleksi terbaik!
             </p>
             <div className="pt-1 flex flex-wrap items-center gap-3">
               <Link
                 href="/evaluate?tab=questionnaire"
-                className="px-6 py-3 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition"
+                className="px-6 py-3 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition shadow-md"
               >
                 Buat CV via Kuesioner
               </Link>
               <Link
                 href="/evaluate"
-                className="px-5 py-3 rounded-xl border border-slate-200 hover:border-[#ce2731] text-[#0f2c56] text-xs sm:text-sm font-bold transition"
+                className="px-5 py-3 rounded-xl border border-slate-200 hover:border-[#0f2c56] text-[#0f2c56] text-xs sm:text-sm font-bold transition"
               >
                 Unggah PDF CV
               </Link>
             </div>
           </div>
 
-          {/* Right 6 Cols: Isometric Gauge Disc + Dot-Matrix Board (Matching Video 00:06 - 00:08) */}
-          <div className="lg:col-span-6 flex items-center justify-center">
+          {/* Right 6 Cols: Isometric Gauge Disc + Dot-Matrix Board inside Morphed Navy Stage */}
+          <div
+            className={`lg:col-span-6 h-full rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent p-4 sm:p-8 flex items-center justify-center ${getChildAnimClass(2, "right", "delay-150")}`}
+          >
             <svg
               viewBox="0 0 560 400"
               className="w-full max-w-[540px] h-auto"
               role="img"
               aria-label="Ilustrasi Isometrik Kesiapan Karir dan Pemetaan Jadwal"
             >
-              {/* Isometric Grid Reference Lines */}
-              <line x1="70" y1="260" x2="350" y2="100" stroke="#e2e8f0" strokeWidth="1" strokeDasharray="4 4" />
-              <line x1="170" y1="340" x2="470" y2="170" stroke="#e2e8f0" strokeWidth="1" strokeDasharray="4 4" />
-              <line x1="140" y1="140" x2="450" y2="320" stroke="#e2e8f0" strokeWidth="1" strokeDasharray="4 4" />
+              <line x1="70" y1="260" x2="350" y2="100" stroke="rgba(255,255,255,0.18)" strokeWidth="1" strokeDasharray="4 4" />
+              <line x1="170" y1="340" x2="470" y2="170" stroke="rgba(255,255,255,0.18)" strokeWidth="1" strokeDasharray="4 4" />
+              <line x1="140" y1="140" x2="450" y2="320" stroke="rgba(255,255,255,0.18)" strokeWidth="1" strokeDasharray="4 4" />
 
               {/* Top-Left Isometric 3D Red Gauge / Clock Cylinder */}
-              <ellipse cx="220" cy="162" rx="76" ry="42" fill="#f1f5f9" stroke="#cbd5e1" strokeWidth="1.4" />
-              <ellipse cx="220" cy="146" rx="76" ry="42" fill="#ce2731" opacity="0.82" stroke="#0f2c56" strokeWidth="1.4" />
+              <ellipse cx="220" cy="162" rx="76" ry="42" fill="#1e3a68" stroke="rgba(255,255,255,0.3)" strokeWidth="1.4" />
+              <ellipse cx="220" cy="146" rx="76" ry="42" fill="#ce2731" stroke="#ffffff" strokeWidth="1.5" />
               <path d="M220,146 L220,104 A76,42 0 0,1 286,166 Z" fill="#faa9ab" />
               <line x1="220" y1="146" x2="220" y2="108" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" />
               <line x1="220" y1="146" x2="268" y2="162" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" />
 
-              {/* Right Standing Isometric Dot-Matrix Board (Matching Video 00:07) */}
+              {/* Right Standing Isometric Dot-Matrix Board */}
               <polygon
                 points="360,115 475,180 475,275 360,210"
                 fill="#ffffff"
-                stroke="#0f2c56"
+                stroke="#ce2731"
                 strokeWidth="1.5"
               />
-              {/* Dots inside Isometric Board */}
               <circle cx="385" cy="155" r="5" fill="#e2e8f0" />
               <circle cx="405" cy="166" r="5" fill="#e2e8f0" />
               <circle cx="425" cy="177" r="5" fill="#cbd5e1" />
@@ -657,25 +697,24 @@ export default function HomePage() {
               <polygon
                 points="285,220 315,202 415,260 385,278"
                 fill="#ce2731"
-                opacity="0.65"
               />
 
               {/* Bottom-Left Isometric Card with Bullet & Lines */}
               <polygon
                 points="170,255 240,215 360,285 290,325"
                 fill="#ffffff"
-                stroke="#0f2c56"
+                stroke="#ffffff"
                 strokeWidth="1.4"
               />
-              <circle cx="225" cy="252" r="6" fill="#ffffff" stroke="#0f2c56" strokeWidth="1.5" />
-              <line x1="242" y1="262" x2="310" y2="302" stroke="#0f2c56" strokeWidth="2" strokeLinecap="round" />
-              <line x1="232" y1="270" x2="285" y2="301" stroke="#cbd5e1" strokeWidth="2" strokeLinecap="round" />
+              <circle cx="225" cy="252" r="6" fill="#ce2731" />
+              <line x1="242" y1="262" x2="310" y2="302" stroke="#0f2c56" strokeWidth="2.5" strokeLinecap="round" />
+              <line x1="232" y1="270" x2="285" y2="301" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" />
 
               {/* Bottom-Right Small Isometric Tile */}
               <polygon
                 points="425,305 468,280 508,303 465,328"
-                fill="#ffffff"
-                stroke="#94a3b8"
+                fill="#1e3a68"
+                stroke="rgba(255,255,255,0.4)"
                 strokeWidth="1.3"
               />
             </svg>
@@ -684,16 +723,18 @@ export default function HomePage() {
       </section>
 
       {/* =====================================================================
-          SLIDE 3 (#asisten): DARK ROUNDED CONTAINER (Matching Video 00:09 - 00:10)
+          SLIDE 3 (#asisten): FULL-WIDTH MORPHED DARK CONTAINER (Matching Video 00:09 - 00:10)
           Cropped Frame + Eye Badge + Up Arrow on Left, Clean White Text on Right
           ===================================================================== */}
       <section
-        className={`absolute inset-0 py-2 px-4 sm:px-8 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(3)}`}
+        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(3)}`}
       >
-        <div className="w-full h-full max-w-7xl mx-auto rounded-[36px] sm:rounded-[40px] bg-[#0f2c56] lg:bg-transparent px-6 sm:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center text-white overflow-hidden">
+        <div className="w-full h-full mx-auto rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent px-6 sm:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center text-white overflow-hidden">
           {/* Left 6 Cols: Cropped White Wireframe Rising from Bottom + Eye Badge + Upward Arrow */}
-          <div className="lg:col-span-6 h-full flex items-end justify-center pt-8 relative">
-            <div className="relative w-full max-w-[380px] h-[86%] bg-white rounded-t-[36px] border-t-4 border-x-4 border-slate-200 px-6 pt-6 flex flex-col gap-4 text-[#0f2c56]">
+          <div
+            className={`lg:col-span-6 h-full flex items-end justify-center pt-8 relative ${getChildAnimClass(3, "up", "delay-100")}`}
+          >
+            <div className="relative w-full max-w-[390px] h-[88%] bg-white rounded-t-[36px] border-t-4 border-x-4 border-slate-200 px-6 pt-6 flex flex-col gap-4 text-[#0f2c56]">
               {/* Card 1 inside Device Frame: Before / Passive */}
               <div className="rounded-2xl bg-[#f4f5f7] border border-slate-200 p-4 space-y-2.5">
                 <div className="w-2/3 h-2 rounded-full bg-slate-300" />
@@ -727,14 +768,14 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Overlapping White Circle with Red Eye Badge on Right Edge (Matching Video 00:10) */}
+              {/* Overlapping White Circle with Red Eye Badge on Right Edge */}
               <div className="hidden sm:flex absolute -right-12 bottom-16 w-32 h-32 rounded-full bg-white border-2 border-slate-300 shadow-2xl items-center justify-center">
                 <div className="w-24 h-24 rounded-full bg-[#fdf2f2] flex items-center justify-center">
                   <Eye className="w-10 h-10 text-[#ce2731]" />
                 </div>
               </div>
 
-              {/* Upward Outline Arrow Next to Badge (Matching Video 00:10) */}
+              {/* Upward Outline Arrow Next to Badge */}
               <svg
                 viewBox="0 0 48 110"
                 className="hidden sm:block absolute -right-24 bottom-24 w-10 h-24 text-white/40"
@@ -747,22 +788,27 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Right 6 Cols: Bold White Heading & Clean Muted Subtitle (Matching Video 00:10) */}
-          <div className="lg:col-span-6 space-y-4 sm:space-y-5 text-left lg:pl-10">
-            <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-bold tracking-tight text-white leading-[1.15]">
+          {/* Right 6 Cols: Bold White Heading & Clean Muted Subtitle */}
+          <div
+            className={`lg:col-span-6 space-y-4 sm:space-y-5 text-left lg:pl-10 ${getChildAnimClass(3, "right", "delay-150")}`}
+          >
+            <span className="inline-block text-xs font-extrabold uppercase tracking-wider text-[#faa9ab]">
+              Asisten Kalimat Aktif
+            </span>
+            <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-white leading-[1.14]">
               Pahami bagaimana Struktur
               <br />
               dan Kalimat Aktif memengaruhi
               <br />
               penilaian HRD
             </h2>
-            <p className="text-xs sm:text-base text-slate-300 max-w-md leading-relaxed">
+            <p className="text-xs sm:text-base text-slate-300 max-w-lg leading-relaxed">
               Lihat perubahan skor kesiapan secara langsung setelah Anda mengganti kalimat pasif menjadi pencapaian terukur, struktur yang rapi, dan kata kunci keahlian yang tepat.
             </p>
             <div className="pt-1">
               <Link
                 href="/evaluate"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition shadow-lg"
               >
                 <span>Uji Kalimat CV Sekarang</span>
                 <ArrowUpRight className="w-4 h-4" />
@@ -774,24 +820,24 @@ export default function HomePage() {
 
       {/* =====================================================================
           SLIDE 4 (#prinsip): 3x2 FEATURE BENTO GRID (Matching Video 00:11 - 00:13)
-          Open White Canvas + 1 Elevated White Card + 5 Clean Open Items
+          Global Morphing Card Shrinks into Active Highlighted Feature Tile!
           ===================================================================== */}
       <section
-        className={`absolute inset-0 py-3 px-4 sm:px-8 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(4)}`}
+        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(4)}`}
       >
-        <div className="w-full h-full max-w-7xl mx-auto flex flex-col justify-center gap-6">
-          {/* Top-Left Section Header (Matching Video 00:11) */}
-          <div className="space-y-1.5 text-left max-w-xl">
+        <div className="w-full h-full mx-auto px-4 sm:px-8 flex flex-col justify-center gap-6">
+          {/* Top-Left Section Header */}
+          <div className={`space-y-1.5 text-left max-w-xl ${getChildAnimClass(4, "down", "delay-75")}`}>
             <span className="text-xs font-bold text-[#ce2731]">Fitur &amp; Prinsip</span>
-            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#0f2c56] leading-[1.15]">
+            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#0f2c56] leading-[1.14]">
               Optimalkan kesiapan karir Anda
               <br />
               dengan perangkat evaluasi presisi
             </h2>
           </div>
 
-          {/* 3 Columns x 2 Rows Feature Grid (Matching Video 00:11 - 00:13) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-5">
+          {/* 3 Columns x 2 Rows Feature Grid */}
+          <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-5 ${getChildAnimClass(4, "up", "delay-150")}`}>
             {FEATURE_GRID_ITEMS.map((item, idx) => {
               const isSelected = activeFeatureIdx === idx;
               return (
@@ -805,7 +851,7 @@ export default function HomePage() {
                       : "hover:bg-slate-50/60"
                   }`}
                 >
-                  {/* Custom Mini UI Illustration Badge at Top (Matching Video 00:11 - 00:13) */}
+                  {/* Custom Mini UI Illustration Badge at Top */}
                   <div className="h-11 flex items-center mb-3">
                     {item.badgeType === "eye" && (
                       <div className="px-4 py-1.5 rounded-full bg-[#fdf2f2] border border-[#f5d0d2] inline-flex items-center justify-center">
@@ -862,27 +908,29 @@ export default function HomePage() {
       </section>
 
       {/* =====================================================================
-          SLIDE 5 (#cara-kerja): DARK INTERACTIVE SPLIT CARD (Matching Video 00:14)
+          SLIDE 5 (#cara-kerja): FULL-WIDTH MORPHED DARK CARD (Matching Video 00:14)
           Left Interactive Slider & Mode Toggles + Right Single Clean White Card
           ===================================================================== */}
       <section
-        className={`absolute inset-0 py-2 px-4 sm:px-8 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(5)}`}
+        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(5)}`}
       >
-        <div className="w-full h-full max-w-7xl mx-auto rounded-[36px] sm:rounded-[40px] bg-[#0f2c56] lg:bg-transparent px-6 sm:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center text-white overflow-hidden">
-          {/* Left 6 Cols: Subtitle, Bold Title, Interactive Range Slider, 2 Toggle Buttons (Matching Video 00:14) */}
-          <div className="lg:col-span-6 space-y-5 text-left">
+        <div className="w-full h-full mx-auto rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent px-6 sm:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center text-white overflow-hidden">
+          {/* Left 6 Cols: Subtitle, Bold Title, Interactive Range Slider, 2 Toggle Buttons */}
+          <div
+            className={`lg:col-span-6 space-y-5 text-left ${getChildAnimClass(5, "left", "delay-100")}`}
+          >
             <div className="space-y-2">
               <p className="text-xs text-slate-300">
                 Berhenti membuang waktu, biarkan sistem mengevaluasi secara otomatis
               </p>
-              <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-white leading-[1.15]">
+              <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-white leading-[1.14]">
                 Dapatkan analisis terbaik
                 <br />
                 untuk kesiapan karir Anda!
               </h2>
             </div>
 
-            {/* Interactive Dimension / Step Slider (Matching Video 00:14: "5 ----o---- 10") */}
+            {/* Interactive Dimension / Step Slider */}
             <div className="space-y-2 max-w-md pt-1">
               <div className="flex items-center gap-4">
                 <span className="text-xs font-bold text-slate-300">1</span>
@@ -902,7 +950,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            {/* 2 Mode Toggle Buttons (Matching Video 00:14 "Billed Monthly / Billed Yearly") */}
+            {/* 2 Mode Toggle Buttons */}
             <div className="flex items-center gap-3 pt-1">
               <button
                 type="button"
@@ -929,8 +977,8 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Right 6 Cols: Single Clean White Card (Matching Video 00:14) */}
-          <div className="lg:col-span-6">
+          {/* Right 6 Cols: Single Clean White Card */}
+          <div className={`lg:col-span-6 ${getChildAnimClass(5, "right", "delay-150")}`}>
             <div className="bg-white text-[#0f2c56] rounded-[32px] p-6 sm:p-9 shadow-2xl space-y-5 max-w-lg mx-auto">
               <h3 className="text-lg sm:text-2xl font-bold text-[#0f2c56] leading-snug">
                 Satu alur terpadu yang menjawab seluruh kebutuhan persiapan karir Anda
@@ -974,16 +1022,15 @@ export default function HomePage() {
       </section>
 
       {/* =====================================================================
-          SLIDE 6 (#mulai): ACCORDION LIST & MINIMAL FOOTER (Matching Video 00:15 - 00:16)
-          Open White Canvas + 5 Horizontal Expandable Rows + Clean Footer
+          SLIDE 6 (#mulai): ACCORDION LIST & MORPHED NAVY FOOTER BAR (Matching Video 00:15 - 00:16)
           ===================================================================== */}
       <section
-        className={`absolute inset-0 py-3 px-4 sm:px-8 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(6)}`}
+        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(6)}`}
       >
-        <div className="w-full h-full max-w-7xl mx-auto flex flex-col justify-between">
-          {/* Top Heading + 5 Expandable Horizontal Rows (Matching Video 00:15) */}
-          <div className="my-auto space-y-5">
-            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#0f2c56] leading-[1.15] max-w-xl text-left">
+        <div className="w-full h-full mx-auto flex flex-col justify-between">
+          {/* Top Heading + 5 Expandable Horizontal Rows on Open White Canvas */}
+          <div className={`my-auto px-4 sm:px-8 space-y-5 ${getChildAnimClass(6, "down", "delay-75")}`}>
+            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#0f2c56] leading-[1.14] max-w-xl text-left">
               Seluruh perangkat cerdas ini juga
               <br />
               siap memetakan peluang karir terbaik Anda
@@ -1017,14 +1064,19 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Bottom Minimal Footer (Matching Video 00:16) */}
-          <footer className="relative z-20 h-[60px] px-4 flex items-center justify-between text-xs">
-            <div className="flex items-center gap-2 font-black text-base text-[#0f2c56]">
-              <span className="w-6 h-6 rounded-full bg-[#ce2731] inline-flex items-center justify-center text-white text-[11px]">
+          {/* Bottom Minimal Footer inside Morphed Navy Bar */}
+          <footer
+            className={`relative z-20 h-[68px] lg:h-[76px] rounded-[24px] sm:rounded-[28px] bg-[#0f2c56] lg:bg-transparent px-6 sm:px-8 flex items-center justify-between text-xs text-white ${getChildAnimClass(6, "up", "delay-150")}`}
+          >
+            <div className="flex items-center gap-2.5 font-black text-base text-white">
+              <span className="w-7 h-7 rounded-full bg-[#ce2731] inline-flex items-center justify-center text-white text-xs">
                 P
               </span>
               <span>
                 Pasbana<span className="text-[#ce2731]"> AI</span>
+              </span>
+              <span className="hidden sm:inline text-xs font-normal text-slate-300 ml-3">
+                © 2026 Karir yang Pas Bana
               </span>
             </div>
 
@@ -1032,30 +1084,30 @@ export default function HomePage() {
               <Link
                 href="/evaluate"
                 title="Evaluasi CV"
-                className="w-8 h-8 rounded-full bg-[#0f2c56] hover:bg-[#ce2731] text-white flex items-center justify-center transition"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#ce2731] text-white flex items-center justify-center transition"
               >
-                <FileText className="w-3.5 h-3.5" />
+                <FileText className="w-4 h-4" />
               </Link>
               <Link
                 href="/jobs"
                 title="Lowongan Kerja"
-                className="w-8 h-8 rounded-full bg-[#0f2c56] hover:bg-[#ce2731] text-white flex items-center justify-center transition"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#ce2731] text-white flex items-center justify-center transition"
               >
-                <Briefcase className="w-3.5 h-3.5" />
+                <Briefcase className="w-4 h-4" />
               </Link>
               <Link
                 href="/about"
                 title="Tentang Kami"
-                className="w-8 h-8 rounded-full bg-[#0f2c56] hover:bg-[#ce2731] text-white flex items-center justify-center transition"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#ce2731] text-white flex items-center justify-center transition"
               >
-                <ShieldCheck className="w-3.5 h-3.5" />
+                <ShieldCheck className="w-4 h-4" />
               </Link>
               <Link
                 href="/login"
                 title="Masuk Akun"
-                className="w-8 h-8 rounded-full bg-[#0f2c56] hover:bg-[#ce2731] text-white flex items-center justify-center transition"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#ce2731] text-white flex items-center justify-center transition"
               >
-                <UserCheck className="w-3.5 h-3.5" />
+                <UserCheck className="w-4 h-4" />
               </Link>
             </div>
           </footer>
