@@ -11,8 +11,6 @@ import {
   Shield,
   ShieldCheck,
   BarChart3,
-  Cpu,
-  Database,
   Layers,
 } from "lucide-react";
 
@@ -29,43 +27,43 @@ interface WorkflowStageData {
 const WORKFLOW_TABS: WorkflowStageData[] = [
   {
     stepIndex: 1,
-    tabLabel: "Ekstraksi",
-    tabSub: "Alur Cerdas ATS",
-    title: "Ekstraksi Digital",
+    tabLabel: "Cek Format ATS",
+    tabSub: "Bebas Gagal Baca",
+    title: "Pastikan CV Lolos Seleksi Awal",
     description:
-      "Otomatisasi pembacaan layer teks resume PDF dan DOCX secara instan. Menyaring tata letak tabel berlapis dan menyamarkan identitas sensitif demi evaluasi yang murni objektif.",
-    ctaText: "Mulai Unggah Berkas",
+      "Banyak kandidat gugur bukan karena kurang kompeten, melainkan format CV yang sulit dibaca sistem rekrutmen. Unggah CV Anda atau susun dari nol lewat panduan kuesioner praktis.",
+    ctaText: "Cek CV Saya Sekarang",
     ctaHref: "/evaluate",
   },
   {
     stepIndex: 2,
-    tabLabel: "5 Dimensi",
-    tabSub: "Standar Perekrut",
-    title: "Analisis 5 Dimensi",
+    tabLabel: "Skor 5 Dimensi",
+    tabSub: "Saran Perbaikan",
+    title: "Ketahui Bagian yang Perlu Diperkuat",
     description:
-      "Mengukur kesiapan CV Anda melalui lima tolok ukur utama industri: kompatibilitas format ATS, kejelasan struktur, kata kerja aktif (action verbs), dampak terukur, dan relevansi skill.",
+      "Bukan sekadar angka tunggal. Anda mendapatkan rincian nilai pada 5 aspek utama yang dinilai HRD, lengkap dengan saran kalimat aktif dan cara menonjolkan pencapaian Anda.",
     ctaText: "Uji Skor 5 Dimensi",
     ctaHref: "/evaluate",
   },
   {
     stepIndex: 3,
-    tabLabel: "Integrasi Loker",
-    tabSub: "pgvector + LLM",
-    title: "Pencocokan Presisi",
+    tabLabel: "Pencocokan Karir",
+    tabSub: "Loker Pas Bana",
+    title: "Lowongan yang Sesuai Keahlian",
     description:
-      "Menghubungkan profil kompetensi Anda dengan ekosistem lowongan mitra industri dan agregator Jooble melalui pencarian kemiripan vektor dua tahap yang akurat.",
-    ctaText: "Bangun Karir Anda",
+      "Tidak perlu lagi menebak posisi mana yang cocok. Berdasarkan keahlian dan pengalaman di CV Anda, dapatkan rekomendasi lowongan terbaik beserta panduan skill yang perlu ditingkatkan.",
+    ctaText: "Temukan Lowongan Cocok",
     ctaHref: "/jobs",
   },
   {
     stepIndex: 4,
-    tabLabel: "Keamanan",
-    tabSub: "UU PDP No. 27/2022",
-    title: "Privasi & Etika",
+    tabLabel: "Penilaian Adil",
+    tabSub: "Objektif & Aman",
+    title: "Dinilai Murni dari Kompetensi",
     description:
-      "Kendali penuh atas data pribadi ada di tangan Anda. Seluruh analisis menerapkan blind scoring bebas bias gender atau usia serta dilengkapi hak hapus permanen kapan saja.",
-    ctaText: "Pelajari Kepatuhan",
-    ctaHref: "/about",
+      "Evaluasi berfokus sepenuhnya pada keahlian, pengalaman proyek, dan potensi karir Anda tanpa bias latar belakang pribadi. Data Anda aman dan dapat dihapus kapan saja.",
+    ctaText: "Mulai Evaluasi Gratis",
+    ctaHref: "/evaluate",
   },
 ];
 
@@ -328,21 +326,21 @@ export default function Home() {
                 {heroBoardTab === "match" && (
                   <div className="space-y-1.5">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-primary">Junior Frontend Engineer</span>
-                      <span className="text-xs font-black text-emerald-600">92% Match</span>
+                      <span className="text-xs font-bold text-primary">Management Trainee &amp; Analis Produk</span>
+                      <span className="text-xs font-black text-emerald-600">92% Cocok</span>
                     </div>
                     <p className="text-[11px] text-slate-500">
-                      PT Solusi Teknologi Nusantara • Jakarta (Hybrid)
+                      PT Nusantara Inovasi Mandiri • Jakarta &amp; Padang (Hybrid)
                     </p>
                     <div className="flex flex-wrap gap-1 pt-1">
                       <span className="px-2 py-0.5 rounded bg-white text-primary text-[10px] font-semibold shadow-2xs">
-                        Next.js 14
+                        Manajemen Proyek
                       </span>
                       <span className="px-2 py-0.5 rounded bg-white text-primary text-[10px] font-semibold shadow-2xs">
-                        TypeScript
+                        Analisis Data
                       </span>
                       <span className="px-2 py-0.5 rounded bg-white text-primary text-[10px] font-semibold shadow-2xs">
-                        Tailwind CSS
+                        Kepemimpinan Tim
                       </span>
                     </div>
                   </div>
@@ -351,13 +349,13 @@ export default function Home() {
                 {heroBoardTab === "gap" && (
                   <div className="space-y-1.5">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-amber-900">Rekomendasi Peningkatan Skill</span>
+                      <span className="text-xs font-bold text-amber-900">Saran Penguatan Isi CV</span>
                       <span className="text-[10px] font-mono text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full">
                         +6 Poin ATS
                       </span>
                     </div>
                     <p className="text-[11px] text-slate-600">
-                      Tambahkan pengalaman pengujian otomatis (Unit Testing / Vitest) pada deskripsi proyek akhir Anda.
+                      Cantumkan dampak terukur (contoh: meningkatkan partisipasi kegiatan hingga 35%) pada deskripsi pengalaman organisasi Anda.
                     </p>
                   </div>
                 )}
@@ -423,8 +421,8 @@ export default function Home() {
           }`}
         >
           <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-extrabold tracking-tight text-primary max-w-2xl leading-[1.12]">
-            Standar evaluasi objektif, <br />
-            fondasi etika bebas bias
+            Mengapa ribuan talenta muda <br />
+            memilih Pasbana AI?
           </h2>
         </div>
 
@@ -626,7 +624,7 @@ export default function Home() {
                 key={currentSlide}
                 className="relative z-20 w-full max-w-md mb-8 sm:mb-10 animate-fade-in-up"
               >
-                {/* SLIDE 1 CARD: AI CV Parser Conversation Card (Matches Frame 00:06-00:07) */}
+                {/* SLIDE 1 CARD: AI CV Assistant Conversation Card (Matches Frame 00:06-00:07) */}
                 {currentSlide === 1 && (
                   <div className="bg-white/95 backdrop-blur-md rounded-3xl p-5 shadow-2xl space-y-3.5 text-left">
                     {/* Top Action Icon Bar */}
@@ -634,7 +632,7 @@ export default function Home() {
                       <FileCheck className="w-3.5 h-3.5 text-primary" />
                       <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
                       <Target className="w-3.5 h-3.5 text-secondary" />
-                      <Cpu className="w-3.5 h-3.5 text-primary" />
+                      <Briefcase className="w-3.5 h-3.5 text-primary" />
                     </div>
 
                     {/* Incoming Resume File Bubble */}
@@ -643,21 +641,21 @@ export default function Home() {
                         WF
                       </div>
                       <div className="text-xs space-y-0.5">
-                        <p className="font-bold text-primary">Berkas Kandidat</p>
+                        <p className="font-bold text-primary">Kandidat Fresh Graduate</p>
                         <p className="text-slate-600 text-[11px]">
-                          Mengunggah <span className="font-mono font-semibold">CV_Wira_Fikri_ATS.pdf</span> (1.420 kata)
+                          Mengunggah <span className="font-mono font-semibold">CV_Wira_Fikri_ATS.pdf</span>
                         </p>
                       </div>
                     </div>
 
-                    {/* Pasbana AI Parser Reply Bubble */}
+                    {/* Pasbana AI Assistant Reply Bubble */}
                     <div className="bg-blue-50/70 p-3.5 rounded-2xl space-y-1 text-xs">
                       <div className="flex items-center gap-1.5 font-bold text-primary">
-                        <span>Pasbana Parser</span>
+                        <span>Asisten Karir Pasbana</span>
                         <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                       </div>
                       <p className="text-[11px] text-slate-700 leading-relaxed">
-                        Layer teks digital 1-kolom terverifikasi bersih. Atribut foto wajah dan usia telah disamarkan (PII Masking) untuk blind scoring.
+                        Format CV 1-kolom Anda sudah rapi dan mudah dibaca HRD. Kami menemukan 3 poin pengalaman organisasi yang bisa diperkuat agar peluang wawancara meningkat.
                       </p>
                     </div>
                   </div>
@@ -674,11 +672,11 @@ export default function Home() {
                     </div>
                     <div className="space-y-2 text-[11px]">
                       {[
-                        { label: "1. Struktur & Format ATS", val: 94, color: "bg-primary" },
-                        { label: "2. Kejelasan Deskripsi Karir", val: 85, color: "bg-sky-500" },
-                        { label: "3. Dampak Terukur (Action Verbs)", val: 82, color: "bg-emerald-500" },
-                        { label: "4. Relevansi Keahlian Teknis", val: 90, color: "bg-secondary" },
-                        { label: "5. Kelengkapan Profil & Kontak", val: 89, color: "bg-amber-500" },
+                        { label: "1. Struktur & Keterbacaan ATS", val: 94, color: "bg-primary" },
+                        { label: "2. Kejelasan Ringkasan Profil", val: 85, color: "bg-sky-500" },
+                        { label: "3. Kalimat Aktif & Pencapaian", val: 82, color: "bg-emerald-500" },
+                        { label: "4. Kesesuaian Keahlian", val: 90, color: "bg-secondary" },
+                        { label: "5. Kelengkapan Pengalaman", val: 89, color: "bg-amber-500" },
                       ].map((d) => (
                         <div key={d.label} className="space-y-1">
                           <div className="flex justify-between font-medium text-slate-700">
@@ -694,17 +692,17 @@ export default function Home() {
                   </div>
                 )}
 
-                {/* SLIDE 3 CARD: 6-Tile Ecosystem Grid + Bottom Floating Pill (Matches Frame 00:08!) */}
+                {/* SLIDE 3 CARD: 6-Tile Benefits Grid + Bottom Floating Pill (Matches Frame 00:08!) */}
                 {currentSlide === 3 && (
                   <div className="space-y-3">
                     <div className="grid grid-cols-2 gap-2.5 text-left">
                       {[
-                        { name: "React & Next.js", sub: "96% Kecocokan Skill", dot: "bg-sky-500" },
-                        { name: "TypeScript", sub: "94% Kecocokan Skill", dot: "bg-primary" },
-                        { name: "FastAPI Service", sub: "88% Kecocokan Skill", dot: "bg-emerald-500" },
-                        { name: "PostgreSQL pgvector", sub: "Indeks Vektor HNSW", dot: "bg-indigo-500" },
-                        { name: "Mitra Industri", sub: "12 Lowongan Internal", dot: "bg-secondary" },
-                        { name: "Jooble Indonesia", sub: "Agregasi Loker Aktif", dot: "bg-amber-500" },
+                        { name: "Kesesuaian Posisi", sub: "92% Pas dengan Profil Anda", dot: "bg-emerald-500" },
+                        { name: "Analisis Gap Skill", sub: "Panduan Skill Tambahan", dot: "bg-sky-500" },
+                        { name: "Saran Kata Kerja", sub: "Perbaikan Kalimat CV", dot: "bg-primary" },
+                        { name: "Belum Punya CV", sub: "Susun Lewat Kuesioner", dot: "bg-amber-500" },
+                        { name: "Lowongan Terkurasi", sub: "Peluang Fresh Graduate", dot: "bg-secondary" },
+                        { name: "Siap Melamar", sub: "Unduh Format Standar HR", dot: "bg-indigo-500" },
                       ].map((tile) => (
                         <div
                           key={tile.name}
@@ -721,46 +719,46 @@ export default function Home() {
 
                     {/* Floating Center Pill below 6-grid (Exact match to Frame 00:08) */}
                     <div className="flex justify-center">
-                      <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/95 backdrop-blur-md shadow-xl text-xs font-semibold text-primary">
-                        <Database className="w-3.5 h-3.5 text-primary" />
-                        <Cpu className="w-3.5 h-3.5 text-secondary" />
-                        <Briefcase className="w-3.5 h-3.5 text-emerald-600" />
-                        <span className="text-[11px] font-mono">Two-Stage Match: 92%</span>
+                      <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/95 backdrop-blur-md shadow-xl text-xs font-semibold text-primary">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                        <Briefcase className="w-3.5 h-3.5 text-primary" />
+                        <Target className="w-3.5 h-3.5 text-secondary" />
+                        <span className="text-[11px] font-semibold">Rekomendasi Karir yang Pas Bana</span>
                       </div>
                     </div>
                   </div>
                 )}
 
-                {/* SLIDE 4 CARD: Privacy & UU PDP 2022 Vault */}
+                {/* SLIDE 4 CARD: Fair & Safe Evaluation Benefits */}
                 {currentSlide === 4 && (
                   <div className="bg-white/95 backdrop-blur-md rounded-3xl p-5 shadow-2xl space-y-3 text-left">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Shield className="w-4 h-4 text-emerald-600" />
-                        <span className="text-xs font-bold text-primary">Protokol Kepatuhan UU PDP</span>
+                        <span className="text-xs font-bold text-primary">Keunggulan Evaluasi Objektif</span>
                       </div>
-                      <span className="text-[10px] font-mono font-bold bg-emerald-50 text-emerald-700 px-2.5 py-0.5 rounded-full">
-                        UU No. 27/2022
+                      <span className="text-[10px] font-bold bg-emerald-50 text-emerald-700 px-2.5 py-0.5 rounded-full">
+                        100% Adil
                       </span>
                     </div>
 
                     <div className="space-y-2 text-xs">
                       <div className="p-3 rounded-2xl bg-slate-50 flex items-center justify-between">
                         <div>
-                          <p className="font-bold text-slate-800">Blind Scoring Bebas Bias</p>
-                          <p className="text-[10px] text-slate-500">Tanpa parameter foto, gender, dan suku</p>
+                          <p className="font-bold text-slate-800">Fokus Murni pada Kemampuan</p>
+                          <p className="text-[10px] text-slate-500">Dinilai dari keahlian, proyek, dan pengalaman Anda</p>
                         </div>
                         <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
-                          Aktif
+                          Bebas Bias
                         </span>
                       </div>
                       <div className="p-3 rounded-2xl bg-slate-50 flex items-center justify-between">
                         <div>
-                          <p className="font-bold text-slate-800">Right to be Forgotten</p>
-                          <p className="text-[10px] text-slate-500">Hapus riwayat &amp; berkas permanen 1-klik</p>
+                          <p className="font-bold text-slate-800">Kendali Penuh Data Pribadi</p>
+                          <p className="text-[10px] text-slate-500">Riwayat dan berkas CV dapat dihapus kapan saja</p>
                         </div>
                         <span className="text-[10px] font-bold text-primary bg-blue-100 px-2 py-0.5 rounded-full">
-                          Tersedia
+                          Terlindungi
                         </span>
                       </div>
                     </div>
@@ -772,11 +770,11 @@ export default function Home() {
         )}
 
         {/* -------------------------------------------------------------------
-            SLIDE 5: BENTO & PRINCIPLES FULL-PAGE STAGE
+            SLIDE 5: BENTO FEATURES & BENEFITS FULL-PAGE STAGE
             ------------------------------------------------------------------- */}
         {isBentoStage && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 h-full animate-fade-in-up">
-            {/* Left 7 Columns: 3 Core Evaluation Weight Cards + Primary Navy Blind Scoring Card */}
+            {/* Left 7 Columns: 3 Core Feature Cards + Primary Navy Highlight Card */}
             <div className="lg:col-span-7 flex flex-col justify-between gap-3 h-full">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 flex-1">
                 <div className="p-4 rounded-3xl bg-gradient-to-br from-blue-50/90 to-white shadow-sm flex flex-col justify-between">
@@ -784,13 +782,13 @@ export default function Home() {
                     <FileCheck className="w-4 h-4" />
                   </div>
                   <div className="space-y-1 my-auto py-1">
-                    <h3 className="text-xs sm:text-sm font-bold text-primary">1. Struktur &amp; ATS</h3>
+                    <h3 className="text-xs sm:text-sm font-bold text-primary">Sudah atau Belum Punya CV</h3>
                     <p className="text-[11px] text-slate-600 leading-relaxed">
-                      Keterbacaan layer teks digital 1-kolom tanpa informasi terpotong.
+                      Unggah berkas CV lama Anda atau buat CV standar HR dari nol cukup dengan mengisi kuesioner terpandu.
                     </p>
                   </div>
-                  <span className="text-[10px] font-mono font-bold text-primary bg-blue-100/80 px-2.5 py-0.5 rounded-full self-start">
-                    Bobot 25%
+                  <span className="text-[10px] font-bold text-primary bg-blue-100/80 px-2.5 py-0.5 rounded-full self-start">
+                    Fleksibel &amp; Mudah
                   </span>
                 </div>
 
@@ -799,13 +797,13 @@ export default function Home() {
                     <BarChart3 className="w-4 h-4" />
                   </div>
                   <div className="space-y-1 my-auto py-1">
-                    <h3 className="text-xs sm:text-sm font-bold text-secondary">2. Dampak Terukur</h3>
+                    <h3 className="text-xs sm:text-sm font-bold text-secondary">Saran Perbaikan Praktis</h3>
                     <p className="text-[11px] text-slate-600 leading-relaxed">
-                      Penggunaan action verbs dan capaian numerik pada pengalaman.
+                      Ketahui kalimat mana yang masih lemah dan dapatkan contoh kata kerja aktif yang lebih meyakinkan.
                     </p>
                   </div>
-                  <span className="text-[10px] font-mono font-bold text-secondary bg-rose-100/80 px-2.5 py-0.5 rounded-full self-start">
-                    Bobot 30%
+                  <span className="text-[10px] font-bold text-secondary bg-rose-100/80 px-2.5 py-0.5 rounded-full self-start">
+                    Panduan Langsung
                   </span>
                 </div>
 
@@ -814,13 +812,13 @@ export default function Home() {
                     <Target className="w-4 h-4" />
                   </div>
                   <div className="space-y-1 my-auto py-1">
-                    <h3 className="text-xs sm:text-sm font-bold text-emerald-900">3. Relevansi Skill</h3>
+                    <h3 className="text-xs sm:text-sm font-bold text-emerald-900">Peta Kesiapan Skill</h3>
                     <p className="text-[11px] text-slate-600 leading-relaxed">
-                      Kesesuaian keahlian teknis dengan kebutuhan riil industri.
+                      Lihat keahlian yang sudah Anda miliki dan kompetensi tambahan yang dicari perusahaan impian.
                     </p>
                   </div>
-                  <span className="text-[10px] font-mono font-bold text-emerald-800 bg-emerald-100/80 px-2.5 py-0.5 rounded-full self-start">
-                    Bobot 45%
+                  <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100/80 px-2.5 py-0.5 rounded-full self-start">
+                    Arah Karir Jelas
                   </span>
                 </div>
               </div>
@@ -829,13 +827,13 @@ export default function Home() {
               <div className="p-5 rounded-3xl bg-gradient-to-r from-[#0f2c56] via-[#163861] to-[#0a1e3b] text-white shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="space-y-1 max-w-md">
                   <span className="text-[10px] font-mono uppercase tracking-wider text-blue-200 font-bold">
-                    Objektivitas Murni
+                    Keunggulan Utama
                   </span>
                   <h3 className="text-base sm:text-lg font-black text-white">
-                    Blind Scoring Bebas Subjektivitas
+                    Penilaian Objektif Tanpa Diskriminasi
                   </h3>
                   <p className="text-xs text-slate-200 leading-relaxed">
-                    Penyaringan mengabaikan foto wajah, usia, dan gender. Evaluasi bertumpu murni pada kompetensi nyata kandidat.
+                    Setiap kandidat dinilai secara adil berdasarkan kompetensi, pengalaman proyek, dan kesiapan kerja nyata tanpa memandang latar belakang pribadi.
                   </p>
                 </div>
                 <Link
@@ -847,37 +845,37 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right 5 Columns: Stacked Ethics & Free Architecture Cards */}
+            {/* Right 5 Columns: Stacked Value & Benefit Cards */}
             <div className="lg:col-span-5 flex flex-col gap-3 h-full">
               <div className="flex-1 p-5 rounded-3xl bg-gradient-to-br from-emerald-50/95 via-teal-50/40 to-white shadow-sm flex flex-col justify-between">
                 <div className="space-y-1">
                   <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-800 font-bold bg-emerald-100/90 px-2.5 py-0.5 rounded-full inline-block">
-                    Akses Terbuka
+                    Akses Tanpa Batas
                   </span>
-                  <h3 className="text-xl font-black text-emerald-950">100% Bebas Biaya (Rp 0)</h3>
+                  <h3 className="text-xl font-black text-emerald-950">100% Gratis Tanpa Langganan</h3>
                   <p className="text-xs text-slate-600 leading-relaxed">
-                    Seluruh mahasiswa dan pencari kerja dapat mengevaluasi CV serta menyusun resume ATS tanpa biaya langganan apapun.
+                    Seluruh mahasiswa, fresh graduate, dan pencari kerja dapat mengevaluasi CV serta menyusun resume standar ATS tanpa biaya sepeser pun.
                   </p>
                 </div>
                 <div className="flex items-center gap-1.5 text-xs text-emerald-800 font-semibold">
                   <Layers className="w-4 h-4 text-emerald-600" />
-                  <span>Zero Budget Cloud Architecture</span>
+                  <span>Mendukung Persiapan Karir Talenta Muda</span>
                 </div>
               </div>
 
               <div className="flex-1 p-5 rounded-3xl bg-gradient-to-br from-rose-50/95 via-red-50/40 to-white shadow-sm flex flex-col justify-between">
                 <div className="space-y-1">
                   <span className="text-[10px] font-mono uppercase tracking-wider text-secondary font-bold bg-rose-100/90 px-2.5 py-0.5 rounded-full inline-block">
-                    Perlindungan Hukum
+                    Langkah Terintegrasi
                   </span>
-                  <h3 className="text-xl font-black text-secondary">Kepatuhan UU PDP 2022</h3>
+                  <h3 className="text-xl font-black text-secondary">Dari Evaluasi Langsung Melamar</h3>
                   <p className="text-xs text-slate-600 leading-relaxed">
-                    Mematuhi regulasi UU No. 27 Tahun 2022 dengan persetujuan eksplisit dan fitur penghapusan berkas permanen.
+                    Tidak berhenti di skor CV. Begitu resume Anda siap, langsung temukan dan lamar lowongan kerja aktif yang paling pas dengan keahlian Anda.
                   </p>
                 </div>
                 <div className="flex items-center gap-1.5 text-xs text-secondary font-semibold">
                   <ShieldCheck className="w-4 h-4 text-secondary" />
-                  <span>Privasi Kandidat Terlindungi</span>
+                  <span>Hemat Waktu Mencari Karir yang Tepat</span>
                 </div>
               </div>
             </div>
