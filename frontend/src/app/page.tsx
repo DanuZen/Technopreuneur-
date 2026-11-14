@@ -481,6 +481,22 @@ export default function HomePage() {
                   })}
                 </div>
 
+                {/* 3 Standalone Small Bento Highlights on White Canvas */}
+                <div className="grid grid-cols-3 gap-2.5 pt-1">
+                  <div className="rounded-2xl bg-slate-50 border border-slate-200/80 p-3">
+                    <div className="text-[10px] font-bold text-slate-500">Format CV</div>
+                    <div className="text-xs sm:text-sm font-black text-[#0f2c56] mt-0.5">1-Kolom ATS</div>
+                  </div>
+                  <div className="rounded-2xl bg-[#fdf2f2] border border-[#fde6e6] p-3">
+                    <div className="text-[10px] font-bold text-[#ce2731]">Evaluasi</div>
+                    <div className="text-xs sm:text-sm font-black text-[#0f2c56] mt-0.5">Skor 5 Dimensi</div>
+                  </div>
+                  <div className="rounded-2xl bg-[#0f2c56] p-3 text-white">
+                    <div className="text-[10px] font-bold text-slate-300">Pencocokan</div>
+                    <div className="text-xs sm:text-sm font-black mt-0.5">92% Akurat</div>
+                  </div>
+                </div>
+
                 <div className="space-y-2 sm:space-y-3 pt-1">
                   <h3 className="text-lg sm:text-2xl font-black text-[#0f2c56]">
                     {activeWorkflow.title}
@@ -949,8 +965,23 @@ export default function HomePage() {
               ))}
             </div>
 
-            {/* Small Bento Quick-Entry Tiles */}
-            <div className="grid grid-cols-2 gap-2.5 pt-1">
+            {/* Small Bento Stats + Quick-Entry Tiles on White Canvas */}
+            <div className="space-y-2.5 pt-1">
+              <div className="grid grid-cols-3 gap-2.5">
+                <div className="rounded-2xl bg-slate-50 border border-slate-200/80 p-2.5">
+                  <div className="text-sm font-black text-[#0f2c56]">88/100</div>
+                  <div className="text-[10px] text-slate-500">Rata-rata Skor</div>
+                </div>
+                <div className="rounded-2xl bg-slate-50 border border-slate-200/80 p-2.5">
+                  <div className="text-sm font-black text-[#ce2731]">5D</div>
+                  <div className="text-[10px] text-slate-500">Aspek Evaluasi</div>
+                </div>
+                <div className="rounded-2xl bg-slate-50 border border-slate-200/80 p-2.5">
+                  <div className="text-sm font-black text-[#0f2c56]">+24 Poin</div>
+                  <div className="text-[10px] text-slate-500">Efek Revisi</div>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-2.5">
               <Link
                 href="/evaluate?tab=questionnaire"
                 className="rounded-2xl bg-[#fdf2f2] border border-[#fde6e6] p-3 hover:border-[#ce2731]/40 transition group"
@@ -969,6 +1000,7 @@ export default function HomePage() {
                   Cek Skor Instan →
                 </div>
               </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -1176,6 +1208,22 @@ export default function HomePage() {
                   <p className="font-black text-[#0f2c56]">Kendali Privasi Penuh</p>
                   <p className="text-slate-600 text-[11px]">Hapus berkas dan riwayat evaluasi kapan saja.</p>
                 </div>
+              </div>
+            </div>
+
+            {/* Standalone Small Bento Row on White Canvas */}
+            <div className="grid grid-cols-3 gap-2.5 pt-1">
+              <div className="rounded-2xl bg-slate-50 border border-slate-200/80 p-3">
+                <div className="text-base sm:text-lg font-black text-[#0f2c56]">94%</div>
+                <div className="text-[10px] text-slate-600 font-semibold">Format &amp; Struktur ATS</div>
+              </div>
+              <div className="rounded-2xl bg-[#fdf2f2] border border-[#fde6e6] p-3">
+                <div className="text-base sm:text-lg font-black text-[#ce2731]">90%</div>
+                <div className="text-[10px] text-slate-600 font-semibold">Relevansi Skill</div>
+              </div>
+              <div className="rounded-2xl bg-[#0f2c56] p-3 text-white">
+                <div className="text-base sm:text-lg font-black">84%</div>
+                <div className="text-[10px] text-slate-300 font-semibold">Dampak Pencapaian</div>
               </div>
             </div>
           </div>
