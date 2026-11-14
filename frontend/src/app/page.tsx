@@ -590,12 +590,12 @@ export default function HomePage() {
       </section>
 
       {/* =====================================================================
-          SLIDE 2: OPEN EDITORIAL COLUMN + SECOND (#CE2731) CARD + PRIMARY (#0F2C56) CARD
+          SLIDE 2: OPEN EDITORIAL COLUMN + 1 SINGLE SECOND (#CE2731) CARD RIGHT
           ===================================================================== */}
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(2)}`}
       >
-        <div className="w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+        <div className="w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-stretch">
           {/* Col 1 (5 Cols): Open Editorial & Feature List (No Card Wrapper) */}
           <div
             className={`lg:col-span-5 h-full flex flex-col justify-between py-3 sm:py-5 px-4 sm:px-8 ${getChildAnimClass(2, "left", "delay-75")}`}
@@ -646,76 +646,98 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Col 2 (4 Cols): Bold Second (#ce2731) Card with Large Mascot Power Pose */}
+          {/* Col 2 (7 Cols): ONE Single Bold Second (#ce2731) Stage Card with Mascot & Metrics */}
           <div
-            className={`lg:col-span-4 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-7 text-[#fefefd] flex flex-col justify-between relative overflow-hidden shadow-xl ${getChildAnimClass(2, "up", "delay-150")}`}
+            className={`lg:col-span-7 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-8 text-[#fefefd] flex flex-col justify-between relative overflow-hidden shadow-2xl border border-white/10 ${getChildAnimClass(2, "right", "delay-150")}`}
             style={{
-              background: "linear-gradient(160deg, #ce2731 0%, #b01e27 65%, #911d24 100%)",
+              background: "linear-gradient(155deg, #ce2731 0%, #b01e27 52%, #0f2c56 100%)",
             }}
           >
+            {/* Geometric Grid Pattern & Glow */}
+            <div
+              className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff12_1px,transparent_1px),linear-gradient(to_bottom,#ffffff12_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"
+              aria-hidden="true"
+            />
+            <div
+              className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-[#0f2c56]/40 blur-3xl pointer-events-none"
+              aria-hidden="true"
+            />
+
+            {/* Top Bar inside Card */}
             <div className="flex items-center justify-between relative z-10">
-              <span className="px-3.5 py-1 rounded-full bg-[#fefefd] text-[#ce2731] text-xs font-black">
+              <span className="px-3.5 py-1 rounded-full bg-[#fefefd] text-[#ce2731] text-xs font-black shadow-xs">
                 Kandidat Siap Kerja
               </span>
-              <span className="text-xs font-black text-[#fde6e6]">+24 Poin Skor</span>
-            </div>
-
-            <div className="my-auto flex flex-col items-center justify-center py-2 relative z-10">
-              <div className="w-44 h-48 sm:w-48 sm:h-56 relative animate-float">
-                <Image
-                  src="/mascot/mascot-power.webp"
-                  alt="Maskot Kandidat Siap Kerja"
-                  fill
-                  className="object-contain drop-shadow-[0_18px_28px_rgba(68,10,14,0.5)]"
-                />
+              <div className="flex items-center gap-2.5 bg-black/20 backdrop-blur-md px-3.5 py-1 rounded-full border border-white/10 text-xs">
+                <span className="font-black text-[#fde6e6]">+24 Poin Skor</span>
+                <span className="w-1 h-1 rounded-full bg-white/60" />
+                <span className="font-bold text-white">92% Pas Bana</span>
               </div>
             </div>
 
-            <div className="space-y-1.5 pt-3 border-t border-white/20 relative z-10">
-              <h3 className="text-lg sm:text-xl font-black text-[#fefefd]">
-                Uji &amp; Perbaiki Seketika
-              </h3>
-              <p className="text-xs text-[#fde6e6] leading-relaxed">
-                Dapatkan saran kalimat aktif yang langsung meningkatkan peluang lolos seleksi HRD.
-              </p>
-            </div>
-          </div>
+            {/* Center Area inside Card: Metrics & Tags on Left + Large Mascot on Right */}
+            <div className="my-auto grid grid-cols-1 sm:grid-cols-12 gap-5 items-center py-2 relative z-10">
+              {/* Metric & Career Match Tags */}
+              <div className="sm:col-span-7 space-y-3.5">
+                <div className="space-y-1">
+                  <div className="text-4xl sm:text-5xl font-black text-[#fefefd] tracking-tight">
+                    92%
+                  </div>
+                  <p className="text-xs font-extrabold uppercase tracking-wider text-[#fde6e6]">
+                    Akurasi Kecocokan Karir Pas Bana
+                  </p>
+                </div>
 
-          {/* Col 3 (3 Cols): Primary (#0f2c56) Card with Second (#ce2731) Highlights */}
-          <div
-            className={`lg:col-span-3 h-full rounded-[26px] sm:rounded-[34px] bg-[#0f2c56] text-[#fefefd] p-6 sm:p-7 flex flex-col justify-between shadow-xl ${getChildAnimClass(2, "right", "delay-200")}`}
-          >
-            <div className="flex items-center justify-between">
-              <span className="px-3 py-1 rounded-full bg-[#ce2731] text-[#fefefd] text-xs font-bold">
-                Pas Bana
-              </span>
-              <Clock className="w-4 h-4 text-[#faa9ab]" />
-            </div>
+                <div className="flex flex-wrap gap-1.5 pt-0.5">
+                  {["Product Analyst", "Management Trainee", "Project Officer", "UI/UX Engineer"].map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/10 text-[11px] font-bold text-[#fefefd]"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
 
-            <div className="my-auto space-y-3 py-4">
-              <div className="text-4xl sm:text-5xl font-black text-[#fefefd]">92%</div>
-              <p className="text-xs font-bold text-[#faa9ab] uppercase tracking-wider">
-                Akurasi Kecocokan Karir
-              </p>
-              <div className="flex flex-wrap gap-1.5 pt-2">
-                {["Product Analyst", "Management Trainee", "Project Officer", "UI/UX Engineer"].map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-2.5 py-1 rounded-xl bg-white/10 text-[11px] font-semibold text-[#fefefd]"
-                  >
-                    {tag}
-                  </span>
-                ))}
+                <div className="p-3 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 flex items-start gap-2.5 text-xs text-[#fde6e6]">
+                  <CheckCircle2 className="w-4 h-4 text-[#faa9ab] shrink-0 mt-0.5" />
+                  <p className="leading-snug">
+                    Format dan kalimat pengalaman otomatis diselaraskan dengan kriteria seleksi posisi target.
+                  </p>
+                </div>
+              </div>
+
+              {/* Large Mascot Power Pose */}
+              <div className="sm:col-span-5 flex items-center justify-center">
+                <div className="w-48 sm:w-56 lg:w-60 h-52 sm:h-64 lg:h-72 relative animate-float">
+                  <Image
+                    src="/mascot/mascot-power.webp"
+                    alt="Maskot Kandidat Siap Kerja"
+                    fill
+                    className="object-contain object-bottom drop-shadow-[0_24px_36px_rgba(0,0,0,0.5)]"
+                  />
+                </div>
               </div>
             </div>
 
-            <div className="space-y-2 pt-3 border-t border-white/15">
-              <h3 className="text-base sm:text-lg font-black text-[#fefefd]">
-                Hemat Waktu Melamar
-              </h3>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Fokus pada lowongan yang benar-benar relevan dengan profil Anda.
-              </p>
+            {/* Bottom Bar inside Card */}
+            <div className="pt-3 border-t border-white/15 grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
+              <div className="space-y-1">
+                <h3 className="text-sm font-black text-[#fefefd]">
+                  Uji &amp; Perbaiki Seketika
+                </h3>
+                <p className="text-xs text-[#fde6e6] leading-relaxed">
+                  Dapatkan rekomendasi kalimat aktif yang langsung meningkatkan peluang lolos seleksi HRD.
+                </p>
+              </div>
+              <div className="space-y-1">
+                <h3 className="text-sm font-black text-[#fefefd]">
+                  Hemat Waktu Melamar
+                </h3>
+                <p className="text-xs text-[#fde6e6] leading-relaxed">
+                  Fokus pada lowongan terkurasi yang benar-benar relevan dengan profil Anda.
+                </p>
+              </div>
             </div>
           </div>
         </div>
