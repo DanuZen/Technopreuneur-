@@ -182,8 +182,8 @@ export default function HomePage() {
     }
     if (index === prevSlide) {
       return scrollDir === "down"
-        ? "opacity-0 -translate-y-12 scale-[0.96] z-10 pointer-events-none"
-        : "opacity-0 translate-y-12 scale-[0.96] z-10 pointer-events-none";
+        ? "opacity-0 -translate-y-12 scale-[0.96] z-[15] pointer-events-none"
+        : "opacity-0 translate-y-12 scale-[0.96] z-[15] pointer-events-none";
     }
     return index < activeSlide
       ? "opacity-0 -translate-y-16 scale-[0.94] z-0 pointer-events-none"
@@ -196,8 +196,8 @@ export default function HomePage() {
     }
     if (prevSlide === 0 || prevSlide === 1) {
       return scrollDir === "down"
-        ? "opacity-0 -translate-y-12 scale-[0.96] z-10 pointer-events-none"
-        : "opacity-0 translate-y-12 scale-[0.96] z-10 pointer-events-none";
+        ? "opacity-0 -translate-y-12 scale-[0.96] z-[15] pointer-events-none"
+        : "opacity-0 translate-y-12 scale-[0.96] z-[15] pointer-events-none";
     }
     return activeSlide > 1
       ? "opacity-0 -translate-y-16 scale-[0.94] z-0 pointer-events-none"
@@ -224,12 +224,94 @@ export default function HomePage() {
 
   const activeWorkflow = WORKFLOW_STEPS[activeWorkflowIdx];
 
+  const getGlobalMorphStyle = (slide: number): React.CSSProperties => {
+    switch (slide) {
+      case 0:
+        return {
+          top: "0px",
+          left: "0px",
+          width: "100%",
+          height: "100%",
+          borderRadius: "34px",
+          backgroundColor: "#0f2c56",
+        };
+      case 1:
+        return {
+          top: "0px",
+          left: "calc(50% + 16px)",
+          width: "calc(50% - 16px)",
+          height: "100%",
+          borderRadius: "34px",
+          backgroundColor: "#ce2731",
+        };
+      case 2:
+        return {
+          top: "0px",
+          left: "0px",
+          width: "calc(58.333333% - 13.33px)",
+          height: "100%",
+          borderRadius: "34px",
+          backgroundColor: "#ce2731",
+        };
+      case 3:
+        return {
+          top: "120px",
+          left: "calc(58.333333% + 11.67px)",
+          width: "calc(41.666667% - 11.67px)",
+          height: "calc(100% - 120px)",
+          borderRadius: "34px",
+          backgroundColor: "#ce2731",
+        };
+      case 4:
+        return {
+          top: "0px",
+          left: "calc(50% + 16px)",
+          width: "calc(50% - 16px)",
+          height: "100%",
+          borderRadius: "34px",
+          backgroundColor: "#0f2c56",
+        };
+      case 5:
+        return {
+          top: "calc(100% - 88px)",
+          left: "0px",
+          width: "100%",
+          height: "88px",
+          borderRadius: "28px",
+          backgroundColor: "#0f2c56",
+        };
+      case 6:
+      default:
+        return {
+          top: "0px",
+          left: "0px",
+          width: "100%",
+          height: "calc(100% - 144px)",
+          borderRadius: "34px",
+          backgroundColor: "#ce2731",
+        };
+    }
+  };
+
   return (
     <div
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       className="h-full w-full relative overflow-hidden bg-[#fefefd] text-[#0f2c56] select-none"
     >
+      {/* GLOBAL PERSISTENT MORPHING CARD STAGE (Desktop lg+): Shape-shifts smoothly across ALL 7 slides */}
+      <div
+        className="hidden lg:block absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 pointer-events-none z-10"
+        aria-hidden="true"
+      >
+        <div className="relative w-full h-full">
+          <div
+            className="absolute shadow-2xl border border-white/15 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+            style={getGlobalMorphStyle(activeSlide)}
+          />
+        </div>
+      </div>
+
       {/* =====================================================================
           SLIDE 0 & 1: HERO MORPHING STAGE (CARD SHAPE-SHIFTS TO ADAPT TO NEXT SECTION)
           ===================================================================== */}
@@ -237,9 +319,9 @@ export default function HomePage() {
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getHeroMorphSectionAnimClass()}`}
       >
         <div className="w-full h-full mx-auto relative">
-          {/* THE MORPHING CARD: Smoothly shrinks & shifts from full-width (Slide 0) to right 6 cols (Slide 1) */}
+          {/* MOBILE/TABLET LOCAL MORPHING CARD (lg+ uses Global Persistent Morphing Card above) */}
           <div
-            className={`absolute rounded-[26px] sm:rounded-[34px] overflow-hidden shadow-2xl border transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] z-10 ${
+            className={`lg:hidden absolute rounded-[26px] sm:rounded-[34px] overflow-hidden shadow-2xl border transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] z-10 ${
               activeSlide === 0
                 ? "inset-0 w-full h-full border-white/15"
                 : "top-[48%] sm:top-[44%] lg:top-0 bottom-0 right-0 left-0 lg:left-[calc(50%+10px)] xl:left-[calc(50%+16px)] w-full lg:w-[calc(50%-10px)] xl:w-[calc(50%-16px)] h-[52%] sm:h-[56%] lg:h-full border-white/10"
@@ -664,10 +746,7 @@ export default function HomePage() {
         <div className="w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-stretch">
           {/* Col 1 (7 Cols): ONE Single Bold Second (#ce2731) Stage Card ON THE LEFT */}
           <div
-            className={`lg:col-span-7 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-8 text-[#fefefd] flex flex-col justify-between relative overflow-hidden shadow-2xl border border-white/10 origin-left ${getChildAnimClass(2, "left", "delay-100")}`}
-            style={{
-              backgroundColor: "#ce2731",
-            }}
+            className={`lg:col-span-7 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-8 text-[#fefefd] flex flex-col justify-between relative overflow-hidden bg-[#ce2731] lg:bg-transparent shadow-2xl lg:shadow-none border border-white/10 lg:border-transparent origin-left ${getChildAnimClass(2, "left", "delay-100")}`}
           >
 
             {/* Top Bar inside Card */}
@@ -817,10 +896,10 @@ export default function HomePage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(3)}`}
       >
-        <div className="w-full h-full mx-auto flex flex-col justify-between gap-4 py-1.5">
+        <div className="w-full h-full mx-auto flex flex-col justify-between gap-4 py-1.5 lg:py-0">
           {/* Top Open Editorial Row + Open Typographic Metrics (No Card Boxes) */}
           <div
-            className={`w-full flex flex-col lg:flex-row lg:items-end justify-between gap-4 pb-3 border-b border-slate-200/80 px-4 sm:px-8 shrink-0 ${getChildAnimClass(3, "down", "delay-75")}`}
+            className={`w-full flex flex-col lg:flex-row lg:items-end justify-between gap-4 pb-3 border-b border-slate-200/80 px-4 sm:px-8 shrink-0 lg:h-[104px] ${getChildAnimClass(3, "down", "delay-75")}`}
           >
             <div className="space-y-1.5">
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
@@ -898,10 +977,7 @@ export default function HomePage() {
 
             {/* Right 5 Cols: Bold Second (#ce2731) Card + Before-After Active Voice Comparison */}
             <div
-              className={`lg:col-span-5 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-7 text-[#fefefd] flex flex-col justify-between relative overflow-hidden shadow-xl origin-bottom-right border border-white/10 ${getChildAnimClass(3, "right", "delay-200")}`}
-              style={{
-                backgroundColor: "#ce2731",
-              }}
+              className={`lg:col-span-5 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-7 text-[#fefefd] flex flex-col justify-between relative overflow-hidden bg-[#ce2731] lg:bg-transparent shadow-xl lg:shadow-none origin-bottom-right border border-white/10 lg:border-transparent ${getChildAnimClass(3, "right", "delay-200")}`}
             >
               <div className="space-y-2 relative z-20">
                 <span className="px-3 py-1 rounded-full bg-[#fefefd]/15 text-xs font-bold text-[#fefefd]">
@@ -1006,10 +1082,7 @@ export default function HomePage() {
 
           {/* Right 6 Cols: Primary (#0f2c56) & Second (#ce2731) Blind Scoring Stage */}
           <div
-            className={`lg:col-span-6 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-8 text-[#fefefd] flex flex-col justify-between relative overflow-hidden shadow-2xl border border-white/10 origin-right ${getChildAnimClass(4, "right", "delay-150")}`}
-            style={{
-              backgroundColor: "#0f2c56",
-            }}
+            className={`lg:col-span-6 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-8 text-[#fefefd] flex flex-col justify-between relative overflow-hidden bg-[#0f2c56] lg:bg-transparent shadow-2xl lg:shadow-none border border-white/10 lg:border-transparent origin-right ${getChildAnimClass(4, "right", "delay-150")}`}
           >
             <div className="flex items-center justify-between relative z-20">
               <span className="px-3.5 py-1 rounded-full bg-[#ce2731] text-[#fefefd] text-xs font-black">
@@ -1095,10 +1168,10 @@ export default function HomePage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(5)}`}
       >
-        <div className="w-full h-full mx-auto flex flex-col justify-between py-2 px-4 sm:px-8">
+        <div className="w-full h-full mx-auto flex flex-col justify-between py-2 lg:py-0">
           {/* Open Header Row */}
           <div
-            className={`w-full flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-3 border-b-2 border-[#0f2c56]/10 ${getChildAnimClass(5, "down", "delay-75")}`}
+            className={`w-full flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-3 px-4 sm:px-8 border-b-2 border-[#0f2c56]/10 ${getChildAnimClass(5, "down", "delay-75")}`}
           >
             <div>
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
@@ -1115,7 +1188,7 @@ export default function HomePage() {
           </div>
 
           {/* Open 12-Col Architectural Steps */}
-          <div className="my-auto py-2">
+          <div className="my-auto py-2 px-4 sm:px-8">
             <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 ${getChildAnimClass(5, "up", "delay-150")}`}>
               {[
                 {
@@ -1156,9 +1229,9 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Bottom Action Strip in Second (#ce2731) & Primary (#0f2c56) */}
+          {/* Bottom Action Strip in Primary (#0f2c56) */}
           <div
-            className={`w-full rounded-[22px] sm:rounded-[28px] bg-[#0f2c56] text-[#fefefd] p-4 sm:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${getChildAnimClass(5, "up", "delay-200")}`}
+            className={`w-full shrink-0 lg:h-[88px] rounded-[22px] sm:rounded-[28px] bg-[#0f2c56] lg:bg-transparent text-[#fefefd] p-4 sm:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${getChildAnimClass(5, "up", "delay-200")}`}
           >
             <div className="space-y-0.5">
               <p className="text-sm sm:text-base font-black text-[#fefefd]">
@@ -1184,13 +1257,10 @@ export default function HomePage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(6)}`}
       >
-        <div className="w-full h-full mx-auto flex flex-col justify-between gap-3 py-1">
-          {/* Top Closing Stage in Second (#ce2731) & Primary (#0f2c56) with Value Assurance */}
+        <div className="w-full h-full mx-auto flex flex-col justify-between gap-3 py-1 lg:py-0">
+          {/* Top Closing Stage in Second (#ce2731) with Value Assurance */}
           <div
-            className={`flex-1 min-h-0 w-full rounded-[26px] sm:rounded-[34px] px-6 sm:px-12 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center relative overflow-hidden shadow-2xl border border-white/10 origin-center ${getChildAnimClass(6, "down", "delay-75")}`}
-            style={{
-              backgroundColor: "#ce2731",
-            }}
+            className={`flex-1 min-h-0 w-full rounded-[26px] sm:rounded-[34px] px-6 sm:px-12 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center relative overflow-hidden bg-[#ce2731] lg:bg-transparent shadow-2xl lg:shadow-none border border-white/10 lg:border-transparent origin-center ${getChildAnimClass(6, "down", "delay-75")}`}
           >
 
             <div className="lg:col-span-8 space-y-4 text-left relative z-20">
@@ -1238,7 +1308,7 @@ export default function HomePage() {
 
           {/* Bottom Open Editorial Footer Directly on #fefefd Canvas (No Card Wrapper) */}
           <footer
-            className={`shrink-0 w-full pt-1 px-4 sm:px-8 ${getChildAnimClass(6, "up", "delay-150")}`}
+            className={`shrink-0 lg:h-[132px] w-full pt-1 px-4 sm:px-8 ${getChildAnimClass(6, "up", "delay-150")}`}
           >
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pb-3 border-b border-slate-200/80 text-xs">
               <div className="col-span-2 sm:col-span-1 space-y-1.5">
