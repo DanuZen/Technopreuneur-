@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import {
   Menu,
@@ -17,6 +18,7 @@ import { User } from "@/types";
 import { api } from "@/lib/api";
 
 export function Navbar({ floating = false }: { floating?: boolean }) {
+  const pathname = usePathname();
   const [user, setUser] = useState<User | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
@@ -89,16 +91,35 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
           </Link>
 
           {/* Desktop Navigation (Single Flat Row Inside Pill) */}
-          <nav className="hidden md:flex items-center gap-1 lg:gap-2">
+          <nav className="hidden md:flex items-center gap-1 lg:gap-1.5">
             <Link
               href="/"
-              className="text-xs font-medium text-slate-200 hover:text-white hover:bg-white/10 px-3 py-1.5 rounded-full transition"
+              className={`text-xs font-medium px-3 py-1.5 rounded-full transition ${
+                pathname === "/"
+                  ? "bg-white/15 text-white font-semibold"
+                  : "text-slate-200 hover:text-white hover:bg-white/10"
+              }`}
             >
               Beranda
             </Link>
             <Link
+              href="/dashboard"
+              className={`text-xs font-medium px-3 py-1.5 rounded-full transition ${
+                pathname === "/dashboard"
+                  ? "bg-white/15 text-white font-semibold"
+                  : "text-slate-200 hover:text-white hover:bg-white/10"
+              }`}
+              title="Dashboard ATS"
+            >
+              Dashboard
+            </Link>
+            <Link
               href="/evaluate"
-              className="flex items-center gap-1.5 text-xs font-medium text-slate-200 hover:text-white hover:bg-white/10 px-3 py-1.5 rounded-full transition"
+              className={`flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full transition ${
+                pathname === "/evaluate"
+                  ? "bg-white/15 text-white font-semibold"
+                  : "text-slate-200 hover:text-white hover:bg-white/10"
+              }`}
               title="Evaluasi CV & Skor ATS"
             >
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-beacon shrink-0" aria-hidden="true" />
@@ -106,7 +127,11 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
             </Link>
             <Link
               href="/jobs"
-              className="text-xs font-medium text-slate-200 hover:text-white hover:bg-white/10 px-3 py-1.5 rounded-full transition"
+              className={`text-xs font-medium px-3 py-1.5 rounded-full transition ${
+                pathname === "/jobs"
+                  ? "bg-white/15 text-white font-semibold"
+                  : "text-slate-200 hover:text-white hover:bg-white/10"
+              }`}
               title="Pencocokan Lowongan AI"
             >
               Pencocokan AI
@@ -120,7 +145,11 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
             </Link>
             <Link
               href="/about"
-              className="text-xs font-medium text-slate-200 hover:text-white hover:bg-white/10 px-3 py-1.5 rounded-full transition"
+              className={`text-xs font-medium px-3 py-1.5 rounded-full transition ${
+                pathname === "/about"
+                  ? "bg-white/15 text-white font-semibold"
+                  : "text-slate-200 hover:text-white hover:bg-white/10"
+              }`}
             >
               Tentang Kami
             </Link>
