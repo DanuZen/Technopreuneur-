@@ -116,6 +116,32 @@ export default function HomePage() {
   const isAnimatingRef = useRef<boolean>(false);
   const touchStartYRef = useRef<number | null>(null);
   const activeSlideRef = useRef<number>(0);
+  const slide4ContainerRef = useRef<HTMLDivElement | null>(null);
+  const featureItemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [featureRect, setFeatureRect] = useState<{
+    top: number;
+    left: number;
+    width: number;
+    height: number;
+  }>({ top: 140, left: 32, width: 360, height: 190 });
+
+  const updateFeatureRect = useCallback(() => {
+    const itemEl = featureItemRefs.current[activeFeatureIdx];
+    if (itemEl) {
+      setFeatureRect({
+        top: itemEl.offsetTop,
+        left: itemEl.offsetLeft,
+        width: itemEl.offsetWidth,
+        height: itemEl.offsetHeight,
+      });
+    }
+  }, [activeFeatureIdx]);
+
+  useEffect(() => {
+    updateFeatureRect();
+    window.addEventListener("resize", updateFeatureRect);
+    return () => window.removeEventListener("resize", updateFeatureRect);
+  }, [updateFeatureRect, activeSlide]);
 
   useEffect(() => {
     activeSlideRef.current = activeSlide;
@@ -307,17 +333,18 @@ export default function HomePage() {
           boxShadow: "0 25px 60px rgba(15, 44, 86, 0.25)",
         };
       case 4: {
-        const col = activeFeatureIdx % 3;
-        const row = Math.floor(activeFeatureIdx / 3);
+        const isCrimson = activeFeatureIdx % 2 === 1;
         return {
-          top: row === 0 ? "132px" : "calc(50% + 44px)",
-          left: `calc(${col * 33.3333}% + 16px)`,
-          width: "calc(33.3333% - 32px)",
-          height: "calc(43% - 20px)",
+          top: `${featureRect.top}px`,
+          left: `${featureRect.left}px`,
+          width: `${featureRect.width}px`,
+          height: `${featureRect.height}px`,
           borderRadius: "28px",
-          backgroundColor: "#ffffff",
-          border: "1px solid #e2e8f0",
-          boxShadow: "0 24px 60px rgba(15, 44, 86, 0.12)",
+          backgroundColor: isCrimson ? "#ce2731" : "#0f2c56",
+          border: "1px solid rgba(255, 255, 255, 0.15)",
+          boxShadow: isCrimson
+            ? "0 24px 55px rgba(206, 39, 49, 0.25)"
+            : "0 24px 55px rgba(15, 44, 86, 0.25)",
         };
       }
       case 5:
@@ -820,53 +847,62 @@ export default function HomePage() {
 
       {/* =====================================================================
           SLIDE 4 (#prinsip): 3x2 FEATURE BENTO GRID (Matching Video 00:11 - 00:13)
-          Global Morphing Card Shrinks into Active Highlighted Feature Tile!
+          Global Morphing Card Shrinks into Active Colored Feature Tile!
           ===================================================================== */}
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(4)}`}
       >
-        <div className="w-full h-full mx-auto px-4 sm:px-8 flex flex-col justify-center gap-6">
+        <div
+          ref={slide4ContainerRef}
+          className="relative w-full h-full mx-auto px-4 sm:px-8 flex flex-col justify-center gap-6"
+        >
           {/* Top-Left Section Header */}
-          <div className={`space-y-1.5 text-left max-w-xl ${getChildAnimClass(4, "down", "delay-75")}`}>
-            <span className="text-xs font-bold text-[#ce2731]">Fitur &amp; Prinsip</span>
-            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#0f2c56] leading-[1.14]">
-              Optimalkan kesiapan karir Anda
-              <br />
-              dengan perangkat evaluasi presisi
+          <div className={`space-y-1.5 text-left max-w-2xl ${getChildAnimClass(4, "down", "delay-75")}`}>
+            <span className="text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
+              Fitur &amp; Prinsip
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#0f2c56] leading-[1.15]">
+              Optimalkan kesiapan karir Anda dengan perangkat evaluasi presisi
             </h2>
           </div>
 
           {/* 3 Columns x 2 Rows Feature Grid */}
-          <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-5 ${getChildAnimClass(4, "up", "delay-150")}`}>
+          <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 ${getChildAnimClass(4, "up", "delay-150")}`}>
             {FEATURE_GRID_ITEMS.map((item, idx) => {
               const isSelected = activeFeatureIdx === idx;
+              const isCrimson = idx % 2 === 1;
               return (
                 <div
                   key={item.id}
+                  ref={(el) => {
+                    featureItemRefs.current[idx] = el;
+                  }}
                   onMouseEnter={() => setActiveFeatureIdx(idx)}
                   onClick={() => setActiveFeatureIdx(idx)}
-                  className={`p-5 sm:p-6 rounded-[28px] text-left transition-all duration-300 cursor-pointer ${
+                  className={`p-5 sm:p-6 rounded-[28px] text-left transition-colors duration-300 cursor-pointer ${
                     isSelected
-                      ? "bg-white lg:bg-transparent shadow-[0_20px_50px_rgba(15,44,86,0.08)] lg:shadow-none border border-slate-100 lg:border-transparent"
-                      : "hover:bg-slate-50/60"
+                      ? `${
+                          isCrimson ? "bg-[#ce2731]" : "bg-[#0f2c56]"
+                        } lg:bg-transparent text-white shadow-xl lg:shadow-none border border-white/15 lg:border-transparent`
+                      : "bg-[#f4f5f7] hover:bg-[#ebedf0] border border-slate-200/80 text-[#0f2c56]"
                   }`}
                 >
                   {/* Custom Mini UI Illustration Badge at Top */}
                   <div className="h-11 flex items-center mb-3">
                     {item.badgeType === "eye" && (
-                      <div className="px-4 py-1.5 rounded-full bg-[#fdf2f2] border border-[#f5d0d2] inline-flex items-center justify-center">
+                      <div className="px-4 py-1.5 rounded-full bg-white border border-[#f5d0d2] inline-flex items-center justify-center shadow-2xs">
                         <Eye className="w-5 h-5 text-[#ce2731]" />
                       </div>
                     )}
                     {item.badgeType === "calendar" && (
-                      <div className="px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 inline-flex items-center gap-1.5">
+                      <div className="px-3.5 py-2 rounded-xl bg-white border border-slate-200 inline-flex items-center gap-1.5 shadow-2xs">
                         <Calendar className="w-4 h-4 text-[#0f2c56]" />
                         <span className="w-2 h-2 rounded-full bg-[#ce2731]" />
                         <span className="w-2 h-2 rounded-full bg-slate-300" />
                       </div>
                     )}
                     {item.badgeType === "video" && (
-                      <div className="px-4 py-2 rounded-xl bg-slate-50 border border-slate-300 inline-flex items-center gap-2">
+                      <div className="px-4 py-2 rounded-xl bg-white border border-slate-200 inline-flex items-center gap-2 shadow-2xs">
                         <span className="w-5 h-3.5 rounded bg-[#ce2731] flex items-center justify-center">
                           <Play className="w-2.5 h-2.5 text-white fill-white" />
                         </span>
@@ -874,12 +910,12 @@ export default function HomePage() {
                       </div>
                     )}
                     {item.badgeType === "rocket" && (
-                      <div className="w-10 h-10 rounded-full bg-[#fdf2f2] border border-[#f5d0d2] inline-flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-full bg-white border border-[#f5d0d2] inline-flex items-center justify-center shadow-2xs">
                         <TrendingUp className="w-4 h-4 text-[#ce2731]" />
                       </div>
                     )}
                     {item.badgeType === "score" && (
-                      <div className="px-3.5 py-1.5 rounded-xl bg-slate-50 border border-slate-300 inline-flex items-center gap-2">
+                      <div className="px-3.5 py-1.5 rounded-xl bg-white border border-slate-200 inline-flex items-center gap-2 shadow-2xs">
                         <span className="text-xs font-black text-[#ce2731] bg-[#fdf2f2] px-2 py-0.5 rounded-md">
                           +24
                         </span>
@@ -887,17 +923,25 @@ export default function HomePage() {
                       </div>
                     )}
                     {item.badgeType === "bell" && (
-                      <div className="relative w-10 h-10 rounded-full bg-slate-50 border border-slate-300 inline-flex items-center justify-center">
+                      <div className="relative w-10 h-10 rounded-full bg-white border border-slate-200 inline-flex items-center justify-center shadow-2xs">
                         <Bell className="w-4 h-4 text-[#0f2c56]" />
                         <span className="absolute top-1.5 right-2 w-2 h-2 rounded-full bg-[#ce2731]" />
                       </div>
                     )}
                   </div>
 
-                  <h3 className="text-sm sm:text-base font-bold text-[#0f2c56] leading-snug mb-1.5">
+                  <h3
+                    className={`text-sm sm:text-base font-bold leading-snug mb-1.5 transition-colors duration-300 ${
+                      isSelected ? "text-white" : "text-[#0f2c56]"
+                    }`}
+                  >
                     {item.title}
                   </h3>
-                  <p className="text-xs text-slate-500 leading-relaxed">
+                  <p
+                    className={`text-xs leading-relaxed transition-colors duration-300 ${
+                      isSelected ? "text-white/85" : "text-slate-600"
+                    }`}
+                  >
                     {item.desc}
                   </p>
                 </div>
