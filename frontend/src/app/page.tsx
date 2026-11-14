@@ -3,83 +3,23 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import {
-  FileSpreadsheet,
+  ArrowUpRight,
   CheckCircle2,
   FileCheck,
-  Briefcase,
-  Target,
-  Shield,
+  FileSpreadsheet,
+  Rocket,
   ShieldCheck,
+  Target,
+  Briefcase,
   BarChart3,
-  Layers,
+  Clock,
+  Lock,
 } from "lucide-react";
 
-interface StageTabItem {
-  stepIndex: number;
-  tabLabel: string;
-  tabSub: string;
-  title: string;
-  description: string;
-  ctaText: string;
-  ctaHref: string;
-}
-
-// SECTION 2 (Slides 1..4): 4 Tahap Alur Kerja Utama (Layout 2-Kolom Dribbble)
-const WORKFLOW_TABS: StageTabItem[] = [
-  {
-    stepIndex: 1,
-    tabLabel: "Cek Format ATS",
-    tabSub: "Bebas Gagal Baca",
-    title: "Pastikan CV Lolos Seleksi Awal",
-    description:
-      "Banyak kandidat gugur bukan karena kurang kompeten, melainkan format CV yang sulit dibaca sistem rekrutmen. Unggah CV Anda atau susun dari nol lewat panduan kuesioner praktis.",
-    ctaText: "Cek CV Saya Sekarang",
-    ctaHref: "/evaluate",
-  },
-  {
-    stepIndex: 2,
-    tabLabel: "Skor 5 Dimensi",
-    tabSub: "Saran Perbaikan",
-    title: "Ketahui Bagian yang Perlu Diperkuat",
-    description:
-      "Bukan sekadar angka tunggal. Anda mendapatkan rincian nilai pada 5 aspek utama yang dinilai HRD, lengkap dengan saran kalimat aktif dan cara menonjolkan pencapaian Anda.",
-    ctaText: "Uji Skor 5 Dimensi",
-    ctaHref: "/evaluate",
-  },
-  {
-    stepIndex: 3,
-    tabLabel: "Pencocokan Karir",
-    tabSub: "Loker Pas Bana",
-    title: "Lowongan yang Sesuai Keahlian",
-    description:
-      "Tidak perlu lagi menebak posisi mana yang cocok. Berdasarkan keahlian dan pengalaman di CV Anda, dapatkan rekomendasi lowongan terbaik beserta panduan skill yang perlu ditingkatkan.",
-    ctaText: "Temukan Lowongan Cocok",
-    ctaHref: "/jobs",
-  },
-  {
-    stepIndex: 4,
-    tabLabel: "Penilaian Adil",
-    tabSub: "Objektif & Aman",
-    title: "Dinilai Murni dari Kompetensi",
-    description:
-      "Evaluasi berfokus sepenuhnya pada keahlian, pengalaman proyek, dan potensi karir Anda tanpa bias latar belakang pribadi. Data Anda aman dan dapat dihapus kapan saja.",
-    ctaText: "Mulai Evaluasi Gratis",
-    ctaHref: "/evaluate",
-  },
-];
-
-// Total 8 slides (0..7) with 5 distinct visual layouts:
-// 0     = Full-Screen Sky Hero + Rising Board ATS + Grassy Hill
-// 1..4  = Shrunk 32% Sky Banner + 2-Col Dribbble Stone Stage (4 Workflow Tabs)
-// 5     = Compact Navy Banner (22%) + Full-Width Interactive Browser Mockup Showcase
-// 6     = Compact Sky Banner (22%) + 3-Col Evaluation Principles + Asymmetric Bento Grid
-// 7     = Full-Screen Sky Closing CTA + Grassy Hill + Capsule Footer
-const TOTAL_SLIDES = 8;
+const TOTAL_SLIDES = 7;
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
-  const [heroBoardTab, setHeroBoardTab] = useState<"ats" | "match" | "gap">("ats");
-  const [mockupTab, setMockupTab] = useState<"analysis" | "matching" | "skills">("analysis");
   const isAnimatingRef = useRef<boolean>(false);
   const wheelDeltaRef = useRef<number>(0);
   const wheelResetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -95,12 +35,12 @@ export default function Home() {
       setTimeout(() => {
         isAnimatingRef.current = false;
         wheelDeltaRef.current = 0;
-      }, 680);
+      }, 650);
     },
     [currentSlide]
   );
 
-  // Wheel / Trackpad accumulator + Keyboard navigation (100% locked viewport, zero vertical scrollbar)
+  // Locked viewport wheel/touchpad/keyboard handler (zero vertical scrollbar)
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
@@ -162,941 +102,764 @@ export default function Home() {
     touchStartYRef.current = null;
   };
 
-  const isFullSkyStage = currentSlide === 0 || currentSlide === 7;
-  const isWorkflowSection = currentSlide >= 1 && currentSlide <= 4;
-  const isMockupSection = currentSlide === 5;
-  const isBentoSection = currentSlide === 6;
-
-  const activeWorkflow =
-    WORKFLOW_TABS[(isWorkflowSection ? currentSlide : 1) - 1];
-
-  const topBannerHeightClass = isFullSkyStage
-    ? "h-full"
-    : isWorkflowSection
-    ? "h-[30%] sm:h-[32%]"
-    : "h-[20%] sm:h-[22%]";
-
-  const topBannerBackground = isMockupSection
-    ? "linear-gradient(135deg, #0a1f3d 0%, #0f2c56 50%, #1d4576 100%)"
-    : isBentoSection
-    ? "linear-gradient(135deg, #fce7ea 0%, #e8f1fb 55%, #d6ebfa 100%)"
-    : "linear-gradient(180deg, #9ec5eb 0%, #c4def7 46%, #e5f0fb 82%, #f4f9fe 100%)";
+  const slideStateClass = (idx: number) => {
+    if (currentSlide === idx) {
+      return "opacity-100 translate-y-0 scale-100 blur-0 pointer-events-auto z-20";
+    }
+    if (currentSlide > idx) {
+      return "opacity-0 -translate-y-10 scale-[0.98] blur-sm pointer-events-none z-10";
+    }
+    return "opacity-0 translate-y-10 scale-[0.98] blur-sm pointer-events-none z-10";
+  };
 
   return (
     <div
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className="h-full w-full px-2.5 sm:px-4 pb-2.5 sm:pb-4 pt-1 flex flex-col bg-[#fefefd] text-primary overflow-hidden select-none"
+      className="h-full w-full relative overflow-hidden bg-[#f7fafe] text-[#0d1f33] select-none"
     >
       {/* =====================================================================
-          TOP MORPHING STAGE BANNER (Morphs Height, Palette & Headline per Section)
+          SLIDE 0: LUMINOUS SKY-BLUE SPLIT HERO + FLOATING CHAT/ATS CARD
           ===================================================================== */}
-      <div
-        className={`relative w-full rounded-[26px] sm:rounded-[34px] overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] shrink-0 ${topBannerHeightClass}`}
-        style={{ background: topBannerBackground }}
+      <section
+        className={`absolute inset-0 p-2.5 sm:p-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${slideStateClass(0)}`}
       >
-        {/* Animated Drifting Sky Clouds (Visible on Sky & Dawn stages) */}
-        {!isMockupSection && (
+        <div
+          className="h-full w-full rounded-[28px] sm:rounded-[36px] relative overflow-hidden flex items-center px-6 sm:px-12 lg:px-16"
+          style={{
+            background:
+              "linear-gradient(165deg, #4b94e6 0%, #6cb2f2 42%, #9ad0fa 78%, #d7ecfe 100%)",
+          }}
+        >
+          {/* Flowing Wave Ambient Overlay */}
           <div
-            className="absolute inset-0 pointer-events-none animate-cloud-drift opacity-75"
+            className="absolute inset-0 pointer-events-none opacity-65"
             style={{
               backgroundImage:
-                "radial-gradient(ellipse 55% 28% at 22% 28%, rgba(255,255,255,0.75) 0%, transparent 70%), radial-gradient(ellipse 60% 32% at 78% 36%, rgba(255,255,255,0.68) 0%, transparent 72%), radial-gradient(ellipse 45% 22% at 50% 62%, rgba(255,255,255,0.55) 0%, transparent 70%)",
+                "radial-gradient(ellipse 65% 40% at 18% 20%, rgba(255,255,255,0.28) 0%, transparent 70%), radial-gradient(ellipse 60% 45% at 85% 75%, rgba(255,255,255,0.45) 0%, transparent 70%)",
             }}
             aria-hidden="true"
           />
-        )}
 
-        {/* Subtle Grid Overlay on Navy Mockup Banner */}
-        {isMockupSection && (
-          <div
-            className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0d_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0d_1px,transparent_1px)] bg-[size:36px_36px] pointer-events-none"
-            aria-hidden="true"
-          />
-        )}
-
-        {/* -------------------------------------------------------------------
-            SECTION 1 (SLIDE 0): FULL-SCREEN HERO + RISING BOARD ATS
-            ------------------------------------------------------------------- */}
-        <div
-          className={`absolute inset-0 flex flex-col justify-between items-center text-center px-4 pt-6 sm:pt-10 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            currentSlide === 0
-              ? "opacity-100 translate-y-0 blur-0 pointer-events-auto"
-              : "opacity-0 -translate-y-12 blur-md pointer-events-none"
-          }`}
-        >
-          {/* Top Center Hero Typography & CTA */}
-          <div className="max-w-3xl mx-auto space-y-3 sm:space-y-4 z-20 my-auto pb-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/85 backdrop-blur-md shadow-xs text-[11px] font-semibold text-primary">
-              <span className="w-2 h-2 rounded-full bg-[#ce2731]" />
-              <span>Pasbana AI • Standar Evaluasi ATS &amp; HR</span>
-            </div>
-
-            <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-black tracking-tight text-primary leading-[1.08]">
-              Autopilot Evaluasi CV &amp; <br className="hidden sm:inline" />
-              <span className="text-[#ce2731]">Pencocokan Karir Impian.</span>
-            </h1>
-
-            <p className="text-xs sm:text-sm text-slate-700 max-w-xl mx-auto leading-relaxed">
-              Ukur kesiapan resume Anda secara objektif dalam 5 dimensi dan temukan lowongan yang paling pas bana dalam hitungan detik.
-            </p>
-
-            <div className="pt-1 flex flex-wrap items-center justify-center gap-3">
-              <Link
-                href="/evaluate"
-                className="px-7 py-3 bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold rounded-full shadow-lg shadow-primary/25 transition-all hover:-translate-y-0.5 cursor-pointer"
-              >
-                Evaluasi CV Saya
-              </Link>
-              <Link
-                href="/evaluate?tab=questionnaire"
-                className="px-6 py-3 bg-white/90 hover:bg-white text-primary text-xs sm:text-sm font-semibold rounded-full shadow-sm transition-all flex items-center gap-2 cursor-pointer"
-              >
-                <FileSpreadsheet className="w-4 h-4 text-[#ce2731]" aria-hidden="true" />
-                <span>Saya Belum Punya CV</span>
-              </Link>
-            </div>
-          </div>
-
-          {/* Bottom Rising White Dashboard Card */}
-          <div
-            className={`relative z-10 w-full max-w-4xl mx-auto bg-white/95 backdrop-blur-md rounded-t-[28px] sm:rounded-t-[36px] shadow-2xl p-4 sm:p-7 pb-10 sm:pb-14 text-left transition-all duration-700 delay-75 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-              currentSlide === 0
-                ? "translate-y-0 opacity-100 scale-100"
-                : "translate-y-28 opacity-0 scale-95"
-            }`}
-          >
-            <div className="flex items-center justify-between pb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#0f2c56] to-[#1d4576] text-white font-bold text-xs flex items-center justify-center shadow-xs">
-                  WF
-                </div>
-                <div>
-                  <p className="text-xs font-bold text-primary leading-tight">Wira Fikri Ramadanu</p>
-                  <p className="text-[10px] text-slate-400 font-mono">Kandidat Fresh Graduate • ID #CV-2026</p>
-                </div>
+          <div className="relative z-10 max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            {/* Left Column: Crisp White Typography & Dual Pill CTA */}
+            <div className="lg:col-span-6 space-y-5 text-left">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-semibold">
+                <span className="w-2 h-2 rounded-full bg-white" />
+                <span>Pasbana AI • Karir yang Pas Bana</span>
               </div>
 
-              <div className="flex items-center gap-2">
-                <div className="hidden sm:flex items-center gap-1 bg-slate-100 p-1 rounded-full text-[11px]">
-                  <button
-                    type="button"
-                    onClick={() => setHeroBoardTab("ats")}
-                    className={`px-2.5 py-1 rounded-full font-semibold transition cursor-pointer ${
-                      heroBoardTab === "ats" ? "bg-white text-primary shadow-2xs" : "text-slate-500 hover:text-primary"
-                    }`}
-                  >
-                    Skor 5D
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setHeroBoardTab("match")}
-                    className={`px-2.5 py-1 rounded-full font-semibold transition cursor-pointer ${
-                      heroBoardTab === "match" ? "bg-white text-primary shadow-2xs" : "text-slate-500 hover:text-primary"
-                    }`}
-                  >
-                    Loker (92%)
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setHeroBoardTab("gap")}
-                    className={`px-2.5 py-1 rounded-full font-semibold transition cursor-pointer ${
-                      heroBoardTab === "gap" ? "bg-white text-primary shadow-2xs" : "text-slate-500 hover:text-primary"
-                    }`}
-                  >
-                    Saran CV
-                  </button>
-                </div>
-                <span className="text-sm sm:text-base font-light text-slate-400">
-                  Board <strong className="font-extrabold text-primary">ATS</strong>
-                </span>
-              </div>
-            </div>
+              <h1 className="text-4xl sm:text-5xl lg:text-[58px] font-black tracking-tight text-white leading-[1.06] drop-shadow-xs">
+                Ukur. Temukan. <br />
+                Wujudkan Karir <br />
+                Impian Anda.
+              </h1>
 
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
-              <div className="md:col-span-5 space-y-3">
-                <p className="text-[10px] font-mono uppercase tracking-wider text-slate-400">
-                  Ringkasan Evaluasi
-                </p>
-                <div className="grid grid-cols-3 gap-2">
-                  <div>
-                    <div className="text-xl sm:text-2xl font-black text-primary">88</div>
-                    <div className="text-[10px] text-slate-400">Skor ATS</div>
-                  </div>
-                  <div>
-                    <div className="text-xl sm:text-2xl font-black text-primary">12</div>
-                    <div className="text-[10px] text-slate-400">Loker Cocok</div>
-                  </div>
-                  <div>
-                    <div className="text-xl sm:text-2xl font-black text-emerald-600">0</div>
-                    <div className="text-[10px] text-slate-400">Bias Data</div>
-                  </div>
-                </div>
-                <div className="pt-1 flex items-baseline gap-2">
-                  <span className="text-lg sm:text-xl font-black text-primary">92.4%</span>
-                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
-                    +18% kesiapan kerja
-                  </span>
-                </div>
-              </div>
+              <p className="text-sm sm:text-base text-white/90 max-w-lg leading-relaxed font-medium">
+                Platform evaluasi CV cerdas 5 dimensi yang membantu mahasiswa dan fresh graduate lolos seleksi HRD serta menemukan lowongan paling pas bana.
+              </p>
 
-              <div className="md:col-span-7 bg-slate-50/90 rounded-2xl p-3.5 sm:p-4 space-y-2.5 shadow-inner">
-                {heroBoardTab === "ats" && (
-                  <>
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="font-bold text-primary">Distribusi 5 Dimensi Objektif</span>
-                      <span className="text-[10px] font-mono text-emerald-600 font-bold">Lolos Screening</span>
-                    </div>
-                    <div className="space-y-1.5 text-[11px]">
-                      <div className="flex items-center justify-between">
-                        <span className="text-slate-600">Struktur &amp; Format 1-Kolom</span>
-                        <span className="font-mono font-bold text-primary">94%</span>
-                      </div>
-                      <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                        <div className="w-[94%] h-full bg-primary rounded-full" />
-                      </div>
-                      <div className="flex items-center justify-between pt-0.5">
-                        <span className="text-slate-600">Relevansi Keahlian &amp; Action Verbs</span>
-                        <span className="font-mono font-bold text-secondary">90%</span>
-                      </div>
-                      <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                        <div className="w-[90%] h-full bg-secondary rounded-full" />
-                      </div>
-                    </div>
-                  </>
-                )}
-
-                {heroBoardTab === "match" && (
-                  <div className="space-y-1.5">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-primary">Management Trainee &amp; Analis Produk</span>
-                      <span className="text-xs font-black text-emerald-600">92% Cocok</span>
-                    </div>
-                    <p className="text-[11px] text-slate-500">
-                      PT Nusantara Inovasi Mandiri • Jakarta &amp; Padang (Hybrid)
-                    </p>
-                    <div className="flex flex-wrap gap-1 pt-1">
-                      <span className="px-2 py-0.5 rounded bg-white text-primary text-[10px] font-semibold shadow-2xs">
-                        Manajemen Proyek
-                      </span>
-                      <span className="px-2 py-0.5 rounded bg-white text-primary text-[10px] font-semibold shadow-2xs">
-                        Analisis Data
-                      </span>
-                      <span className="px-2 py-0.5 rounded bg-white text-primary text-[10px] font-semibold shadow-2xs">
-                        Kepemimpinan Tim
-                      </span>
-                    </div>
-                  </div>
-                )}
-
-                {heroBoardTab === "gap" && (
-                  <div className="space-y-1.5">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-amber-900">Saran Penguatan Isi CV</span>
-                      <span className="text-[10px] font-mono text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full">
-                        +6 Poin ATS
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-slate-600">
-                      Cantumkan dampak terukur (contoh: meningkatkan partisipasi kegiatan hingga 35%) pada deskripsi pengalaman organisasi Anda.
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Lush Rolling Grassy Hill Foreground Overlapping Bottom Edge */}
-          <div className="absolute bottom-0 inset-x-0 h-16 sm:h-24 pointer-events-none z-20 overflow-hidden">
-            <svg
-              viewBox="0 0 1440 160"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-full h-full preserve-3d object-cover"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M0 160L1440 160L1440 35C1260 15 1040 55 820 85C580 118 280 135 0 155Z"
-                fill="url(#hillGrad1)"
-              />
-              <path
-                d="M220 160L1440 160L1440 65C1180 45 960 95 680 125C450 148 310 155 220 160Z"
-                fill="url(#hillGrad2)"
-              />
-              <defs>
-                <linearGradient id="hillGrad1" x1="720" y1="15" x2="720" y2="160" gradientUnits="userSpaceOnUse">
-                  <stop stopColor="#6c8f52" stopOpacity="0.92" />
-                  <stop offset="1" stopColor="#3c592b" />
-                </linearGradient>
-                <linearGradient id="hillGrad2" x1="830" y1="45" x2="830" y2="160" gradientUnits="userSpaceOnUse">
-                  <stop stopColor="#86ab68" stopOpacity="0.88" />
-                  <stop offset="1" stopColor="#2c441e" />
-                </linearGradient>
-              </defs>
-            </svg>
-          </div>
-        </div>
-
-        {/* -------------------------------------------------------------------
-            SECTION 2 BANNER (SLIDES 1..4): COMPACT SKY BANNER
-            ------------------------------------------------------------------- */}
-        <div
-          className={`absolute inset-0 flex flex-col items-center justify-center text-center px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            isWorkflowSection
-              ? "opacity-100 translate-y-0 blur-0 pointer-events-auto"
-              : "opacity-0 translate-y-8 blur-md pointer-events-none"
-          }`}
-        >
-          <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-extrabold tracking-tight text-primary max-w-2xl leading-[1.12]">
-            Otomasi evaluasi berkas, <br />
-            temukan karir dalam hitungan detik
-          </h2>
-        </div>
-
-        {/* -------------------------------------------------------------------
-            SECTION 3 BANNER (SLIDE 5): DEEP NAVY BANNER FOR PRODUCT MOCKUP
-            ------------------------------------------------------------------- */}
-        <div
-          className={`absolute inset-0 flex flex-col items-center justify-center text-center px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            isMockupSection
-              ? "opacity-100 translate-y-0 blur-0 pointer-events-auto"
-              : "opacity-0 translate-y-8 blur-md pointer-events-none"
-          }`}
-        >
-          <span className="text-[10px] font-mono uppercase tracking-widest text-sky-300 font-bold mb-1">
-            Pratinjau Antarmuka Langsung
-          </span>
-          <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white max-w-2xl leading-tight">
-            Lihat Bagaimana CV Anda Dinilai &amp; Dicocokkan
-          </h2>
-        </div>
-
-        {/* -------------------------------------------------------------------
-            SECTION 4 BANNER (SLIDE 6): SOFT DAWN BANNER FOR BENTO & PRINCIPLES
-            ------------------------------------------------------------------- */}
-        <div
-          className={`absolute inset-0 flex flex-col items-center justify-center text-center px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            isBentoSection
-              ? "opacity-100 translate-y-0 blur-0 pointer-events-auto"
-              : "opacity-0 translate-y-8 blur-md pointer-events-none"
-          }`}
-        >
-          <span className="text-[10px] font-mono uppercase tracking-widest text-secondary font-bold mb-1">
-            Keunggulan &amp; Standar Penilaian
-          </span>
-          <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-primary max-w-2xl leading-tight">
-            Mengapa Ribuan Talenta Muda Memilih Pasbana AI?
-          </h2>
-        </div>
-
-        {/* -------------------------------------------------------------------
-            SECTION 5 (SLIDE 7): FULL-SCREEN CLOSING CTA + CAPSULE FOOTER
-            ------------------------------------------------------------------- */}
-        <div
-          className={`absolute inset-0 flex flex-col justify-between items-center text-center px-4 py-8 sm:py-10 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            currentSlide === 7
-              ? "opacity-100 translate-y-0 blur-0 pointer-events-auto"
-              : "opacity-0 translate-y-12 blur-md pointer-events-none"
-          }`}
-        >
-          <div className="my-auto max-w-2xl mx-auto space-y-5 z-20">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/85 backdrop-blur-md shadow-xs text-xs font-semibold text-primary">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" aria-hidden="true" />
-              <span>100% Gratis • Tanpa Biaya Langganan</span>
-            </div>
-
-            <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-primary leading-[1.1]">
-              Siap Mengetahui Kualitas <br className="hidden sm:inline" />
-              <span className="text-[#ce2731]">CV Anda Sekarang?</span>
-            </h2>
-
-            <p className="text-xs sm:text-base text-slate-700 leading-relaxed max-w-xl mx-auto">
-              Dapatkan skor ATS objektif 5 dimensi, perbaikan kata kerja aktif, serta rekomendasi lowongan kerja yang pas bana.
-            </p>
-
-            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
-              <Link
-                href="/evaluate"
-                className="w-full sm:w-auto px-8 py-3.5 bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold rounded-full shadow-xl transition-all hover:-translate-y-0.5"
-              >
-                Mulai Evaluasi CV Gratis
-              </Link>
-              <Link
-                href="/jobs"
-                className="w-full sm:w-auto px-7 py-3.5 bg-white/90 hover:bg-white text-primary text-xs sm:text-sm font-semibold rounded-full shadow-md transition-all"
-              >
-                Eksplorasi Lowongan Kerja
-              </Link>
-            </div>
-          </div>
-
-          <footer className="w-full max-w-5xl mx-auto bg-white/90 backdrop-blur-md rounded-full px-6 py-3 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600 z-20">
-            <div className="flex items-center gap-2 font-bold text-primary">
-              <span>Pasbana<span className="text-[#ce2731]"> AI</span></span>
-              <span className="text-slate-300">|</span>
-              <span className="font-normal text-[11px] text-slate-500">
-                Karir yang Baik Dimulai dari Pertemuan yang Pas Bana
-              </span>
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-4 text-[11px] font-semibold text-slate-600">
-              <Link href="/evaluate" className="hover:text-primary transition">Evaluasi CV</Link>
-              <Link href="/evaluate?tab=questionnaire" className="hover:text-primary transition">Kuesioner</Link>
-              <Link href="/jobs" className="hover:text-primary transition">Lowongan</Link>
-              <Link href="/about" className="hover:text-primary transition">Tentang Kami</Link>
-              <Link href="/login" className="hover:text-primary transition">Masuk</Link>
-            </div>
-          </footer>
-        </div>
-      </div>
-
-      {/* =====================================================================
-          BOTTOM DYNAMIC STAGE (Switches Layout per Section!)
-          - Slides 1..4: 2-Column Dribbble Workflow Stage
-          - Slide 5: Full-Width Centered Interactive Browser Window Showcase
-          - Slide 6: 3-Column Principles + Asymmetric Bento Grid
-          ===================================================================== */}
-      <div
-        className={`w-full transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] overflow-hidden ${
-          isFullSkyStage
-            ? "h-0 opacity-0 pointer-events-none mt-0"
-            : "flex-1 opacity-100 pointer-events-auto mt-3 sm:mt-4"
-        }`}
-      >
-        {/* -------------------------------------------------------------------
-            SECTION 2 (SLIDES 1..4): 2-COLUMN DRIBBBLE WORKFLOW STAGE
-            ------------------------------------------------------------------- */}
-        {isWorkflowSection && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 h-full animate-fade-in-up">
-            {/* LEFT COLUMN: 4 Step Tabs at Top + Animated Title/Desc/CTA at Bottom */}
-            <div className="lg:col-span-6 flex flex-col justify-between p-3 sm:p-6 h-full">
-              <div className="grid grid-cols-4 gap-2 sm:gap-4">
-                {WORKFLOW_TABS.map((tab) => {
-                  const isActive = currentSlide === tab.stepIndex;
-                  const isPassed = currentSlide > tab.stepIndex;
-                  return (
-                    <button
-                      key={tab.stepIndex}
-                      type="button"
-                      onClick={() => goToSlide(tab.stepIndex)}
-                      className="text-left group cursor-pointer focus-visible:outline-none"
-                    >
-                      <div className="h-[2px] w-full bg-slate-200 rounded-full overflow-hidden mb-2">
-                        <div
-                          className={`h-full transition-all duration-500 ${
-                            isActive
-                              ? "w-full bg-primary"
-                              : isPassed
-                              ? "w-full bg-primary/40"
-                              : "w-0 bg-primary"
-                          }`}
-                        />
-                      </div>
-                      <p
-                        className={`text-xs sm:text-sm font-bold transition-colors truncate ${
-                          isActive ? "text-primary" : "text-slate-400 group-hover:text-slate-600"
-                        }`}
-                      >
-                        {tab.tabLabel}
-                      </p>
-                      <p className="text-[10px] text-slate-400 truncate hidden sm:block">
-                        {tab.tabSub}
-                      </p>
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div
-                key={activeWorkflow.stepIndex}
-                className="space-y-3 sm:space-y-4 my-auto lg:my-0 pt-2 animate-fade-in-up"
-              >
-                <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-primary leading-tight">
-                  {activeWorkflow.title}
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-600 max-w-md leading-relaxed">
-                  {activeWorkflow.description}
-                </p>
-                <div className="pt-1">
-                  <Link
-                    href={activeWorkflow.ctaHref}
-                    className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#0f2c56] hover:bg-[#163861] text-white text-xs font-bold shadow-lg shadow-primary/20 transition-all hover:-translate-y-0.5"
-                  >
-                    {activeWorkflow.ctaText}
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* RIGHT COLUMN: Rounded Sky + 3D Sculpted Stone on Grass Hill + Floating Card */}
-            <div
-              className="lg:col-span-6 rounded-[26px] sm:rounded-[34px] relative overflow-hidden flex items-center justify-center p-4 sm:p-8 h-full"
-              style={{
-                background:
-                  "linear-gradient(180deg, #9fc6ec 0%, #c8e0f7 52%, #e8f2fc 88%, #f5f9fd 100%)",
-              }}
-            >
-              <div
-                className="absolute inset-0 pointer-events-none opacity-70"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(ellipse 60% 35% at 30% 25%, rgba(255,255,255,0.75) 0%, transparent 70%), radial-gradient(ellipse 50% 30% at 75% 40%, rgba(255,255,255,0.65) 0%, transparent 70%)",
-                }}
-                aria-hidden="true"
-              />
-
-              <div className="absolute bottom-0 inset-x-0 h-32 sm:h-40 pointer-events-none z-10">
-                <svg
-                  viewBox="0 0 800 220"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-full h-full object-cover"
-                  preserveAspectRatio="none"
-                >
-                  <polygon points="210,125 360,92 610,104 650,155 180,165" fill="#d8dcd8" />
-                  <polygon points="210,125 360,92 430,132 180,165" fill="#eaedea" />
-                  <polygon points="360,92 610,104 650,155 430,132" fill="#b4bcb6" />
-                  <polygon points="180,165 430,132 650,155 620,185 160,185" fill="#7c857e" />
-                  <path
-                    d="M0 220L800 220L800 148C680 128 540 135 410 148C260 162 120 150 0 172Z"
-                    fill="url(#rightHill1)"
-                  />
-                  <path
-                    d="M60 220L800 220L800 168C640 152 480 158 330 175C190 190 110 205 60 220Z"
-                    fill="url(#rightHill2)"
-                  />
-                  <defs>
-                    <linearGradient id="rightHill1" x1="400" y1="128" x2="400" y2="220" gradientUnits="userSpaceOnUse">
-                      <stop stopColor="#6f9454" />
-                      <stop offset="1" stopColor="#355024" />
-                    </linearGradient>
-                    <linearGradient id="rightHill2" x1="430" y1="152" x2="430" y2="220" gradientUnits="userSpaceOnUse">
-                      <stop stopColor="#89ae6b" />
-                      <stop offset="1" stopColor="#263c18" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
-
-              <div
-                key={currentSlide}
-                className="relative z-20 w-full max-w-md mb-8 sm:mb-10 animate-fade-in-up"
-              >
-                {currentSlide === 1 && (
-                  <div className="bg-white/95 backdrop-blur-md rounded-3xl p-5 shadow-2xl space-y-3.5 text-left">
-                    <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-slate-100 text-slate-600">
-                      <FileCheck className="w-3.5 h-3.5 text-primary" />
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                      <Target className="w-3.5 h-3.5 text-secondary" />
-                      <Briefcase className="w-3.5 h-3.5 text-primary" />
-                    </div>
-                    <div className="flex items-start gap-2.5 bg-slate-50 p-3 rounded-2xl">
-                      <div className="w-7 h-7 rounded-full bg-primary text-white text-[10px] font-bold flex items-center justify-center shrink-0">
-                        WF
-                      </div>
-                      <div className="text-xs space-y-0.5">
-                        <p className="font-bold text-primary">Kandidat Fresh Graduate</p>
-                        <p className="text-slate-600 text-[11px]">
-                          Mengunggah <span className="font-mono font-semibold">CV_Wira_Fikri_ATS.pdf</span>
-                        </p>
-                      </div>
-                    </div>
-                    <div className="bg-blue-50/70 p-3.5 rounded-2xl space-y-1 text-xs">
-                      <div className="flex items-center gap-1.5 font-bold text-primary">
-                        <span>Asisten Karir Pasbana</span>
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                      </div>
-                      <p className="text-[11px] text-slate-700 leading-relaxed">
-                        Format CV 1-kolom Anda sudah rapi dan mudah dibaca HRD. Kami menemukan 3 poin pengalaman organisasi yang bisa diperkuat agar peluang wawancara meningkat.
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-                {currentSlide === 2 && (
-                  <div className="bg-white/95 backdrop-blur-md rounded-3xl p-5 shadow-2xl space-y-3 text-left">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-primary">Evaluasi 5 Dimensi Objektif</span>
-                      <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-xs font-black">
-                        Skor: 88/100
-                      </span>
-                    </div>
-                    <div className="space-y-2 text-[11px]">
-                      {[
-                        { label: "1. Struktur & Keterbacaan ATS", val: 94, color: "bg-primary" },
-                        { label: "2. Kejelasan Ringkasan Profil", val: 85, color: "bg-sky-500" },
-                        { label: "3. Kalimat Aktif & Pencapaian", val: 82, color: "bg-emerald-500" },
-                        { label: "4. Kesesuaian Keahlian", val: 90, color: "bg-secondary" },
-                        { label: "5. Kelengkapan Pengalaman", val: 89, color: "bg-amber-500" },
-                      ].map((d) => (
-                        <div key={d.label} className="space-y-1">
-                          <div className="flex justify-between font-medium text-slate-700">
-                            <span>{d.label}</span>
-                            <span className="font-mono font-bold text-slate-900">{d.val}%</span>
-                          </div>
-                          <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                            <div className={`h-full rounded-full ${d.color}`} style={{ width: `${d.val}%` }} />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {currentSlide === 3 && (
-                  <div className="space-y-3">
-                    <div className="grid grid-cols-2 gap-2.5 text-left">
-                      {[
-                        { name: "Kesesuaian Posisi", sub: "92% Pas dengan Profil Anda", dot: "bg-emerald-500" },
-                        { name: "Analisis Gap Skill", sub: "Panduan Skill Tambahan", dot: "bg-sky-500" },
-                        { name: "Saran Kata Kerja", sub: "Perbaikan Kalimat CV", dot: "bg-primary" },
-                        { name: "Belum Punya CV", sub: "Susun Lewat Kuesioner", dot: "bg-amber-500" },
-                        { name: "Lowongan Terkurasi", sub: "Peluang Fresh Graduate", dot: "bg-secondary" },
-                        { name: "Siap Melamar", sub: "Unduh Format Standar HR", dot: "bg-indigo-500" },
-                      ].map((tile) => (
-                        <div
-                          key={tile.name}
-                          className="bg-white/95 backdrop-blur-md p-3 rounded-2xl shadow-lg flex items-center gap-2.5"
-                        >
-                          <span className={`w-3 h-3 rounded-full ${tile.dot} shrink-0`} />
-                          <div className="min-w-0">
-                            <p className="text-xs font-bold text-primary truncate">{tile.name}</p>
-                            <p className="text-[10px] text-slate-400 truncate">{tile.sub}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="flex justify-center">
-                      <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/95 backdrop-blur-md shadow-xl text-xs font-semibold text-primary">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                        <Briefcase className="w-3.5 h-3.5 text-primary" />
-                        <Target className="w-3.5 h-3.5 text-secondary" />
-                        <span className="text-[11px] font-semibold">Rekomendasi Karir yang Pas Bana</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {currentSlide === 4 && (
-                  <div className="bg-white/95 backdrop-blur-md rounded-3xl p-5 shadow-2xl space-y-3 text-left">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Shield className="w-4 h-4 text-emerald-600" />
-                        <span className="text-xs font-bold text-primary">Keunggulan Evaluasi Objektif</span>
-                      </div>
-                      <span className="text-[10px] font-bold bg-emerald-50 text-emerald-700 px-2.5 py-0.5 rounded-full">
-                        100% Adil
-                      </span>
-                    </div>
-                    <div className="space-y-2 text-xs">
-                      <div className="p-3 rounded-2xl bg-slate-50 flex items-center justify-between">
-                        <div>
-                          <p className="font-bold text-slate-800">Fokus Murni pada Kemampuan</p>
-                          <p className="text-[10px] text-slate-500">Dinilai dari keahlian, proyek, dan pengalaman Anda</p>
-                        </div>
-                        <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
-                          Bebas Bias
-                        </span>
-                      </div>
-                      <div className="p-3 rounded-2xl bg-slate-50 flex items-center justify-between">
-                        <div>
-                          <p className="font-bold text-slate-800">Kendali Penuh Data Pribadi</p>
-                          <p className="text-[10px] text-slate-500">Riwayat dan berkas CV dapat dihapus kapan saja</p>
-                        </div>
-                        <span className="text-[10px] font-bold text-primary bg-blue-100 px-2 py-0.5 rounded-full">
-                          Terlindungi
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* -------------------------------------------------------------------
-            SECTION 3 (SLIDE 5): FULL-WIDTH CENTERED INTERACTIVE BROWSER MOCKUP
-            ------------------------------------------------------------------- */}
-        {isMockupSection && (
-          <div className="h-full flex items-center justify-center px-1 sm:px-6 animate-fade-in-up">
-            <div className="w-full max-w-5xl rounded-[28px] sm:rounded-[34px] bg-white shadow-2xl shadow-primary/15 overflow-hidden flex flex-col max-h-full">
-              {/* Browser Top Bar */}
-              <div className="bg-[#0f2c56] px-5 py-3 flex items-center justify-between text-white shrink-0">
-                <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-[#ce2731] inline-block" />
-                  <span className="w-3 h-3 rounded-full bg-amber-400 inline-block" />
-                  <span className="w-3 h-3 rounded-full bg-emerald-400 inline-block" />
-                  <span className="text-xs font-mono text-slate-300 ml-2 hidden sm:inline">
-                    pasbana.ai/dashboard/candidate
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-[11px] font-medium text-white">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-beacon shrink-0" aria-hidden="true" />
-                  <span>Penilaian Objektif Aktif</span>
-                </div>
-              </div>
-
-              {/* Interactive Mockup Body */}
-              <div className="p-4 sm:p-7 space-y-5 bg-gradient-to-br from-slate-50/80 via-blue-50/30 to-white flex-1 overflow-hidden">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setMockupTab("analysis")}
-                      className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer shadow-2xs ${
-                        mockupTab === "analysis"
-                          ? "bg-primary text-white"
-                          : "text-primary bg-white hover:bg-slate-100"
-                      }`}
-                    >
-                      Skor 5 Dimensi
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setMockupTab("matching")}
-                      className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer shadow-2xs ${
-                        mockupTab === "matching"
-                          ? "bg-primary text-white"
-                          : "text-slate-600 bg-white hover:text-primary"
-                      }`}
-                    >
-                      Rekomendasi Loker (92%)
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setMockupTab("skills")}
-                      className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer shadow-2xs ${
-                        mockupTab === "skills"
-                          ? "bg-primary text-white"
-                          : "text-slate-600 bg-white hover:text-primary"
-                      }`}
-                    >
-                      Saran Penguatan CV
-                    </button>
-                  </div>
-                  <span className="text-[11px] text-slate-400 font-mono hidden sm:inline">
-                    ID Berkas: CV-2026-F09
-                  </span>
-                </div>
-
-                <div key={mockupTab} className="animate-fade-in-up">
-                  {mockupTab === "analysis" && (
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div className="bg-gradient-to-br from-[#0f2c56] via-[#163861] to-[#0f2c56] text-white p-5 rounded-2xl shadow-md flex flex-col items-center justify-center text-center space-y-2">
-                        <div className="w-20 h-20 rounded-full border-4 border-emerald-400/30 border-t-emerald-400 flex flex-col items-center justify-center shadow-inner">
-                          <span className="text-2xl font-black text-white">88</span>
-                          <span className="text-[9px] uppercase font-mono text-emerald-300 font-semibold">Skor ATS</span>
-                        </div>
-                        <div className="pt-1">
-                          <span className="text-xs font-semibold text-emerald-300 bg-emerald-950/60 px-2.5 py-0.5 rounded-full">
-                            Sangat Kompetitif
-                          </span>
-                          <p className="text-[11px] text-slate-200 mt-1">
-                            Format rapi dan siap lolos penyaringan awal HRD.
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="md:col-span-2 bg-white p-5 rounded-2xl shadow-sm space-y-2.5">
-                        <div className="flex items-center justify-between text-xs font-semibold text-primary">
-                          <span>Distribusi Kualitas 5 Dimensi</span>
-                          <span className="text-[11px] text-slate-400 font-normal">Standar HR &amp; Recruiter</span>
-                        </div>
-                        {[
-                          { label: "Struktur & Format ATS", score: 94, color: "bg-primary" },
-                          { label: "Kejelasan Deskripsi Karir", score: 85, color: "bg-sky-500" },
-                          { label: "Pencapaian Terukur (Action Verbs)", score: 82, color: "bg-emerald-500" },
-                          { label: "Relevansi Keahlian", score: 90, color: "bg-[#ce2731]" },
-                          { label: "Kelengkapan Informasi Kontak & Edu", score: 89, color: "bg-amber-500" },
-                        ].map((bar) => (
-                          <div key={bar.label} className="space-y-1">
-                            <div className="flex items-center justify-between text-xs">
-                              <span className="text-slate-600">{bar.label}</span>
-                              <span className="font-mono font-bold text-slate-900">{bar.score}%</span>
-                            </div>
-                            <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                              <div className={`h-full rounded-full ${bar.color}`} style={{ width: `${bar.score}%` }} />
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {mockupTab === "matching" && (
-                    <div className="bg-white p-5 rounded-2xl shadow-sm space-y-4">
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <h3 className="text-base font-bold text-slate-900">Management Trainee &amp; Business Analyst</h3>
-                            <span className="text-[10px] bg-blue-50 text-blue-700 px-2 py-0.5 rounded font-mono font-medium">
-                              Rekomendasi Utama
-                            </span>
-                          </div>
-                          <p className="text-xs text-slate-500">PT Nusantara Inovasi Mandiri • Jakarta &amp; Padang (Hybrid)</p>
-                        </div>
-                        <div className="text-right">
-                          <span className="text-lg font-black text-emerald-600">92%</span>
-                          <p className="text-[10px] text-slate-400 uppercase font-mono">Tingkat Kecocokan</p>
-                        </div>
-                      </div>
-                      <div className="p-3 bg-slate-50 rounded-xl text-xs text-slate-600 space-y-1">
-                        <p className="font-semibold text-slate-800">Mengapa Posisi Ini Cocok untuk Anda:</p>
-                        <p>
-                          Pengalaman magang, kepemimpinan organisasi, dan keahlian analisis data Anda memenuhi 4 dari 5 kualifikasi utama yang dicari perusahaan ini.
-                        </p>
-                      </div>
-                      <div className="flex flex-wrap items-center gap-1.5 text-xs">
-                        <span className="text-[11px] font-medium text-slate-500">Keahlian Sesuai:</span>
-                        <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[11px] font-semibold">Analisis Data</span>
-                        <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[11px] font-semibold">Manajemen Proyek</span>
-                        <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[11px] font-semibold">Kepemimpinan Tim</span>
-                      </div>
-                    </div>
-                  )}
-
-                  {mockupTab === "skills" && (
-                    <div className="bg-white p-5 rounded-2xl shadow-sm space-y-3">
-                      <h3 className="text-xs font-semibold text-slate-700 uppercase tracking-wider font-mono">
-                        Panduan Penguatan CV &amp; Kompetensi
-                      </h3>
-                      <p className="text-xs text-slate-600">
-                        Berikut adalah saran perbaikan langsung agar CV Anda semakin menonjol dan lolos tahap penyaringan awal HRD:
-                      </p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                        <div className="p-3.5 rounded-xl bg-amber-50/70 space-y-1">
-                          <span className="text-xs font-bold text-amber-900">Tambahkan Capaian Berbasis Angka</span>
-                          <p className="text-[11px] text-amber-800">
-                            Perkuat deskripsi pengalaman dengan dampak terukur, misalnya persentase pertumbuhan atau jumlah anggota tim yang dikelola.
-                          </p>
-                        </div>
-                        <div className="p-3.5 rounded-xl bg-blue-50/70 space-y-1">
-                          <span className="text-xs font-bold text-blue-900">Lengkapi Sertifikasi Pendukung</span>
-                          <p className="text-[11px] text-blue-800">
-                            Mencantumkan pelatihan atau sertifikasi relevan dapat meningkatkan daya saing profil fresh graduate hingga 25%.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* -------------------------------------------------------------------
-            SECTION 4 (SLIDE 6): 3 EVALUATION PILLARS + ASYMMETRIC BENTO GRID
-            ------------------------------------------------------------------- */}
-        {isBentoSection && (
-          <div className="h-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-4 py-1 animate-fade-in-up">
-            {/* Left 7 Columns: 3 Core Evaluation Weight Cards + Navy Blind Scoring Card */}
-            <div className="lg:col-span-7 flex flex-col justify-between gap-3 h-full">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 flex-1">
-                <div className="p-4 rounded-3xl bg-gradient-to-br from-blue-50/90 to-white shadow-sm flex flex-col justify-between">
-                  <div className="w-9 h-9 rounded-xl bg-primary text-white flex items-center justify-center shadow-xs">
-                    <FileCheck className="w-4 h-4" />
-                  </div>
-                  <div className="space-y-1 my-auto py-1">
-                    <h3 className="text-xs sm:text-sm font-bold text-primary">1. Struktur &amp; ATS</h3>
-                    <p className="text-[11px] text-slate-600 leading-relaxed">
-                      Memastikan format CV mudah dibaca mesin rekrutmen tanpa informasi terpotong.
-                    </p>
-                  </div>
-                  <span className="text-[10px] font-mono font-bold text-primary bg-blue-100/80 px-2.5 py-0.5 rounded-full self-start">
-                    Bobot 25%
-                  </span>
-                </div>
-
-                <div className="p-4 rounded-3xl bg-gradient-to-br from-rose-50/90 to-white shadow-sm flex flex-col justify-between">
-                  <div className="w-9 h-9 rounded-xl bg-secondary text-white flex items-center justify-center shadow-xs">
-                    <BarChart3 className="w-4 h-4" />
-                  </div>
-                  <div className="space-y-1 my-auto py-1">
-                    <h3 className="text-xs sm:text-sm font-bold text-secondary">2. Dampak Terukur</h3>
-                    <p className="text-[11px] text-slate-600 leading-relaxed">
-                      Menilai kekuatan kata kerja aktif dan capaian angka pada pengalaman.
-                    </p>
-                  </div>
-                  <span className="text-[10px] font-mono font-bold text-secondary bg-rose-100/80 px-2.5 py-0.5 rounded-full self-start">
-                    Bobot 30%
-                  </span>
-                </div>
-
-                <div className="p-4 rounded-3xl bg-gradient-to-br from-emerald-50/90 to-white shadow-sm flex flex-col justify-between">
-                  <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-xs">
-                    <Target className="w-4 h-4" />
-                  </div>
-                  <div className="space-y-1 my-auto py-1">
-                    <h3 className="text-xs sm:text-sm font-bold text-emerald-900">3. Relevansi Skill</h3>
-                    <p className="text-[11px] text-slate-600 leading-relaxed">
-                      Memetakan kesesuaian keahlian Anda dengan kebutuhan nyata industri.
-                    </p>
-                  </div>
-                  <span className="text-[10px] font-mono font-bold text-emerald-800 bg-emerald-100/80 px-2.5 py-0.5 rounded-full self-start">
-                    Bobot 45%
-                  </span>
-                </div>
-              </div>
-
-              <div className="p-5 rounded-3xl bg-gradient-to-r from-[#0f2c56] via-[#163861] to-[#0a1e3b] text-white shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="space-y-1 max-w-md">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-blue-200 font-bold">
-                    Objektivitas Murni
-                  </span>
-                  <h3 className="text-base sm:text-lg font-black text-white">
-                    Penilaian Adil Tanpa Diskriminasi
-                  </h3>
-                  <p className="text-xs text-slate-200 leading-relaxed">
-                    Setiap kandidat dinilai murni dari kompetensi, pengalaman proyek, dan kesiapan kerja tanpa memandang latar belakang pribadi.
-                  </p>
-                </div>
+              <div className="pt-2 flex flex-wrap items-center gap-4">
                 <Link
                   href="/evaluate"
-                  className="px-5 py-2.5 rounded-full bg-white text-primary text-xs font-bold shadow-sm hover:bg-slate-100 transition shrink-0 self-start sm:self-center"
+                  className="inline-flex items-center gap-3 pl-6 pr-2 py-2 rounded-full bg-[#7dbaf5]/80 hover:bg-[#7dbaf5] text-white font-bold text-sm shadow-lg shadow-[#1d5ca3]/25 transition-all hover:-translate-y-0.5 backdrop-blur-md border border-white/30"
                 >
-                  Coba Sekarang
+                  <span>Mulai Evaluasi Gratis</span>
+                  <span className="w-9 h-9 rounded-full bg-white text-[#0d1f33] flex items-center justify-center shadow-xs">
+                    <ArrowUpRight className="w-4 h-4" />
+                  </span>
+                </Link>
+
+                <Link
+                  href="/evaluate?tab=questionnaire"
+                  className="text-xs sm:text-sm font-semibold text-white/95 hover:text-white underline-offset-4 hover:underline flex items-center gap-1.5"
+                >
+                  <FileSpreadsheet className="w-4 h-4" />
+                  <span>Belum punya CV? Isi Kuesioner</span>
                 </Link>
               </div>
             </div>
 
-            {/* Right 5 Columns: Stacked Value & Benefit Cards */}
-            <div className="lg:col-span-5 flex flex-col gap-3 h-full">
-              <div className="flex-1 p-5 rounded-3xl bg-gradient-to-br from-emerald-50/95 via-teal-50/40 to-white shadow-sm flex flex-col justify-between">
-                <div className="space-y-1">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-800 font-bold bg-emerald-100/90 px-2.5 py-0.5 rounded-full inline-block">
-                    Akses Tanpa Batas
-                  </span>
-                  <h3 className="text-xl font-black text-emerald-950">100% Gratis Tanpa Langganan</h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    Seluruh mahasiswa dan pencari kerja dapat mengevaluasi CV maupun membuat resume standar ATS lewat kuesioner tanpa biaya sepeser pun.
-                  </p>
+            {/* Right Column: Floating Evaluation Card + Flanking Metric Chips */}
+            <div className="lg:col-span-6 relative flex items-center justify-center">
+              <div className="relative w-full max-w-md">
+                {/* Floating Left Metric Chip */}
+                <div className="hidden sm:block absolute -left-10 top-6 z-20 bg-white/95 backdrop-blur-md rounded-2xl p-3 shadow-xl w-36 animate-float">
+                  <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500">
+                    <FileCheck className="w-3.5 h-3.5 text-[#3b8eeb]" />
+                    <span>Skor ATS</span>
+                  </div>
+                  <div className="text-2xl font-black text-[#0d1f33] mt-1">88</div>
+                  <div className="text-[10px] font-semibold text-emerald-600">+18% kesiapan</div>
                 </div>
-                <div className="flex items-center gap-1.5 text-xs text-emerald-800 font-semibold">
-                  <Layers className="w-4 h-4 text-emerald-600" />
-                  <span>Mendukung Persiapan Karir Talenta Muda</span>
-                </div>
-              </div>
 
-              <div className="flex-1 p-5 rounded-3xl bg-gradient-to-br from-rose-50/95 via-red-50/40 to-white shadow-sm flex flex-col justify-between">
-                <div className="space-y-1">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-secondary font-bold bg-rose-100/90 px-2.5 py-0.5 rounded-full inline-block">
-                    Langkah Terintegrasi
-                  </span>
-                  <h3 className="text-xl font-black text-secondary">Dari Evaluasi Langsung Melamar</h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    Begitu resume Anda siap, langsung temukan dan lamar lowongan kerja aktif yang paling pas dengan kompetensi dan minat karir Anda.
-                  </p>
+                {/* Floating Right Metric Chip */}
+                <div className="hidden sm:block absolute -right-8 top-14 z-20 bg-white/95 backdrop-blur-md rounded-2xl p-3 shadow-xl w-36 animate-float-delay">
+                  <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500">
+                    <Target className="w-3.5 h-3.5 text-[#3b8eeb]" />
+                    <span>Kecocokan Karir</span>
+                  </div>
+                  <div className="text-2xl font-black text-[#0d1f33] mt-1">92%</div>
+                  <div className="text-[10px] font-semibold text-[#3b8eeb]">12 Loker Cocok</div>
                 </div>
-                <div className="flex items-center gap-1.5 text-xs text-secondary font-semibold">
-                  <ShieldCheck className="w-4 h-4 text-secondary" />
-                  <span>Privasi Terjaga &amp; Hak Hapus Permanen</span>
+
+                {/* Main Center Card (Chat/Assistant Style from Reference) */}
+                <div className="bg-white/95 backdrop-blur-xl rounded-[28px] p-5 shadow-2xl shadow-[#164b8a]/20 space-y-3.5">
+                  <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-full bg-[#4b94e6] text-white text-xs font-bold flex items-center justify-center">
+                        PA
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-[#0d1f33]">Asisten Karir Pasbana</p>
+                        <p className="text-[10px] text-emerald-600 font-semibold">Evaluasi 5 Dimensi Aktif</p>
+                      </div>
+                    </div>
+                    <span className="text-[10px] font-mono text-slate-400">CV-2026</span>
+                  </div>
+
+                  {/* Conversation Bubbles */}
+                  <div className="space-y-2.5 text-xs">
+                    <div className="bg-slate-100 text-slate-700 p-3 rounded-2xl rounded-tl-sm max-w-[85%]">
+                      Halo! Apakah format CV 1-kolom saya sudah aman untuk seleksi HRD?
+                    </div>
+                    <div className="bg-[#5aa9f4] text-white p-3 rounded-2xl rounded-tr-sm ml-auto max-w-[88%] shadow-sm">
+                      Format CV Anda sangat rapi (Skor 94%). Tambahkan angka pencapaian pada pengalaman magang agar nilai dampak naik ke 90%!
+                    </div>
+                    <div className="bg-slate-100 text-slate-700 p-2.5 rounded-2xl rounded-tl-sm max-w-[80%] font-medium">
+                      Rekomendasi posisi: <span className="text-[#0d1f33] font-bold">Management Trainee (92%)</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Floating Bottom-Left Mini Area Chart Card */}
+                <div className="hidden sm:block absolute -left-8 -bottom-6 z-20 bg-white/95 backdrop-blur-md rounded-2xl p-3 shadow-xl w-44">
+                  <p className="text-[10px] font-bold text-slate-500 mb-1">Progres Kesiapan CV</p>
+                  <svg viewBox="0 0 160 44" className="w-full h-10">
+                    <defs>
+                      <linearGradient id="heroArea" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#5aa9f4" stopOpacity="0.45" />
+                        <stop offset="100%" stopColor="#5aa9f4" stopOpacity="0.02" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M0 38 Q30 34, 55 24 T110 18 T160 6 L160 44 L0 44 Z"
+                      fill="url(#heroArea)"
+                    />
+                    <path
+                      d="M0 38 Q30 34, 55 24 T110 18 T160 6"
+                      fill="none"
+                      stroke="#4b94e6"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                    />
+                  </svg>
                 </div>
               </div>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      </section>
+
+      {/* =====================================================================
+          SLIDE 1: THE COMPLETE PLATFORM — 3 DISTINCT FEATURE SHOWCASE CARDS
+          ===================================================================== */}
+      <section
+        className={`absolute inset-0 p-4 sm:p-8 lg:p-12 flex flex-col justify-center bg-white transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${slideStateClass(1)}`}
+      >
+        <div className="max-w-6xl mx-auto w-full space-y-8">
+          {/* Split Header */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-end">
+            <div className="lg:col-span-6">
+              <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[#0d1f33] leading-tight">
+                Platform Lengkap untuk <br />
+                <span className="text-[#4b94e6]">Persiapan Karir Anda</span>
+              </h2>
+            </div>
+            <div className="lg:col-span-6">
+              <p className="text-sm text-[#5a6b7f] leading-relaxed max-w-xl">
+                Pasbana AI dirancang untuk membantu talenta muda melewati tahap seleksi awal dengan percaya diri, mulai dari menyusun CV standar HR hingga menemukan lowongan yang paling sesuai.
+              </p>
+            </div>
+          </div>
+
+          {/* 3 Feature Cards (Matches Ref Part 1 Bottom) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Card 1: 8-Tile Feature Grid */}
+            <div className="rounded-[28px] bg-[#f8fbff] border border-[#e6eef7] p-6 flex flex-col justify-between space-y-6 shadow-sm hover:shadow-md transition">
+              <div className="space-y-4">
+                <div className="text-center font-bold text-sm text-[#0d1f33]">
+                  Ekosistem Fitur <span className="text-[#4b94e6]">Pasbana AI</span>
+                </div>
+                <div className="grid grid-cols-4 gap-2.5">
+                  {[
+                    { icon: FileCheck, bg: "bg-blue-50 text-[#3b8eeb]", label: "ATS" },
+                    { icon: BarChart3, bg: "bg-sky-50 text-sky-600", label: "5D" },
+                    { icon: FileSpreadsheet, bg: "bg-indigo-50 text-indigo-600", label: "Form" },
+                    { icon: Briefcase, bg: "bg-emerald-50 text-emerald-600", label: "Loker" },
+                    { icon: Target, bg: "bg-amber-50 text-amber-600", label: "Skill" },
+                    { icon: ShieldCheck, bg: "bg-rose-50 text-rose-600", label: "Adil" },
+                    { icon: CheckCircle2, bg: "bg-teal-50 text-teal-600", label: "Saran" },
+                    { icon: Lock, bg: "bg-slate-100 text-slate-700", label: "Aman" },
+                  ].map((item, i) => {
+                    const Icon = item.icon;
+                    return (
+                      <div
+                        key={i}
+                        className="aspect-square rounded-2xl bg-white border border-slate-100 shadow-2xs flex flex-col items-center justify-center gap-1"
+                      >
+                        <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${item.bg}`}>
+                          <Icon className="w-4 h-4" />
+                        </div>
+                        <span className="text-[9px] font-bold text-slate-500">{item.label}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="space-y-1.5">
+                <h3 className="text-base font-bold text-[#0d1f33]">Evaluasi &amp; Kuesioner Terpadu</h3>
+                <p className="text-xs text-[#5a6b7f] leading-relaxed">
+                  Sudah punya CV maupun belum, Anda bisa langsung mengukur kesiapan kerja dalam satu tempat.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 2: Rocket Boost Illustration */}
+            <div className="rounded-[28px] bg-[#f8fbff] border border-[#e6eef7] p-6 flex flex-col justify-between space-y-6 shadow-sm hover:shadow-md transition">
+              <div className="relative h-40 flex flex-col items-center justify-center">
+                <span className="self-start inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-slate-100 text-[10px] font-bold text-[#0d1f33] shadow-2xs">
+                  <span className="w-2 h-2 rounded-full bg-rose-500" />
+                  Kandidat Siap Kerja
+                </span>
+                <div className="my-auto w-16 h-16 rounded-2xl bg-gradient-to-br from-[#5aa9f4] to-[#3b8eeb] text-white flex items-center justify-center shadow-lg shadow-blue-400/30">
+                  <Rocket className="w-8 h-8" />
+                </div>
+                <div className="self-end px-3 py-1.5 rounded-xl bg-white border border-slate-100 text-[10px] font-bold text-[#0d1f33] shadow-xs">
+                  Tingkatkan Peluang Lolos HRD
+                </div>
+              </div>
+              <div className="space-y-1.5">
+                <h3 className="text-base font-bold text-[#0d1f33]">Uji &amp; Perbaiki dalam Hitungan Detik</h3>
+                <p className="text-xs text-[#5a6b7f] leading-relaxed">
+                  Dapatkan rincian skor dan saran kalimat aktif yang langsung bisa Anda terapkan pada resume.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 3: Concentric Blue Target */}
+            <div className="rounded-[28px] bg-[#f8fbff] border border-[#e6eef7] p-6 flex flex-col justify-between space-y-6 shadow-sm hover:shadow-md transition">
+              <div className="relative h-40 flex flex-col items-center justify-center">
+                <span className="self-start inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-slate-100 text-[10px] font-bold text-[#0d1f33] shadow-2xs">
+                  <Target className="w-3 h-3 text-[#4b94e6]" />
+                  Rekomendasi Otomatis
+                </span>
+                <div className="my-auto relative flex items-center justify-center">
+                  <div className="w-24 h-24 rounded-full border-4 border-[#90c6fa]/40 flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-full border-4 border-[#5aa9f4]/70 flex items-center justify-center">
+                      <div className="w-8 h-8 rounded-full bg-[#4b94e6]" />
+                    </div>
+                  </div>
+                </div>
+                <div className="self-end inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-100 text-[10px] font-bold text-[#0d1f33] shadow-xs">
+                  <Clock className="w-3 h-3 text-[#4b94e6]" />
+                  <span>Hemat Waktu Cari Loker</span>
+                </div>
+              </div>
+              <div className="space-y-1.5">
+                <h3 className="text-base font-bold text-[#0d1f33]">Pencocokan Karir yang Pas Bana</h3>
+                <p className="text-xs text-[#5a6b7f] leading-relaxed">
+                  Temukan posisi aktif yang sesuai keahlian Anda tanpa perlu menebak kualifikasi perusahaan.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =====================================================================
+          SLIDE 2: DASHBOARD OVERVIEW + SIDE ASSISTANT (Ref Part 2 Bottom)
+          ===================================================================== */}
+      <section
+        className={`absolute inset-0 p-4 sm:p-8 lg:p-10 flex flex-col justify-center bg-[#f6f9fd] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${slideStateClass(2)}`}
+      >
+        <div className="max-w-6xl mx-auto w-full space-y-6">
+          <div className="text-center space-y-1">
+            <h2 className="text-2xl sm:text-4xl font-black tracking-tight text-[#0d1f33]">
+              <span className="text-[#4b94e6]">Pasbana AI</span> Cepat Digunakan, <br />
+              Mudah Dipahami Semua Kalangan.
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+            {/* Left 8 Cols: Clean Overview Dashboard Window */}
+            <div className="lg:col-span-8 bg-white rounded-[28px] border border-[#e3edf7] shadow-xl shadow-[#4b94e6]/10 p-5 sm:p-6 space-y-5">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm font-bold text-[#0d1f33]">Ringkasan Evaluasi CV</h3>
+                  <p className="text-[11px] text-[#5a6b7f]">Pantau perkembangan skor dan kesiapan kerja Anda</p>
+                </div>
+                <span className="px-3 py-1 rounded-full bg-[#ebf4fd] text-[#3b8eeb] text-[11px] font-bold">
+                  Standar HRD
+                </span>
+              </div>
+
+              {/* Sky-Blue Chart Banner */}
+              <div className="rounded-2xl bg-gradient-to-r from-[#539ce8] to-[#7abdf7] p-4 text-white space-y-2">
+                <div className="flex items-center justify-between text-xs font-semibold">
+                  <span>Tren Skor Kesiapan Resume</span>
+                  <span className="bg-white/20 px-2.5 py-0.5 rounded-full text-[10px]">+24 Poin</span>
+                </div>
+                <svg viewBox="0 0 420 75" className="w-full h-16">
+                  <path
+                    d="M0 62 Q70 54, 130 40 T260 28 T360 16 T420 8"
+                    fill="none"
+                    stroke="#ffffff"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                  />
+                  <circle cx="420" cy="8" r="4.5" fill="#ffffff" />
+                </svg>
+              </div>
+
+              {/* 4 Metric Tiles */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {[
+                  { label: "Skor ATS Total", val: "88/100", sub: "Kompetitif" },
+                  { label: "Aspek Dinilai", val: "5 Dimensi", sub: "Objektif" },
+                  { label: "Loker Cocok", val: "12 Posisi", sub: "Aktif" },
+                  { label: "Tingkat Kecocokan", val: "92%", sub: "Pas Bana" },
+                ].map((m) => (
+                  <div key={m.label} className="p-3 rounded-2xl bg-[#f8fbff] border border-[#e6eef7]">
+                    <p className="text-[10px] text-[#5a6b7f] font-medium">{m.label}</p>
+                    <p className="text-lg font-black text-[#0d1f33] mt-0.5">{m.val}</p>
+                    <p className="text-[10px] font-bold text-[#3b8eeb]">{m.sub}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right 4 Cols: Side Assistant Card */}
+            <div className="lg:col-span-4 bg-white rounded-[28px] border border-[#e3edf7] shadow-xl shadow-[#4b94e6]/10 p-5 flex flex-col justify-between space-y-4">
+              <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                <span className="text-xs font-bold text-[#0d1f33]">Saran Perbaikan Langsung</span>
+                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+              </div>
+              <div className="space-y-3 text-xs my-auto">
+                <div className="p-3 rounded-2xl bg-slate-100 text-slate-700">
+                  Bagaimana cara memperkuat pengalaman organisasi saya di CV?
+                </div>
+                <div className="p-3 rounded-2xl bg-[#5aa9f4] text-white shadow-xs leading-relaxed">
+                  Gunakan kata kerja aktif seperti &quot;Memimpin&quot; atau &quot;Mengelola&quot; dan sertakan hasil terukur, misalnya: &quot;Mengelola acara kampus dengan 350+ peserta.&quot;
+                </div>
+              </div>
+              <Link
+                href="/evaluate"
+                className="w-full py-2.5 rounded-full bg-[#0d1f33] hover:bg-[#193554] text-white text-xs font-bold text-center transition"
+              >
+                Coba Evaluasi Sekarang
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =====================================================================
+          SLIDE 3: DEEP OCEAN NAVY STAGE — OBJEKTIVITAS & BLIND SCORING (Ref Part 3 Top)
+          ===================================================================== */}
+      <section
+        className={`absolute inset-0 p-2.5 sm:p-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${slideStateClass(3)}`}
+      >
+        <div
+          className="h-full w-full rounded-[28px] sm:rounded-[36px] relative overflow-hidden flex flex-col justify-center px-6 sm:px-12 lg:px-16 text-white"
+          style={{
+            background: "linear-gradient(155deg, #051e34 0%, #092c4b 55%, #0d3a62 100%)",
+          }}
+        >
+          {/* Subtle Navy Wave Lines */}
+          <div
+            className="absolute inset-0 opacity-20 pointer-events-none"
+            style={{
+              backgroundImage:
+                "radial-gradient(ellipse 70% 50% at 80% 20%, rgba(90,169,244,0.35) 0%, transparent 70%)",
+            }}
+            aria-hidden="true"
+          />
+
+          <div className="relative z-10 max-w-6xl mx-auto w-full space-y-8">
+            {/* Split White Header */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-end">
+              <div className="lg:col-span-7">
+                <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black tracking-tight leading-tight">
+                  Penilaian Objektif untuk <br />
+                  <span className="text-[#79bdf9]">Kesempatan Karir yang Setara</span>
+                </h2>
+              </div>
+              <div className="lg:col-span-5">
+                <p className="text-xs sm:text-sm text-[#c4dcf2] leading-relaxed">
+                  Pasbana AI menyaring resume murni berdasarkan keahlian, pengalaman proyek, dan dampak kerja Anda tanpa bias foto, usia, maupun latar belakang pribadi.
+                </p>
+              </div>
+            </div>
+
+            {/* Inner Showcase Panel */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center bg-white/10 backdrop-blur-md border border-white/15 rounded-[28px] p-5 sm:p-8">
+              <div className="lg:col-span-6 space-y-4">
+                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#5aa9f4]/20 text-[#96cdfc] text-xs font-bold">
+                  <ShieldCheck className="w-4 h-4" />
+                  <span>Prinsip Blind Scoring &amp; Privasi</span>
+                </span>
+                <h3 className="text-2xl font-bold text-white">
+                  Fokus Murni pada Kompetensi Anda
+                </h3>
+                <ul className="space-y-2.5 text-xs sm:text-sm text-[#d4e7f8]">
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#79bdf9] shrink-0" />
+                    <span>Tidak menilai foto wajah, gender, maupun usia kandidat.</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#79bdf9] shrink-0" />
+                    <span>Kendali penuh atas berkas CV dengan fitur hapus kapan saja.</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#79bdf9] shrink-0" />
+                    <span>100% gratis untuk seluruh mahasiswa dan pencari kerja.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="lg:col-span-6 bg-white text-[#0d1f33] rounded-3xl p-5 shadow-2xl space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold">Rincian Penilaian Objektif</span>
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#ebf4fd] text-[#3b8eeb] text-[10px] font-bold">
+                    Bebas Bias
+                  </span>
+                </div>
+                {[
+                  { label: "Struktur & Keterbacaan ATS", val: 94 },
+                  { label: "Kejelasan Deskripsi Pengalaman", val: 85 },
+                  { label: "Kalimat Aktif & Dampak Terukur", val: 82 },
+                  { label: "Relevansi Keahlian Industri", val: 90 },
+                ].map((row) => (
+                  <div key={row.label} className="space-y-1">
+                    <div className="flex justify-between text-[11px] font-semibold">
+                      <span>{row.label}</span>
+                      <span className="text-[#3b8eeb] font-mono">{row.val}%</span>
+                    </div>
+                    <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                      <div className="h-full bg-[#4b94e6] rounded-full" style={{ width: `${row.val}%` }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =====================================================================
+          SLIDE 4: ANALYTICS IMPACT (RADAR + AREA) + 4 BOLD SKY-BLUE STATS (Ref Part 3 Bottom & Part 4)
+          ===================================================================== */}
+      <section
+        className={`absolute inset-0 p-4 sm:p-8 lg:p-10 flex flex-col justify-center bg-white transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${slideStateClass(4)}`}
+      >
+        <div className="max-w-6xl mx-auto w-full space-y-7">
+          {/* Split Header */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-end">
+            <div className="lg:col-span-6">
+              <h2 className="text-2xl sm:text-4xl font-black tracking-tight text-[#0d1f33] leading-tight">
+                Pantau Bagaimana CV Anda <br />
+                <span className="text-[#4b94e6]">Berkembang Lebih Baik</span>
+              </h2>
+            </div>
+            <div className="lg:col-span-6">
+              <p className="text-xs sm:text-sm text-[#5a6b7f] leading-relaxed">
+                Temukan insight perbaikan CV secara jelas dan mudah dipahami tanpa perlu menebak apa yang dicari oleh tim rekrutmen perusahaan.
+              </p>
+            </div>
+          </div>
+
+          {/* 3 Analytics Cards (Area Chart + Readiness Card + SVG Radar Chart) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {/* Card 1: Area Chart */}
+            <div className="rounded-3xl bg-[#f8fbff] border border-[#e6eef7] p-5 flex flex-col justify-between space-y-4">
+              <div className="flex items-center justify-between text-xs font-bold text-[#0d1f33]">
+                <span>Grafik Kenaikan Skor</span>
+                <span className="text-[10px] text-[#4b94e6]">Sebelum vs Sesudah</span>
+              </div>
+              <svg viewBox="0 0 240 100" className="w-full h-24">
+                <defs>
+                  <linearGradient id="impactGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#5aa9f4" stopOpacity="0.4" />
+                    <stop offset="100%" stopColor="#5aa9f4" stopOpacity="0.02" />
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M0 84 Q45 78, 85 52 T165 44 T240 14 L240 100 L0 100 Z"
+                  fill="url(#impactGrad)"
+                />
+                <path
+                  d="M0 84 Q45 78, 85 52 T165 44 T240 14"
+                  fill="none"
+                  stroke="#4b94e6"
+                  strokeWidth="2.5"
+                />
+              </svg>
+              <div>
+                <h3 className="text-sm font-bold text-[#0d1f33]">Perkembangan Skor ATS</h3>
+                <p className="text-[11px] text-[#5a6b7f]">Pantau peningkatan kualitas resume setelah revisi.</p>
+              </div>
+            </div>
+
+            {/* Card 2: Gap Skill Identification */}
+            <div className="rounded-3xl bg-[#f8fbff] border border-[#e6eef7] p-5 flex flex-col justify-between space-y-4">
+              <div className="flex items-center justify-between text-xs font-bold text-[#0d1f33]">
+                <span>Kesiapan Melamar</span>
+                <span className="text-[10px] text-emerald-600 font-bold">Siap</span>
+              </div>
+              <div className="p-4 rounded-2xl bg-white border border-slate-100 space-y-2 my-auto">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#0d1f33]">
+                  <CheckCircle2 className="w-4 h-4 text-[#4b94e6]" />
+                  <span>3 Saran Perbaikan Tersedia</span>
+                </div>
+                <p className="text-[11px] text-[#5a6b7f] leading-relaxed">
+                  Perkuat bagian pencapaian proyek dan lengkapi keahlian inti agar peluang panggilan wawancara meningkat.
+                </p>
+              </div>
+              <div>
+                <h3 className="text-sm font-bold text-[#0d1f33]">Identifikasi Celah Keahlian</h3>
+                <p className="text-[11px] text-[#5a6b7f]">Ketahui skill tambahan yang paling dicari industri.</p>
+              </div>
+            </div>
+
+            {/* Card 3: 6-Axis Radar Chart (Exact Match to Reference Part 3 Bottom Right!) */}
+            <div className="rounded-3xl bg-[#f8fbff] border border-[#e6eef7] p-5 flex flex-col justify-between space-y-2">
+              <div className="flex items-center justify-between text-xs font-bold text-[#0d1f33]">
+                <span>Peta 5 Dimensi</span>
+                <span className="text-[10px] text-[#4b94e6]">Seimbang</span>
+              </div>
+              <svg viewBox="0 0 180 120" className="w-full h-24 mx-auto">
+                <polygon points="90,14 134,39 134,89 90,114 46,89 46,39" fill="none" stroke="#dbe8f6" strokeWidth="1" />
+                <polygon points="90,30 120,47 120,81 90,98 60,81 60,47" fill="none" stroke="#dbe8f6" strokeWidth="1" />
+                <polygon
+                  points="90,18 128,44 124,84 90,104 54,82 58,42"
+                  fill="rgba(90,169,244,0.22)"
+                  stroke="#4b94e6"
+                  strokeWidth="2"
+                />
+                <text x="90" y="10" textAnchor="middle" fontSize="7" fill="#5a6b7f">ATS</text>
+                <text x="148" y="42" textAnchor="start" fontSize="7" fill="#5a6b7f">Struktur</text>
+                <text x="148" y="92" textAnchor="start" fontSize="7" fill="#5a6b7f">Dampak</text>
+                <text x="32" y="92" textAnchor="end" fontSize="7" fill="#5a6b7f">Skill</text>
+                <text x="32" y="42" textAnchor="end" fontSize="7" fill="#5a6b7f">Profil</text>
+              </svg>
+              <div>
+                <h3 className="text-sm font-bold text-[#0d1f33]">Keseimbangan Kompetensi</h3>
+                <p className="text-[11px] text-[#5a6b7f]">Visualisasi menyeluruh aspek kekuatan CV Anda.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* 4 Bold Sky-Blue Stats Row (Matches Reference Part 4) */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2 border-t border-slate-100 text-center">
+            {[
+              { num: "5D", title: "Kriteria Evaluasi", sub: "Diadopsi dari standar seleksi HRD" },
+              { num: "92%", title: "Akurasi Pencocokan", sub: "Memetakan loker sesuai keahlian" },
+              { num: "100%", title: "Bebas Biaya", sub: "Gratis tanpa langganan bagi talenta muda" },
+              { num: "#1", title: "Fokus Mahasiswa", sub: "Mendukung fresh graduate siap kerja" },
+            ].map((stat) => (
+              <div key={stat.title} className="space-y-0.5">
+                <div className="text-3xl sm:text-4xl font-black text-[#5aa9f4]">{stat.num}</div>
+                <div className="text-xs font-bold text-[#0d1f33]">{stat.title}</div>
+                <div className="text-[10px] text-[#5a6b7f]">{stat.sub}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* =====================================================================
+          SLIDE 5: GET UP AND RUNNING IN 3 SIMPLE STEPS (Ref Part 5 Top)
+          ===================================================================== */}
+      <section
+        className={`absolute inset-0 p-4 sm:p-8 lg:p-12 flex flex-col justify-center bg-[#f6f9fd] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${slideStateClass(5)}`}
+      >
+        <div className="max-w-5xl mx-auto w-full space-y-8">
+          <div className="text-center space-y-2">
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[#0d1f33] leading-tight">
+              Siapkan Karir Impian dalam <br />
+              <span className="text-[#4b94e6]">3 Langkah Sederhana</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Step 1: Grid Blue Visual Card */}
+            <div className="rounded-[28px] bg-white border border-[#e3edf7] overflow-hidden shadow-sm hover:shadow-lg transition flex flex-col">
+              <div
+                className="h-44 relative flex items-center justify-center p-4"
+                style={{
+                  background: "linear-gradient(135deg, #4b94e6 0%, #86c3fa 100%)",
+                }}
+              >
+                <div
+                  className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff22_1px,transparent_1px),linear-gradient(to_bottom,#ffffff22_1px,transparent_1px)] bg-[size:36px_36px]"
+                  aria-hidden="true"
+                />
+                <span className="relative z-10 px-5 py-2 rounded-full bg-white text-[#0d1f33] text-xs font-bold shadow-md">
+                  Unggah CV / Isi Kuesioner
+                </span>
+              </div>
+              <div className="p-6 space-y-1.5">
+                <h3 className="text-sm font-bold text-[#0d1f33]">Langkah 1: Mulai Gratis</h3>
+                <p className="text-xs text-[#5a6b7f] leading-relaxed">
+                  Unggah file CV Anda atau susun CV baru dari nol menggunakan kuesioner terpandu tanpa biaya.
+                </p>
+              </div>
+            </div>
+
+            {/* Step 2: Checkerboard Blue & White Visual Card */}
+            <div className="rounded-[28px] bg-white border border-[#e3edf7] overflow-hidden shadow-sm hover:shadow-lg transition flex flex-col">
+              <div className="h-44 relative grid grid-cols-4 grid-rows-3 bg-white">
+                <div className="bg-[#7bbcf8]/50" />
+                <div className="bg-white" />
+                <div className="bg-[#64aef5]/70" />
+                <div className="bg-white" />
+                <div className="bg-white" />
+                <div className="bg-[#4b94e6]/80" />
+                <div className="bg-white" />
+                <div className="bg-[#7bbcf8]/50" />
+                <div className="bg-[#64aef5]/60" />
+                <div className="bg-white" />
+                <div className="bg-[#8ec8fb]/50" />
+                <div className="bg-white" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-full bg-white shadow-xl flex items-center justify-center font-black text-base text-[#4b94e6]">
+                    5D
+                  </div>
+                </div>
+              </div>
+              <div className="p-6 space-y-1.5">
+                <h3 className="text-sm font-bold text-[#0d1f33]">Langkah 2: Terima Skor &amp; Saran</h3>
+                <p className="text-xs text-[#5a6b7f] leading-relaxed">
+                  Lihat nilai 5 dimensi CV Anda beserta rekomendasi perbaikan kalimat agar lebih menarik di mata HRD.
+                </p>
+              </div>
+            </div>
+
+            {/* Step 3: Mini Chat Bubble Card */}
+            <div className="rounded-[28px] bg-white border border-[#e3edf7] overflow-hidden shadow-sm hover:shadow-lg transition flex flex-col">
+              <div className="h-44 bg-[#f5f9fe] p-5 flex flex-col justify-center space-y-3">
+                <div className="inline-flex items-center gap-2 bg-white px-3 py-2 rounded-2xl shadow-2xs self-start text-xs font-semibold text-[#0d1f33]">
+                  <span className="w-5 h-5 rounded-full bg-[#4b94e6] text-white text-[9px] flex items-center justify-center font-bold">
+                    PA
+                  </span>
+                  <span>CV Anda siap dikirim!</span>
+                </div>
+                <div className="bg-[#5aa9f4] text-white text-xs p-3 rounded-2xl rounded-tr-sm self-end max-w-[85%] shadow-sm">
+                  Ditemukan 12 lowongan aktif yang sangat pas dengan profil Anda.
+                </div>
+              </div>
+              <div className="p-6 space-y-1.5">
+                <h3 className="text-sm font-bold text-[#0d1f33]">Langkah 3: Lamar Posisi Terbaik</h3>
+                <p className="text-xs text-[#5a6b7f] leading-relaxed">
+                  Pilih lowongan yang sesuai dengan kompetensi Anda dan mulai perjalanan karir impian.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =====================================================================
+          SLIDE 6: LUMINOUS SKY-BLUE CTA BANNER + CLEAN 4-COL FOOTER (Ref Part 5 Bottom)
+          ===================================================================== */}
+      <section
+        className={`absolute inset-0 p-4 sm:p-8 lg:p-10 flex flex-col justify-between bg-white transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${slideStateClass(6)}`}
+      >
+        {/* Top Luminous Sky-Blue Rounded CTA Banner */}
+        <div
+          className="flex-1 max-w-6xl mx-auto w-full rounded-[30px] sm:rounded-[38px] flex flex-col items-center justify-center text-center px-6 py-8 relative overflow-hidden shadow-xl shadow-[#4b94e6]/15"
+          style={{
+            background: "linear-gradient(155deg, #549ee9 0%, #75b9f6 55%, #9bd0fb 100%)",
+          }}
+        >
+          <div
+            className="absolute inset-0 pointer-events-none opacity-40"
+            style={{
+              backgroundImage:
+                "radial-gradient(ellipse 60% 45% at 25% 20%, rgba(255,255,255,0.45) 0%, transparent 70%), radial-gradient(ellipse 50% 40% at 80% 80%, rgba(255,255,255,0.35) 0%, transparent 70%)",
+            }}
+            aria-hidden="true"
+          />
+
+          <div className="relative z-10 max-w-xl mx-auto space-y-4">
+            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight leading-tight">
+              Mulai Bersama Pasbana AI Gratis
+            </h2>
+            <p className="text-xs sm:text-sm text-white/95 leading-relaxed">
+              Siap meningkatkan kualitas CV, memperbaiki kalimat pengalaman, dan menemukan peluang kerja yang paling pas bana?
+            </p>
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
+              <Link
+                href="/evaluate"
+                className="px-7 py-3 rounded-full bg-white hover:bg-slate-50 text-[#0d1f33] text-xs sm:text-sm font-bold shadow-md transition-all hover:-translate-y-0.5"
+              >
+                Evaluasi CV Sekarang
+              </Link>
+              <Link
+                href="/jobs"
+                className="px-6 py-3 rounded-full bg-white/20 hover:bg-white/30 text-white text-xs sm:text-sm font-semibold backdrop-blur-sm border border-white/30 transition-all"
+              >
+                Lihat Lowongan Kerja
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Clean 4-Column Editorial Footer */}
+        <footer className="max-w-6xl mx-auto w-full pt-7 pb-1">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pb-5 border-b border-slate-100 text-xs">
+            <div className="col-span-2 sm:col-span-1 space-y-2">
+              <div className="font-black text-base text-[#0d1f33]">
+                Pasbana<span className="text-[#ce2731]"> AI</span>
+              </div>
+              <p className="text-[11px] text-[#5a6b7f] leading-relaxed">
+                Karir yang Baik Dimulai dari Pertemuan yang Pas Bana.
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <p className="font-bold text-[#0d1f33]">Fitur Utama</p>
+              <ul className="space-y-1 text-[#5a6b7f]">
+                <li><Link href="/evaluate" className="hover:text-[#4b94e6] transition">Evaluasi CV 5D</Link></li>
+                <li><Link href="/evaluate?tab=questionnaire" className="hover:text-[#4b94e6] transition">Kuesioner ATS</Link></li>
+                <li><Link href="/jobs" className="hover:text-[#4b94e6] transition">Pencocokan Karir</Link></li>
+              </ul>
+            </div>
+
+            <div className="space-y-2">
+              <p className="font-bold text-[#0d1f33]">Platform</p>
+              <ul className="space-y-1 text-[#5a6b7f]">
+                <li><Link href="/dashboard" className="hover:text-[#4b94e6] transition">Dashboard ATS</Link></li>
+                <li><Link href="/about" className="hover:text-[#4b94e6] transition">Tentang Kami</Link></li>
+              </ul>
+            </div>
+
+            <div className="space-y-2">
+              <p className="font-bold text-[#0d1f33]">Akun</p>
+              <ul className="space-y-1 text-[#5a6b7f]">
+                <li><Link href="/login" className="hover:text-[#4b94e6] transition">Masuk</Link></li>
+                <li><Link href="/register" className="hover:text-[#4b94e6] transition">Daftar Akun</Link></li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="pt-3 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-400">
+            <span>© 2026 Pasbana AI. All rights reserved.</span>
+            <span>Standar Evaluasi Objektif &amp; Bebas Bias</span>
+          </div>
+        </footer>
+      </section>
     </div>
   );
 }
