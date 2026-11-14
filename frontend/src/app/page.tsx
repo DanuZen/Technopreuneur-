@@ -2,12 +2,12 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowUpRight,
   CheckCircle2,
   FileCheck,
   FileSpreadsheet,
-  Rocket,
   ShieldCheck,
   Target,
   Briefcase,
@@ -275,8 +275,19 @@ export default function Home() {
               <div className="text-[10px] font-semibold text-emerald-600">+18% kesiapan</div>
             </div>
 
+            {/* Floating Chibi Mecha Mascot Standing Beside Board ATS */}
+            <div className="hidden lg:block absolute -right-24 xl:-right-32 -top-20 w-28 xl:w-36 h-40 xl:h-48 pointer-events-none z-20 animate-float">
+              <Image
+                src="/mascot/mascot-hero.webp"
+                alt="Maskot Pasbana AI"
+                fill
+                className="object-contain drop-shadow-xl"
+                priority
+              />
+            </div>
+
             {/* Floating Right Metric Chip */}
-            <div className="hidden xl:block absolute -right-28 top-10 bg-white/95 backdrop-blur-md rounded-2xl p-3 shadow-xl w-36 animate-float-delay">
+            <div className="hidden xl:block absolute -right-28 top-24 bg-white/95 backdrop-blur-md rounded-2xl p-3 shadow-xl w-36 animate-float-delay z-30">
               <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500">
                 <Target className="w-3.5 h-3.5 text-[#ce2731]" />
                 <span>Kecocokan</span>
@@ -672,6 +683,24 @@ export default function Home() {
               )}
             </div>
 
+            {/* Contextual Mascot Pose Standing on the Right Stage Hill */}
+            <div className="hidden sm:block absolute bottom-8 right-4 xl:right-7 w-24 xl:w-28 h-32 xl:h-36 pointer-events-none z-30 animate-float">
+              <Image
+                src={
+                  activeWorkflowIdx === 0
+                    ? "/mascot/mascot-action.webp"
+                    : activeWorkflowIdx === 1
+                    ? "/mascot/mascot-idea.webp"
+                    : activeWorkflowIdx === 2
+                    ? "/mascot/mascot-celebrate.webp"
+                    : "/mascot/mascot-shield.webp"
+                }
+                alt="Maskot Pendamping Pasbana AI"
+                fill
+                className="object-contain drop-shadow-xl"
+              />
+            </div>
+
             {/* Stone & Grassy Horizon Foreground */}
             <div className="absolute bottom-0 inset-x-0 h-20 sm:h-24 pointer-events-none z-10 overflow-hidden">
               <svg
@@ -786,9 +815,14 @@ export default function Home() {
               <span className="text-xs font-bold text-emerald-600">+24 Poin Skor</span>
             </div>
 
-            <div className="my-auto flex flex-col items-center justify-center gap-5 py-3">
-              <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-[#0f2c56] to-[#275992] text-white flex items-center justify-center shadow-xl shadow-[#0f2c56]/25">
-                <Rocket className="w-12 h-12 text-white" />
+            <div className="my-auto flex flex-col items-center justify-center gap-4 py-2">
+              <div className="w-28 h-32 relative drop-shadow-lg animate-float">
+                <Image
+                  src="/mascot/mascot-power.webp"
+                  alt="Maskot Kandidat Siap Kerja"
+                  fill
+                  className="object-contain"
+                />
               </div>
               <div className="px-4 py-2 rounded-2xl bg-[#f0f4f9] border border-[#dbe5f2] text-xs font-bold text-[#0f2c56]">
                 Tingkatkan Peluang Lolos Seleksi HRD
@@ -949,8 +983,13 @@ export default function Home() {
               className={`shrink-0 bg-[#fefefd] rounded-[26px] sm:rounded-[30px] border border-[#dbe5f2] p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${getChildAnimClass(3, "up", "delay-200")}`}
             >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-[#0f2c56] text-white text-xs font-bold flex items-center justify-center shrink-0">
-                  PA
+                <div className="w-12 h-12 rounded-2xl bg-[#f0f4f9] border border-[#dbe5f2] relative shrink-0 overflow-hidden">
+                  <Image
+                    src="/mascot/mascot-idea.webp"
+                    alt="Asisten Kalimat Aktif Pasbana AI"
+                    fill
+                    className="object-contain p-0.5"
+                  />
                 </div>
                 <div className="space-y-0.5">
                   <p className="text-xs font-bold text-[#0f2c56]">Saran Kalimat Aktif</p>
@@ -1021,9 +1060,19 @@ export default function Home() {
               className={`h-full rounded-3xl bg-white/10 backdrop-blur-md border border-white/15 p-6 flex flex-col justify-between ${getChildAnimClass(4, "left", "delay-100")}`}
             >
               <div className="space-y-3">
-                <span className="px-3 py-1 rounded-full bg-[#ce2731] text-white text-xs font-bold">
-                  Bebas Bias Rekrutmen
-                </span>
+                <div className="flex items-center justify-between">
+                  <span className="px-3 py-1 rounded-full bg-[#ce2731] text-white text-xs font-bold">
+                    Bebas Bias Rekrutmen
+                  </span>
+                  <div className="w-12 h-12 relative shrink-0">
+                    <Image
+                      src="/mascot/mascot-shield.webp"
+                      alt="Maskot Penilaian Objektif"
+                      fill
+                      className="object-contain drop-shadow-md"
+                    />
+                  </div>
+                </div>
                 <h3 className="text-xl font-black text-white">
                   Fokus Murni pada Kompetensi Anda
                 </h3>
@@ -1263,7 +1312,15 @@ export default function Home() {
             background: "linear-gradient(180deg, #8eb3d6 0%, #bad0e6 50%, #dbe5f2 85%, #f0f4f9 100%)",
           }}
         >
-          <div className="relative z-20 max-w-2xl mx-auto space-y-4">
+          <div className="relative z-20 max-w-2xl mx-auto space-y-3">
+            <div className="w-16 h-20 sm:w-20 sm:h-24 mx-auto relative drop-shadow-lg animate-float">
+              <Image
+                src="/mascot/mascot-celebrate.webp"
+                alt="Maskot Pasbana AI Siap Karir"
+                fill
+                className="object-contain"
+              />
+            </div>
             <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/90 text-[#0f2c56] text-xs font-bold shadow-xs">
               <span className="w-2 h-2 rounded-full bg-[#ce2731]" />
               <span>100% Gratis untuk Mahasiswa &amp; Pencari Kerja</span>

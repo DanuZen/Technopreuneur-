@@ -442,13 +442,13 @@ export default function LoginPage() {
 
             {/* Centered Graphic Showcase */}
             <div className="relative z-10 my-auto text-center space-y-6 py-12 max-w-lg mx-auto">
-              {/* Floating Emblem Container */}
-              <div className="w-28 h-28 mx-auto relative drop-shadow-[0_25px_50px_rgba(142,197,255,0.45)] animate-float-slow">
+              {/* Floating Mascot & Brand Emblem Showcase */}
+              <div className="w-40 h-52 mx-auto relative drop-shadow-[0_25px_50px_rgba(142,197,255,0.45)] animate-float-slow">
                 <Image
-                  src="/logo-app-white.webp"
-                  alt="Logo Pasbana AI"
+                  src="/mascot/mascot-hero.webp"
+                  alt="Maskot Pasbana AI"
                   fill
-                  className="object-contain rounded-3xl"
+                  className="object-contain"
                   priority
                 />
               </div>

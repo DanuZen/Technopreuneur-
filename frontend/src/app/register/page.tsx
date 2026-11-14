@@ -338,12 +338,12 @@ export default function RegisterPage() {
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0d_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0d_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
 
             <div className="relative z-10 my-auto text-center space-y-6 py-12 max-w-lg mx-auto">
-              <div className="w-28 h-28 mx-auto relative drop-shadow-[0_25px_50px_rgba(142,197,255,0.45)] animate-float-slow">
+              <div className="w-40 h-52 mx-auto relative drop-shadow-[0_25px_50px_rgba(142,197,255,0.45)] animate-float-slow">
                 <Image
-                  src="/logo-app-white.webp"
-                  alt="Logo Pasbana AI"
+                  src="/mascot/mascot-celebrate.webp"
+                  alt="Maskot Pasbana AI"
                   fill
-                  className="object-contain rounded-3xl"
+                  className="object-contain"
                   priority
                 />
               </div>
