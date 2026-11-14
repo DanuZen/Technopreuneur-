@@ -39,7 +39,7 @@ const WORKFLOW_STEPS: WorkflowStepItem[] = [
       "Banyak kandidat gugur bukan karena kurang kompeten, melainkan karena susunan CV gagal dibaca sistem HR. Pasbana AI memeriksa struktur 1-kolom dan kelengkapan profil Anda secara instan.",
     ctaText: "Coba Evaluasi CV",
     ctaHref: "/evaluate",
-    mascotSrc: "/mascot/mascot-action.webp",
+    mascotSrc: "/mascot/mascot-power.webp",
   },
   {
     id: 1,
@@ -86,7 +86,6 @@ export default function HomePage() {
   const [prevSlide, setPrevSlide] = useState<number>(0);
   const [scrollDir, setScrollDir] = useState<"down" | "up">("down");
   const [activeWorkflowIdx, setActiveWorkflowIdx] = useState<number>(0);
-  const [heroBoardTab, setHeroBoardTab] = useState<"ats" | "match" | "gap">("ats");
 
   const isAnimatingRef = useRef<boolean>(false);
   const touchStartYRef = useRef<number | null>(null);
@@ -300,113 +299,28 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right 6 Cols: Hero Mascot Showcase + Live Board ATS Preview */}
+            {/* Right 6 Cols: Clean Mascot Spotlight (No Overlapping Cards) */}
             <div className={`lg:col-span-6 h-full flex items-center justify-center relative ${getChildAnimClass(0, "right", "delay-150")}`}>
-              <div className="relative w-full max-w-xl h-[86%] min-h-[360px] flex items-center">
-                {/* Architectural Backdrop Accent in Second (#ce2731) & Primary (#0f2c56) */}
+              <div className="relative w-full max-w-lg h-[90%] flex items-center justify-center">
+                {/* Soft Radial Ambient Glow */}
                 <div
-                  className="absolute right-0 top-4 bottom-4 w-[62%] rounded-[36px] overflow-hidden shadow-2xl"
-                  style={{
-                    background: "linear-gradient(155deg, #ce2731 0%, #b01e27 55%, #0f2c56 100%)",
-                  }}
-                >
-                  <div
-                    className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff14_1px,transparent_1px),linear-gradient(to_bottom,#ffffff14_1px,transparent_1px)] bg-[size:36px_36px]"
-                    aria-hidden="true"
-                  />
-                  <div className="absolute top-5 left-5 right-5 flex items-center justify-between text-[#fefefd]/90 text-[11px] font-bold">
-                    <span className="px-3 py-1 rounded-full bg-white/15 backdrop-blur-md">
-                      Asisten Karir AI
-                    </span>
-                    <span className="font-mono">PASBANA • 5D</span>
-                  </div>
-                </div>
+                  className="absolute w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-[#ce2731]/15 blur-3xl pointer-events-none"
+                  aria-hidden="true"
+                />
+                <div
+                  className="absolute w-60 sm:w-80 h-60 sm:h-80 rounded-full bg-[#0f2c56]/15 blur-2xl pointer-events-none"
+                  aria-hidden="true"
+                />
 
-                {/* Hero Chibi Mecha Mascot Standing Tall & Proportional on Right */}
-                <div className="absolute right-2 sm:right-5 bottom-2 w-[210px] sm:w-[260px] lg:w-[290px] h-[300px] sm:h-[370px] lg:h-[410px] z-20 pointer-events-none animate-float">
+                {/* Hero Mascot in Dynamic Action Stance */}
+                <div className="relative w-[280px] sm:w-[350px] lg:w-[410px] xl:w-[450px] h-[360px] sm:h-[440px] lg:h-[500px] xl:h-[540px] z-20 pointer-events-none animate-float">
                   <Image
-                    src="/mascot/mascot-hero.webp"
-                    alt="Maskot Utama Pasbana AI"
+                    src="/mascot/mascot-action.webp"
+                    alt="Maskot Pasbana AI"
                     fill
-                    className="object-contain object-bottom drop-shadow-[0_24px_36px_rgba(15,44,86,0.4)]"
+                    className="object-contain object-bottom drop-shadow-[0_28px_40px_rgba(15,44,86,0.38)]"
                     priority
                   />
-                </div>
-
-                {/* Interactive Board ATS Card Anchored Cleanly on Left-Bottom */}
-                <div className="relative z-30 w-[72%] sm:w-[66%] bg-[#fefefd] border-2 border-[#0f2c56]/10 rounded-[28px] shadow-2xl p-4 sm:p-5 space-y-3.5 mt-auto mb-6">
-                  <div className="flex items-center justify-between pb-2.5 border-b border-slate-100">
-                    <div>
-                      <p className="text-xs font-black text-[#0f2c56]">Board Evaluasi ATS</p>
-                      <p className="text-[10px] text-slate-400 font-mono">Wira Fikri • #CV-2026</p>
-                    </div>
-                    <div className="flex items-center gap-1 bg-[#fdf2f2] p-1 rounded-full">
-                      {(["ats", "match", "gap"] as const).map((tab) => (
-                        <button
-                          key={tab}
-                          type="button"
-                          onClick={() => setHeroBoardTab(tab)}
-                          className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition cursor-pointer ${
-                            heroBoardTab === tab
-                              ? "bg-[#ce2731] text-[#fefefd] shadow-2xs"
-                              : "text-[#0f2c56] hover:text-[#ce2731]"
-                          }`}
-                        >
-                          {tab === "ats" ? "Skor 5D" : tab === "match" ? "Loker" : "Saran"}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {heroBoardTab === "ats" && (
-                    <div className="space-y-2.5 text-[11px]">
-                      <div className="flex items-center justify-between">
-                        <span className="font-semibold text-slate-600">Struktur &amp; Format 1-Kolom</span>
-                        <span className="font-mono font-bold text-[#0f2c56]">94%</span>
-                      </div>
-                      <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                        <div className="w-[94%] h-full bg-[#0f2c56] rounded-full" />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="font-semibold text-slate-600">Relevansi Skill &amp; Kalimat Aktif</span>
-                        <span className="font-mono font-bold text-[#ce2731]">90%</span>
-                      </div>
-                      <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                        <div className="w-[90%] h-full bg-[#ce2731] rounded-full" />
-                      </div>
-                    </div>
-                  )}
-
-                  {heroBoardTab === "match" && (
-                    <div className="space-y-2 text-[11px]">
-                      <div className="flex items-center justify-between">
-                        <span className="font-bold text-[#0f2c56]">Product Analyst &amp; MT</span>
-                        <span className="px-2 py-0.5 rounded-full bg-[#fdf2f2] text-[#ce2731] font-bold text-[10px]">
-                          92% Pas Bana
-                        </span>
-                      </div>
-                      <p className="text-slate-500 text-[10px]">
-                        12 posisi aktif ditemukan sesuai kompetensi analisis data &amp; kepemimpinan Anda.
-                      </p>
-                    </div>
-                  )}
-
-                  {heroBoardTab === "gap" && (
-                    <div className="space-y-1.5 text-[11px]">
-                      <div className="flex items-center justify-between">
-                        <span className="font-bold text-[#0f2c56]">Penguatan Kalimat Aktif</span>
-                        <span className="text-[10px] font-bold text-[#ce2731]">+6 Poin ATS</span>
-                      </div>
-                      <p className="text-slate-600 text-[10px] leading-relaxed">
-                        Tambahkan metrik terukur pada deskripsi proyek agar lebih menonjol saat disaring HRD.
-                      </p>
-                    </div>
-                  )}
-
-                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
-                    <span className="font-bold text-[#0f2c56]">Status Kesiapan Kerja</span>
-                    <span className="font-black text-[#ce2731]">+18% Meningkat</span>
-                  </div>
                 </div>
               </div>
             </div>
