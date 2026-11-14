@@ -212,10 +212,10 @@ export default function Home() {
           SLIDE 0: FULL-SCREEN SKY HERO + RISING BOARD ATS + HORIZON HILL
           ===================================================================== */}
       <section
-        className={`absolute inset-0 p-2 sm:p-3 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(0)}`}
+        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(0)}`}
       >
         <div
-          className="h-full w-full rounded-[26px] sm:rounded-[34px] relative overflow-hidden flex flex-col justify-between items-center text-center px-4 sm:px-10 pt-16 sm:pt-20"
+          className="h-full w-full rounded-[26px] sm:rounded-[34px] relative overflow-hidden flex flex-col justify-between items-center text-center px-4 sm:px-10 pt-5 sm:pt-7"
           style={{
             background:
               "linear-gradient(165deg, #4b94e6 0%, #6cb2f2 45%, #9ad0fa 80%, #d7ecfe 100%)",
@@ -473,11 +473,11 @@ export default function Home() {
           SLIDE 1: DRIBBBLE VIDEO MORPHING STAGE (33% Top Sky Banner + 67% 2-Col Stage)
           ===================================================================== */}
       <section
-        className={`absolute inset-0 p-2 sm:p-3 flex flex-col gap-3 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(1)}`}
+        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 flex flex-col gap-3 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(1)}`}
       >
         {/* Top 33% Sky Banner (Unique to Slide 1) */}
         <div
-          className={`h-[32%] sm:h-[34%] w-full rounded-[26px] sm:rounded-[34px] relative overflow-hidden flex flex-col items-center justify-center text-center px-4 pt-12 sm:pt-14 shrink-0 ${getChildAnimClass(1, "down", "delay-75")}`}
+          className={`h-[28%] sm:h-[30%] w-full rounded-[26px] sm:rounded-[34px] relative overflow-hidden flex flex-col items-center justify-center text-center px-4 shrink-0 ${getChildAnimClass(1, "down", "delay-75")}`}
           style={{
             background:
               "linear-gradient(165deg, #4b94e6 0%, #6cb2f2 45%, #9ad0fa 80%, #d7ecfe 100%)",
@@ -709,7 +709,7 @@ export default function Home() {
           SLIDE 2: SPLIT EDITORIAL HEADER (NO BANNER BOX) + 3 FULL-HEIGHT BENTO CARDS
           ===================================================================== */}
       <section
-        className={`absolute inset-0 pt-16 sm:pt-20 pb-2.5 sm:pb-3 px-2.5 sm:px-4 flex flex-col gap-3.5 bg-white transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(2)}`}
+        className={`absolute inset-0 pt-2 sm:pt-3 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 flex flex-col gap-3.5 bg-[#f4f9fe] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(2)}`}
       >
         {/* Split 2-Column Editorial Header Directly on Canvas (No Sky Banner Box!) */}
         <div
@@ -850,7 +850,7 @@ export default function Home() {
           SLIDE 3: LEFT VERTICAL SIDEBAR HEADER (4 COLS) + RIGHT 8-COL DASHBOARD & ASSISTANT
           ===================================================================== */}
       <section
-        className={`absolute inset-0 pt-16 sm:pt-20 pb-2.5 sm:pb-3 px-2.5 sm:px-4 flex flex-col bg-[#f4f9fe] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(3)}`}
+        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 flex flex-col bg-[#f4f9fe] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(3)}`}
       >
         <div className="flex-1 min-h-0 w-full grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-stretch">
           {/* Left 4 Cols: Full-Height Vertical Sky Sidebar Header Card (Zero Top Header!) */}
@@ -975,10 +975,10 @@ export default function Home() {
           SLIDE 4: FULL-SCREEN DEEP OCEAN NAVY STAGE + INLINE STAT PILLS + 3-COL ANALYTICS & RADAR
           ===================================================================== */}
       <section
-        className={`absolute inset-0 p-2 sm:p-3 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(4)}`}
+        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(4)}`}
       >
         <div
-          className="h-full w-full rounded-[26px] sm:rounded-[34px] pt-16 sm:pt-20 pb-4 sm:pb-6 px-4 sm:px-8 flex flex-col justify-between text-white relative overflow-hidden"
+          className="h-full w-full rounded-[26px] sm:rounded-[34px] py-5 sm:py-6 px-4 sm:px-8 flex flex-col justify-between text-white relative overflow-hidden"
           style={{
             background: "linear-gradient(155deg, #051e34 0%, #092c4b 55%, #0d3a62 100%)",
           }}
@@ -1135,7 +1135,7 @@ export default function Home() {
           SLIDE 5: STEP-COUNTER INLINE HEADER + 3 GIANT VISUAL STEP CARDS (Grid, Checkerboard, Chat)
           ===================================================================== */}
       <section
-        className={`absolute inset-0 pt-16 sm:pt-20 pb-2.5 sm:pb-3 px-2.5 sm:px-4 flex flex-col gap-3.5 bg-[#f6f9fd] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(5)}`}
+        className={`absolute inset-0 pt-2 sm:pt-3 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 flex flex-col gap-3.5 bg-[#f4f9fe] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(5)}`}
       >
         {/* Minimal Step-Counter Header Row */}
         <div
@@ -1254,11 +1254,11 @@ export default function Home() {
           SLIDE 6: SPLIT CLOSING SKY STAGE + FULL-WIDTH 4-COLUMN EDITORIAL FOOTER CARD
           ===================================================================== */}
       <section
-        className={`absolute inset-0 p-2 sm:p-3 flex flex-col gap-3 bg-[#f4f9fe] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(6)}`}
+        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 flex flex-col gap-3 bg-[#f4f9fe] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(6)}`}
       >
         {/* Top Luminous Sky-Blue Rounded CTA Stage with Rolling Hill */}
         <div
-          className={`flex-1 min-h-0 w-full rounded-[28px] sm:rounded-[36px] flex flex-col items-center justify-center text-center px-6 pt-14 pb-10 relative overflow-hidden ${getChildAnimClass(6, "down", "delay-75")}`}
+          className={`flex-1 min-h-0 w-full rounded-[28px] sm:rounded-[36px] flex flex-col items-center justify-center text-center px-6 py-8 relative overflow-hidden ${getChildAnimClass(6, "down", "delay-75")}`}
           style={{
             background: "linear-gradient(155deg, #4b94e6 0%, #6cb2f2 55%, #9bd0fb 100%)",
           }}

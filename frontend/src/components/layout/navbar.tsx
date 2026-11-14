@@ -33,7 +33,7 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
       className={
         floating
           ? "w-full z-50 px-4 sm:px-8 flex flex-col items-center bg-transparent pointer-events-none"
-          : "sticky top-0 w-full shrink-0 z-50 bg-transparent pt-2.5 sm:pt-3 pb-2 px-3 sm:px-6 flex flex-col items-center pointer-events-none"
+          : "sticky top-0 w-full shrink-0 z-50 bg-transparent pt-2.5 sm:pt-3 pb-1.5 px-3 sm:px-6 flex flex-col items-center pointer-events-none"
       }
     >
       {/* Single Clean Pill Navbar (Transparent outer header, floating pill) */}
