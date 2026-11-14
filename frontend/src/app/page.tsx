@@ -210,7 +210,7 @@ export default function Home() {
             SLIDE 0 CONTENT: HERO HEADLINE + RISING BOARD CRM/ATS MOCKUP
             ------------------------------------------------------------------- */}
         <div
-          className={`absolute inset-0 flex flex-col justify-between items-center text-center px-4 pt-6 sm:pt-10 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          className={`absolute inset-0 flex flex-col justify-between items-center text-center px-4 pt-16 sm:pt-20 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
             currentSlide === 0
               ? "opacity-100 translate-y-0 blur-0 pointer-events-auto"
               : "opacity-0 -translate-y-12 blur-md pointer-events-none"
@@ -436,7 +436,7 @@ export default function Home() {
             SLIDES 1..4 COMPACT SKY BANNER HEADLINE (Matches Frame 00:04-00:08)
             ------------------------------------------------------------------- */}
         <div
-          className={`absolute inset-0 flex flex-col items-center justify-center text-center px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          className={`absolute inset-0 flex flex-col items-center justify-center text-center px-4 pt-10 sm:pt-12 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
             isWorkflowStage
               ? "opacity-100 translate-y-0 blur-0 pointer-events-auto"
               : "opacity-0 translate-y-8 blur-md pointer-events-none"
@@ -452,7 +452,7 @@ export default function Home() {
             SLIDE 5 COMPACT SKY BANNER HEADLINE (Bento & Principles)
             ------------------------------------------------------------------- */}
         <div
-          className={`absolute inset-0 flex flex-col items-center justify-center text-center px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          className={`absolute inset-0 flex flex-col items-center justify-center text-center px-4 pt-10 sm:pt-12 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
             isBentoStage
               ? "opacity-100 translate-y-0 blur-0 pointer-events-auto"
               : "opacity-0 translate-y-8 blur-md pointer-events-none"
@@ -468,7 +468,7 @@ export default function Home() {
             SLIDE 6 CONTENT: FULL-SCREEN CLOSING CTA + INTEGRATED FOOTER
             ------------------------------------------------------------------- */}
         <div
-          className={`absolute inset-0 flex flex-col justify-between items-center text-center px-4 py-8 sm:py-12 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          className={`absolute inset-0 flex flex-col justify-between items-center text-center px-4 pt-16 sm:pt-20 pb-8 sm:pb-12 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
             currentSlide === 6
               ? "opacity-100 translate-y-0 blur-0 pointer-events-auto"
               : "opacity-0 translate-y-12 blur-md pointer-events-none"

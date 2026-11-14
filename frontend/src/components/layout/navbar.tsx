@@ -29,45 +29,49 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-primary/95 backdrop-blur-md border-b border-primary-800 text-white shadow-lg transition-all">
-      <div className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-10">
-        <div className="flex items-center justify-between h-16">
+    <header className="fixed top-3 sm:top-4 inset-x-0 z-50 flex flex-col items-center px-3 sm:px-6 pointer-events-none">
+      {/* Main Floating Pill Navbar */}
+      <div className="pointer-events-auto w-full max-w-5xl bg-[#0e2647]/95 backdrop-blur-xl text-white rounded-full shadow-xl shadow-[#0a1d37]/20 px-3 sm:px-5 py-2 transition-all">
+        <div className="flex items-center justify-between gap-2 sm:gap-4">
           {/* Logo & Brand */}
-          <Link href="/" className="flex items-center gap-2.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-lg">
+          <Link
+            href="/"
+            className="flex items-center gap-2.5 pl-1 pr-2 py-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full shrink-0"
+          >
             <div className="relative w-8 h-8 flex items-center justify-center shrink-0">
               <Image
                 src="/logo-app-white.webp"
                 alt="Pasbana AI Logo"
                 width={32}
                 height={32}
-                className="rounded-lg object-contain shadow-sm group-hover:scale-105 transition-transform"
+                className="rounded-full object-contain shadow-sm group-hover:scale-105 transition-transform"
                 priority
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-white tracking-tight text-base sm:text-lg leading-tight">
+              <span className="font-bold text-white tracking-tight text-sm sm:text-base leading-none">
                 Pasbana<span className="text-[#ce2731] font-bold"> AI</span>
               </span>
-              <span className="text-[10px] text-slate-300 tracking-wider">
+              <span className="text-[9px] text-slate-300 tracking-wider mt-0.5 hidden sm:inline">
                 Karir yang Pas Bana
               </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation with Integrated Center Island Pill */}
-          <nav className="hidden md:flex items-center gap-3 lg:gap-5">
+          {/* Desktop Navigation with Integrated Center Pill */}
+          <nav className="hidden md:flex items-center gap-1 lg:gap-2">
             <Link
               href="/"
-              className="text-xs font-semibold text-slate-200 hover:text-white transition"
+              className="text-xs font-semibold text-slate-200 hover:text-white hover:bg-white/10 px-3 py-1.5 rounded-full transition"
             >
               Beranda
             </Link>
 
-            {/* Floating Island Pill Widget (Integrated to Nav) */}
-            <div className="inline-flex items-center gap-1 p-1 bg-[#0a1f3a] text-white rounded-full shadow-md select-none border border-white/10">
+            {/* Inner Segmented Pill Widget */}
+            <div className="inline-flex items-center gap-1 p-1 bg-[#081830]/80 text-white rounded-full shadow-inner select-none">
               <Link
                 href="/evaluate"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/15 hover:bg-white/25 text-white text-xs font-semibold transition shadow-2xs"
+                className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 hover:bg-white/25 text-white text-xs font-semibold transition shadow-2xs"
                 title="Evaluasi CV &amp; Skor ATS"
               >
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-beacon shrink-0" aria-hidden="true" />
@@ -75,14 +79,14 @@ export function Navbar() {
               </Link>
               <Link
                 href="/jobs"
-                className="flex items-center gap-1 px-3 py-1.5 rounded-full text-slate-200 hover:text-white hover:bg-white/10 text-xs font-medium transition"
+                className="flex items-center gap-1 px-3 py-1 rounded-full text-slate-200 hover:text-white hover:bg-white/10 text-xs font-medium transition"
                 title="Pencocokan Lowongan AI"
               >
                 <span>Pencocokan AI</span>
               </Link>
               <Link
                 href="/evaluate"
-                className="flex items-center gap-1 px-3 py-1.5 rounded-full text-slate-200 hover:text-white hover:bg-white/10 text-xs font-medium transition"
+                className="flex items-center gap-1 px-3 py-1 rounded-full text-slate-200 hover:text-white hover:bg-white/10 text-xs font-medium transition"
                 title="Blind Scoring Bebas Bias"
               >
                 <span>Blind Scoring</span>
@@ -91,26 +95,27 @@ export function Navbar() {
 
             <Link
               href="/about"
-              className="text-xs font-semibold text-slate-200 hover:text-white transition"
+              className="text-xs font-semibold text-slate-200 hover:text-white hover:bg-white/10 px-3 py-1.5 rounded-full transition"
             >
               Tentang Kami
             </Link>
           </nav>
 
           {/* Desktop Actions */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-1.5 shrink-0">
             {user ? (
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2 text-xs bg-white/10 text-white px-3 py-1.5 rounded-full border border-white/20">
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 text-xs bg-white/10 text-white px-3 py-1.5 rounded-full">
                   <UserIcon className="w-3.5 h-3.5 text-slate-300" />
-                  <span className="font-medium max-w-[120px] truncate">{user.name}</span>
-                  <span className="uppercase text-[9px] bg-secondary text-white px-1.5 py-0.5 rounded font-mono font-semibold">
+                  <span className="font-medium max-w-[110px] truncate">{user.name}</span>
+                  <span className="uppercase text-[9px] bg-secondary text-white px-1.5 py-0.5 rounded-full font-mono font-semibold">
                     {user.role}
                   </span>
                 </div>
                 <button
+                  type="button"
                   onClick={handleLogout}
-                  className="p-1.5 text-slate-300 hover:text-rose-400 hover:bg-white/10 rounded-lg transition"
+                  className="p-2 text-slate-300 hover:text-rose-400 hover:bg-white/10 rounded-full transition cursor-pointer"
                   title="Keluar"
                 >
                   <LogOut className="w-4 h-4" />
@@ -120,13 +125,13 @@ export function Navbar() {
               <>
                 <Link
                   href="/login"
-                  className="text-xs font-semibold text-slate-200 hover:text-white px-3 py-2 rounded-full transition"
+                  className="text-xs font-semibold text-slate-200 hover:text-white hover:bg-white/10 px-3.5 py-1.5 rounded-full transition"
                 >
                   Masuk
                 </Link>
                 <Link
                   href="/register"
-                  className="text-xs font-semibold text-white bg-secondary hover:bg-secondary-700 px-4 py-2 rounded-full shadow-md shadow-secondary/25 transition min-h-[36px] flex items-center justify-center"
+                  className="text-xs font-semibold text-white bg-secondary hover:bg-secondary-700 px-4 py-1.5 rounded-full shadow-md shadow-secondary/25 transition flex items-center justify-center"
                 >
                   Daftar Akun
                 </Link>
@@ -137,19 +142,20 @@ export function Navbar() {
           {/* Mobile Menu Button */}
           <div className="flex md:hidden">
             <button
+              type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-200 hover:bg-white/10"
+              className="p-2 rounded-full text-slate-200 hover:bg-white/10 cursor-pointer"
               aria-label="Toggle navigation menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Menu Floating Dropdown Card */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-primary-800 bg-primary px-4 pt-2 pb-4 space-y-3">
+        <div className="pointer-events-auto md:hidden mt-2 w-full max-w-sm rounded-3xl bg-[#0e2647]/95 backdrop-blur-xl text-white shadow-2xl px-5 py-4 space-y-2.5">
           <Link
             href="/"
             onClick={() => setMobileMenuOpen(false)}
@@ -162,7 +168,7 @@ export function Navbar() {
             onClick={() => setMobileMenuOpen(false)}
             className="block text-sm font-medium text-slate-200 hover:text-white py-1"
           >
-            Evaluasi CV
+            Evaluasi CV &amp; Skor ATS
           </Link>
           <Link
             href="/dashboard"
@@ -176,7 +182,7 @@ export function Navbar() {
             onClick={() => setMobileMenuOpen(false)}
             className="block text-sm font-medium text-slate-200 hover:text-white py-1"
           >
-            Cari Lowongan
+            Pencocokan Lowongan AI
           </Link>
           <Link
             href="/about"
@@ -185,13 +191,16 @@ export function Navbar() {
           >
             Tentang Kami
           </Link>
-          <div className="pt-2 border-t border-primary-800 flex flex-col gap-2">
+          <div className="pt-2 flex flex-col gap-2">
             {user ? (
               <div className="flex items-center justify-between">
-                <span className="text-xs text-slate-300 font-medium">{user.name} ({user.role})</span>
+                <span className="text-xs text-slate-300 font-medium">
+                  {user.name} ({user.role})
+                </span>
                 <button
+                  type="button"
                   onClick={handleLogout}
-                  className="text-xs text-rose-400 font-medium py-1"
+                  className="text-xs text-rose-400 font-medium py-1 cursor-pointer"
                 >
                   Keluar
                 </button>
@@ -201,7 +210,7 @@ export function Navbar() {
                 <Link
                   href="/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-center text-sm font-medium text-slate-200 border border-white/20 py-2 rounded-full"
+                  className="text-center text-sm font-medium text-slate-200 bg-white/10 hover:bg-white/15 py-2 rounded-full"
                 >
                   Masuk
                 </Link>
