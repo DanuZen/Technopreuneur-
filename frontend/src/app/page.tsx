@@ -14,8 +14,6 @@ import {
   Cpu,
   Database,
   Layers,
-  ChevronDown,
-  ChevronUp,
 } from "lucide-react";
 
 interface WorkflowStageData {
@@ -150,40 +148,6 @@ export default function Home() {
       onTouchEnd={handleTouchEnd}
       className="h-full w-full p-2.5 sm:p-4 flex flex-col bg-[#fefefd] relative overflow-hidden select-none"
     >
-      {/* =====================================================================
-          RIGHT-SIDE FLOATING SLIDE PAGINATION DOTS
-          ===================================================================== */}
-      <aside
-        aria-label="Navigasi bagian halaman"
-        className="fixed right-4 sm:right-6 top-1/2 -translate-y-1/2 z-40 hidden sm:flex flex-col items-center gap-2 bg-white/80 backdrop-blur-md p-2 rounded-full shadow-lg"
-      >
-        {[
-          { idx: 0, label: "Hero & Board ATS" },
-          { idx: 1, label: "1. Ekstraksi Digital" },
-          { idx: 2, label: "2. Analisis 5 Dimensi" },
-          { idx: 3, label: "3. Pencocokan Presisi" },
-          { idx: 4, label: "4. Privasi UU PDP" },
-          { idx: 5, label: "Standar & Arsitektur" },
-          { idx: 6, label: "Mulai Evaluasi" },
-        ].map((item) => {
-          const active = currentSlide === item.idx;
-          return (
-            <button
-              key={item.idx}
-              type="button"
-              onClick={() => goToSlide(item.idx)}
-              title={item.label}
-              aria-label={item.label}
-              className={`w-2.5 rounded-full transition-all duration-500 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
-                active
-                  ? "h-7 bg-primary shadow-xs"
-                  : "h-2.5 bg-slate-300 hover:bg-slate-400"
-              }`}
-            />
-          );
-        })}
-      </aside>
-
       {/* =====================================================================
           TOP MORPHING SKY CONTAINER (100% height on Slide 0 & 6, 33% on 1..5)
           ===================================================================== */}
@@ -919,33 +883,6 @@ export default function Home() {
             </div>
           </div>
         )}
-      </div>
-
-      {/* =====================================================================
-          BOTTOM FLOATING SCROLL STEPPER PILL (Interactive Prev/Next & Hint)
-          ===================================================================== */}
-      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/85 text-white backdrop-blur-md shadow-xl text-[11px] font-medium">
-        <button
-          type="button"
-          onClick={() => goToSlide(currentSlide - 1)}
-          disabled={currentSlide === 0}
-          aria-label="Bagian sebelumnya"
-          className="p-1 rounded-full hover:bg-white/15 disabled:opacity-30 transition cursor-pointer"
-        >
-          <ChevronUp className="w-3.5 h-3.5" />
-        </button>
-        <span className="font-mono px-1.5 text-[10px] text-slate-200">
-          {currentSlide + 1} / {TOTAL_SLIDES}
-        </span>
-        <button
-          type="button"
-          onClick={() => goToSlide(currentSlide + 1)}
-          disabled={currentSlide === TOTAL_SLIDES - 1}
-          aria-label="Bagian selanjutnya"
-          className="p-1 rounded-full hover:bg-white/15 disabled:opacity-30 transition cursor-pointer"
-        >
-          <ChevronDown className="w-3.5 h-3.5" />
-        </button>
       </div>
     </div>
   );
