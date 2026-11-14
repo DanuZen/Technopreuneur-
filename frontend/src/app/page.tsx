@@ -196,6 +196,20 @@ export default function HomePage() {
       : "opacity-0 translate-y-16 scale-[0.94] z-0 pointer-events-none";
   };
 
+  const getHeroMorphSectionAnimClass = () => {
+    if (activeSlide === 0 || activeSlide === 1) {
+      return "opacity-100 translate-y-0 scale-100 z-20 pointer-events-auto";
+    }
+    if (prevSlide === 0 || prevSlide === 1) {
+      return scrollDir === "down"
+        ? "opacity-0 -translate-y-12 scale-[0.96] z-10 pointer-events-none"
+        : "opacity-0 translate-y-12 scale-[0.96] z-10 pointer-events-none";
+    }
+    return activeSlide > 1
+      ? "opacity-0 -translate-y-16 scale-[0.94] z-0 pointer-events-none"
+      : "opacity-0 translate-y-16 scale-[0.94] z-0 pointer-events-none";
+  };
+
   const getChildAnimClass = (
     slideIndex: number,
     enterFrom: "up" | "down" | "left" | "right" = "up",
@@ -223,101 +237,220 @@ export default function HomePage() {
       className="h-full w-full relative overflow-hidden bg-[#fefefd] text-[#0f2c56] select-none"
     >
       {/* =====================================================================
-          SLIDE 0: FULL-SCREEN HERO CARD IN NAV BRAND NAVY (#0E2647) + MASCOT
+          SLIDE 0 & 1: HERO MORPHING STAGE (CARD SHAPE-SHIFTS TO ADAPT TO NEXT SECTION)
           ===================================================================== */}
       <section
-        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(0)}`}
+        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getHeroMorphSectionAnimClass()}`}
       >
-        <div
-          className="h-full w-full rounded-[26px] sm:rounded-[34px] relative overflow-hidden flex items-center px-5 sm:px-10 lg:px-14 border border-white/15 shadow-2xl text-white"
-          style={{
-            background:
-              "linear-gradient(155deg, #07172e 0%, #0e2647 50%, #153866 100%)",
-          }}
-        >
-          {/* Subtle Geometric Grid & Ambient Glow Matching Navbar */}
+        <div className="w-full h-full mx-auto relative">
+          {/* THE MORPHING CARD: Smoothly shrinks & shifts from full-width (Slide 0) to right 6 cols (Slide 1) */}
           <div
-            className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"
-            aria-hidden="true"
-          />
-          <div
-            className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#ce2731]/20 blur-3xl pointer-events-none"
-            aria-hidden="true"
-          />
-          <div
-            className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#275992]/30 blur-3xl pointer-events-none"
-            aria-hidden="true"
-          />
+            className={`absolute rounded-[26px] sm:rounded-[34px] overflow-hidden shadow-2xl border transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] z-10 ${
+              activeSlide === 0
+                ? "inset-0 w-full h-full border-white/15"
+                : "top-[48%] sm:top-[44%] lg:top-0 bottom-0 right-0 left-0 lg:left-[calc(50%+10px)] xl:left-[calc(50%+16px)] w-full lg:w-[calc(50%-10px)] xl:w-[calc(50%-16px)] h-[52%] sm:h-[56%] lg:h-full border-white/10"
+            }`}
+          >
+            {/* Morphing Background Layer 1: Slide 0 Deep Navy Gradient */}
+            <div
+              className={`absolute inset-0 transition-opacity duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                activeSlide === 0 ? "opacity-100" : "opacity-0 pointer-events-none"
+              }`}
+              style={{
+                background:
+                  "linear-gradient(155deg, #07172e 0%, #0e2647 50%, #153866 100%)",
+              }}
+            >
+              <div
+                className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"
+                aria-hidden="true"
+              />
+              <div
+                className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#ce2731]/20 blur-3xl pointer-events-none"
+                aria-hidden="true"
+              />
+              <div
+                className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#275992]/30 blur-3xl pointer-events-none"
+                aria-hidden="true"
+              />
+            </div>
 
-          <div className="max-w-[1360px] w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center relative z-10">
-            {/* Left 6 Cols: Editorial Typography & Stats */}
-            <div className={`lg:col-span-6 space-y-5 text-left ${getChildAnimClass(0, "left", "delay-75")}`}>
-              <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-bold text-[#fefefd]">
-                <span className="w-2 h-2 rounded-full bg-[#ce2731]" />
-                <span>Pasbana AI • Standar Evaluasi ATS &amp; HRD</span>
+            {/* Morphing Background Layer 2: Slide 1 Crimson Second Palette Gradient */}
+            <div
+              className={`absolute inset-0 transition-opacity duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                activeSlide === 1 ? "opacity-100" : "opacity-0 pointer-events-none"
+              }`}
+              style={{
+                background:
+                  "linear-gradient(145deg, #ce2731 0%, #b01e27 48%, #0f2c56 100%)",
+              }}
+            >
+              <div
+                className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff12_1px,transparent_1px),linear-gradient(to_bottom,#ffffff12_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"
+                aria-hidden="true"
+              />
+            </div>
+          </div>
+
+          {/* 12-COLUMN CONTENT GRID IN FRONT OF MORPHING CARD */}
+          <div className="w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-stretch relative z-20">
+            {/* =================================================================
+                LEFT 6 COLS: Transitions between Hero White Text (Slide 0) and
+                Open Workflow Editorial on #fefefd Canvas (Slide 1)
+                ================================================================= */}
+            <div className="lg:col-span-6 h-[48%] sm:h-[44%] lg:h-full relative">
+              {/* SLIDE 0 HERO EDITORIAL (White on Navy) */}
+              <div
+                className={`absolute inset-0 h-full flex flex-col justify-center py-2 sm:py-5 px-3 sm:px-8 lg:px-12 space-y-4 sm:space-y-5 text-left transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  activeSlide === 0
+                    ? "opacity-100 translate-x-0 scale-100 pointer-events-auto"
+                    : "opacity-0 -translate-x-12 scale-95 pointer-events-none"
+                }`}
+              >
+                <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-bold text-[#fefefd] self-start">
+                  <span className="w-2 h-2 rounded-full bg-[#ce2731]" />
+                  <span>Pasbana AI • Standar Evaluasi ATS &amp; HRD</span>
+                </div>
+
+                <h1 className="text-2xl sm:text-4xl xl:text-[54px] font-black tracking-tight text-white leading-[1.08]">
+                  Autopilot Evaluasi CV &amp;{" "}
+                  <span className="text-[#ce2731]">Pencocokan Karir Impian.</span>
+                </h1>
+
+                <p className="text-xs sm:text-base text-slate-200 max-w-xl leading-relaxed font-normal">
+                  Ukur kesiapan resume Anda secara objektif dalam 5 dimensi dan temukan lowongan yang paling pas bana dalam hitungan detik, tanpa biaya berlangganan.
+                </p>
+
+                <div className="pt-1 sm:pt-2 flex flex-wrap items-center gap-3">
+                  <Link
+                    href="/evaluate"
+                    className="inline-flex items-center gap-3 pl-6 pr-2.5 py-2.5 bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold rounded-full shadow-lg shadow-[#ce2731]/35 transition-all hover:-translate-y-0.5"
+                  >
+                    <span>Evaluasi CV Saya</span>
+                    <span className="w-7 h-7 rounded-full bg-white text-[#ce2731] flex items-center justify-center">
+                      <ArrowUpRight className="w-4 h-4" />
+                    </span>
+                  </Link>
+                  <Link
+                    href="/evaluate?tab=questionnaire"
+                    className="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs sm:text-sm font-bold rounded-full shadow-sm transition-all"
+                  >
+                    Saya Belum Punya CV
+                  </Link>
+                </div>
+
+                <div className="pt-2 sm:pt-4 border-t border-white/15 grid grid-cols-3 gap-4 max-w-lg">
+                  <div>
+                    <div className="text-lg sm:text-2xl font-black text-white">88/100</div>
+                    <div className="text-[10px] sm:text-[11px] text-slate-300 font-medium">Simulasi Skor ATS</div>
+                  </div>
+                  <div>
+                    <div className="text-lg sm:text-2xl font-black text-white">92%</div>
+                    <div className="text-[10px] sm:text-[11px] text-slate-300 font-medium">Akurasi Loker Cocok</div>
+                  </div>
+                  <div>
+                    <div className="text-lg sm:text-2xl font-black text-white">5D</div>
+                    <div className="text-[10px] sm:text-[11px] text-slate-300 font-medium">Dimensi Objektif</div>
+                  </div>
+                </div>
               </div>
 
-              <h1 className="text-3xl sm:text-5xl xl:text-[56px] font-black tracking-tight text-white leading-[1.06]">
-                Autopilot Evaluasi CV &amp;{" "}
-                <span className="text-[#ce2731]">Pencocokan Karir Impian.</span>
-              </h1>
-
-              <p className="text-xs sm:text-base text-slate-200 max-w-xl leading-relaxed font-medium">
-                Ukur kesiapan resume Anda secara objektif dalam 5 dimensi dan temukan lowongan yang paling pas bana dalam hitungan detik, tanpa biaya berlangganan.
-              </p>
-
-              {/* Dual Brand CTAs (#ce2731 Second & White/Glass) */}
-              <div className="pt-1 flex flex-wrap items-center gap-3.5">
-                <Link
-                  href="/evaluate"
-                  className="inline-flex items-center gap-3 pl-6 pr-2.5 py-2.5 bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold rounded-full shadow-lg shadow-[#ce2731]/35 transition-all hover:-translate-y-0.5"
-                >
-                  <span>Evaluasi CV Saya</span>
-                  <span className="w-7 h-7 rounded-full bg-white text-[#ce2731] flex items-center justify-center">
-                    <ArrowUpRight className="w-4 h-4" />
+              {/* SLIDE 1 WORKFLOW EDITORIAL (Navy & Red on White #fefefd Canvas) */}
+              <div
+                className={`absolute inset-0 h-full flex flex-col justify-between py-2 sm:py-5 px-3 sm:px-8 lg:px-12 text-left transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  activeSlide === 1
+                    ? "opacity-100 translate-x-0 scale-100 pointer-events-auto delay-100"
+                    : "opacity-0 -translate-x-12 scale-95 pointer-events-none"
+                }`}
+              >
+                <div className="space-y-1 sm:space-y-2">
+                  <span className="text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
+                    Tahapan Evaluasi Cerdas
                   </span>
-                </Link>
-                <Link
-                  href="/evaluate?tab=questionnaire"
-                  className="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs sm:text-sm font-bold rounded-full shadow-sm transition-all flex items-center gap-2 backdrop-blur-md"
-                >
-                  <FileSpreadsheet className="w-4 h-4 text-[#faa9ab]" aria-hidden="true" />
-                  <span>Saya Belum Punya CV</span>
-                </Link>
-              </div>
+                  <h2 className="text-xl sm:text-3xl lg:text-4xl font-black tracking-tight text-[#0f2c56] leading-tight">
+                    Otomasi evaluasi berkas,{" "}
+                    <span className="text-[#ce2731]">temukan karir dalam hitungan detik.</span>
+                  </h2>
+                </div>
 
-              {/* Typographic Stat Row */}
-              <div className="pt-4 grid grid-cols-3 gap-6 border-t border-white/15 max-w-lg">
-                <div>
-                  <p className="text-2xl sm:text-3xl font-black text-white">88/100</p>
-                  <p className="text-[11px] sm:text-xs font-bold text-[#faa9ab] mt-0.5">Simulasi Skor ATS</p>
+                {/* 4 Interactive Progress Tabs */}
+                <div className="grid grid-cols-4 gap-2 sm:gap-3 pt-1">
+                  {WORKFLOW_STEPS.map((tab) => {
+                    const isActive = activeWorkflowIdx === tab.id;
+                    return (
+                      <button
+                        key={tab.id}
+                        type="button"
+                        onClick={() => setActiveWorkflowIdx(tab.id)}
+                        className="text-left group cursor-pointer focus:outline-none"
+                      >
+                        <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden mb-1.5 sm:mb-2.5">
+                          <div
+                            className={`h-full rounded-full transition-all duration-500 ${
+                              isActive ? "w-full bg-[#ce2731]" : "w-0 group-hover:w-full group-hover:bg-[#0f2c56]/40"
+                            }`}
+                          />
+                        </div>
+                        <div className={`text-[10px] sm:text-[11px] font-black tracking-wide ${isActive ? "text-[#ce2731]" : "text-slate-400 group-hover:text-[#0f2c56]"}`}>
+                          0{tab.id + 1}
+                        </div>
+                        <div className={`text-[11px] sm:text-xs font-bold leading-snug line-clamp-1 ${isActive ? "text-[#0f2c56]" : "text-slate-500 group-hover:text-[#0f2c56]"}`}>
+                          {tab.tabLabel}
+                        </div>
+                        <div className="text-[10px] text-slate-400 line-clamp-1 hidden sm:block">
+                          {tab.tabSub}
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
-                <div>
-                  <p className="text-2xl sm:text-3xl font-black text-[#ce2731]">92%</p>
-                  <p className="text-[11px] sm:text-xs font-bold text-slate-300 mt-0.5">Akurasi Loker Cocok</p>
-                </div>
-                <div>
-                  <p className="text-2xl sm:text-3xl font-black text-white">5D</p>
-                  <p className="text-[11px] sm:text-xs font-bold text-slate-300 mt-0.5">Dimensi Objektif</p>
+
+                <div className="space-y-2 sm:space-y-3 pt-1">
+                  <h3 className="text-lg sm:text-2xl font-black text-[#0f2c56]">
+                    {activeWorkflow.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-lg">
+                    {activeWorkflow.description}
+                  </p>
+
+                  <div className="flex items-center gap-3 pt-1">
+                    <Link
+                      href={activeWorkflow.ctaHref}
+                      className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#ce2731] hover:bg-[#b01e27] text-[#fefefd] text-xs font-bold shadow-md transition"
+                    >
+                      <span>{activeWorkflow.ctaText}</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => setActiveWorkflowIdx((prev) => (prev + 1) % WORKFLOW_STEPS.length)}
+                      className="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full border border-[#0f2c56]/20 hover:border-[#0f2c56] text-[#0f2c56] text-xs font-bold transition cursor-pointer"
+                    >
+                      Tahap Berikutnya →
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Right 6 Cols: Clean Mascot Spotlight (No Overlapping Cards) */}
-            <div className={`lg:col-span-6 h-full flex items-center justify-center relative ${getChildAnimClass(0, "right", "delay-150")}`}>
-              <div className="relative w-full max-w-lg h-[90%] flex items-center justify-center">
-                {/* Soft Radial Ambient Glow */}
+            {/* =================================================================
+                RIGHT 6 COLS: Transitions between Slide 0 Hero Action Mascot
+                and Slide 1 Stage Card with Power Mascot & Live Previews
+                ================================================================= */}
+            <div className="lg:col-span-6 h-[52%] sm:h-[56%] lg:h-full relative">
+              {/* SLIDE 0 HERO RIGHT STAGE: Spotlight Glow + Action Mascot */}
+              <div
+                className={`absolute inset-0 flex items-center justify-center p-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  activeSlide === 0
+                    ? "opacity-100 scale-100 pointer-events-auto"
+                    : "opacity-0 scale-95 pointer-events-none"
+                }`}
+              >
                 <div
-                  className="absolute w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-[#ce2731]/25 blur-3xl pointer-events-none"
+                  className="absolute w-80 sm:w-96 lg:w-[480px] h-80 sm:h-96 lg:h-[480px] rounded-full bg-radial from-[#ce2731]/30 via-[#275992]/25 to-transparent blur-3xl pointer-events-none"
                   aria-hidden="true"
                 />
-                <div
-                  className="absolute w-60 sm:w-80 h-60 sm:h-80 rounded-full bg-white/10 blur-2xl pointer-events-none"
-                  aria-hidden="true"
-                />
-
-                {/* Hero Mascot in Dynamic Action Stance */}
-                <div className="relative w-[280px] sm:w-[350px] lg:w-[410px] xl:w-[450px] h-[360px] sm:h-[440px] lg:h-[500px] xl:h-[540px] z-20 pointer-events-none animate-float">
+                <div className="relative w-[280px] sm:w-[350px] lg:w-[410px] xl:w-[450px] h-[320px] sm:h-[420px] lg:h-[500px] xl:h-[540px] z-20 pointer-events-none animate-float">
                   <Image
                     src="/mascot/mascot-action.webp"
                     alt="Maskot Pasbana AI"
@@ -327,213 +460,130 @@ export default function HomePage() {
                   />
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* =====================================================================
-          SLIDE 1: OPEN LEFT WORKFLOW EDITORIAL + BOLD SECOND (#CE2731) STAGE CARD RIGHT
-          ===================================================================== */}
-      <section
-        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(1)}`}
-      >
-        <div className="w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-stretch">
-          {/* Left 6 Cols: Open Unboxed Workflow Tabs & Editorial Content */}
-          <div className={`lg:col-span-6 h-full flex flex-col justify-between py-3 sm:py-5 px-4 sm:px-8 lg:px-12 ${getChildAnimClass(1, "left", "delay-75")}`}>
-            <div className="space-y-2">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
-                Tahapan Evaluasi Cerdas
-              </span>
-              <h2 className="text-2xl sm:text-4xl font-black tracking-tight text-[#0f2c56] leading-tight">
-                Otomasi evaluasi berkas,{" "}
-                <span className="text-[#ce2731]">temukan karir dalam hitungan detik.</span>
-              </h2>
-            </div>
+              {/* SLIDE 1 STAGE RIGHT CONTENT: Interactive Stage + Power Mascot */}
+              <div
+                className={`absolute inset-0 flex flex-col justify-between p-4 sm:p-7 text-[#fefefd] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  activeSlide === 1
+                    ? "opacity-100 scale-100 pointer-events-auto delay-100"
+                    : "opacity-0 scale-95 pointer-events-none"
+                }`}
+              >
+                {/* Top Badges */}
+                <div className="relative z-20 flex items-center justify-between">
+                  <span className="px-3.5 py-1 rounded-full bg-[#fefefd]/15 backdrop-blur-md text-xs font-bold text-[#fefefd]">
+                    Tahap {activeWorkflow.num} • {activeWorkflow.tabLabel}
+                  </span>
+                  <span className="text-xs font-mono font-bold text-[#fde6e6]">
+                    {activeWorkflow.tabSub}
+                  </span>
+                </div>
 
-            {/* 4 Interactive Progress Tabs (Open on #fefefd) */}
-            <div className="grid grid-cols-4 gap-3 pt-2">
-              {WORKFLOW_STEPS.map((tab) => {
-                const isActive = activeWorkflowIdx === tab.id;
-                return (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    onClick={() => setActiveWorkflowIdx(tab.id)}
-                    className="text-left group cursor-pointer focus:outline-none"
-                  >
-                    <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden mb-2.5">
-                      <div
-                        className={`h-full rounded-full transition-all duration-500 ${
-                          isActive ? "w-full bg-[#ce2731]" : "w-0 group-hover:w-full group-hover:bg-[#0f2c56]/40"
-                        }`}
+                {/* Center Live Previews + Power Mascot */}
+                <div className="relative z-20 grid grid-cols-1 sm:grid-cols-12 gap-4 items-center my-auto">
+                  <div className="sm:col-span-7">
+                    {activeWorkflowIdx === 0 && (
+                      <div className="bg-[#fefefd] text-[#0f2c56] rounded-3xl p-4 sm:p-5 shadow-xl space-y-3">
+                        <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                          <span className="text-xs font-black text-[#0f2c56]">Pemeriksa Struktur CV</span>
+                          <span className="text-[10px] font-bold bg-[#fdf2f2] text-[#ce2731] px-2.5 py-0.5 rounded-full">
+                            94% Lolos
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-600 leading-relaxed">
+                          Susunan 1-kolom terverifikasi. Bagian pendidikan, pengalaman, dan keahlian siap dibaca sistem ATS.
+                        </p>
+                        <div className="p-2.5 rounded-2xl bg-[#0f2c56] text-[#fefefd] text-[11px] font-bold flex items-center gap-2">
+                          <CheckCircle2 className="w-4 h-4 text-[#faa9ab] shrink-0" />
+                          <span>Bebas Risiko Gagal Parsing</span>
+                        </div>
+                      </div>
+                    )}
+
+                    {activeWorkflowIdx === 1 && (
+                      <div className="bg-[#fefefd] text-[#0f2c56] rounded-3xl p-4 sm:p-5 shadow-xl space-y-2.5">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-black text-[#0f2c56]">Rincian 5 Dimensi</span>
+                          <span className="text-xs font-black text-[#ce2731]">88 / 100</span>
+                        </div>
+                        {[
+                          { label: "Format & Keterbacaan ATS", val: "94%", w: "w-[94%]", c: "bg-[#0f2c56]" },
+                          { label: "Relevansi Keahlian", val: "90%", w: "w-[90%]", c: "bg-[#ce2731]" },
+                          { label: "Dampak & Pencapaian", val: "84%", w: "w-[84%]", c: "bg-[#0f2c56]" },
+                        ].map((row) => (
+                          <div key={row.label} className="space-y-1 text-[11px]">
+                            <div className="flex justify-between font-bold">
+                              <span>{row.label}</span>
+                              <span className="text-[#ce2731]">{row.val}</span>
+                            </div>
+                            <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                              <div className={`${row.w} h-full ${row.c} rounded-full`} />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {activeWorkflowIdx === 2 && (
+                      <div className="bg-[#fefefd] text-[#0f2c56] rounded-3xl p-4 sm:p-5 shadow-xl space-y-2.5">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-black text-[#0f2c56]">Loker Paling Pas Bana</span>
+                          <span className="text-[10px] font-bold text-[#ce2731] bg-[#fdf2f2] px-2 py-0.5 rounded-full">
+                            Skor &gt; 90%
+                          </span>
+                        </div>
+                        {[
+                          { title: "Product Operations Analyst", match: "94% Cocok" },
+                          { title: "Junior Management Trainee", match: "92% Cocok" },
+                        ].map((job) => (
+                          <div key={job.title} className="p-2.5 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-between">
+                            <span className="text-xs font-bold text-[#0f2c56]">{job.title}</span>
+                            <span className="text-[10px] font-black text-[#ce2731] bg-[#fdf2f2] px-2 py-0.5 rounded-full shrink-0">
+                              {job.match}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {activeWorkflowIdx === 3 && (
+                      <div className="bg-[#fefefd] text-[#0f2c56] rounded-3xl p-4 sm:p-5 shadow-xl space-y-2.5">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-black text-[#0f2c56]">Mode Penilaian Anonim</span>
+                          <span className="text-[10px] font-bold bg-[#fdf2f2] text-[#ce2731] px-2 py-0.5 rounded-full">
+                            Identitas Terlindungi
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-600 leading-relaxed">
+                          Foto, gender, usia, dan nama disembunyikan agar evaluasi berfokus murni pada kualifikasi dan portofolio.
+                        </p>
+                        <div className="p-2 rounded-2xl bg-[#0f2c56] text-[#fefefd] text-[10px] font-bold flex items-center justify-between">
+                          <span>Evaluasi Objektif 100%</span>
+                          <span className="text-[#faa9ab]">Standar HRD</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Power Pose Mascot */}
+                  <div className="sm:col-span-5 flex items-center justify-center">
+                    <div className="relative w-[180px] sm:w-[220px] lg:w-[260px] xl:w-[290px] h-[220px] sm:h-[260px] lg:h-[320px] xl:h-[350px]">
+                      <Image
+                        src="/mascot/mascot-power.webp"
+                        alt="Maskot Pasbana AI Power Pose"
+                        fill
+                        className="object-contain object-bottom drop-shadow-[0_24px_32px_rgba(0,0,0,0.5)]"
                       />
                     </div>
-                    <p className="text-[10px] font-mono font-bold text-[#ce2731]">{tab.num}</p>
-                    <p
-                      className={`text-xs sm:text-sm font-black transition-colors truncate ${
-                        isActive ? "text-[#0f2c56]" : "text-slate-400 group-hover:text-slate-600"
-                      }`}
-                    >
-                      {tab.tabLabel}
-                    </p>
-                    <p className="text-[10px] text-slate-400 truncate hidden sm:block">
-                      {tab.tabSub}
-                    </p>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Active Step Editorial Details (Open on #fefefd) */}
-            <div key={activeWorkflow.id} className="space-y-4 animate-fade-in-up">
-              <h3 className="text-2xl sm:text-4xl font-black tracking-tight text-[#0f2c56] leading-[1.12]">
-                {activeWorkflow.title}
-              </h3>
-              <p className="text-xs sm:text-base text-slate-600 max-w-lg leading-relaxed">
-                {activeWorkflow.description}
-              </p>
-              <div className="pt-2 flex flex-wrap items-center gap-3">
-                <Link
-                  href={activeWorkflow.ctaHref}
-                  className="inline-flex items-center gap-2.5 px-6 py-3 bg-[#ce2731] hover:bg-[#b01e27] text-[#fefefd] text-xs sm:text-sm font-bold rounded-full shadow-lg shadow-[#ce2731]/25 transition-all hover:-translate-y-0.5"
-                >
-                  <span>{activeWorkflow.ctaText}</span>
-                  <ArrowUpRight className="w-4 h-4" />
-                </Link>
-                <button
-                  type="button"
-                  onClick={() => setActiveWorkflowIdx((prev) => (prev + 1) % WORKFLOW_STEPS.length)}
-                  className="px-5 py-3 rounded-full border-2 border-[#0f2c56] text-[#0f2c56] hover:bg-[#0f2c56] hover:text-[#fefefd] text-xs font-bold transition cursor-pointer"
-                >
-                  Tahap Berikutnya →
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Right 6 Cols: Bold Second (#ce2731) Stage Card Matching Hero Height Exactly */}
-          <div
-            className={`lg:col-span-6 h-full rounded-[26px] sm:rounded-[34px] relative overflow-hidden p-6 sm:p-8 flex flex-col justify-between text-[#fefefd] shadow-2xl border border-white/10 ${getChildAnimClass(1, "right", "delay-150")}`}
-            style={{
-              background: "linear-gradient(145deg, #ce2731 0%, #b01e27 48%, #0f2c56 100%)",
-            }}
-          >
-            <div
-              className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff12_1px,transparent_1px),linear-gradient(to_bottom,#ffffff12_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"
-              aria-hidden="true"
-            />
-
-            <div className="relative z-20 flex items-center justify-between">
-              <span className="px-3.5 py-1 rounded-full bg-[#fefefd]/15 backdrop-blur-md text-xs font-bold text-[#fefefd]">
-                Tahap {activeWorkflow.num} • {activeWorkflow.tabLabel}
-              </span>
-              <span className="text-xs font-mono font-bold text-[#fde6e6]">
-                {activeWorkflow.tabSub}
-              </span>
-            </div>
-
-            {/* Split Inside Stage: UI Card Left + Large Proportional Mascot Right */}
-            <div className="relative z-20 grid grid-cols-1 sm:grid-cols-12 gap-4 items-center my-auto">
-              <div className="sm:col-span-7">
-                {activeWorkflowIdx === 0 && (
-                  <div className="bg-[#fefefd] text-[#0f2c56] rounded-3xl p-5 shadow-xl space-y-3">
-                    <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-                      <span className="text-xs font-black text-[#0f2c56]">Pemeriksa Struktur CV</span>
-                      <span className="text-[10px] font-bold bg-[#fdf2f2] text-[#ce2731] px-2.5 py-0.5 rounded-full">
-                        94% Lolos
-                      </span>
-                    </div>
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      Susunan 1-kolom terverifikasi. Bagian pendidikan, pengalaman, dan keahlian siap dibaca sistem ATS.
-                    </p>
-                    <div className="p-2.5 rounded-2xl bg-[#0f2c56] text-[#fefefd] text-[11px] font-bold flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-[#faa9ab] shrink-0" />
-                      <span>Bebas Risiko Gagal Parsing</span>
-                    </div>
                   </div>
-                )}
+                </div>
 
-                {activeWorkflowIdx === 1 && (
-                  <div className="bg-[#fefefd] text-[#0f2c56] rounded-3xl p-5 shadow-xl space-y-2.5">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-black text-[#0f2c56]">Rincian 5 Dimensi</span>
-                      <span className="text-xs font-black text-[#ce2731]">88 / 100</span>
-                    </div>
-                    {[
-                      { label: "Format & Keterbacaan ATS", val: "94%", w: "w-[94%]", c: "bg-[#0f2c56]" },
-                      { label: "Relevansi Keahlian", val: "90%", w: "w-[90%]", c: "bg-[#ce2731]" },
-                      { label: "Dampak & Pencapaian", val: "84%", w: "w-[84%]", c: "bg-[#0f2c56]" },
-                    ].map((row) => (
-                      <div key={row.label} className="space-y-1 text-[11px]">
-                        <div className="flex justify-between font-bold">
-                          <span>{row.label}</span>
-                          <span className="text-[#ce2731]">{row.val}</span>
-                        </div>
-                        <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                          <div className={`${row.w} h-full ${row.c} rounded-full`} />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {activeWorkflowIdx === 2 && (
-                  <div className="space-y-2.5">
-                    {[
-                      { role: "Product Analyst", match: "94% Cocok", loc: "Jakarta • Hybrid" },
-                      { role: "Management Trainee", match: "92% Cocok", loc: "Padang • Penuh Waktu" },
-                    ].map((item) => (
-                      <div
-                        key={item.role}
-                        className="bg-[#fefefd] text-[#0f2c56] rounded-2xl p-3.5 shadow-xl flex items-center justify-between"
-                      >
-                        <div>
-                          <p className="text-xs font-black text-[#0f2c56]">{item.role}</p>
-                          <p className="text-[10px] text-slate-500">{item.loc}</p>
-                        </div>
-                        <span className="px-2.5 py-1 rounded-full bg-[#fdf2f2] text-[#ce2731] text-[10px] font-black">
-                          {item.match}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {activeWorkflowIdx === 3 && (
-                  <div className="bg-[#fefefd] text-[#0f2c56] rounded-3xl p-5 shadow-xl space-y-2.5">
-                    <span className="px-2.5 py-1 rounded-full bg-[#fdf2f2] text-[#ce2731] text-[10px] font-black">
-                      100% Blind Scoring
-                    </span>
-                    <p className="text-xs font-black text-[#0f2c56] pt-1">
-                      Fokus Murni pada Kemampuan
-                    </p>
-                    <p className="text-[11px] text-slate-600 leading-relaxed">
-                      Tanpa penilaian foto, usia, maupun latar belakang pribadi. Anda bebas menghapus riwayat CV kapan saja.
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              {/* Large Contextual Mascot Pose on Right 5 Cols */}
-              <div className="sm:col-span-5 flex items-center justify-center">
-                <div
-                  key={activeWorkflow.mascotSrc}
-                  className="relative w-44 h-56 sm:w-48 sm:h-64 lg:w-52 lg:h-72 animate-fade-in-up"
-                >
-                  <Image
-                    src={activeWorkflow.mascotSrc}
-                    alt={activeWorkflow.tabLabel}
-                    fill
-                    className="object-contain drop-shadow-[0_20px_30px_rgba(8,27,55,0.45)]"
-                  />
+                {/* Bottom Tags */}
+                <div className="relative z-20 flex items-center justify-between text-[11px] text-[#fde6e6] pt-1">
+                  <span>Filosofi Karir yang Pas Bana</span>
+                  <span className="font-semibold">Gratis untuk Pencari Kerja</span>
                 </div>
               </div>
-            </div>
-
-            <div className="relative z-20 flex items-center justify-between text-xs text-[#fde6e6] pt-2 border-t border-white/15">
-              <span>Filosofi Karir yang Pas Bana</span>
-              <span className="font-bold text-[#fefefd]">Gratis untuk Pencari Kerja</span>
             </div>
           </div>
         </div>
