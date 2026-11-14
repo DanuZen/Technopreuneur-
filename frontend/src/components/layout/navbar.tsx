@@ -32,12 +32,12 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
     <header
       className={
         floating
-          ? "w-full z-50 px-5 sm:px-10 flex flex-col items-center pointer-events-none"
-          : "sticky top-0 w-full shrink-0 z-50 bg-[#fefefd]/90 backdrop-blur-md pt-2.5 sm:pt-3 pb-2 px-3 sm:px-6 flex flex-col items-center"
+          ? "w-full z-50 px-4 sm:px-8 flex flex-col items-center bg-transparent pointer-events-none"
+          : "sticky top-0 w-full shrink-0 z-50 bg-transparent pt-2.5 sm:pt-3 pb-2 px-3 sm:px-6 flex flex-col items-center pointer-events-none"
       }
     >
-      {/* Single Clean Pill Navbar (No Nested Pill-in-Pill) */}
-      <div className="pointer-events-auto w-full max-w-5xl bg-[#0e2647]/95 backdrop-blur-md text-white rounded-full shadow-lg shadow-[#051529]/20 px-3.5 sm:px-5 py-2 transition-all">
+      {/* Single Clean Pill Navbar (Transparent outer header, floating pill) */}
+      <div className="pointer-events-auto w-full max-w-5xl bg-[#0e2647]/90 backdrop-blur-xl border border-white/15 text-white rounded-full shadow-lg shadow-[#051529]/20 px-3.5 sm:px-5 py-2 transition-all">
         <div className="flex items-center justify-between gap-2 sm:gap-4">
           {/* Logo & Brand */}
           <Link
