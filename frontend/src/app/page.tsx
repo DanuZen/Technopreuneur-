@@ -262,10 +262,6 @@ export default function HomePage() {
               }}
             >
               <div
-                className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"
-                aria-hidden="true"
-              />
-              <div
                 className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#ce2731]/20 blur-3xl pointer-events-none"
                 aria-hidden="true"
               />
@@ -285,10 +281,6 @@ export default function HomePage() {
                   "linear-gradient(145deg, #ce2731 0%, #b01e27 48%, #0f2c56 100%)",
               }}
             >
-              <div
-                className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff12_1px,transparent_1px),linear-gradient(to_bottom,#ffffff12_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"
-                aria-hidden="true"
-              />
             </div>
           </div>
 
@@ -604,10 +596,6 @@ export default function HomePage() {
             }}
           >
             {/* Geometric Grid Pattern & Glow */}
-            <div
-              className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff12_1px,transparent_1px),linear-gradient(to_bottom,#ffffff12_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"
-              aria-hidden="true"
-            />
             <div
               className="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-[#0f2c56]/40 blur-3xl pointer-events-none"
               aria-hidden="true"
@@ -1119,10 +1107,6 @@ export default function HomePage() {
               background: "linear-gradient(135deg, #ce2731 0%, #b01e27 52%, #0f2c56 100%)",
             }}
           >
-            <div
-              className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff12_1px,transparent_1px),linear-gradient(to_bottom,#ffffff12_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"
-              aria-hidden="true"
-            />
 
             <div className="lg:col-span-8 space-y-4 text-left relative z-20">
               <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#fefefd] text-[#ce2731] text-xs font-black shadow-xs">
