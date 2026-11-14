@@ -117,20 +117,22 @@ export default function HomePage() {
   const touchStartYRef = useRef<number | null>(null);
   const activeSlideRef = useRef<number>(0);
   const slide4ContainerRef = useRef<HTMLDivElement | null>(null);
+  const slide4GridRef = useRef<HTMLDivElement | null>(null);
   const featureItemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [featureRect, setFeatureRect] = useState<{
     top: number;
     left: number;
     width: number;
     height: number;
-  }>({ top: 140, left: 32, width: 360, height: 190 });
+  }>({ top: 240, left: 32, width: 360, height: 180 });
 
   const updateFeatureRect = useCallback(() => {
+    const gridEl = slide4GridRef.current;
     const itemEl = featureItemRefs.current[activeFeatureIdx];
-    if (itemEl) {
+    if (gridEl && itemEl) {
       setFeatureRect({
-        top: itemEl.offsetTop,
-        left: itemEl.offsetLeft,
+        top: gridEl.offsetTop + itemEl.offsetTop,
+        left: gridEl.offsetLeft + itemEl.offsetLeft,
         width: itemEl.offsetWidth,
         height: itemEl.offsetHeight,
       });
@@ -841,7 +843,10 @@ export default function HomePage() {
           </div>
 
           {/* 3 Columns x 2 Rows Feature Grid */}
-          <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 ${getChildAnimClass(4, "up", "delay-150")}`}>
+          <div
+            ref={slide4GridRef}
+            className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 ${getChildAnimClass(4, "up", "delay-150")}`}
+          >
             {FEATURE_GRID_ITEMS.map((item, idx) => {
               const isSelected = activeFeatureIdx === idx;
               const isCrimson = idx % 2 === 1;
@@ -855,9 +860,7 @@ export default function HomePage() {
                   onClick={() => setActiveFeatureIdx(idx)}
                   className={`p-5 sm:p-6 rounded-[28px] text-left transition-colors duration-300 cursor-pointer ${
                     isSelected
-                      ? `${
-                          isCrimson ? "bg-[#ce2731]" : "bg-[#0f2c56]"
-                        } lg:bg-transparent text-white`
+                      ? `${isCrimson ? "bg-[#ce2731]" : "bg-[#0f2c56]"} text-white`
                       : "bg-white border-2 border-slate-200 hover:border-[#0f2c56] text-[#0f2c56]"
                   }`}
                 >
