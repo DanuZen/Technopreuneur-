@@ -103,29 +103,6 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
               Beranda
             </Link>
             <Link
-              href="/dashboard"
-              className={`text-xs font-medium px-3 py-1.5 rounded-full transition ${
-                pathname === "/dashboard"
-                  ? "bg-white/15 text-white font-semibold"
-                  : "text-slate-200 hover:text-white hover:bg-white/10"
-              }`}
-              title="Dashboard ATS"
-            >
-              Dashboard
-            </Link>
-            <Link
-              href="/evaluate"
-              className={`flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full transition ${
-                pathname === "/evaluate"
-                  ? "bg-white/15 text-white font-semibold"
-                  : "text-slate-200 hover:text-white hover:bg-white/10"
-              }`}
-              title="Evaluasi CV & Skor ATS"
-            >
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-beacon shrink-0" aria-hidden="true" />
-              <span>Skor ATS</span>
-            </Link>
-            <Link
               href="/jobs"
               className={`text-xs font-medium px-3 py-1.5 rounded-full transition ${
                 pathname === "/jobs"
@@ -135,13 +112,6 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
               title="Pencocokan Lowongan AI"
             >
               Pencocokan AI
-            </Link>
-            <Link
-              href="/evaluate"
-              className="text-xs font-medium text-slate-200 hover:text-white hover:bg-white/10 px-3 py-1.5 rounded-full transition"
-              title="Blind Scoring Bebas Bias"
-            >
-              Blind Scoring
             </Link>
             <Link
               href="/about"
@@ -281,25 +251,11 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
             Beranda
           </Link>
           <Link
-            href="/evaluate"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-slate-200 hover:text-white py-1"
-          >
-            Evaluasi CV &amp; Skor ATS
-          </Link>
-          <Link
-            href="/dashboard"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-slate-200 hover:text-white py-1"
-          >
-            Dashboard ATS
-          </Link>
-          <Link
             href="/jobs"
             onClick={() => setMobileMenuOpen(false)}
             className="block text-sm font-medium text-slate-200 hover:text-white py-1"
           >
-            Pencocokan Lowongan AI
+            Pencocokan AI
           </Link>
           <Link
             href="/about"
