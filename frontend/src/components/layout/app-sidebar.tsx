@@ -127,7 +127,7 @@ export function AppSidebar({
       label: "Evaluasi CV",
       href: "/evaluate",
       icon: FileCheck,
-      desc: "Uji berkas & blind scoring",
+      desc: "Uji berkas & skor 5 dimensi",
     },
     {
       label: "Rekomendasi Lowongan",
@@ -216,7 +216,7 @@ export function AppSidebar({
               <button
                 type="button"
                 onClick={handleSelectNewEvaluation}
-                className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#0f2c56] to-[#163861] text-white shadow-md shadow-primary/25 hover:opacity-95 transition-transform hover:scale-105"
+                className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#0f2c56] hover:bg-[#ce2731] text-white transition-colors cursor-pointer"
                 title="Mulai Evaluasi CV Baru (+)"
                 aria-label="Mulai evaluasi CV baru"
               >
@@ -295,7 +295,7 @@ export function AppSidebar({
                   onClick={onCloseMobile}
                   className="flex items-center gap-2.5 group"
                 >
-                  <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#0f2c56] to-[#163861] p-1.5 shadow-sm flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-xl bg-[#0f2c56] p-1.5 flex items-center justify-center shrink-0">
                     <Image
                       src="/logo-app-white.webp"
                       alt="Pasbana AI"
@@ -336,9 +336,9 @@ export function AppSidebar({
                 <button
                   type="button"
                   onClick={handleSelectNewEvaluation}
-                  className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-2xl bg-gradient-to-r from-[#0f2c56] to-[#163861] text-white text-xs font-bold shadow-md shadow-primary/20 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer"
+                  className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-2xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors cursor-pointer"
                 >
-                  <Plus className="w-4 h-4 text-amber-300 shrink-0" aria-hidden="true" />
+                  <Plus className="w-4 h-4 text-white shrink-0" aria-hidden="true" />
                   <span>Evaluasi CV Baru</span>
                 </button>
               </div>
@@ -361,8 +361,8 @@ export function AppSidebar({
                       onClick={onCloseMobile}
                       className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
                         isActive
-                          ? "bg-primary text-white shadow-xs"
-                          : "text-slate-700 hover:bg-white/90 hover:text-primary"
+                          ? "bg-[#0f2c56] text-white"
+                          : "text-slate-700 hover:bg-white hover:text-[#0f2c56]"
                       }`}
                     >
                       <Icon className="w-4 h-4 shrink-0" aria-hidden="true" />
@@ -370,7 +370,7 @@ export function AppSidebar({
                         <p className="truncate leading-tight">{item.label}</p>
                       </div>
                       {isActive && (
-                        <span className="w-1.5 h-1.5 rounded-full bg-amber-300 shrink-0" />
+                        <span className="w-2 h-2 rounded-full bg-[#ce2731] shrink-0" />
                       )}
                     </Link>
                   );
@@ -440,20 +440,20 @@ export function AppSidebar({
                         onKeyDown={(e) => {
                           if (e.key === "Enter" || e.key === " ") handlePilihRiwayat();
                         }}
-                        className="group flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-xs bg-white/60 hover:bg-white text-slate-700 hover:text-primary shadow-2xs transition-all cursor-pointer"
+                        className="group flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-xs bg-white hover:bg-[#0f2c56] text-slate-700 hover:text-white border border-slate-200 transition-colors cursor-pointer"
                       >
                         <div className="flex items-center gap-2 min-w-0">
-                          <FileCheck className="w-3.5 h-3.5 text-primary shrink-0" />
+                          <FileCheck className="w-3.5 h-3.5 text-[#0f2c56] group-hover:text-white shrink-0" />
                           <span className="truncate font-medium">{item.judul}</span>
                         </div>
                         <div className="flex items-center gap-1 shrink-0">
-                          <span className="px-1.5 py-0.5 rounded bg-blue-100/80 text-primary font-mono text-[10px] font-bold">
+                          <span className="px-1.5 py-0.5 rounded bg-[#ce2731] text-white font-mono text-[10px] font-bold">
                             {item.skor}
                           </span>
                           <button
                             type="button"
                             onClick={(e) => handleHapusRiwayat(item.id, e)}
-                            className="opacity-0 group-hover:opacity-100 p-1 text-slate-400 hover:text-rose-600 transition-opacity"
+                            className="opacity-0 group-hover:opacity-100 p-1 text-white/70 hover:text-white transition-opacity"
                             title="Hapus riwayat ini"
                             aria-label={`Hapus ${item.judul}`}
                           >
@@ -465,32 +465,19 @@ export function AppSidebar({
                   )}
                 </div>
               </div>
-
-              {/* Standar & Privasi Pill */}
-              <div className="pt-2">
-                <div className="p-3 rounded-2xl bg-white/80 space-y-1.5 shadow-xs">
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-primary">
-                    <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>Privasi &amp; Kepatuhan</span>
-                  </div>
-                  <p className="text-[11px] text-slate-500 leading-relaxed">
-                    Sesuai UU PDP No. 27/2022. Seluruh identitas sensitif (PII) disanitasi sebelum evaluasi.
-                  </p>
-                </div>
-              </div>
             </div>
 
             {/* Bottom Footer Section: User Profile & Account */}
-            <div className="shrink-0 p-3 bg-white/80 space-y-2">
+            <div className="shrink-0 p-3 bg-white border-t border-slate-200 space-y-2">
               {user ? (
                 <div className="space-y-2">
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2 min-w-0">
-                      <div className="w-8 h-8 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
+                      <div className="w-8 h-8 rounded-full bg-[#0f2c56] text-white text-xs font-bold flex items-center justify-center shrink-0">
                         {user.name.charAt(0).toUpperCase()}
                       </div>
                       <div className="min-w-0">
-                        <p className="text-xs font-bold text-primary truncate leading-tight">
+                        <p className="text-xs font-bold text-[#0f2c56] truncate leading-tight">
                           {user.name}
                         </p>
                         <p className="text-[10px] text-slate-500 truncate leading-tight">
@@ -504,26 +491,26 @@ export function AppSidebar({
                     <button
                       type="button"
                       onClick={() => setKonfirmasiLogout(true)}
-                      className="w-full flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-xl text-xs font-semibold text-rose-700 bg-rose-50 hover:bg-rose-100 transition-colors"
+                      className="w-full flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-xl text-xs font-semibold text-white bg-[#ce2731] hover:bg-[#0f2c56] transition-colors cursor-pointer"
                     >
                       <LogOut className="w-3.5 h-3.5" />
                       <span>Keluar Akun</span>
                     </button>
                   ) : (
-                    <div className="p-2 rounded-xl bg-rose-50 space-y-1.5 text-center shadow-xs">
-                      <p className="text-[11px] font-bold text-rose-900">Yakin ingin keluar?</p>
+                    <div className="p-2 rounded-xl bg-slate-100 border border-slate-200 space-y-1.5 text-center">
+                      <p className="text-[11px] font-bold text-[#0f2c56]">Yakin ingin keluar?</p>
                       <div className="flex gap-1.5">
                         <button
                           type="button"
                           onClick={handleLogout}
-                          className="flex-1 py-1 rounded-lg bg-rose-600 text-white text-[11px] font-bold hover:bg-rose-700 transition"
+                          className="flex-1 py-1 rounded-lg bg-[#ce2731] text-white text-[11px] font-bold hover:bg-[#0f2c56] transition"
                         >
                           Ya, Keluar
                         </button>
                         <button
                           type="button"
                           onClick={() => setKonfirmasiLogout(false)}
-                          className="flex-1 py-1 rounded-lg bg-slate-200 text-slate-700 text-[11px] font-semibold hover:bg-slate-300 transition"
+                          className="flex-1 py-1 rounded-lg bg-white text-[#0f2c56] border border-slate-200 text-[11px] font-semibold hover:bg-slate-50 transition"
                         >
                           Batal
                         </button>
@@ -534,18 +521,18 @@ export function AppSidebar({
               ) : (
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2 min-w-0">
-                    <div className="w-7 h-7 rounded-lg bg-blue-100 text-primary flex items-center justify-center shrink-0">
+                    <div className="w-7 h-7 rounded-lg bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
                       <UserIcon className="w-4 h-4" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-xs font-bold text-primary truncate">Tamu / Pengunjung</p>
+                      <p className="text-xs font-bold text-[#0f2c56] truncate">Tamu / Pengunjung</p>
                       <p className="text-[10px] text-slate-500">Sesi Lokal Aman</p>
                     </div>
                   </div>
                   <Link
                     href="/login"
                     onClick={onCloseMobile}
-                    className="inline-flex items-center gap-1 text-xs font-bold text-secondary bg-rose-50 hover:bg-rose-100 px-2.5 py-1.5 rounded-xl transition shadow-xs"
+                    className="inline-flex items-center gap-1 text-xs font-bold text-white bg-[#ce2731] hover:bg-[#0f2c56] px-2.5 py-1.5 rounded-xl transition"
                   >
                     <span>Masuk</span>
                     <ChevronRight className="w-3.5 h-3.5" />

@@ -15,15 +15,19 @@ import {
   ArrowLeft,
   UploadCloud,
   FileSpreadsheet,
+  AlertTriangle,
+  Layers,
+  TrendingUp,
+  Wrench,
+  BookOpen,
+  Award,
+  ArrowUpRight,
 } from "lucide-react";
 import { api } from "@/lib/api";
 import { CVAnalysisResult, JobItem } from "@/types";
 import { AtsOnboardingWizard } from "@/components/dashboard/ats-onboarding-wizard";
 import { AtsCvPreview } from "@/components/dashboard/ats-cv-preview";
 import { CVDropzone } from "@/components/cv/cv-dropzone";
-import { AmbientBackground } from "@/components/evaluate/ambient-background";
-import { HeroGreeting } from "@/components/evaluate/hero-greeting";
-import { QuickScenarioChips } from "@/components/evaluate/quick-scenario-chips";
 
 function DashboardContent() {
   const searchParams = useSearchParams();
@@ -48,12 +52,10 @@ function DashboardContent() {
       }
       setIsOnboarding(false);
     } else {
-      // Belum ada CV terunggah/dianalisis: otomatis arahkan ke rute evaluasi yang benar (/evaluate)
       router.replace("/evaluate");
       return;
     }
 
-    // Load initial jobs
     api
       .getJobs()
       .then((data) => {
@@ -69,7 +71,7 @@ function DashboardContent() {
       .finally(() => {
         setLoading(false);
       });
-  }, [searchParams]);
+  }, [searchParams, router]);
 
   const handleOnboardingComplete = (result: CVAnalysisResult) => {
     api.saveAnalysis(result);
@@ -95,54 +97,54 @@ function DashboardContent() {
   if (loading) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center space-y-4">
-        <div className="w-10 h-10 border-4 border-slate-900 border-t-transparent rounded-full animate-spin" />
-        <p className="text-sm text-slate-600 font-medium font-mono">
+        <div className="w-10 h-10 border-4 border-[#0f2c56] border-t-transparent rounded-full animate-spin" />
+        <p className="text-sm text-[#0f2c56] font-bold font-mono">
           Memuat data analitik karir Anda...
         </p>
       </div>
     );
   }
 
-  // Tampilan 1: Mode Onboarding (Bagi pengguna yang belum punya CV atau memilih onboarding ATS)
+  // Tampilan 1: Mode Onboarding (Bagi pengguna yang mengubah data onboarding)
   if (isOnboarding || !analysis) {
     return (
-      <div className="relative min-h-[calc(100vh-4rem)] flex flex-col justify-between overflow-hidden">
-        <AmbientBackground />
-
-        <main className="relative z-10 max-w-[1360px] w-full mx-auto px-4 sm:px-6 lg:px-10 pt-6 pb-16 space-y-8 animate-fade-in-up">
-          {/* Top Bar Link */}
+      <div className="min-h-full w-full bg-[#f8fafc] px-4 sm:px-6 lg:px-8 py-6">
+        <main className="max-w-5xl w-full mx-auto space-y-6">
           <div className="flex items-center justify-between">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 text-xs font-bold text-slate-600 hover:text-primary transition bg-white/90 hover:bg-white px-3.5 py-1.5 rounded-full shadow-xs"
+            <button
+              type="button"
+              onClick={() => setIsOnboarding(false)}
+              className="inline-flex items-center gap-2 text-xs font-bold text-[#0f2c56] hover:text-white bg-white hover:bg-[#0f2c56] px-4 py-2 rounded-full border border-slate-200 transition-colors cursor-pointer"
             >
               <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
-              <span>Kembali ke Beranda</span>
-            </Link>
+              <span>Kembali ke Dashboard</span>
+            </button>
 
-            <div className="inline-flex items-center gap-1.5 text-xs text-primary font-bold bg-blue-100/70 px-3.5 py-1.5 rounded-full shadow-2xs">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>Mode Onboarding ATS</span>
+            <div className="inline-flex items-center gap-1.5 text-xs text-white font-bold bg-[#0f2c56] px-3.5 py-2 rounded-full">
+              <span className="w-2 h-2 rounded-full bg-[#ce2731]" />
+              <span>Mode Pembaruan Data ATS</span>
             </div>
           </div>
 
-          {/* Hero Greeting Component */}
-          <div className="max-w-3xl mx-auto">
-            <HeroGreeting />
-          </div>
+          <div className="bg-white border border-slate-200 rounded-[28px] p-6 sm:p-8 space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-200">
+              <div>
+                <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#ce2731]">
+                  Pembaruan Profil
+                </span>
+                <h2 className="text-xl font-extrabold text-[#0f2c56]">
+                  Perbarui Dokumen atau Kuesioner CV ATS
+                </h2>
+              </div>
 
-          {/* Floating Stage Card */}
-          <div className="max-w-4xl mx-auto w-full">
-            <div className="rounded-[32px] sm:rounded-[36px] clay-card p-5 sm:p-9 space-y-6 shadow-xl">
-              {/* Dual-Mode Selector Pills */}
-              <div className="grid grid-cols-2 gap-2 p-1.5 bg-[#edf2f9] rounded-full max-w-md mx-auto shadow-[inset_0_2px_4px_rgba(15,44,86,0.06)]">
+              <div className="inline-flex p-1 bg-slate-100 border border-slate-200 rounded-xl self-start sm:self-auto">
                 <button
                   type="button"
                   onClick={() => setOnboardingMode("wizard")}
-                  className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-full text-xs font-bold transition-all duration-200 ${
+                  className={`flex items-center gap-2 py-2 px-3.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
                     onboardingMode === "wizard"
-                      ? "bg-primary text-white shadow-md shadow-primary/25"
-                      : "text-primary hover:text-secondary font-semibold"
+                      ? "bg-[#0f2c56] text-white"
+                      : "text-slate-600 hover:text-[#0f2c56]"
                   }`}
                 >
                   <FileSpreadsheet className="w-4 h-4" aria-hidden="true" />
@@ -152,97 +154,103 @@ function DashboardContent() {
                 <button
                   type="button"
                   onClick={() => setOnboardingMode("dropzone")}
-                  className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-full text-xs font-bold transition-all duration-200 ${
+                  className={`flex items-center gap-2 py-2 px-3.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
                     onboardingMode === "dropzone"
-                      ? "bg-primary text-white shadow-md shadow-primary/25"
-                      : "text-primary hover:text-secondary font-semibold"
+                      ? "bg-[#ce2731] text-white"
+                      : "text-slate-600 hover:text-[#0f2c56]"
                   }`}
                 >
                   <UploadCloud className="w-4 h-4" aria-hidden="true" />
                   <span>Unggah Berkas PDF/DOCX</span>
                 </button>
               </div>
-
-              {/* Content Body */}
-              <div key={onboardingMode} className="pt-1 animate-fade-in-up">
-                {onboardingMode === "wizard" ? (
-                  <AtsOnboardingWizard onComplete={handleOnboardingComplete} />
-                ) : (
-                  <div className="p-4 sm:p-6 bg-white rounded-3xl shadow-sm space-y-4">
-                    <div className="text-center space-y-1">
-                      <h3 className="text-base font-bold text-primary">
-                        Unggah Berkas CV Anda
-                      </h3>
-                      <p className="text-xs text-slate-600">
-                        Format didukung: PDF atau DOCX (maksimal 5 MB).
-                      </p>
-                    </div>
-                    <CVDropzone
-                      autoRedirect={false}
-                      onAnalysisComplete={handleDropzoneComplete}
-                    />
-                  </div>
-                )}
-              </div>
             </div>
 
-            {/* Quick Scenario Chips */}
-            <QuickScenarioChips
-              onPilihSampel={async () => {
-                const demoFile = new File(
-                  ["Contoh Dokumen Resume Standar ATS 1-Kolom Wira Fikri"],
-                  "CV_Wira_Fikri_ATS_Standard.pdf",
-                  { type: "application/pdf" }
-                );
-                const result = await api.uploadCV(demoFile);
-                handleDropzoneComplete(result);
-              }}
-              onPilihWizard={() => setOnboardingMode("wizard")}
-              onPilihInfoATS={() => setOnboardingMode("dropzone")}
-            />
+            <div key={onboardingMode}>
+              {onboardingMode === "wizard" ? (
+                <AtsOnboardingWizard onComplete={handleOnboardingComplete} />
+              ) : (
+                <CVDropzone
+                  autoRedirect={false}
+                  onAnalysisComplete={handleDropzoneComplete}
+                />
+              )}
+            </div>
           </div>
         </main>
       </div>
     );
   }
 
-  // Tampilan 2: Candidate Dashboard Utama (Setelah CV diunggah atau onboarding tuntas)
+  // Tampilan 2: Candidate Dashboard Utama (100% Solid Colors)
   const score = analysis.overallScore || 88;
   const isHighReady = score >= 85;
 
-  return (
-    <main className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-10 py-8 space-y-8 animate-fade-in-up">
-      {/* CANDIDATE HEADER HERO CARD */}
-      <section className="bg-[#0f2c56] text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
-        {/* Subtle decorative glow */}
-        <div
-          className="absolute -right-20 -top-20 w-80 h-80 bg-white/5 rounded-full blur-3xl pointer-events-none"
-          aria-hidden="true"
-        />
+  const dimensionCards = [
+    {
+      num: "01",
+      title: "Struktur ATS",
+      score: analysis.dimensions.structure,
+      desc: "Format 1-kolom bersih bebas tabel rumit dan teks kotak tak terbaca.",
+      icon: Layers,
+    },
+    {
+      num: "02",
+      title: "Kejelasan Bahasa",
+      score: analysis.dimensions.clarity,
+      desc: "Kalimat aksi langsung, lugas, dan bebas kesalahan ejaan mendasar.",
+      icon: BookOpen,
+    },
+    {
+      num: "03",
+      title: "Dampak Terukur",
+      score: analysis.dimensions.measurableImpact,
+      desc: "Kuantifikasi hasil capaian kerja dengan angka dan persentase nyata.",
+      icon: TrendingUp,
+    },
+    {
+      num: "04",
+      title: "Relevansi Skill",
+      score: analysis.dimensions.skillRelevance,
+      desc: "Kesesuaian kata kunci teknis dengan kebutuhan rekrutmen terkini.",
+      icon: Wrench,
+    },
+    {
+      num: "05",
+      title: "Kelengkapan Profil",
+      score: analysis.dimensions.completeness,
+      desc: "Kelengkapan data kontak resmi, riwayat pendidikan, dan portofolio.",
+      icon: Award,
+    },
+  ];
 
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+  return (
+    <main className="min-h-full bg-[#f8fafc] max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      {/* CANDIDATE HEADER HERO CARD (100% Solid Navy & Crimson) */}
+      <section className="bg-[#0f2c56] text-white rounded-[28px] p-6 sm:p-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
           {/* Profile Identity Details */}
-          <div className="space-y-3">
+          <div className="lg:col-span-8 space-y-4">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-semibold backdrop-blur-sm shadow-xs">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ce2731] text-white text-xs font-extrabold">
+                <CheckCircle2 className="w-3.5 h-3.5 text-white" aria-hidden="true" />
                 Format ATS Terverifikasi
               </span>
-              <span className="text-xs text-slate-300 font-mono bg-white/10 px-2.5 py-0.5 rounded-full shadow-2xs">
+              <span className="text-xs text-[#0f2c56] font-mono font-bold bg-white px-3 py-1 rounded-full">
                 ID Dokumen: {analysis.cvId}
               </span>
             </div>
 
             <div>
-              <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-white font-heading">
                 {analysis.profile.fullName}
               </h1>
-              <p className="text-sm sm:text-base font-semibold text-slate-200 mt-0.5">
+              <p className="text-sm sm:text-base font-bold text-white/85 mt-1">
                 {analysis.profile.headline || "Kandidat Profesional Muda"}
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-4 text-xs text-slate-300">
+            <div className="flex flex-wrap items-center gap-4 text-xs text-white/80 font-medium">
               {analysis.profile.contactEmail && (
                 <span>Email: {analysis.profile.contactEmail}</span>
               )}
@@ -257,44 +265,44 @@ function DashboardContent() {
               <button
                 type="button"
                 onClick={() => setActiveTab("preview")}
-                className="px-5 py-2.5 bg-white hover:bg-slate-100 text-primary text-xs font-bold rounded-full shadow-md transition flex items-center gap-1.5 min-h-[38px]"
+                className="px-5 py-2.5 bg-white hover:bg-[#ce2731] text-[#0f2c56] hover:text-white text-xs font-extrabold rounded-xl transition-colors flex items-center gap-2 cursor-pointer"
               >
-                <FileText className="w-3.5 h-3.5 text-secondary" aria-hidden="true" />
+                <FileText className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>Lihat Dokumen CV ATS</span>
               </button>
 
               <button
                 type="button"
                 onClick={handleResetToOnboarding}
-                className="px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white text-xs font-semibold rounded-full backdrop-blur-sm transition flex items-center gap-1.5 min-h-[38px] shadow-xs"
+                className="px-5 py-2.5 bg-[#ce2731] hover:bg-white text-white hover:text-[#0f2c56] text-xs font-extrabold rounded-xl transition-colors flex items-center gap-2 cursor-pointer"
               >
-                <RotateCcw className="w-3.5 h-3.5 text-slate-300" aria-hidden="true" />
+                <RotateCcw className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>Ubah Data Onboarding</span>
               </button>
             </div>
           </div>
 
-          {/* ATS Overall Score Metric Box */}
-          <div className="flex items-center gap-4 sm:gap-6 bg-white/10 backdrop-blur-md p-5 sm:p-6 rounded-2xl shadow-inner">
-            <div className="relative flex items-center justify-center w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-white/15 border-4 border-emerald-400 shadow-lg">
+          {/* ATS Overall Score Metric Box (Solid White Card) */}
+          <div className="lg:col-span-4 bg-white text-[#0f2c56] p-6 rounded-2xl flex items-center gap-5">
+            <div className="relative flex items-center justify-center w-24 h-24 sm:w-28 sm:h-28 rounded-full border-[6px] border-[#0f2c56] shrink-0">
               <div className="text-center">
-                <span className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+                <span className="text-2xl sm:text-3xl font-black text-[#0f2c56] tracking-tight">
                   {score}
                 </span>
-                <span className="block text-[10px] uppercase font-bold text-emerald-300 tracking-wider">
+                <span className="block text-[10px] uppercase font-extrabold text-slate-400 tracking-wider">
                   / 100
                 </span>
               </div>
             </div>
 
-            <div className="space-y-1.5 max-w-[200px]">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-slate-300 font-semibold">
+            <div className="space-y-1.5">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-bold">
                 Skor Kesiapan ATS
               </span>
-              <p className="text-sm font-bold text-emerald-300">
+              <p className="text-sm font-extrabold text-white bg-[#ce2731] px-2.5 py-0.5 rounded-md inline-block">
                 {isHighReady ? "Sangat Kompetitif" : "Cukup Siap Kerja"}
               </p>
-              <p className="text-xs text-slate-200 leading-snug">
+              <p className="text-xs text-slate-600 leading-snug">
                 {isHighReady
                   ? "Struktur berkas siap dipindai sistem parser lowongan kerja tanpa hambatan."
                   : "Terapkan rekomendasi optimasi untuk memaksimalkan peluang panggilan wawancara."}
@@ -304,16 +312,19 @@ function DashboardContent() {
         </div>
       </section>
 
-      {/* DASHBOARD TAB NAVIGATION BAR (Clay Pill Segment) */}
-      <nav aria-label="Bagian Analisis Dashboard" className="bg-[#edf2f9] p-1.5 rounded-2xl print:hidden shadow-[inset_0_2px_4px_rgba(15,44,86,0.06)]">
+      {/* DASHBOARD TAB NAVIGATION BAR (Solid Clean Bar) */}
+      <nav
+        aria-label="Bagian Analisis Dashboard"
+        className="bg-white p-2 rounded-2xl border border-slate-200 print:hidden"
+      >
         <div className="flex flex-wrap items-center gap-1.5">
           <button
             type="button"
             onClick={() => setActiveTab("dimensions")}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm transition-all flex items-center gap-2 ${
+            className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm transition-colors flex items-center gap-2 cursor-pointer ${
               activeTab === "dimensions"
-                ? "bg-white text-primary shadow-xs font-bold"
-                : "text-slate-600 hover:text-primary font-semibold"
+                ? "bg-[#0f2c56] text-white font-bold"
+                : "text-slate-600 hover:text-[#0f2c56] hover:bg-slate-100 font-semibold"
             }`}
           >
             <Target className="w-4 h-4" aria-hidden="true" />
@@ -323,10 +334,10 @@ function DashboardContent() {
           <button
             type="button"
             onClick={() => setActiveTab("preview")}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm transition-all flex items-center gap-2 ${
+            className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm transition-colors flex items-center gap-2 cursor-pointer ${
               activeTab === "preview"
-                ? "bg-white text-primary shadow-xs font-bold"
-                : "text-slate-600 hover:text-primary font-semibold"
+                ? "bg-[#0f2c56] text-white font-bold"
+                : "text-slate-600 hover:text-[#0f2c56] hover:bg-slate-100 font-semibold"
             }`}
           >
             <FileText className="w-4 h-4" aria-hidden="true" />
@@ -336,15 +347,15 @@ function DashboardContent() {
           <button
             type="button"
             onClick={() => setActiveTab("jobs")}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm transition-all flex items-center gap-2 ${
+            className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm transition-colors flex items-center gap-2 cursor-pointer ${
               activeTab === "jobs"
-                ? "bg-white text-primary shadow-xs font-bold"
-                : "text-slate-600 hover:text-primary font-semibold"
+                ? "bg-[#0f2c56] text-white font-bold"
+                : "text-slate-600 hover:text-[#0f2c56] hover:bg-slate-100 font-semibold"
             }`}
           >
             <Briefcase className="w-4 h-4" aria-hidden="true" />
             <span>Lowongan Kerja Cocok</span>
-            <span className="text-[10px] font-mono bg-blue-100 text-primary px-1.5 py-0.5 rounded-full font-bold">
+            <span className="text-[10px] font-mono bg-[#ce2731] text-white px-2 py-0.5 rounded-full font-bold">
               {jobs.length}
             </span>
           </button>
@@ -352,10 +363,10 @@ function DashboardContent() {
           <button
             type="button"
             onClick={() => setActiveTab("upload")}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm transition-all flex items-center gap-2 ${
+            className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm transition-colors flex items-center gap-2 cursor-pointer ${
               activeTab === "upload"
-                ? "bg-white text-primary shadow-xs font-bold"
-                : "text-slate-600 hover:text-primary font-semibold"
+                ? "bg-[#ce2731] text-white font-bold"
+                : "text-slate-600 hover:text-[#0f2c56] hover:bg-slate-100 font-semibold"
             }`}
           >
             <UploadCloud className="w-4 h-4" aria-hidden="true" />
@@ -366,165 +377,130 @@ function DashboardContent() {
 
       {/* TAB CONTENT 1: SKOR & 5 DIMENSI */}
       {activeTab === "dimensions" && (
-        <section className="space-y-8 animate-fade-in-up">
-          {/* 5 DIMENSIONS GRID */}
+        <section className="space-y-6">
+          {/* 5 DIMENSIONS GRID (Solid Navy & Crimson Hierarchy) */}
           <div className="space-y-3">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-              <h2 className="text-lg font-bold text-slate-900">
-                Peringkat 5 Dimensi Kualitas Resume
-              </h2>
-              <span className="text-xs text-slate-500 font-mono">
-                Evaluasi Otomatis Berbasis Algoritma Heuristik &amp; Standar Parsing ATS
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-1">
+              <div>
+                <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#ce2731]">
+                  Rincian Penilaian
+                </span>
+                <h2 className="text-lg sm:text-xl font-extrabold text-[#0f2c56] font-heading">
+                  Peringkat 5 Dimensi Kualitas Resume
+                </h2>
+              </div>
+              <span className="text-xs text-slate-500 font-semibold">
+                Target optimal setiap dimensi: &ge; 80 / 100
               </span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-              {/* Dimensi 1: Struktur ATS (Navy / Blue) */}
-              <div className="p-4 bg-slate-50 border border-slate-200/80 rounded-2xl shadow-xs space-y-2">
-                <span className="text-[11px] font-mono uppercase text-primary font-bold">
-                  1. Struktur ATS
-                </span>
-                <div className="flex items-baseline justify-between">
-                  <span className="text-2xl font-black text-primary">
-                    {analysis.dimensions.structure}
-                  </span>
-                  <span className="text-xs text-primary/70 font-semibold">/ 100</span>
-                </div>
-                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+              {dimensionCards.map((dim) => {
+                const Icon = dim.icon;
+                const isOptimal = dim.score >= 80;
+                return (
                   <div
-                    className="bg-primary h-full rounded-full"
-                    style={{ width: `${analysis.dimensions.structure}%` }}
-                  />
-                </div>
-                <p className="text-[11px] text-slate-700 leading-tight">
-                  Format 1-kolom bersih bebas tabel rumit dan teks kotak tak terbaca.
-                </p>
-              </div>
+                    key={dim.num}
+                    className="p-5 bg-white border border-slate-200 rounded-2xl flex flex-col justify-between space-y-4"
+                  >
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div
+                          className={`w-9 h-9 rounded-xl flex items-center justify-center text-white ${
+                            isOptimal ? "bg-[#0f2c56]" : "bg-[#ce2731]"
+                          }`}
+                        >
+                          <Icon className="w-4 h-4" />
+                        </div>
+                        <span
+                          className={`px-2.5 py-0.5 rounded-lg text-xs font-black text-white ${
+                            isOptimal ? "bg-[#0f2c56]" : "bg-[#ce2731]"
+                          }`}
+                        >
+                          {dim.score}/100
+                        </span>
+                      </div>
 
-              {/* Dimensi 2: Kejelasan Bahasa (Sky / Cyan) */}
-              <div className="p-4 bg-slate-50 border border-slate-200/80 rounded-2xl shadow-xs space-y-2">
-                <span className="text-[11px] font-mono uppercase text-sky-800 font-bold">
-                  2. Kejelasan Bahasa
-                </span>
-                <div className="flex items-baseline justify-between">
-                  <span className="text-2xl font-black text-sky-900">
-                    {analysis.dimensions.clarity}
-                  </span>
-                  <span className="text-xs text-sky-700 font-semibold">/ 100</span>
-                </div>
-                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
-                  <div
-                    className="bg-sky-600 h-full rounded-full"
-                    style={{ width: `${analysis.dimensions.clarity}%` }}
-                  />
-                </div>
-                <p className="text-[11px] text-slate-700 leading-tight">
-                  Kalimat aksi langsung, lugas, dan bebas kesalahan ejaan mendasar.
-                </p>
-              </div>
+                      <div>
+                        <span className="text-[10px] font-mono uppercase text-slate-400 font-bold">
+                          Dimensi {dim.num}
+                        </span>
+                        <h3 className="text-sm font-extrabold text-[#0f2c56]">
+                          {dim.title}
+                        </h3>
+                      </div>
 
-              {/* Dimensi 3: Dampak Terukur (Emerald / Teal) */}
-              <div className="p-4 bg-slate-50 border border-slate-200/80 rounded-2xl shadow-xs space-y-2">
-                <span className="text-[11px] font-mono uppercase text-emerald-800 font-bold">
-                  3. Dampak Terukur
-                </span>
-                <div className="flex items-baseline justify-between">
-                  <span className="text-2xl font-black text-emerald-950">
-                    {analysis.dimensions.measurableImpact}
-                  </span>
-                  <span className="text-xs text-emerald-700 font-semibold">/ 100</span>
-                </div>
-                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
-                  <div
-                    className="bg-emerald-600 h-full rounded-full"
-                    style={{ width: `${analysis.dimensions.measurableImpact}%` }}
-                  />
-                </div>
-                <p className="text-[11px] text-slate-700 leading-tight">
-                  Kuantifikasi hasil capaian kerja dengan angka dan persentase nyata.
-                </p>
-              </div>
+                      <p className="text-xs text-slate-600 leading-relaxed">
+                        {dim.desc}
+                      </p>
+                    </div>
 
-              {/* Dimensi 4: Relevansi Skill (Crimson / Rose) */}
-              <div className="p-4 bg-slate-50 border border-slate-200/80 rounded-2xl shadow-xs space-y-2">
-                <span className="text-[11px] font-mono uppercase text-secondary font-bold">
-                  4. Relevansi Skill
-                </span>
-                <div className="flex items-baseline justify-between">
-                  <span className="text-2xl font-black text-secondary">
-                    {analysis.dimensions.skillRelevance}
-                  </span>
-                  <span className="text-xs text-secondary/70 font-semibold">/ 100</span>
-                </div>
-                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
-                  <div
-                    className="bg-secondary h-full rounded-full"
-                    style={{ width: `${analysis.dimensions.skillRelevance}%` }}
-                  />
-                </div>
-                <p className="text-[11px] text-slate-700 leading-tight">
-                  Kesesuaian kata kunci teknis dengan kebutuhan rekrutmen terkini.
-                </p>
-              </div>
-
-              {/* Dimensi 5: Kelengkapan Profil (Amber / Orange) */}
-              <div className="p-4 bg-slate-50 border border-slate-200/80 rounded-2xl shadow-xs space-y-2">
-                <span className="text-[11px] font-mono uppercase text-amber-800 font-bold">
-                  5. Kelengkapan Profil
-                </span>
-                <div className="flex items-baseline justify-between">
-                  <span className="text-2xl font-black text-amber-950">
-                    {analysis.dimensions.completeness}
-                  </span>
-                  <span className="text-xs text-amber-700 font-semibold">/ 100</span>
-                </div>
-                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
-                  <div
-                    className="bg-amber-600 h-full rounded-full"
-                    style={{ width: `${analysis.dimensions.completeness}%` }}
-                  />
-                </div>
-                <p className="text-[11px] text-slate-700 leading-tight">
-                  Kelengkapan data kontak resmi, riwayat pendidikan, dan portofolio.
-                </p>
-              </div>
+                    <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full rounded-full ${
+                          isOptimal ? "bg-[#0f2c56]" : "bg-[#ce2731]"
+                        }`}
+                        style={{ width: `${dim.score}%` }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
-          {/* STRENGTHS & RECOMMENDATIONS TWO-COLUMN CARD */}
+          {/* STRENGTHS & RECOMMENDATIONS TWO-COLUMN CARD (Solid White + Bold Brand Borders) */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Strengths (Emerald Tinted) */}
-            <div className="p-6 bg-emerald-50/40 border border-emerald-100 rounded-3xl shadow-xs space-y-4">
-              <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-600" aria-hidden="true" />
-                <h3 className="text-sm font-bold text-emerald-950">
-                  Kekuatan Utama Dokumen CV Anda
-                </h3>
+            {/* Strengths (Solid Navy Border) */}
+            <div className="p-6 bg-white border-2 border-[#0f2c56] rounded-2xl space-y-4">
+              <div className="flex items-center gap-3 pb-3 border-b border-slate-200">
+                <div className="w-9 h-9 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="w-5 h-5" aria-hidden="true" />
+                </div>
+                <div>
+                  <h3 className="text-sm sm:text-base font-extrabold text-[#0f2c56]">
+                    Kekuatan Utama Dokumen CV Anda
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Elemen yang sudah memenuhi standar kurasi ATS
+                  </p>
+                </div>
               </div>
 
               <ul className="space-y-3">
                 {analysis.strengths.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-800">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" aria-hidden="true" />
+                  <li key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-[#0f2c56]">
+                    <span className="w-5 h-5 rounded-md bg-[#0f2c56] text-white font-bold text-[11px] flex items-center justify-center shrink-0 mt-0.5">
+                      {idx + 1}
+                    </span>
                     <span className="leading-relaxed font-medium">{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Recommendations for Improvement (Amber Tinted) */}
-            <div className="p-6 bg-amber-50/40 border border-amber-100 rounded-3xl shadow-xs space-y-4">
-              <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-amber-600" aria-hidden="true" />
-                <h3 className="text-sm font-bold text-amber-950">
-                  Peluang Optimasi &amp; Rekomendasi
-                </h3>
+            {/* Recommendations for Improvement (Solid Crimson Border) */}
+            <div className="p-6 bg-white border-2 border-[#ce2731] rounded-2xl space-y-4">
+              <div className="flex items-center gap-3 pb-3 border-b border-slate-200">
+                <div className="w-9 h-9 rounded-xl bg-[#ce2731] text-white flex items-center justify-center shrink-0">
+                  <AlertTriangle className="w-5 h-5" aria-hidden="true" />
+                </div>
+                <div>
+                  <h3 className="text-sm sm:text-base font-extrabold text-[#0f2c56]">
+                    Peluang Optimasi &amp; Rekomendasi
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Langkah perbaikan prioritas untuk menaikkan skor kesiapan
+                  </p>
+                </div>
               </div>
 
               <ul className="space-y-3">
                 {analysis.recommendations.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-800">
-                    <ChevronRight className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" aria-hidden="true" />
+                  <li key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-[#0f2c56]">
+                    <span className="w-5 h-5 rounded-md bg-[#ce2731] text-white font-bold text-[11px] flex items-center justify-center shrink-0 mt-0.5">
+                      {idx + 1}
+                    </span>
                     <span className="leading-relaxed font-medium">{item}</span>
                   </li>
                 ))}
@@ -536,7 +512,7 @@ function DashboardContent() {
 
       {/* TAB CONTENT 2: DOKUMEN CV ATS PREVIEW */}
       {activeTab === "preview" && (
-        <section className="space-y-4 animate-fade-in-up">
+        <section className="space-y-4">
           <AtsCvPreview
             profile={analysis.profile}
             onEdit={handleResetToOnboarding}
@@ -546,22 +522,23 @@ function DashboardContent() {
 
       {/* TAB CONTENT 3: REKOMENDASI LOWONGAN COCOK */}
       {activeTab === "jobs" && (
-        <section className="space-y-6 animate-fade-in-up">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <section className="space-y-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-white p-5 rounded-2xl border border-slate-200">
             <div>
-              <h2 className="text-lg font-bold text-slate-900">
+              <h2 className="text-lg font-extrabold text-[#0f2c56]">
                 Rekomendasi Lowongan Sesuai Profil
               </h2>
               <p className="text-xs text-slate-600">
-                Pencocokan berbasis vektor keahlian teknis dan preferensi posisi yang Anda cantumkan.
+                Pencocokan berbasis keahlian teknis dan preferensi posisi yang Anda cantumkan.
               </p>
             </div>
 
             <Link
               href="/jobs"
-              className="text-xs font-semibold text-slate-900 hover:underline self-start sm:self-auto"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors self-start sm:self-auto"
             >
               <span>Jelajahi Semua Lowongan</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
             </Link>
           </div>
 
@@ -569,9 +546,10 @@ function DashboardContent() {
             {jobs.map((job) => {
               const userTechSkills = analysis.profile.skills.technical || [];
               const matchedCount = job.requiredSkills.filter((req) =>
-                userTechSkills.some((userSkill) =>
-                  userSkill.toLowerCase().includes(req.toLowerCase()) ||
-                  req.toLowerCase().includes(userSkill.toLowerCase())
+                userTechSkills.some(
+                  (userSkill) =>
+                    userSkill.toLowerCase().includes(req.toLowerCase()) ||
+                    req.toLowerCase().includes(userSkill.toLowerCase())
                 )
               ).length;
               const matchPercent = Math.max(
@@ -582,54 +560,53 @@ function DashboardContent() {
               return (
                 <div
                   key={job.id}
-                  className="p-5 bg-white rounded-2xl shadow-xs hover:shadow-md transition flex flex-col justify-between space-y-4"
+                  className="p-5 bg-white border border-slate-200 rounded-2xl flex flex-col justify-between space-y-4"
                 >
                   <div className="space-y-3">
                     <div className="flex items-start justify-between gap-2">
-                      <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 shadow-2xs font-semibold">
+                      <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-[#ce2731] text-white font-bold">
                         {matchPercent}% Cocok
                       </span>
-                      <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-slate-100 text-slate-600">
+                      <span className="text-[10px] uppercase font-mono px-2.5 py-1 rounded-md bg-slate-100 text-[#0f2c56] font-bold">
                         {job.workType}
                       </span>
                     </div>
 
                     <div>
-                      <h3 className="text-sm font-bold text-slate-900 line-clamp-1">
+                      <h3 className="text-sm font-extrabold text-[#0f2c56] line-clamp-1">
                         {job.title}
                       </h3>
-                      <p className="text-xs text-slate-600 font-medium mt-0.5">
+                      <p className="text-xs text-slate-600 font-semibold mt-0.5">
                         {job.companyName}
                       </p>
                     </div>
 
                     <div className="flex items-center gap-3 text-xs text-slate-500">
                       <span className="flex items-center gap-1">
-                        <MapPin className="w-3 h-3 text-slate-400" />
+                        <MapPin className="w-3.5 h-3.5 text-[#ce2731]" />
                         {job.location}
                       </span>
-                      {job.salaryRange && (
-                        <span>{job.salaryRange}</span>
-                      )}
+                      {job.salaryRange && <span>{job.salaryRange}</span>}
                     </div>
 
                     {/* Skill Badges */}
-                    <div className="space-y-1">
-                      <span className="text-[10px] font-mono uppercase text-slate-400">
+                    <div className="space-y-1.5 pt-1">
+                      <span className="text-[10px] font-mono uppercase text-slate-400 font-bold">
                         Skill Lowongan:
                       </span>
-                      <div className="flex flex-wrap gap-1">
+                      <div className="flex flex-wrap gap-1.5">
                         {job.requiredSkills.map((req, i) => {
-                          const isMatched = userTechSkills.some((u) =>
-                            u.toLowerCase().includes(req.toLowerCase()) ||
-                            req.toLowerCase().includes(u.toLowerCase())
+                          const isMatched = userTechSkills.some(
+                            (u) =>
+                              u.toLowerCase().includes(req.toLowerCase()) ||
+                              req.toLowerCase().includes(u.toLowerCase())
                           );
                           return (
                             <span
                               key={i}
-                              className={`text-[10px] font-mono px-2 py-0.5 rounded ${
+                              className={`text-[10px] font-mono px-2 py-0.5 rounded font-bold ${
                                 isMatched
-                                  ? "bg-emerald-50 text-emerald-700 shadow-2xs font-semibold"
+                                  ? "bg-[#0f2c56] text-white"
                                   : "bg-slate-100 text-slate-600"
                               }`}
                             >
@@ -647,17 +624,18 @@ function DashboardContent() {
                         href={job.externalUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition flex items-center justify-center gap-1.5 min-h-[36px]"
+                        className="w-full py-2.5 bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold rounded-xl transition-colors flex items-center justify-center gap-1.5"
                       >
                         <span>Lamar di Sumber Asli</span>
                         <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
                       </a>
                     ) : (
                       <Link
-                        href={`/jobs`}
-                        className="w-full py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition flex items-center justify-center min-h-[36px]"
+                        href="/jobs"
+                        className="w-full py-2.5 bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold rounded-xl transition-colors flex items-center justify-center gap-1.5"
                       >
                         <span>Kirim Lamaran Profil</span>
+                        <ChevronRight className="w-3.5 h-3.5" />
                       </Link>
                     )}
                   </div>
@@ -670,14 +648,17 @@ function DashboardContent() {
 
       {/* TAB CONTENT 4: UJI BERKAS CV LAIN */}
       {activeTab === "upload" && (
-        <section className="max-w-2xl mx-auto space-y-4 animate-fade-in-up">
-          <div className="p-6 bg-white rounded-3xl shadow-sm space-y-4">
-            <div className="text-center space-y-1">
-              <h2 className="text-base font-bold text-slate-900">
+        <section className="max-w-3xl mx-auto">
+          <div className="p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl space-y-5">
+            <div>
+              <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#ce2731]">
+                Evaluasi Baru
+              </span>
+              <h2 className="text-lg font-extrabold text-[#0f2c56]">
                 Uji atau Ganti Berkas CV Anda
               </h2>
-              <p className="text-xs text-slate-600">
-                Unggah variasi berkas baru untuk membandingkan skor 5 dimensi secara instan tanpa menghapus riwayat sebelumnya.
+              <p className="text-xs text-slate-600 mt-0.5">
+                Unggah variasi berkas baru untuk membandingkan skor 5 dimensi secara instan.
               </p>
             </div>
 
@@ -697,7 +678,7 @@ export default function DashboardPage() {
     <Suspense
       fallback={
         <div className="min-h-[60vh] flex items-center justify-center">
-          <div className="w-10 h-10 border-4 border-slate-900 border-t-transparent rounded-full animate-spin" />
+          <div className="w-10 h-10 border-4 border-[#0f2c56] border-t-transparent rounded-full animate-spin" />
         </div>
       }
     >

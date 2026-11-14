@@ -73,14 +73,14 @@ export function AppHeader({
   };
 
   return (
-    <header className="sticky top-0 z-30 flex min-h-[58px] sm:min-h-[64px] w-full shrink-0 items-center justify-between gap-3 bg-white/95 backdrop-blur-md px-3.5 sm:px-6 py-2 shadow-2xs">
+    <header className="sticky top-0 z-30 flex min-h-[58px] sm:min-h-[64px] w-full shrink-0 items-center justify-between gap-3 bg-white border-b border-slate-200 px-3.5 sm:px-6 py-2">
       {/* Left: Toggles & Title */}
       <div className="flex items-center gap-2.5 min-w-0">
         {/* Mobile Hamburger Toggle */}
         <button
           type="button"
           onClick={onToggleMobile}
-          className="flex lg:hidden h-10 w-10 items-center justify-center rounded-xl bg-white hover:bg-blue-50 text-primary shadow-xs cursor-pointer"
+          className="flex lg:hidden h-10 w-10 items-center justify-center rounded-xl bg-slate-100 hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white transition-colors cursor-pointer"
           aria-label="Buka menu samping navigasi"
         >
           <Menu className="w-4 h-4" />
@@ -90,7 +90,7 @@ export function AppHeader({
         <button
           type="button"
           onClick={onToggleDesktopCollapse}
-          className="hidden lg:flex h-10 w-10 items-center justify-center rounded-xl bg-white hover:bg-blue-50 text-slate-600 hover:text-primary shadow-xs transition-colors cursor-pointer"
+          className="hidden lg:flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 hover:bg-[#0f2c56] text-slate-600 hover:text-white transition-colors cursor-pointer"
           title={isDesktopCollapsed ? "Perluas menu samping" : "Lipat menu samping (Rail mode)"}
           aria-label="Buka/tutup menu samping"
         >
@@ -103,8 +103,8 @@ export function AppHeader({
 
         {/* Breadcrumb / Location Badge */}
         <div className="flex items-center gap-2 min-w-0">
-          <span className="hidden sm:inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-          <h2 className="text-xs sm:text-sm font-bold text-primary truncate tracking-tight font-heading">
+          <span className="hidden sm:inline-block w-2 h-2 rounded-full bg-[#ce2731] shrink-0" />
+          <h2 className="text-xs sm:text-sm font-bold text-[#0f2c56] truncate tracking-tight font-heading">
             {getViewTitle()}
           </h2>
         </div>
@@ -116,9 +116,9 @@ export function AppHeader({
         {pathname !== "/evaluate" && (
           <Link
             href="/evaluate"
-            className="hidden sm:inline-flex items-center gap-1.5 py-1.5 px-3.5 rounded-full bg-gradient-to-r from-[#0f2c56] to-[#163861] text-white text-xs font-bold shadow-xs hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all"
+            className="hidden sm:inline-flex items-center gap-1.5 py-1.5 px-3.5 rounded-full bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors"
           >
-            <FileCheck className="w-3.5 h-3.5 text-emerald-400" />
+            <FileCheck className="w-3.5 h-3.5 text-white" />
             <span>Mulai Evaluasi</span>
           </Link>
         )}
@@ -129,11 +129,11 @@ export function AppHeader({
             <button
               type="button"
               onClick={() => setMenuOpen((s) => !s)}
-              className="flex items-center gap-2 py-1.5 px-2.5 rounded-full bg-white hover:bg-blue-50 shadow-xs text-xs font-bold text-primary transition-all cursor-pointer"
+              className="flex items-center gap-2 py-1.5 px-2.5 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs font-bold text-[#0f2c56] transition-colors cursor-pointer"
               aria-expanded={menuOpen}
               aria-haspopup="menu"
             >
-              <div className="w-6 h-6 rounded-full bg-primary text-white text-[11px] font-bold flex items-center justify-center">
+              <div className="w-6 h-6 rounded-full bg-[#0f2c56] text-white text-[11px] font-bold flex items-center justify-center">
                 {user.name.charAt(0).toUpperCase()}
               </div>
               <span className="hidden md:inline max-w-[120px] truncate">{user.name}</span>
@@ -141,34 +141,34 @@ export function AppHeader({
             </button>
 
             {menuOpen && (
-              <div className="absolute right-0 mt-2 w-56 rounded-2xl bg-white shadow-xl py-2 z-50 animate-fade-in-up">
-                <div className="px-4 py-2 bg-slate-50/70">
-                  <p className="text-xs font-bold text-primary truncate">{user.name}</p>
+              <div className="absolute right-0 mt-2 w-56 rounded-2xl bg-white border border-slate-200 shadow-lg py-2 z-50">
+                <div className="px-4 py-2 bg-slate-50 border-b border-slate-100">
+                  <p className="text-xs font-bold text-[#0f2c56] truncate">{user.name}</p>
                   <p className="text-[11px] text-slate-500 truncate">{user.email}</p>
                 </div>
                 <div className="py-1">
                   <Link
                     href="/dashboard"
                     onClick={() => setMenuOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2 text-xs text-slate-700 hover:bg-blue-50 hover:text-primary transition"
+                    className="flex items-center gap-2 px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-[#0f2c56] transition"
                   >
-                    <FileCheck className="w-4 h-4 text-primary" />
+                    <FileCheck className="w-4 h-4 text-[#0f2c56]" />
                     <span>Dashboard Evaluasi ATS</span>
                   </Link>
                   <Link
                     href="/jobs"
                     onClick={() => setMenuOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2 text-xs text-slate-700 hover:bg-blue-50 hover:text-primary transition"
+                    className="flex items-center gap-2 px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-[#0f2c56] transition"
                   >
-                    <Briefcase className="w-4 h-4 text-secondary" />
+                    <Briefcase className="w-4 h-4 text-[#ce2731]" />
                     <span>Rekomendasi Karir</span>
                   </Link>
                 </div>
-                <div className="pt-1 bg-slate-50/50">
+                <div className="pt-1 border-t border-slate-100 px-2">
                   <button
                     type="button"
                     onClick={handleLogout}
-                    className="w-full flex items-center gap-2 px-4 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50 transition"
+                    className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-[#ce2731] hover:bg-[#0f2c56] transition cursor-pointer"
                   >
                     <LogOut className="w-4 h-4" />
                     <span>Keluar Akun</span>
@@ -181,7 +181,7 @@ export function AppHeader({
           <div className="flex items-center gap-2">
             <Link
               href="/login"
-              className="inline-flex items-center gap-1.5 py-1.5 px-3.5 rounded-full bg-white hover:bg-blue-50 text-primary text-xs font-bold shadow-xs transition"
+              className="inline-flex items-center gap-1.5 py-1.5 px-3.5 rounded-full bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition"
             >
               <UserIcon className="w-3.5 h-3.5" />
               <span>Masuk</span>

@@ -6,17 +6,16 @@ import Link from "next/link";
 import {
   UploadCloud,
   FileSpreadsheet,
-  ArrowRight,
-  ShieldCheck,
   CheckCircle2,
   ArrowLeft,
-  FileText,
+  ArrowUpRight,
+  FileCheck2,
+  Briefcase,
+  Play,
+  Layers,
 } from "lucide-react";
 import { CVDropzone } from "@/components/cv/cv-dropzone";
 import { AtsOnboardingWizard } from "@/components/dashboard/ats-onboarding-wizard";
-import { AmbientBackground } from "@/components/evaluate/ambient-background";
-import { HeroGreeting } from "@/components/evaluate/hero-greeting";
-import { QuickScenarioChips } from "@/components/evaluate/quick-scenario-chips";
 import { CVAnalysisResult } from "@/types";
 import { api } from "@/lib/api";
 
@@ -57,85 +56,207 @@ function EvaluateContent() {
   };
 
   return (
-    <div className="relative h-full w-full flex flex-col justify-between items-center overflow-hidden py-3 sm:py-4 px-3 sm:px-6 select-none">
-      {/* Redam-style Ambient Node & Mesh Background */}
-      <AmbientBackground />
+    <div className="min-h-full w-full bg-[#f8fafc] px-4 sm:px-6 lg:px-8 py-5 sm:py-6 flex flex-col gap-5">
+      {/* Baris Atas: Navigasi Kembali & Pintasan Demo */}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 text-xs font-bold text-[#0f2c56] hover:text-white bg-white hover:bg-[#0f2c56] px-4 py-2 rounded-full border border-slate-200 transition-colors"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
+          <span>Kembali ke Beranda</span>
+        </Link>
 
-      <main className="relative z-10 max-w-4xl w-full flex flex-col justify-between h-full my-auto gap-2 sm:gap-3 animate-fade-in-up">
-        {/* Navigation Bar / Breadcrumb (Compact) */}
-        <div className="flex items-center justify-between shrink-0">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-600 hover:text-primary transition bg-white/90 hover:bg-white px-3 py-1 rounded-full shadow-xs"
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={handleRunDemoSample}
+            disabled={isProcessingDemo}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors cursor-pointer disabled:opacity-60"
           >
-            <ArrowLeft className="w-3 h-3" aria-hidden="true" />
-            <span>Kembali ke Beranda</span>
-          </Link>
-
-          <div className="inline-flex items-center gap-1.5 text-[11px] text-primary font-bold bg-blue-100/70 px-3 py-1 rounded-full shadow-2xs">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <Play className="w-3.5 h-3.5 fill-current" />
+            <span>
+              {isProcessingDemo ? "Memuat Sampel..." : "Uji Contoh CV ATS (Skor 88/100)"}
+            </span>
+          </button>
+          <div className="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#0f2c56] px-3.5 py-2 rounded-full">
+            <CheckCircle2 className="w-3.5 h-3.5 text-[#ce2731]" />
             <span>Format ATS Terverifikasi</span>
           </div>
         </div>
+      </div>
 
-        {/* HERO GREETING (Compact) */}
-        <div className="shrink-0">
-          <HeroGreeting />
-        </div>
-
-        {/* FLOATING ACTION STAGE CARD (Fitted & Responsive) */}
-        <div className="shrink-0 w-full space-y-2 sm:space-y-2.5">
-          <div className="rounded-[24px] sm:rounded-[30px] clay-card p-3.5 sm:p-5 space-y-3 shadow-xl">
-            {/* Dual-Mode Selector Pills (Well Container) */}
-            <div className="grid grid-cols-2 gap-1.5 p-1 bg-[#edf2f9] rounded-full max-w-sm mx-auto shadow-[inset_0_2px_4px_rgba(15,44,86,0.06)]">
-              <button
-                type="button"
-                onClick={() => setActiveTab("upload")}
-                className={`flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-full text-xs font-bold transition-all duration-200 ${
-                  activeTab === "upload"
-                    ? "bg-primary text-white shadow-xs shadow-primary/25"
-                    : "text-primary hover:text-secondary font-semibold"
-                }`}
-              >
-                <UploadCloud className="w-3.5 h-3.5" aria-hidden="true" />
-                <span>Saya Sudah Punya CV</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setActiveTab("questionnaire")}
-                className={`flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-full text-xs font-bold transition-all duration-200 ${
-                  activeTab === "questionnaire"
-                    ? "bg-primary text-white shadow-xs shadow-primary/25"
-                    : "text-primary hover:text-secondary font-semibold"
-                }`}
-              >
-                <FileSpreadsheet className="w-3.5 h-3.5" aria-hidden="true" />
-                <span>Saya Belum Punya CV</span>
-              </button>
+      {/* Kontainer Utama: 12-Column Asymmetric Bento Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch flex-1">
+        {/* Kolom Kiri (5 Kolom): Kartu Utama Navy + 3 Bento Statistik Solid */}
+        <div className="lg:col-span-5 flex flex-col gap-4">
+          {/* Kartu Hero Workspace Solid Navy */}
+          <div className="bg-[#0f2c56] text-white rounded-[28px] p-6 sm:p-7 flex flex-col justify-between flex-1">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ce2731] text-white text-[11px] font-bold uppercase tracking-wider mb-4">
+                <span>Ruang Evaluasi Presisi</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-[1.15] mb-3 font-heading">
+                Ukur. Temukan.{" "}
+                <span className="inline-block bg-[#ce2731] text-white px-3 py-0.5 rounded-xl mt-1">
+                  Karir Impian.
+                </span>
+              </h2>
+              <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
+                Platform evaluasi CV 5 dimensi dan pencocokan lowongan kerja cerdas untuk fresh graduate dan talenta muda berbasis filosofi pas bana.
+              </p>
             </div>
 
-            {/* Dynamic Interactive Stage Area */}
-            <div key={activeTab} className="pt-0.5">
-              {activeTab === "upload" ? (
-                <CVDropzone onAnalysisComplete={handleAnalysisSuccess} />
-              ) : (
-                <div className="max-h-[38vh] sm:max-h-[44vh] overflow-y-auto scrollbar-halus pr-1">
-                  <AtsOnboardingWizard onComplete={handleAnalysisSuccess} />
-                </div>
-              )}
+            <div className="mt-6 pt-5 border-t border-white/15 flex items-center justify-between gap-3">
+              <div>
+                <p className="text-[11px] uppercase tracking-wider font-bold text-white/60">
+                  Target Kesiapan
+                </p>
+                <p className="text-sm font-extrabold text-white">
+                  Skor Optimal &ge; 80 / 100 Poin
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={handleRunDemoSample}
+                disabled={isProcessingDemo}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white text-[#0f2c56] hover:bg-[#ce2731] hover:text-white text-xs font-extrabold transition-colors cursor-pointer shrink-0 disabled:opacity-60"
+              >
+                <span>Lihat Demo</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </button>
             </div>
           </div>
 
-          {/* QUICK SCENARIO CHIPS */}
-          <QuickScenarioChips
-            sedangMemproses={isProcessingDemo}
-            onPilihSampel={handleRunDemoSample}
-            onPilihWizard={() => setActiveTab("questionnaire")}
-            onPilihInfoATS={() => setActiveTab("upload")}
-          />
+          {/* 3 Kartu Indikator Solid (Bento Baris Bawah Kiri) */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between">
+              <div className="w-8 h-8 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center mb-3">
+                <Layers className="w-4 h-4" />
+              </div>
+              <div>
+                <p className="text-base font-black text-[#0f2c56] leading-tight">
+                  5 Dimensi
+                </p>
+                <p className="text-[11px] text-slate-500 mt-0.5 leading-snug">
+                  Struktur, kejelasan &amp; dampak terukur
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-[#ce2731] text-white rounded-2xl p-4 flex flex-col justify-between">
+              <div className="w-8 h-8 rounded-xl bg-white text-[#ce2731] flex items-center justify-center mb-3">
+                <FileCheck2 className="w-4 h-4" />
+              </div>
+              <div>
+                <p className="text-base font-black text-white leading-tight">
+                  1-Kolom ATS
+                </p>
+                <p className="text-[11px] text-white/85 mt-0.5 leading-snug">
+                  Bebas tabel rumit &amp; mudah dipindai HRD
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between">
+              <div className="w-8 h-8 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center mb-3">
+                <Briefcase className="w-4 h-4" />
+              </div>
+              <div>
+                <p className="text-base font-black text-[#0f2c56] leading-tight">
+                  Loker Cocok
+                </p>
+                <p className="text-[11px] text-slate-500 mt-0.5 leading-snug">
+                  Rekomendasi posisi kerja sesuai keahlian
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
+
+        {/* Kolom Kanan (7 Kolom): Panggung Interaktif Unggah CV / Kuesioner */}
+        <div className="lg:col-span-7 bg-white border border-slate-200 rounded-[28px] p-5 sm:p-7 flex flex-col justify-between">
+          <div>
+            {/* Header Panggung + Mode Switcher */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 mb-6 border-b border-slate-200">
+              <div>
+                <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#ce2731]">
+                  Metode Evaluasi
+                </span>
+                <h3 className="text-lg sm:text-xl font-extrabold text-[#0f2c56] font-heading">
+                  {activeTab === "upload"
+                    ? "Unggah Dokumen CV Anda"
+                    : "Susun CV ATS dari Kuesioner"}
+                </h3>
+              </div>
+
+              <div className="inline-flex p-1 rounded-xl bg-slate-100 border border-slate-200 self-start sm:self-auto">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("upload")}
+                  className={`px-3.5 py-2 rounded-lg font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer ${
+                    activeTab === "upload"
+                      ? "bg-[#0f2c56] text-white"
+                      : "text-slate-600 hover:text-[#0f2c56]"
+                  }`}
+                >
+                  <UploadCloud className="w-3.5 h-3.5" aria-hidden="true" />
+                  <span>Saya Sudah Punya CV</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("questionnaire")}
+                  className={`px-3.5 py-2 rounded-lg font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer ${
+                    activeTab === "questionnaire"
+                      ? "bg-[#ce2731] text-white"
+                      : "text-slate-600 hover:text-[#0f2c56]"
+                  }`}
+                >
+                  <FileSpreadsheet className="w-3.5 h-3.5" aria-hidden="true" />
+                  <span>Saya Belum Punya CV</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Area Interaktif Utama */}
+            {activeTab === "upload" ? (
+              <CVDropzone onAnalysisComplete={handleAnalysisSuccess} />
+            ) : (
+              <div className="max-h-[55vh] overflow-y-auto scrollbar-halus pr-1">
+                <AtsOnboardingWizard onComplete={handleAnalysisSuccess} />
+              </div>
+            )}
+          </div>
+
+          {/* Baris Langkah Cepat di Bawah Dropzone */}
+          <div className="mt-6 pt-5 border-t border-slate-200 grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="flex items-center gap-2.5">
+              <span className="w-6 h-6 rounded-full bg-[#0f2c56] text-white font-extrabold text-xs flex items-center justify-center shrink-0">
+                1
+              </span>
+              <span className="text-xs font-semibold text-[#0f2c56]">
+                Unggah PDF/DOCX atau isi kuesioner
+              </span>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <span className="w-6 h-6 rounded-full bg-[#0f2c56] text-white font-extrabold text-xs flex items-center justify-center shrink-0">
+                2
+              </span>
+              <span className="text-xs font-semibold text-[#0f2c56]">
+                Periksa skor 5 dimensi &amp; saran perbaikan
+              </span>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <span className="w-6 h-6 rounded-full bg-[#ce2731] text-white font-extrabold text-xs flex items-center justify-center shrink-0">
+                3
+              </span>
+              <span className="text-xs font-semibold text-[#0f2c56]">
+                Lamar lowongan dengan kecocokan tertinggi
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -145,7 +266,7 @@ export default function EvaluatePage() {
     <Suspense
       fallback={
         <div className="min-h-[60vh] flex items-center justify-center">
-          <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+          <div className="w-10 h-10 border-4 border-[#0f2c56] border-t-transparent rounded-full animate-spin" />
         </div>
       }
     >
