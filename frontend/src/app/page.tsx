@@ -590,65 +590,15 @@ export default function HomePage() {
       </section>
 
       {/* =====================================================================
-          SLIDE 2: OPEN EDITORIAL COLUMN + 1 SINGLE SECOND (#CE2731) CARD RIGHT
+          SLIDE 2: 1 SINGLE SECOND (#CE2731) CARD ON LEFT + OPEN EDITORIAL ON RIGHT
           ===================================================================== */}
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(2)}`}
       >
         <div className="w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-stretch">
-          {/* Col 1 (5 Cols): Open Editorial & Feature List (No Card Wrapper) */}
+          {/* Col 1 (7 Cols): ONE Single Bold Second (#ce2731) Stage Card ON THE LEFT */}
           <div
-            className={`lg:col-span-5 h-full flex flex-col justify-between py-3 sm:py-5 px-4 sm:px-8 ${getChildAnimClass(2, "left", "delay-75")}`}
-          >
-            <div className="space-y-3">
-              <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#fdf2f2] text-[#ce2731] text-xs font-bold">
-                <span className="w-2 h-2 rounded-full bg-[#ce2731]" />
-                <span>Ekosistem Persiapan Karir</span>
-              </span>
-              <h2 className="text-2xl sm:text-4xl font-black tracking-tight text-[#0f2c56] leading-[1.1]">
-                Platform Lengkap untuk{" "}
-                <span className="text-[#ce2731]">Persiapan Karir Anda.</span>
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Sudah punya CV maupun belum, Anda bisa mengukur kesiapan kerja dan menyusun resume standar HRD dalam satu alur terpadu.
-              </p>
-            </div>
-
-            {/* Open Unboxed List with Crimson Second (#ce2731) Accents */}
-            <div className="space-y-4 my-auto py-3">
-              {[
-                {
-                  num: "01",
-                  title: "Evaluasi & Kuesioner Pembuat CV",
-                  desc: "Unggah PDF CV Anda atau buat CV standar ATS dari nol lewat panduan kuesioner.",
-                },
-                {
-                  num: "02",
-                  title: "Analisis 5 Dimensi & Kalimat Aktif",
-                  desc: "Ukur struktur, relevansi keahlian, dan dampak pengalaman secara objektif.",
-                },
-                {
-                  num: "03",
-                  title: "Rekomendasi Lowongan Presisi",
-                  desc: "Temukan posisi kerja aktif yang paling pas dengan kompetensi Anda.",
-                },
-              ].map((item) => (
-                <div key={item.num} className="flex items-start gap-3.5 border-b border-slate-200/80 pb-3.5 last:border-none last:pb-0">
-                  <span className="px-2.5 py-1 rounded-lg bg-[#ce2731] text-[#fefefd] font-mono text-xs font-black shrink-0 mt-0.5">
-                    {item.num}
-                  </span>
-                  <div>
-                    <h3 className="text-sm sm:text-base font-black text-[#0f2c56]">{item.title}</h3>
-                    <p className="text-xs text-slate-600 mt-0.5 leading-relaxed">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Col 2 (7 Cols): ONE Single Bold Second (#ce2731) Stage Card with Mascot & Metrics */}
-          <div
-            className={`lg:col-span-7 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-8 text-[#fefefd] flex flex-col justify-between relative overflow-hidden shadow-2xl border border-white/10 ${getChildAnimClass(2, "right", "delay-150")}`}
+            className={`lg:col-span-7 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-8 text-[#fefefd] flex flex-col justify-between relative overflow-hidden shadow-2xl border border-white/10 origin-left ${getChildAnimClass(2, "left", "delay-100")}`}
             style={{
               background: "linear-gradient(155deg, #ce2731 0%, #b01e27 52%, #0f2c56 100%)",
             }}
@@ -659,7 +609,7 @@ export default function HomePage() {
               aria-hidden="true"
             />
             <div
-              className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-[#0f2c56]/40 blur-3xl pointer-events-none"
+              className="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-[#0f2c56]/40 blur-3xl pointer-events-none"
               aria-hidden="true"
             />
 
@@ -740,6 +690,56 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+
+          {/* Col 2 (5 Cols): Open Editorial & Feature List on the RIGHT */}
+          <div
+            className={`lg:col-span-5 h-full flex flex-col justify-between py-3 sm:py-5 px-4 sm:px-8 origin-right ${getChildAnimClass(2, "right", "delay-150")}`}
+          >
+            <div className="space-y-3">
+              <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#fdf2f2] text-[#ce2731] text-xs font-bold">
+                <span className="w-2 h-2 rounded-full bg-[#ce2731]" />
+                <span>Ekosistem Persiapan Karir</span>
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-black tracking-tight text-[#0f2c56] leading-[1.1]">
+                Platform Lengkap untuk{" "}
+                <span className="text-[#ce2731]">Persiapan Karir Anda.</span>
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Sudah punya CV maupun belum, Anda bisa mengukur kesiapan kerja dan menyusun resume standar HRD dalam satu alur terpadu.
+              </p>
+            </div>
+
+            {/* Open Unboxed List with Crimson Second (#ce2731) Accents */}
+            <div className="space-y-4 my-auto py-3">
+              {[
+                {
+                  num: "01",
+                  title: "Evaluasi & Kuesioner Pembuat CV",
+                  desc: "Unggah PDF CV Anda atau buat CV standar ATS dari nol lewat panduan kuesioner.",
+                },
+                {
+                  num: "02",
+                  title: "Analisis 5 Dimensi & Kalimat Aktif",
+                  desc: "Ukur struktur, relevansi keahlian, dan dampak pengalaman secara objektif.",
+                },
+                {
+                  num: "03",
+                  title: "Rekomendasi Lowongan Presisi",
+                  desc: "Temukan posisi kerja aktif yang paling pas dengan kompetensi Anda.",
+                },
+              ].map((item) => (
+                <div key={item.num} className="flex items-start gap-3.5 border-b border-slate-200/80 pb-3.5 last:border-none last:pb-0">
+                  <span className="px-2.5 py-1 rounded-lg bg-[#ce2731] text-[#fefefd] font-mono text-xs font-black shrink-0 mt-0.5">
+                    {item.num}
+                  </span>
+                  <div>
+                    <h3 className="text-sm sm:text-base font-black text-[#0f2c56]">{item.title}</h3>
+                    <p className="text-xs text-slate-600 mt-0.5 leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -782,7 +782,7 @@ export default function HomePage() {
           <div className="flex-1 min-h-0 w-full grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
             {/* Left 7 Cols: Clean Soft-Rose (#fdf2f2) & Navy Trend Visualization */}
             <div
-              className={`lg:col-span-7 h-full rounded-[26px] sm:rounded-[34px] bg-[#fdf2f2] border border-[#fde6e6] p-6 sm:p-7 flex flex-col justify-between ${getChildAnimClass(3, "left", "delay-150")}`}
+              className={`lg:col-span-7 h-full rounded-[26px] sm:rounded-[34px] bg-[#fdf2f2] border border-[#fde6e6] p-6 sm:p-7 flex flex-col justify-between origin-bottom-left shadow-lg ${getChildAnimClass(3, "left", "delay-150")}`}
             >
               <div className="flex items-center justify-between">
                 <div>
@@ -836,7 +836,7 @@ export default function HomePage() {
 
             {/* Right 5 Cols: Bold Second (#ce2731) Card + Large Mascot Idea Pose */}
             <div
-              className={`lg:col-span-5 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-7 text-[#fefefd] flex flex-col justify-between relative overflow-hidden shadow-xl ${getChildAnimClass(3, "right", "delay-200")}`}
+              className={`lg:col-span-5 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-7 text-[#fefefd] flex flex-col justify-between relative overflow-hidden shadow-xl origin-bottom-right border border-white/10 ${getChildAnimClass(3, "right", "delay-200")}`}
               style={{
                 background: "linear-gradient(150deg, #ce2731 0%, #b01e27 55%, #0f2c56 100%)",
               }}
@@ -943,7 +943,7 @@ export default function HomePage() {
 
           {/* Right 6 Cols: Primary (#0f2c56) & Second (#ce2731) Blind Scoring Stage with Large Mascot Shield */}
           <div
-            className={`lg:col-span-6 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-8 text-[#fefefd] flex flex-col justify-between relative overflow-hidden shadow-2xl border border-white/10 ${getChildAnimClass(4, "right", "delay-150")}`}
+            className={`lg:col-span-6 h-full rounded-[26px] sm:rounded-[34px] p-6 sm:p-8 text-[#fefefd] flex flex-col justify-between relative overflow-hidden shadow-2xl border border-white/10 origin-right ${getChildAnimClass(4, "right", "delay-150")}`}
             style={{
               background: "linear-gradient(145deg, #0f2c56 0%, #163861 52%, #ce2731 100%)",
             }}
@@ -1114,7 +1114,7 @@ export default function HomePage() {
         <div className="w-full h-full mx-auto flex flex-col justify-between gap-3 py-1">
           {/* Top Closing Stage in Second (#ce2731) & Primary (#0f2c56) with Large Celebrating Mascot */}
           <div
-            className={`flex-1 min-h-0 w-full rounded-[26px] sm:rounded-[34px] px-6 sm:px-12 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center relative overflow-hidden shadow-2xl border border-white/10 ${getChildAnimClass(6, "down", "delay-75")}`}
+            className={`flex-1 min-h-0 w-full rounded-[26px] sm:rounded-[34px] px-6 sm:px-12 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center relative overflow-hidden shadow-2xl border border-white/10 origin-center ${getChildAnimClass(6, "down", "delay-75")}`}
             style={{
               background: "linear-gradient(135deg, #ce2731 0%, #b01e27 52%, #0f2c56 100%)",
             }}
