@@ -23,9 +23,10 @@ export const metadata: Metadata = {
   description: "Pasbana (bahasa Minang: 'sangat pas'): Platform evaluasi kualitas CV dan pencocokan lowongan kerja cerdas untuk fresh graduate dan talenta muda.",
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/icon.png", type: "image/png" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+      { url: "/favicon.ico", sizes: "32x32" },
     ],
+    shortcut: "/icon.png",
     apple: "/apple-icon.png",
   },
 };
