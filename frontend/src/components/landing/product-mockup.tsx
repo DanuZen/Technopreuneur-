@@ -130,12 +130,12 @@ export function ProductMockup() {
                 <div className="flex items-start justify-between">
                   <div>
                     <div className="flex items-center gap-2">
-                      <h3 className="text-base font-bold text-slate-900">Junior Frontend Engineer</h3>
+                      <h3 className="text-base font-bold text-slate-900">Management Trainee &amp; Business Analyst</h3>
                       <span className="text-[10px] bg-blue-50 text-blue-700 px-2 py-0.5 rounded font-mono font-medium shadow-2xs">
-                        Pencocokan Dua Tahap
+                        Rekomendasi Utama
                       </span>
                     </div>
-                    <p className="text-xs text-slate-500">PT Solusi Teknologi Nusantara · Jakarta (Hybrid)</p>
+                    <p className="text-xs text-slate-500">PT Nusantara Inovasi Mandiri · Jakarta &amp; Padang (Hybrid)</p>
                   </div>
                   <div className="text-right">
                     <span className="text-lg font-black text-emerald-600">92%</span>
@@ -144,17 +144,17 @@ export function ProductMockup() {
                 </div>
 
                 <div className="p-3 bg-slate-50 rounded-xl shadow-xs text-xs text-slate-600 space-y-1">
-                  <p className="font-semibold text-slate-800">Alasan Kesesuaian AI:</p>
+                  <p className="font-semibold text-slate-800">Mengapa Posisi Ini Cocok untuk Anda:</p>
                   <p>
-                    Pengalaman Anda dalam proyek web Next.js dan Tailwind CSS memenuhi 4 dari 5 kualifikasi utama lowongan ini.
+                    Pengalaman magang, kepemimpinan organisasi, dan keahlian analisis data Anda memenuhi 4 dari 5 kualifikasi utama yang dicari perusahaan ini.
                   </p>
                 </div>
 
                 <div className="flex flex-wrap items-center gap-1.5 text-xs">
-                  <span className="text-[11px] font-medium text-slate-500">Skill Cocok:</span>
-                  <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 shadow-2xs text-[11px]">React / Next.js</span>
-                  <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 shadow-2xs text-[11px]">TypeScript</span>
-                  <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 shadow-2xs text-[11px]">Tailwind CSS</span>
+                  <span className="text-[11px] font-medium text-slate-500">Keahlian yang Sesuai:</span>
+                  <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 shadow-2xs text-[11px]">Analisis Data</span>
+                  <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 shadow-2xs text-[11px]">Manajemen Proyek</span>
+                  <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 shadow-2xs text-[11px]">Komunikasi &amp; Kepemimpinan</span>
                 </div>
               </div>
             )}
@@ -163,22 +163,22 @@ export function ProductMockup() {
             {activeTab === "skills" && (
               <div className="bg-white p-5 rounded-2xl shadow-sm space-y-3">
                 <h3 className="text-xs font-semibold text-slate-700 uppercase tracking-wider font-mono">
-                  Identifikasi Kesenjangan Keahlian (Skills Gap)
+                  Panduan Penguatan CV &amp; Kompetensi
                 </h3>
                 <p className="text-xs text-slate-600">
-                  AI mendeteksi beberapa keahlian yang sering dicari oleh perusahaan di bidang impian Anda tetapi belum tertera di CV:
+                  Berikut adalah saran perbaikan langsung agar CV Anda semakin menonjol dan lolos tahap penyaringan awal HRD:
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                   <div className="p-3 rounded-xl bg-amber-50/70 shadow-xs space-y-1">
-                    <span className="text-xs font-bold text-amber-900">State Management (Zustand / Redux)</span>
+                    <span className="text-xs font-bold text-amber-900">Tambahkan Capaian Berbasis Angka</span>
                     <p className="text-[11px] text-amber-800">
-                      Sangat dianjurkan untuk ditambahkan jika pernah menggunakannya pada proyek akhir kuliah.
+                      Perkuat deskripsi pengalaman dengan dampak terukur, misalnya persentase pertumbuhan atau jumlah anggota tim yang dikelola.
                     </p>
                   </div>
                   <div className="p-3 rounded-xl bg-blue-50/70 shadow-xs space-y-1">
-                    <span className="text-xs font-bold text-blue-900">Unit Testing (Jest / Vitest)</span>
+                    <span className="text-xs font-bold text-blue-900">Lengkapi Sertifikasi Pendukung</span>
                     <p className="text-[11px] text-blue-800">
-                      Nilai tambah penting untuk posisi developer entry-level modern.
+                      Mencantumkan pelatihan atau sertifikasi relevan dapat meningkatkan daya saing profil fresh graduate hingga 25%.
                     </p>
                   </div>
                 </div>

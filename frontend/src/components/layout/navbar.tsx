@@ -29,7 +29,7 @@ export function Navbar() {
   };
 
   return (
-    <header className="w-full shrink-0 z-50 pt-2.5 sm:pt-3 pb-1 px-3 sm:px-6 flex flex-col items-center">
+    <header className="sticky top-0 w-full shrink-0 z-50 bg-[#fefefd]/90 backdrop-blur-md pt-2.5 sm:pt-3 pb-2 px-3 sm:px-6 flex flex-col items-center">
       {/* Single Clean Pill Navbar (No Nested Pill-in-Pill) */}
       <div className="w-full max-w-5xl bg-[#0e2647] text-white rounded-full shadow-md shadow-[#0a1d37]/15 px-3.5 sm:px-5 py-2 transition-all">
         <div className="flex items-center justify-between gap-2 sm:gap-4">

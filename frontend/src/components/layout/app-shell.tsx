@@ -43,22 +43,12 @@ export function AppShell({ children }: AppShellProps) {
     });
   };
 
-  // Tampilan khusus beranda (/): Full-viewport 1-section-per-page dengan transisi scroll ala Dribbble
-  if (pathname === "/") {
-    return (
-      <div className="h-dvh w-full overflow-hidden flex flex-col bg-[#fefefd] text-primary select-none">
-        <Navbar />
-        <main className="flex-1 overflow-hidden relative">{children}</main>
-      </div>
-    );
-  }
-
-  // Tampilan halaman publik lainnya (/jobs, /about, /login, /register): Navbar + Konten + Footer
+  // Tampilan halaman publik (/, /jobs, /about, /login, /register): Pill Navbar + Konten + Footer
   if (!isDashboardWorkspace) {
     return (
       <div className="min-h-screen flex flex-col justify-between bg-[#fefefd] text-primary">
         <Navbar />
-        <main className="flex-1 pt-2">{children}</main>
+        <main className="flex-1">{children}</main>
         <Footer />
       </div>
     );
