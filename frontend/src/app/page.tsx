@@ -223,59 +223,63 @@ export default function HomePage() {
       className="h-full w-full relative overflow-hidden bg-[#fefefd] text-[#0f2c56] select-none"
     >
       {/* =====================================================================
-          SLIDE 0: FULL-SCREEN HERO CARD WRAPPING THE 2-COLUMN SPLIT HERO + MASCOT
+          SLIDE 0: FULL-SCREEN HERO CARD IN NAV BRAND NAVY (#0E2647) + MASCOT
           ===================================================================== */}
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(0)}`}
       >
         <div
-          className="h-full w-full rounded-[26px] sm:rounded-[34px] relative overflow-hidden flex items-center px-5 sm:px-10 lg:px-14 border border-[#dbe5f2] shadow-lg"
+          className="h-full w-full rounded-[26px] sm:rounded-[34px] relative overflow-hidden flex items-center px-5 sm:px-10 lg:px-14 border border-white/15 shadow-2xl text-white"
           style={{
             background:
-              "linear-gradient(180deg, #8eb3d6 0%, #bad0e6 42%, #dbe5f2 78%, #fefefd 100%)",
+              "linear-gradient(155deg, #07172e 0%, #0e2647 50%, #153866 100%)",
           }}
         >
-          {/* Ambient Drifting Clouds */}
+          {/* Subtle Geometric Grid & Ambient Glow Matching Navbar */}
           <div
-            className="absolute inset-0 pointer-events-none animate-cloud-drift opacity-70"
-            style={{
-              backgroundImage:
-                "radial-gradient(ellipse 55% 28% at 22% 28%, rgba(255,255,255,0.75) 0%, transparent 70%), radial-gradient(ellipse 60% 32% at 78% 36%, rgba(255,255,255,0.68) 0%, transparent 72%)",
-            }}
+            className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"
+            aria-hidden="true"
+          />
+          <div
+            className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#ce2731]/20 blur-3xl pointer-events-none"
+            aria-hidden="true"
+          />
+          <div
+            className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#275992]/30 blur-3xl pointer-events-none"
             aria-hidden="true"
           />
 
           <div className="max-w-[1360px] w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center relative z-10">
             {/* Left 6 Cols: Editorial Typography & Stats */}
             <div className={`lg:col-span-6 space-y-5 text-left ${getChildAnimClass(0, "left", "delay-75")}`}>
-              <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#fefefd]/95 border border-[#fde6e6] shadow-2xs text-xs font-bold text-[#ce2731]">
+              <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-bold text-[#fefefd]">
                 <span className="w-2 h-2 rounded-full bg-[#ce2731]" />
                 <span>Pasbana AI • Standar Evaluasi ATS &amp; HRD</span>
               </div>
 
-              <h1 className="text-3xl sm:text-5xl xl:text-[56px] font-black tracking-tight text-[#0f2c56] leading-[1.06]">
+              <h1 className="text-3xl sm:text-5xl xl:text-[56px] font-black tracking-tight text-white leading-[1.06]">
                 Autopilot Evaluasi CV &amp;{" "}
                 <span className="text-[#ce2731]">Pencocokan Karir Impian.</span>
               </h1>
 
-              <p className="text-xs sm:text-base text-slate-700 max-w-xl leading-relaxed font-medium">
+              <p className="text-xs sm:text-base text-slate-200 max-w-xl leading-relaxed font-medium">
                 Ukur kesiapan resume Anda secara objektif dalam 5 dimensi dan temukan lowongan yang paling pas bana dalam hitungan detik, tanpa biaya berlangganan.
               </p>
 
-              {/* Dual Brand CTAs (#ce2731 Second & #0f2c56 Primary) */}
+              {/* Dual Brand CTAs (#ce2731 Second & White/Glass) */}
               <div className="pt-1 flex flex-wrap items-center gap-3.5">
                 <Link
                   href="/evaluate"
-                  className="inline-flex items-center gap-3 pl-6 pr-2.5 py-2.5 bg-[#ce2731] hover:bg-[#b01e27] text-[#fefefd] text-xs sm:text-sm font-bold rounded-full shadow-lg shadow-[#ce2731]/25 transition-all hover:-translate-y-0.5"
+                  className="inline-flex items-center gap-3 pl-6 pr-2.5 py-2.5 bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold rounded-full shadow-lg shadow-[#ce2731]/35 transition-all hover:-translate-y-0.5"
                 >
                   <span>Evaluasi CV Saya</span>
-                  <span className="w-7 h-7 rounded-full bg-[#fefefd] text-[#ce2731] flex items-center justify-center">
+                  <span className="w-7 h-7 rounded-full bg-white text-[#ce2731] flex items-center justify-center">
                     <ArrowUpRight className="w-4 h-4" />
                   </span>
                 </Link>
                 <Link
                   href="/evaluate?tab=questionnaire"
-                  className="px-6 py-3 bg-[#0f2c56] hover:bg-[#163861] text-[#fefefd] text-xs sm:text-sm font-bold rounded-full shadow-md transition-all flex items-center gap-2"
+                  className="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs sm:text-sm font-bold rounded-full shadow-sm transition-all flex items-center gap-2 backdrop-blur-md"
                 >
                   <FileSpreadsheet className="w-4 h-4 text-[#faa9ab]" aria-hidden="true" />
                   <span>Saya Belum Punya CV</span>
@@ -283,18 +287,18 @@ export default function HomePage() {
               </div>
 
               {/* Typographic Stat Row */}
-              <div className="pt-4 grid grid-cols-3 gap-6 border-t border-[#0f2c56]/15 max-w-lg">
+              <div className="pt-4 grid grid-cols-3 gap-6 border-t border-white/15 max-w-lg">
                 <div>
-                  <p className="text-2xl sm:text-3xl font-black text-[#0f2c56]">88/100</p>
-                  <p className="text-[11px] sm:text-xs font-bold text-[#ce2731] mt-0.5">Simulasi Skor ATS</p>
+                  <p className="text-2xl sm:text-3xl font-black text-white">88/100</p>
+                  <p className="text-[11px] sm:text-xs font-bold text-[#faa9ab] mt-0.5">Simulasi Skor ATS</p>
                 </div>
                 <div>
                   <p className="text-2xl sm:text-3xl font-black text-[#ce2731]">92%</p>
-                  <p className="text-[11px] sm:text-xs font-bold text-[#0f2c56] mt-0.5">Akurasi Loker Cocok</p>
+                  <p className="text-[11px] sm:text-xs font-bold text-slate-300 mt-0.5">Akurasi Loker Cocok</p>
                 </div>
                 <div>
-                  <p className="text-2xl sm:text-3xl font-black text-[#0f2c56]">5D</p>
-                  <p className="text-[11px] sm:text-xs font-bold text-slate-600 mt-0.5">Dimensi Objektif</p>
+                  <p className="text-2xl sm:text-3xl font-black text-white">5D</p>
+                  <p className="text-[11px] sm:text-xs font-bold text-slate-300 mt-0.5">Dimensi Objektif</p>
                 </div>
               </div>
             </div>
@@ -304,11 +308,11 @@ export default function HomePage() {
               <div className="relative w-full max-w-lg h-[90%] flex items-center justify-center">
                 {/* Soft Radial Ambient Glow */}
                 <div
-                  className="absolute w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-[#ce2731]/15 blur-3xl pointer-events-none"
+                  className="absolute w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-[#ce2731]/25 blur-3xl pointer-events-none"
                   aria-hidden="true"
                 />
                 <div
-                  className="absolute w-60 sm:w-80 h-60 sm:h-80 rounded-full bg-[#0f2c56]/15 blur-2xl pointer-events-none"
+                  className="absolute w-60 sm:w-80 h-60 sm:h-80 rounded-full bg-white/10 blur-2xl pointer-events-none"
                   aria-hidden="true"
                 />
 
@@ -318,7 +322,7 @@ export default function HomePage() {
                     src="/mascot/mascot-action.webp"
                     alt="Maskot Pasbana AI"
                     fill
-                    className="object-contain object-bottom drop-shadow-[0_28px_40px_rgba(15,44,86,0.38)]"
+                    className="object-contain object-bottom drop-shadow-[0_28px_40px_rgba(0,0,0,0.45)]"
                     priority
                   />
                 </div>
