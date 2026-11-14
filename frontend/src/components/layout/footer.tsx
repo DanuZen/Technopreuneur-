@@ -42,7 +42,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/evaluate?tab=questionnaire" className="hover:text-white transition">
+                <Link href="/onboarding" className="hover:text-white transition">
                   Kuesioner Terpandu
                 </Link>
               </li>

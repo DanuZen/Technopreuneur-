@@ -47,7 +47,7 @@ function DashboardContent() {
     if (current) {
       setAnalysis(current);
       if (queryOnboarding) {
-        router.replace("/evaluate?tab=questionnaire");
+        router.replace("/onboarding");
         return;
       }
       setIsOnboarding(false);
@@ -90,8 +90,7 @@ function DashboardContent() {
   };
 
   const handleResetToOnboarding = () => {
-    setIsOnboarding(true);
-    setOnboardingMode("wizard");
+    router.push("/onboarding");
   };
 
   if (loading) {

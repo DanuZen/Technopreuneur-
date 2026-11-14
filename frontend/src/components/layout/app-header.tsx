@@ -64,6 +64,7 @@ export function AppHeader({
 
   const getViewTitle = () => {
     if (pathname.startsWith("/evaluate")) return "Ruang Evaluasi CV & Kesiapan Karir";
+    if (pathname.startsWith("/onboarding")) return "Onboarding Pembuatan CV Standar ATS";
     if (pathname.startsWith("/dashboard")) return "Dashboard Hasil Evaluasi 5 Dimensi";
     if (pathname.startsWith("/jobs")) return "Rekomendasi Lowongan Kerja Cerdas";
     if (pathname.startsWith("/about")) return "Tentang Kami • Visi & Nilai Pasbana";

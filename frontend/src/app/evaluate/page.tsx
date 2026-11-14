@@ -4,7 +4,6 @@ import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
-  UploadCloud,
   FileSpreadsheet,
   CheckCircle2,
   ArrowLeft,
@@ -13,26 +12,23 @@ import {
   Briefcase,
   Play,
   Layers,
+  ArrowRight,
 } from "lucide-react";
 import { CVDropzone } from "@/components/cv/cv-dropzone";
-import { AtsOnboardingWizard } from "@/components/dashboard/ats-onboarding-wizard";
 import { CVAnalysisResult } from "@/types";
 import { api } from "@/lib/api";
 
 function EvaluateContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [activeTab, setActiveTab] = useState<"upload" | "questionnaire">("upload");
   const [isProcessingDemo, setIsProcessingDemo] = useState(false);
 
   useEffect(() => {
     const tabParam = searchParams.get("tab");
     if (tabParam === "questionnaire" || tabParam === "onboarding") {
-      setActiveTab("questionnaire");
-    } else {
-      setActiveTab("upload");
+      router.replace("/onboarding");
     }
-  }, [searchParams]);
+  }, [searchParams, router]);
 
   const handleAnalysisSuccess = (result: CVAnalysisResult) => {
     api.saveAnalysis(result);
@@ -174,86 +170,57 @@ function EvaluateContent() {
           </div>
         </div>
 
-        {/* Kolom Kanan (7 Kolom): Panggung Interaktif Unggah CV / Kuesioner */}
+        {/* Kolom Kanan (7 Kolom): Fokus Unggah Dokumen CV + Tombol Menuju Halaman Onboarding */}
         <div className="lg:col-span-7 bg-white border border-slate-200 rounded-[28px] p-5 sm:p-7 flex flex-col justify-between">
           <div>
-            {/* Header Panggung + Mode Switcher */}
+            {/* Header Panggung + Tombol Menuju Halaman Onboarding */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 mb-6 border-b border-slate-200">
               <div>
                 <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#ce2731]">
-                  Metode Evaluasi
+                  Evaluasi Berkas Digital
                 </span>
                 <h3 className="text-lg sm:text-xl font-extrabold text-[#0f2c56] font-heading">
-                  {activeTab === "upload"
-                    ? "Unggah Dokumen CV Anda"
-                    : "Susun CV ATS dari Kuesioner"}
+                  Unggah Dokumen CV Anda
                 </h3>
               </div>
 
-              <div className="inline-flex p-1 rounded-xl bg-slate-100 border border-slate-200 self-start sm:self-auto">
-                <button
-                  type="button"
-                  onClick={() => setActiveTab("upload")}
-                  className={`px-3.5 py-2 rounded-lg font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer ${
-                    activeTab === "upload"
-                      ? "bg-[#0f2c56] text-white"
-                      : "text-slate-600 hover:text-[#0f2c56]"
-                  }`}
-                >
-                  <UploadCloud className="w-3.5 h-3.5" aria-hidden="true" />
-                  <span>Saya Sudah Punya CV</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveTab("questionnaire")}
-                  className={`px-3.5 py-2 rounded-lg font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer ${
-                    activeTab === "questionnaire"
-                      ? "bg-[#ce2731] text-white"
-                      : "text-slate-600 hover:text-[#0f2c56]"
-                  }`}
-                >
-                  <FileSpreadsheet className="w-3.5 h-3.5" aria-hidden="true" />
-                  <span>Saya Belum Punya CV</span>
-                </button>
-              </div>
+              <Link
+                href="/onboarding"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white font-bold text-xs transition-colors self-start sm:self-auto"
+              >
+                <FileSpreadsheet className="w-4 h-4" aria-hidden="true" />
+                <span>Belum Punya CV? Buat di Onboarding</span>
+                <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+              </Link>
             </div>
 
-            {/* Area Interaktif Utama */}
-            {activeTab === "upload" ? (
-              <CVDropzone onAnalysisComplete={handleAnalysisSuccess} />
-            ) : (
-              <div className="max-h-[55vh] overflow-y-auto scrollbar-halus pr-1">
-                <AtsOnboardingWizard onComplete={handleAnalysisSuccess} />
-              </div>
-            )}
+            {/* Area Unggah Dokumen CV */}
+            <CVDropzone onAnalysisComplete={handleAnalysisSuccess} />
           </div>
 
-          {/* Baris Langkah Cepat di Bawah Dropzone */}
-          <div className="mt-6 pt-5 border-t border-slate-200 grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div className="flex items-center gap-2.5">
-              <span className="w-6 h-6 rounded-full bg-[#0f2c56] text-white font-extrabold text-xs flex items-center justify-center shrink-0">
-                1
-              </span>
-              <span className="text-xs font-semibold text-[#0f2c56]">
-                Unggah PDF/DOCX atau isi kuesioner
-              </span>
+          {/* Banner Pintasan Onboarding & Langkah Cepat di Bawah Dropzone */}
+          <div className="mt-6 pt-5 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+                <FileSpreadsheet className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="text-xs sm:text-sm font-extrabold text-[#0f2c56]">
+                  Tidak memiliki file CV yang siap diunggah?
+                </p>
+                <p className="text-xs text-slate-500">
+                  Susun CV standar ATS 1-kolom dari nol melalui halaman Onboarding Terpandu.
+                </p>
+              </div>
             </div>
-            <div className="flex items-center gap-2.5">
-              <span className="w-6 h-6 rounded-full bg-[#0f2c56] text-white font-extrabold text-xs flex items-center justify-center shrink-0">
-                2
-              </span>
-              <span className="text-xs font-semibold text-[#0f2c56]">
-                Periksa skor 5 dimensi &amp; saran perbaikan
-              </span>
-            </div>
-            <div className="flex items-center gap-2.5">
-              <span className="w-6 h-6 rounded-full bg-[#ce2731] text-white font-extrabold text-xs flex items-center justify-center shrink-0">
-                3
-              </span>
-              <span className="text-xs font-semibold text-[#0f2c56]">
-                Lamar lowongan dengan kecocokan tertinggi
-              </span>
-            </div>
+
+            <Link
+              href="/onboarding"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-extrabold transition-colors shrink-0"
+            >
+              <span>Buka Halaman Onboarding</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </div>
       </div>

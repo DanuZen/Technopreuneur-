@@ -16,9 +16,11 @@ export function AppShell({ children }: AppShellProps) {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isDesktopCollapsed, setIsDesktopCollapsed] = useState(false);
 
-  // Bagian side ini HANYA aktif ketika dalam dashboard evaluasi (/evaluate dan /dashboard)
+  // Bagian side ini aktif ketika dalam ruang kerja (/evaluate, /onboarding, dan /dashboard)
   const isDashboardWorkspace =
-    pathname.startsWith("/evaluate") || pathname.startsWith("/dashboard");
+    pathname.startsWith("/evaluate") ||
+    pathname.startsWith("/onboarding") ||
+    pathname.startsWith("/dashboard");
 
   useEffect(() => {
     try {
@@ -91,14 +93,10 @@ export function AppShell({ children }: AppShellProps) {
           onToggleDesktopCollapse={handleToggleDesktopCollapse}
         />
 
-        {/* Viewport Content: Non-scrollable on evaluation stage (/evaluate), smooth scroll on dashboard analysis */}
+        {/* Viewport Content */}
         <main
           id="konten-utama"
-          className={`flex-1 ${
-            pathname.startsWith("/evaluate")
-              ? "overflow-hidden h-full flex flex-col"
-              : "overflow-y-auto scrollbar-halus"
-          }`}
+          className="flex-1 overflow-y-auto scrollbar-halus"
         >
           {children}
         </main>

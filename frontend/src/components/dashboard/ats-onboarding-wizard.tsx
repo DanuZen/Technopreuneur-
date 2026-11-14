@@ -1,15 +1,30 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle2, AlertCircle, Loader2, GraduationCap, Briefcase, Award, FileSpreadsheet, User, MapPin } from "lucide-react";
+import {
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
+  GraduationCap,
+  Briefcase,
+  Award,
+  FileSpreadsheet,
+  User,
+  ArrowRight,
+  ArrowLeft,
+} from "lucide-react";
 import { QuestionnaireData, CVAnalysisResult } from "@/types";
 import { api } from "@/lib/api";
 
 interface AtsOnboardingWizardProps {
   onComplete: (result: CVAnalysisResult) => void;
+  onStepChange?: (step: number) => void;
 }
 
-export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
+export function AtsOnboardingWizard({
+  onComplete,
+  onStepChange,
+}: AtsOnboardingWizardProps) {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -31,6 +46,11 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
 
   const updateField = (field: keyof QuestionnaireData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const changeStep = (nextStep: number) => {
+    setStep(nextStep);
+    onStepChange?.(nextStep);
   };
 
   const handleNext = () => {
@@ -56,12 +76,12 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
         return;
       }
     }
-    setStep((prev) => prev + 1);
+    changeStep(step + 1);
   };
 
   const handleBack = () => {
     setError(null);
-    setStep((prev) => prev - 1);
+    changeStep(step - 1);
   };
 
   const handleSubmit = async () => {
@@ -83,25 +103,25 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
   };
 
   return (
-    <div className="bg-[#edf2f9]/80 rounded-[28px] p-6 sm:p-9 clay-well space-y-7 animate-fade-in-up max-w-3xl mx-auto shadow-md">
-      {/* Header & ATS Standards Indicator */}
-      <div className="space-y-4 pb-2">
+    <div className="space-y-6">
+      {/* Header & ATS Standards Progress Bar */}
+      <div className="space-y-3 pb-4 border-b border-slate-200">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
-            <span className="text-[11px] font-mono uppercase tracking-wider text-primary font-bold bg-blue-100/90 px-3 py-1 rounded-full shadow-2xs">
+            <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#ce2731]">
               Onboarding Mandiri Standar ATS
             </span>
-            <h2 className="text-xl sm:text-2xl font-bold text-primary mt-2">
+            <h2 className="text-lg sm:text-xl font-extrabold text-[#0f2c56] mt-0.5 font-heading">
               Lengkapi Data Profil CV Anda
             </h2>
           </div>
-          <span className="text-xs text-primary font-bold bg-white px-3 py-1 rounded-full shadow-xs">
+          <span className="text-xs text-white font-extrabold bg-[#0f2c56] px-3.5 py-1.5 rounded-full self-start sm:self-auto">
             Langkah {step} dari 5
           </span>
         </div>
 
         {/* Step Progress Bar */}
-        <div className="w-full bg-blue-100/80 h-2.5 rounded-full overflow-hidden shadow-inner">
+        <div className="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
           <div
             className="bg-[#ce2731] h-full transition-all duration-300 rounded-full"
             style={{ width: `${(step / 5) * 100}%` }}
@@ -111,7 +131,7 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
 
       {/* Error Alert */}
       {error && (
-        <div className="p-3.5 bg-rose-50 text-rose-700 text-xs rounded-xl flex items-center gap-2 shadow-xs">
+        <div className="p-3.5 bg-[#ce2731] text-white text-xs font-semibold rounded-xl flex items-center gap-2.5">
           <AlertCircle className="w-4 h-4 shrink-0" aria-hidden="true" />
           <span>{error}</span>
         </div>
@@ -119,9 +139,11 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
 
       {/* STEP 1: IDENTITAS & KONTAK */}
       {step === 1 && (
-        <div className="space-y-5 animate-fade-in-up">
-          <div className="flex items-center gap-2.5 text-slate-900 font-semibold text-base">
-            <User className="w-5 h-5 text-slate-700" aria-hidden="true" />
+        <div className="space-y-5">
+          <div className="flex items-center gap-2.5 text-[#0f2c56] font-extrabold text-base">
+            <div className="w-8 h-8 rounded-lg bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+              <User className="w-4 h-4" aria-hidden="true" />
+            </div>
             <h3>Identitas &amp; Kontak Resmi (ATS Header)</h3>
           </div>
           <p className="text-xs text-slate-500 leading-relaxed">
@@ -130,7 +152,7 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-bold text-[#0f2c56] uppercase tracking-wider mb-1.5">
                 Nama Lengkap *
               </label>
               <input
@@ -138,12 +160,12 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
                 value={formData.fullName}
                 onChange={(e) => updateField("fullName", e.target.value)}
                 placeholder="Contoh: Wira Fikri Ramadanu"
-                className="w-full px-3.5 py-2.5 text-sm bg-white rounded-xl shadow-xs border-0 focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-3.5 py-2.5 text-sm bg-[#f8fafc] border border-slate-200 rounded-xl text-[#0f2c56] font-medium focus:outline-none focus:border-[#0f2c56]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-bold text-[#0f2c56] uppercase tracking-wider mb-1.5">
                 Alamat Email Aktif *
               </label>
               <input
@@ -151,12 +173,12 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
                 value={formData.email}
                 onChange={(e) => updateField("email", e.target.value)}
                 placeholder="nama@email.com"
-                className="w-full px-3.5 py-2.5 text-sm bg-white rounded-xl shadow-xs border-0 focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-3.5 py-2.5 text-sm bg-[#f8fafc] border border-slate-200 rounded-xl text-[#0f2c56] font-medium focus:outline-none focus:border-[#0f2c56]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-bold text-[#0f2c56] uppercase tracking-wider mb-1.5">
                 Nomor Telepon / WhatsApp
               </label>
               <input
@@ -164,12 +186,12 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
                 value={formData.phone || ""}
                 onChange={(e) => updateField("phone", e.target.value)}
                 placeholder="+62 812-3456-7890"
-                className="w-full px-3.5 py-2.5 text-sm bg-white rounded-xl shadow-xs border-0 focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-3.5 py-2.5 text-sm bg-[#f8fafc] border border-slate-200 rounded-xl text-[#0f2c56] font-medium focus:outline-none focus:border-[#0f2c56]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-bold text-[#0f2c56] uppercase tracking-wider mb-1.5">
                 Tautan LinkedIn atau Portofolio (Opsional)
               </label>
               <input
@@ -177,7 +199,7 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
                 value={formData.portfolioLink || ""}
                 onChange={(e) => updateField("portfolioLink", e.target.value)}
                 placeholder="https://linkedin.com/in/..."
-                className="w-full px-3.5 py-2.5 text-sm bg-white rounded-xl shadow-xs border-0 focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-3.5 py-2.5 text-sm bg-[#f8fafc] border border-slate-200 rounded-xl text-[#0f2c56] font-medium focus:outline-none focus:border-[#0f2c56]"
               />
             </div>
           </div>
@@ -186,9 +208,11 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
 
       {/* STEP 2: PENDIDIKAN TERAKHIR */}
       {step === 2 && (
-        <div className="space-y-5 animate-fade-in-up">
-          <div className="flex items-center gap-2.5 text-slate-900 font-semibold text-base">
-            <GraduationCap className="w-5 h-5 text-slate-700" aria-hidden="true" />
+        <div className="space-y-5">
+          <div className="flex items-center gap-2.5 text-[#0f2c56] font-extrabold text-base">
+            <div className="w-8 h-8 rounded-lg bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+              <GraduationCap className="w-4 h-4" aria-hidden="true" />
+            </div>
             <h3>Riwayat Pendidikan Formal</h3>
           </div>
           <p className="text-xs text-slate-500 leading-relaxed">
@@ -197,13 +221,19 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-bold text-[#0f2c56] uppercase tracking-wider mb-1.5">
                 Jenjang Pendidikan *
               </label>
               <select
                 value={formData.educationLevel}
-                onChange={(e) => updateField("educationLevel", e.target.value as QuestionnaireData["educationLevel"])}
-                className="w-full px-3.5 py-2.5 text-sm bg-white rounded-xl shadow-xs border-0 focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+                onChange={(e) =>
+                  updateField(
+                    "educationLevel",
+                    e.target.value as QuestionnaireData["educationLevel"]
+                  )
+                }
+                aria-label="Jenjang Pendidikan"
+                className="w-full px-3.5 py-2.5 text-sm bg-[#f8fafc] border border-slate-200 rounded-xl text-[#0f2c56] font-medium focus:outline-none focus:border-[#0f2c56] cursor-pointer"
               >
                 <option value="SMK">SMK / SMA</option>
                 <option value="D3">Diploma (D3)</option>
@@ -214,7 +244,7 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
             </div>
 
             <div className="sm:col-span-2">
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-bold text-[#0f2c56] uppercase tracking-wider mb-1.5">
                 Nama Kampus / Sekolah *
               </label>
               <input
@@ -222,14 +252,14 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
                 value={formData.institution}
                 onChange={(e) => updateField("institution", e.target.value)}
                 placeholder="Contoh: Universitas Negeri Padang"
-                className="w-full px-3.5 py-2.5 text-sm bg-white rounded-xl shadow-xs border-0 focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-3.5 py-2.5 text-sm bg-[#f8fafc] border border-slate-200 rounded-xl text-[#0f2c56] font-medium focus:outline-none focus:border-[#0f2c56]"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-bold text-[#0f2c56] uppercase tracking-wider mb-1.5">
                 Jurusan / Program Studi
               </label>
               <input
@@ -237,12 +267,12 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
                 value={formData.major}
                 onChange={(e) => updateField("major", e.target.value)}
                 placeholder="Contoh: Teknik Informatika / Sistem Informasi"
-                className="w-full px-3.5 py-2.5 text-sm bg-white rounded-xl shadow-xs border-0 focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-3.5 py-2.5 text-sm bg-[#f8fafc] border border-slate-200 rounded-xl text-[#0f2c56] font-medium focus:outline-none focus:border-[#0f2c56]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-bold text-[#0f2c56] uppercase tracking-wider mb-1.5">
                 Tahun Kelulusan (atau Perkiraan)
               </label>
               <input
@@ -250,7 +280,7 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
                 value={formData.graduationYear}
                 onChange={(e) => updateField("graduationYear", e.target.value)}
                 placeholder="2026"
-                className="w-full px-3.5 py-2.5 text-sm bg-white rounded-xl shadow-xs border-0 focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-3.5 py-2.5 text-sm bg-[#f8fafc] border border-slate-200 rounded-xl text-[#0f2c56] font-medium focus:outline-none focus:border-[#0f2c56]"
               />
             </div>
           </div>
@@ -259,17 +289,19 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
 
       {/* STEP 3: TARGET POSISI KERJA */}
       {step === 3 && (
-        <div className="space-y-5 animate-fade-in-up">
-          <div className="flex items-center gap-2.5 text-slate-900 font-semibold text-base">
-            <Briefcase className="w-5 h-5 text-slate-700" aria-hidden="true" />
+        <div className="space-y-5">
+          <div className="flex items-center gap-2.5 text-[#0f2c56] font-extrabold text-base">
+            <div className="w-8 h-8 rounded-lg bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+              <Briefcase className="w-4 h-4" aria-hidden="true" />
+            </div>
             <h3>Target Posisi &amp; Fokus Bidang Karir</h3>
           </div>
           <p className="text-xs text-slate-500 leading-relaxed">
-            Menentukan headline profesional pada resume ATS dan memandu mesin matching mencari lowongan yang sejalan.
+            Menentukan headline profesional pada resume ATS dan memandu sistem pencocokan mencari lowongan yang sejalan.
           </p>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+            <label className="block text-xs font-bold text-[#0f2c56] uppercase tracking-wider mb-1.5">
               Posisi Kerja yang Dituju *
             </label>
             <input
@@ -277,9 +309,9 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
               value={formData.targetRole}
               onChange={(e) => updateField("targetRole", e.target.value)}
               placeholder="Contoh: Junior Frontend Developer / UI Engineer"
-              className="w-full px-3.5 py-2.5 text-sm bg-white rounded-xl shadow-xs border-0 focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-3.5 py-2.5 text-sm bg-[#f8fafc] border border-slate-200 rounded-xl text-[#0f2c56] font-medium focus:outline-none focus:border-[#0f2c56]"
             />
-            <p className="text-[11px] text-slate-400 mt-1.5">
+            <p className="text-[11px] text-slate-500 mt-1.5">
               Gunakan nama peran standar industri untuk meningkatkan skor kecocokan kata kunci.
             </p>
           </div>
@@ -288,9 +320,11 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
 
       {/* STEP 4: KEAHLIAN TEKNIS & TOOLS */}
       {step === 4 && (
-        <div className="space-y-5 animate-fade-in-up">
-          <div className="flex items-center gap-2.5 text-slate-900 font-semibold text-base">
-            <Award className="w-5 h-5 text-slate-700" aria-hidden="true" />
+        <div className="space-y-5">
+          <div className="flex items-center gap-2.5 text-[#0f2c56] font-extrabold text-base">
+            <div className="w-8 h-8 rounded-lg bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+              <Award className="w-4 h-4" aria-hidden="true" />
+            </div>
             <h3>Keahlian Teknis &amp; Alat Kerja (Skills Section)</h3>
           </div>
           <p className="text-xs text-slate-500 leading-relaxed">
@@ -298,7 +332,7 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
           </p>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+            <label className="block text-xs font-bold text-[#0f2c56] uppercase tracking-wider mb-1.5">
               Keahlian Teknis / Bahasa Pemrograman / Software *
             </label>
             <textarea
@@ -306,15 +340,15 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
               value={formData.technicalSkills}
               onChange={(e) => updateField("technicalSkills", e.target.value)}
               placeholder="Contoh: React, Next.js, TypeScript, Tailwind CSS, Git, REST API, Figma"
-              className="w-full px-3.5 py-2.5 text-sm bg-white rounded-xl shadow-xs border-0 focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-3.5 py-2.5 text-sm bg-[#f8fafc] border border-slate-200 rounded-xl text-[#0f2c56] font-medium focus:outline-none focus:border-[#0f2c56]"
             />
-            <p className="text-[11px] text-slate-400 mt-1">
+            <p className="text-[11px] text-slate-500 mt-1">
               Pisahkan setiap keahlian dengan tanda koma.
             </p>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+            <label className="block text-xs font-bold text-[#0f2c56] uppercase tracking-wider mb-1.5">
               Keterampilan Non-Teknis (Soft Skills)
             </label>
             <input
@@ -322,7 +356,7 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
               value={formData.softSkills}
               onChange={(e) => updateField("softSkills", e.target.value)}
               placeholder="Contoh: Problem Solving, Komunikasi Tim, Berpikir Analitis"
-              className="w-full px-3.5 py-2.5 text-sm bg-white rounded-xl shadow-xs border-0 focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-3.5 py-2.5 text-sm bg-[#f8fafc] border border-slate-200 rounded-xl text-[#0f2c56] font-medium focus:outline-none focus:border-[#0f2c56]"
             />
           </div>
         </div>
@@ -330,17 +364,19 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
 
       {/* STEP 5: PENGALAMAN & PROYEK */}
       {step === 5 && (
-        <div className="space-y-5 animate-fade-in-up">
-          <div className="flex items-center gap-2.5 text-slate-900 font-semibold text-base">
-            <FileSpreadsheet className="w-5 h-5 text-slate-700" aria-hidden="true" />
+        <div className="space-y-5">
+          <div className="flex items-center gap-2.5 text-[#0f2c56] font-extrabold text-base">
+            <div className="w-8 h-8 rounded-lg bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+              <FileSpreadsheet className="w-4 h-4" aria-hidden="true" />
+            </div>
             <h3>Pengalaman Nyata: Proyek Kuliah, Magang atau Organisasi</h3>
           </div>
           <p className="text-xs text-slate-500 leading-relaxed">
-            Ceritakan proyek terbaik yang pernah Anda kerjakan. AI kami akan memformatnya menjadi poin-poin *action verbs* terukur standar ATS.
+            Ceritakan proyek terbaik yang pernah Anda kerjakan. Sistem kami akan memformatnya menjadi poin-poin kata kerja aktif terukur standar ATS.
           </p>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+            <label className="block text-xs font-bold text-[#0f2c56] uppercase tracking-wider mb-1.5">
               Deskripsi Pengalaman / Proyek
             </label>
             <textarea
@@ -348,29 +384,30 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
               value={formData.experienceSummary}
               onChange={(e) => updateField("experienceSummary", e.target.value)}
               placeholder="Contoh: Memimpin tim 4 orang dalam merancang aplikasi antrean web tugas akhir kampus dengan Next.js. Mengoptimasi query database sehingga respon halaman meningkat 40%."
-              className="w-full px-3.5 py-2.5 text-sm bg-white rounded-xl shadow-xs border-0 focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-3.5 py-2.5 text-sm bg-[#f8fafc] border border-slate-200 rounded-xl text-[#0f2c56] font-medium focus:outline-none focus:border-[#0f2c56]"
             />
           </div>
 
-          <div className="p-4 bg-white/90 rounded-2xl shadow-xs text-xs text-slate-700 space-y-1.5">
-            <p className="font-bold text-slate-900">Format Resume ATS Siap Dibuat:</p>
-            <p className="text-slate-600 leading-relaxed">
-              Setelah tombol ditekan, profil Anda akan langsung dikonversi menjadi dokumen CV digital 1-kolom berstandar ATS dan dashboard karir Anda akan terbuka otomatis.
+          <div className="p-4 bg-[#0f2c56] rounded-2xl text-xs text-white space-y-1">
+            <p className="font-extrabold text-white">Format Resume ATS Siap Dibuat:</p>
+            <p className="text-white/85 leading-relaxed">
+              Setelah tombol ditekan, profil Anda langsung dikonversi menjadi dokumen CV digital 1-kolom berstandar ATS dan dashboard karir Anda terbuka otomatis.
             </p>
           </div>
         </div>
       )}
 
       {/* Wizard Footer Controls */}
-      <div className="flex items-center justify-between pt-6">
+      <div className="flex items-center justify-between pt-5 border-t border-slate-200">
         {step > 1 ? (
           <button
             type="button"
             onClick={handleBack}
             disabled={loading}
-            className="px-5 py-2.5 text-xs font-semibold text-slate-700 hover:text-primary bg-white hover:bg-slate-50 rounded-full shadow-xs transition min-h-[40px]"
+            className="px-5 py-2.5 text-xs font-bold text-[#0f2c56] hover:text-white bg-slate-100 hover:bg-[#0f2c56] rounded-xl transition-colors inline-flex items-center gap-1.5 cursor-pointer"
           >
-            Kembali
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Kembali</span>
           </button>
         ) : (
           <div />
@@ -380,16 +417,17 @@ export function AtsOnboardingWizard({ onComplete }: AtsOnboardingWizardProps) {
           <button
             type="button"
             onClick={handleNext}
-            className="px-7 py-2.5 bg-primary hover:bg-[#163861] text-white text-xs font-bold rounded-full shadow-md shadow-primary/25 transition min-h-[40px]"
+            className="px-6 py-2.5 bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold rounded-xl transition-colors inline-flex items-center gap-1.5 cursor-pointer"
           >
-            Lanjut
+            <span>Lanjut</span>
+            <ArrowRight className="w-3.5 h-3.5" />
           </button>
         ) : (
           <button
             type="button"
             onClick={handleSubmit}
             disabled={loading}
-            className="px-7 py-3 bg-secondary hover:bg-secondary-700 text-white text-xs font-bold rounded-full shadow-lg shadow-secondary/30 transition flex items-center gap-2 min-h-[44px] disabled:opacity-60"
+            className="px-6 py-3 bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-extrabold rounded-xl transition-colors flex items-center gap-2 disabled:opacity-60 cursor-pointer"
           >
             {loading ? (
               <>

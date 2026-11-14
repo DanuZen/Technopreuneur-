@@ -418,7 +418,7 @@ export default function HomePage() {
                 Evaluasi CV Saya
               </Link>
               <Link
-                href="/evaluate?tab=questionnaire"
+                href="/onboarding"
                 className="px-6 py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-all"
               >
                 Belum Punya CV
@@ -636,7 +636,7 @@ export default function HomePage() {
             </p>
             <div className="pt-1 flex flex-wrap items-center gap-3">
               <Link
-                href="/evaluate?tab=questionnaire"
+                href="/onboarding"
                 className="px-6 py-3 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition shadow-md"
               >
                 Buat CV via Kuesioner
@@ -1028,7 +1028,7 @@ export default function HomePage() {
                 </div>
 
                 <Link
-                  href={inputMode === "pdf" ? "/evaluate" : "/evaluate?tab=questionnaire"}
+                  href={inputMode === "pdf" ? "/evaluate" : "/onboarding"}
                   className="px-7 py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold shadow-md transition"
                 >
                   Mulai Sekarang
