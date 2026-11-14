@@ -81,6 +81,52 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   animation: beaconPing 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+@keyframes floatCard {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes cloudDriftSlow {
+  0% {
+    transform: translateX(-3%) scale(1);
+  }
+  50% {
+    transform: translateX(3%) scale(1.03);
+  }
+  100% {
+    transform: translateX(-3%) scale(1);
+  }
+}
+
+@keyframes tabProgressBar {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-float {
+  animation: floatCard 5s ease-in-out infinite;
+}
+
+.animate-float-delay {
+  animation: floatCard 5.5s ease-in-out 1.2s infinite;
+}
+
+.animate-cloud-drift {
+  animation: cloudDriftSlow 24s ease-in-out infinite;
+}
+
+.animate-tab-progress {
+  animation: tabProgressBar 5s linear forwards;
+}
+
 /* ============================================================================
    Pasbana AI Claymorphism System (Redam Architecture Reference)
    Hierarki 3 tingkat: Recessed Well -> Sculpted Clay Card -> Tactile Clay CTA

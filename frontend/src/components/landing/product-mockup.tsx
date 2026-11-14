@@ -6,7 +6,13 @@ export function ProductMockup() {
   const [activeTab, setActiveTab] = useState<"analysis" | "matching" | "skills">("analysis");
 
   return (
-    <section className="space-y-6">
+    <section className="space-y-6 relative pt-4">
+      {/* Sky Ambient Light Glow */}
+      <div
+        className="absolute -top-12 inset-x-0 h-80 bg-gradient-to-b from-sky-200/30 via-blue-100/15 to-transparent blur-3xl pointer-events-none -z-10"
+        aria-hidden="true"
+      />
+
       <div className="text-center space-y-2 max-w-2xl mx-auto">
         <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-primary">
           Antarmuka Analisis &amp; Rekomendasi Presisi
@@ -16,8 +22,10 @@ export function ProductMockup() {
         </p>
       </div>
 
-      {/* Browser Window Frame with Minimal Margin & Hover Elevation */}
-      <div className="rounded-3xl bg-white shadow-2xl shadow-primary/10 hover:shadow-primary/20 transition-all duration-500 overflow-hidden max-w-6xl mx-auto">
+      {/* Floating 3D Showcase Container (Matching Dribbble 00:01-00:03) */}
+      <div className="relative max-w-6xl mx-auto pt-2 pb-6">
+        {/* Browser Window Frame with Gentle Floating Animation */}
+        <div className="rounded-[32px] sm:rounded-[40px] bg-white shadow-2xl shadow-primary/15 transition-all duration-500 overflow-hidden max-w-6xl mx-auto animate-float relative z-10">
         {/* Browser Top Bar in Brand Navy */}
         <div className="bg-[#0f2c56] px-5 py-3.5 flex items-center justify-between text-white">
           <div className="flex items-center gap-2">
@@ -179,7 +187,14 @@ export function ProductMockup() {
           </div>
         </div>
       </div>
-    </section>
+
+      {/* Serene Horizon Base Silhouette */}
+      <div
+        className="absolute -bottom-4 inset-x-4 h-24 bg-gradient-to-t from-emerald-950/10 via-teal-900/5 to-transparent rounded-[50%] blur-xl pointer-events-none -z-0"
+        aria-hidden="true"
+      />
+    </div>
+  </section>
   );
 }
 

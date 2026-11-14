@@ -10,15 +10,41 @@ export default function Home() {
   return (
     <div className="space-y-24 pb-20">
       {/* HERO SECTION (Focused purely on Landing Page & Value Proposition) */}
-      <section className="relative pt-12 sm:pt-20 px-4 sm:px-6 lg:px-8 max-w-[1360px] mx-auto space-y-10 text-center">
-        {/* Subtle animated background mesh matching reference */}
+      <section className="relative pt-8 sm:pt-16 px-4 sm:px-6 lg:px-8 max-w-[1360px] mx-auto space-y-8 text-center">
+        {/* Subtle animated background mesh and drifting sky mist matching reference */}
         <div
-          className="absolute inset-0 -top-16 -z-10 mx-auto max-w-5xl h-[460px] opacity-40 blur-3xl pointer-events-none animate-hero-mesh"
+          className="absolute inset-0 -top-20 -z-10 mx-auto max-w-5xl h-[520px] opacity-40 blur-3xl pointer-events-none animate-cloud-drift"
           style={{
-            background: "radial-gradient(circle at 50% 30%, rgba(15, 44, 86, 0.16) 0%, rgba(206, 39, 49, 0.08) 50%, transparent 80%)",
+            background: "radial-gradient(circle at 50% 25%, rgba(15, 44, 86, 0.16) 0%, rgba(206, 39, 49, 0.08) 50%, transparent 80%)",
           }}
           aria-hidden="true"
         />
+
+        {/* Floating Island Interactive Controller (Matching Dribbble 00:01-00:02) */}
+        <div className="inline-flex items-center gap-1 p-1 bg-slate-900/90 text-white rounded-full shadow-xl backdrop-blur-md animate-fade-in-up select-none">
+          <Link
+            href="/evaluate"
+            className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 hover:bg-white/25 text-white text-[11px] font-semibold transition"
+            title="Evaluasi CV Berkas"
+          >
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-beacon" />
+            <span>Skor ATS</span>
+          </Link>
+          <Link
+            href="/jobs"
+            className="flex items-center gap-1 px-2.5 py-1 rounded-full text-slate-300 hover:text-white text-[11px] font-medium transition"
+            title="Pencocokan Lowongan"
+          >
+            <span>Pencocokan AI</span>
+          </Link>
+          <Link
+            href="/about"
+            className="flex items-center gap-1 px-2.5 py-1 rounded-full text-slate-300 hover:text-white text-[11px] font-medium transition"
+            title="Kepatuhan UU PDP"
+          >
+            <span>Blind Scoring</span>
+          </Link>
+        </div>
 
         {/* Hero Title & Subtitle */}
         <div className="space-y-4 max-w-4xl mx-auto animate-fade-in-up">
