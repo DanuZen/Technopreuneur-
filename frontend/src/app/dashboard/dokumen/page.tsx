@@ -14,6 +14,10 @@ import {
   Ruler,
   FileCheck2,
   SlidersHorizontal,
+  User,
+  Award,
+  Briefcase,
+  GraduationCap,
 } from "lucide-react";
 import { api } from "@/lib/api";
 import { CVAnalysisResult } from "@/types";
@@ -209,7 +213,7 @@ export default function DokumenCvAtsPage() {
             </div>
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-3xl p-5 flex-1 flex flex-col justify-between gap-4 text-[#0f2c56]">
+          <div className="bg-white border border-slate-200 rounded-3xl p-5 flex-1 flex flex-col justify-center gap-4 text-[#0f2c56]">
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-2.5">
                 <div className="w-9 h-9 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
@@ -280,31 +284,43 @@ export default function DokumenCvAtsPage() {
             </div>
           </div>
 
-          <div className="bg-[#edf2f9] rounded-3xl p-5 space-y-2.5 shrink-0 text-[#0f2c56]">
-            <p className="text-xs font-extrabold uppercase tracking-wider">
-              Kelengkapan Bagian CV
-            </p>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+          <div className="bg-white border border-slate-200 rounded-3xl p-5 space-y-3 shrink-0 text-[#0f2c56]">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+                <CheckCircle2 className="w-4 h-4" aria-hidden="true" />
+              </div>
+              <p className="text-xs font-extrabold uppercase tracking-wider">
+                Kelengkapan Bagian CV
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2.5">
               {[
-                { label: "Ringkasan Profil", ok: Boolean(analysis.profile.summary) },
-                { label: "Keahlian & Alat", ok: Boolean(analysis.profile.skills) },
+                { label: "Ringkasan Profil", ok: Boolean(analysis.profile.summary), icon: User },
+                { label: "Keahlian & Alat", ok: Boolean(analysis.profile.skills), icon: Award },
                 {
                   label: "Pengalaman / Proyek",
                   ok: Boolean(analysis.profile.experiences?.length),
+                  icon: Briefcase,
                 },
                 {
                   label: "Pendidikan Formal",
                   ok: Boolean(analysis.profile.education?.length),
+                  icon: GraduationCap,
                 },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  className="text-xs font-bold flex items-center gap-2 text-[#0f2c56]"
-                >
-                  <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-[#0f2c56]" />
-                  <span className="truncate">{item.label}</span>
-                </div>
-              ))}
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div
+                    key={item.label}
+                    className="text-xs font-bold flex items-center gap-2.5 text-[#0f2c56]"
+                  >
+                    <div className="w-7 h-7 rounded-lg bg-[#edf2f9] text-[#0f2c56] flex items-center justify-center shrink-0">
+                      <Icon className="w-3.5 h-3.5" aria-hidden="true" />
+                    </div>
+                    <span className="truncate">{item.label}</span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </aside>
