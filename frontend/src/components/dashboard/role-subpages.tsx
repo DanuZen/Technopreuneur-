@@ -1087,26 +1087,6 @@ export function AdminAuditSubpage() {
           </div>
         </div>
       </div>
-
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <AlertTriangle className="w-5 h-5 text-[#ce2731] shrink-0" />
-          <div>
-            <p className="text-xs sm:text-sm font-extrabold text-[#0f2c56]">
-              Pemantauan Pipeline AI &amp; Validasi Standar Dokumen
-            </p>
-            <p className="text-xs text-slate-500">
-              Seluruh parser {allowedFormat === "pdf_docx" ? "PDF/DOCX" : "PDF"} berjalan normal dengan SLA target {slaSeconds} detik.
-            </p>
-          </div>
-        </div>
-        <Link
-          href="/admin/dashboard/lowongan"
-          className="morph-pill px-4 py-2 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold shrink-0"
-        >
-          Audit Calon Mitra
-        </Link>
-      </div>
     </main>
   );
 }
@@ -1318,22 +1298,6 @@ export function AdminReportSubpage() {
             </p>
           </div>
         </div>
-      </div>
-
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <Sparkles className="w-5 h-5 text-[#0f2c56] shrink-0" />
-          <p className="text-xs text-slate-600">
-            Gunakan tombol <strong>Cetak Laporan</strong> di kanan atas untuk mengekspor ringkasan periodik ({periodLabel}) dalam format PDF A4.
-          </p>
-        </div>
-        <button
-          type="button"
-          onClick={() => window.print()}
-          className="px-4 py-2 rounded-xl bg-[#edf2f9] hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white text-xs font-bold transition-colors cursor-pointer shrink-0"
-        >
-          Ekspor PDF A4
-        </button>
       </div>
     </main>
   );
