@@ -44,13 +44,15 @@ function EvaluateContent() {
 
   if (analysis) {
     return (
-      <div className="min-h-full w-full px-3.5 sm:px-6 py-5 sm:py-6 flex flex-col gap-5">
-        <DashboardPageHeading
-          badge="Hasil & Konsultasi CV"
-          titleLine1="Diskusikan hasil evaluasi"
-          titleLine2Prefix="untuk skor"
-          titleHighlight="paling optimal!"
-        />
+      <div className="h-full overflow-hidden w-full px-3.5 sm:px-6 pt-5 sm:pt-6 pb-3 flex flex-col gap-4">
+        <div className="shrink-0">
+          <DashboardPageHeading
+            badge="Hasil & Konsultasi CV"
+            titleLine1="Diskusikan hasil evaluasi"
+            titleLine2Prefix="untuk skor"
+            titleHighlight="paling optimal!"
+          />
+        </div>
         <CvEvaluationChat
           analysis={analysis}
           onResetUpload={() => setAnalysis(null)}

@@ -165,9 +165,9 @@ export function CvEvaluationChat({ analysis, onResetUpload }: CvEvaluationChatPr
   const isHighReady = analysis.overallScore >= 85;
 
   return (
-    <div className="flex flex-col flex-1 min-h-[calc(100dvh-160px)] justify-between gap-4">
+    <div className="flex flex-col flex-1 min-h-0 overflow-hidden gap-3">
       {/* Top Action Bar for Current Evaluated CV */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-200/80">
+      <div className="shrink-0 flex flex-wrap items-center justify-between gap-3 pb-3.5 border-b border-slate-200/80">
         <div className="flex items-center gap-2.5 min-w-0">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0f2c56] text-white text-xs font-bold truncate max-w-[260px] sm:max-w-md">
             <Sparkles className="w-3.5 h-3.5 text-[#ce2731] shrink-0" />
@@ -197,8 +197,8 @@ export function CvEvaluationChat({ analysis, onResetUpload }: CvEvaluationChatPr
         </div>
       </div>
 
-      {/* Chat Messages Thread */}
-      <div className="flex-1 space-y-5 py-2">
+      {/* Chat Messages Thread (Only this section scrolls) */}
+      <div className="flex-1 min-h-0 overflow-y-auto scrollbar-halus space-y-5 py-2 pr-1">
         {messages.map((msg) => {
           if (msg.sender === "user") {
             return (
@@ -351,8 +351,8 @@ export function CvEvaluationChat({ analysis, onResetUpload }: CvEvaluationChatPr
         <div ref={bottomRef} />
       </div>
 
-      {/* Bottom Sticky Chat Input + Quick Suggestions */}
-      <div className="sticky bottom-0 bg-[#fefefd] pt-3 pb-1 border-t border-slate-200/70 space-y-2.5">
+      {/* Bottom Fixed Chat Input + Quick Suggestions */}
+      <div className="shrink-0 bg-[#fefefd] pt-3 pb-1 border-t border-slate-200/70 space-y-2.5">
         <div className="flex flex-wrap gap-1.5">
           {QUICK_QUESTIONS.map((q) => (
             <button
@@ -393,3 +393,4 @@ export function CvEvaluationChat({ analysis, onResetUpload }: CvEvaluationChatPr
     </div>
   );
 }
+
