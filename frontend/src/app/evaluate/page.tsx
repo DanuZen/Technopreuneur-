@@ -30,7 +30,7 @@ function EvaluateContent() {
   };
 
   return (
-    <div className="min-h-full w-full px-3.5 sm:px-6 py-5 sm:py-6 flex flex-col gap-6">
+    <div className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 flex flex-col gap-6">
       <DashboardPageHeading
         badge="Evaluasi Berkas Digital"
         titleLine1="Uji kualitas dokumen CV"

@@ -64,7 +64,7 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="min-h-full w-full px-3.5 sm:px-6 py-5 sm:py-6 flex flex-col gap-5">
+    <div className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 flex flex-col gap-5">
       <DashboardPageHeading
         badge="Onboarding CV ATS"
         titleLine1="Susun dokumen CV standar"

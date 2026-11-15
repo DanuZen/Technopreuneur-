@@ -67,7 +67,7 @@ export function AppHeader({
     : getDashboardBasePath(user?.role);
 
   return (
-    <header className="sticky top-0 z-30 flex min-h-[58px] sm:min-h-[64px] w-full shrink-0 items-center justify-between gap-3 bg-white px-3.5 sm:px-6 py-2">
+    <header className="sticky top-0 z-30 flex min-h-[46px] sm:min-h-[50px] w-full shrink-0 items-center justify-between gap-3 bg-white px-3.5 sm:px-6 py-1.5">
       {/* Left: Mobile Toggle */}
       <div className="flex items-center gap-2.5 min-w-0">
         {/* Mobile Hamburger Toggle */}
@@ -197,7 +197,7 @@ export function AppHeader({
       {/* Soft bottom white gradient fade */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-full h-6 bg-gradient-to-b from-white via-white/80 to-transparent"
+        className="pointer-events-none absolute inset-x-0 top-full h-3 bg-gradient-to-b from-white via-white/80 to-transparent"
       />
     </header>
   );
