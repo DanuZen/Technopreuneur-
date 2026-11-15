@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   ArrowLeft,
+  ArrowRight,
   UploadCloud,
   CheckCircle2,
   FileCheck2,
@@ -54,6 +55,7 @@ const ONBOARDING_STEPS = [
 
 export default function OnboardingPage() {
   const router = useRouter();
+  const [hasStarted, setHasStarted] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
 
   const handleOnboardingSuccess = (result: CVAnalysisResult) => {
@@ -63,40 +65,95 @@ export default function OnboardingPage() {
 
   return (
     <div className="min-h-full w-full px-3.5 sm:px-6 py-5 sm:py-6 flex flex-col gap-5">
-      {/* Baris Atas: Navigasi Kembali ke Unggah CV */}
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <Link
-          href="/user/dashboard/evaluasi"
-          className="inline-flex items-center gap-2 text-xs font-bold text-[#0f2c56] hover:text-white bg-white hover:bg-[#0f2c56] px-4 py-2 rounded-full border border-slate-200 transition-colors"
-        >
-          <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
-          <span>Kembali ke Unggah Dokumen CV</span>
-        </Link>
-
-        <div className="flex items-center gap-2">
-          <Link
-            href="/user/dashboard/evaluasi"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white border border-slate-200 text-xs font-bold transition-colors"
-          >
-            <UploadCloud className="w-3.5 h-3.5" aria-hidden="true" />
-            <span>Sudah Punya File CV? Unggah di Sini</span>
-          </Link>
-          <div className="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#0f2c56] px-3.5 py-2 rounded-full">
-            <CheckCircle2 className="w-3.5 h-3.5 text-[#ce2731]" />
-            <span>Generator CV ATS 1-Kolom</span>
-          </div>
-        </div>
-      </div>
-
       <DashboardPageHeading
         badge="Onboarding CV ATS"
         titleLine1="Susun dokumen CV standar"
         titleLine2Prefix="dengan struktur"
         titleHighlight="ATS 1-kolom!"
+        rightSlot={
+          <div className="flex flex-wrap items-center gap-2">
+            {hasStarted && (
+              <button
+                type="button"
+                onClick={() => setHasStarted(false)}
+                className="inline-flex items-center gap-2 text-xs font-bold text-[#0f2c56] hover:text-white bg-white hover:bg-[#0f2c56] px-4 py-2.5 rounded-xl border border-slate-200 transition-colors cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>Kembali ke Ringkasan</span>
+              </button>
+            )}
+            <Link
+              href="/user/dashboard/evaluasi"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white border border-slate-200 text-xs font-bold transition-colors"
+            >
+              <UploadCloud className="w-3.5 h-3.5" aria-hidden="true" />
+              <span>Sudah Punya File CV? Unggah di Sini</span>
+            </Link>
+          </div>
+        }
       />
 
-      {/* Kontainer Utama: 12-Column Asymmetric Bento Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch flex-1">
+      {!hasStarted ? (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+          <div className="lg:col-span-7 bg-[#0f2c56] text-white rounded-[28px] p-6 sm:p-8 flex flex-col justify-between gap-6">
+            <div className="space-y-4">
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ce2731] text-white text-[11px] font-bold uppercase tracking-wider">
+                <span>Belum Punya CV</span>
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-snug font-heading">
+                Buat CV Profesional dari Nol dalam 5 Langkah Singkat
+              </h2>
+              <p className="text-xs sm:text-sm text-white/80 leading-relaxed max-w-xl">
+                Tidak perlu bingung memikirkan desain atau format. Cukup lengkapi informasi diri, pendidikan, keahlian, dan pengalaman Anda, lalu sistem Pasbana AI akan menyusun CV standar ATS 1-kolom yang siap dipakai melamar kerja.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setHasStarted(true)}
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-[#ce2731] hover:bg-white text-white hover:text-[#0f2c56] text-xs sm:text-sm font-extrabold transition-colors cursor-pointer"
+              >
+                <span>Mulai Susun CV Sekarang</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+              <div className="inline-flex items-center gap-2 text-xs text-white/80 font-medium px-2">
+                <FileCheck2 className="w-4 h-4 text-[#ce2731]" />
+                <span>Estimasi 3 sampai 5 menit</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="lg:col-span-5 bg-white border border-slate-200 rounded-[28px] p-6 sm:p-7 space-y-3">
+            <p className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-bold">
+              Tahapan Kuesioner (5 Langkah)
+            </p>
+            <div className="space-y-2.5">
+              {ONBOARDING_STEPS.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div
+                    key={item.num}
+                    className="p-3 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center gap-3"
+                  >
+                    <div className="w-8 h-8 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+                      <Icon className="w-4 h-4" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs font-extrabold text-[#0f2c56] truncate">
+                        {item.num}. {item.title}
+                      </p>
+                      <p className="text-[11px] text-slate-500 truncate">{item.desc}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      ) : (
+        /* Kontainer Utama: 12-Column Asymmetric Bento Grid */
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch flex-1">
         {/* Kolom Kiri (5 Kolom): Panduan 5 Langkah Onboarding Solid Navy */}
         <div className="lg:col-span-5 flex flex-col gap-4">
           <div className="bg-[#0f2c56] text-white rounded-[28px] p-6 sm:p-7 flex flex-col justify-between flex-1">
@@ -193,6 +250,7 @@ export default function OnboardingPage() {
           />
         </div>
       </div>
+      )}
     </div>
   );
 }

@@ -10,6 +10,7 @@ import {
   Briefcase,
   Home,
   FileText,
+  FileSpreadsheet,
   X,
   Trash2,
 } from "lucide-react";
@@ -133,8 +134,15 @@ export function AppSidebar({
         pathname === baseDashboardPath ||
         pathname === "/dashboard" ||
         pathname.startsWith(`${baseDashboardPath}/evaluasi`) ||
+        pathname === "/evaluate",
+    },
+    {
+      label: "Onboarding CV",
+      href: `${baseDashboardPath}/onboarding`,
+      icon: FileSpreadsheet,
+      desc: "Susun CV dari kuesioner",
+      isActive:
         pathname.startsWith(`${baseDashboardPath}/onboarding`) ||
-        pathname === "/evaluate" ||
         pathname === "/onboarding",
     },
     {
