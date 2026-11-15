@@ -11,7 +11,6 @@ import {
   LayoutDashboard,
   Home,
   FileText,
-  FileSpreadsheet,
   X,
   Trash2,
 } from "lucide-react";
@@ -120,14 +119,7 @@ export function AppSidebar({
       href: "/evaluate",
       icon: FileCheck,
       desc: "Unggah berkas PDF / DOCX",
-      isActive: pathname === "/evaluate",
-    },
-    {
-      label: "Onboarding CV ATS",
-      href: "/onboarding",
-      icon: FileSpreadsheet,
-      desc: "Susun CV dari kuesioner",
-      isActive: pathname === "/onboarding",
+      isActive: pathname === "/evaluate" || pathname === "/onboarding",
     },
     {
       label: "Dokumen CV ATS",
