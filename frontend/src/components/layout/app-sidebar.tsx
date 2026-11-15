@@ -12,15 +12,12 @@ import {
   Home,
   FileText,
   FileSpreadsheet,
-  User as UserIcon,
-  LogOut,
-  ChevronRight,
   X,
   PanelLeftClose,
   PanelLeftOpen,
   Trash2,
 } from "lucide-react";
-import { User, CVAnalysisResult } from "@/types";
+import { CVAnalysisResult } from "@/types";
 import { api } from "@/lib/api";
 
 export interface ItemRiwayatEvaluasi {
@@ -63,19 +60,12 @@ export function AppSidebar({
   const router = useRouter();
   const currentTab = searchParams.get("tab");
 
-  const [user, setUser] = useState<User | null>(null);
   const [daftarRiwayat, setDaftarRiwayat] = useState<ItemRiwayatEvaluasi[]>(CONTOH_RIWAYAT_DEFAULT);
   const [cariTerbuka, setCariTerbuka] = useState(false);
   const [kataKunci, setKataKunci] = useState("");
-  const [konfirmasiLogout, setKonfirmasiLogout] = useState(false);
 
   useEffect(() => {
     try {
-      const storedUser = localStorage.getItem("cm_user");
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
-      }
-
       const storedAnalysis = localStorage.getItem("cm_analysis");
       if (storedAnalysis) {
         const parsed: CVAnalysisResult = JSON.parse(storedAnalysis);
@@ -96,13 +86,6 @@ export function AppSidebar({
       // ignore parse error
     }
   }, [pathname]);
-
-  const handleLogout = () => {
-    api.removeToken();
-    setUser(null);
-    setKonfirmasiLogout(false);
-    router.push("/");
-  };
 
   const handlePilihRiwayat = () => {
     onCloseMobile();
@@ -254,23 +237,6 @@ export function AppSidebar({
               >
                 <PanelLeftOpen className="w-4 h-4" aria-hidden="true" />
               </button>
-
-              {user ? (
-                <div
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0f2c56] text-white text-xs font-bold shadow-xs cursor-pointer"
-                  title={`Akun: ${user.name}`}
-                >
-                  {user.name.charAt(0).toUpperCase()}
-                </div>
-              ) : (
-                <Link
-                  href="/login"
-                  className="flex h-9 w-9 items-center justify-center rounded-xl bg-white hover:bg-blue-50 text-primary shadow-xs"
-                  title="Masuk Akun"
-                >
-                  <UserIcon className="w-4 h-4" aria-hidden="true" />
-                </Link>
-              )}
             </div>
           </div>
 
@@ -451,80 +417,6 @@ export function AppSidebar({
                   <span>Kembali ke Beranda</span>
                 </Link>
               </div>
-            </div>
-
-            {/* Bottom Footer Section: User Profile & Account (Hanya tombol Keluar Akun) */}
-            <div className="shrink-0 p-3 bg-white border-t border-slate-200 space-y-2">
-              {user ? (
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-2 min-w-0">
-                      <div className="w-8 h-8 rounded-full bg-[#0f2c56] text-white text-xs font-bold flex items-center justify-center shrink-0">
-                        {user.name.charAt(0).toUpperCase()}
-                      </div>
-                      <div className="min-w-0">
-                        <p className="text-xs font-bold text-[#0f2c56] truncate leading-tight">
-                          {user.name}
-                        </p>
-                        <p className="text-[10px] text-slate-500 truncate leading-tight">
-                          {user.email}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {!konfirmasiLogout ? (
-                    <button
-                      type="button"
-                      onClick={() => setKonfirmasiLogout(true)}
-                      className="w-full flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-xl text-xs font-semibold text-white bg-[#ce2731] hover:bg-[#0f2c56] transition-colors cursor-pointer"
-                    >
-                      <LogOut className="w-3.5 h-3.5" />
-                      <span>Keluar Akun</span>
-                    </button>
-                  ) : (
-                    <div className="p-2 rounded-xl bg-slate-100 border border-slate-200 space-y-1.5 text-center">
-                      <p className="text-[11px] font-bold text-[#0f2c56]">Yakin ingin keluar?</p>
-                      <div className="flex gap-1.5">
-                        <button
-                          type="button"
-                          onClick={handleLogout}
-                          className="flex-1 py-1 rounded-lg bg-[#ce2731] text-white text-[11px] font-bold hover:bg-[#0f2c56] transition"
-                        >
-                          Ya, Keluar
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setKonfirmasiLogout(false)}
-                          className="flex-1 py-1 rounded-lg bg-white text-[#0f2c56] border border-slate-200 text-[11px] font-semibold hover:bg-slate-50 transition"
-                        >
-                          Batal
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <div className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <div className="w-7 h-7 rounded-lg bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
-                      <UserIcon className="w-4 h-4" />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-xs font-bold text-[#0f2c56] truncate">Tamu / Pengunjung</p>
-                      <p className="text-[10px] text-slate-500">Sesi Lokal Aman</p>
-                    </div>
-                  </div>
-                  <Link
-                    href="/login"
-                    onClick={onCloseMobile}
-                    className="inline-flex items-center gap-1 text-xs font-bold text-white bg-[#ce2731] hover:bg-[#0f2c56] px-2.5 py-1.5 rounded-xl transition"
-                  >
-                    <span>Masuk</span>
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-              )}
             </div>
           </div>
         </div>
