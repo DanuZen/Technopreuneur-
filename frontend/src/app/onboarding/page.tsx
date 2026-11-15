@@ -86,9 +86,10 @@ export default function OnboardingPage() {
       />
 
       {!hasStarted ? (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch flex-1">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch flex-1">
+          {/* Kolom Kiri: Panel Pengantar Solid Navy tanpa Card Bersarang */}
           <div className="lg:col-span-7 bg-[#0f2c56] text-white rounded-[28px] p-6 sm:p-8 flex flex-col justify-between gap-6">
-            <div className="space-y-4">
+            <div className="space-y-3.5">
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ce2731] text-white text-[11px] font-bold uppercase tracking-wider">
                 <span>Belum Punya CV</span>
               </span>
@@ -100,63 +101,72 @@ export default function OnboardingPage() {
               </p>
             </div>
 
-            {/* Ilustrasi Pratinjau Struktur CV ATS 1-Kolom */}
-            <div className="rounded-2xl bg-white/10 border border-white/15 p-4 sm:p-5 flex flex-col sm:flex-row items-center gap-5">
-              <div className="relative shrink-0">
+            {/* Ilustrasi Proses Penyusunan CV ATS (Langsung di atas permukaan Navy) */}
+            <div className="py-4 border-y border-white/15 flex flex-col sm:flex-row items-center gap-6">
+              <div className="shrink-0">
                 <svg
-                  viewBox="0 0 180 144"
-                  className="w-40 sm:w-44 h-auto drop-shadow-sm"
+                  viewBox="0 0 220 156"
+                  className="w-48 sm:w-52 h-auto"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
                 >
-                  <rect x="14" y="6" width="136" height="132" rx="12" fill="#FFFFFF" />
-                  <rect x="28" y="20" width="58" height="8" rx="4" fill="#0F2C56" />
-                  <rect x="28" y="33" width="92" height="4" rx="2" fill="#94A3B8" />
-                  <rect x="28" y="45" width="108" height="1.5" fill="#E2E8F0" />
+                  {/* Decorative dots */}
+                  <circle cx="20" cy="24" r="3" fill="#CE2731" />
+                  <circle cx="198" cy="132" r="4" fill="#FFFFFF" fillOpacity="0.25" />
+                  <circle cx="186" cy="20" r="2.5" fill="#FFFFFF" fillOpacity="0.35" />
 
-                  <rect x="28" y="54" width="42" height="5" rx="2.5" fill="#CE2731" />
-                  <rect x="28" y="64" width="106" height="4" rx="2" fill="#CBD5E1" />
-                  <rect x="28" y="72" width="90" height="4" rx="2" fill="#CBD5E1" />
+                  {/* Back sheet */}
+                  <rect x="26" y="18" width="136" height="126" rx="12" fill="#1E3F73" />
+                  {/* Main A4 CV sheet */}
+                  <rect x="38" y="10" width="136" height="132" rx="12" fill="#FFFFFF" />
+                  <rect x="52" y="24" width="62" height="8" rx="4" fill="#0F2C56" />
+                  <rect x="52" y="37" width="90" height="4" rx="2" fill="#94A3B8" />
+                  <rect x="52" y="48" width="108" height="1.5" fill="#E2E8F0" />
 
-                  <rect x="28" y="85" width="50" height="5" rx="2.5" fill="#0F2C56" />
-                  <circle cx="31" cy="97" r="2.5" fill="#CE2731" />
-                  <rect x="38" y="95" width="92" height="4" rx="2" fill="#CBD5E1" />
-                  <circle cx="31" cy="107" r="2.5" fill="#CE2731" />
-                  <rect x="38" y="105" width="78" height="4" rx="2" fill="#CBD5E1" />
-                  <circle cx="31" cy="117" r="2.5" fill="#CE2731" />
-                  <rect x="38" y="115" width="84" height="4" rx="2" fill="#CBD5E1" />
+                  <rect x="52" y="57" width="44" height="5" rx="2.5" fill="#CE2731" />
+                  <rect x="52" y="67" width="106" height="4" rx="2" fill="#CBD5E1" />
+                  <rect x="52" y="75" width="88" height="4" rx="2" fill="#CBD5E1" />
 
-                  <rect x="116" y="14" width="54" height="22" rx="11" fill="#CE2731" />
+                  <rect x="52" y="88" width="52" height="5" rx="2.5" fill="#0F2C56" />
+                  <circle cx="55" cy="100" r="2.5" fill="#CE2731" />
+                  <rect x="62" y="98" width="92" height="4" rx="2" fill="#CBD5E1" />
+                  <circle cx="55" cy="110" r="2.5" fill="#CE2731" />
+                  <rect x="62" y="108" width="76" height="4" rx="2" fill="#CBD5E1" />
+                  <circle cx="55" cy="120" r="2.5" fill="#CE2731" />
+                  <rect x="62" y="118" width="84" height="4" rx="2" fill="#CBD5E1" />
+
+                  {/* Floating verified badge */}
+                  <rect x="134" y="18" width="66" height="24" rx="12" fill="#CE2731" />
                   <path
-                    d="M127 25L130.5 28.5L137 21.5"
+                    d="M146 30L149.5 33.5L156 26.5"
                     stroke="#FFFFFF"
                     strokeWidth="2.2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
-                  <rect x="141" y="23" width="20" height="4" rx="2" fill="#FFFFFF" />
+                  <rect x="161" y="28" width="26" height="4" rx="2" fill="#FFFFFF" />
                 </svg>
               </div>
 
-              <div className="space-y-2.5 flex-1 min-w-0">
+              <div className="space-y-3 flex-1 min-w-0">
                 <p className="text-[11px] font-mono uppercase tracking-wider text-white/70 font-bold">
                   Output Dokumen Standar Rekruter
                 </p>
-                <div className="space-y-2">
-                  <div className="flex items-start gap-2">
+                <div className="space-y-2.5">
+                  <div className="flex items-start gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0 mt-0.5" />
                     <p className="text-xs text-white/90 leading-snug">
                       <span className="font-bold text-white">Struktur 1-Kolom Rapi:</span> bebas tabel rumit agar mudah dipindai mesin ATS.
                     </p>
                   </div>
-                  <div className="flex items-start gap-2">
+                  <div className="flex items-start gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0 mt-0.5" />
                     <p className="text-xs text-white/90 leading-snug">
                       <span className="font-bold text-white">Panduan Kalimat Dampak:</span> dilengkapi contoh penulisan pengalaman yang terukur.
                     </p>
                   </div>
-                  <div className="flex items-start gap-2">
+                  <div className="flex items-start gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0 mt-0.5" />
                     <p className="text-xs text-white/90 leading-snug">
                       <span className="font-bold text-white">Siap Cetak &amp; Evaluasi:</span> langsung tersimpan ke Dokumen CV ATS dan Riwayat Sesi.
@@ -166,7 +176,7 @@ export default function OnboardingPage() {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3 pt-2">
+            <div className="flex flex-wrap items-center gap-3">
               <button
                 type="button"
                 onClick={() => setHasStarted(true)}
@@ -182,27 +192,28 @@ export default function OnboardingPage() {
             </div>
           </div>
 
-          <div className="lg:col-span-5 bg-white border border-slate-200 rounded-[28px] p-6 sm:p-7 flex flex-col justify-between gap-4">
+          {/* Kolom Kanan: Daftar Tahapan Flat tanpa Card Bersarang */}
+          <div className="lg:col-span-5 flex flex-col justify-between gap-4 py-2">
             <div className="space-y-3">
               <p className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-bold">
                 Tahapan Kuesioner (5 Langkah)
               </p>
-              <div className="space-y-2.5">
+              <div className="divide-y divide-slate-200/80 border-y border-slate-200/80">
                 {ONBOARDING_STEPS.map((item) => {
                   const Icon = item.icon;
                   return (
                     <div
                       key={item.num}
-                      className="p-3 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center gap-3"
+                      className="py-3.5 flex items-center gap-3.5"
                     >
-                      <div className="w-8 h-8 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+                      <div className="w-9 h-9 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
                         <Icon className="w-4 h-4" />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="text-xs font-extrabold text-[#0f2c56] truncate">
+                        <p className="text-xs sm:text-sm font-extrabold text-[#0f2c56] truncate">
                           {item.num}. {item.title}
                         </p>
-                        <p className="text-[11px] text-slate-500 truncate">{item.desc}</p>
+                        <p className="text-xs text-slate-500 truncate">{item.desc}</p>
                       </div>
                     </div>
                   );
@@ -210,18 +221,19 @@ export default function OnboardingPage() {
               </div>
             </div>
 
-            <div className="pt-3 border-t border-slate-100 grid grid-cols-2 gap-2.5">
-              <div className="p-3 rounded-2xl bg-[#edf2f9] space-y-0.5">
-                <p className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-bold">
+            <div className="flex items-center justify-between gap-4 pt-2 text-xs">
+              <div>
+                <p className="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold">
                   Output Standar
                 </p>
-                <p className="text-xs font-extrabold text-[#0f2c56]">PDF A4 1-Kolom</p>
+                <p className="font-extrabold text-[#0f2c56]">PDF A4 1-Kolom</p>
               </div>
-              <div className="p-3 rounded-2xl bg-[#edf2f9] space-y-0.5">
-                <p className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-bold">
+              <div className="h-7 w-px bg-slate-200" aria-hidden="true" />
+              <div>
+                <p className="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold">
                   Setelah Selesai
                 </p>
-                <p className="text-xs font-extrabold text-[#0f2c56]">Skor &amp; Konsultasi AI</p>
+                <p className="font-extrabold text-[#0f2c56]">Skor &amp; Konsultasi AI</p>
               </div>
             </div>
           </div>

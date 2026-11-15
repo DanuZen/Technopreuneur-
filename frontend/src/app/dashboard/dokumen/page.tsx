@@ -139,10 +139,10 @@ export default function DokumenCvAtsPage() {
         />
       </div>
 
-      <div className="flex-1 min-h-0 grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch print:block">
-        {/* Kolom Kiri: Card Keterangan, Kelengkapan & Tips Cetak */}
-        <aside className="xl:col-span-5 flex flex-col gap-3.5 xl:overflow-y-auto scrollbar-none print:hidden">
-          <div className="bg-[#0f2c56] text-white rounded-3xl p-5 space-y-3.5 shrink-0">
+      <div className="flex-1 min-h-0 grid grid-cols-1 xl:grid-cols-12 gap-6 items-stretch print:block">
+        {/* Kolom Kiri: Panel Keterangan Solid Navy + Panduan Flat tanpa Card Bersarang */}
+        <aside className="xl:col-span-5 flex flex-col justify-between gap-4 xl:overflow-y-auto scrollbar-none print:hidden">
+          <div className="bg-[#0f2c56] text-white rounded-3xl p-5 sm:p-6 space-y-4 shrink-0">
             <div className="flex items-center justify-between gap-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ce2731] text-white text-[11px] font-bold uppercase tracking-wider">
                 <FileText className="w-3.5 h-3.5" aria-hidden="true" />
@@ -153,40 +153,60 @@ export default function DokumenCvAtsPage() {
               </span>
             </div>
 
-            <div>
-              <h2 className="text-base sm:text-lg font-extrabold tracking-tight leading-snug">
-                Keterangan Dokumen CV
-              </h2>
-              <p className="text-xs text-white/75 mt-1 leading-relaxed">
-                Pratinjau di samping menggunakan proporsi kertas standar A4 (210 x 297 mm) dengan tata letak 1-kolom ramah ATS.
-              </p>
+            <div className="flex items-center gap-4">
+              <svg
+                viewBox="0 0 96 112"
+                className="w-16 h-auto shrink-0"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <rect x="8" y="4" width="80" height="104" rx="8" fill="#FFFFFF" />
+                <rect x="16" y="12" width="64" height="88" rx="4" stroke="#CBD5E1" strokeDasharray="3 3" />
+                <rect x="26" y="20" width="44" height="6" rx="3" fill="#0F2C56" />
+                <rect x="32" y="30" width="32" height="3" rx="1.5" fill="#94A3B8" />
+                <rect x="22" y="42" width="28" height="4" rx="2" fill="#CE2731" />
+                <rect x="22" y="50" width="52" height="3" rx="1.5" fill="#CBD5E1" />
+                <rect x="22" y="56" width="46" height="3" rx="1.5" fill="#CBD5E1" />
+                <rect x="22" y="68" width="32" height="4" rx="2" fill="#0F2C56" />
+                <rect x="22" y="76" width="52" height="3" rx="1.5" fill="#CBD5E1" />
+                <rect x="22" y="82" width="40" height="3" rx="1.5" fill="#CBD5E1" />
+              </svg>
+              <div>
+                <h2 className="text-base sm:text-lg font-extrabold tracking-tight leading-snug">
+                  Keterangan Dokumen CV
+                </h2>
+                <p className="text-xs text-white/75 mt-1 leading-relaxed">
+                  Pratinjau di samping menggunakan proporsi kertas standar A4 (210 x 297 mm) dengan tata letak 1-kolom ramah ATS.
+                </p>
+              </div>
             </div>
 
-            <div className="rounded-2xl bg-white/10 border border-white/15 p-3.5 space-y-2 text-xs">
-              <div className="flex items-center justify-between gap-3">
+            <div className="border-t border-white/15 divide-y divide-white/10 text-xs">
+              <div className="py-2 flex items-center justify-between gap-3">
                 <span className="text-white/70">Nama Kandidat</span>
                 <span className="font-bold text-white text-right truncate">
                   {analysis.profile.fullName}
                 </span>
               </div>
-              <div className="flex items-center justify-between gap-3">
+              <div className="py-2 flex items-center justify-between gap-3">
                 <span className="text-white/70">Target Peran</span>
                 <span className="font-bold text-white text-right truncate">
                   {analysis.profile.headline || "Kandidat Profesional"}
                 </span>
               </div>
-              <div className="flex items-center justify-between gap-3">
+              <div className="py-2 flex items-center justify-between gap-3">
                 <span className="text-white/70">Ukuran Kertas</span>
                 <span className="font-bold text-white">A4 (210 x 297 mm)</span>
               </div>
-              <div className="flex items-center justify-between gap-3">
+              <div className="pt-2 flex items-center justify-between gap-3">
                 <span className="text-white/70">Format Struktur</span>
                 <span className="font-bold text-white">1-Kolom Bersih</span>
               </div>
             </div>
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-3xl p-5 flex-1 flex flex-col justify-between gap-3.5">
+          <div className="flex-1 flex flex-col justify-between gap-3 px-1">
             <div className="space-y-2.5">
               <p className="text-xs font-extrabold uppercase tracking-wider text-[#0f2c56]">
                 Panduan &amp; Tips Cetak PDF
@@ -207,17 +227,17 @@ export default function DokumenCvAtsPage() {
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0 mt-0.5" />
                   <p className="text-xs text-slate-600 leading-relaxed">
-                    <span className="font-bold text-[#0f2c56]">Pengaturan Cetak:</span> klik <span className="font-semibold">Cetak / Unduh PDF</span>, pilih ukuran <span className="font-semibold">A4</span>, lalu nonaktifkan <span className="font-semibold">Headers and footers</span>.
+                    <span className="font-bold text-[#0f2c56]">Pengaturan Cetak:</span> klik <span className="font-semibold">Cetak / Unduh PDF</span>, pilih ukuran <span className="font-semibold">A4</span>, lalu nonaktifkan opsi <span className="font-semibold">Headers and footers</span>.
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="pt-3 border-t border-slate-100 space-y-2">
+            <div className="pt-3 border-t border-slate-200/80 space-y-2">
               <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
                 Kelengkapan Bagian CV
               </p>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-x-4 gap-y-2">
                 {[
                   { label: "Ringkasan Profil", ok: Boolean(analysis.profile.summary) },
                   { label: "Keahlian & Alat", ok: Boolean(analysis.profile.skills) },
@@ -232,10 +252,8 @@ export default function DokumenCvAtsPage() {
                 ].map((item) => (
                   <div
                     key={item.label}
-                    className={`px-3 py-2 rounded-xl text-[11px] font-bold flex items-center gap-1.5 ${
-                      item.ok
-                        ? "bg-[#edf2f9] text-[#0f2c56]"
-                        : "bg-slate-50 text-slate-400"
+                    className={`text-xs font-bold flex items-center gap-2 ${
+                      item.ok ? "text-[#0f2c56]" : "text-slate-400"
                     }`}
                   >
                     <CheckCircle2
@@ -251,8 +269,8 @@ export default function DokumenCvAtsPage() {
           </div>
         </aside>
 
-        {/* Kolom Kanan: Stage Pratinjau Lembar Dokumen CV Ukuran A4 */}
-        <div className="xl:col-span-7 min-h-0 h-full w-full bg-slate-100/80 border border-slate-200/80 rounded-3xl p-4 sm:p-5 print:bg-transparent print:border-none print:p-0 print:block">
+        {/* Kolom Kanan: Lembar Dokumen CV Ukuran A4 Langsung tanpa Card Pembungkus */}
+        <div className="xl:col-span-7 min-h-0 h-full w-full print:block">
           <AtsCvPreview
             profile={analysis.profile}
             hideToolbar
