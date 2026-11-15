@@ -410,32 +410,29 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* RIGHT COLUMN (50% Width): Rounded Box Showcase */}
+        {/* RIGHT COLUMN (50% Width): Rounded Box Showcase (Matching Splash Screen) */}
         <div className={`hidden lg:flex w-1/2 min-h-screen p-4 xl:p-6 bg-white ${showcaseSlideClass}`}>
-          <div className="relative w-full h-full rounded-[32px] xl:rounded-[40px] bg-gradient-to-br from-[#07152b] via-[#0f2c56] to-[#1a4380] flex flex-col justify-center p-12 xl:p-16 text-white overflow-hidden">
-            {/* Soft Ambient Radial Glow */}
-            <div className="absolute inset-0 pointer-events-none opacity-55 bg-[radial-gradient(ellipse_at_center,rgba(206,39,49,0.28)_0%,transparent_72%)] animate-pulse-glow" />
-            <div className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#ce2731]/25 blur-3xl pointer-events-none" />
-
-            {/* Centered Graphic Showcase */}
-            <div className="relative z-10 my-auto text-center space-y-6 py-12 max-w-lg mx-auto">
-              {/* Floating Emblem Container */}
-              <div className="w-32 h-32 mx-auto relative drop-shadow-[0_25px_50px_rgba(15,44,86,0.55)] animate-float-slow">
+          <div className="relative w-full h-full rounded-[32px] xl:rounded-[40px] bg-[#0f2c56] flex flex-col items-center justify-center p-12 xl:p-16 text-white overflow-hidden">
+            {/* Centered Splash-Style Lockup */}
+            <div className="relative z-10 flex items-center gap-4 sm:gap-5 px-6 max-w-md mx-auto">
+              {/* Logo di Kiri */}
+              <div className="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 animate-float-slow">
                 <Image
                   src="/logo-white.webp"
-                  alt="Logo Pasbana AI"
+                  alt="Logo Pasbana"
                   fill
                   className="object-contain"
                   priority
                 />
               </div>
 
-              <div className="space-y-3 animate-fade-in-up delay-200">
-                <h2 className="text-3xl xl:text-4xl font-black tracking-tight text-white leading-tight uppercase">
-                  PASBANA AI
+              {/* Nama & Tagline di Kanan */}
+              <div className="space-y-1.5 text-left animate-fade-in-up delay-200">
+                <h2 className="text-3xl sm:text-4xl font-black tracking-wider text-white leading-none uppercase">
+                  PASBANA
                 </h2>
-                <p className="text-sm text-slate-200/95 font-medium leading-relaxed">
-                  Platform Evaluasi CV Objektif 5 Dimensi, Panduan Kuesioner Standar ATS &amp; Rekomendasi Lowongan Kerja Terintegrasi.
+                <p className="text-[11px] sm:text-xs font-bold text-white/80 uppercase tracking-[0.22em]">
+                  KARIR YANG PAS BANA
                 </p>
               </div>
             </div>
