@@ -67,10 +67,18 @@ export function AppSidebar({
       const storedAnalysis = localStorage.getItem("cm_analysis");
       if (storedAnalysis) {
         const parsed: CVAnalysisResult = JSON.parse(storedAnalysis);
-        if (parsed?.profile?.fullName) {
+        const rawCvName = parsed?.fileName
+          ? parsed.fileName.replace(/\.[^/.]+$/, "").replace(/[-_]+/g, " ").trim()
+          : parsed?.profile?.fullName?.trim();
+        if (rawCvName) {
+          const judul = parsed?.fileName
+            ? rawCvName
+            : /^(cv|resume)\b/i.test(rawCvName)
+            ? rawCvName
+            : `CV ${rawCvName}`;
           const itemAktif: ItemRiwayatEvaluasi = {
             id: parsed.cvId || "eval-terbaru",
-            judul: `CV ${parsed.profile.fullName}`,
+            judul,
             skor: parsed.overallScore || 85,
             tanggal: "Aktif",
           };
@@ -346,7 +354,7 @@ export function AppSidebar({
                 )}
 
                 {/* History Items List */}
-                <div className="space-y-1">
+                <div className="space-y-1.5">
                   {riwayatTersaring.length === 0 ? (
                     <p className="px-2 py-3 text-[11px] text-slate-500 bg-white/60 rounded-xl">
                       Tidak ada riwayat evaluasi yang sesuai.
@@ -361,26 +369,21 @@ export function AppSidebar({
                         onKeyDown={(e) => {
                           if (e.key === "Enter" || e.key === " ") handlePilihRiwayat();
                         }}
-                        className="group flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-xs bg-white hover:bg-[#0f2c56] text-slate-700 hover:text-white border border-slate-200 transition-colors cursor-pointer"
+                        className="group flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[13px] font-semibold transition-all text-slate-700 hover:bg-white hover:text-[#0f2c56] cursor-pointer"
                       >
-                        <div className="flex items-center gap-2 min-w-0">
-                          <FileCheck className="w-3.5 h-3.5 text-[#0f2c56] group-hover:text-white shrink-0" />
-                          <span className="truncate font-medium">{item.judul}</span>
+                        <FileCheck className="w-[18px] h-[18px] shrink-0" aria-hidden="true" />
+                        <div className="flex-1 min-w-0">
+                          <p className="truncate leading-tight">{item.judul}</p>
                         </div>
-                        <div className="flex items-center gap-1 shrink-0">
-                          <span className="px-1.5 py-0.5 rounded bg-[#ce2731] text-white font-mono text-[10px] font-bold">
-                            {item.skor}
-                          </span>
-                          <button
-                            type="button"
-                            onClick={(e) => handleHapusRiwayat(item.id, e)}
-                            className="opacity-0 group-hover:opacity-100 p-1 text-white/70 hover:text-white transition-opacity"
-                            title="Hapus riwayat ini"
-                            aria-label={`Hapus ${item.judul}`}
-                          >
-                            <Trash2 className="w-3 h-3" />
-                          </button>
-                        </div>
+                        <button
+                          type="button"
+                          onClick={(e) => handleHapusRiwayat(item.id, e)}
+                          className="opacity-0 group-hover:opacity-100 p-1 text-slate-400 hover:text-[#ce2731] transition-opacity shrink-0"
+                          title="Hapus riwayat ini"
+                          aria-label={`Hapus ${item.judul}`}
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
                       </div>
                     ))
                   )}

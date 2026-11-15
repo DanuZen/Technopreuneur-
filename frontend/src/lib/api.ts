@@ -101,12 +101,17 @@ class ApiClient {
         method: "POST",
         body: formData,
       });
-      this.saveAnalysis(res);
-      return res;
+      const resultWithFileName: CVAnalysisResult = {
+        ...res,
+        fileName: res.fileName || file.name,
+      };
+      this.saveAnalysis(resultWithFileName);
+      return resultWithFileName;
     } catch {
       // Fallback local mock simulation when backend API is offline
       const mockResult: CVAnalysisResult = {
         cvId: `cv-${Date.now()}`,
+        fileName: file.name,
         overallScore: 88,
         dimensions: {
           structure: 92,

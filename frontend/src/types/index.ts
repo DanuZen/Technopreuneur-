@@ -66,6 +66,7 @@ export interface CVProfileData {
 
 export interface CVAnalysisResult {
   cvId: string;
+  fileName?: string;
   overallScore: number; // 0-100
   dimensions: CVDimensionScore;
   strengths: string[];
