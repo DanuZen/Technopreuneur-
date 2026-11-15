@@ -344,20 +344,20 @@ export default function AboutPage() {
                   }`}
                 >
                   {/* Left: Pop-Out Portrait Stage */}
-                  <div className="relative w-32 h-36 -mt-8 sm:mt-0 sm:self-center shrink-0 rounded-b-2xl overflow-hidden flex items-end justify-center">
+                  <div className="relative w-36 h-44 sm:w-40 sm:h-48 -mt-8 sm:mt-0 sm:self-center shrink-0 rounded-b-2xl overflow-hidden flex items-end justify-center">
                     <div
-                      className={`absolute inset-x-0 bottom-0 h-28 rounded-2xl transition-colors duration-500 ${
-                        isSelected ? "bg-[#ce2731]" : "bg-[#edf2f9]"
+                      className={`absolute inset-x-0 bottom-0 h-36 sm:h-40 rounded-2xl transition-colors duration-500 ${
+                        isSelected ? "bg-white" : "bg-[#edf2f9]"
                       }`}
                     />
                     <Image
                       src="/team-danu.png"
                       alt={member.name}
-                      width={160}
-                      height={280}
-                      className={`relative z-10 w-28 h-28 object-cover object-top transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                      width={200}
+                      height={340}
+                      className={`relative z-10 w-32 h-36 sm:w-36 sm:h-40 object-cover object-top transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                         isSelected
-                          ? "grayscale-0 -translate-y-3 scale-110"
+                          ? "grayscale-0 -translate-y-4 scale-110"
                           : "grayscale opacity-90 translate-y-1 scale-95"
                       }`}
                     />
