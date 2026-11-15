@@ -198,7 +198,7 @@ export function CvEvaluationChat({ analysis, onResetUpload }: CvEvaluationChatPr
       </div>
 
       {/* Chat Messages Thread (Only this section scrolls) */}
-      <div className="flex-1 min-h-0 overflow-y-auto scrollbar-halus space-y-5 py-2 pr-1">
+      <div className="flex-1 min-h-0 overflow-y-auto scrollbar-none space-y-5 py-2 pr-1">
         {messages.map((msg) => {
           if (msg.sender === "user") {
             return (
