@@ -380,7 +380,7 @@ export function CompanyProfileSubpage() {
 
       <form
         onSubmit={handleSave}
-        className="rounded-2xl border border-slate-200/80 bg-white p-5 sm:p-6 space-y-4 max-w-3xl shadow-xs"
+        className="rounded-2xl border border-slate-200/80 bg-white p-5 sm:p-6 space-y-4 w-full shadow-xs"
       >
         <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
           <div className="w-10 h-10 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center">

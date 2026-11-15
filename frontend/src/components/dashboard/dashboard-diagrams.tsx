@@ -48,7 +48,7 @@ export function CompanyFunnelDiagram({
   const shortlistDash = shortlistRatio * circumference;
 
   return (
-    <div className="morph-surface bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 space-y-4 text-[#0f2c56]">
+    <div className="morph-surface h-full flex flex-col justify-between bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 space-y-4 text-[#0f2c56]">
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
@@ -162,7 +162,7 @@ export function CompanyTrendDiagram() {
     .join(" ");
 
   return (
-    <div className="morph-surface bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 space-y-4 text-[#0f2c56]">
+    <div className="morph-surface h-full flex flex-col justify-between bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 space-y-4 text-[#0f2c56]">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-[#ce2731] text-white flex items-center justify-center shrink-0">
@@ -322,7 +322,7 @@ export function AdminModerationDiagram({
   const approvedDash = (approvedCount / total) * circ;
 
   return (
-    <div className="morph-surface bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 space-y-4 text-[#0f2c56]">
+    <div className="morph-surface h-full flex flex-col justify-between bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 space-y-4 text-[#0f2c56]">
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
@@ -421,7 +421,7 @@ export function AdminPipelineDiagram() {
     .join(" ");
 
   return (
-    <div className="morph-surface bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 space-y-4 text-[#0f2c56]">
+    <div className="morph-surface h-full flex flex-col justify-between bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 space-y-4 text-[#0f2c56]">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-[#ce2731] text-white flex items-center justify-center shrink-0">
