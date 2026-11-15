@@ -4,7 +4,6 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import {
   Send,
-  Sparkles,
   FileText,
   UploadCloud,
   CheckCircle2,
@@ -167,19 +166,8 @@ export function CvEvaluationChat({ analysis, onResetUpload }: CvEvaluationChatPr
   return (
     <div className="flex flex-col flex-1 min-h-0 overflow-hidden gap-3">
       {/* Top Action Bar for Current Evaluated CV */}
-      <div className="shrink-0 flex flex-wrap items-center justify-between gap-3 pb-3.5 border-b border-slate-200/80">
-        <div className="flex items-center gap-2.5 min-w-0">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0f2c56] text-white text-xs font-bold truncate max-w-[260px] sm:max-w-md">
-            <Sparkles className="w-3.5 h-3.5 text-[#ce2731] shrink-0" />
-            <span className="truncate">{cvDisplayName}</span>
-          </span>
-          <span className="px-2.5 py-1 rounded-full bg-[#ce2731] text-white text-xs font-mono font-bold shrink-0">
-            Skor {analysis.overallScore}/100
-          </span>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-2">
-          <Link
+      <div className="shrink-0 flex flex-wrap items-center justify-end gap-2 pb-3.5 border-b border-slate-200/80">
+        <Link
             href="/user/dashboard/dokumen"
             className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 text-[#0f2c56] border border-slate-200 text-xs font-bold transition-colors"
           >
@@ -194,7 +182,6 @@ export function CvEvaluationChat({ analysis, onResetUpload }: CvEvaluationChatPr
             <UploadCloud className="w-3.5 h-3.5" />
             <span>Evaluasi CV Baru</span>
           </button>
-        </div>
       </div>
 
       {/* Chat Messages Thread (Only this section scrolls) */}
