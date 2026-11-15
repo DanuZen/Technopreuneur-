@@ -156,7 +156,7 @@ export function CompanyJobsSubpage() {
       {showForm && (
         <form
           onSubmit={handleAdd}
-          className="rounded-2xl border border-slate-200/80 bg-white p-5 space-y-4 shadow-xs"
+          className="rounded-2xl border border-slate-200 bg-white p-5 space-y-4 shadow-xs"
         >
           <p className="text-xs font-extrabold text-[#0f2c56] uppercase tracking-wider">
             Publikasikan Lowongan Baru
@@ -202,7 +202,7 @@ export function CompanyJobsSubpage() {
         {jobs.map((job) => (
           <div
             key={job.id}
-            className="morph-surface rounded-2xl border border-slate-200/80 bg-white p-5 flex flex-col justify-between gap-4 shadow-xs"
+            className="morph-surface rounded-2xl border border-slate-200 bg-white p-5 flex flex-col justify-between gap-4 shadow-xs"
           >
             <div className="space-y-2">
               <div className="flex items-center justify-between gap-2">
@@ -292,8 +292,8 @@ export function CompanyCandidatesSubpage() {
 
       <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-4 lg:overflow-hidden">
         {/* Tabel List Ringkas (Tanpa Kolom Aksi) */}
-        <div className="flex-1 min-h-0 flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-xs">
-          <div className="shrink-0 grid grid-cols-12 gap-2 px-4 py-3 border-b border-slate-100 bg-slate-50/70 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
+        <div className="flex-1 min-h-0 flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs">
+          <div className="shrink-0 grid grid-cols-12 gap-2 px-4 py-3 border-b border-slate-100 bg-slate-50 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
             <span className="col-span-5">Kandidat</span>
             <span className="col-span-4">Posisi Dilamar</span>
             <span className="col-span-3 text-right">Skor &amp; Status</span>
@@ -308,8 +308,8 @@ export function CompanyCandidatesSubpage() {
                   onClick={() => setSelectedId(cand.id)}
                   className={`w-full text-left grid grid-cols-12 gap-2 items-center px-4 py-3.5 transition-colors cursor-pointer ${
                     isSelected
-                      ? "bg-blue-50/70 border-l-4 border-l-[#0f2c56]"
-                      : "hover:bg-slate-50/80 border-l-4 border-l-transparent"
+                      ? "bg-[#edf2f9] border-l-4 border-l-[#0f2c56]"
+                      : "hover:bg-slate-50 border-l-4 border-l-transparent"
                   }`}
                 >
                   <div className="col-span-5 min-w-0">
@@ -338,7 +338,7 @@ export function CompanyCandidatesSubpage() {
 
         {/* Live Side Detail Panel Card */}
         {selected && (
-          <aside className="w-full lg:w-80 shrink-0 rounded-2xl border border-slate-200/80 bg-white p-5 flex flex-col justify-between gap-4 shadow-xs">
+          <aside className="w-full lg:w-80 shrink-0 rounded-2xl border border-slate-200 bg-white p-5 flex flex-col justify-between gap-4 shadow-xs">
             <div className="space-y-3">
               <div className="flex items-center justify-between gap-2">
                 <span className="px-2.5 py-1 rounded-full bg-[#0f2c56] text-white text-[11px] font-bold">
@@ -443,7 +443,7 @@ export function CompanyProfileSubpage() {
 
       <form
         onSubmit={handleSave}
-        className="rounded-2xl border border-slate-200/80 bg-white p-5 sm:p-6 space-y-4 w-full shadow-xs"
+        className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 space-y-4 w-full shadow-xs"
       >
         <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
           <div className="w-10 h-10 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center">
@@ -569,8 +569,8 @@ export function AdminModerationSubpage() {
 
       <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-4 lg:overflow-hidden">
         {/* Tabel List Ringkas (Tanpa Kolom Aksi) */}
-        <div className="flex-1 min-h-0 flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-xs">
-          <div className="shrink-0 grid grid-cols-12 gap-2 px-4 py-3 border-b border-slate-100 bg-slate-50/70 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
+        <div className="flex-1 min-h-0 flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs">
+          <div className="shrink-0 grid grid-cols-12 gap-2 px-4 py-3 border-b border-slate-100 bg-slate-50 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
             <span className="col-span-5">Posisi Lowongan</span>
             <span className="col-span-4">Perusahaan Mitra</span>
             <span className="col-span-3 text-right">Status</span>
@@ -585,8 +585,8 @@ export function AdminModerationSubpage() {
                   onClick={() => setSelectedId(item.id)}
                   className={`w-full text-left grid grid-cols-12 gap-2 items-center px-4 py-3.5 transition-colors cursor-pointer ${
                     isSelected
-                      ? "bg-blue-50/70 border-l-4 border-l-[#0f2c56]"
-                      : "hover:bg-slate-50/80 border-l-4 border-l-transparent"
+                      ? "bg-[#edf2f9] border-l-4 border-l-[#0f2c56]"
+                      : "hover:bg-slate-50 border-l-4 border-l-transparent"
                   }`}
                 >
                   <div className="col-span-5 min-w-0 flex items-center gap-2">
@@ -623,7 +623,7 @@ export function AdminModerationSubpage() {
 
         {/* Live Side Detail Panel Card */}
         {selected && (
-          <aside className="w-full lg:w-80 shrink-0 rounded-2xl border border-slate-200/80 bg-white p-5 flex flex-col justify-between gap-4 shadow-xs">
+          <aside className="w-full lg:w-80 shrink-0 rounded-2xl border border-slate-200 bg-white p-5 flex flex-col justify-between gap-4 shadow-xs">
             <div className="space-y-3">
               <span
                 className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-bold uppercase ${
@@ -734,9 +734,9 @@ export function AdminAuditSubpage() {
         {audits.map((a) => (
           <div
             key={a.id}
-            className="morph-surface rounded-2xl border border-slate-200/80 bg-white p-5 space-y-2 shadow-xs"
+            className="morph-surface rounded-2xl border border-slate-200 bg-white p-5 space-y-2 shadow-xs"
           >
-            <div className="w-9 h-9 rounded-xl bg-[#0f2c56]/10 text-[#0f2c56] flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center">
               <FileCheck className="w-4 h-4" />
             </div>
             <p className="text-xs font-bold text-slate-500">{a.metric}</p>
@@ -746,7 +746,7 @@ export function AdminAuditSubpage() {
         ))}
       </div>
 
-      <div className="rounded-2xl border border-slate-200/80 bg-white p-5 space-y-3 shadow-xs">
+      <div className="rounded-2xl border border-slate-200 bg-white p-5 space-y-3 shadow-xs">
         <p className="text-xs font-extrabold text-[#0f2c56] uppercase tracking-wider">
           Manajemen Akun &amp; Status Aktivasi
         </p>
@@ -754,7 +754,7 @@ export function AdminAuditSubpage() {
           {accounts.map((acc) => (
             <div
               key={acc.id}
-              className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/60"
+              className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200"
             >
               <div>
                 <div className="flex items-center gap-2">
@@ -781,7 +781,7 @@ export function AdminAuditSubpage() {
         </div>
       </div>
 
-      <div className="rounded-2xl border border-slate-200/80 bg-white p-5 flex items-center justify-between gap-4">
+      <div className="rounded-2xl border border-slate-200 bg-white p-5 flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <AlertTriangle className="w-5 h-5 text-[#ce2731] shrink-0" />
           <div>
@@ -825,7 +825,7 @@ export function AdminReportSubpage() {
       />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="rounded-2xl border border-slate-200/80 bg-white p-5 space-y-2 shadow-xs">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 space-y-2 shadow-xs">
           <div className="flex items-center gap-2 text-[#0f2c56]">
             <Users className="w-4 h-4" />
             <span className="text-xs font-extrabold uppercase">Pertumbuhan Pengguna</span>
@@ -836,7 +836,7 @@ export function AdminReportSubpage() {
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200/80 bg-white p-5 space-y-2 shadow-xs">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 space-y-2 shadow-xs">
           <div className="flex items-center gap-2 text-[#ce2731]">
             <ShieldCheck className="w-4 h-4" />
             <span className="text-xs font-extrabold uppercase">Kepatuhan Privasi</span>
@@ -848,7 +848,7 @@ export function AdminReportSubpage() {
         </div>
       </div>
 
-      <div className="rounded-2xl border border-slate-200/80 bg-white p-5 flex items-center gap-3">
+      <div className="rounded-2xl border border-slate-200 bg-white p-5 flex items-center gap-3">
         <Sparkles className="w-5 h-5 text-[#0f2c56] shrink-0" />
         <p className="text-xs text-slate-600">
           Gunakan tombol <strong>Cetak Laporan</strong> di kanan atas untuk mengekspor ringkasan periodik dalam format PDF A4.
