@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { UploadCloud, FileSpreadsheet, ArrowUpRight } from "lucide-react";
+import { UploadCloud, FileSpreadsheet, ArrowUpRight, Edit3, Printer } from "lucide-react";
 import { api } from "@/lib/api";
 import { CVAnalysisResult } from "@/types";
 import { AtsCvPreview } from "@/components/dashboard/ats-cv-preview";
@@ -107,10 +107,30 @@ export default function DokumenCvAtsPage() {
         titleLine1="Pratinjau & cetak CV"
         titleLine2Prefix="dengan format"
         titleHighlight="siap lamaran!"
+        rightSlot={
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => router.push("/user/dashboard/onboarding")}
+              className="px-4 py-2.5 bg-white hover:bg-slate-50 text-[#0f2c56] text-xs font-bold rounded-xl border border-slate-200 transition flex items-center gap-1.5 cursor-pointer"
+            >
+              <Edit3 className="w-3.5 h-3.5" aria-hidden="true" />
+              <span>Edit Data</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => window.print()}
+              className="px-4 py-2.5 bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5 cursor-pointer"
+            >
+              <Printer className="w-3.5 h-3.5" aria-hidden="true" />
+              <span>Cetak / Unduh PDF</span>
+            </button>
+          </div>
+        }
       />
       <AtsCvPreview
         profile={analysis.profile}
-        onEdit={() => router.push("/user/dashboard/onboarding")}
+        hideToolbar
       />
     </main>
   );

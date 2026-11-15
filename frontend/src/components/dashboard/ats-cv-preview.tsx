@@ -6,9 +6,10 @@ import { CVProfileData } from "@/types";
 interface AtsCvPreviewProps {
   profile: CVProfileData;
   onEdit?: () => void;
+  hideToolbar?: boolean;
 }
 
-export function AtsCvPreview({ profile, onEdit }: AtsCvPreviewProps) {
+export function AtsCvPreview({ profile, onEdit, hideToolbar = false }: AtsCvPreviewProps) {
   const handlePrint = () => {
     window.print();
   };
@@ -16,36 +17,38 @@ export function AtsCvPreview({ profile, onEdit }: AtsCvPreviewProps) {
   return (
     <div className="space-y-4">
       {/* Action Toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-white rounded-2xl border border-slate-200/90 shadow-sm print:hidden">
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" aria-hidden="true" />
-          <span className="text-xs font-semibold text-slate-800">
-            Format ATS 1-Kolom Bersih Terverifikasi
-          </span>
-        </div>
+      {!hideToolbar && (
+        <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-white rounded-2xl border border-slate-200/90 shadow-sm print:hidden">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" aria-hidden="true" />
+            <span className="text-xs font-semibold text-slate-800">
+              Format ATS 1-Kolom Bersih Terverifikasi
+            </span>
+          </div>
 
-        <div className="flex items-center gap-2">
-          {onEdit && (
+          <div className="flex items-center gap-2">
+            {onEdit && (
+              <button
+                type="button"
+                onClick={onEdit}
+                className="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-lg border border-slate-200 transition flex items-center gap-1.5 min-h-[36px]"
+              >
+                <Edit3 className="w-3.5 h-3.5 text-slate-600" aria-hidden="true" />
+                <span>Edit Data</span>
+              </button>
+            )}
+
             <button
               type="button"
-              onClick={onEdit}
-              className="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-lg border border-slate-200 transition flex items-center gap-1.5 min-h-[36px]"
+              onClick={handlePrint}
+              className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg shadow-sm transition flex items-center gap-1.5 min-h-[36px]"
             >
-              <Edit3 className="w-3.5 h-3.5 text-slate-600" aria-hidden="true" />
-              <span>Edit Data</span>
+              <Printer className="w-3.5 h-3.5" aria-hidden="true" />
+              <span>Cetak / Unduh PDF</span>
             </button>
-          )}
-
-          <button
-            type="button"
-            onClick={handlePrint}
-            className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg shadow-sm transition flex items-center gap-1.5 min-h-[36px]"
-          >
-            <Printer className="w-3.5 h-3.5" aria-hidden="true" />
-            <span>Cetak / Unduh PDF</span>
-          </button>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* ATS DOCUMENT PAPER SHEET */}
       <div className="bg-white p-8 sm:p-14 rounded-2xl border border-slate-200 shadow-md font-sans text-slate-900 space-y-6 max-w-4xl mx-auto print:shadow-none print:border-none print:p-0">
