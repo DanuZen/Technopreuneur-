@@ -228,32 +228,8 @@ export default function LoginPage() {
       >
         {/* LEFT COLUMN (50% Width): Full-Screen Clean Form Panel */}
         <div className="w-full lg:w-1/2 h-full lg:min-h-screen lg:h-auto p-6 sm:p-8 lg:p-12 xl:p-16 flex flex-col justify-between bg-white z-10 overflow-y-auto scrollbar-none">
-          {/* Top Brand Header */}
-          <div className="flex items-center justify-between animate-fade-in-up delay-100">
-            <Link
-              href="/"
-              onClick={handleBackToHome}
-              className="flex items-center gap-3 group cursor-pointer"
-            >
-              <div className="w-10 h-10 relative shrink-0 transition-transform duration-300 group-hover:scale-105">
-                <Image
-                  src="/logo-navy.webp"
-                  alt="Logo Pasbana AI"
-                  fill
-                  className="object-contain"
-                  priority
-                />
-              </div>
-              <div>
-                <p className="font-black text-2xl tracking-tight text-[#0f2c56] leading-none group-hover:text-[#ce2731] transition-colors uppercase">
-                  PASBANA <span className="text-[#ce2731]">AI</span>
-                </p>
-                <p className="text-[9px] font-bold text-[#0f2c56]/70 tracking-widest uppercase mt-0.5">
-                  KARIR YANG PAS BANA
-                </p>
-              </div>
-            </Link>
-
+          {/* Top Utility Header */}
+          <div className="flex items-center justify-end animate-fade-in-up delay-100">
             <button
               type="button"
               onClick={() => setShowFaqModal(true)}
