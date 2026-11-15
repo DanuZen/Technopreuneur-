@@ -188,3 +188,4 @@ export default function OnboardingPage() {
     </div>
   );
 }
+
