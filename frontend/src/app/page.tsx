@@ -357,6 +357,91 @@ export default function HomePage() {
     }
   };
 
+  const getMorphLogoConfig = (slide: number): { style: React.CSSProperties; isWhite: boolean } => {
+    switch (slide) {
+      case 0:
+        return {
+          isWhite: true,
+          style: {
+            top: "28px",
+            left: "calc(50% + 40px)",
+            width: "44px",
+            height: "44px",
+            transform: "rotate(0deg)",
+          },
+        };
+      case 1:
+        return {
+          isWhite: true,
+          style: {
+            top: "28px",
+            left: "calc(100% - 92px)",
+            width: "64px",
+            height: "64px",
+            transform: "rotate(6deg)",
+          },
+        };
+      case 2:
+        return {
+          isWhite: true,
+          style: {
+            top: "28px",
+            left: "calc(50% + 40px)",
+            width: "52px",
+            height: "52px",
+            transform: "rotate(0deg)",
+          },
+        };
+      case 3:
+        return {
+          isWhite: true,
+          style: {
+            top: "28px",
+            left: "calc(100% - 104px)",
+            width: "72px",
+            height: "72px",
+            transform: "rotate(-6deg)",
+          },
+        };
+      case 4:
+        return {
+          isWhite: false,
+          style: {
+            top: "24px",
+            left: "calc(100% - 92px)",
+            width: "56px",
+            height: "56px",
+            transform: "rotate(0deg)",
+          },
+        };
+      case 5:
+        return {
+          isWhite: true,
+          style: {
+            top: "28px",
+            left: "calc(100% - 88px)",
+            width: "48px",
+            height: "48px",
+            transform: "rotate(6deg)",
+          },
+        };
+      case 6:
+      default:
+        return {
+          isWhite: false,
+          style: {
+            top: "24px",
+            left: "calc(100% - 100px)",
+            width: "64px",
+            height: "64px",
+            transform: "rotate(0deg)",
+          },
+        };
+    }
+  };
+
+  const morphLogo = getMorphLogoConfig(activeSlide);
+
   return (
     <div
       onTouchStart={handleTouchStart}
@@ -376,6 +461,36 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* GLOBAL PERSISTENT MORPHING LOGO (Desktop lg+): Changes size, position & color per slide */}
+      <div
+        className="hidden lg:block absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 pointer-events-none z-[25]"
+        aria-hidden="true"
+      >
+        <div className="relative w-full h-full">
+          <div
+            className="absolute transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+            style={morphLogo.style}
+          >
+            <Image
+              src="/logo-white.webp"
+              alt=""
+              fill
+              className={`object-contain transition-opacity duration-500 ${
+                morphLogo.isWhite ? "opacity-95" : "opacity-0"
+              }`}
+            />
+            <Image
+              src="/logo-navy.webp"
+              alt=""
+              fill
+              className={`object-contain transition-opacity duration-500 ${
+                morphLogo.isWhite ? "opacity-0" : "opacity-95"
+              }`}
+            />
+          </div>
+        </div>
+      </div>
+
       {/* =====================================================================
           SLIDE 0 (#beranda): HERO SECTION (Matching Video 00:00 - 00:03)
           Tight Edge-to-Edge Gap + Left Headline + Right Morphing Isometric Stage
@@ -388,14 +503,8 @@ export default function HomePage() {
           <div
             className={`lg:col-span-6 px-4 sm:px-8 lg:px-12 space-y-5 sm:space-y-6 text-left ${getChildAnimClass(0, "left", "delay-75")}`}
           >
-            <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-[#0f2c56]">
-              <Image
-                src="/logo-navy.webp"
-                alt="Pasbana AI"
-                width={20}
-                height={20}
-                className="object-contain"
-              />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white">
+              <span className="w-2 h-2 rounded-full bg-[#ce2731]" />
               <span>Pasbana AI • Evaluasi CV &amp; Karir</span>
             </div>
 
@@ -593,16 +702,9 @@ export default function HomePage() {
           <div
             className={`lg:col-span-6 space-y-4 sm:space-y-5 text-left lg:pl-8 ${getChildAnimClass(1, "right", "delay-150")}`}
           >
-            <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-white">
-              <Image
-                src="/logo-white.webp"
-                alt="Pasbana AI"
-                width={20}
-                height={20}
-                className="object-contain"
-              />
-              <span>Pemeriksa Format ATS</span>
-            </div>
+            <span className="inline-block px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-extrabold uppercase tracking-wider text-white">
+              Pemeriksa Format ATS
+            </span>
             <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-white leading-[1.14]">
               Berhenti mengirim CV
               <br />
@@ -635,16 +737,9 @@ export default function HomePage() {
           <div
             className={`lg:col-span-6 px-4 sm:px-8 lg:px-12 space-y-4 sm:space-y-5 text-left ${getChildAnimClass(2, "left", "delay-75")}`}
           >
-            <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
-              <Image
-                src="/logo-navy.webp"
-                alt="Pasbana AI"
-                width={20}
-                height={20}
-                className="object-contain"
-              />
-              <span>Ekosistem Persiapan Karir</span>
-            </div>
+            <span className="inline-block text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
+              Ekosistem Persiapan Karir
+            </span>
             <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-[#0f2c56] leading-[1.14]">
               Tingkatkan peluang lolos
               <br />
@@ -813,16 +908,9 @@ export default function HomePage() {
           <div
             className={`lg:col-span-6 space-y-4 sm:space-y-5 text-left lg:pl-10 ${getChildAnimClass(3, "right", "delay-150")}`}
           >
-            <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-white">
-              <Image
-                src="/logo-white.webp"
-                alt="Pasbana AI"
-                width={20}
-                height={20}
-                className="object-contain"
-              />
-              <span>Asisten Kalimat Aktif</span>
-            </div>
+            <span className="inline-block px-3.5 py-1 rounded-full bg-[#ce2731] text-xs font-extrabold uppercase tracking-wider text-white">
+              Asisten Kalimat Aktif
+            </span>
             <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-white leading-[1.14]">
               Pahami bagaimana Struktur
               <br />
@@ -859,16 +947,9 @@ export default function HomePage() {
         >
           {/* Top-Left Section Header */}
           <div className={`space-y-1.5 text-left max-w-2xl ${getChildAnimClass(4, "down", "delay-75")}`}>
-            <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
-              <Image
-                src="/logo-navy.webp"
-                alt="Pasbana AI"
-                width={20}
-                height={20}
-                className="object-contain"
-              />
-              <span>Fitur &amp; Prinsip</span>
-            </div>
+            <span className="text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
+              Fitur &amp; Prinsip
+            </span>
             <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#0f2c56] leading-[1.15]">
               Optimalkan kesiapan karir Anda dengan perangkat evaluasi presisi
             </h2>
@@ -973,16 +1054,6 @@ export default function HomePage() {
             className={`lg:col-span-6 space-y-5 text-left ${getChildAnimClass(5, "left", "delay-100")}`}
           >
             <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white/90">
-                <Image
-                  src="/logo-white.webp"
-                  alt="Pasbana AI"
-                  width={20}
-                  height={20}
-                  className="object-contain"
-                />
-                <span>Pencocokan Cerdas Pasbana AI</span>
-              </div>
               <p className="text-xs text-slate-300">
                 Berhenti membuang waktu, biarkan sistem mengevaluasi secara otomatis
               </p>
@@ -1093,23 +1164,11 @@ export default function HomePage() {
         <div className="w-full h-full mx-auto flex flex-col justify-center">
           {/* Top Heading + 5 Expandable Horizontal Rows on Open White Canvas */}
           <div className={`px-4 sm:px-8 space-y-6 ${getChildAnimClass(6, "down", "delay-75")}`}>
-            <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
-                <Image
-                  src="/logo-navy.webp"
-                  alt="Pasbana AI"
-                  width={20}
-                  height={20}
-                  className="object-contain"
-                />
-                <span>Tentang &amp; Pertanyaan Umum</span>
-              </div>
-              <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#0f2c56] leading-[1.14] max-w-xl text-left">
-                Seluruh perangkat cerdas ini juga
-                <br />
-                siap memetakan peluang karir terbaik Anda
-              </h2>
-            </div>
+            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#0f2c56] leading-[1.14] max-w-xl text-left">
+              Seluruh perangkat cerdas ini juga
+              <br />
+              siap memetakan peluang karir terbaik Anda
+            </h2>
 
             <div className="border-t border-slate-200">
               {ACCORDION_ITEMS.map((item) => {
