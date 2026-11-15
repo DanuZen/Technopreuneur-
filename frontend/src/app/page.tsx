@@ -434,17 +434,24 @@ export default function HomePage() {
           >
             <svg
               viewBox="0 0 560 420"
-              className="w-full max-w-[540px] h-auto"
+              className="w-full max-w-[540px] h-auto overflow-visible"
               role="img"
               aria-label="Ilustrasi Isometrik Evaluasi CV dan Pencocokan Karir"
             >
-              <line x1="80" y1="310" x2="360" y2="150" stroke="#1e3a68" strokeWidth="1.5" strokeDasharray="4 4" />
-              <line x1="180" y1="370" x2="460" y2="210" stroke="#1e3a68" strokeWidth="1.5" strokeDasharray="4 4" />
-              <line x1="120" y1="170" x2="420" y2="340" stroke="#1e3a68" strokeWidth="1.5" strokeDasharray="4 4" />
+              {/* Animated Isometric Grid Lines */}
+              <line x1="80" y1="310" x2="360" y2="150" stroke="#1e3a68" strokeWidth="1.5" strokeDasharray="4 4">
+                <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="3s" repeatCount="indefinite" />
+              </line>
+              <line x1="180" y1="370" x2="460" y2="210" stroke="#1e3a68" strokeWidth="1.5" strokeDasharray="4 4">
+                <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="3s" repeatCount="indefinite" />
+              </line>
+              <line x1="120" y1="170" x2="420" y2="340" stroke="#1e3a68" strokeWidth="1.5" strokeDasharray="4 4">
+                <animate attributeName="stroke-dashoffset" from="0" to="16" dur="3s" repeatCount="indefinite" />
+              </line>
 
-              {/* Main Isometric Tablet / Dashboard Board (100% Solid Colors) */}
+              {/* Main Isometric CV Document Board (100% Solid Colors) */}
               <polygon
-                points="190,195 365,95 495,170 320,270"
+                points="190,196 365,96 495,171 320,271"
                 fill="#ce2731"
               />
               <polygon
@@ -453,71 +460,82 @@ export default function HomePage() {
                 stroke="#0f2c56"
                 strokeWidth="2"
               />
-              <polygon
-                points="280,195 385,135 425,158 320,218"
-                fill="#ce2731"
-              />
-              <circle cx="340" cy="145" r="14" fill="#ffffff" stroke="#0f2c56" strokeWidth="2" />
-              <path
-                d="M312,182 C312,164 368,164 368,182"
-                fill="#0f2c56"
-              />
+              {/* CV Header Profile Badge & Lines (aligned cleanly inside card) */}
+              <ellipse cx="322" cy="144" rx="22" ry="13" fill="#ce2731" />
+              <circle cx="322" cy="136" r="7" fill="#ffffff" />
+              <line x1="352" y1="138" x2="408" y2="170" stroke="#0f2c56" strokeWidth="4" strokeLinecap="round" />
+              <line x1="340" y1="148" x2="386" y2="174" stroke="#ce2731" strokeWidth="3" strokeLinecap="round" />
+              {/* CV Body Section Lines */}
+              <line x1="252" y1="184" x2="352" y2="241" stroke="#0f2c56" strokeWidth="3" strokeLinecap="round" />
+              <line x1="274" y1="171" x2="374" y2="228" stroke="#cbd5e1" strokeWidth="2.5" strokeLinecap="round" />
+              <line x1="296" y1="158" x2="358" y2="194" stroke="#cbd5e1" strokeWidth="2.5" strokeLinecap="round" />
 
-              {/* Floating Top-Right Mini Isometric Card */}
-              <polygon
-                points="405,68 465,34 510,60 450,94"
-                fill="#ffffff"
-                stroke="#0f2c56"
-                strokeWidth="1.5"
-              />
-              <line x1="428" y1="66" x2="462" y2="47" stroke="#0f2c56" strokeWidth="2.5" strokeLinecap="round" />
-              <line x1="436" y1="74" x2="478" y2="50" stroke="#ce2731" strokeWidth="2.5" strokeLinecap="round" />
+              {/* Floating Top-Right Mini Isometric Card (ATS Verified) */}
+              <g className="animate-float">
+                <polygon
+                  points="405,68 465,34 512,61 452,95"
+                  fill="#ffffff"
+                  stroke="#0f2c56"
+                  strokeWidth="1.5"
+                />
+                <circle cx="445" cy="64" r="7" fill="#ce2731" />
+                <path d="M441.5,64 L444,66.5 L449,61.5" fill="none" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                <line x1="458" y1="57" x2="482" y2="44" stroke="#0f2c56" strokeWidth="2.5" strokeLinecap="round" />
+              </g>
 
-              {/* Floating Top-Left Mini Isometric Card */}
-              <polygon
-                points="275,92 322,65 356,85 309,112"
-                fill="#ffffff"
-                stroke="#0f2c56"
-                strokeWidth="1.5"
-              />
-              <circle cx="315" cy="88" r="5" fill="#ce2731" />
+              {/* Floating Top-Left Mini Isometric Badge */}
+              <g className="animate-float-delay">
+                <polygon
+                  points="275,92 322,65 356,85 309,112"
+                  fill="#ffffff"
+                  stroke="#0f2c56"
+                  strokeWidth="1.5"
+                />
+                <circle cx="315" cy="88" r="5.5" fill="#ce2731" />
+              </g>
 
-              {/* Floating Mid-Left Isometric Card with Solid ATS Badge */}
-              <polygon
-                points="145,245 225,198 285,233 205,280"
-                fill="#ffffff"
-                stroke="#0f2c56"
-                strokeWidth="1.5"
-              />
-              <circle cx="205" cy="232" r="7" fill="#ce2731" />
-              <line x1="218" y1="226" x2="250" y2="208" stroke="#0f2c56" strokeWidth="2.5" strokeLinecap="round" />
-              <line x1="185" y1="254" x2="235" y2="225" stroke="#0f2c56" strokeWidth="2" strokeLinecap="round" />
+              {/* Floating Mid-Left Isometric Card (Keyword Match - strictly inside bounds) */}
+              <g className="animate-float-delay">
+                <polygon
+                  points="142,245 224,198 286,234 204,281"
+                  fill="#ffffff"
+                  stroke="#0f2c56"
+                  strokeWidth="1.5"
+                />
+                <circle cx="192" cy="240" r="7" fill="#ce2731" />
+                <line x1="208" y1="231" x2="238" y2="214" stroke="#0f2c56" strokeWidth="2.5" strokeLinecap="round" />
+                <line x1="216" y1="241" x2="252" y2="221" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" />
+              </g>
 
               {/* Bottom-Left Small Isometric Tile */}
               <polygon
-                points="85,325 132,298 168,319 121,346"
+                points="88,325 134,298 170,319 124,346"
                 fill="#ce2731"
               />
 
               {/* Bottom-Center Isometric Card */}
-              <polygon
-                points="240,340 305,302 355,331 290,369"
-                fill="#ffffff"
-                stroke="#0f2c56"
-                strokeWidth="1.5"
-              />
-              <line x1="268" y1="336" x2="305" y2="315" stroke="#0f2c56" strokeWidth="2.5" strokeLinecap="round" />
-              <line x1="278" y1="345" x2="322" y2="320" stroke="#ce2731" strokeWidth="2.5" strokeLinecap="round" />
+              <g className="animate-float">
+                <polygon
+                  points="240,340 305,302 355,331 290,369"
+                  fill="#ffffff"
+                  stroke="#0f2c56"
+                  strokeWidth="1.5"
+                />
+                <line x1="268" y1="336" x2="305" y2="315" stroke="#0f2c56" strokeWidth="2.5" strokeLinecap="round" />
+                <line x1="278" y1="345" x2="322" y2="320" stroke="#ce2731" strokeWidth="2.5" strokeLinecap="round" />
+              </g>
 
-              {/* Right Isometric Cylinder Column (100% Solid, No Translucent Pink) */}
-              <path
-                d="M451,215 L451,275 A34,18 0 0,0 519,275 L519,215 Z"
-                fill="#ffffff"
-              />
-              <ellipse cx="485" cy="215" rx="34" ry="18" fill="#ce2731" />
+              {/* Right Isometric 3D Score Cylinder */}
+              <g className="animate-float">
+                <path
+                  d="M451,215 L451,275 A34,18 0 0,0 519,275 L519,215 Z"
+                  fill="#ffffff"
+                />
+                <ellipse cx="485" cy="215" rx="34" ry="18" fill="#ce2731" stroke="#ffffff" strokeWidth="1.5" />
+                <ellipse cx="485" cy="215" rx="14" ry="7" fill="#ffffff" />
+              </g>
 
-              {/* Bottom-Right Isometric Pie / Disc Badges (100% Solid) */}
-              <ellipse cx="430" cy="292" rx="18" ry="10" fill="#ffffff" />
+              {/* Bottom-Right Isometric Pie Chart */}
               <ellipse cx="385" cy="348" rx="28" ry="15" fill="#ce2731" />
               <path d="M385,348 L413,348 A28,15 0 0,0 395,334 Z" fill="#ffffff" />
             </svg>
@@ -660,67 +678,117 @@ export default function HomePage() {
           >
             <svg
               viewBox="0 0 560 400"
-              className="w-full max-w-[540px] h-auto"
+              className="w-full max-w-[540px] h-auto overflow-visible"
               role="img"
               aria-label="Ilustrasi Isometrik Kesiapan Karir dan Pemetaan Jadwal"
             >
-              <line x1="70" y1="260" x2="350" y2="100" stroke="rgba(255,255,255,0.18)" strokeWidth="1" strokeDasharray="4 4" />
-              <line x1="170" y1="340" x2="470" y2="170" stroke="rgba(255,255,255,0.18)" strokeWidth="1" strokeDasharray="4 4" />
-              <line x1="140" y1="140" x2="450" y2="320" stroke="rgba(255,255,255,0.18)" strokeWidth="1" strokeDasharray="4 4" />
+              {/* Animated Isometric Grid Lines */}
+              <line x1="70" y1="260" x2="350" y2="100" stroke="rgba(255,255,255,0.2)" strokeWidth="1.2" strokeDasharray="4 4">
+                <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="3s" repeatCount="indefinite" />
+              </line>
+              <line x1="170" y1="340" x2="470" y2="170" stroke="rgba(255,255,255,0.2)" strokeWidth="1.2" strokeDasharray="4 4">
+                <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="3s" repeatCount="indefinite" />
+              </line>
+              <line x1="140" y1="140" x2="450" y2="320" stroke="rgba(255,255,255,0.2)" strokeWidth="1.2" strokeDasharray="4 4">
+                <animate attributeName="stroke-dashoffset" from="0" to="16" dur="3s" repeatCount="indefinite" />
+              </line>
 
-              {/* Top-Left Isometric 3D Solid Red Gauge / Clock Cylinder */}
-              <ellipse cx="220" cy="162" rx="76" ry="42" fill="#ffffff" />
-              <ellipse cx="220" cy="146" rx="76" ry="42" fill="#ce2731" stroke="#ffffff" strokeWidth="2" />
-              <path d="M220,146 L220,104 A76,42 0 0,1 286,166 Z" fill="#ffffff" />
-              <line x1="220" y1="146" x2="220" y2="108" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" />
-              <line x1="220" y1="146" x2="268" y2="162" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" />
+              {/* Top-Left Isometric 3D Solid Clock / Readiness Timer */}
+              <g className="animate-float">
+                <path
+                  d="M144,146 L144,166 A76,42 0 0,0 296,166 L296,146 Z"
+                  fill="#ffffff"
+                />
+                <ellipse cx="220" cy="146" rx="76" ry="42" fill="#ce2731" stroke="#ffffff" strokeWidth="2.5" />
+                {/* Clock Hour Markers */}
+                <circle cx="220" cy="113" r="2.5" fill="#ffffff" />
+                <circle cx="280" cy="146" r="2.5" fill="#ffffff" />
+                <circle cx="220" cy="179" r="2.5" fill="#ffffff" />
+                <circle cx="160" cy="146" r="2.5" fill="#ffffff" />
+                {/* Hour Hand */}
+                <line x1="220" y1="146" x2="252" y2="156" stroke="#ffffff" strokeWidth="3.5" strokeLinecap="round" />
+                {/* Animated Rotating Minute Hand */}
+                <line x1="220" y1="146" x2="220" y2="116" stroke="#ffffff" strokeWidth="2.8" strokeLinecap="round">
+                  <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 220 146"
+                    to="360 220 146"
+                    dur="8s"
+                    repeatCount="indefinite"
+                  />
+                </line>
+                <circle cx="220" cy="146" r="5" fill="#0f2c56" stroke="#ffffff" strokeWidth="1.5" />
+              </g>
 
-              {/* Right Standing Isometric Dot-Matrix Board */}
-              <polygon
-                points="360,115 475,180 475,275 360,210"
-                fill="#ffffff"
-                stroke="#ce2731"
-                strokeWidth="1.5"
-              />
-              <circle cx="385" cy="155" r="5" fill="#e2e8f0" />
-              <circle cx="405" cy="166" r="5" fill="#e2e8f0" />
-              <circle cx="425" cy="177" r="5" fill="#cbd5e1" />
-              <circle cx="445" cy="188" r="5" fill="#e2e8f0" />
+              {/* Right Standing Isometric Calendar / Schedule Board */}
+              <g className="animate-float-delay">
+                <polygon
+                  points="355,108 475,176 475,276 355,208"
+                  fill="#ffffff"
+                  stroke="#0f2c56"
+                  strokeWidth="1.5"
+                />
+                {/* Calendar Header Strip */}
+                <polygon
+                  points="355,108 475,176 475,194 355,126"
+                  fill="#ce2731"
+                />
+                {/* Dot-Matrix Dates */}
+                <circle cx="382" cy="154" r="4.5" fill="#e2e8f0" />
+                <circle cx="403" cy="166" r="4.5" fill="#e2e8f0" />
+                <circle cx="424" cy="178" r="4.5" fill="#cbd5e1" />
+                <circle cx="445" cy="190" r="4.5" fill="#e2e8f0" />
 
-              <circle cx="385" cy="178" r="5" fill="#e2e8f0" />
-              <circle cx="405" cy="189" r="6" fill="#ce2731" />
-              <circle cx="425" cy="200" r="6" fill="#0f2c56" />
-              <circle cx="445" cy="211" r="5" fill="#cbd5e1" />
+                <circle cx="382" cy="177" r="4.5" fill="#e2e8f0" />
+                <circle cx="403" cy="189" r="6" fill="#ce2731">
+                  <animate attributeName="r" values="5.5;7.5;5.5" dur="2s" repeatCount="indefinite" />
+                </circle>
+                <circle cx="424" cy="201" r="6" fill="#0f2c56">
+                  <animate attributeName="r" values="5.5;7.5;5.5" dur="2s" begin="1s" repeatCount="indefinite" />
+                </circle>
+                <circle cx="445" cy="213" r="4.5" fill="#cbd5e1" />
 
-              <circle cx="385" cy="201" r="5" fill="#cbd5e1" />
-              <circle cx="405" cy="212" r="5" fill="#e2e8f0" />
-              <circle cx="425" cy="223" r="5" fill="#e2e8f0" />
-              <circle cx="445" cy="234" r="5" fill="#e2e8f0" />
+                <circle cx="382" cy="200" r="4.5" fill="#cbd5e1" />
+                <circle cx="403" cy="212" r="4.5" fill="#e2e8f0" />
+                <circle cx="424" cy="224" r="4.5" fill="#e2e8f0" />
+                <circle cx="445" cy="236" r="4.5" fill="#e2e8f0" />
+              </g>
 
-              {/* Center Isometric Soft Red Pill Bar */}
+              {/* Center Connecting Red Track with Animated Signal */}
               <polygon
                 points="285,220 315,202 415,260 385,278"
                 fill="#ce2731"
               />
+              <circle cx="300" cy="211" r="4" fill="#ffffff">
+                <animate attributeName="cx" values="300;400;300" dur="3.5s" repeatCount="indefinite" />
+                <animate attributeName="cy" values="211;269;211" dur="3.5s" repeatCount="indefinite" />
+              </circle>
 
-              {/* Bottom-Left Isometric Card with Bullet & Lines */}
-              <polygon
-                points="170,255 240,215 360,285 290,325"
-                fill="#ffffff"
-                stroke="#ffffff"
-                strokeWidth="1.4"
-              />
-              <circle cx="225" cy="252" r="6" fill="#ce2731" />
-              <line x1="242" y1="262" x2="310" y2="302" stroke="#0f2c56" strokeWidth="2.5" strokeLinecap="round" />
-              <line x1="232" y1="270" x2="285" y2="301" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" />
+              {/* Bottom-Left Isometric Action Card */}
+              <g className="animate-float">
+                <polygon
+                  points="170,255 240,215 360,285 290,325"
+                  fill="#ffffff"
+                  stroke="#0f2c56"
+                  strokeWidth="1.5"
+                />
+                <circle cx="225" cy="252" r="7.5" fill="#ce2731" />
+                <path d="M221.5,252 L224,254.5 L229,249.5" fill="none" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                <line x1="242" y1="262" x2="310" y2="302" stroke="#0f2c56" strokeWidth="3" strokeLinecap="round" />
+                <line x1="232" y1="270" x2="285" y2="301" stroke="#94a3b8" strokeWidth="2.2" strokeLinecap="round" />
+              </g>
 
-              {/* Bottom-Right Small Isometric Tile */}
+              {/* Bottom-Right Isometric Milestone Tile */}
               <polygon
                 points="425,305 468,280 508,303 465,328"
                 fill="#1e3a68"
-                stroke="rgba(255,255,255,0.4)"
+                stroke="rgba(255,255,255,0.45)"
                 strokeWidth="1.3"
               />
+              <circle cx="466" cy="304" r="4" fill="#ce2731">
+                <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite" />
+              </circle>
             </svg>
           </div>
         </div>
