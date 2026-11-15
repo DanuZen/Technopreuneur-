@@ -348,7 +348,7 @@ export default function AboutPage() {
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(2)}`}
       >
         <div className="relative w-full h-full mx-auto px-4 sm:px-8 lg:px-12 flex flex-col justify-center gap-6">
-          <div className="space-y-3 text-left max-w-2xl">
+          <div className="space-y-3 text-center max-w-2xl mx-auto flex flex-col items-center">
             <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white ${getTextRevealClass(2, "delay-75")}`}>
               Tim Pengembang
             </span>
