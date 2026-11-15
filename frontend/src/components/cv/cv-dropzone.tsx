@@ -87,7 +87,7 @@ export function CVDropzone({ onAnalysisComplete, autoRedirect = true }: CVDropzo
 
       if (autoRedirect) {
         await new Promise((r) => setTimeout(r, 600));
-        router.push("/dashboard");
+        router.push("/user/dashboard");
       }
     } catch (err: unknown) {
       setStatus("error");

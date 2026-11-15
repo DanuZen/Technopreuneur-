@@ -44,7 +44,17 @@ function DashboardContent() {
     const current = api.getCurrentAnalysis();
 
     if (queryOnboarding) {
-      router.replace("/onboarding");
+      router.replace("/user/dashboard/onboarding");
+      return;
+    }
+
+    if (tabParam === "preview") {
+      router.replace("/user/dashboard/dokumen");
+      return;
+    }
+
+    if (tabParam === "jobs") {
+      router.replace("/user/dashboard/lowongan");
       return;
     }
 
@@ -98,7 +108,7 @@ function DashboardContent() {
   };
 
   const handleResetToOnboarding = () => {
-    router.push("/onboarding");
+    router.push("/user/dashboard/onboarding");
   };
 
   if (loading) {
@@ -239,14 +249,14 @@ function DashboardContent() {
 
           <div className="flex flex-wrap items-center gap-3 shrink-0">
             <Link
-              href="/evaluate"
+              href="/user/dashboard/evaluasi"
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors"
             >
               <UploadCloud className="w-4 h-4" />
               <span>Evaluasi CV</span>
             </Link>
             <Link
-              href="/onboarding"
+              href="/user/dashboard/onboarding"
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white text-xs font-bold transition-colors"
             >
               <FileSpreadsheet className="w-4 h-4" />
@@ -402,7 +412,7 @@ function DashboardContent() {
             <div className="pt-2 flex flex-wrap items-center gap-3 print:hidden">
               <button
                 type="button"
-                onClick={() => router.push("/dashboard?tab=preview")}
+                onClick={() => router.push("/user/dashboard/dokumen")}
                 className="px-5 py-2.5 bg-white hover:bg-[#ce2731] text-[#0f2c56] hover:text-white text-xs font-extrabold rounded-xl transition-colors flex items-center gap-2 cursor-pointer"
               >
                 <FileText className="w-3.5 h-3.5" aria-hidden="true" />

@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { User } from "@/types";
 import { api } from "@/lib/api";
+import { getDashboardBasePath, getRoleFromPathname } from "@/lib/routes";
 
 interface AppHeaderProps {
   onToggleMobile: () => void;
@@ -58,10 +59,28 @@ export function AppHeader({
     router.push("/");
   };
 
+  const roleInUrl = /^\/(user|company|admin)\/dashboard(\/|$)/.test(pathname)
+    ? getRoleFromPathname(pathname)
+    : null;
+  const baseDashboardPath = roleInUrl
+    ? `/${roleInUrl}/dashboard`
+    : getDashboardBasePath(user?.role);
+
   const getViewTitle = () => {
-    if (pathname.startsWith("/evaluate")) return "Ruang Evaluasi CV & Kesiapan Karir";
-    if (pathname.startsWith("/onboarding")) return "Onboarding Pembuatan CV Standar ATS";
-    if (pathname.startsWith("/dashboard")) return "Dashboard Hasil Evaluasi 5 Dimensi";
+    if (pathname.startsWith("/evaluate") || pathname.includes("/dashboard/evaluasi"))
+      return "Ruang Evaluasi CV & Kesiapan Karir";
+    if (pathname.startsWith("/onboarding") || pathname.includes("/dashboard/onboarding"))
+      return "Onboarding Pembuatan CV Standar ATS";
+    if (pathname.includes("/dashboard/dokumen"))
+      return "Dokumen CV Standar ATS";
+    if (pathname.includes("/dashboard/lowongan"))
+      return "Rekomendasi Lowongan Cocok";
+    if (pathname.startsWith("/company/dashboard"))
+      return "Dashboard Rekrutmen Perusahaan";
+    if (pathname.startsWith("/admin/dashboard"))
+      return "Dashboard Administrator Pasbana";
+    if (pathname.startsWith("/dashboard") || pathname.startsWith("/user/dashboard"))
+      return "Dashboard Hasil Evaluasi 5 Dimensi";
     if (pathname.startsWith("/jobs")) return "Rekomendasi Lowongan Kerja Cerdas";
     if (pathname.startsWith("/about")) return "Tentang Kami • Visi & Nilai Pasbana";
     if (pathname.startsWith("/login")) return "Masuk ke Akun Pasbana AI";
@@ -94,9 +113,9 @@ export function AppHeader({
       {/* Right: Quick Action & User Dropdown */}
       <div className="flex items-center gap-2.5 shrink-0">
         {/* Quick CTA if not on evaluate */}
-        {pathname !== "/evaluate" && (
+        {pathname !== "/evaluate" && !pathname.includes("/dashboard/evaluasi") && (
           <Link
-            href="/evaluate"
+            href={`${baseDashboardPath}/evaluasi`}
             className="hidden sm:inline-flex items-center gap-1.5 py-1.5 px-3.5 rounded-full bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors"
           >
             <FileCheck className="w-3.5 h-3.5 text-white" />
@@ -141,7 +160,7 @@ export function AppHeader({
                 {/* Navigation Links */}
                 <div className="space-y-1">
                   <Link
-                    href="/dashboard"
+                    href={baseDashboardPath}
                     onClick={() => setMenuOpen(false)}
                     className="flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-bold text-[#0f2c56] hover:bg-[#edf2f9] transition-colors"
                   >
@@ -151,7 +170,7 @@ export function AppHeader({
                     <span>Dashboard ATS</span>
                   </Link>
                   <Link
-                    href="/evaluate"
+                    href={`${baseDashboardPath}/evaluasi`}
                     onClick={() => setMenuOpen(false)}
                     className="flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-bold text-[#0f2c56] hover:bg-[#edf2f9] transition-colors"
                   >

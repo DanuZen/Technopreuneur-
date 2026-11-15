@@ -16,8 +16,9 @@ export function AppShell({ children }: AppShellProps) {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isDesktopCollapsed, setIsDesktopCollapsed] = useState(false);
 
-  // Bagian side ini aktif ketika dalam ruang kerja (/evaluate, /onboarding, dan /dashboard)
+  // Bagian side ini aktif ketika dalam ruang kerja (/[role]/dashboard, /evaluate, /onboarding, dan /dashboard)
   const isDashboardWorkspace =
+    /^\/(user|company|admin)\/dashboard(\/|$)/.test(pathname) ||
     pathname.startsWith("/evaluate") ||
     pathname.startsWith("/onboarding") ||
     pathname.startsWith("/dashboard");

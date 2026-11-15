@@ -19,13 +19,13 @@ function EvaluateContent() {
   useEffect(() => {
     const tabParam = searchParams.get("tab");
     if (tabParam === "questionnaire" || tabParam === "onboarding") {
-      router.replace("/onboarding");
+      router.replace("/user/dashboard/onboarding");
     }
   }, [searchParams, router]);
 
   const handleAnalysisSuccess = (result: CVAnalysisResult) => {
     api.saveAnalysis(result);
-    router.push("/dashboard");
+    router.push("/user/dashboard");
   };
 
   return (
@@ -44,7 +44,7 @@ function EvaluateContent() {
               </div>
 
               <Link
-                href="/onboarding"
+                href="/user/dashboard/onboarding"
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white font-bold text-xs transition-colors self-start sm:self-auto"
               >
                 <FileSpreadsheet className="w-4 h-4" aria-hidden="true" />
@@ -74,7 +74,7 @@ function EvaluateContent() {
             </div>
 
           <Link
-            href="/onboarding"
+            href="/user/dashboard/onboarding"
             className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-extrabold transition-colors shrink-0"
           >
             <span>Buka Halaman Onboarding</span>

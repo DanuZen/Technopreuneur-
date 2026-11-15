@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Search,
   FileCheck,
@@ -15,7 +15,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { CVAnalysisResult } from "@/types";
-import { api } from "@/lib/api";
+import { getRoleFromPathname, getDashboardBasePath } from "@/lib/routes";
 
 export interface ItemRiwayatEvaluasi {
   id: string;
@@ -53,13 +53,31 @@ export function AppSidebar({
   onToggleDesktopCollapse,
 }: AppSidebarProps) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const router = useRouter();
-  const currentTab = searchParams.get("tab");
 
   const [daftarRiwayat, setDaftarRiwayat] = useState<ItemRiwayatEvaluasi[]>(CONTOH_RIWAYAT_DEFAULT);
   const [cariTerbuka, setCariTerbuka] = useState(false);
   const [kataKunci, setKataKunci] = useState("");
+  const [userRole, setUserRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      const storedUser = localStorage.getItem("cm_user");
+      if (storedUser) {
+        const parsed = JSON.parse(storedUser);
+        if (parsed?.role) setUserRole(parsed.role);
+      }
+    } catch {
+      // ignore
+    }
+  }, [pathname]);
+
+  const roleInUrl = /^\/(user|company|admin)\/dashboard(\/|$)/.test(pathname)
+    ? getRoleFromPathname(pathname)
+    : null;
+  const baseDashboardPath = roleInUrl
+    ? `/${roleInUrl}/dashboard`
+    : getDashboardBasePath(userRole);
 
   useEffect(() => {
     try {
@@ -94,7 +112,7 @@ export function AppSidebar({
 
   const handlePilihRiwayat = () => {
     onCloseMobile();
-    router.push("/dashboard");
+    router.push(baseDashboardPath);
   };
 
   const handleHapusRiwayat = (id: string, e: React.MouseEvent) => {
@@ -109,31 +127,39 @@ export function AppSidebar({
   const navLinks = [
     {
       label: "Dashboard Skor ATS",
-      href: "/dashboard",
+      href: baseDashboardPath,
       icon: LayoutDashboard,
       desc: "Analisis profil 5 dimensi",
-      isActive: pathname === "/dashboard" && (!currentTab || currentTab === "dimensions"),
+      isActive: pathname === baseDashboardPath || pathname === "/dashboard",
     },
     {
       label: "Evaluasi CV",
-      href: "/evaluate",
+      href: `${baseDashboardPath}/evaluasi`,
       icon: FileCheck,
       desc: "Unggah berkas PDF / DOCX",
-      isActive: pathname === "/evaluate" || pathname === "/onboarding",
+      isActive:
+        pathname.startsWith(`${baseDashboardPath}/evaluasi`) ||
+        pathname.startsWith(`${baseDashboardPath}/onboarding`) ||
+        pathname === "/evaluate" ||
+        pathname === "/onboarding",
     },
     {
       label: "Dokumen CV ATS",
-      href: "/dashboard?tab=preview",
+      href: `${baseDashboardPath}/dokumen`,
       icon: FileText,
       desc: "Pratinjau & cetak CV standar ATS",
-      isActive: pathname === "/dashboard" && currentTab === "preview",
+      isActive:
+        pathname.startsWith(`${baseDashboardPath}/dokumen`) ||
+        pathname.startsWith("/dashboard/dokumen"),
     },
     {
       label: "Lowongan Cocok",
-      href: "/dashboard?tab=jobs",
+      href: `${baseDashboardPath}/lowongan`,
       icon: Briefcase,
       desc: "Rekomendasi karir di dashboard",
-      isActive: pathname === "/dashboard" && currentTab === "jobs",
+      isActive:
+        pathname.startsWith(`${baseDashboardPath}/lowongan`) ||
+        pathname.startsWith("/dashboard/lowongan"),
     },
   ];
 

@@ -57,7 +57,7 @@ export default function OnboardingPage() {
 
   const handleOnboardingSuccess = (result: CVAnalysisResult) => {
     api.saveAnalysis(result);
-    router.push("/dashboard");
+    router.push("/user/dashboard");
   };
 
   return (
@@ -65,7 +65,7 @@ export default function OnboardingPage() {
       {/* Baris Atas: Navigasi Kembali ke Unggah CV */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <Link
-          href="/evaluate"
+          href="/user/dashboard/evaluasi"
           className="inline-flex items-center gap-2 text-xs font-bold text-[#0f2c56] hover:text-white bg-white hover:bg-[#0f2c56] px-4 py-2 rounded-full border border-slate-200 transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
@@ -74,7 +74,7 @@ export default function OnboardingPage() {
 
         <div className="flex items-center gap-2">
           <Link
-            href="/evaluate"
+            href="/user/dashboard/evaluasi"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white border border-slate-200 text-xs font-bold transition-colors"
           >
             <UploadCloud className="w-3.5 h-3.5" aria-hidden="true" />

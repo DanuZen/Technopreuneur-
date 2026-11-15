@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { User } from "@/types";
 import { api } from "@/lib/api";
+import { getDashboardBasePath } from "@/lib/routes";
 
 const LANDING_SECTIONS = [
   { label: "Beranda", href: "/", slide: 0 },
@@ -200,7 +201,7 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
                     {/* Navigation Links */}
                     <div className="space-y-1">
                       <Link
-                        href="/dashboard"
+                        href={getDashboardBasePath(user.role)}
                         onClick={() => setUserDropdownOpen(false)}
                         className="flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-bold text-[#0f2c56] hover:bg-[#edf2f9] transition-colors"
                       >
@@ -210,7 +211,7 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
                         <span>Dashboard ATS</span>
                       </Link>
                       <Link
-                        href="/evaluate"
+                        href={`${getDashboardBasePath(user.role)}/evaluasi`}
                         onClick={() => setUserDropdownOpen(false)}
                         className="flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-bold text-[#0f2c56] hover:bg-[#edf2f9] transition-colors"
                       >
