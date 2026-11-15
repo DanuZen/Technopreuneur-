@@ -213,7 +213,7 @@ export default function DokumenCvAtsPage() {
             </div>
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-3xl p-5 flex-1 flex flex-col justify-center gap-4 text-[#0f2c56]">
+          <div className="bg-white border border-slate-200 rounded-3xl p-5 flex-1 flex flex-col justify-center gap-3.5 text-[#0f2c56]">
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-2.5">
                 <div className="w-9 h-9 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
@@ -256,7 +256,7 @@ export default function DokumenCvAtsPage() {
               </svg>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               <div className="flex items-start gap-3">
                 <div className="w-7 h-7 rounded-lg bg-[#edf2f9] text-[#0f2c56] flex items-center justify-center shrink-0 mt-0.5">
                   <Ruler className="w-3.5 h-3.5" aria-hidden="true" />
@@ -284,16 +284,52 @@ export default function DokumenCvAtsPage() {
             </div>
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-3xl p-5 space-y-3 shrink-0 text-[#0f2c56]">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
-                <CheckCircle2 className="w-4 h-4" aria-hidden="true" />
+          <div className="bg-white border border-slate-200 rounded-3xl p-5 flex-1 flex flex-col justify-center gap-3.5 text-[#0f2c56]">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="w-4 h-4" aria-hidden="true" />
+                </div>
+                <div>
+                  <p className="text-xs font-extrabold uppercase tracking-wider">
+                    Kelengkapan Bagian CV
+                  </p>
+                  <p className="text-[11px] font-medium">
+                    4 komponen utama standar rekruter
+                  </p>
+                </div>
               </div>
-              <p className="text-xs font-extrabold uppercase tracking-wider">
-                Kelengkapan Bagian CV
-              </p>
+
+              {/* Ilustrasi Mini Checklist Bagian CV */}
+              <svg
+                viewBox="0 0 88 64"
+                className="w-20 h-auto shrink-0"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <rect x="14" y="6" width="52" height="52" rx="8" fill="#EDF2F9" />
+                <rect x="20" y="10" width="44" height="44" rx="6" fill="#FFFFFF" stroke="#0F2C56" strokeWidth="1.5" />
+                <circle cx="28" cy="20" r="2.5" fill="#CE2731" />
+                <rect x="34" y="18.5" width="22" height="3" rx="1.5" fill="#0F2C56" />
+                <circle cx="28" cy="29" r="2.5" fill="#0F2C56" />
+                <rect x="34" y="27.5" width="18" height="3" rx="1.5" fill="#CBD5E1" />
+                <circle cx="28" cy="38" r="2.5" fill="#0F2C56" />
+                <rect x="34" y="36.5" width="20" height="3" rx="1.5" fill="#CBD5E1" />
+                <circle cx="28" cy="47" r="2.5" fill="#0F2C56" />
+                <rect x="34" y="45.5" width="16" height="3" rx="1.5" fill="#CBD5E1" />
+                <rect x="52" y="38" width="28" height="16" rx="8" fill="#CE2731" />
+                <path
+                  d="M60 46L63.5 49.5L71 42"
+                  stroke="#FFFFFF"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </div>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2.5">
+
+            <div className="grid grid-cols-2 gap-x-4 gap-y-3">
               {[
                 { label: "Ringkasan Profil", ok: Boolean(analysis.profile.summary), icon: User },
                 { label: "Keahlian & Alat", ok: Boolean(analysis.profile.skills), icon: Award },
