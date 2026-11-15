@@ -7,15 +7,21 @@ interface AtsCvPreviewProps {
   profile: CVProfileData;
   onEdit?: () => void;
   hideToolbar?: boolean;
+  fitViewport?: boolean;
 }
 
-export function AtsCvPreview({ profile, onEdit, hideToolbar = false }: AtsCvPreviewProps) {
+export function AtsCvPreview({
+  profile,
+  onEdit,
+  hideToolbar = false,
+  fitViewport = false,
+}: AtsCvPreviewProps) {
   const handlePrint = () => {
     window.print();
   };
 
   return (
-    <div className="space-y-4">
+    <div className={fitViewport ? "h-full flex items-center justify-center print:block" : "space-y-4"}>
       {/* Action Toolbar */}
       {!hideToolbar && (
         <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-white rounded-2xl border border-slate-200/90 shadow-sm print:hidden">
@@ -51,10 +57,20 @@ export function AtsCvPreview({ profile, onEdit, hideToolbar = false }: AtsCvPrev
       )}
 
       {/* ATS DOCUMENT PAPER SHEET (A4: 210mm x 297mm) */}
-      <div className="bg-white p-8 sm:p-12 rounded-2xl border border-slate-200 shadow-md font-sans text-slate-900 space-y-6 w-full max-w-[794px] sm:min-h-[1123px] mx-auto print:w-[210mm] print:min-h-[297mm] print:max-w-none print:shadow-none print:border-none print:p-0">
+      <div
+        className={`bg-white rounded-2xl border border-slate-200 shadow-md font-sans text-slate-900 mx-auto print:w-[210mm] print:min-h-[297mm] print:h-auto print:aspect-auto print:max-w-none print:shadow-none print:border-none print:p-0 print:overflow-visible ${
+          fitViewport
+            ? "p-5 sm:p-7 space-y-3.5 w-full xl:w-auto xl:h-full xl:max-h-full xl:aspect-[210/297] overflow-y-auto scrollbar-none"
+            : "p-8 sm:p-12 space-y-6 w-full max-w-[794px] sm:min-h-[1123px]"
+        }`}
+      >
         {/* ATS Header */}
-        <header className="border-b border-slate-300 pb-4 text-center space-y-1">
-          <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900 uppercase">
+        <header className={`border-b border-slate-300 text-center space-y-1 ${fitViewport ? "pb-2.5" : "pb-4"}`}>
+          <h1
+            className={`font-black tracking-tight text-slate-900 uppercase ${
+              fitViewport ? "text-xl sm:text-2xl" : "text-2xl sm:text-3xl"
+            }`}
+          >
             {profile.fullName}
           </h1>
           {profile.headline && (

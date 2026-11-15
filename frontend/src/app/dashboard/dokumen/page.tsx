@@ -109,37 +109,40 @@ export default function DokumenCvAtsPage() {
   }
 
   return (
-    <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-6">
-      <DashboardPageHeading
-        badge="Dokumen CV ATS"
-        titleLine1="Pratinjau & cetak CV"
-        titleLine2Prefix="dengan format"
-        titleHighlight="siap lamaran!"
-        rightSlot={
-          <div className="flex flex-wrap items-center gap-2">
-            <button
-              type="button"
-              onClick={() => router.push("/user/dashboard/onboarding")}
-              className="px-4 py-2.5 bg-white hover:bg-slate-50 text-[#0f2c56] text-xs font-bold rounded-xl border border-slate-200 transition flex items-center gap-1.5 cursor-pointer"
-            >
-              <Edit3 className="w-3.5 h-3.5" aria-hidden="true" />
-              <span>Edit Data</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => window.print()}
-              className="px-4 py-2.5 bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5 cursor-pointer"
-            >
-              <Printer className="w-3.5 h-3.5" aria-hidden="true" />
-              <span>Cetak / Unduh PDF</span>
-            </button>
-          </div>
-        }
-      />
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+    <main className="xl:h-full xl:overflow-hidden min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 flex flex-col gap-4 print:h-auto print:overflow-visible">
+      <div className="shrink-0">
+        <DashboardPageHeading
+          badge="Dokumen CV ATS"
+          titleLine1="Pratinjau & cetak CV"
+          titleLine2Prefix="dengan format"
+          titleHighlight="siap lamaran!"
+          rightSlot={
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={() => router.push("/user/dashboard/onboarding")}
+                className="px-4 py-2.5 bg-white hover:bg-slate-50 text-[#0f2c56] text-xs font-bold rounded-xl border border-slate-200 transition flex items-center gap-1.5 cursor-pointer"
+              >
+                <Edit3 className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>Edit Data</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => window.print()}
+                className="px-4 py-2.5 bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5 cursor-pointer"
+              >
+                <Printer className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>Cetak / Unduh PDF</span>
+              </button>
+            </div>
+          }
+        />
+      </div>
+
+      <div className="flex-1 min-h-0 grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch print:block">
         {/* Kolom Kiri: Card Keterangan & Spesifikasi Dokumen A4 */}
-        <aside className="xl:col-span-4 space-y-4 print:hidden">
-          <div className="bg-[#0f2c56] text-white rounded-3xl p-6 space-y-4">
+        <aside className="xl:col-span-4 flex flex-col gap-3.5 xl:overflow-y-auto scrollbar-none print:hidden">
+          <div className="bg-[#0f2c56] text-white rounded-3xl p-5 space-y-3.5">
             <div className="flex items-center justify-between gap-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ce2731] text-white text-[11px] font-bold uppercase tracking-wider">
                 <FileText className="w-3.5 h-3.5" aria-hidden="true" />
@@ -151,7 +154,7 @@ export default function DokumenCvAtsPage() {
             </div>
 
             <div>
-              <h2 className="text-lg font-extrabold tracking-tight leading-snug">
+              <h2 className="text-base sm:text-lg font-extrabold tracking-tight leading-snug">
                 Keterangan Dokumen CV
               </h2>
               <p className="text-xs text-white/75 mt-1 leading-relaxed">
@@ -159,7 +162,7 @@ export default function DokumenCvAtsPage() {
               </p>
             </div>
 
-            <div className="rounded-2xl bg-white/10 border border-white/15 p-4 space-y-2.5 text-xs">
+            <div className="rounded-2xl bg-white/10 border border-white/15 p-3.5 space-y-2 text-xs">
               <div className="flex items-center justify-between gap-3">
                 <span className="text-white/70">Nama Kandidat</span>
                 <span className="font-bold text-white text-right truncate">
@@ -183,11 +186,11 @@ export default function DokumenCvAtsPage() {
             </div>
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-3xl p-6 space-y-3">
+          <div className="bg-white border border-slate-200 rounded-3xl p-5 space-y-2.5">
             <p className="text-xs font-extrabold uppercase tracking-wider text-[#0f2c56]">
               Panduan &amp; Tips Cetak PDF
             </p>
-            <div className="space-y-2.5">
+            <div className="space-y-2">
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0 mt-0.5" />
                 <p className="text-xs text-slate-600 leading-relaxed">
@@ -211,10 +214,11 @@ export default function DokumenCvAtsPage() {
         </aside>
 
         {/* Kolom Kanan: Pratinjau Lembar Dokumen CV Ukuran A4 */}
-        <div className="xl:col-span-8 w-full print:block">
+        <div className="xl:col-span-8 min-h-0 h-full w-full print:block">
           <AtsCvPreview
             profile={analysis.profile}
             hideToolbar
+            fitViewport
           />
         </div>
       </div>
