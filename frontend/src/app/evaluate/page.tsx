@@ -51,7 +51,7 @@ function EvaluateContent() {
   };
 
   return (
-    <main className="min-h-full bg-[#f8fafc] max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-6">
+    <div className="min-h-full max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-6">
       {/* Kontainer Utama: 12-Column Asymmetric Bento Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch flex-1">
         {/* Kolom Kiri (5 Kolom): Kartu Utama Navy + 3 Bento Statistik Solid */}
@@ -155,10 +155,10 @@ function EvaluateContent() {
         </div>
 
         {/* Kolom Kanan (7 Kolom): Fokus Unggah Dokumen CV + Tombol Menuju Halaman Onboarding */}
-        <div className="lg:col-span-7 bg-white border border-slate-200 rounded-[28px] p-5 sm:p-7 flex flex-col justify-between">
+        <div className="lg:col-span-7 flex flex-col justify-between gap-6 py-1 sm:px-2">
           <div>
             {/* Header Panggung + Tombol Menuju Halaman Onboarding */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 mb-6 border-b border-slate-200">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 mb-6 border-b border-slate-200/80">
               <div>
                 <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#ce2731]">
                   Evaluasi Berkas Digital
@@ -183,7 +183,7 @@ function EvaluateContent() {
           </div>
 
           {/* Banner Pintasan Onboarding & Langkah Cepat di Bawah Dropzone */}
-          <div className="mt-6 pt-5 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="pt-5 border-t border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
                 <FileSpreadsheet className="w-5 h-5" />
@@ -208,7 +208,7 @@ function EvaluateContent() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 
