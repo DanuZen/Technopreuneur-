@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -32,6 +32,56 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [splashActive, setSplashActive] = useState(false);
+  const [isEntered, setIsEntered] = useState(false);
+  const [cameFromLogin] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    try {
+      return sessionStorage.getItem("pasbana_prev_path") === "/login";
+    } catch {
+      return false;
+    }
+  });
+
+  useEffect(() => {
+    router.prefetch("/login");
+    try {
+      sessionStorage.setItem("pasbana_prev_path", "/register");
+    } catch {
+      // ignore
+    }
+
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        setIsEntered(true);
+      });
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      if (raf2) cancelAnimationFrame(raf2);
+    };
+  }, [router]);
+
+  const morphCardStyle: React.CSSProperties = !isEntered
+    ? cameFromLogin
+      ? {
+          top: "0px",
+          left: "calc(50% + 16px)",
+          width: "calc(50% - 16px)",
+          height: "100%",
+        }
+      : {
+          top: "0px",
+          left: "0px",
+          width: "100%",
+          height: "100%",
+        }
+    : {
+        top: "0px",
+        left: "0px",
+        width: "calc(50% - 16px)",
+        height: "100%",
+      };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -93,15 +143,31 @@ export default function RegisterPage() {
         />
       )}
 
-      <div className="min-h-dvh w-full flex flex-col lg:flex-row bg-white overflow-x-hidden login-slide-in-left">
-        {/* LEFT COLUMN (50% Width): Rounded Box Showcase (Matching Splash Screen) */}
-        <div className="hidden lg:flex w-1/2 min-h-screen p-4 xl:p-6 bg-white login-showcase-in-left">
-          <div className="relative w-full h-full rounded-[32px] xl:rounded-[40px] bg-gradient-to-br from-[#0a1f3d] via-[#0f2c56] to-[#163c73] flex flex-col items-center justify-center p-10 xl:p-14 text-white overflow-hidden">
-            {/* Soft Ambient Glow Orbs */}
-            <div className="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-white/5 blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-28 -right-28 w-96 h-96 rounded-full bg-[#ce2731]/25 blur-3xl pointer-events-none animate-pulse-glow" />
-            <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.07)_0%,transparent_62%)]" />
+      <div className="relative min-h-dvh w-full flex flex-col lg:flex-row bg-white overflow-x-hidden">
+        {/* PERSISTENT MORPHING SHOWCASE CARD (Desktop lg+) */}
+        <div
+          className="hidden lg:block absolute inset-4 pointer-events-none z-10"
+          aria-hidden="true"
+        >
+          <div className="relative w-full h-full">
+            <div
+              className="absolute rounded-[32px] xl:rounded-[40px] bg-gradient-to-br from-[#0a1f3d] via-[#0f2c56] to-[#163c73] overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+              style={morphCardStyle}
+            >
+              <div className="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-white/5 blur-3xl pointer-events-none" />
+              <div className="absolute -bottom-28 -right-28 w-96 h-96 rounded-full bg-[#ce2731]/25 blur-3xl pointer-events-none animate-pulse-glow" />
+              <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.07)_0%,transparent_62%)]" />
+            </div>
+          </div>
+        </div>
 
+        {/* LEFT COLUMN (50% Width): Rounded Box Showcase (Matching Splash Screen) */}
+        <div
+          className={`hidden lg:flex w-1/2 min-h-screen p-4 z-20 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] delay-150 ${
+            isEntered ? "opacity-100 scale-100" : "opacity-0 scale-95"
+          }`}
+        >
+          <div className="relative w-full h-full rounded-[32px] xl:rounded-[40px] flex flex-col items-center justify-center p-10 xl:p-14 text-white overflow-hidden">
             {/* Centered Large Splash-Style Lockup */}
             <div className="relative z-10 flex flex-col items-center text-center space-y-7 max-w-lg mx-auto">
               <div className="flex items-center gap-5 xl:gap-6">
@@ -150,7 +216,11 @@ export default function RegisterPage() {
         </div>
 
         {/* RIGHT COLUMN (50% Width): Clean Form Panel */}
-        <div className="w-full lg:w-1/2 min-h-dvh p-6 sm:p-8 lg:p-10 xl:p-14 flex flex-col justify-between bg-white z-10 overflow-y-auto scrollbar-none">
+        <div
+          className={`w-full lg:w-1/2 min-h-dvh p-6 sm:p-8 lg:p-10 xl:p-14 flex flex-col justify-between bg-white lg:bg-transparent z-20 overflow-y-auto scrollbar-none transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            isEntered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`}
+        >
           {/* Top Utility Header */}
           <div className="flex items-center justify-end animate-fade-in-up delay-100">
             <Link
