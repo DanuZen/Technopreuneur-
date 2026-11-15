@@ -1195,32 +1195,6 @@ export default function HomePage() {
                 </Link>
               </div>
             </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-[#ce2731] text-white rounded-2xl p-5 flex flex-col justify-between">
-                <span className="text-[11px] font-extrabold uppercase tracking-wider text-white/80">
-                  Evaluasi
-                </span>
-                <div className="mt-2">
-                  <p className="text-2xl font-black text-white">5 Dimensi</p>
-                  <p className="text-[11px] text-white/85 mt-0.5 leading-snug">
-                    Penilaian objektif standar ATS
-                  </p>
-                </div>
-              </div>
-
-              <div className="bg-[#f8fafc] border border-slate-200 text-[#0f2c56] rounded-2xl p-5 flex flex-col justify-between">
-                <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#ce2731]">
-                  Akses Penuh
-                </span>
-                <div className="mt-2">
-                  <p className="text-2xl font-black text-[#0f2c56]">Gratis</p>
-                  <p className="text-[11px] text-slate-500 mt-0.5 leading-snug">
-                    Tanpa biaya berlangganan
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Right 7 Cols: Clean Header + 5 Solid Interactive Accordion Cards */}
