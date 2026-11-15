@@ -412,28 +412,54 @@ export default function LoginPage() {
 
         {/* RIGHT COLUMN (50% Width): Rounded Box Showcase (Matching Splash Screen) */}
         <div className={`hidden lg:flex w-1/2 min-h-screen p-4 xl:p-6 bg-white ${showcaseSlideClass}`}>
-          <div className="relative w-full h-full rounded-[32px] xl:rounded-[40px] bg-[#0f2c56] flex flex-col items-center justify-center p-12 xl:p-16 text-white overflow-hidden">
-            {/* Centered Splash-Style Lockup */}
-            <div className="relative z-10 flex items-center gap-4 sm:gap-5 px-6 max-w-md mx-auto">
-              {/* Logo di Kiri */}
-              <div className="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 animate-float-slow">
-                <Image
-                  src="/logo-white.webp"
-                  alt="Logo Pasbana"
-                  fill
-                  className="object-contain"
-                  priority
-                />
+          <div className="relative w-full h-full rounded-[32px] xl:rounded-[40px] bg-gradient-to-br from-[#0a1f3d] via-[#0f2c56] to-[#163c73] flex flex-col items-center justify-center p-10 xl:p-14 text-white overflow-hidden">
+            {/* Soft Ambient Glow Orbs */}
+            <div className="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-white/5 blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-28 -right-28 w-96 h-96 rounded-full bg-[#ce2731]/25 blur-3xl pointer-events-none animate-pulse-glow" />
+            <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.07)_0%,transparent_62%)]" />
+
+            {/* Centered Large Splash-Style Lockup */}
+            <div className="relative z-10 flex flex-col items-center text-center space-y-7 max-w-lg mx-auto">
+              <div className="flex items-center gap-5 xl:gap-6">
+                {/* Logo di Kiri */}
+                <div className="relative w-24 h-24 xl:w-28 xl:h-28 shrink-0 drop-shadow-[0_20px_38px_rgba(0,0,0,0.35)] animate-float-slow">
+                  <Image
+                    src="/logo-white.webp"
+                    alt="Logo Pasbana"
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                </div>
+
+                {/* Nama & Tagline di Kanan */}
+                <div className="space-y-2 text-left animate-fade-in-up delay-200">
+                  <h2 className="text-5xl xl:text-6xl font-black tracking-wider text-white leading-none uppercase">
+                    PASBANA
+                  </h2>
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-6 h-1 rounded-full bg-[#ce2731]" />
+                    <p className="text-xs xl:text-sm font-bold text-white/85 uppercase tracking-[0.26em]">
+                      KARIR YANG PAS BANA
+                    </p>
+                  </div>
+                </div>
               </div>
 
-              {/* Nama & Tagline di Kanan */}
-              <div className="space-y-1.5 text-left animate-fade-in-up delay-200">
-                <h2 className="text-3xl sm:text-4xl font-black tracking-wider text-white leading-none uppercase">
-                  PASBANA
-                </h2>
-                <p className="text-[11px] sm:text-xs font-bold text-white/80 uppercase tracking-[0.22em]">
-                  KARIR YANG PAS BANA
-                </p>
+              <p className="text-sm xl:text-base text-slate-200/90 font-medium leading-relaxed max-w-md animate-fade-in-up delay-300">
+                Evaluasi kesiapan CV secara objektif dalam 5 dimensi dan temukan peluang karir terbaik sesuai kompetensi Anda.
+              </p>
+
+              <div className="flex flex-wrap items-center justify-center gap-2.5 animate-fade-in-up delay-300">
+                <span className="px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-bold text-white/95 backdrop-blur-xs">
+                  Evaluasi CV 5 Dimensi
+                </span>
+                <span className="px-3.5 py-1.5 rounded-full bg-[#ce2731] text-xs font-bold text-white shadow-sm">
+                  Standar ATS HRD
+                </span>
+                <span className="px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-bold text-white/95 backdrop-blur-xs">
+                  Pencocokan Loker AI
+                </span>
               </div>
             </div>
           </div>
