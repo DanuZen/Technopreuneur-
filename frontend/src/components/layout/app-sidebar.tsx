@@ -478,18 +478,22 @@ export function AppSidebar({
                   )}
                 </div>
               </div>
+
+              {/* 1 Button Route Keluar */}
+              <div className="pt-2 border-t border-slate-200/80">
+                <Link
+                  href="/"
+                  onClick={onCloseMobile}
+                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-[#0f2c56] bg-white hover:bg-[#0f2c56] hover:text-white border border-slate-200 transition-colors"
+                >
+                  <Home className="w-4 h-4 shrink-0" aria-hidden="true" />
+                  <span>Kembali ke Beranda</span>
+                </Link>
+              </div>
             </div>
 
-            {/* Bottom Footer Section: 1 External Route Button + User Profile & Account */}
-            <div className="shrink-0 p-3 bg-white border-t border-slate-200 space-y-2.5">
-              <Link
-                href="/"
-                onClick={onCloseMobile}
-                className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-bold text-[#0f2c56] bg-[#edf2f9] hover:bg-[#0f2c56] hover:text-white border border-slate-200 transition-colors"
-              >
-                <Home className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
-                <span>Kembali ke Beranda</span>
-              </Link>
+            {/* Bottom Footer Section: User Profile & Account (Hanya tombol Keluar Akun) */}
+            <div className="shrink-0 p-3 bg-white border-t border-slate-200 space-y-2">
               {user ? (
                 <div className="space-y-2">
                   <div className="flex items-center justify-between gap-2">
