@@ -497,24 +497,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
-      {/* FLOATING SECTION INDICATOR PILL */}
-      <nav
-        aria-label="Navigasi section tentang"
-        className="fixed right-4 sm:right-6 top-1/2 -translate-y-1/2 z-30 hidden sm:flex flex-col gap-2 bg-white/90 border border-slate-200 rounded-full p-1.5 shadow-sm"
-      >
-        {Array.from({ length: TOTAL_SLIDES }).map((_, idx) => (
-          <button
-            key={idx}
-            type="button"
-            onClick={() => goToSlide(idx)}
-            aria-label={`Section ${idx + 1}`}
-            className={`w-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-              activeSlide === idx ? "h-7 bg-[#ce2731]" : "h-2.5 bg-[#0f2c56]/25 hover:bg-[#0f2c56]/60"
-            }`}
-          />
-        ))}
-      </nav>
     </div>
   );
 }
