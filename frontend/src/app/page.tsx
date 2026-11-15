@@ -345,13 +345,13 @@ export default function HomePage() {
       case 6:
       default:
         return {
-          top: "100%",
-          left: "20%",
-          width: "60%",
-          height: "0px",
+          top: "4px",
+          left: "16px",
+          width: "calc(41.666667% - 25px)",
+          height: "calc(100% - 8px)",
           borderRadius: "28px",
           backgroundColor: "#0f2c56",
-          opacity: 0,
+          opacity: 1,
         };
     }
   };
@@ -1059,7 +1059,7 @@ export default function HomePage() {
           <div
             className={`lg:col-span-5 flex flex-col py-1 ${getChildAnimClass(6, "left", "delay-75")}`}
           >
-            <div className="bg-[#0f2c56] text-white rounded-[28px] p-6 sm:p-8 lg:p-10 flex flex-col justify-center items-center text-center gap-6 flex-1">
+            <div className="bg-[#0f2c56] lg:bg-transparent text-white rounded-[28px] p-6 sm:p-8 lg:p-10 flex flex-col justify-center items-center text-center gap-6 flex-1">
               <div className="space-y-4 flex flex-col items-center">
                 <span className="inline-block px-3.5 py-1 rounded-full bg-[#ce2731] text-white text-xs font-extrabold uppercase tracking-wider">
                   Mulai Langkah Karir
