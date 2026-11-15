@@ -49,24 +49,24 @@ export function SplashScreen({
         fade ? "splash-fade-out" : "splash-fade-in"
       }`}
     >
-      <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-sm mx-auto space-y-5">
-        {/* Logo */}
-        <div className="relative w-24 h-24 sm:w-28 sm:h-28 animate-float-slow">
+      <div className="relative z-10 flex items-center gap-4 sm:gap-5 px-6 max-w-md mx-auto">
+        {/* Logo di Kiri */}
+        <div className="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 animate-float-slow">
           <Image
             src="/logo-white.webp"
-            alt="Logo Pasbana AI"
+            alt="Logo Pasbana"
             fill
             className="object-contain"
             priority
           />
         </div>
 
-        {/* Nama & Tagline */}
-        <div className="space-y-2 animate-fade-in-up">
+        {/* Nama & Tagline di Kanan */}
+        <div className="space-y-1.5 text-left animate-fade-in-up">
           <h1 className="text-3xl sm:text-4xl font-black tracking-wider text-white leading-none uppercase">
-            PASBANA <span className="text-[#ce2731]">AI</span>
+            PASBANA
           </h1>
-          <p className="text-[11px] sm:text-xs font-bold text-white/80 uppercase tracking-[0.25em]">
+          <p className="text-[11px] sm:text-xs font-bold text-white/80 uppercase tracking-[0.22em]">
             KARIR YANG PAS BANA
           </p>
         </div>
