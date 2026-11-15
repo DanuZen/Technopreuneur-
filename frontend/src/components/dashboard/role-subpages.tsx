@@ -135,7 +135,7 @@ export function CompanyJobsSubpage() {
   };
 
   return (
-    <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-5">
+    <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4 lg:overflow-hidden">
       <DashboardPageHeading
         badge="Manajemen Lowongan"
         titleLine1="Kelola posisi kerja"
@@ -198,8 +198,9 @@ export function CompanyJobsSubpage() {
         </form>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-        {jobs.map((job) => (
+      <div className="flex-1 min-h-0 overflow-y-auto scrollbar-none">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 content-start">
+          {jobs.map((job) => (
           <div
             key={job.id}
             className="morph-surface rounded-2xl border border-slate-200 bg-white p-5 flex flex-col justify-between gap-4 shadow-xs"
@@ -244,6 +245,7 @@ export function CompanyJobsSubpage() {
             </div>
           </div>
         ))}
+        </div>
       </div>
     </main>
   );
@@ -451,7 +453,7 @@ export function CompanyProfileSubpage() {
   };
 
   return (
-    <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-5">
+    <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4 lg:overflow-hidden">
       <DashboardPageHeading
         badge="Profil Mitra"
         titleLine1="Identitas perusahaan"
@@ -461,7 +463,7 @@ export function CompanyProfileSubpage() {
 
       <form
         onSubmit={handleSave}
-        className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 space-y-4 w-full shadow-xs"
+        className="flex-1 min-h-0 overflow-y-auto scrollbar-none rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 flex flex-col justify-between gap-4 w-full shadow-xs"
       >
         <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
           <div className="w-10 h-10 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center">
@@ -825,7 +827,7 @@ export function AdminAuditSubpage() {
   };
 
   return (
-    <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-5">
+    <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4 lg:overflow-hidden">
       <DashboardPageHeading
         badge="Standarisasi Platform (FR-51)"
         titleLine1="Tetapkan standarisasi"
@@ -833,6 +835,7 @@ export function AdminAuditSubpage() {
         titleHighlight="ekosistem Pasbana!"
       />
 
+      <div className="flex-1 min-h-0 overflow-y-auto scrollbar-none space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {ecosystemStats.map((a) => {
           const Icon = a.icon;
@@ -1087,6 +1090,7 @@ export function AdminAuditSubpage() {
           </div>
         </div>
       </div>
+      </div>
     </main>
   );
 }
@@ -1152,7 +1156,7 @@ export function AdminReportSubpage() {
   ];
 
   return (
-    <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-5">
+    <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4 lg:overflow-hidden">
       <DashboardPageHeading
         badge="Laporan Eksekutif"
         titleLine1="Ringkasan kepatuhan"
@@ -1192,6 +1196,7 @@ export function AdminReportSubpage() {
         }
       />
 
+      <div className="flex-1 min-h-0 overflow-y-auto scrollbar-none space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         {summaryCards.map((card) => {
           const Icon = card.icon;
@@ -1298,6 +1303,7 @@ export function AdminReportSubpage() {
             </p>
           </div>
         </div>
+      </div>
       </div>
     </main>
   );
