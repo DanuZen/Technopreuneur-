@@ -48,8 +48,8 @@ export function CompanyFunnelDiagram({
   const shortlistDash = shortlistRatio * circumference;
 
   return (
-    <div className="morph-surface h-full flex flex-col justify-between bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 space-y-4 text-[#0f2c56]">
-      <div className="flex items-center justify-between gap-3">
+    <div className="morph-surface h-full flex flex-col gap-4 bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 text-[#0f2c56]">
+      <div className="flex items-center justify-between gap-3 shrink-0">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
             <PieChart className="w-4 h-4" aria-hidden="true" />
@@ -68,9 +68,9 @@ export function CompanyFunnelDiagram({
         </span>
       </div>
 
-      <div className="flex flex-col sm:flex-row items-center gap-5 pt-1">
+      <div className="flex-1 flex flex-col sm:flex-row items-center gap-6 py-1">
         {/* SVG Donut Ring */}
-        <div className="relative w-28 h-28 shrink-0 flex items-center justify-center">
+        <div className="relative w-36 h-36 shrink-0 flex items-center justify-center">
           <svg viewBox="0 0 90 90" className="w-full h-full -rotate-90" aria-hidden="true">
             <circle
               cx="45"
@@ -78,7 +78,7 @@ export function CompanyFunnelDiagram({
               r={radius}
               fill="none"
               stroke="#edf2f9"
-              strokeWidth="10"
+              strokeWidth="11"
             />
             <circle
               cx="45"
@@ -86,7 +86,7 @@ export function CompanyFunnelDiagram({
               r={radius}
               fill="none"
               stroke="#0f2c56"
-              strokeWidth="10"
+              strokeWidth="11"
               strokeDasharray={`${circumference * 0.72} ${circumference}`}
               strokeLinecap="round"
             />
@@ -96,32 +96,32 @@ export function CompanyFunnelDiagram({
               r={radius}
               fill="none"
               stroke="#ce2731"
-              strokeWidth="10"
+              strokeWidth="11"
               strokeDasharray={`${shortlistDash} ${circumference}`}
               strokeLinecap="round"
             />
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-            <span className="text-lg font-black leading-none text-[#0f2c56]">
+            <span className="text-2xl font-black leading-none text-[#0f2c56]">
               {Math.round(shortlistRatio * 100)}%
             </span>
-            <span className="text-[10px] font-bold text-slate-500 mt-0.5">
+            <span className="text-[11px] font-bold text-slate-500 mt-1">
               Shortlist
             </span>
           </div>
         </div>
 
         {/* Horizontal Funnel Bars */}
-        <div className="flex-1 w-full space-y-2.5">
+        <div className="flex-1 w-full space-y-3">
           {stages.map((s) => (
-            <div key={s.label} className="space-y-1">
-              <div className="flex items-center justify-between text-[11px] font-bold">
+            <div key={s.label} className="space-y-1.5">
+              <div className="flex items-center justify-between text-xs font-bold">
                 <span className="text-slate-700">{s.label}</span>
                 <span className="text-[#0f2c56]">
                   {s.count} ({s.pct}%)
                 </span>
               </div>
-              <div className="h-2 w-full rounded-full bg-[#edf2f9] overflow-hidden">
+              <div className="h-2.5 w-full rounded-full bg-[#edf2f9] overflow-hidden">
                 <div
                   className="h-full rounded-full transition-all duration-500"
                   style={{ width: `${Math.max(s.pct, 6)}%`, backgroundColor: s.color }}
@@ -129,6 +129,24 @@ export function CompanyFunnelDiagram({
               </div>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Ringkasan Metrik Bawah */}
+      <div className="shrink-0 grid grid-cols-3 gap-2.5 pt-3 border-t border-slate-100">
+        <div className="rounded-xl bg-[#f4f7fb] px-3 py-2">
+          <p className="text-[10px] font-bold uppercase text-slate-500">Rata-rata ATS</p>
+          <p className="text-sm font-black text-[#0f2c56]">85.3 / 100</p>
+        </div>
+        <div className="rounded-xl bg-[#f4f7fb] px-3 py-2">
+          <p className="text-[10px] font-bold uppercase text-slate-500">Tingkat Review</p>
+          <p className="text-sm font-black text-[#0f2c56]">
+            {Math.round(((reviewedCount + shortlistedCount) / safeTotal) * 100)}%
+          </p>
+        </div>
+        <div className="rounded-xl bg-[#f4f7fb] px-3 py-2">
+          <p className="text-[10px] font-bold uppercase text-slate-500">Waktu Screening</p>
+          <p className="text-sm font-black text-[#ce2731]">&lt; 30 Detik</p>
         </div>
       </div>
     </div>
@@ -162,7 +180,7 @@ export function CompanyTrendDiagram() {
     .join(" ");
 
   return (
-    <div className="morph-surface h-full flex flex-col justify-between bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 space-y-4 text-[#0f2c56]">
+    <div className="morph-surface h-full flex flex-col gap-3 bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 text-[#0f2c56]">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-[#ce2731] text-white flex items-center justify-center shrink-0">
@@ -190,10 +208,10 @@ export function CompanyTrendDiagram() {
         </div>
       </div>
 
-      <div className="w-full overflow-hidden">
+      <div className="flex-1 min-h-0 w-full flex items-center overflow-hidden">
         <svg
           viewBox={`0 0 ${chartW} ${chartH + 22}`}
-          className="w-full h-44 sm:h-48"
+          className="w-full h-full min-h-[160px] max-h-52"
           role="img"
           aria-label="Diagram tren pelamar dan kandidat lolos ATS selama 6 minggu"
         >
@@ -322,7 +340,7 @@ export function AdminModerationDiagram({
   const approvedDash = (approvedCount / total) * circ;
 
   return (
-    <div className="morph-surface h-full flex flex-col justify-between bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 space-y-4 text-[#0f2c56]">
+    <div className="morph-surface h-full flex flex-col gap-3 bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 text-[#0f2c56]">
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
@@ -342,26 +360,26 @@ export function AdminModerationDiagram({
         </span>
       </div>
 
-      <div className="flex flex-col sm:flex-row items-center gap-5 pt-1">
-        <div className="relative w-28 h-28 shrink-0 flex items-center justify-center">
+      <div className="flex-1 flex flex-col sm:flex-row items-center gap-6 py-1">
+        <div className="relative w-36 h-36 shrink-0 flex items-center justify-center">
           <svg viewBox="0 0 90 90" className="w-full h-full -rotate-90" aria-hidden="true">
-            <circle cx="45" cy="45" r={radius} fill="none" stroke="#edf2f9" strokeWidth="10" />
+            <circle cx="45" cy="45" r={radius} fill="none" stroke="#edf2f9" strokeWidth="11" />
             <circle
               cx="45"
               cy="45"
               r={radius}
               fill="none"
               stroke="#0f2c56"
-              strokeWidth="10"
+              strokeWidth="11"
               strokeDasharray={`${approvedDash} ${circ}`}
               strokeLinecap="round"
             />
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-            <span className="text-lg font-black leading-none text-[#0f2c56]">
+            <span className="text-2xl font-black leading-none text-[#0f2c56]">
               {Math.round((approvedCount / total) * 100)}%
             </span>
-            <span className="text-[10px] font-bold text-slate-500 mt-0.5">
+            <span className="text-[11px] font-bold text-slate-500 mt-1">
               Disetujui
             </span>
           </div>
@@ -371,14 +389,14 @@ export function AdminModerationDiagram({
           {bars.map((b) => {
             const pct = Math.round((b.count / total) * 100);
             return (
-              <div key={b.label} className="space-y-1">
-                <div className="flex items-center justify-between text-[11px] font-bold">
+              <div key={b.label} className="space-y-1.5">
+                <div className="flex items-center justify-between text-xs font-bold">
                   <span className="text-slate-700">{b.label}</span>
                   <span className="text-[#0f2c56]">
                     {b.count} ({pct}%)
                   </span>
                 </div>
-                <div className="h-2 w-full rounded-full bg-[#edf2f9] overflow-hidden">
+                <div className="h-2.5 w-full rounded-full bg-[#edf2f9] overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-500"
                     style={{ width: `${Math.max(pct, 6)}%`, backgroundColor: b.color }}
@@ -387,6 +405,21 @@ export function AdminModerationDiagram({
               </div>
             );
           })}
+        </div>
+      </div>
+
+      <div className="shrink-0 grid grid-cols-3 gap-2.5 pt-3 border-t border-slate-100">
+        <div className="rounded-xl bg-[#f4f7fb] px-3 py-2">
+          <p className="text-[10px] font-bold uppercase text-slate-500">Mitra Aktif</p>
+          <p className="text-sm font-black text-[#0f2c56]">24 Perusahaan</p>
+        </div>
+        <div className="rounded-xl bg-[#f4f7fb] px-3 py-2">
+          <p className="text-[10px] font-bold uppercase text-slate-500">Embedding</p>
+          <p className="text-sm font-black text-[#0f2c56]">100% Terindeks</p>
+        </div>
+        <div className="rounded-xl bg-[#f4f7fb] px-3 py-2">
+          <p className="text-[10px] font-bold uppercase text-slate-500">Privasi UU PDP</p>
+          <p className="text-sm font-black text-[#ce2731]">Patuh</p>
         </div>
       </div>
     </div>
@@ -421,7 +454,7 @@ export function AdminPipelineDiagram() {
     .join(" ");
 
   return (
-    <div className="morph-surface h-full flex flex-col justify-between bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 space-y-4 text-[#0f2c56]">
+    <div className="morph-surface h-full flex flex-col gap-3 bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 text-[#0f2c56]">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-[#ce2731] text-white flex items-center justify-center shrink-0">
@@ -449,10 +482,10 @@ export function AdminPipelineDiagram() {
         </div>
       </div>
 
-      <div className="w-full overflow-hidden">
+      <div className="flex-1 min-h-0 w-full flex items-center overflow-hidden">
         <svg
           viewBox={`0 0 ${chartW} ${chartH + 22}`}
-          className="w-full h-44 sm:h-48"
+          className="w-full h-full min-h-[160px] max-h-52"
           role="img"
           aria-label="Diagram aktivitas pipeline evaluasi CV dan matching AI mingguan"
         >
