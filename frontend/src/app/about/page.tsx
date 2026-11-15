@@ -368,7 +368,7 @@ export default function AboutPage() {
                   }`}
                 >
                   {/* Left: Pop-Out Portrait Stage */}
-                  <div className="relative w-32 h-36 shrink-0 rounded-b-2xl overflow-hidden flex items-end justify-center">
+                  <div className="relative w-36 h-40 shrink-0 rounded-b-2xl overflow-hidden flex items-end justify-center">
                     <div
                       className={`absolute inset-x-0 bottom-0 h-28 rounded-2xl transition-colors duration-500 ${
                         isSelected ? "bg-white" : "bg-[#edf2f9]"
@@ -379,7 +379,7 @@ export default function AboutPage() {
                       alt={member.name}
                       width={200}
                       height={340}
-                      className={`relative z-10 w-28 h-32 object-cover object-top origin-bottom transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                      className={`relative z-10 w-36 h-40 object-cover object-top origin-bottom transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                         isSelected
                           ? "grayscale-0 scale-[1.12]"
                           : "grayscale opacity-90 scale-100"
@@ -387,9 +387,12 @@ export default function AboutPage() {
                     />
                   </div>
 
-                  {/* Right: Role, Name, Focus, NIM */}
+                  {/* Right: Name, Role Badge, NIM */}
                   <div className="flex flex-col justify-center gap-2.5 flex-1 min-w-0">
-                    <div className="space-y-1.5">
+                    <div className="space-y-2">
+                      <h3 className="text-base sm:text-lg font-extrabold leading-snug">
+                        {member.name}
+                      </h3>
                       <span
                         className={`inline-flex items-center px-3 py-0.5 rounded-full text-[11px] font-bold transition-colors duration-300 ${
                           isSelected
@@ -399,16 +402,6 @@ export default function AboutPage() {
                       >
                         {member.role}
                       </span>
-                      <h3 className="text-base sm:text-lg font-extrabold leading-snug">
-                        {member.name}
-                      </h3>
-                      <p
-                        className={`text-xs leading-relaxed ${
-                          isSelected ? "text-white/85" : "text-slate-600"
-                        }`}
-                      >
-                        {member.focus}
-                      </p>
                     </div>
                     <p
                       className={`text-xs font-mono font-bold ${
