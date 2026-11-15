@@ -917,8 +917,8 @@ export default function HomePage() {
           ref={slide4ContainerRef}
           className="relative w-full h-full mx-auto px-4 sm:px-8 lg:px-12 flex flex-col justify-center gap-6"
         >
-          {/* Top-Left Section Header */}
-          <div className="space-y-3 text-left max-w-2xl">
+          {/* Top-Center Section Header */}
+          <div className="space-y-3 text-center max-w-2xl mx-auto flex flex-col items-center">
             <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white ${getTextRevealClass(4, "delay-75")}`}>
               Fitur &amp; Prinsip
             </span>
