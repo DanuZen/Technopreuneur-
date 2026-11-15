@@ -32,7 +32,21 @@ export default function AboutPage() {
   const [activeSlide, setActiveSlide] = useState<number>(0);
   const [prevSlide, setPrevSlide] = useState<number>(0);
   const [scrollDir, setScrollDir] = useState<"down" | "up">("down");
+  const [isEntered, setIsEntered] = useState<boolean>(false);
   const [activeMemberIdx, setActiveMemberIdx] = useState<number>(0);
+
+  useEffect(() => {
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        setIsEntered(true);
+      });
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      if (raf2) cancelAnimationFrame(raf2);
+    };
+  }, []);
 
   const isAnimatingRef = useRef<boolean>(false);
   const touchStartYRef = useRef<number | null>(null);
@@ -144,20 +158,30 @@ export default function AboutPage() {
   };
 
   const getTextRevealClass = (slideIndex: number, delayClass: string = "delay-100") => {
-    const isActive = activeSlide === slideIndex;
+    const isActive = isEntered && activeSlide === slideIndex;
     return isActive
       ? `opacity-100 translate-y-0 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${delayClass}`
       : "opacity-0 translate-y-6 transition-all duration-300 ease-in";
   };
 
   const getHighlightPopClass = (slideIndex: number, delayClass: string = "delay-300") => {
-    const isActive = activeSlide === slideIndex;
+    const isActive = isEntered && activeSlide === slideIndex;
     return isActive
       ? `opacity-100 scale-100 translate-y-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${delayClass}`
       : "opacity-0 scale-90 translate-y-2 transition-all duration-300 ease-in";
   };
 
   const getGlobalMorphStyle = (slide: number): React.CSSProperties => {
+    if (!isEntered) {
+      return {
+        top: "0px",
+        left: "0px",
+        width: "100%",
+        height: "100%",
+        borderRadius: "34px",
+        backgroundColor: "#0f2c56",
+      };
+    }
     switch (slide) {
       case 0:
         return {
