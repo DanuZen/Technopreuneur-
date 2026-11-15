@@ -15,10 +15,27 @@ import {
   EyeOff,
   CheckCircle2,
   ArrowRight,
+  HelpCircle,
+  X,
 } from "lucide-react";
 import { UserRole } from "@/types";
 import { api } from "@/lib/api";
 import { SplashScreen } from "@/components/ui/splash-screen";
+
+const FAQ_ITEMS = [
+  {
+    q: "Bagaimana cara mendaftar akun di Pasbana AI?",
+    a: "Pilih peran akun (Pencari Kerja atau Pemberi Kerja / HR), isi nama lengkap atau perusahaan, email aktif, serta kata sandi minimal 6 karakter, lalu centang persetujuan pemrosesan data.",
+  },
+  {
+    q: "Apakah data CV dan profil saya aman?",
+    a: "Ya, kami menerapkan sanitasi data pribadi dan memberi kendali penuh kepada pengguna untuk mengunduh atau menghapus berkas maupun akun secara permanen kapan saja.",
+  },
+  {
+    q: "Apakah saya harus sudah punya file CV PDF untuk mendaftar?",
+    a: "Tidak harus. Setelah mendaftar, Anda dapat langsung mengunggah PDF CV atau menggunakan fitur Kuesioner Terpandu untuk menyusun CV standar ATS dari nol.",
+  },
+];
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -32,6 +49,7 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [splashActive, setSplashActive] = useState(false);
+  const [showFaqModal, setShowFaqModal] = useState(false);
   const [isEntered, setIsEntered] = useState(false);
   const [cameFromLogin] = useState<boolean>(() => {
     if (typeof window === "undefined") return false;
@@ -222,13 +240,15 @@ export default function RegisterPage() {
           }`}
         >
           {/* Top Utility Header */}
-          <div className="flex items-center justify-end animate-fade-in-up delay-100">
-            <Link
-              href="/login"
-              className="text-xs font-semibold text-slate-500 hover:text-[#0f2c56] transition-colors"
+          <div className="flex items-center justify-start animate-fade-in-up delay-100">
+            <button
+              type="button"
+              onClick={() => setShowFaqModal(true)}
+              className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-[#0f2c56] transition-colors cursor-pointer group"
             >
-              Sudah Punya Akun? Masuk
-            </Link>
+              <HelpCircle className="w-4 h-4 text-[#ce2731] group-hover:scale-105 transition-transform" />
+              <span>Pusat Bantuan</span>
+            </button>
           </div>
 
           {/* Center Form Body */}
@@ -441,6 +461,73 @@ export default function RegisterPage() {
           </div>
         </div>
       </div>
+
+      {/* FAQ Modal (Pusat Bantuan) */}
+      {showFaqModal && (
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4">
+          <div
+            onClick={() => setShowFaqModal(false)}
+            className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity cursor-pointer animate-fade-in"
+          />
+
+          <div className="relative w-full max-w-lg bg-white text-slate-900 border border-slate-200/90 rounded-3xl p-6 shadow-2xl z-10 overflow-hidden animate-scale-up">
+            {/* Header with Title and Close Button */}
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100 relative">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-xl bg-[#0f2c56]/10 border border-[#0f2c56]/20 flex items-center justify-center text-[#0f2c56]">
+                  <HelpCircle className="w-4 h-4" />
+                </div>
+                <div>
+                  <h2 className="font-extrabold text-base text-slate-900 leading-tight">
+                    Pusat Bantuan
+                  </h2>
+                  <p className="text-[11px] text-slate-500">
+                    Panduan Pendaftaran &amp; Fitur Pasbana AI
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowFaqModal(false)}
+                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-all cursor-pointer"
+                title="Tutup"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* FAQ List Content */}
+            <div className="py-4 space-y-3 max-h-[60vh] overflow-y-auto scrollbar-none pr-1">
+              {FAQ_ITEMS.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-1.5 transition-colors hover:bg-slate-50/80"
+                >
+                  <h4 className="text-xs font-bold text-slate-900 flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0" />
+                    <span>{item.q}</span>
+                  </h4>
+                  <p className="text-xs text-slate-600 leading-relaxed pl-6 font-normal">
+                    {item.a}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Footer Action */}
+            <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-3 relative">
+              <button
+                type="button"
+                onClick={() => setShowFaqModal(false)}
+                className="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-all cursor-pointer"
+              >
+                Tutup
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
