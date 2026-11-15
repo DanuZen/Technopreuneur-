@@ -8,6 +8,7 @@ import {
   User as UserIcon,
   ChevronDown,
   LayoutDashboard,
+  LogOut,
 } from "lucide-react";
 import { User } from "@/types";
 import { api } from "@/lib/api";
@@ -27,7 +28,18 @@ export function AppHeader({
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [profilePopupOpen, setProfilePopupOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     try {
@@ -69,16 +81,8 @@ export function AppHeader({
         </button>
       </div>
 
-      {/* Right: Dashboard Button & Profile Dropdown */}
+      {/* Right: Profile Dropdown */}
       <div className="flex items-center gap-2.5 shrink-0">
-        <Link
-          href={baseDashboardPath}
-          className="morph-pill hidden sm:inline-flex items-center gap-1.5 py-1.5 px-3.5 rounded-full bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors"
-        >
-          <LayoutDashboard className="w-3.5 h-3.5 text-white" />
-          <span>Dashboard</span>
-        </Link>
-
         {/* Account Menu */}
         {user ? (
           <div className="relative" ref={menuRef}>
@@ -101,10 +105,68 @@ export function AppHeader({
             </button>
 
             {menuOpen && (
+              <div className="absolute right-0 top-full mt-2.5 w-64 rounded-[24px] bg-white border border-slate-200 text-[#0f2c56] shadow-2xl p-2.5 z-50">
+                {/* User Profile Header */}
+                <div className="px-4 py-3 rounded-2xl bg-[#0f2c56] text-white mb-2">
+                  <div className="text-xs font-extrabold text-white truncate">{user.name}</div>
+                  <div className="text-[11px] text-slate-300 truncate mt-0.5">
+                    {user.email || "Akun Terverifikasi"}
+                  </div>
+                  <span className="inline-block mt-2 uppercase text-[9px] bg-[#ce2731] text-white px-2.5 py-0.5 rounded-full font-mono font-bold">
+                    {user.role}
+                  </span>
+                </div>
+
+                {/* Dropdown Items: Dashboard & Detail Profil */}
+                <div className="space-y-1">
+                  <Link
+                    href={baseDashboardPath}
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-bold text-[#0f2c56] hover:bg-[#edf2f9] transition-colors"
+                  >
+                    <span className="w-7 h-7 rounded-lg bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+                      <LayoutDashboard className="w-3.5 h-3.5" />
+                    </span>
+                    <span>Dashboard</span>
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMenuOpen(false);
+                      setProfilePopupOpen(true);
+                    }}
+                    className="w-full flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-bold text-[#0f2c56] hover:bg-[#edf2f9] transition-colors cursor-pointer text-left"
+                  >
+                    <span className="w-7 h-7 rounded-lg bg-[#ce2731] text-white flex items-center justify-center shrink-0">
+                      <UserIcon className="w-3.5 h-3.5" />
+                    </span>
+                    <span>Detail Profil</span>
+                  </button>
+                </div>
+
+                <div className="my-2 border-t border-slate-100" />
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    handleLogout();
+                  }}
+                  className="w-full flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-bold text-white bg-[#ce2731] hover:bg-[#b01e27] transition-colors cursor-pointer"
+                >
+                  <span className="w-7 h-7 rounded-lg bg-white/15 flex items-center justify-center shrink-0">
+                    <LogOut className="w-3.5 h-3.5" />
+                  </span>
+                  <span>Keluar dari Akun</span>
+                </button>
+              </div>
+            )}
+
+            {profilePopupOpen && (
               <UserProfilePopup
                 user={user}
                 baseDashboardPath={baseDashboardPath}
-                onClose={() => setMenuOpen(false)}
+                onClose={() => setProfilePopupOpen(false)}
                 onLogout={handleLogout}
                 onUserUpdated={(updated) => setUser(updated)}
               />
