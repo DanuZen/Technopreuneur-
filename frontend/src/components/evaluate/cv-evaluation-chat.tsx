@@ -179,102 +179,260 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
           }
 
           if (msg.type === "analysis") {
+            const cx = 160;
+            const cy = 132;
+            const maxR = 68;
+            const labelR = 94;
+            const ringLevels = [0.25, 0.5, 0.75, 1];
+            const getPoint = (index: number, ratio: number) => {
+              const angle = -Math.PI / 2 + (index * 2 * Math.PI) / 5;
+              return {
+                x: cx + maxR * ratio * Math.cos(angle),
+                y: cy + maxR * ratio * Math.sin(angle),
+              };
+            };
+            const scorePolygonPoints = dimensionList
+              .map((dim, idx) => {
+                const pt = getPoint(idx, Math.max(0.1, Math.min(1, dim.score / 100)));
+                return `${pt.x.toFixed(1)},${pt.y.toFixed(1)}`;
+              })
+              .join(" ");
+
+            const ringCircumference = 2 * Math.PI * 26;
+            const ringOffset =
+              ringCircumference - (Math.min(100, Math.max(0, analysis.overallScore)) / 100) * ringCircumference;
+
             return (
               <div key={msg.id} className="flex items-start gap-3">
                 <div className="w-8 h-8 rounded-full bg-[#ce2731] text-white flex items-center justify-center shrink-0 mt-0.5">
                   <Bot className="w-4 h-4" />
                 </div>
                 <div className="flex-1 max-w-4xl space-y-4">
-                  {/* Summary Hero Bubble */}
-                  <div className="bg-white border border-slate-200 rounded-2xl rounded-tl-sm p-5 space-y-4">
-                    <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-100">
-                      <div>
-                        <p className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-bold">
+                  <div className="bg-white border border-slate-200 rounded-2xl rounded-tl-sm p-4 sm:p-5 space-y-4">
+                    {/* Solid Navy Hero Summary */}
+                    <div className="bg-[#0f2c56] text-white rounded-2xl p-4 sm:p-5 flex flex-wrap items-center justify-between gap-4">
+                      <div className="space-y-1">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#ce2731] text-white text-[10px] font-bold uppercase tracking-wider">
                           Hasil Evaluasi Pasbana AI
-                        </p>
-                        <h2 className="text-base sm:text-lg font-extrabold text-[#0f2c56]">
+                        </span>
+                        <h2 className="text-lg sm:text-xl font-extrabold text-white pt-1">
                           {analysis.profile.fullName}
                         </h2>
-                        <p className="text-xs text-slate-500">
+                        <p className="text-xs text-white/75">
                           {analysis.profile.headline || "Kandidat Profesional Muda"}
                         </p>
                       </div>
 
-                      <div className="flex items-center gap-3 bg-[#edf2f9] px-4 py-2.5 rounded-2xl">
-                        <div className="text-2xl font-black text-[#0f2c56] font-mono">
-                          {analysis.overallScore}
-                          <span className="text-xs text-slate-500 font-bold">/100</span>
+                      <div className="flex items-center gap-3.5 bg-white text-[#0f2c56] px-4 py-2.5 rounded-2xl shrink-0">
+                        <div className="relative w-14 h-14 flex items-center justify-center shrink-0">
+                          <svg viewBox="0 0 64 64" className="w-14 h-14 -rotate-90" aria-hidden="true">
+                            <circle
+                              cx="32"
+                              cy="32"
+                              r="26"
+                              fill="none"
+                              stroke="#E2E8F0"
+                              strokeWidth="6"
+                            />
+                            <circle
+                              cx="32"
+                              cy="32"
+                              r="26"
+                              fill="none"
+                              stroke={isHighReady ? "#0F2C56" : "#CE2731"}
+                              strokeWidth="6"
+                              strokeLinecap="round"
+                              strokeDasharray={ringCircumference}
+                              strokeDashoffset={ringOffset}
+                            />
+                          </svg>
+                          <span className="absolute text-sm font-black font-mono text-[#0f2c56]">
+                            {analysis.overallScore}
+                          </span>
                         </div>
-                        <span
-                          className={`px-2.5 py-1 rounded-full text-[11px] font-bold text-white ${
-                            isHighReady ? "bg-[#0f2c56]" : "bg-[#ce2731]"
-                          }`}
-                        >
-                          {isHighReady ? "Sangat Kompetitif" : "Perlu Optimasi"}
-                        </span>
+                        <div className="space-y-1">
+                          <p className="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold">
+                            Skor ATS
+                          </p>
+                          <span
+                            className={`inline-block px-2.5 py-1 rounded-full text-[11px] font-bold text-white ${
+                              isHighReady ? "bg-[#0f2c56]" : "bg-[#ce2731]"
+                            }`}
+                          >
+                            {isHighReady ? "Sangat Kompetitif" : "Perlu Optimasi"}
+                          </span>
+                        </div>
                       </div>
                     </div>
 
-                    {/* 5 Dimensions Bars */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-                      {dimensionList.map((dim) => {
-                        const optimal = dim.score >= 85;
-                        return (
-                          <div
-                            key={dim.label}
-                            className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2"
-                          >
-                            <div className="flex items-center justify-between gap-1">
-                              <span className="text-[11px] font-bold text-[#0f2c56] truncate">
-                                {dim.label}
-                              </span>
-                              <span
-                                className={`text-[11px] font-mono font-black ${
-                                  optimal ? "text-[#0f2c56]" : "text-[#ce2731]"
-                                }`}
-                              >
-                                {dim.score}
-                              </span>
-                            </div>
-                            <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                              <div
-                                className={`h-full rounded-full ${
-                                  optimal ? "bg-[#0f2c56]" : "bg-[#ce2731]"
-                                }`}
-                                style={{ width: `${dim.score}%` }}
+                    {/* Diagram Radar 5 Dimensi + Rincian Skor Solid */}
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+                      {/* Pentagon Radar Diagram */}
+                      <div className="lg:col-span-5 bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-col items-center justify-between">
+                        <div className="w-full flex items-center justify-between">
+                          <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#0f2c56]">
+                            Diagram 5 Dimensi
+                          </span>
+                          <span className="text-[10px] font-mono font-bold text-slate-400">
+                            Target &ge; 85
+                          </span>
+                        </div>
+                        <svg
+                          viewBox="0 0 320 264"
+                          className="w-full max-w-[280px] h-auto"
+                          role="img"
+                          aria-label="Diagram radar 5 dimensi skor CV ATS"
+                        >
+                          {ringLevels.map((lvl) => {
+                            const pts = [0, 1, 2, 3, 4]
+                              .map((idx) => {
+                                const pt = getPoint(idx, lvl);
+                                return `${pt.x.toFixed(1)},${pt.y.toFixed(1)}`;
+                              })
+                              .join(" ");
+                            return (
+                              <polygon
+                                key={lvl}
+                                points={pts}
+                                fill="none"
+                                stroke="#CBD5E1"
+                                strokeWidth="1"
                               />
+                            );
+                          })}
+
+                          {[0, 1, 2, 3, 4].map((idx) => {
+                            const edge = getPoint(idx, 1);
+                            return (
+                              <line
+                                key={idx}
+                                x1={cx}
+                                y1={cy}
+                                x2={edge.x}
+                                y2={edge.y}
+                                stroke="#CBD5E1"
+                                strokeWidth="1"
+                              />
+                            );
+                          })}
+
+                          <polygon
+                            points={scorePolygonPoints}
+                            fill="#0F2C56"
+                            fillOpacity="0.2"
+                            stroke="#0F2C56"
+                            strokeWidth="2.5"
+                            strokeLinejoin="round"
+                          />
+
+                          {dimensionList.map((dim, idx) => {
+                            const pt = getPoint(idx, Math.max(0.1, Math.min(1, dim.score / 100)));
+                            const angle = -Math.PI / 2 + (idx * 2 * Math.PI) / 5;
+                            const lx = cx + labelR * Math.cos(angle);
+                            const ly = cy + labelR * Math.sin(angle);
+                            const optimal = dim.score >= 85;
+                            const anchor =
+                              idx === 0 ? "middle" : idx === 1 || idx === 2 ? "start" : "end";
+                            const shortLabel = dim.label.split(" ")[0];
+                            return (
+                              <g key={dim.label}>
+                                <circle
+                                  cx={pt.x}
+                                  cy={pt.y}
+                                  r="4.5"
+                                  fill={optimal ? "#0F2C56" : "#CE2731"}
+                                  stroke="#FFFFFF"
+                                  strokeWidth="1.5"
+                                />
+                                <text
+                                  x={lx}
+                                  y={ly - 3}
+                                  textAnchor={anchor}
+                                  className="fill-[#0F2C56] text-[10px] font-bold"
+                                >
+                                  {shortLabel}
+                                </text>
+                                <text
+                                  x={lx}
+                                  y={ly + 10}
+                                  textAnchor={anchor}
+                                  className={`text-[10px] font-mono font-black ${
+                                    optimal ? "fill-[#0F2C56]" : "fill-[#CE2731]"
+                                  }`}
+                                >
+                                  {dim.score}
+                                </text>
+                              </g>
+                            );
+                          })}
+                        </svg>
+                      </div>
+
+                      {/* 5 Dimension Solid Progress Rows */}
+                      <div className="lg:col-span-7 flex flex-col justify-between gap-2.5">
+                        {dimensionList.map((dim) => {
+                          const optimal = dim.score >= 85;
+                          return (
+                            <div
+                              key={dim.label}
+                              className="px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 space-y-1.5"
+                            >
+                              <div className="flex items-center justify-between gap-2">
+                                <span className="text-xs font-extrabold text-[#0f2c56]">
+                                  {dim.label}
+                                </span>
+                                <span
+                                  className={`px-2 py-0.5 rounded-full text-[11px] font-mono font-black text-white ${
+                                    optimal ? "bg-[#0f2c56]" : "bg-[#ce2731]"
+                                  }`}
+                                >
+                                  {dim.score}/100
+                                </span>
+                              </div>
+                              <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                                <div
+                                  className={`h-full rounded-full ${
+                                    optimal ? "bg-[#0f2c56]" : "bg-[#ce2731]"
+                                  }`}
+                                  style={{ width: `${dim.score}%` }}
+                                />
+                              </div>
                             </div>
-                          </div>
-                        );
-                      })}
+                          );
+                        })}
+                      </div>
                     </div>
 
-                    {/* Strengths & Recommendations */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
-                      <div className="p-4 rounded-xl border border-[#0f2c56]/20 bg-[#edf2f9]/40 space-y-2.5">
-                        <div className="flex items-center gap-2 text-xs font-extrabold text-[#0f2c56]">
-                          <CheckCircle2 className="w-4 h-4 text-[#0f2c56]" />
+                    {/* Solid Navy & Crimson Cards: Strengths & Recommendations */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="p-4 sm:p-5 rounded-2xl bg-[#0f2c56] text-white space-y-3">
+                        <div className="flex items-center gap-2 text-xs font-extrabold text-white">
+                          <CheckCircle2 className="w-4 h-4 text-white" />
                           <span>Kekuatan Utama</span>
                         </div>
-                        <ul className="space-y-1.5">
+                        <ul className="space-y-2">
                           {analysis.strengths.map((s, i) => (
-                            <li key={i} className="text-xs text-slate-700 leading-relaxed flex gap-2">
-                              <span className="font-bold text-[#0f2c56]">{i + 1}.</span>
+                            <li key={i} className="text-xs text-white/90 leading-relaxed flex gap-2.5">
+                              <span className="w-5 h-5 rounded-md bg-white text-[#0f2c56] font-extrabold text-[11px] flex items-center justify-center shrink-0 mt-0.5">
+                                {i + 1}
+                              </span>
                               <span>{s}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
 
-                      <div className="p-4 rounded-xl border border-[#ce2731]/25 bg-rose-50/40 space-y-2.5">
-                        <div className="flex items-center gap-2 text-xs font-extrabold text-[#ce2731]">
-                          <AlertTriangle className="w-4 h-4 text-[#ce2731]" />
+                      <div className="p-4 sm:p-5 rounded-2xl bg-[#ce2731] text-white space-y-3">
+                        <div className="flex items-center gap-2 text-xs font-extrabold text-white">
+                          <AlertTriangle className="w-4 h-4 text-white" />
                           <span>Rekomendasi Perbaikan</span>
                         </div>
-                        <ul className="space-y-1.5">
+                        <ul className="space-y-2">
                           {analysis.recommendations.map((r, i) => (
-                            <li key={i} className="text-xs text-slate-700 leading-relaxed flex gap-2">
-                              <span className="font-bold text-[#ce2731]">{i + 1}.</span>
+                            <li key={i} className="text-xs text-white/95 leading-relaxed flex gap-2.5">
+                              <span className="w-5 h-5 rounded-md bg-white text-[#ce2731] font-extrabold text-[11px] flex items-center justify-center shrink-0 mt-0.5">
+                                {i + 1}
+                              </span>
                               <span>{r}</span>
                             </li>
                           ))}
