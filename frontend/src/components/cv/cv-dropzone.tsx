@@ -148,7 +148,7 @@ export function CVDropzone({ onAnalysisComplete, autoRedirect = true }: CVDropzo
             <div>
               <h3 className="text-base sm:text-lg font-extrabold text-[#0f2c56] font-heading">
                 Tarik berkas CV Anda ke sini atau{" "}
-                <span className="text-[#ce2731] underline decoration-2 underline-offset-4">
+                <span className="underline decoration-2 underline-offset-4">
                   klik untuk memilih
                 </span>
               </h3>
