@@ -431,7 +431,7 @@ export default function HomePage() {
           isWhite: true,
           style: {
             top: "calc(56% - 64px)",
-            left: "56px",
+            left: "calc(20.8% - 172px)",
             width: "128px",
             height: "128px",
             transform: "rotate(0deg)",
@@ -1191,8 +1191,8 @@ export default function HomePage() {
           <div
             className={`lg:col-span-5 flex flex-col py-1 ${getChildAnimClass(6, "left", "delay-75")}`}
           >
-            <div className="bg-[#0f2c56] text-white rounded-[28px] p-6 sm:p-8 lg:p-10 flex flex-col justify-between flex-1">
-              <div className="space-y-5">
+            <div className="bg-[#0f2c56] text-white rounded-[28px] p-6 sm:p-8 lg:p-10 flex flex-col justify-between items-center text-center flex-1">
+              <div className="space-y-5 flex flex-col items-center">
                 <span className="inline-block px-3.5 py-1 rounded-full bg-[#ce2731] text-white text-xs font-extrabold uppercase tracking-wider">
                   Mulai Langkah Karir
                 </span>
@@ -1202,7 +1202,7 @@ export default function HomePage() {
                     karir terbaik Anda.
                   </span>
                 </h2>
-                <p className="text-sm sm:text-base text-white/85 leading-relaxed">
+                <p className="text-sm sm:text-base text-white/85 max-w-md mx-auto leading-relaxed">
                   Pastikan CV Anda terbaca sempurna oleh sistem ATS, perkuat poin pencapaian, dan temukan posisi kerja yang paling pas bana.
                 </p>
               </div>
@@ -1229,7 +1229,7 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="pt-2 flex flex-wrap items-center gap-3">
+              <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
                 <Link
                   href="/evaluate"
                   className="px-6 py-3.5 rounded-xl bg-[#ce2731] hover:bg-white text-white hover:text-[#0f2c56] text-xs sm:text-sm font-bold transition-colors inline-flex items-center gap-2"
