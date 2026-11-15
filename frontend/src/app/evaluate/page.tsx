@@ -29,43 +29,43 @@ function EvaluateContent() {
   };
 
   return (
-    <div className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 flex flex-col">
-      <div className="w-full max-w-3xl mx-auto flex-1 flex flex-col gap-6">
-        <DashboardPageHeading
-          badge="Evaluasi Berkas Digital"
-          titleLine1="Uji kualitas dokumen CV"
-          titleLine2Prefix="dengan analisis"
-          titleHighlight="standar ATS!"
-          align="center"
-        />
+    <div className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 flex flex-col gap-6">
+      <DashboardPageHeading
+        badge="Evaluasi Berkas Digital"
+        titleLine1="Uji kualitas dokumen CV"
+        titleLine2Prefix="dengan analisis"
+        titleHighlight="standar ATS!"
+        align="center"
+      />
 
-        {/* Area Unggah Dokumen CV */}
+      {/* Area Unggah Dokumen CV */}
+      <div className="w-full max-w-3xl mx-auto">
         <CVDropzone autoRedirect={false} onAnalysisComplete={handleAnalysisSuccess} />
+      </div>
 
-        {/* Banner Pintasan Onboarding & Langkah Cepat di Bawah Dropzone */}
-        <div className="mt-auto pt-5 border-t border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
-              <FileSpreadsheet className="w-5 h-5" />
-            </div>
-            <div>
-              <p className="text-xs sm:text-sm font-extrabold text-[#0f2c56]">
-                Tidak memiliki file CV yang siap diunggah?
-              </p>
-              <p className="text-xs text-slate-500">
-                Susun CV standar ATS 1-kolom dari nol melalui halaman Onboarding Terpandu.
-              </p>
-            </div>
+      {/* Banner Pintasan Onboarding & Langkah Cepat di Bawah Dropzone */}
+      <div className="mt-auto pt-5 border-t border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+            <FileSpreadsheet className="w-5 h-5" />
           </div>
-
-          <Link
-            href="/user/dashboard/onboarding"
-            className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-extrabold transition-colors shrink-0"
-          >
-            <span>Buka Halaman Onboarding</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </Link>
+          <div>
+            <p className="text-xs sm:text-sm font-extrabold text-[#0f2c56]">
+              Tidak memiliki file CV yang siap diunggah?
+            </p>
+            <p className="text-xs text-slate-500">
+              Susun CV standar ATS 1-kolom dari nol melalui halaman Onboarding Terpandu.
+            </p>
+          </div>
         </div>
+
+        <Link
+          href="/user/dashboard/onboarding"
+          className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-extrabold transition-colors shrink-0"
+        >
+          <span>Buka Halaman Onboarding</span>
+          <ArrowUpRight className="w-3.5 h-3.5" />
+        </Link>
       </div>
     </div>
   );

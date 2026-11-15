@@ -6,6 +6,7 @@ import Link from "next/link";
 import {
   ArrowLeft,
   ArrowRight,
+  ArrowUpRight,
   UploadCloud,
   CheckCircle2,
   FileCheck2,
@@ -64,32 +65,23 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="min-h-full w-full px-3.5 sm:px-6 pt-4 sm:pt-5 pb-5 sm:pb-6 flex flex-col gap-5">
+    <div className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 flex flex-col gap-5">
       <DashboardPageHeading
         badge="Onboarding CV ATS"
         titleLine1="Susun dokumen CV standar"
         titleLine2Prefix="dengan struktur"
         titleHighlight="ATS 1-kolom!"
         rightSlot={
-          <div className="flex flex-wrap items-center gap-2">
-            {hasStarted && (
-              <button
-                type="button"
-                onClick={() => setHasStarted(false)}
-                className="inline-flex items-center gap-2 text-xs font-bold text-[#0f2c56] hover:text-white bg-white hover:bg-[#0f2c56] px-4 py-2.5 rounded-xl border border-slate-200 transition-colors cursor-pointer"
-              >
-                <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
-                <span>Kembali ke Ringkasan</span>
-              </button>
-            )}
-            <Link
-              href="/user/dashboard/evaluasi"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white border border-slate-200 text-xs font-bold transition-colors"
+          hasStarted ? (
+            <button
+              type="button"
+              onClick={() => setHasStarted(false)}
+              className="inline-flex items-center gap-2 text-xs font-bold text-[#0f2c56] hover:text-white bg-white hover:bg-[#0f2c56] px-4 py-2.5 rounded-xl border border-slate-200 transition-colors cursor-pointer"
             >
-              <UploadCloud className="w-3.5 h-3.5" aria-hidden="true" />
-              <span>Sudah Punya File CV? Unggah di Sini</span>
-            </Link>
-          </div>
+              <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
+              <span>Kembali ke Ringkasan</span>
+            </button>
+          ) : undefined
         }
       />
 
@@ -251,6 +243,31 @@ export default function OnboardingPage() {
         </div>
       </div>
       )}
+
+      {/* Banner Pintasan Evaluasi CV di Bawah */}
+      <div className="mt-auto pt-5 border-t border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+            <UploadCloud className="w-5 h-5" />
+          </div>
+          <div>
+            <p className="text-xs sm:text-sm font-extrabold text-[#0f2c56]">
+              Sudah memiliki file CV yang siap diunggah?
+            </p>
+            <p className="text-xs text-slate-500">
+              Unggah berkas PDF atau DOCX Anda langsung melalui halaman Evaluasi CV.
+            </p>
+          </div>
+        </div>
+
+        <Link
+          href="/user/dashboard/evaluasi"
+          className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-extrabold transition-colors shrink-0"
+        >
+          <span>Buka Halaman Evaluasi</span>
+          <ArrowUpRight className="w-3.5 h-3.5" />
+        </Link>
+      </div>
     </div>
   );
 }
