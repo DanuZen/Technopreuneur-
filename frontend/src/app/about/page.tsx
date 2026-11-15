@@ -394,11 +394,7 @@ export default function AboutPage() {
                         {member.name}
                       </h3>
                       <span
-                        className={`inline-flex items-center px-3 py-0.5 rounded-full text-[11px] font-bold transition-colors duration-300 ${
-                          isSelected
-                            ? "bg-white text-[#0f2c56]"
-                            : "bg-[#0f2c56] text-white"
-                        }`}
+                        className="inline-flex items-center px-3 py-0.5 rounded-full text-[11px] font-bold bg-[#ce2731] text-white transition-colors duration-300"
                       >
                         {member.role}
                       </span>
