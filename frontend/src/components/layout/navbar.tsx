@@ -194,7 +194,7 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
                         {user.email || "Akun Terverifikasi"}
                       </div>
                       <span className="inline-block mt-2 uppercase text-[9px] bg-[#ce2731] text-white px-2.5 py-0.5 rounded-full font-mono font-bold">
-                        Role: {user.role}
+                        {user.role}
                       </span>
                     </div>
 

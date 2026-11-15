@@ -73,7 +73,12 @@ export function UserProfilePopup({
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [onClose]);
 
   const [draft, setDraft] = useState<UserProfileDraft>({
     name: user.name,
@@ -342,7 +347,7 @@ export function UserProfilePopup({
               </h2>
               <div className="flex items-center gap-2 mt-0.5">
                 <span className="uppercase text-[10px] bg-[#ce2731] text-white px-2.5 py-0.5 rounded-full font-mono font-bold">
-                  Role: {user.role}
+                  {user.role}
                 </span>
                 {savedNotice && (
                   <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700">
