@@ -157,9 +157,8 @@ export function CVDropzone({ onAnalysisComplete, autoRedirect = true }: CVDropzo
                 <strong className="text-[#0f2c56]">DOCX</strong> (Maksimal 5 MB)
               </p>
             </div>
-            <div className="inline-flex items-center gap-2 text-[11px] text-white bg-[#0f2c56] px-3.5 py-1.5 rounded-full font-semibold max-w-lg">
-              <span className="w-2 h-2 rounded-full bg-[#ce2731] shrink-0" />
-              <span>Pastikan berkas berbasis teks digital, bukan hasil foto/scan gambar dokumen.</span>
+            <div className="inline-flex items-center text-[11px] text-white bg-[#ce2731] px-3.5 py-1.5 rounded-full font-semibold max-w-lg">
+              <span>Pastikan berkas berbasis teks digital, bukan hasil foto/scan gambar dokumen</span>
             </div>
           </div>
         )}
