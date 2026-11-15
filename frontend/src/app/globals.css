@@ -325,6 +325,10 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     0 20px 40px -14px rgba(15, 44, 86, 0.12),
     inset 0 4px 10px rgba(255, 255, 255, 0.98),
     inset 0 -6px 12px rgba(15, 44, 86, 0.04);
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-radius 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease;
 }
 
 .clay-subcard {
@@ -334,6 +338,10 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     0 10px 24px -10px rgba(15, 44, 86, 0.08),
     inset 0 4px 8px rgba(255, 255, 255, 0.85),
     inset 0 -4px 8px rgba(15, 44, 86, 0.04);
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    border-radius 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease;
 }
 
 .clay-well {
@@ -376,16 +384,73 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 @keyframes pageEnter {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(10px) scale(0.985);
+    filter: blur(4px);
   }
   to {
     opacity: 1;
-    transform: none;
+    transform: scale(1);
+    filter: blur(0px);
   }
 }
 
 .animate-page-enter {
-  animation: pageEnter 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: pageEnter 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes morphBlob {
+  0%, 100% {
+    border-radius: 42% 58% 68% 32% / 44% 48% 52% 56%;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  33% {
+    border-radius: 64% 36% 34% 66% / 56% 32% 68% 44%;
+    transform: translate(10px, -12px) scale(1.05) rotate(4deg);
+  }
+  66% {
+    border-radius: 36% 64% 56% 44% / 42% 64% 36% 58%;
+    transform: translate(-8px, 8px) scale(0.97) rotate(-4deg);
+  }
+}
+
+.animate-morph-blob {
+  animation: morphBlob 10s ease-in-out infinite;
+  will-change: border-radius, transform;
+}
+
+.animate-morph-blob-slow {
+  animation: morphBlob 16s ease-in-out infinite reverse;
+  will-change: border-radius, transform;
+}
+
+.morph-surface {
+  transition:
+    border-radius 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease,
+    background-color 0.25s ease;
+}
+
+.morph-surface:hover {
+  border-radius: 28px 14px 28px 14px;
+  transform: translateY(-2px);
+}
+
+.morph-pill {
+  transition:
+    border-radius 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.22s ease,
+    box-shadow 0.25s ease;
+}
+
+.morph-pill:hover {
+  border-radius: 9999px;
+  transform: scale(1.03);
+}
+
+.morph-pill:active {
+  transform: scale(0.97);
 }
 
 /* Accessibility: Stop animations when user prefers reduced motion (R-39) */

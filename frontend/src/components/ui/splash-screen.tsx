@@ -64,10 +64,20 @@ export function SplashScreen({
       role="dialog"
       aria-modal="true"
       aria-label="Splash Screen Pasbana"
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white text-[#0f2c56] overflow-hidden transition-opacity duration-500 ease-out select-none ${
-        fade ? "opacity-0 pointer-events-none" : "opacity-100"
+      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white text-[#0f2c56] overflow-hidden transition-all duration-500 ease-out select-none ${
+        fade ? "opacity-0 scale-105 blur-[4px] pointer-events-none" : "opacity-100 scale-100 blur-0"
       }`}
     >
+      {/* Ambient Morphing Blobs */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-24 -left-20 h-72 w-72 bg-[#0f2c56]/[0.06] blur-2xl animate-morph-blob"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-24 -right-20 h-80 w-80 bg-[#ce2731]/[0.06] blur-2xl animate-morph-blob-slow"
+      />
+
       <div className="relative z-10 flex flex-col items-center justify-center px-6 text-center">
         {/* Centered Video Splash */}
         <div className="w-[320px] sm:w-[440px] md:w-[540px] lg:w-[620px] aspect-video overflow-hidden">

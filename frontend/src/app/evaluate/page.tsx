@@ -30,8 +30,18 @@ function EvaluateContent() {
   };
 
   return (
-    <div className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 flex flex-col gap-6">
-      <div className="flex-1 flex flex-col justify-center gap-6 py-4">
+    <div className="relative min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 flex flex-col gap-6 overflow-hidden">
+      {/* Ambient Morphing Background Shapes */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-20 -right-16 h-64 w-64 bg-[#0f2c56]/[0.04] blur-2xl animate-morph-blob"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-10 -left-20 h-60 w-60 bg-[#ce2731]/[0.04] blur-2xl animate-morph-blob-slow"
+      />
+
+      <div className="relative z-10 flex-1 flex flex-col justify-center gap-6 py-4">
         <DashboardPageHeading
           badge="Evaluasi Berkas Digital"
           titleLine1="Uji kualitas dokumen CV"
@@ -64,7 +74,7 @@ function EvaluateContent() {
 
         <Link
           href="/user/dashboard/onboarding"
-          className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-extrabold transition-colors shrink-0"
+          className="morph-pill inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-extrabold shrink-0"
         >
           <span>Buka Halaman Onboarding</span>
           <ArrowUpRight className="w-3.5 h-3.5" />

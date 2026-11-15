@@ -232,9 +232,9 @@ export function AppSidebar({
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`flex h-10 w-10 items-center justify-center rounded-xl transition-all ${
+                      className={`morph-pill flex h-10 w-10 items-center justify-center rounded-xl ${
                         item.isActive
-                          ? "bg-[#0f2c56] text-white shadow-xs font-bold"
+                          ? "bg-[#0f2c56] text-white shadow-xs font-bold rounded-full"
                           : "text-slate-600 hover:text-primary hover:bg-white/80"
                       }`}
                       title={`${item.label}: ${item.desc}`}
