@@ -15,6 +15,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { CVAnalysisResult } from "@/types";
+import { api } from "@/lib/api";
 import { getRoleFromPathname, getDashboardBasePath } from "@/lib/routes";
 
 export interface ItemRiwayatEvaluasi {
@@ -80,43 +81,62 @@ export function AppSidebar({
     : getDashboardBasePath(userRole);
 
   useEffect(() => {
-    try {
-      const storedAnalysis = localStorage.getItem("cm_analysis");
-      if (storedAnalysis) {
-        const parsed: CVAnalysisResult = JSON.parse(storedAnalysis);
-        const rawCvName = parsed?.fileName
-          ? parsed.fileName.replace(/\.[^/.]+$/, "").replace(/[-_]+/g, " ").trim()
-          : parsed?.profile?.fullName?.trim();
-        if (rawCvName) {
-          const judul = parsed?.fileName
-            ? rawCvName
-            : /^(cv|resume)\b/i.test(rawCvName)
-            ? rawCvName
-            : `CV ${rawCvName}`;
-          const itemAktif: ItemRiwayatEvaluasi = {
-            id: parsed.cvId || "eval-terbaru",
-            judul,
-            skor: parsed.overallScore || 85,
-            tanggal: "Aktif",
-          };
-          setDaftarRiwayat((prev) => {
-            const disaring = prev.filter((p) => p.id !== itemAktif.id);
-            return [itemAktif, ...disaring];
-          });
+    const syncHistory = () => {
+      try {
+        const storedHistory = api.getHistory();
+        const fallbackCurrent = api.getCurrentAnalysis();
+        const combined = [...storedHistory];
+        if (
+          fallbackCurrent &&
+          !combined.some((entry) => entry.cvId === fallbackCurrent.cvId)
+        ) {
+          combined.unshift(fallbackCurrent);
         }
+
+        const mappedFromStorage: ItemRiwayatEvaluasi[] = combined
+          .map((parsed) => {
+            const rawCvName = parsed?.fileName
+              ? parsed.fileName.replace(/\.[^/.]+$/, "").replace(/[-_]+/g, " ").trim()
+              : parsed?.profile?.fullName?.trim();
+            if (!rawCvName) return null;
+            const judul = parsed?.fileName
+              ? rawCvName
+              : /^(cv|resume)\b/i.test(rawCvName)
+              ? rawCvName
+              : `CV ${rawCvName}`;
+            return {
+              id: parsed.cvId || "eval-terbaru",
+              judul,
+              skor: parsed.overallScore || 85,
+              tanggal: "Aktif",
+            };
+          })
+          .filter((item): item is ItemRiwayatEvaluasi => item !== null);
+
+        const defaultFiltered = CONTOH_RIWAYAT_DEFAULT.filter(
+          (demo) => !mappedFromStorage.some((m) => m.id === demo.id)
+        );
+        setDaftarRiwayat([...mappedFromStorage, ...defaultFiltered]);
+      } catch {
+        // ignore parse error
       }
-    } catch {
-      // ignore parse error
-    }
+    };
+
+    syncHistory();
+    window.addEventListener("pasbana:history-updated", syncHistory);
+    return () => {
+      window.removeEventListener("pasbana:history-updated", syncHistory);
+    };
   }, [pathname]);
 
-  const handlePilihRiwayat = () => {
+  const handlePilihRiwayat = (id: string) => {
     onCloseMobile();
-    router.push(`${baseDashboardPath}/evaluasi`);
+    router.push(`${baseDashboardPath}/riwayat/${encodeURIComponent(id)}`);
   };
 
   const handleHapusRiwayat = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
+    api.removeHistory(id);
     setDaftarRiwayat((prev) => prev.filter((item) => item.id !== id));
   };
 
@@ -377,32 +397,51 @@ export function AppSidebar({
                       Tidak ada riwayat evaluasi yang sesuai.
                     </p>
                   ) : (
-                    riwayatTersaring.map((item) => (
-                      <div
-                        key={item.id}
-                        onClick={handlePilihRiwayat}
-                        role="button"
-                        tabIndex={0}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter" || e.key === " ") handlePilihRiwayat();
-                        }}
-                        className="group flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[13px] font-semibold transition-all text-slate-700 hover:bg-white hover:text-[#0f2c56] cursor-pointer"
-                      >
-                        <FileCheck className="w-[18px] h-[18px] shrink-0" aria-hidden="true" />
-                        <div className="flex-1 min-w-0">
-                          <p className="truncate leading-tight">{item.judul}</p>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={(e) => handleHapusRiwayat(item.id, e)}
-                          className="opacity-0 group-hover:opacity-100 p-1 text-slate-400 hover:text-[#ce2731] transition-opacity shrink-0"
-                          title="Hapus riwayat ini"
-                          aria-label={`Hapus ${item.judul}`}
+                    riwayatTersaring.map((item) => {
+                      const sessionHref = `${baseDashboardPath}/riwayat/${encodeURIComponent(
+                        item.id
+                      )}`;
+                      const isSessionActive =
+                        pathname === sessionHref ||
+                        decodeURIComponent(pathname) ===
+                          `${baseDashboardPath}/riwayat/${item.id}`;
+                      return (
+                        <div
+                          key={item.id}
+                          onClick={() => handlePilihRiwayat(item.id)}
+                          role="button"
+                          tabIndex={0}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                              handlePilihRiwayat(item.id);
+                            }
+                          }}
+                          className={`group flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[13px] font-semibold transition-all cursor-pointer ${
+                            isSessionActive
+                              ? "bg-[#0f2c56] text-white"
+                              : "text-slate-700 hover:bg-white hover:text-[#0f2c56]"
+                          }`}
                         >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    ))
+                          <FileCheck className="w-[18px] h-[18px] shrink-0" aria-hidden="true" />
+                          <div className="flex-1 min-w-0">
+                            <p className="truncate leading-tight">{item.judul}</p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={(e) => handleHapusRiwayat(item.id, e)}
+                            className={`opacity-0 group-hover:opacity-100 p-1 transition-opacity shrink-0 ${
+                              isSessionActive
+                                ? "text-white/75 hover:text-white"
+                                : "text-slate-400 hover:text-[#ce2731]"
+                            }`}
+                            title="Hapus riwayat ini"
+                            aria-label={`Hapus ${item.judul}`}
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      );
+                    })
                   )}
                 </div>
               </div>

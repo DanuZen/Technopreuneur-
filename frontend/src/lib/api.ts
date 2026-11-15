@@ -251,10 +251,46 @@ class ApiClient {
     }
   }
 
-  // Local Storage Storage Helpers for CV Analysis
+  // Local Storage Helpers for CV Analysis & Session History
   saveAnalysis(result: CVAnalysisResult): void {
     if (typeof window !== "undefined") {
       localStorage.setItem("cm_analysis", JSON.stringify(result));
+      const existing = this.getHistory().filter((item) => item.cvId !== result.cvId);
+      const updated = [result, ...existing].slice(0, 20);
+      localStorage.setItem("cm_history", JSON.stringify(updated));
+      window.dispatchEvent(new Event("pasbana:history-updated"));
+    }
+  }
+
+  getHistory(): CVAnalysisResult[] {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("cm_history");
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed)) return parsed as CVAnalysisResult[];
+        } catch {
+          return [];
+        }
+      }
+    }
+    return [];
+  }
+
+  getAnalysisById(cvId: string): CVAnalysisResult | null {
+    const history = this.getHistory();
+    const found = history.find((item) => item.cvId === cvId);
+    if (found) return found;
+    const current = this.getCurrentAnalysis();
+    if (current && current.cvId === cvId) return current;
+    return null;
+  }
+
+  removeHistory(cvId: string): void {
+    if (typeof window !== "undefined") {
+      const updated = this.getHistory().filter((item) => item.cvId !== cvId);
+      localStorage.setItem("cm_history", JSON.stringify(updated));
+      window.dispatchEvent(new Event("pasbana:history-updated"));
     }
   }
 

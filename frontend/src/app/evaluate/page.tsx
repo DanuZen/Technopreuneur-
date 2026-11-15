@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
@@ -10,56 +10,24 @@ import {
 } from "lucide-react";
 import { CVDropzone } from "@/components/cv/cv-dropzone";
 import { DashboardPageHeading } from "@/components/dashboard/dashboard-page-heading";
-import { CvEvaluationChat } from "@/components/evaluate/cv-evaluation-chat";
 import { CVAnalysisResult } from "@/types";
 import { api } from "@/lib/api";
 
 function EvaluateContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [analysis, setAnalysis] = useState<CVAnalysisResult | null>(null);
 
   useEffect(() => {
     const tabParam = searchParams.get("tab");
     if (tabParam === "questionnaire" || tabParam === "onboarding") {
       router.replace("/user/dashboard/onboarding");
-      return;
-    }
-
-    if (searchParams.get("new") === "true") {
-      setAnalysis(null);
-      return;
-    }
-
-    const current = api.getCurrentAnalysis();
-    if (current) {
-      setAnalysis(current);
     }
   }, [searchParams, router]);
 
   const handleAnalysisSuccess = (result: CVAnalysisResult) => {
     api.saveAnalysis(result);
-    setAnalysis(result);
+    router.push(`/user/dashboard/riwayat/${encodeURIComponent(result.cvId)}`);
   };
-
-  if (analysis) {
-    return (
-      <div className="h-full overflow-hidden w-full px-3.5 sm:px-6 pt-5 sm:pt-6 pb-3 flex flex-col gap-4">
-        <div className="shrink-0">
-          <DashboardPageHeading
-            badge="Hasil & Konsultasi CV"
-            titleLine1="Diskusikan hasil evaluasi"
-            titleLine2Prefix="untuk skor"
-            titleHighlight="paling optimal!"
-          />
-        </div>
-        <CvEvaluationChat
-          analysis={analysis}
-          onResetUpload={() => setAnalysis(null)}
-        />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-full w-full px-3.5 sm:px-6 py-5 sm:py-6 flex flex-col gap-6">

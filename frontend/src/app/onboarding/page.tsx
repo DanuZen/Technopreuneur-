@@ -60,7 +60,7 @@ export default function OnboardingPage() {
 
   const handleOnboardingSuccess = (result: CVAnalysisResult) => {
     api.saveAnalysis(result);
-    router.push("/user/dashboard/evaluasi");
+    router.push(`/user/dashboard/riwayat/${encodeURIComponent(result.cvId)}`);
   };
 
   return (
