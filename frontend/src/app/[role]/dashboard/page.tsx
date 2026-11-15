@@ -322,9 +322,29 @@ const MONITORED_PARTNERS: PartnerMonitoringItem[] = [
 ];
 
 function AdminDashboardView() {
-  const verifiedCount = MONITORED_PARTNERS.filter((p) => p.complianceStatus === "verified").length;
-  const pendingCount = MONITORED_PARTNERS.filter((p) => p.complianceStatus === "pending").length;
-  const incompleteCount = MONITORED_PARTNERS.filter((p) => p.complianceStatus === "incomplete").length;
+  const [partners, setPartners] = useState<PartnerMonitoringItem[]>(MONITORED_PARTNERS);
+
+  const handlePartnerAudit = (
+    id: string,
+    complianceStatus: "verified" | "incomplete"
+  ) => {
+    setPartners((prev) =>
+      prev.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              complianceStatus,
+              standardScore:
+                complianceStatus === "verified" ? "100% Terverifikasi" : "Perlu Revisi",
+            }
+          : item
+      )
+    );
+  };
+
+  const verifiedCount = partners.filter((p) => p.complianceStatus === "verified").length;
+  const pendingCount = partners.filter((p) => p.complianceStatus === "pending").length;
+  const incompleteCount = partners.filter((p) => p.complianceStatus === "incomplete").length;
 
   return (
     <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4">
@@ -407,8 +427,8 @@ function AdminDashboardView() {
                 <span className="font-bold">24 Perusahaan</span>
               </div>
               <div className="pt-2 flex items-center justify-between gap-3">
-                <span>Calon Mitra Dipantau</span>
-                <span className="font-bold">{pendingCount} Pengajuan Baru</span>
+                <span>Menunggu Audit &amp; Verifikasi</span>
+                <span className="font-bold">{pendingCount} Perusahaan</span>
               </div>
             </div>
           </div>
@@ -433,17 +453,17 @@ function AdminDashboardView() {
                   </div>
                   <div>
                     <p className="text-xs font-extrabold uppercase tracking-wider">
-                      Monitoring Pengajuan Kemitraan Company
+                      Audit &amp; Verifikasi Pendaftaran Company
                     </p>
                     <p className="text-xs font-medium text-slate-500">
-                      Pemantauan kesiapan standar dan legalitas perusahaan yang ingin bekerja sama
+                      Audit legalitas dan verifikasi perusahaan yang mendaftar sebelum resmi bermitra
                     </p>
                   </div>
                 </div>
               </div>
 
               <div className="divide-y divide-slate-200 border-y border-slate-200">
-                {MONITORED_PARTNERS.map((item) => (
+                {partners.map((item) => (
                   <div
                     key={item.id}
                     className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
@@ -451,29 +471,43 @@ function AdminDashboardView() {
                     <div className="space-y-0.5">
                       <p className="text-sm font-extrabold">{item.company}</p>
                       <p className="text-xs font-medium text-slate-500">
-                        {item.sector} &middot; {item.location}
+                        {item.sector} &middot; {item.location} &middot; {item.standardScore}
                       </p>
                     </div>
 
                     <div className="flex items-center gap-2 shrink-0">
-                      <span className="px-3 py-1 rounded-full bg-[#edf2f9] text-[#0f2c56] text-xs font-bold">
-                        {item.standardScore}
-                      </span>
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-bold text-white ${
-                          item.complianceStatus === "verified"
-                            ? "bg-[#0f2c56]"
-                            : item.complianceStatus === "incomplete"
-                            ? "bg-[#ce2731]"
-                            : "bg-amber-600"
-                        }`}
-                      >
-                        {item.complianceStatus === "verified"
-                          ? "Mitra Aktif"
-                          : item.complianceStatus === "incomplete"
-                          ? "Perlu Kelengkapan"
-                          : "Dalam Pemantauan"}
-                      </span>
+                      {item.complianceStatus === "pending" ? (
+                        <>
+                          <button
+                            type="button"
+                            onClick={() => handlePartnerAudit(item.id, "verified")}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors cursor-pointer"
+                          >
+                            <CheckCircle2 className="w-3.5 h-3.5" aria-hidden="true" />
+                            <span>Verifikasi</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handlePartnerAudit(item.id, "incomplete")}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors cursor-pointer"
+                          >
+                            <XCircle className="w-3.5 h-3.5" aria-hidden="true" />
+                            <span>Minta Kelengkapan</span>
+                          </button>
+                        </>
+                      ) : (
+                        <span
+                          className={`px-3 py-1 rounded-full text-xs font-bold text-white ${
+                            item.complianceStatus === "verified"
+                              ? "bg-[#0f2c56]"
+                              : "bg-[#ce2731]"
+                          }`}
+                        >
+                          {item.complianceStatus === "verified"
+                            ? "Mitra Terverifikasi"
+                            : "Perlu Kelengkapan"}
+                        </span>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -481,7 +515,7 @@ function AdminDashboardView() {
             </div>
 
             <p className="text-xs font-medium text-slate-500">
-              Admin memantau pemenuhan standar kemitraan dan menetapkan kebijakan ATS global tanpa mengelola lowongan atau seleksi di dalam ranah company.
+              Admin mengaudit dan memverifikasi perusahaan yang mendaftar serta menetapkan standarisasi platform tanpa mengintervensi ranah rekrutmen company.
             </p>
           </div>
 

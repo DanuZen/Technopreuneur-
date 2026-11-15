@@ -48,7 +48,7 @@ Produk melayani tiga role; pencari kerja adalah fokus utama MVP.
 | --- | --- | --- |
 | Pencari kerja | Fresh graduate dan profesional muda | Tahu kualitas CV, dapat lowongan cocok, melamar dengan mudah |
 | Employer | HRD, pemilik UMKM, rekruter | Pasang lowongan, lihat pelamar terurut kecocokan |
-| Admin | Tim internal | Pantau jumlah agregat jobseeker dan company mitra, tetapkan standarisasi, dan monitoring calon mitra company |
+| Admin | Tim internal | Pantau jumlah agregat jobseeker dan company mitra, tetapkan standarisasi, serta audit dan verifikasi company yang mendaftar |
 
 **Rina, 22 tahun, lulusan S1 Informatika.** Belum pernah bekerja dan tidak yakin CV-nya layak. Ingin tahu skill apa yang kurang.
 
@@ -63,7 +63,7 @@ MVP mencakup alur lengkap pencari kerja dan employer dengan satu sumber lowongan
 | Pencari kerja | Registrasi dan login (email + Google); upload CV PDF/DOCX maks 5 MB; analisis AI (profil, skor, kekuatan, kelemahan, saran); koreksi profil manual; rekomendasi lowongan dengan skor, alasan, dan gap skill; simpan dan lamar; hapus CV dan akun |
 | Employer | Registrasi dan profil perusahaan; CRUD lowongan; daftar pelamar terurut skor; ubah status pelamar |
 | Sumber eksternal | Satu adaptor API resmi (mis. Jooble) sebagai uji coba, dengan tautan keluar ke sumber asli |
-| Admin | Lihat jumlah agregat jobseeker & company bekerja sama; atur standarisasi platform; monitoring company calon mitra |
+| Admin | Lihat jumlah agregat jobseeker & company bekerja sama; atur standarisasi platform; audit dan verifikasi pendaftaran company |
 
 **Ditunda setelah MVP:**
 
@@ -104,7 +104,7 @@ MVP memuat 24 kebutuhan wajib (P0) dan 8 kebutuhan tambahan (P1) di enam area.
 | FR-41 | Lamaran | Lowongan eksternal: tombol "Lamar di sumber" membuka tautan asli |
 | FR-43 | Lamaran | Employer melihat pelamar terurut skor dengan ringkasan AI |
 | FR-44 | Lamaran | Employer mengubah status pelamar |
-| FR-50 | Admin | Monitoring pengajuan dan kesiapan standar company yang ingin bekerja sama tanpa mengintervensi ranah rekrutmen company |
+| FR-50 | Admin | Audit legalitas dan verifikasi pendaftaran company yang ingin bekerja sama tanpa mengintervensi ranah rekrutmen company |
 
 **Tambahan (P1)**
 
@@ -152,7 +152,7 @@ Pencari kerja memiliki **2 opsi**: jika sudah memiliki CV dapat langsung mengung
 
 ![Alur Employer](diagrams/alur-employer.svg)
 
-Lowongan yang memenuhi validasi standar sistem otomatis langsung aktif dan dibuatkan embedding-nya tanpa intervensi manual admin; admin berfokus pada standarisasi dan monitoring company calon mitra.
+Company yang mendaftar diaudit dan diverifikasi oleh admin terlebih dahulu; setelah terverifikasi, lowongan yang memenuhi validasi standar sistem otomatis aktif dan dibuatkan embedding-nya tanpa intervensi manual admin di dalam ranah rekrutmen company.
 
 **Pipeline AI (asinkron)**
 

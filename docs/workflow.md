@@ -78,8 +78,11 @@ Employer mendaftarkan profil perusahaan, mempublikasikan lowongan pekerjaan baru
 
 ```mermaid
 flowchart TD
-    A([Mulai]) --> B[Registrasi Akun Employer & Isi Profil Perusahaan]
-    B --> C[Dashboard Employer]
+    A([Mulai]) --> B[Registrasi Akun Employer & Unggah Legalitas Perusahaan]
+    B --> BA{Audit & Verifikasi Admin}
+    BA -- Perlu Kelengkapan --> BB[Notifikasi Perbaikan Dokumen ke Employer]
+    BB --> B
+    BA -- Terverifikasi --> C[Dashboard Employer]
     C --> D[Buat Lowongan Baru\nJudul, Deskripsi, Kualifikasi, Lokasi, Gaji]
     D --> E[Submit Lowongan]
     E --> F{Validasi Standar Sistem Otomatis}

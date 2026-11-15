@@ -92,7 +92,7 @@ Hal-hal berikut **TIDAK** masuk dalam lingkup rilis MVP:
 
 3. **Administrator (*Internal Ops*):**
    - **Profil:** Tim pengelola standar dan ekosistem platform.
-   - **Kebutuhan:** Melihat jumlah agregat *jobseeker* dan *company* yang bekerja sama, menentukan standarisasi platform (skor minimum ATS, aturan *blind screening*, validasi dokumen), serta memonitoring *company* yang ingin bekerja sama tanpa ikut campur langsung ke ranah operasional/rekrutmen *company*.
+   - **Kebutuhan:** Melihat jumlah agregat *jobseeker* dan *company* yang bekerja sama, menentukan standarisasi platform (skor minimum ATS, aturan *blind screening*, validasi dokumen), serta mengaudit dan memverifikasi *company* yang mendaftar untuk bekerja sama tanpa ikut campur langsung ke ranah rekrutmen *company*.
 
 ---
 
@@ -126,7 +126,7 @@ Hal-hal berikut **TIDAK** masuk dalam lingkup rilis MVP:
 | **FR-41** | Lamaran | External Redirect | Lowongan eksternal menyediakan tombol *Lamar di Sumber Asli* yang membuka tab baru ke URL mitra |
 | **FR-43** | Lamaran | Review Pelamar Employer | Employer melihat pelamar yang masuk terurut skor kecocokan tertinggi dan ringkasan AI |
 | **FR-44** | Lamaran | Update Status Lamaran | Employer dapat memperbarui status pelamar (`submitted`, `reviewed`, `shortlisted`, `rejected`) |
-| **FR-50** | Admin | Monitoring Kemitraan Company | Admin dapat memantau pengajuan dan kesiapan standar company yang ingin bekerja sama tanpa mengintervensi lowongan atau seleksi company |
+| **FR-50** | Admin | Audit & Verifikasi Pendaftaran Company | Admin mengaudit legalitas dan memverifikasi company yang mendaftar untuk bekerja sama sebelum disetujui sebagai mitra resmi, tanpa mengintervensi lowongan atau seleksi company |
 
 ### 5.2 Prioritas P1 (Fitur Tambahan Pasca-P0)
 

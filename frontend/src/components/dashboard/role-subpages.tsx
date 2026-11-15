@@ -580,31 +580,41 @@ const MONITORED_COMPANY_APPLICATIONS: PartnerMonitoringRecord[] = [
 ];
 
 export function AdminModerationSubpage() {
+  const [items, setItems] = useState<PartnerMonitoringRecord[]>(
+    MONITORED_COMPANY_APPLICATIONS
+  );
   const [selectedId, setSelectedId] = useState<string>(MONITORED_COMPANY_APPLICATIONS[0].id);
 
-  const selected =
-    MONITORED_COMPANY_APPLICATIONS.find((it) => it.id === selectedId) ||
-    MONITORED_COMPANY_APPLICATIONS[0];
+  const setAuditStatus = (
+    id: string,
+    status: PartnerMonitoringRecord["status"]
+  ) => {
+    setItems((prev) =>
+      prev.map((it) => (it.id === id ? { ...it, status } : it))
+    );
+  };
+
+  const selected = items.find((it) => it.id === selectedId) || items[0];
 
   return (
     <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4 lg:overflow-hidden">
       <DashboardPageHeading
-        badge="Monitoring Mitra (FR-50)"
-        titleLine1="Monitoring pengajuan"
-        titleLine2Prefix="kemitraan company"
+        badge="Audit & Verifikasi Mitra (FR-50)"
+        titleLine1="Audit & verifikasi"
+        titleLine2Prefix="pendaftaran company"
         titleHighlight="calon mitra!"
       />
 
       <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-4 lg:overflow-hidden">
-        {/* Tabel List Ringkas (Read-only Monitoring) */}
+        {/* Tabel List Ringkas (Tanpa Kolom Aksi) */}
         <div className="flex-1 min-h-0 flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs">
           <div className="shrink-0 grid grid-cols-12 gap-2 px-4 py-3 border-b border-slate-100 bg-slate-50 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
             <span className="col-span-5">Perusahaan</span>
             <span className="col-span-4">Sektor &amp; Lokasi</span>
-            <span className="col-span-3 text-right">Status Kemitraan</span>
+            <span className="col-span-3 text-right">Status Audit</span>
           </div>
           <div className="flex-1 min-h-0 overflow-y-auto scrollbar-none divide-y divide-slate-100">
-            {MONITORED_COMPANY_APPLICATIONS.map((item) => {
+            {items.map((item) => {
               const isSelected = selected?.id === item.id;
               return (
                 <button
@@ -642,7 +652,7 @@ export function AdminModerationSubpage() {
                         ? "Terverifikasi"
                         : item.status === "incomplete"
                         ? "Perlu Kelengkapan"
-                        : "Dipantau"}
+                        : "Dalam Audit"}
                     </span>
                   </div>
                 </button>
@@ -665,10 +675,10 @@ export function AdminModerationSubpage() {
                 }`}
               >
                 {selected.status === "verified"
-                  ? "Mitra Bekerja Sama"
+                  ? "Mitra Terverifikasi"
                   : selected.status === "incomplete"
-                  ? "Belum Memenuhi Standar"
-                  : "Dalam Pemantauan Pengajuan"}
+                  ? "Perlu Kelengkapan Dokumen"
+                  : "Menunggu Audit Admin"}
               </span>
               <div>
                 <h3 className="text-base font-extrabold text-[#0f2c56]">
@@ -680,7 +690,7 @@ export function AdminModerationSubpage() {
               </div>
               <div className="space-y-2 rounded-xl bg-[#f4f7fb] p-3.5 text-xs text-slate-600">
                 <p>
-                  <strong className="text-[#0f2c56]">Legalitas:</strong> {selected.legalityDoc}
+                  <strong className="text-[#0f2c56]">Audit Legalitas:</strong> {selected.legalityDoc}
                 </p>
                 <p>
                   <strong className="text-[#0f2c56]">Kepatuhan PDP:</strong> {selected.pdpCompliance}
@@ -691,11 +701,31 @@ export function AdminModerationSubpage() {
 
             <div className="space-y-2 pt-3 border-t border-slate-100">
               <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500">
-                Batasan Wewenang Admin
+                Keputusan Audit &amp; Verifikasi
               </p>
-              <p className="text-[11px] text-slate-500 leading-relaxed">
-                Admin hanya memantau pemenuhan standar kemitraan company tanpa masuk ke pengelolaan lowongan atau seleksi kandidat perusahaan.
-              </p>
+              <div className="grid grid-cols-3 gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => setAuditStatus(selected.id, "verified")}
+                  className="px-2 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-600 hover:text-white text-emerald-700 text-[11px] font-bold transition-colors cursor-pointer"
+                >
+                  Verifikasi
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setAuditStatus(selected.id, "pending")}
+                  className="px-2 py-2 rounded-xl bg-amber-50 hover:bg-amber-500 hover:text-white text-amber-700 text-[11px] font-bold transition-colors cursor-pointer"
+                >
+                  Audit
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setAuditStatus(selected.id, "incomplete")}
+                  className="px-2 py-2 rounded-xl bg-red-50 hover:bg-[#ce2731] hover:text-white text-[#ce2731] text-[11px] font-bold transition-colors cursor-pointer"
+                >
+                  Lengkapi
+                </button>
+              </div>
             </div>
           </aside>
         )}
