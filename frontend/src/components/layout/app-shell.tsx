@@ -53,8 +53,11 @@ export function AppShell({ children }: AppShellProps) {
     return <main className="min-h-dvh w-full bg-white text-primary">{children}</main>;
   }
 
-  // Halaman beranda (/): Terkunci 1 layar penuh, belakang pill Navbar transparan mengikuti background utama (#fefefd), dan konten di bawahnya tidak naik menabrak navbar
-  if (pathname === "/") {
+  // Halaman full-slide (/ , /jobs, /about): Terkunci 1 layar penuh dengan Navbar melayang di atas
+  const isFullSlidePage =
+    pathname === "/" || pathname === "/jobs" || pathname === "/about";
+
+  if (isFullSlidePage) {
     return (
       <div className="h-dvh w-full overflow-hidden flex flex-col bg-[#fefefd] text-primary select-none">
         <Navbar />

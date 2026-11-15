@@ -1,10 +1,24 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import { Search, MapPin, Briefcase, ExternalLink, Filter, Bookmark, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
+import {
+  Search,
+  MapPin,
+  Briefcase,
+  ExternalLink,
+  Filter,
+  Bookmark,
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
+  ArrowUpRight,
+  SlidersHorizontal,
+} from "lucide-react";
 import { JobItem } from "@/types";
 import { api } from "@/lib/api";
+
+const TOTAL_SLIDES = 3;
 
 export default function JobsPage() {
   const [keyword, setKeyword] = useState("");
@@ -14,19 +28,25 @@ export default function JobsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const [activeSlide, setActiveSlide] = useState<number>(0);
+  const [prevSlide, setPrevSlide] = useState<number>(0);
+  const [scrollDir, setScrollDir] = useState<"down" | "up">("down");
+
+  const isAnimatingRef = useRef<boolean>(false);
+  const touchStartYRef = useRef<number | null>(null);
+  const activeSlideRef = useRef<number>(0);
+
   const fetchJobs = async () => {
     setLoading(true);
     setError(null);
     try {
       const data = await api.getJobs({ keyword, location, workType });
-      // If backend returns empty list (mocked/initial state), supply realistic initial sample jobs
       if (!data || data.length === 0) {
         setJobs(SAMPLE_JOBS);
       } else {
         setJobs(data);
       }
     } catch {
-      // In offline/initial dev phase, fallback to clean sample jobs
       setJobs(SAMPLE_JOBS);
     } finally {
       setLoading(false);
@@ -37,127 +57,428 @@ export default function JobsPage() {
     fetchJobs();
   }, []);
 
+  useEffect(() => {
+    activeSlideRef.current = activeSlide;
+  }, [activeSlide]);
+
+  const goToSlide = useCallback((targetIndex: number) => {
+    const clamped = Math.max(0, Math.min(TOTAL_SLIDES - 1, targetIndex));
+    if (clamped === activeSlideRef.current || isAnimatingRef.current) return;
+
+    setScrollDir(clamped > activeSlideRef.current ? "down" : "up");
+    setPrevSlide(activeSlideRef.current);
+    isAnimatingRef.current = true;
+    activeSlideRef.current = clamped;
+    setActiveSlide(clamped);
+
+    setTimeout(() => {
+      isAnimatingRef.current = false;
+    }, 760);
+  }, []);
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     fetchJobs();
+    goToSlide(1);
+  };
+
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      const target = e.target as HTMLElement | null;
+      const scrollContainer = target?.closest("[data-jobs-scroll='true']") as HTMLElement | null;
+
+      if (scrollContainer && scrollContainer.scrollHeight > scrollContainer.clientHeight + 2) {
+        const atTop = scrollContainer.scrollTop <= 1;
+        const atBottom =
+          scrollContainer.scrollTop + scrollContainer.clientHeight >=
+          scrollContainer.scrollHeight - 2;
+
+        if ((e.deltaY < 0 && !atTop) || (e.deltaY > 0 && !atBottom)) {
+          return;
+        }
+      }
+
+      e.preventDefault();
+      if (isAnimatingRef.current) return;
+      if (Math.abs(e.deltaY) < 22) return;
+      goToSlide(activeSlideRef.current + (e.deltaY > 0 ? 1 : -1));
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const activeTag = document.activeElement?.tagName;
+      if (activeTag === "INPUT" || activeTag === "SELECT" || activeTag === "TEXTAREA") {
+        return;
+      }
+      if (isAnimatingRef.current) return;
+      if (e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ") {
+        e.preventDefault();
+        goToSlide(activeSlideRef.current + 1);
+      } else if (e.key === "ArrowUp" || e.key === "PageUp") {
+        e.preventDefault();
+        goToSlide(activeSlideRef.current - 1);
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        goToSlide(0);
+      } else if (e.key === "End") {
+        e.preventDefault();
+        goToSlide(TOTAL_SLIDES - 1);
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [goToSlide]);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartYRef.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartYRef.current === null || isAnimatingRef.current) return;
+    const deltaY = touchStartYRef.current - e.changedTouches[0].clientY;
+    touchStartYRef.current = null;
+    if (Math.abs(deltaY) < 40) return;
+    goToSlide(activeSlideRef.current + (deltaY > 0 ? 1 : -1));
+  };
+
+  const getSectionAnimClass = (index: number) => {
+    if (index === activeSlide) {
+      return "opacity-100 translate-y-0 scale-100 z-20 pointer-events-auto";
+    }
+    if (index === prevSlide) {
+      return scrollDir === "down"
+        ? "opacity-0 -translate-y-12 scale-[0.96] z-[15] pointer-events-none"
+        : "opacity-0 translate-y-12 scale-[0.96] z-[15] pointer-events-none";
+    }
+    return index < activeSlide
+      ? "opacity-0 -translate-y-16 scale-[0.94] z-0 pointer-events-none"
+      : "opacity-0 translate-y-16 scale-[0.94] z-0 pointer-events-none";
+  };
+
+  const getTextRevealClass = (slideIndex: number, delayClass: string = "delay-100") => {
+    const isActive = activeSlide === slideIndex;
+    return isActive
+      ? `opacity-100 translate-y-0 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${delayClass}`
+      : "opacity-0 translate-y-6 transition-all duration-300 ease-in";
+  };
+
+  const getHighlightPopClass = (slideIndex: number, delayClass: string = "delay-300") => {
+    const isActive = activeSlide === slideIndex;
+    return isActive
+      ? `opacity-100 scale-100 translate-y-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${delayClass}`
+      : "opacity-0 scale-90 translate-y-2 transition-all duration-300 ease-in";
+  };
+
+  const getGlobalMorphStyle = (slide: number): React.CSSProperties => {
+    switch (slide) {
+      case 0:
+        return {
+          top: "0px",
+          left: "calc(50% + 12px)",
+          width: "calc(50% - 12px)",
+          height: "100%",
+          borderRadius: "34px",
+          backgroundColor: "#0f2c56",
+        };
+      case 1:
+        return {
+          top: "0px",
+          left: "0px",
+          width: "100%",
+          height: "100%",
+          borderRadius: "34px",
+          backgroundColor: "#0f2c56",
+        };
+      case 2:
+      default:
+        return {
+          top: "4px",
+          left: "16px",
+          width: "calc(41.666667% - 25px)",
+          height: "calc(100% - 8px)",
+          borderRadius: "28px",
+          backgroundColor: "#0f2c56",
+        };
+    }
   };
 
   return (
-    <main className="min-h-screen bg-[#fefefd] text-[#0f2c56]">
-      <div className="max-w-[1400px] w-full mx-auto px-4 py-8 sm:px-6 lg:px-10 space-y-8 animate-fade-in-up">
-        {/* Header */}
-        <header className="space-y-3">
-          <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white">
-            Pencocokan Karir
-          </span>
-          <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold tracking-tight text-[#0f2c56] leading-[1.18]">
-            Eksplorasi{" "}
-            <span className="inline-block bg-[#ce2731] text-white px-3 py-0.5 rounded-xl">
-              Lowongan Kerja
+    <div
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      className="h-full w-full relative overflow-hidden bg-[#fefefd] text-[#0f2c56] select-none"
+    >
+      {/* GLOBAL MORPHING CARD STAGE (Desktop lg+) */}
+      <div
+        className="hidden lg:block absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 pointer-events-none z-10"
+        aria-hidden="true"
+      >
+        <div className="relative w-full h-full">
+          <div
+            className="absolute transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+            style={getGlobalMorphStyle(activeSlide)}
+          />
+        </div>
+      </div>
+
+      {/* SLIDE 0: HERO PENCARIAN & FILTER LOWONGAN */}
+      <section
+        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(0)}`}
+      >
+        <div className="w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-center">
+          <div className="lg:col-span-6 px-4 sm:px-8 lg:px-12 space-y-5 text-left">
+            <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white ${getTextRevealClass(0, "delay-75")}`}>
+              Pencocokan Karir
             </span>
-          </h1>
-          <p className="text-sm sm:text-base text-slate-600 max-w-2xl leading-relaxed">
-            Temukan lowongan dari mitra internal terverifikasi dan agregasi portal Jooble Indonesia, lengkap dengan analisis kesesuaian keahlian Pasbana AI.
-          </p>
-        </header>
 
-        {/* Search & Filter Bar */}
-        <form
-          onSubmit={handleSearch}
-          className="p-5 sm:p-6 bg-white border border-slate-200 rounded-[28px] space-y-3"
-        >
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div className="relative">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" aria-hidden="true" />
-              <input
-                type="text"
-                value={keyword}
-                onChange={(e) => setKeyword(e.target.value)}
-                placeholder="Posisi, keahlian, atau perusahaan..."
-                className="w-full pl-10 pr-3.5 py-3 text-sm rounded-xl border border-slate-200 focus:outline-none focus:border-[#0f2c56] bg-white text-[#0f2c56]"
-              />
+            <h1 className={`text-3xl sm:text-5xl font-extrabold tracking-tight text-[#0f2c56] leading-[1.18] ${getTextRevealClass(0, "delay-150")}`}>
+              Eksplorasi{" "}
+              <span className={`inline-block bg-[#ce2731] text-white px-3.5 py-0.5 rounded-xl mt-1.5 ${getHighlightPopClass(0, "delay-300")}`}>
+                Lowongan Kerja
+              </span>
+            </h1>
+
+            <p className={`text-sm sm:text-base text-slate-600 max-w-lg leading-relaxed ${getTextRevealClass(0, "delay-200")}`}>
+              Temukan lowongan dari mitra internal terverifikasi dan agregasi portal Jooble Indonesia, lengkap dengan analisis kesesuaian keahlian Pasbana AI.
+            </p>
+
+            <div className={`pt-1 flex flex-wrap items-center gap-3 ${getTextRevealClass(0, "delay-300")}`}>
+              <button
+                type="button"
+                onClick={() => goToSlide(1)}
+                className="px-6 py-3.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition-colors cursor-pointer inline-flex items-center gap-2"
+              >
+                <span>Lihat {jobs.length} Lowongan Aktif</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </button>
+              <Link
+                href="/evaluate"
+                className="px-6 py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors"
+              >
+                Cek Kecocokan CV
+              </Link>
             </div>
+          </div>
 
-            <div className="relative">
-              <MapPin className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" aria-hidden="true" />
-              <input
-                type="text"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                placeholder="Kota (Jakarta, Bandung, Remote)..."
-                className="w-full pl-10 pr-3.5 py-3 text-sm rounded-xl border border-slate-200 focus:outline-none focus:border-[#0f2c56] bg-white text-[#0f2c56]"
-              />
-            </div>
-
-            <div className="flex gap-2.5">
-              <div className="relative flex-1">
-                <Filter className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" aria-hidden="true" />
-                <select
-                  value={workType}
-                  onChange={(e) => setWorkType(e.target.value)}
-                  className="w-full pl-10 pr-3.5 py-3 text-sm rounded-xl border border-slate-200 focus:outline-none focus:border-[#0f2c56] cursor-pointer bg-white text-[#0f2c56]"
-                >
-                  <option value="">Semua Tipe Kerja</option>
-                  <option value="full-time">Full-time</option>
-                  <option value="part-time">Part-time</option>
-                  <option value="internship">Magang (Internship)</option>
-                  <option value="remote">Remote</option>
-                </select>
+          <div className="lg:col-span-6 h-full rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent p-6 sm:p-10 lg:p-14 flex flex-col justify-center">
+            <form
+              onSubmit={handleSearch}
+              className="bg-white text-[#0f2c56] rounded-[28px] p-6 sm:p-8 space-y-4 shadow-2xl"
+            >
+              <div className="space-y-1.5">
+                <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#ce2731] text-white text-[11px] font-bold">
+                  Filter Cerdas
+                </span>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-[#0f2c56]">
+                  Cari posisi yang paling pas bana
+                </h2>
               </div>
 
+              <div className="space-y-3">
+                <div className="relative">
+                  <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" aria-hidden="true" />
+                  <input
+                    type="text"
+                    value={keyword}
+                    onChange={(e) => setKeyword(e.target.value)}
+                    placeholder="Posisi, keahlian, atau perusahaan..."
+                    className="w-full pl-10 pr-3.5 py-3 text-sm rounded-xl border border-slate-200 focus:outline-none focus:border-[#0f2c56] bg-white text-[#0f2c56]"
+                  />
+                </div>
+
+                <div className="relative">
+                  <MapPin className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" aria-hidden="true" />
+                  <input
+                    type="text"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    placeholder="Kota (Jakarta, Bandung, Remote)..."
+                    className="w-full pl-10 pr-3.5 py-3 text-sm rounded-xl border border-slate-200 focus:outline-none focus:border-[#0f2c56] bg-white text-[#0f2c56]"
+                  />
+                </div>
+
+                <div className="relative">
+                  <Filter className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" aria-hidden="true" />
+                  <select
+                    value={workType}
+                    onChange={(e) => setWorkType(e.target.value)}
+                    className="w-full pl-10 pr-3.5 py-3 text-sm rounded-xl border border-slate-200 focus:outline-none focus:border-[#0f2c56] cursor-pointer bg-white text-[#0f2c56]"
+                  >
+                    <option value="">Semua Tipe Kerja</option>
+                    <option value="full-time">Full-time</option>
+                    <option value="part-time">Part-time</option>
+                    <option value="internship">Magang (Internship)</option>
+                    <option value="remote">Remote</option>
+                  </select>
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full py-3.5 bg-[#ce2731] hover:bg-[#b01e27] text-white text-sm font-bold rounded-xl transition-colors cursor-pointer"
+                >
+                  Cari Lowongan
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      {/* SLIDE 1: DAFTAR LOWONGAN AKTIF */}
+      <section
+        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(1)}`}
+      >
+        <div className="w-full h-full mx-auto rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent px-5 sm:px-10 lg:px-14 py-6 flex flex-col gap-5 text-white overflow-hidden">
+          <div className="flex flex-wrap items-center justify-between gap-4 shrink-0">
+            <div className="space-y-1.5">
+              <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#ce2731] text-xs font-bold text-white ${getTextRevealClass(1, "delay-75")}`}>
+                Lowongan Terkurasi
+              </span>
+              <h2 className={`text-2xl sm:text-3xl font-extrabold text-white ${getTextRevealClass(1, "delay-150")}`}>
+                Menampilkan {jobs.length} Peluang Aktif
+              </h2>
+            </div>
+
+            <div className="flex items-center gap-2.5">
               <button
-                type="submit"
-                className="px-6 py-3 bg-[#ce2731] hover:bg-[#b01e27] text-white text-sm font-bold rounded-xl transition-colors min-h-[44px] cursor-pointer"
+                type="button"
+                onClick={() => goToSlide(0)}
+                className="px-4 py-2.5 rounded-xl bg-white text-[#0f2c56] hover:bg-[#ce2731] hover:text-white text-xs font-bold transition-colors inline-flex items-center gap-1.5 cursor-pointer"
               >
-                Cari
+                <SlidersHorizontal className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>Ubah Filter</span>
               </button>
             </div>
           </div>
-        </form>
 
-        {/* Loading State */}
-        {loading && (
-          <div className="py-16 text-center space-y-3">
-            <Loader2 className="w-8 h-8 text-[#0f2c56] animate-spin mx-auto" aria-hidden="true" />
-            <p className="text-sm text-slate-600 font-medium">Memuat data lowongan kerja...</p>
+          <div
+            data-jobs-scroll="true"
+            className="flex-1 min-h-0 overflow-y-auto pr-1 space-y-4 select-text"
+          >
+            {loading && (
+              <div className="h-full flex flex-col items-center justify-center gap-3 py-12">
+                <Loader2 className="w-8 h-8 text-white animate-spin" aria-hidden="true" />
+                <p className="text-sm text-white/80 font-medium">Memuat data lowongan kerja...</p>
+              </div>
+            )}
+
+            {!loading && error && (
+              <div className="p-5 bg-[#ce2731] text-white rounded-[24px] text-sm font-medium flex items-center gap-3">
+                <AlertCircle className="w-5 h-5 shrink-0" aria-hidden="true" />
+                <span>{error}</span>
+              </div>
+            )}
+
+            {!loading && !error && jobs.length === 0 && (
+              <div className="py-16 text-center space-y-3 bg-white text-[#0f2c56] rounded-[28px] p-8">
+                <Briefcase className="w-12 h-12 text-[#0f2c56] mx-auto" aria-hidden="true" />
+                <h3 className="text-base font-bold">Tidak ada lowongan yang sesuai kriteria</h3>
+                <p className="text-xs text-slate-600 max-w-sm mx-auto">
+                  Coba ubah kata kunci pencarian atau bersihkan filter lokasi untuk melihat lowongan lainnya.
+                </p>
+              </div>
+            )}
+
+            {!loading && !error && jobs.length > 0 && (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-2">
+                {jobs.map((job) => (
+                  <JobCard key={job.id} job={job} />
+                ))}
+              </div>
+            )}
           </div>
-        )}
+        </div>
+      </section>
 
-        {/* Error State */}
-        {!loading && error && (
-          <div className="p-5 bg-[#ce2731] text-white rounded-[24px] text-sm font-medium flex items-center gap-3">
-            <AlertCircle className="w-5 h-5 shrink-0" aria-hidden="true" />
-            <span>{error}</span>
-          </div>
-        )}
+      {/* SLIDE 2: TINGKATKAN SKOR KECOCOKAN CV */}
+      <section
+        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(2)}`}
+      >
+        <div className="w-full h-full mx-auto px-2 sm:px-4 grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+          <div className="lg:col-span-5 flex flex-col py-1">
+            <div className="bg-[#0f2c56] lg:bg-transparent text-white rounded-[28px] p-6 sm:p-8 lg:p-10 flex flex-col justify-center items-center text-center gap-6 flex-1">
+              <div className="space-y-4 flex flex-col items-center">
+                <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#ce2731] text-white text-xs font-bold ${getTextRevealClass(2, "delay-75")}`}>
+                  Optimasi Lamaran
+                </span>
+                <h2 className={`text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-[1.22] ${getTextRevealClass(2, "delay-150")}`}>
+                  Tingkatkan skor{" "}
+                  <span className={`inline-block bg-[#ce2731] text-white px-3 py-0.5 rounded-xl mt-1.5 ${getHighlightPopClass(2, "delay-300")}`}>
+                    kecocokan CV Anda.
+                  </span>
+                </h2>
+                <p className={`text-sm text-white/85 max-w-md mx-auto leading-relaxed ${getTextRevealClass(2, "delay-200")}`}>
+                  Sebelum melamar, pastikan CV Anda lolos pembacaan ATS dan memiliki kata kunci kompetensi yang sesuai dengan posisi impian.
+                </p>
+              </div>
 
-        {/* Empty State */}
-        {!loading && !error && jobs.length === 0 && (
-          <div className="py-16 text-center space-y-3 bg-white rounded-[28px] border border-slate-200 p-8">
-            <Briefcase className="w-12 h-12 text-[#0f2c56] mx-auto" aria-hidden="true" />
-            <h3 className="text-base font-bold text-[#0f2c56]">Tidak ada lowongan yang sesuai kriteria</h3>
-            <p className="text-xs text-slate-600 max-w-sm mx-auto">
-              Coba ubah kata kunci pencarian atau bersihkan filter lokasi untuk melihat lowongan lainnya.
-            </p>
-          </div>
-        )}
-
-        {/* Job List State */}
-        {!loading && !error && jobs.length > 0 && (
-          <div className="space-y-4">
-            <div className="flex items-center justify-between text-xs font-bold text-slate-500">
-              <span>Menampilkan {jobs.length} lowongan aktif</span>
+              <div className={`flex flex-wrap items-center justify-center gap-3 ${getTextRevealClass(2, "delay-300")}`}>
+                <Link
+                  href="/evaluate"
+                  className="px-6 py-3.5 rounded-xl bg-[#ce2731] hover:bg-white text-white hover:text-[#0f2c56] text-xs sm:text-sm font-bold transition-colors inline-flex items-center gap-2"
+                >
+                  <span>Evaluasi CV Sekarang</span>
+                  <ArrowUpRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  href="/onboarding"
+                  className="px-6 py-3.5 rounded-xl bg-white hover:bg-[#ce2731] text-[#0f2c56] hover:text-white text-xs sm:text-sm font-bold transition-colors"
+                >
+                  Buat CV
+                </Link>
+              </div>
             </div>
+          </div>
 
-            <div className="grid grid-cols-1 gap-4">
-              {jobs.map((job) => (
-                <JobCard key={job.id} job={job} />
-              ))}
+          <div className="lg:col-span-7 flex flex-col justify-center gap-4 py-2 lg:pl-4">
+            <div className={`rounded-[28px] bg-white border border-slate-200 p-6 sm:p-8 space-y-4 ${getTextRevealClass(2, "delay-150")}`}>
+              <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-white text-xs font-bold">
+                Keunggulan Pencocokan Pasbana
+              </span>
+              <h3 className="text-xl sm:text-2xl font-extrabold text-[#0f2c56]">
+                Mengapa melamar lewat rekomendasi Pasbana AI?
+              </h3>
+              <ul className="space-y-3 text-sm text-slate-600">
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0 mt-0.5" aria-hidden="true" />
+                  <span>Pencocokan semantik berbasis keahlian inti, bukan sekadar kata kunci judul posisi.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0 mt-0.5" aria-hidden="true" />
+                  <span>Gabungan lowongan mitra terverifikasi dan portal kerja aktif Jooble Indonesia.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0 mt-0.5" aria-hidden="true" />
+                  <span>100% gratis tanpa batasan jumlah lamaran maupun akses evaluasi CV.</span>
+                </li>
+              </ul>
             </div>
           </div>
-        )}
-      </div>
-    </main>
+        </div>
+      </section>
+
+      {/* FLOATING SECTION INDICATOR PILL */}
+      <nav
+        aria-label="Navigasi section lowongan"
+        className="fixed right-4 sm:right-6 top-1/2 -translate-y-1/2 z-30 hidden sm:flex flex-col gap-2 bg-white/90 border border-slate-200 rounded-full p-1.5 shadow-sm"
+      >
+        {Array.from({ length: TOTAL_SLIDES }).map((_, idx) => (
+          <button
+            key={idx}
+            type="button"
+            onClick={() => goToSlide(idx)}
+            aria-label={`Section ${idx + 1}`}
+            className={`w-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+              activeSlide === idx ? "h-7 bg-[#ce2731]" : "h-2.5 bg-[#0f2c56]/25 hover:bg-[#0f2c56]/60"
+            }`}
+          />
+        ))}
+      </nav>
+    </div>
   );
 }
 
@@ -165,25 +486,25 @@ function JobCard({ job }: { job: JobItem }) {
   const [saved, setSaved] = useState(false);
 
   return (
-    <article className="p-6 sm:p-7 bg-white border border-slate-200 hover:border-[#0f2c56] rounded-[28px] transition-colors space-y-4">
-      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
-        <div className="space-y-1.5">
-          <div className="flex flex-wrap items-center gap-2.5">
-            <h2 className="text-lg sm:text-xl font-extrabold text-[#0f2c56]">{job.title}</h2>
+    <article className="p-5 sm:p-6 bg-white text-[#0f2c56] border border-slate-200 rounded-[24px] space-y-3.5">
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2.5">
+        <div className="space-y-1">
+          <div className="flex flex-wrap items-center gap-2">
+            <h3 className="text-base sm:text-lg font-extrabold text-[#0f2c56]">{job.title}</h3>
             <span
-              className={`text-[11px] px-3 py-0.5 rounded-full font-bold ${
+              className={`text-[10px] px-2.5 py-0.5 rounded-full font-bold ${
                 job.source === "internal"
                   ? "bg-[#0f2c56] text-white"
                   : "border border-slate-200 text-[#0f2c56] bg-white"
               }`}
             >
-              {job.source === "internal" ? "Mitra Terverifikasi" : "Sumber: Jooble"}
+              {job.source === "internal" ? "Mitra Terverifikasi" : "Jooble"}
             </span>
           </div>
 
-          <p className="text-sm font-bold text-slate-700">{job.companyName}</p>
+          <p className="text-xs sm:text-sm font-bold text-slate-700">{job.companyName}</p>
 
-          <div className="flex flex-wrap items-center gap-3 text-xs text-slate-600 pt-1">
+          <div className="flex flex-wrap items-center gap-2.5 text-xs text-slate-600 pt-0.5">
             <span className="flex items-center gap-1 font-semibold">
               <MapPin className="w-3.5 h-3.5 text-[#ce2731]" aria-hidden="true" />
               {job.location}
@@ -199,37 +520,32 @@ function JobCard({ job }: { job: JobItem }) {
           </div>
         </div>
 
-        {/* Match Score Badge (if computed) */}
         {job.matchScore !== undefined && (
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-[#ce2731] text-white rounded-full text-xs font-bold self-start">
-            <CheckCircle2 className="w-4 h-4 text-white" aria-hidden="true" />
-            <span>Kecocokan {job.matchScore}%</span>
+          <div className="inline-flex items-center gap-1 px-3 py-1 bg-[#ce2731] text-white rounded-full text-[11px] font-bold self-start shrink-0">
+            <CheckCircle2 className="w-3.5 h-3.5 text-white" aria-hidden="true" />
+            <span>{job.matchScore}% Cocok</span>
           </div>
         )}
       </div>
 
-      <p className="text-xs sm:text-sm text-slate-600 line-clamp-2 leading-relaxed">
-        {job.description}
-      </p>
+      <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">{job.description}</p>
 
-      {/* Required Skills Badges */}
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap items-center gap-1.5">
         {job.requiredSkills.map((skill, idx) => (
           <span
             key={idx}
-            className="text-[11px] px-3 py-1 rounded-lg border border-slate-200 bg-white text-[#0f2c56] font-bold"
+            className="text-[11px] px-2.5 py-0.5 rounded-lg border border-slate-200 bg-white text-[#0f2c56] font-bold"
           >
             {skill}
           </span>
         ))}
       </div>
 
-      {/* Actions */}
-      <div className="flex items-center justify-between pt-3 border-t border-slate-100">
+      <div className="flex items-center justify-between pt-2.5 border-t border-slate-100">
         <button
           type="button"
           onClick={() => setSaved(!saved)}
-          className={`text-xs font-bold px-4 py-2 rounded-xl border transition-colors flex items-center gap-1.5 min-h-[38px] cursor-pointer ${
+          className={`text-xs font-bold px-3.5 py-2 rounded-xl border transition-colors flex items-center gap-1.5 cursor-pointer ${
             saved
               ? "bg-[#0f2c56] border-[#0f2c56] text-white"
               : "bg-white border-slate-200 text-[#0f2c56] hover:border-[#0f2c56]"
@@ -245,7 +561,7 @@ function JobCard({ job }: { job: JobItem }) {
             href={job.externalUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs font-bold px-5 py-2.5 bg-[#0f2c56] hover:bg-[#ce2731] text-white rounded-xl transition-colors flex items-center gap-1.5 min-h-[38px]"
+            className="text-xs font-bold px-4 py-2 bg-[#0f2c56] hover:bg-[#ce2731] text-white rounded-xl transition-colors flex items-center gap-1.5"
           >
             Lamar di Sumber Asli
             <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
@@ -253,7 +569,7 @@ function JobCard({ job }: { job: JobItem }) {
         ) : (
           <Link
             href={`/apply/${job.id}`}
-            className="text-xs font-bold px-5 py-2.5 bg-[#ce2731] hover:bg-[#b01e27] text-white rounded-xl transition-colors min-h-[38px] inline-flex items-center"
+            className="text-xs font-bold px-4 py-2 bg-[#ce2731] hover:bg-[#b01e27] text-white rounded-xl transition-colors inline-flex items-center"
           >
             Kirim Lamaran Cepat
           </Link>
@@ -305,4 +621,3 @@ const SAMPLE_JOBS: JobItem[] = [
     matchScore: 78,
   },
 ];
-
