@@ -5,8 +5,6 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Menu,
-  PanelLeftClose,
-  PanelLeftOpen,
   User as UserIcon,
   LogOut,
   ChevronDown,
@@ -19,14 +17,12 @@ import { api } from "@/lib/api";
 
 interface AppHeaderProps {
   onToggleMobile: () => void;
-  isDesktopCollapsed: boolean;
-  onToggleDesktopCollapse: () => void;
+  isDesktopCollapsed?: boolean;
+  onToggleDesktopCollapse?: () => void;
 }
 
 export function AppHeader({
   onToggleMobile,
-  isDesktopCollapsed,
-  onToggleDesktopCollapse,
 }: AppHeaderProps) {
   const pathname = usePathname();
   const router = useRouter();
@@ -85,21 +81,6 @@ export function AppHeader({
           aria-label="Buka menu samping navigasi"
         >
           <Menu className="w-4 h-4" />
-        </button>
-
-        {/* Desktop Collapse / Expand Toggle */}
-        <button
-          type="button"
-          onClick={onToggleDesktopCollapse}
-          className="hidden lg:flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 hover:bg-[#0f2c56] text-slate-600 hover:text-white transition-colors cursor-pointer"
-          title={isDesktopCollapsed ? "Perluas menu samping" : "Lipat menu samping (Rail mode)"}
-          aria-label="Buka/tutup menu samping"
-        >
-          {isDesktopCollapsed ? (
-            <PanelLeftOpen className="w-4 h-4" />
-          ) : (
-            <PanelLeftClose className="w-4 h-4" />
-          )}
         </button>
 
         {/* Breadcrumb / Location Badge */}

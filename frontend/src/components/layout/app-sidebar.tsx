@@ -13,8 +13,6 @@ import {
   FileText,
   FileSpreadsheet,
   X,
-  PanelLeftClose,
-  PanelLeftOpen,
   Trash2,
 } from "lucide-react";
 import { CVAnalysisResult } from "@/types";
@@ -218,17 +216,8 @@ export function AppSidebar({
               </div>
             </div>
 
-            {/* Bottom Rail: Expand Toggle + Back to Home */}
+            {/* Bottom Rail: Back to Home */}
             <div className="flex flex-col items-center gap-2 pb-2">
-              <button
-                type="button"
-                onClick={onToggleDesktopCollapse}
-                className="flex h-10 w-10 items-center justify-center rounded-xl text-slate-500 hover:text-primary hover:bg-white/80 transition-colors"
-                title="Perluas Menu Samping"
-                aria-label="Perluas menu samping"
-              >
-                <PanelLeftOpen className="w-4 h-4" aria-hidden="true" />
-              </button>
               <Link
                 href="/"
                 className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white transition-colors"
@@ -250,13 +239,21 @@ export function AppSidebar({
                 : "opacity-100 pointer-events-auto"
             }`}
           >
-            {/* Header: Centered Brand Logo & Collapse Button */}
+            {/* Header: Centered Brand Logo (click to collapse/close sidebar) */}
             <div className="relative shrink-0 px-5 pt-5 pb-3.5 bg-[#edf2f9] border-b border-slate-200/70">
               <div className="flex items-center justify-center">
-                <Link
-                  href="/"
-                  onClick={onCloseMobile}
-                  className="flex items-center justify-center group"
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (window.innerWidth < 1024) {
+                      onCloseMobile();
+                    } else {
+                      onToggleDesktopCollapse();
+                    }
+                  }}
+                  className="flex items-center justify-center group cursor-pointer"
+                  aria-label="Tutup atau lipat panel samping"
+                  title="Lipat panel samping"
                 >
                   <Image
                     src="/logo-text-navy.webp"
@@ -265,24 +262,8 @@ export function AppSidebar({
                     height={56}
                     className="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition-transform"
                   />
-                </Link>
+                </button>
               </div>
-
-              <button
-                type="button"
-                onClick={() => {
-                  if (window.innerWidth < 1024) {
-                    onCloseMobile();
-                  } else {
-                    onToggleDesktopCollapse();
-                  }
-                }}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 hover:text-primary hover:bg-white/80 transition-colors"
-                aria-label="Tutup panel samping"
-                title="Lipat panel samping (Rail mode)"
-              >
-                <PanelLeftClose className="w-4 h-4" aria-hidden="true" />
-              </button>
             </div>
 
             {/* Scrollable Middle Body: Navigation & Evaluation History */}
