@@ -422,7 +422,7 @@ export default function LoginPage() {
             <div className="relative z-10 flex flex-col items-center text-center space-y-7 max-w-lg mx-auto">
               <div className="flex items-center gap-5 xl:gap-6">
                 {/* Logo di Kiri */}
-                <div className="relative w-20 h-20 xl:w-24 xl:h-24 shrink-0 drop-shadow-[0_20px_38px_rgba(0,0,0,0.35)]">
+                <div className="relative w-24 h-24 xl:w-28 xl:h-28 shrink-0 drop-shadow-[0_20px_38px_rgba(0,0,0,0.35)]">
                   <Image
                     src="/logo-white.webp"
                     alt="Logo Pasbana"
@@ -434,12 +434,12 @@ export default function LoginPage() {
 
                 {/* Nama & Tagline Sejajar di Kanan */}
                 <div className="flex flex-col justify-center space-y-2 text-left animate-fade-in-up delay-200">
-                  <h2 className="text-4xl xl:text-5xl font-black tracking-[0.06em] text-white leading-none uppercase">
+                  <h2 className="text-3xl xl:text-4xl font-black tracking-[0.06em] text-white leading-none uppercase">
                     PASBANA
                   </h2>
-                  <div className="w-full flex items-center justify-between gap-3">
-                    <span className="w-6 h-1 rounded-full bg-[#ce2731] shrink-0" />
-                    <p className="text-[10.5px] xl:text-xs font-bold text-white/85 uppercase tracking-[0.2em] leading-none whitespace-nowrap">
+                  <div className="w-full flex items-center justify-between gap-2.5">
+                    <span className="w-5 h-1 rounded-full bg-[#ce2731] shrink-0" />
+                    <p className="text-[10px] xl:text-[11px] font-bold text-white/85 uppercase tracking-[0.14em] leading-none whitespace-nowrap">
                       KARIR YANG PAS BANA
                     </p>
                   </div>
