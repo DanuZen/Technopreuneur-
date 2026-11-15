@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import { Compass, Users, Shield, Cpu, ArrowUpRight } from "lucide-react";
+import Image from "next/image";
+import { Compass, Shield, Cpu, ArrowUpRight } from "lucide-react";
 
 const TOTAL_SLIDES = 4;
 
@@ -359,7 +360,7 @@ export default function AboutPage() {
             </h2>
           </div>
 
-          <div ref={teamGridRef} className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div ref={teamGridRef} className="relative grid grid-cols-1 md:grid-cols-3 gap-5">
             {TEAM_MEMBERS.map((member, idx) => {
               const isSelected = activeMemberIdx === idx;
               const isCrimson = idx % 2 === 1;
@@ -371,7 +372,7 @@ export default function AboutPage() {
                   }}
                   onMouseEnter={() => setActiveMemberIdx(idx)}
                   onClick={() => setActiveMemberIdx(idx)}
-                  className={`rounded-[28px] p-6 sm:p-8 cursor-pointer transition-colors duration-300 flex flex-col justify-between gap-5 min-h-[210px] ${
+                  className={`rounded-[28px] p-6 sm:p-8 cursor-pointer transition-colors duration-300 flex flex-col justify-between gap-5 min-h-[230px] ${
                     isSelected
                       ? isCrimson
                         ? "bg-[#ce2731] lg:bg-transparent text-white"
@@ -379,25 +380,39 @@ export default function AboutPage() {
                       : "bg-white border border-slate-200 text-[#0f2c56]"
                   }`}
                 >
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between gap-2">
-                      <span
-                        className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold ${
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-4">
+                      <div
+                        className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden shrink-0 border-2 transition-colors ${
                           isSelected
-                            ? "bg-white text-[#0f2c56]"
-                            : isCrimson
-                            ? "bg-[#ce2731] text-white"
-                            : "bg-[#0f2c56] text-white"
+                            ? "bg-white border-white"
+                            : "bg-[#fefefd] border-slate-200"
                         }`}
                       >
-                        {member.role}
-                      </span>
-                      <Users
-                        className={`w-5 h-5 ${isSelected ? "text-white/80" : "text-slate-400"}`}
-                        aria-hidden="true"
-                      />
+                        <Image
+                          src="/team-danu.png"
+                          alt={member.name}
+                          fill
+                          className="object-cover object-top"
+                        />
+                      </div>
+                      <div className="space-y-1.5 min-w-0">
+                        <span
+                          className={`inline-flex items-center px-3 py-0.5 rounded-full text-[11px] font-bold ${
+                            isSelected
+                              ? "bg-white text-[#0f2c56]"
+                              : isCrimson
+                              ? "bg-[#ce2731] text-white"
+                              : "bg-[#0f2c56] text-white"
+                          }`}
+                        >
+                          {member.role}
+                        </span>
+                        <h3 className="text-base sm:text-lg font-extrabold leading-snug">
+                          {member.name}
+                        </h3>
+                      </div>
                     </div>
-                    <h3 className="text-lg sm:text-xl font-extrabold">{member.name}</h3>
                     <p
                       className={`text-xs sm:text-sm leading-relaxed ${
                         isSelected ? "text-white/85" : "text-slate-600"
