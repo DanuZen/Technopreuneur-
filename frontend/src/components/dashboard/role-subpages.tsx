@@ -873,7 +873,7 @@ export function AdminAuditSubpage() {
               </p>
             </div>
             {savedStandard && (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-[11px] font-bold">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-600 text-white text-[11px] font-bold">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 <span>Standar Disimpan</span>
               </span>
