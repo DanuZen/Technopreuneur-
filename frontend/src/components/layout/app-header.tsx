@@ -70,7 +70,7 @@ export function AppHeader({
   };
 
   return (
-    <header className="sticky top-0 z-30 flex min-h-[58px] sm:min-h-[64px] w-full shrink-0 items-center justify-between gap-3 bg-white border-b border-slate-200 px-3.5 sm:px-6 py-2">
+    <header className="sticky top-0 z-30 flex min-h-[58px] sm:min-h-[64px] w-full shrink-0 items-center justify-between gap-3 bg-white px-3.5 sm:px-6 py-2">
       {/* Left: Toggles & Title */}
       <div className="flex items-center gap-2.5 min-w-0">
         {/* Mobile Hamburger Toggle */}
@@ -83,9 +83,8 @@ export function AppHeader({
           <Menu className="w-4 h-4" />
         </button>
 
-        {/* Breadcrumb / Location Badge */}
-        <div className="flex items-center gap-2 min-w-0">
-          <span className="hidden sm:inline-block w-2 h-2 rounded-full bg-[#ce2731] shrink-0" />
+        {/* Breadcrumb / Location Title */}
+        <div className="flex items-center min-w-0">
           <h2 className="text-xs sm:text-sm font-bold text-[#0f2c56] truncate tracking-tight font-heading">
             {getViewTitle()}
           </h2>
@@ -171,6 +170,11 @@ export function AppHeader({
           </div>
         )}
       </div>
+      {/* Soft bottom white gradient fade */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-full h-6 bg-gradient-to-b from-white via-white/80 to-transparent"
+      />
     </header>
   );
 }
