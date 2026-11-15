@@ -320,7 +320,7 @@ export default function HomePage() {
       case 2:
         return {
           top: "0px",
-          left: "calc(50% + 12px)",
+          left: "0px",
           width: "calc(50% - 12px)",
           height: "100%",
           borderRadius: "34px",
@@ -651,14 +651,14 @@ export default function HomePage() {
       </section>
 
       {/* =====================================================================
-          SLIDE 2 (#persiapan): OPEN LEFT + MORPHED NAVY STAGE ON RIGHT (Matching Video 00:06 - 00:08)
+          SLIDE 2 (#persiapan): MORPHED NAVY STAGE ON LEFT + OPEN RIGHT
           ===================================================================== */}
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(2)}`}
       >
         <div className="w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-center">
-          {/* Left 6 Cols: Clean Bold Heading & Subtitle on Open White Canvas */}
-          <div className="lg:col-span-6 px-4 sm:px-8 lg:px-12 space-y-5 sm:space-y-6 text-right flex flex-col items-end">
+          {/* Right 6 Cols: Clean Bold Heading & Subtitle on Open White Canvas */}
+          <div className="lg:col-span-6 lg:order-2 px-4 sm:px-8 lg:px-12 space-y-5 sm:space-y-6 text-right flex flex-col items-end">
             <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white ${getTextRevealClass(2, "delay-75")}`}>
               Ekosistem Persiapan Karir
             </span>
@@ -689,9 +689,9 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Right 6 Cols: Isometric Gauge Disc + Dot-Matrix Board inside Morphed Navy Stage */}
+          {/* Left 6 Cols: Isometric Gauge Disc + Dot-Matrix Board inside Morphed Navy Stage */}
           <div
-            className={`lg:col-span-6 h-full rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent p-3 sm:p-5 lg:p-6 flex items-center justify-center ${getChildAnimClass(2, "right", "delay-150")}`}
+            className={`lg:col-span-6 lg:order-1 h-full rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent p-3 sm:p-5 lg:p-6 flex items-center justify-center ${getChildAnimClass(2, "left", "delay-150")}`}
           >
             <svg
               viewBox="0 0 560 400"
