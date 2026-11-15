@@ -643,7 +643,7 @@ export default function HomePage() {
                 href="/onboarding"
                 className="px-6 py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors"
               >
-                Buat CV via Kuesioner
+                Buat CV
               </Link>
               <Link
                 href="/evaluate"
@@ -999,7 +999,7 @@ export default function HomePage() {
                     : "border border-white/30 text-white hover:border-white"
                 }`}
               >
-                Isi Kuesioner CV
+                Buat CV
               </button>
             </div>
           </div>
@@ -1087,7 +1087,7 @@ export default function HomePage() {
                   href="/onboarding"
                   className="px-6 py-3.5 rounded-xl bg-white hover:bg-[#ce2731] text-[#0f2c56] hover:text-white text-xs sm:text-sm font-bold transition-colors"
                 >
-                  Buat dari Kuesioner
+                  Buat CV
                 </Link>
               </div>
             </div>
