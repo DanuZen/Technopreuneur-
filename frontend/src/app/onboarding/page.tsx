@@ -193,20 +193,20 @@ export default function OnboardingPage() {
           </div>
 
           {/* Kolom Kanan: Daftar Tahapan Flat tanpa Card Bersarang */}
-          <div className="lg:col-span-5 flex flex-col justify-between gap-4 py-2 text-[#0f2c56]">
-            <div className="space-y-3">
-              <p className="text-[11px] font-mono uppercase tracking-wider font-bold">
+          <div className="lg:col-span-5 flex flex-col justify-between gap-4 py-1 text-[#0f2c56]">
+            <div className="flex-1 flex flex-col gap-3">
+              <p className="text-[11px] font-mono uppercase tracking-wider font-bold shrink-0">
                 Tahapan Kuesioner (5 Langkah)
               </p>
-              <div className="divide-y divide-slate-200/80 border-y border-slate-200/80">
+              <div className="flex-1 flex flex-col divide-y divide-slate-200/80 border-y border-slate-200/80">
                 {ONBOARDING_STEPS.map((item) => {
                   const Icon = item.icon;
                   return (
                     <div
                       key={item.num}
-                      className="py-3.5 flex items-center gap-3.5"
+                      className="flex-1 py-3 flex items-center gap-3.5"
                     >
-                      <div className="w-9 h-9 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+                      <div className="w-10 h-10 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
                         <Icon className="w-4 h-4" />
                       </div>
                       <div className="min-w-0 flex-1">
@@ -215,13 +215,16 @@ export default function OnboardingPage() {
                         </p>
                         <p className="text-xs truncate">{item.desc}</p>
                       </div>
+                      <span className="text-[11px] font-mono font-bold shrink-0">
+                        0{item.num}
+                      </span>
                     </div>
                   );
                 })}
               </div>
             </div>
 
-            <div className="flex items-center justify-between gap-4 pt-2 text-xs">
+            <div className="shrink-0 flex items-center justify-between gap-4 pt-1 text-xs">
               <div>
                 <p className="text-[10px] font-mono uppercase tracking-wider font-bold">
                   Output Standar
