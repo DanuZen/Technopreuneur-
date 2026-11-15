@@ -11,6 +11,9 @@ import {
   Printer,
   CheckCircle2,
   FileText,
+  Ruler,
+  FileCheck2,
+  SlidersHorizontal,
 } from "lucide-react";
 import { api } from "@/lib/api";
 import { CVAnalysisResult } from "@/types";
@@ -206,25 +209,70 @@ export default function DokumenCvAtsPage() {
             </div>
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-3xl p-5 flex-1 flex flex-col justify-center gap-3 text-[#0f2c56]">
-            <p className="text-xs font-extrabold uppercase tracking-wider">
-              Panduan &amp; Tips Cetak PDF
-            </p>
-            <div className="space-y-2.5">
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-[#0f2c56] shrink-0 mt-0.5" />
+          <div className="bg-white border border-slate-200 rounded-3xl p-5 flex-1 flex flex-col justify-between gap-4 text-[#0f2c56]">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+                  <Printer className="w-4 h-4" aria-hidden="true" />
+                </div>
+                <div>
+                  <p className="text-xs font-extrabold uppercase tracking-wider">
+                    Panduan &amp; Tips Cetak PDF
+                  </p>
+                  <p className="text-[11px] font-medium">
+                    Pastikan hasil ekspor siap lamaran kerja
+                  </p>
+                </div>
+              </div>
+
+              {/* Ilustrasi Mini Cetak PDF A4 */}
+              <svg
+                viewBox="0 0 88 64"
+                className="w-20 h-auto shrink-0"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <rect x="18" y="6" width="44" height="22" rx="4" fill="#EDF2F9" />
+                <rect x="8" y="20" width="64" height="24" rx="7" fill="#0F2C56" />
+                <circle cx="60" cy="28" r="2.5" fill="#CE2731" />
+                <rect x="20" y="34" width="40" height="24" rx="4" fill="#FFFFFF" stroke="#0F2C56" strokeWidth="1.5" />
+                <rect x="26" y="40" width="24" height="3" rx="1.5" fill="#0F2C56" />
+                <rect x="26" y="46" width="28" height="2.5" rx="1.25" fill="#CBD5E1" />
+                <rect x="26" y="51" width="20" height="2.5" rx="1.25" fill="#CBD5E1" />
+                <rect x="52" y="44" width="28" height="14" rx="7" fill="#CE2731" />
+                <path
+                  d="M59 51L62 54L68 48"
+                  stroke="#FFFFFF"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <rect x="70" y="50" width="5" height="2" rx="1" fill="#FFFFFF" />
+              </svg>
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex items-start gap-3">
+                <div className="w-7 h-7 rounded-lg bg-[#edf2f9] text-[#0f2c56] flex items-center justify-center shrink-0 mt-0.5">
+                  <Ruler className="w-3.5 h-3.5" aria-hidden="true" />
+                </div>
                 <p className="text-xs leading-relaxed">
                   <span className="font-bold">Proporsi A4 Akurat:</span> lebar 210 mm dan tinggi 297 mm agar hasil ekspor PDF tetap rapi saat dibuka rekruter.
                 </p>
               </div>
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-[#0f2c56] shrink-0 mt-0.5" />
+              <div className="flex items-start gap-3">
+                <div className="w-7 h-7 rounded-lg bg-[#edf2f9] text-[#0f2c56] flex items-center justify-center shrink-0 mt-0.5">
+                  <FileCheck2 className="w-3.5 h-3.5" aria-hidden="true" />
+                </div>
                 <p className="text-xs leading-relaxed">
                   <span className="font-bold">100% Terbaca Parser ATS:</span> bebas tabel rumit, kolom ganda, maupun elemen grafis yang menghambat ekstraksi teks.
                 </p>
               </div>
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-[#0f2c56] shrink-0 mt-0.5" />
+              <div className="flex items-start gap-3">
+                <div className="w-7 h-7 rounded-lg bg-[#edf2f9] text-[#0f2c56] flex items-center justify-center shrink-0 mt-0.5">
+                  <SlidersHorizontal className="w-3.5 h-3.5" aria-hidden="true" />
+                </div>
                 <p className="text-xs leading-relaxed">
                   <span className="font-bold">Pengaturan Cetak:</span> klik <span className="font-semibold">Cetak / Unduh PDF</span>, pilih ukuran <span className="font-semibold">A4</span>, lalu nonaktifkan opsi <span className="font-semibold">Headers and footers</span>.
                 </p>
