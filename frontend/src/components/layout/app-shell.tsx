@@ -3,7 +3,7 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { usePathname } from "next/navigation";
 import { AppSidebar } from "./app-sidebar";
-import { AppHeader } from "./app-header";
+import { Menu } from "lucide-react";
 import { Navbar } from "./navbar";
 import { Footer } from "./footer";
 
@@ -93,11 +93,15 @@ export function AppShell({ children }: AppShellProps) {
 
       {/* Main Workspace Stage (Rounded Clay Stage on Desktop) */}
       <div className="flex flex-1 flex-col overflow-hidden bg-[#fefefd] clay-stage lg:my-2 lg:mr-2 lg:rounded-[32px] relative isolate shadow-2xl shadow-primary/10">
-        <AppHeader
-          onToggleMobile={() => setIsMobileOpen((s) => !s)}
-          isDesktopCollapsed={isDesktopCollapsed}
-          onToggleDesktopCollapse={handleToggleDesktopCollapse}
-        />
+        {/* Mobile Sidebar Toggle (floating, no top nav bar) */}
+        <button
+          type="button"
+          onClick={() => setIsMobileOpen((s) => !s)}
+          className="flex lg:hidden absolute top-3.5 right-3.5 z-30 h-9 w-9 items-center justify-center rounded-xl bg-slate-100 hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white transition-colors cursor-pointer"
+          aria-label="Buka menu samping navigasi"
+        >
+          <Menu className="w-4 h-4" />
+        </button>
 
         {/* Viewport Content */}
         <main

@@ -51,7 +51,7 @@ export default function DokumenCvAtsPage() {
 
   if (!analysis) {
     return (
-      <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-6">
+      <main className="min-h-full w-full px-3.5 sm:px-6 pt-4 sm:pt-5 pb-5 sm:pb-6 space-y-6">
         <DashboardPageHeading
           badge="Dokumen CV ATS"
           titleLine1="Pratinjau & cetak CV"
@@ -101,7 +101,7 @@ export default function DokumenCvAtsPage() {
   }
 
   return (
-    <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-6">
+    <main className="min-h-full w-full px-3.5 sm:px-6 pt-4 sm:pt-5 pb-5 sm:pb-6 space-y-6">
       <DashboardPageHeading
         badge="Dokumen CV ATS"
         titleLine1="Pratinjau & cetak CV"

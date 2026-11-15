@@ -93,7 +93,7 @@ export default function LowonganCocokPage() {
   const userTechSkills = analysis?.profile.skills?.technical || [];
 
   return (
-    <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-6">
+    <main className="min-h-full w-full px-3.5 sm:px-6 pt-4 sm:pt-5 pb-5 sm:pb-6 space-y-6">
       <DashboardPageHeading
         badge="Lowongan Cocok"
         titleLine1="Temukan peluang karir"

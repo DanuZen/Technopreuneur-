@@ -149,7 +149,7 @@ export default function RiwayatSesiDetailPage() {
 
   if (!analysis) {
     return (
-      <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-6">
+      <main className="min-h-full w-full px-3.5 sm:px-6 pt-4 sm:pt-5 pb-5 sm:pb-6 space-y-6">
         <DashboardPageHeading
           badge="Riwayat Sesi"
           titleLine1="Sesi evaluasi CV"
@@ -173,7 +173,7 @@ export default function RiwayatSesiDetailPage() {
   }
 
   return (
-    <div className="h-full overflow-hidden w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-3 flex flex-col gap-4">
+    <div className="h-full overflow-hidden w-full px-3.5 sm:px-6 pt-4 sm:pt-5 pb-3 flex flex-col gap-4">
       <div className="shrink-0">
         <DashboardPageHeading
           badge="Hasil & Konsultasi CV"
