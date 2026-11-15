@@ -86,7 +86,7 @@ export default function OnboardingPage() {
       />
 
       {!hasStarted ? (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch flex-1">
           <div className="lg:col-span-7 bg-[#0f2c56] text-white rounded-[28px] p-6 sm:p-8 flex flex-col justify-between gap-6">
             <div className="space-y-4">
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ce2731] text-white text-[11px] font-bold uppercase tracking-wider">
@@ -182,30 +182,47 @@ export default function OnboardingPage() {
             </div>
           </div>
 
-          <div className="lg:col-span-5 bg-white border border-slate-200 rounded-[28px] p-6 sm:p-7 space-y-3">
-            <p className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-bold">
-              Tahapan Kuesioner (5 Langkah)
-            </p>
-            <div className="space-y-2.5">
-              {ONBOARDING_STEPS.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <div
-                    key={item.num}
-                    className="p-3 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center gap-3"
-                  >
-                    <div className="w-8 h-8 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
-                      <Icon className="w-4 h-4" />
+          <div className="lg:col-span-5 bg-white border border-slate-200 rounded-[28px] p-6 sm:p-7 flex flex-col justify-between gap-4">
+            <div className="space-y-3">
+              <p className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-bold">
+                Tahapan Kuesioner (5 Langkah)
+              </p>
+              <div className="space-y-2.5">
+                {ONBOARDING_STEPS.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <div
+                      key={item.num}
+                      className="p-3 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center gap-3"
+                    >
+                      <div className="w-8 h-8 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+                        <Icon className="w-4 h-4" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-extrabold text-[#0f2c56] truncate">
+                          {item.num}. {item.title}
+                        </p>
+                        <p className="text-[11px] text-slate-500 truncate">{item.desc}</p>
+                      </div>
                     </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-xs font-extrabold text-[#0f2c56] truncate">
-                        {item.num}. {item.title}
-                      </p>
-                      <p className="text-[11px] text-slate-500 truncate">{item.desc}</p>
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="pt-3 border-t border-slate-100 grid grid-cols-2 gap-2.5">
+              <div className="p-3 rounded-2xl bg-[#edf2f9] space-y-0.5">
+                <p className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-bold">
+                  Output Standar
+                </p>
+                <p className="text-xs font-extrabold text-[#0f2c56]">PDF A4 1-Kolom</p>
+              </div>
+              <div className="p-3 rounded-2xl bg-[#edf2f9] space-y-0.5">
+                <p className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-bold">
+                  Setelah Selesai
+                </p>
+                <p className="text-xs font-extrabold text-[#0f2c56]">Skor &amp; Konsultasi AI</p>
+              </div>
             </div>
           </div>
         </div>
