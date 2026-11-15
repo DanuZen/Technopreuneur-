@@ -561,7 +561,7 @@ export default function HomePage() {
                 <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center text-[#0f2c56] text-xs font-black">
                   94%
                 </div>
-                <div className="w-11 h-11 rounded-full bg-[#ce2731] flex items-center justify-center text-white text-xs font-black">
+                <div className="w-11 h-11 rounded-full bg-[#ce2731] flex items-center justify-center text-white text-xs font-black animate-pulse">
                   5D
                 </div>
                 <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center text-[#0f2c56] text-xs font-black">
@@ -574,7 +574,7 @@ export default function HomePage() {
                 <div className="w-3/4 h-2.5 rounded-full bg-[#0f2c56]" />
                 <div className="w-1/2 h-2.5 rounded-full bg-slate-300" />
                 <div className="mt-4 h-24 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center gap-3 px-4">
-                  <span className="w-8 h-8 rounded-lg bg-[#ce2731] text-white flex items-center justify-center shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-[#ce2731] text-white flex items-center justify-center shrink-0 animate-pulse">
                     <Play className="w-3.5 h-3.5 fill-white ml-0.5" />
                   </span>
                   <div className="flex-1 space-y-1">
@@ -582,12 +582,12 @@ export default function HomePage() {
                     <div className="text-[10px] text-slate-300">Struktur 1-Kolom Terverifikasi</div>
                   </div>
                 </div>
-                <div className="w-full h-2 rounded-full bg-slate-300" />
+                <div className="w-full h-2 rounded-full bg-slate-300 animate-pulse" />
                 <div className="w-2/3 h-2 rounded-full bg-slate-200" />
               </div>
 
               {/* Overlapping Circular Solid Navy Gauge Timer on Right Edge */}
-              <div className="hidden sm:flex absolute -right-14 bottom-12 w-44 h-44 rounded-full bg-white border-4 border-[#0f2c56] shadow-xl items-center justify-center p-2.5">
+              <div className="hidden sm:flex absolute -right-14 bottom-12 w-44 h-44 rounded-full bg-white border-4 border-[#0f2c56] shadow-xl items-center justify-center p-2.5 animate-float">
                 <svg viewBox="0 0 120 120" className="w-full h-full">
                   <circle cx="60" cy="60" r="52" fill="#0f2c56" />
                   <path d="M60,60 L60,8 A52,52 0 0,1 108,80 Z" fill="#ce2731" />
@@ -595,7 +595,16 @@ export default function HomePage() {
                   <line x1="112" y1="60" x2="105" y2="60" stroke="#ffffff" strokeWidth="2" />
                   <line x1="60" y1="112" x2="60" y2="105" stroke="#ffffff" strokeWidth="2" />
                   <line x1="8" y1="60" x2="15" y2="60" stroke="#ffffff" strokeWidth="2" />
-                  <line x1="60" y1="60" x2="34" y2="34" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" />
+                  <line x1="60" y1="60" x2="34" y2="34" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round">
+                    <animateTransform
+                      attributeName="transform"
+                      type="rotate"
+                      from="0 60 60"
+                      to="360 60 60"
+                      dur="8s"
+                      repeatCount="indefinite"
+                    />
+                  </line>
                   <circle cx="60" cy="60" r="4" fill="#ffffff" />
                 </svg>
               </div>
@@ -834,23 +843,23 @@ export default function HomePage() {
                       Mengelola seminar 350+ peserta
                     </div>
                   </div>
-                  <span className="w-7 h-7 rounded-md bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+                  <span className="w-7 h-7 rounded-md bg-[#0f2c56] text-white flex items-center justify-center shrink-0 animate-pulse">
                     <Play className="w-3 h-3 fill-white ml-0.5" />
                   </span>
                 </div>
               </div>
 
               {/* Overlapping Solid Circle with Red Eye Badge on Right Edge */}
-              <div className="hidden sm:flex absolute -right-12 bottom-16 w-32 h-32 rounded-full bg-white border-4 border-[#0f2c56] shadow-2xl items-center justify-center">
+              <div className="hidden sm:flex absolute -right-12 bottom-16 w-32 h-32 rounded-full bg-white border-4 border-[#0f2c56] shadow-2xl items-center justify-center animate-float">
                 <div className="w-24 h-24 rounded-full bg-[#ce2731] flex items-center justify-center">
-                  <Eye className="w-10 h-10 text-white" />
+                  <Eye className="w-10 h-10 text-white animate-pulse" />
                 </div>
               </div>
 
               {/* Upward Outline Arrow Next to Badge */}
               <svg
                 viewBox="0 0 48 110"
-                className="hidden sm:block absolute -right-24 bottom-24 w-10 h-24 text-white"
+                className="hidden sm:block absolute -right-24 bottom-24 w-10 h-24 text-white animate-float-delay"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
