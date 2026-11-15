@@ -110,20 +110,6 @@ export function AppSidebar({
       isActive: pathname === "/dashboard" && (!currentTab || currentTab === "dimensions"),
     },
     {
-      label: "Dokumen CV ATS",
-      href: "/dashboard?tab=preview",
-      icon: FileText,
-      desc: "Pratinjau & cetak CV standar ATS",
-      isActive: pathname === "/dashboard" && currentTab === "preview",
-    },
-    {
-      label: "Lowongan Cocok",
-      href: "/dashboard?tab=jobs",
-      icon: Briefcase,
-      desc: "Rekomendasi karir di dashboard",
-      isActive: pathname === "/dashboard" && currentTab === "jobs",
-    },
-    {
       label: "Evaluasi CV",
       href: "/evaluate",
       icon: FileCheck,
@@ -136,6 +122,20 @@ export function AppSidebar({
       icon: FileSpreadsheet,
       desc: "Susun CV dari kuesioner",
       isActive: pathname === "/onboarding",
+    },
+    {
+      label: "Dokumen CV ATS",
+      href: "/dashboard?tab=preview",
+      icon: FileText,
+      desc: "Pratinjau & cetak CV standar ATS",
+      isActive: pathname === "/dashboard" && currentTab === "preview",
+    },
+    {
+      label: "Lowongan Cocok",
+      href: "/dashboard?tab=jobs",
+      icon: Briefcase,
+      desc: "Rekomendasi karir di dashboard",
+      isActive: pathname === "/dashboard" && currentTab === "jobs",
     },
   ];
 
