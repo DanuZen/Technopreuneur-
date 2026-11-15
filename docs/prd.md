@@ -108,8 +108,8 @@ Hal-hal berikut **TIDAK** masuk dalam lingkup rilis MVP:
 | **FR-10** | CV | Upload Dokumen | Mendukung format `.pdf` dan `.docx` dengan batas ukuran maksimal 5 MB |
 | **FR-11** | CV | Validasi & Ekstraksi Teks | Validasi tipe MIME file asli; deteksi jika teks kosong (scan) dengan pesan error edukatif |
 | **FR-12** | CV | Ekstraksi Profil Terstruktur | AI memetakan CV menjadi JSON (ringkasan, skill, pengalaman, edukasi, bahasa) |
-| **FR-13** | CV | Scoring & Feedback AI | AI menghasilkan skor 0–100, breakdown 5 aspek, daftar kekuatan, kelemahan, dan saran perbaikan |
-| **FR-14** | CV | Koreksi Profil oleh Pengguna | Pengguna dapat mengedit data profil hasil ekstraksi sebelum digunakan oleh sistem matching |
+| **FR-13** | CV | Scoring, Diagram & Konsultasi AI | AI menghasilkan skor 0–100, breakdown & diagram radar 5 dimensi, kekuatan utama, rekomendasi perbaikan, serta sesi chat konsultasi AI pada Riwayat Sesi (`/user/dashboard/riwayat/[id]`) |
+| **FR-14** | CV | Pratinjau A4 & Koreksi Profil | Pengguna dapat meninjau CV standar ATS 1-kolom ukuran A4, mencetak/unduh PDF, serta mengedit data profil melalui Onboarding (`/user/dashboard/dokumen` & `/user/dashboard/onboarding`) |
 | **FR-16** | CV | Penghapusan Data Permanen | Pengguna dapat menghapus dokumen CV, teks mentah, profil, dan embedding kapan saja |
 | **FR-17** | CV | Rate Limiting Analisis | Batas analisis CV akun gratis (misal: kuota 5 kali analisis per bulan) |
 | **FR-18** | CV & Form | Kuesioner Pembuatan CV (User Tanpa CV) | Form interaktif terpandu (pendidikan, skill, pengalaman/organisasi/proyek, minat karir); AI otomatis menghasilkan profil & resume terstruktur |

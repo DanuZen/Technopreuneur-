@@ -8,11 +8,11 @@ Dokumen ini mendefinisikan seluruh alur operasional pengguna, rancangan pipeline
 
 ### 1.1 Alur Pencari Kerja (Job Seeker Flow)
 
-Pencari kerja diberikan **2 pilihan metode input profil**:
-1. **Opsi A (Sudah Memiliki CV):** Mengunggah berkas CV format PDF atau DOCX (maks 5 MB). AI worker akan mengekstrak teks, menilai kualitas, dan menyusun profil terstruktur.
-2. **Opsi B (Belum Memiliki CV):** Sistem menyediakan **kuesioner pertanyaan terpandu (*Guided Wizard Form*)** seputar riwayat pendidikan, keahlian utama, pengalaman organisasi/magang/proyek, dan minat karir. AI akan **secara otomatis membuatkan resume/CV terstruktur** berdasarkan jawaban yang diisi.
+Pencari kerja diberikan **2 pilihan metode input profil** di dalam dashboard berbasis role (`/[role]/dashboard/*`):
+1. **Opsi A (Sudah Memiliki CV — `/user/dashboard/evaluasi`):** Mengunggah berkas CV format PDF atau DOCX (maks 5 MB). AI worker akan mengekstrak teks, menilai kualitas 5 dimensi, dan menyusun profil terstruktur.
+2. **Opsi B (Belum Memiliki CV — `/user/dashboard/onboarding`):** Halaman pengantar terlebih dahulu menampilkan ringkasan manfaat dan 5 tahapan kuesioner, lalu pengguna dapat memulai **kuesioner pertanyaan terpandu (*Guided Wizard Form*)** seputar identitas, pendidikan, target peran, keahlian, dan pengalaman/proyek. AI akan **secara otomatis membuatkan resume/CV terstruktur standar ATS 1-kolom**.
 
-Kedua opsi bermuara pada profil terstruktur dan skor evaluasi yang dapat ditinjau serta dikoreksi oleh pengguna sebelum dicocokkan dengan lowongan kerja.
+Kedua opsi bermuara ke **Riwayat Sesi & Konsultasi AI (`/user/dashboard/riwayat/[id]`)** yang menampilkan hasil evaluasi 5 dimensi (Circular Score Gauge, Diagram Radar Pentagon, Kekuatan Utama, dan Rekomendasi Perbaikan) dalam format chat interaktif untuk berdiskusi dengan Pasbana AI. Pengguna kemudian dapat meninjau serta mencetak **Dokumen CV ATS ukuran A4 (`/user/dashboard/dokumen`)** atau melamar **Lowongan Cocok (`/user/dashboard/lowongan` -> `/apply/[id]`)**.
 
 > 🎨 **Diagram Desain Interaktif:** [Buka Versi HTML Interaktif](diagrams/alur-pencari-kerja.html) · [Buka Berkas Vektor SVG](diagrams/alur-pencari-kerja.svg)
 
@@ -42,21 +42,21 @@ flowchart TD
     K -- Sukses --> M[AI Ekstraksi Profil & Skor 5 Dimensi]
 
     %% JALUR B: TIDAK PUNYA CV
-    E -- Tidak (Opsi B) --> N[Kuesioner Pertanyaan Terpandu AI\nPendidikan, Skill, Proyek/Organisasi]
-    N --> O[AI Auto-Generate CV & Profil Terstruktur]
+    E -- Tidak (Opsi B) --> N[Halaman Pengantar & Kuesioner 5 Langkah\nIdentitas, Pendidikan, Target Peran, Skill, Proyek]
+    N --> O[AI Auto-Generate CV ATS 1-Kolom & Profil Terstruktur]
 
     %% PENYATUAN DUA JALUR
-    M --> P[Tinjau Skor 0-100 & Profil Terstruktur]
+    M --> P[Riwayat Sesi & Chat Konsultasi AI\nSkor 0-100, Diagram Radar 5 Dimensi & Tanya Jawab]
     O --> P
-    P --> Q{Perlu Koreksi Manual?}
-    Q -- Ya --> R[Formulir Koreksi Profil oleh User]
+    P --> Q{Ingin Tinjau / Cetak CV A4?}
+    Q -- Ya --> R[Dokumen CV ATS Ukuran A4\nPratinjau, Edit Data via Onboarding & Cetak PDF]
     R --> S[Simpan Profil Final & Update Embedding]
     Q -- Tidak --> S
     S --> T[Jalankan Engine Matching 2-Tahap]
-    T --> U[Tampilkan Daftar Lowongan Terurut Skor]
+    T --> U[Tampilkan Lowongan Cocok Terurut Skor]
     U --> V{Pilih Aksi Lowongan}
-    V -- Lowongan Internal --> W[Klik 'Lamar Sekarang'\nCV & Profil Dikirim ke Employer]
-    V -- Lowongan Eksternal --> X[Klik 'Lamar di Sumber'\nRedirect ke Portal Mitra Asli]
+    V -- Lowongan Internal --> W[Buka /apply/id & Kirim Lamaran Profil]
+    V -- Lowongan Eksternal --> X[Klik 'Lamar di Sumber Asli'\nRedirect ke Portal Mitra Asli]
     W --> Y([Selesai])
     X --> Y
 ```

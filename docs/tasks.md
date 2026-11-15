@@ -167,18 +167,12 @@ gantt
 - [ ] Halaman Pengaturan Akun: tombol hapus CV dan tombol hapus akun permanen (*Right to be Forgotten*)
 
 #### C. Modul Pencari Kerja (Job Seeker)
-- [x] Komponen Pemilih 2 Pilihan Masuk Awal: "Saya Sudah Punya CV" (Upload) vs "Saya Belum Punya CV" (Kuesioner Terpandu)
-- [x] Komponen Wizard Kuesioner Pertanyaan Terpandu AI (*Multi-step Form Wizard*: Pendidikan, Skill, Pengalaman Organisasi/Magang/Proyek, Minat Karir)
-- [x] Komponen Drag-and-Drop Dropzone berkas CV dengan validasi tipe (.pdf / .docx) dan batas ukuran (5 MB)
-- [x] Indikator progress bar pengunggahan dan visualisasi tahapan status pemrosesan AI secara real-time
-- [x] Alert peringatan dokumen terbaca kosong jika pengguna mengunggah hasil scan foto/gambar
-- [x] Komponen Radial Scorecard untuk skor kualitas CV (0–100) dengan pewarnaan dinamis
-- [x] Komponen visualisasi 5 dimensi evaluasi (Struktur, Kejelasan, Pencapaian Terukur, Relevansi Skill, Kelengkapan)
-- [x] Kartu daftar kekuatan resume, kelemahan resume, dan saran perbaikan konkret
-- [x] Formulir koreksi manual data profil hasil ekstraksi/generasi AI (pengguna dapat mengedit sebelum dikunci)
-- [x] Halaman daftar lowongan kerja rekomendasi yang diurutkan berdasarkan persentase kecocokan
-- [x] Komponen kartu lowongan lengkap dengan badge sumber (*Internal* vs *Jooble ↗*), alasan kecocokan, dan label merah *missing skills*
-- [x] Tombol aksi lamar (*Quick Apply Internal* dan redirect ke portal sumber eksternal)
+- [x] Routing dashboard berbasis role (`/[role]/dashboard/*` untuk `user`, `company`, dan `admin` beserta sub-route `evaluasi`, `onboarding`, `dokumen`, `lowongan`, dan `riwayat/[id]`)
+- [x] Halaman Evaluasi CV (`/user/dashboard/evaluasi`) dengan Drag-and-Drop Dropzone (.pdf / .docx maks 5 MB), validasi scan gambar, dan pintasan menuju Onboarding CV
+- [x] Halaman Onboarding CV (`/user/dashboard/onboarding`) dengan halaman pengantar terpisah sebelum memulai *Multi-step Form Wizard* 5 langkah (Identitas, Pendidikan, Target Peran, Skill, Pengalaman/Proyek)
+- [x] Halaman Riwayat Sesi & Konsultasi AI (`/user/dashboard/riwayat/[id]`) yang menyimpan hasil evaluasi/onboarding nyata (tanpa data dummy), menampilkan Circular Score Gauge (0–100), Diagram Radar 5 Dimensi, kartu solid Kekuatan Utama & Rekomendasi Perbaikan, serta chat konsultasi AI interaktif
+- [x] Halaman Dokumen CV ATS (`/user/dashboard/dokumen`) dengan pratinjau lembar ukuran A4 (210 x 297 mm), card keterangan dokumen, panduan cetak PDF, kelengkapan bagian CV, serta tombol aksi **Edit Data** dan **Cetak / Unduh PDF**
+- [x] Halaman Lowongan Cocok (`/user/dashboard/lowongan`) dengan badge sumber (*Internal* vs *Jooble*), alasan kecocokan, label *missing skills*, serta tombol lamar ke `/apply/[id]` (internal) dan portal eksternal
 - [x] Fitur simpan/bookmark lowongan untuk dibaca nanti (*Saved Jobs*)
 
 #### D. Modul Pemberi Kerja (Employer)
