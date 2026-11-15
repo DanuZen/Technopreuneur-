@@ -23,6 +23,7 @@ import { api } from "@/lib/api";
 import { CVAnalysisResult } from "@/types";
 import { AtsCvPreview } from "@/components/dashboard/ats-cv-preview";
 import { DashboardPageHeading } from "@/components/dashboard/dashboard-page-heading";
+import { DokumenPageSkeleton } from "@/components/ui/dashboard-skeleton";
 
 export default function DokumenCvAtsPage() {
   const router = useRouter();
@@ -54,14 +55,7 @@ export default function DokumenCvAtsPage() {
   };
 
   if (loading) {
-    return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center space-y-4">
-        <div className="w-10 h-10 border-4 border-[#0f2c56] border-t-transparent rounded-full animate-spin" />
-        <p className="text-sm text-[#0f2c56] font-bold font-mono">
-          Memuat dokumen CV standar ATS...
-        </p>
-      </div>
-    );
+    return <DokumenPageSkeleton />;
   }
 
   if (!analysis) {

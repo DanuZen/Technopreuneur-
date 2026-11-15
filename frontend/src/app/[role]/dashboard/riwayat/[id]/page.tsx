@@ -9,6 +9,7 @@ import { isValidDashboardRole } from "@/lib/routes";
 import { CVAnalysisResult } from "@/types";
 import { DashboardPageHeading } from "@/components/dashboard/dashboard-page-heading";
 import { CvEvaluationChat } from "@/components/evaluate/cv-evaluation-chat";
+import { RiwayatChatSkeleton } from "@/components/ui/dashboard-skeleton";
 
 export default function RiwayatSesiDetailPage() {
   const params = useParams<{ role: string; id: string }>();
@@ -33,11 +34,7 @@ export default function RiwayatSesiDetailPage() {
   }, [sessionId]);
 
   if (loading) {
-    return (
-      <div className="min-h-[60vh] flex items-center justify-center">
-        <div className="w-10 h-10 border-4 border-[#0f2c56] border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
+    return <RiwayatChatSkeleton />;
   }
 
   if (!analysis) {

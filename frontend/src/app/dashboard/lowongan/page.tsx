@@ -12,6 +12,7 @@ import {
 import { api } from "@/lib/api";
 import { CVAnalysisResult, JobItem } from "@/types";
 import { DashboardPageHeading } from "@/components/dashboard/dashboard-page-heading";
+import { LowonganPageSkeleton } from "@/components/ui/dashboard-skeleton";
 
 const DEFAULT_RECOMMENDED_JOBS: JobItem[] = [
   {
@@ -80,14 +81,7 @@ export default function LowonganCocokPage() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center space-y-4">
-        <div className="w-10 h-10 border-4 border-[#0f2c56] border-t-transparent rounded-full animate-spin" />
-        <p className="text-sm text-[#0f2c56] font-bold font-mono">
-          Memuat rekomendasi lowongan kerja...
-        </p>
-      </div>
-    );
+    return <LowonganPageSkeleton />;
   }
 
   const userTechSkills = analysis?.profile.skills?.technical || [];

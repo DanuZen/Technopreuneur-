@@ -47,7 +47,7 @@ export function SplashScreen({
       });
     }
 
-    const effectiveDuration = duration ?? 4200;
+    const effectiveDuration = duration ?? 2200;
     const finishTimer = setTimeout(() => {
       dismiss();
     }, effectiveDuration);
@@ -86,6 +86,10 @@ export function SplashScreen({
           >
             <source src="/splash-screen.webm" type="video/webm" />
           </video>
+        </div>
+
+        <div className="mt-3 w-36 h-1 rounded-full bg-slate-100 overflow-hidden">
+          <div className="h-full bg-[#ce2731] rounded-full animate-[tabProgressBar_2.2s_ease-out_forwards]" />
         </div>
 
         {(message || subMessage) && (
