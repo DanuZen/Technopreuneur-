@@ -508,7 +508,7 @@ export default function HomePage() {
               <span>Pasbana AI • Evaluasi CV &amp; Karir</span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl xl:text-[56px] font-extrabold tracking-tight text-[#0f2c56] leading-[1.15]">
+            <h1 className="text-3xl sm:text-5xl xl:text-[52px] font-extrabold tracking-tight text-[#0f2c56] leading-[1.18]">
               Hemat waktu evaluasi
               <br />
               dan{" "}
@@ -519,25 +519,25 @@ export default function HomePage() {
               </span>{" "}
               temukan
               <br />
-              <span className="inline-block bg-[#ce2731] text-white px-3.5 py-0.5 rounded-xl mt-1">
+              <span className="inline-block bg-[#ce2731] text-white px-3.5 py-0.5 rounded-xl mt-1.5">
                 Karir Pas Bana.
               </span>
             </h1>
 
-            <p className="text-xs sm:text-base text-slate-600 max-w-lg leading-relaxed">
+            <p className="text-sm sm:text-base text-slate-600 max-w-lg leading-relaxed">
               Dapatkan analisis objektif 5 dimensi terhadap kesiapan CV Anda dan rekomendasi lowongan kerja secara otomatis!
             </p>
 
             <div className="pt-1 flex flex-wrap items-center gap-3">
               <Link
                 href="/evaluate"
-                className="px-7 py-3.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition-all hover:-translate-y-0.5"
+                className="px-6 py-3.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition-colors"
               >
                 Evaluasi CV Saya
               </Link>
               <Link
                 href="/onboarding"
-                className="px-6 py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-all"
+                className="px-6 py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors"
               >
                 Belum Punya CV
               </Link>
@@ -702,24 +702,24 @@ export default function HomePage() {
 
           {/* Right 6 Cols: Clean Solid White Editorial Copy */}
           <div
-            className={`lg:col-span-6 space-y-4 sm:space-y-5 text-left lg:pl-8 ${getChildAnimClass(1, "right", "delay-150")}`}
+            className={`lg:col-span-6 space-y-5 sm:space-y-6 text-left lg:pl-8 ${getChildAnimClass(1, "right", "delay-150")}`}
           >
             <span className="inline-block px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-extrabold uppercase tracking-wider text-white">
               Pemeriksa Format ATS
             </span>
-            <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-extrabold tracking-tight text-white leading-[1.2]">
+            <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-extrabold tracking-tight text-white leading-[1.22]">
               Berhenti mengirim CV yang{" "}
-              <span className="inline-block bg-[#0f2c56] text-white px-3 py-0.5 rounded-xl mt-1">
+              <span className="inline-block bg-[#0f2c56] text-white px-3 py-0.5 rounded-xl mt-1.5">
                 gagal dibaca sistem.
               </span>
             </h2>
-            <p className="text-xs sm:text-base text-white/90 max-w-lg leading-relaxed">
+            <p className="text-sm sm:text-base text-white/90 max-w-lg leading-relaxed">
               Banyak kandidat gugur saat melamar kerja bukan karena kurang kompeten, melainkan karena susunan resume gagal dipahami mesin ATS. Ketahui letak celah CV Anda dan ikuti alur perbaikannya secara instan!
             </p>
             <div className="pt-1">
               <Link
                 href="/evaluate"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition shadow-md"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition-colors"
               >
                 <span>Coba Pemeriksa Struktur ATS</span>
                 <ArrowUpRight className="w-4 h-4" />
@@ -738,32 +738,32 @@ export default function HomePage() {
         <div className="w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-center">
           {/* Left 6 Cols: Clean Bold Heading & Subtitle on Open White Canvas */}
           <div
-            className={`lg:col-span-6 px-4 sm:px-8 lg:px-12 space-y-4 sm:space-y-5 text-left ${getChildAnimClass(2, "left", "delay-75")}`}
+            className={`lg:col-span-6 px-4 sm:px-8 lg:px-12 space-y-5 sm:space-y-6 text-left ${getChildAnimClass(2, "left", "delay-75")}`}
           >
             <span className="inline-block text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
               Ekosistem Persiapan Karir
             </span>
-            <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-extrabold tracking-tight text-[#0f2c56] leading-[1.2]">
+            <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-extrabold tracking-tight text-[#0f2c56] leading-[1.22]">
               Tingkatkan peluang lolos
               <br />
               dengan kesiapan{" "}
-              <span className="inline-block bg-[#ce2731] text-white px-3 py-0.5 rounded-xl mt-1">
+              <span className="inline-block bg-[#ce2731] text-white px-3 py-0.5 rounded-xl mt-1.5">
                 paling optimal!
               </span>
             </h2>
-            <p className="text-xs sm:text-base text-slate-500 max-w-lg leading-relaxed">
+            <p className="text-sm sm:text-base text-slate-600 max-w-lg leading-relaxed">
               Baik sudah memiliki file PDF maupun belum punya CV sama sekali, ukur 5 dimensi kualitas resume Anda pada waktu yang tepat untuk hasil seleksi terbaik!
             </p>
             <div className="pt-1 flex flex-wrap items-center gap-3">
               <Link
                 href="/onboarding"
-                className="px-6 py-3 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition shadow-md"
+                className="px-6 py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors"
               >
                 Buat CV via Kuesioner
               </Link>
               <Link
                 href="/evaluate"
-                className="px-5 py-3 rounded-xl border border-slate-200 hover:border-[#0f2c56] text-[#0f2c56] text-xs sm:text-sm font-bold transition"
+                className="px-6 py-3.5 rounded-xl border border-slate-200 hover:border-[#0f2c56] text-[#0f2c56] text-xs sm:text-sm font-bold transition-colors"
               >
                 Unggah PDF CV
               </Link>
@@ -910,26 +910,26 @@ export default function HomePage() {
 
           {/* Right 6 Cols: Bold White Heading & Clean Subtitle */}
           <div
-            className={`lg:col-span-6 space-y-4 sm:space-y-5 text-left lg:pl-10 ${getChildAnimClass(3, "right", "delay-150")}`}
+            className={`lg:col-span-6 space-y-5 sm:space-y-6 text-left lg:pl-10 ${getChildAnimClass(3, "right", "delay-150")}`}
           >
             <span className="inline-block px-3.5 py-1 rounded-full bg-[#ce2731] text-xs font-extrabold uppercase tracking-wider text-white">
               Asisten Kalimat Aktif
             </span>
-            <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-extrabold tracking-tight text-white leading-[1.2]">
+            <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-extrabold tracking-tight text-white leading-[1.22]">
               Pahami Struktur dan
               <br />
               Kalimat Aktif dalam{" "}
-              <span className="inline-block bg-[#ce2731] text-white px-3 py-0.5 rounded-xl mt-1">
+              <span className="inline-block bg-[#ce2731] text-white px-3 py-0.5 rounded-xl mt-1.5">
                 penilaian HRD.
               </span>
             </h2>
-            <p className="text-xs sm:text-base text-slate-300 max-w-lg leading-relaxed">
+            <p className="text-sm sm:text-base text-slate-300 max-w-lg leading-relaxed">
               Lihat perubahan skor kesiapan secara langsung setelah Anda mengganti kalimat pasif menjadi pencapaian terukur, struktur yang rapi, dan kata kunci keahlian yang tepat.
             </p>
             <div className="pt-1">
               <Link
                 href="/evaluate"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition shadow-lg"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors"
               >
                 <span>Uji Kalimat CV Sekarang</span>
                 <ArrowUpRight className="w-4 h-4" />
@@ -948,16 +948,16 @@ export default function HomePage() {
       >
         <div
           ref={slide4ContainerRef}
-          className="relative w-full h-full mx-auto px-4 sm:px-8 flex flex-col justify-center gap-6"
+          className="relative w-full h-full mx-auto px-4 sm:px-8 lg:px-12 flex flex-col justify-center gap-6"
         >
           {/* Top-Left Section Header */}
-          <div className={`space-y-1.5 text-left max-w-2xl ${getChildAnimClass(4, "down", "delay-75")}`}>
+          <div className={`space-y-2 text-left max-w-2xl ${getChildAnimClass(4, "down", "delay-75")}`}>
             <span className="text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
               Fitur &amp; Prinsip
             </span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[#0f2c56] leading-[1.2]">
+            <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-extrabold tracking-tight text-[#0f2c56] leading-[1.22]">
               Optimalkan kesiapan karir dengan{" "}
-              <span className="inline-block bg-[#ce2731] text-white px-3 py-0.5 rounded-xl mt-1">
+              <span className="inline-block bg-[#ce2731] text-white px-3 py-0.5 rounded-xl mt-1.5">
                 evaluasi presisi.
               </span>
             </h2>
@@ -1059,15 +1059,15 @@ export default function HomePage() {
         <div className="w-full h-full mx-auto rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent px-6 sm:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center text-white overflow-hidden">
           {/* Left 6 Cols: Subtitle, Bold Title, Interactive Range Slider, 2 Toggle Buttons */}
           <div
-            className={`lg:col-span-6 space-y-5 text-left ${getChildAnimClass(5, "left", "delay-100")}`}
+            className={`lg:col-span-6 space-y-5 sm:space-y-6 text-left ${getChildAnimClass(5, "left", "delay-100")}`}
           >
-            <div className="space-y-2">
-              <p className="text-xs text-slate-300">
+            <div className="space-y-2.5">
+              <p className="text-xs sm:text-sm text-slate-300 font-semibold">
                 Berhenti membuang waktu, biarkan sistem mengevaluasi secara otomatis
               </p>
-              <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-extrabold tracking-tight text-white leading-[1.2]">
+              <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-extrabold tracking-tight text-white leading-[1.22]">
                 Dapatkan analisis terbaik untuk{" "}
-                <span className="inline-block bg-[#ce2731] text-white px-3 py-0.5 rounded-xl mt-1">
+                <span className="inline-block bg-[#ce2731] text-white px-3 py-0.5 rounded-xl mt-1.5">
                   kesiapan karir!
                 </span>
               </h2>
@@ -1154,7 +1154,7 @@ export default function HomePage() {
 
                 <Link
                   href={inputMode === "pdf" ? "/evaluate" : "/onboarding"}
-                  className="px-7 py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold shadow-md transition"
+                  className="px-6 py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors"
                 >
                   Mulai Sekarang
                 </Link>
@@ -1171,22 +1171,22 @@ export default function HomePage() {
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(6)}`}
       >
         <div className="w-full h-full mx-auto px-2 sm:px-4 grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-          {/* Left 5 Cols: Solid Navy CTA Card + 2 Solid Highlight Tiles */}
+          {/* Left 5 Cols: Solid Navy CTA Card */}
           <div
-            className={`lg:col-span-5 flex flex-col gap-4 py-2 ${getChildAnimClass(6, "left", "delay-75")}`}
+            className={`lg:col-span-5 flex flex-col py-1 ${getChildAnimClass(6, "left", "delay-75")}`}
           >
-            <div className="bg-[#0f2c56] text-white rounded-[28px] p-6 sm:p-8 flex flex-col justify-between flex-1">
-              <div className="space-y-4">
-                <span className="inline-block px-3.5 py-1 rounded-full bg-[#ce2731] text-white text-[11px] font-extrabold uppercase tracking-wider">
+            <div className="bg-[#0f2c56] text-white rounded-[28px] p-6 sm:p-8 lg:p-10 flex flex-col justify-between flex-1">
+              <div className="space-y-5">
+                <span className="inline-block px-3.5 py-1 rounded-full bg-[#ce2731] text-white text-xs font-extrabold uppercase tracking-wider">
                   Mulai Langkah Karir
                 </span>
-                <h2 className="text-2xl sm:text-3xl xl:text-4xl font-extrabold tracking-tight text-white leading-[1.2]">
+                <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-extrabold tracking-tight text-white leading-[1.22]">
                   Petakan langkah menuju{" "}
-                  <span className="inline-block bg-[#ce2731] text-white px-3 py-0.5 rounded-xl mt-1">
+                  <span className="inline-block bg-[#ce2731] text-white px-3 py-0.5 rounded-xl mt-1.5">
                     karir terbaik Anda.
                   </span>
                 </h2>
-                <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
+                <p className="text-sm sm:text-base text-white/85 leading-relaxed">
                   Pastikan CV Anda terbaca sempurna oleh sistem ATS, perkuat poin pencapaian, dan temukan posisi kerja yang paling pas bana.
                 </p>
               </div>
@@ -1194,14 +1194,14 @@ export default function HomePage() {
               <div className="pt-6 flex flex-wrap items-center gap-3">
                 <Link
                   href="/evaluate"
-                  className="px-6 py-3 rounded-xl bg-[#ce2731] hover:bg-white text-white hover:text-[#0f2c56] text-xs sm:text-sm font-bold transition-colors inline-flex items-center gap-2"
+                  className="px-6 py-3.5 rounded-xl bg-[#ce2731] hover:bg-white text-white hover:text-[#0f2c56] text-xs sm:text-sm font-bold transition-colors inline-flex items-center gap-2"
                 >
                   <span>Evaluasi CV Sekarang</span>
                   <ArrowUpRight className="w-4 h-4" />
                 </Link>
                 <Link
                   href="/onboarding"
-                  className="px-5 py-3 rounded-xl bg-white hover:bg-[#ce2731] text-[#0f2c56] hover:text-white text-xs sm:text-sm font-bold transition-colors"
+                  className="px-6 py-3.5 rounded-xl bg-white hover:bg-[#ce2731] text-[#0f2c56] hover:text-white text-xs sm:text-sm font-bold transition-colors"
                 >
                   Buat dari Kuesioner
                 </Link>
