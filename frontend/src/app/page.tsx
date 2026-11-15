@@ -1191,52 +1191,15 @@ export default function HomePage() {
                 </p>
               </div>
 
-              {/* Solid Isometric Career & ATS Verification Illustration */}
+              {/* Large Brand Logo */}
               <div className="my-4 flex items-center justify-center">
-                <svg
-                  viewBox="0 0 420 220"
-                  className="w-full max-w-[340px] h-auto"
-                  aria-hidden="true"
-                >
-                  {/* Subtle Isometric Dashed Axis */}
-                  <line x1="50" y1="165" x2="215" y2="70" stroke="#ffffff" strokeOpacity="0.18" strokeWidth="1.5" strokeDasharray="4 4" />
-                  <line x1="130" y1="205" x2="310" y2="100" stroke="#ffffff" strokeOpacity="0.18" strokeWidth="1.5" strokeDasharray="4 4" />
-                  <line x1="115" y1="95" x2="295" y2="195" stroke="#ffffff" strokeOpacity="0.18" strokeWidth="1.5" strokeDasharray="4 4" />
-
-                  {/* Isometric Base CV Sheet */}
-                  <polygon points="105,135 205,78 295,128 195,185" fill="#ffffff" />
-                  <polygon points="155,135 205,107 245,129 195,157" fill="#ce2731" />
-                  <line x1="132" y1="134" x2="178" y2="108" stroke="#0f2c56" strokeWidth="3.5" strokeLinecap="round" />
-                  <line x1="190" y1="166" x2="255" y2="128" stroke="#94a3b8" strokeWidth="3" strokeLinecap="round" />
-
-                  {/* Isometric ATS Checkmark Card (Left Floating) */}
-                  <polygon points="62,102 118,70 162,95 106,127" fill="#ffffff" />
-                  <circle cx="106" cy="96" r="7" fill="#ce2731" />
-                  <line x1="120" y1="96" x2="144" y2="83" stroke="#0f2c56" strokeWidth="3" strokeLinecap="round" />
-
-                  {/* Isometric 3D Score Disc (Top Left) */}
-                  <path d="M120,56 A46,24 0 1,0 212,56 L212,68 A46,24 0 1,1 120,68 Z" fill="#ffffff" />
-                  <ellipse cx="166" cy="56" rx="46" ry="24" fill="#ffffff" />
-                  <path d="M166,56 L166,32 A46,24 0 1,0 208,64 Z" fill="#ce2731" />
-
-                  {/* Isometric Match Target Board (Right) */}
-                  <polygon points="245,52 335,102 335,172 245,122" fill="#ffffff" stroke="#ce2731" strokeWidth="2.5" />
-                  <circle cx="272" cy="84" r="4" fill="#cbd5e1" />
-                  <circle cx="290" cy="94" r="4" fill="#ce2731" />
-                  <circle cx="308" cy="104" r="4" fill="#cbd5e1" />
-                  <circle cx="272" cy="104" r="4" fill="#cbd5e1" />
-                  <circle cx="290" cy="114" r="4" fill="#0f2c56" />
-                  <circle cx="308" cy="124" r="4" fill="#ce2731" />
-                  <circle cx="272" cy="124" r="4" fill="#cbd5e1" />
-                  <circle cx="290" cy="134" r="4" fill="#cbd5e1" />
-                  <circle cx="308" cy="144" r="4" fill="#0f2c56" />
-
-                  {/* Floating Crimson Accent Tile */}
-                  <polygon points="222,138 258,118 292,137 256,157" fill="#ce2731" />
-
-                  {/* Small Isometric Outline Diamond */}
-                  <polygon points="295,180 322,165 349,180 322,195" fill="none" stroke="#ffffff" strokeOpacity="0.45" strokeWidth="1.5" />
-                </svg>
+                <Image
+                  src="/logo-white.webp"
+                  alt="Logo Pasbana"
+                  width={210}
+                  height={210}
+                  className="w-40 h-40 sm:w-52 sm:h-52 object-contain"
+                />
               </div>
 
               <div className="pt-2 flex flex-wrap items-center gap-3">
