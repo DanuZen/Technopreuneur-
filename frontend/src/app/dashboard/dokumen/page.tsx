@@ -148,7 +148,7 @@ export default function DokumenCvAtsPage() {
                 <FileText className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>Standar A4 ATS</span>
               </span>
-              <span className="text-xs font-extrabold text-white/80">
+              <span className="text-xs font-extrabold text-white">
                 Skor {analysis.overallScore}/100
               </span>
             </div>
@@ -173,68 +173,68 @@ export default function DokumenCvAtsPage() {
                 <rect x="22" y="82" width="40" height="3" rx="1.5" fill="#CBD5E1" />
               </svg>
               <div>
-                <h2 className="text-base sm:text-lg font-extrabold tracking-tight leading-snug">
+                <h2 className="text-base sm:text-lg font-extrabold tracking-tight leading-snug text-white">
                   Keterangan Dokumen CV
                 </h2>
-                <p className="text-xs text-white/75 mt-1 leading-relaxed">
+                <p className="text-xs text-white mt-1 leading-relaxed">
                   Pratinjau di samping menggunakan proporsi kertas standar A4 (210 x 297 mm) dengan tata letak 1-kolom ramah ATS.
                 </p>
               </div>
             </div>
 
-            <div className="border-t border-white/15 divide-y divide-white/10 text-xs">
+            <div className="border-t border-white/15 divide-y divide-white/10 text-xs text-white">
               <div className="py-2 flex items-center justify-between gap-3">
-                <span className="text-white/70">Nama Kandidat</span>
-                <span className="font-bold text-white text-right truncate">
+                <span>Nama Kandidat</span>
+                <span className="font-bold text-right truncate">
                   {analysis.profile.fullName}
                 </span>
               </div>
               <div className="py-2 flex items-center justify-between gap-3">
-                <span className="text-white/70">Target Peran</span>
-                <span className="font-bold text-white text-right truncate">
+                <span>Target Peran</span>
+                <span className="font-bold text-right truncate">
                   {analysis.profile.headline || "Kandidat Profesional"}
                 </span>
               </div>
               <div className="py-2 flex items-center justify-between gap-3">
-                <span className="text-white/70">Ukuran Kertas</span>
-                <span className="font-bold text-white">A4 (210 x 297 mm)</span>
+                <span>Ukuran Kertas</span>
+                <span className="font-bold">A4 (210 x 297 mm)</span>
               </div>
               <div className="pt-2 flex items-center justify-between gap-3">
-                <span className="text-white/70">Format Struktur</span>
-                <span className="font-bold text-white">1-Kolom Bersih</span>
+                <span>Format Struktur</span>
+                <span className="font-bold">1-Kolom Bersih</span>
               </div>
             </div>
           </div>
 
-          <div className="flex-1 flex flex-col justify-between gap-3 px-1">
+          <div className="flex-1 flex flex-col justify-between gap-3 px-1 text-[#0f2c56]">
             <div className="space-y-2.5">
-              <p className="text-xs font-extrabold uppercase tracking-wider text-[#0f2c56]">
+              <p className="text-xs font-extrabold uppercase tracking-wider">
                 Panduan &amp; Tips Cetak PDF
               </p>
               <div className="space-y-2">
                 <div className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0 mt-0.5" />
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    <span className="font-bold text-[#0f2c56]">Proporsi A4 Akurat:</span> lebar 210 mm dan tinggi 297 mm agar hasil ekspor PDF tetap rapi saat dibuka rekruter.
+                  <CheckCircle2 className="w-4 h-4 text-[#0f2c56] shrink-0 mt-0.5" />
+                  <p className="text-xs leading-relaxed">
+                    <span className="font-bold">Proporsi A4 Akurat:</span> lebar 210 mm dan tinggi 297 mm agar hasil ekspor PDF tetap rapi saat dibuka rekruter.
                   </p>
                 </div>
                 <div className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0 mt-0.5" />
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    <span className="font-bold text-[#0f2c56]">100% Terbaca Parser ATS:</span> bebas tabel rumit, kolom ganda, maupun elemen grafis yang menghambat ekstraksi teks.
+                  <CheckCircle2 className="w-4 h-4 text-[#0f2c56] shrink-0 mt-0.5" />
+                  <p className="text-xs leading-relaxed">
+                    <span className="font-bold">100% Terbaca Parser ATS:</span> bebas tabel rumit, kolom ganda, maupun elemen grafis yang menghambat ekstraksi teks.
                   </p>
                 </div>
                 <div className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0 mt-0.5" />
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    <span className="font-bold text-[#0f2c56]">Pengaturan Cetak:</span> klik <span className="font-semibold">Cetak / Unduh PDF</span>, pilih ukuran <span className="font-semibold">A4</span>, lalu nonaktifkan opsi <span className="font-semibold">Headers and footers</span>.
+                  <CheckCircle2 className="w-4 h-4 text-[#0f2c56] shrink-0 mt-0.5" />
+                  <p className="text-xs leading-relaxed">
+                    <span className="font-bold">Pengaturan Cetak:</span> klik <span className="font-semibold">Cetak / Unduh PDF</span>, pilih ukuran <span className="font-semibold">A4</span>, lalu nonaktifkan opsi <span className="font-semibold">Headers and footers</span>.
                   </p>
                 </div>
               </div>
             </div>
 
             <div className="pt-3 border-t border-slate-200/80 space-y-2">
-              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+              <p className="text-[11px] font-bold uppercase tracking-wider">
                 Kelengkapan Bagian CV
               </p>
               <div className="grid grid-cols-2 gap-x-4 gap-y-2">
@@ -252,15 +252,9 @@ export default function DokumenCvAtsPage() {
                 ].map((item) => (
                   <div
                     key={item.label}
-                    className={`text-xs font-bold flex items-center gap-2 ${
-                      item.ok ? "text-[#0f2c56]" : "text-slate-400"
-                    }`}
+                    className="text-xs font-bold flex items-center gap-2 text-[#0f2c56]"
                   >
-                    <CheckCircle2
-                      className={`w-3.5 h-3.5 shrink-0 ${
-                        item.ok ? "text-[#0f2c56]" : "text-slate-300"
-                      }`}
-                    />
+                    <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-[#0f2c56]" />
                     <span className="truncate">{item.label}</span>
                   </div>
                 ))}

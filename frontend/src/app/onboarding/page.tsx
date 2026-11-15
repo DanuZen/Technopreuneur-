@@ -96,7 +96,7 @@ export default function OnboardingPage() {
               <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-snug font-heading">
                 Buat CV Profesional dari Nol dalam 5 Langkah Singkat
               </h2>
-              <p className="text-xs sm:text-sm text-white/80 leading-relaxed max-w-xl">
+              <p className="text-xs sm:text-sm text-white leading-relaxed max-w-xl">
                 Tidak perlu bingung memikirkan desain atau format. Cukup lengkapi informasi diri, pendidikan, keahlian, dan pengalaman Anda, lalu sistem Pasbana AI akan menyusun CV standar ATS 1-kolom yang siap dipakai melamar kerja.
               </p>
             </div>
@@ -150,26 +150,26 @@ export default function OnboardingPage() {
               </div>
 
               <div className="space-y-3 flex-1 min-w-0">
-                <p className="text-[11px] font-mono uppercase tracking-wider text-white/70 font-bold">
+                <p className="text-[11px] font-mono uppercase tracking-wider text-white font-bold">
                   Output Dokumen Standar Rekruter
                 </p>
                 <div className="space-y-2.5">
                   <div className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0 mt-0.5" />
-                    <p className="text-xs text-white/90 leading-snug">
-                      <span className="font-bold text-white">Struktur 1-Kolom Rapi:</span> bebas tabel rumit agar mudah dipindai mesin ATS.
+                    <CheckCircle2 className="w-4 h-4 text-white shrink-0 mt-0.5" />
+                    <p className="text-xs text-white leading-snug">
+                      <span className="font-bold">Struktur 1-Kolom Rapi:</span> bebas tabel rumit agar mudah dipindai mesin ATS.
                     </p>
                   </div>
                   <div className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0 mt-0.5" />
-                    <p className="text-xs text-white/90 leading-snug">
-                      <span className="font-bold text-white">Panduan Kalimat Dampak:</span> dilengkapi contoh penulisan pengalaman yang terukur.
+                    <CheckCircle2 className="w-4 h-4 text-white shrink-0 mt-0.5" />
+                    <p className="text-xs text-white leading-snug">
+                      <span className="font-bold">Panduan Kalimat Dampak:</span> dilengkapi contoh penulisan pengalaman yang terukur.
                     </p>
                   </div>
                   <div className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0 mt-0.5" />
-                    <p className="text-xs text-white/90 leading-snug">
-                      <span className="font-bold text-white">Siap Cetak &amp; Evaluasi:</span> langsung tersimpan ke Dokumen CV ATS dan Riwayat Sesi.
+                    <CheckCircle2 className="w-4 h-4 text-white shrink-0 mt-0.5" />
+                    <p className="text-xs text-white leading-snug">
+                      <span className="font-bold">Siap Cetak &amp; Evaluasi:</span> langsung tersimpan ke Dokumen CV ATS dan Riwayat Sesi.
                     </p>
                   </div>
                 </div>
@@ -185,17 +185,17 @@ export default function OnboardingPage() {
                 <span>Mulai Susun CV Sekarang</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
-              <div className="inline-flex items-center gap-2 text-xs text-white/80 font-medium px-2">
-                <FileCheck2 className="w-4 h-4 text-[#ce2731]" />
+              <div className="inline-flex items-center gap-2 text-xs text-white font-medium px-2">
+                <FileCheck2 className="w-4 h-4 text-white" />
                 <span>Estimasi 3 sampai 5 menit</span>
               </div>
             </div>
           </div>
 
           {/* Kolom Kanan: Daftar Tahapan Flat tanpa Card Bersarang */}
-          <div className="lg:col-span-5 flex flex-col justify-between gap-4 py-2">
+          <div className="lg:col-span-5 flex flex-col justify-between gap-4 py-2 text-[#0f2c56]">
             <div className="space-y-3">
-              <p className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-bold">
+              <p className="text-[11px] font-mono uppercase tracking-wider font-bold">
                 Tahapan Kuesioner (5 Langkah)
               </p>
               <div className="divide-y divide-slate-200/80 border-y border-slate-200/80">
@@ -210,10 +210,10 @@ export default function OnboardingPage() {
                         <Icon className="w-4 h-4" />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="text-xs sm:text-sm font-extrabold text-[#0f2c56] truncate">
+                        <p className="text-xs sm:text-sm font-extrabold truncate">
                           {item.num}. {item.title}
                         </p>
-                        <p className="text-xs text-slate-500 truncate">{item.desc}</p>
+                        <p className="text-xs truncate">{item.desc}</p>
                       </div>
                     </div>
                   );
@@ -223,17 +223,17 @@ export default function OnboardingPage() {
 
             <div className="flex items-center justify-between gap-4 pt-2 text-xs">
               <div>
-                <p className="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold">
+                <p className="text-[10px] font-mono uppercase tracking-wider font-bold">
                   Output Standar
                 </p>
-                <p className="font-extrabold text-[#0f2c56]">PDF A4 1-Kolom</p>
+                <p className="font-extrabold">PDF A4 1-Kolom</p>
               </div>
               <div className="h-7 w-px bg-slate-200" aria-hidden="true" />
               <div>
-                <p className="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold">
+                <p className="text-[10px] font-mono uppercase tracking-wider font-bold">
                   Setelah Selesai
                 </p>
-                <p className="font-extrabold text-[#0f2c56]">Skor &amp; Konsultasi AI</p>
+                <p className="font-extrabold">Skor &amp; Konsultasi AI</p>
               </div>
             </div>
           </div>
