@@ -26,7 +26,7 @@ function EvaluateContent() {
 
   const handleAnalysisSuccess = (result: CVAnalysisResult) => {
     api.saveAnalysis(result);
-    router.push(`/user/dashboard/riwayat/${encodeURIComponent(result.cvId)}`);
+    router.push("/user/dashboard/hasil-evaluasi");
   };
 
   return (

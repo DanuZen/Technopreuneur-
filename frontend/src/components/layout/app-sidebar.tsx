@@ -13,6 +13,7 @@ import {
   Building2,
   ShieldCheck,
   Users,
+  MessageSquareText,
 } from "lucide-react";
 import { getRoleFromPathname, getDashboardBasePath, getRoleSegment } from "@/lib/routes";
 
@@ -146,6 +147,15 @@ export function AppSidebar({
             isActive:
               pathname.startsWith(`${baseDashboardPath}/onboarding`) ||
               pathname === "/onboarding",
+          },
+          {
+            label: "Hasil Evaluasi",
+            href: `${baseDashboardPath}/hasil-evaluasi`,
+            icon: MessageSquareText,
+            desc: "Skor 5 dimensi & konsultasi AI",
+            isActive:
+              pathname.startsWith(`${baseDashboardPath}/hasil-evaluasi`) ||
+              pathname.startsWith(`${baseDashboardPath}/riwayat`),
           },
           {
             label: "Dokumen CV ATS",
