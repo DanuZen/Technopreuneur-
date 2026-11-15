@@ -178,17 +178,15 @@ export default function AboutPage() {
           backgroundColor: "#ce2731",
         };
       case 2:
-      default: {
-        const isCrimson = activeMemberIdx % 2 === 1;
+      default:
         return {
           top: `${memberRect.top}px`,
           left: `${memberRect.left}px`,
           width: `${memberRect.width}px`,
           height: `${memberRect.height}px`,
           borderRadius: "28px",
-          backgroundColor: isCrimson ? "#ce2731" : "#0f2c56",
+          backgroundColor: "#0f2c56",
         };
-      }
     }
   };
 
@@ -328,10 +326,9 @@ export default function AboutPage() {
             </h2>
           </div>
 
-          <div ref={teamGridRef} className="relative grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 pt-6">
+          <div ref={teamGridRef} className="relative grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-7 pt-6">
             {TEAM_MEMBERS.map((member, idx) => {
               const isSelected = activeMemberIdx === idx;
-              const isCrimson = idx % 2 === 1;
               return (
                 <div
                   key={member.nim}
@@ -340,71 +337,63 @@ export default function AboutPage() {
                   }}
                   onMouseEnter={() => setActiveMemberIdx(idx)}
                   onClick={() => setActiveMemberIdx(idx)}
-                  className={`rounded-[28px] px-6 pb-7 pt-5 sm:px-8 sm:pb-8 sm:pt-6 cursor-pointer transition-colors duration-300 flex flex-col justify-between items-center text-center gap-5 min-h-[260px] ${
+                  className={`rounded-[28px] p-6 sm:p-7 cursor-pointer transition-colors duration-300 flex flex-col sm:flex-row items-center sm:items-stretch gap-5 text-center sm:text-left min-h-[210px] ${
                     isSelected
-                      ? isCrimson
-                        ? "bg-[#ce2731] lg:bg-transparent text-white"
-                        : "bg-[#0f2c56] lg:bg-transparent text-white"
+                      ? "bg-[#0f2c56] lg:bg-transparent text-white"
                       : "bg-white border border-slate-200 text-[#0f2c56]"
                   }`}
                 >
-                  <div className="space-y-4 flex flex-col items-center">
-                    {/* Pop-Out Portrait Stage matching protokoler.unp.ac.id */}
-                    <div className="relative w-36 h-36 -mt-14 rounded-b-2xl overflow-hidden flex items-end justify-center">
-                      <div
-                        className={`absolute inset-x-0 bottom-0 h-24 rounded-2xl transition-colors duration-500 ${
-                          isSelected
-                            ? isCrimson
-                              ? "bg-[#0f2c56]"
-                              : "bg-[#ce2731]"
-                            : "bg-[#edf2f9]"
-                        }`}
-                      />
-                      <Image
-                        src="/team-danu.png"
-                        alt={member.name}
-                        width={160}
-                        height={280}
-                        className={`relative z-10 w-28 h-28 object-cover object-top transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                          isSelected
-                            ? "grayscale-0 -translate-y-3 scale-110"
-                            : "grayscale opacity-90 translate-y-1 scale-95"
-                        }`}
-                      />
-                    </div>
+                  {/* Left: Pop-Out Portrait Stage */}
+                  <div className="relative w-32 h-36 -mt-8 sm:mt-0 sm:self-center shrink-0 rounded-b-2xl overflow-hidden flex items-end justify-center">
+                    <div
+                      className={`absolute inset-x-0 bottom-0 h-28 rounded-2xl transition-colors duration-500 ${
+                        isSelected ? "bg-[#ce2731]" : "bg-[#edf2f9]"
+                      }`}
+                    />
+                    <Image
+                      src="/team-danu.png"
+                      alt={member.name}
+                      width={160}
+                      height={280}
+                      className={`relative z-10 w-28 h-28 object-cover object-top transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                        isSelected
+                          ? "grayscale-0 -translate-y-3 scale-110"
+                          : "grayscale opacity-90 translate-y-1 scale-95"
+                      }`}
+                    />
+                  </div>
 
-                    <div className="space-y-2 flex flex-col items-center">
+                  {/* Right: Role, Name, Focus, NIM */}
+                  <div className="flex flex-col justify-between gap-3 flex-1 min-w-0">
+                    <div className="space-y-2">
                       <span
                         className={`inline-flex items-center px-3 py-0.5 rounded-full text-[11px] font-bold transition-colors duration-300 ${
                           isSelected
                             ? "bg-white text-[#0f2c56]"
-                            : isCrimson
-                            ? "bg-[#ce2731] text-white"
                             : "bg-[#0f2c56] text-white"
                         }`}
                       >
                         {member.role}
                       </span>
-                      <h3 className="text-lg sm:text-xl font-extrabold leading-snug">
+                      <h3 className="text-base sm:text-lg font-extrabold leading-snug">
                         {member.name}
                       </h3>
+                      <p
+                        className={`text-xs leading-relaxed ${
+                          isSelected ? "text-white/85" : "text-slate-600"
+                        }`}
+                      >
+                        {member.focus}
+                      </p>
                     </div>
-
                     <p
-                      className={`text-xs sm:text-sm leading-relaxed ${
-                        isSelected ? "text-white/85" : "text-slate-600"
+                      className={`text-xs font-mono font-bold ${
+                        isSelected ? "text-white/75" : "text-slate-400"
                       }`}
                     >
-                      {member.focus}
+                      NIM: {member.nim}
                     </p>
                   </div>
-                  <p
-                    className={`text-xs font-mono font-bold ${
-                      isSelected ? "text-white/75" : "text-slate-400"
-                    }`}
-                  >
-                    NIM: {member.nim}
-                  </p>
                 </div>
               );
             })}
