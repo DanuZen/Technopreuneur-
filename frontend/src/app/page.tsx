@@ -105,7 +105,6 @@ export default function HomePage() {
   const [prevSlide, setPrevSlide] = useState<number>(0);
   const [scrollDir, setScrollDir] = useState<"down" | "up">("down");
   const [activeFeatureIdx, setActiveFeatureIdx] = useState<number>(0);
-  const [sliderStep, setSliderStep] = useState<number>(5);
   const [inputMode, setInputMode] = useState<"pdf" | "questionnaire">("pdf");
   const [openAccordionId, setOpenAccordionId] = useState<number | null>(0);
 
@@ -1042,28 +1041,8 @@ export default function HomePage() {
               </p>
             </div>
 
-            {/* Interactive Dimension / Step Slider */}
-            <div className="space-y-2 max-w-md pt-1">
-              <div className="flex items-center gap-4">
-                <span className="text-xs font-bold text-slate-300">1</span>
-                <input
-                  type="range"
-                  min={1}
-                  max={5}
-                  value={sliderStep}
-                  onChange={(e) => setSliderStep(Number(e.target.value))}
-                  aria-label="Jumlah dimensi evaluasi"
-                  className="w-full accent-white cursor-pointer h-1.5 bg-white/20 rounded-lg"
-                />
-                <span className="text-xs font-bold text-slate-300">5</span>
-              </div>
-              <p className="text-xs text-slate-300">
-                Berdasarkan evaluasi {sliderStep} dimensi utama standar HRD
-              </p>
-            </div>
-
             {/* 2 Mode Toggle Buttons */}
-            <div className="flex items-center gap-3 pt-1">
+            <div className={`flex items-center gap-3 pt-1 ${getTextRevealClass(5, "delay-300")}`}>
               <button
                 type="button"
                 onClick={() => setInputMode("pdf")}
@@ -1099,7 +1078,7 @@ export default function HomePage() {
               <ul className="space-y-2 text-xs sm:text-sm text-slate-500">
                 <li className="flex items-start gap-2">
                   <span className="text-[#0f2c56] font-bold">•</span>
-                  <span>Evaluasi mendalam {sliderStep} dimensi kesiapan ATS dan standar HRD</span>
+                  <span>Evaluasi mendalam 5 dimensi kesiapan ATS dan standar HRD</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-[#0f2c56] font-bold">•</span>
