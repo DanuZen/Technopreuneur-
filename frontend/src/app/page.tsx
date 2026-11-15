@@ -508,7 +508,7 @@ export default function HomePage() {
               <span>Pasbana AI • Evaluasi CV &amp; Karir</span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl xl:text-[56px] font-bold tracking-tight text-[#0f2c56] leading-[1.1]">
+            <h1 className="text-3xl sm:text-5xl xl:text-[56px] font-extrabold tracking-tight text-[#0f2c56] leading-[1.15]">
               Hemat waktu evaluasi
               <br />
               dan{" "}
@@ -519,7 +519,9 @@ export default function HomePage() {
               </span>{" "}
               temukan
               <br />
-              Karir Pas Bana
+              <span className="inline-block bg-[#ce2731] text-white px-3.5 py-0.5 rounded-xl mt-1">
+                Karir Pas Bana.
+              </span>
             </h1>
 
             <p className="text-xs sm:text-base text-slate-600 max-w-lg leading-relaxed">
@@ -705,10 +707,11 @@ export default function HomePage() {
             <span className="inline-block px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-extrabold uppercase tracking-wider text-white">
               Pemeriksa Format ATS
             </span>
-            <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-white leading-[1.14]">
-              Berhenti mengirim CV
-              <br />
-              yang gagal dibaca sistem
+            <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-extrabold tracking-tight text-white leading-[1.2]">
+              Berhenti mengirim CV yang{" "}
+              <span className="inline-block bg-[#0f2c56] text-white px-3 py-0.5 rounded-xl mt-1">
+                gagal dibaca sistem.
+              </span>
             </h2>
             <p className="text-xs sm:text-base text-white/90 max-w-lg leading-relaxed">
               Banyak kandidat gugur saat melamar kerja bukan karena kurang kompeten, melainkan karena susunan resume gagal dipahami mesin ATS. Ketahui letak celah CV Anda dan ikuti alur perbaikannya secara instan!
@@ -740,12 +743,13 @@ export default function HomePage() {
             <span className="inline-block text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
               Ekosistem Persiapan Karir
             </span>
-            <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-[#0f2c56] leading-[1.14]">
+            <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-extrabold tracking-tight text-[#0f2c56] leading-[1.2]">
               Tingkatkan peluang lolos
               <br />
-              dengan kesiapan berkas
-              <br />
-              yang paling optimal!
+              dengan kesiapan{" "}
+              <span className="inline-block bg-[#ce2731] text-white px-3 py-0.5 rounded-xl mt-1">
+                paling optimal!
+              </span>
             </h2>
             <p className="text-xs sm:text-base text-slate-500 max-w-lg leading-relaxed">
               Baik sudah memiliki file PDF maupun belum punya CV sama sekali, ukur 5 dimensi kualitas resume Anda pada waktu yang tepat untuk hasil seleksi terbaik!
@@ -911,12 +915,13 @@ export default function HomePage() {
             <span className="inline-block px-3.5 py-1 rounded-full bg-[#ce2731] text-xs font-extrabold uppercase tracking-wider text-white">
               Asisten Kalimat Aktif
             </span>
-            <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-white leading-[1.14]">
-              Pahami bagaimana Struktur
+            <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-extrabold tracking-tight text-white leading-[1.2]">
+              Pahami Struktur dan
               <br />
-              dan Kalimat Aktif memengaruhi
-              <br />
-              penilaian HRD
+              Kalimat Aktif dalam{" "}
+              <span className="inline-block bg-[#ce2731] text-white px-3 py-0.5 rounded-xl mt-1">
+                penilaian HRD.
+              </span>
             </h2>
             <p className="text-xs sm:text-base text-slate-300 max-w-lg leading-relaxed">
               Lihat perubahan skor kesiapan secara langsung setelah Anda mengganti kalimat pasif menjadi pencapaian terukur, struktur yang rapi, dan kata kunci keahlian yang tepat.
@@ -950,8 +955,11 @@ export default function HomePage() {
             <span className="text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
               Fitur &amp; Prinsip
             </span>
-            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#0f2c56] leading-[1.15]">
-              Optimalkan kesiapan karir Anda dengan perangkat evaluasi presisi
+            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[#0f2c56] leading-[1.2]">
+              Optimalkan kesiapan karir dengan{" "}
+              <span className="inline-block bg-[#ce2731] text-white px-3 py-0.5 rounded-xl mt-1">
+                evaluasi presisi.
+              </span>
             </h2>
           </div>
 
@@ -1057,10 +1065,11 @@ export default function HomePage() {
               <p className="text-xs text-slate-300">
                 Berhenti membuang waktu, biarkan sistem mengevaluasi secara otomatis
               </p>
-              <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-white leading-[1.14]">
-                Dapatkan analisis terbaik
-                <br />
-                untuk kesiapan karir Anda!
+              <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-extrabold tracking-tight text-white leading-[1.2]">
+                Dapatkan analisis terbaik untuk{" "}
+                <span className="inline-block bg-[#ce2731] text-white px-3 py-0.5 rounded-xl mt-1">
+                  kesiapan karir!
+                </span>
               </h2>
             </div>
 
@@ -1171,8 +1180,11 @@ export default function HomePage() {
                 <span className="inline-block px-3.5 py-1 rounded-full bg-[#ce2731] text-white text-[11px] font-extrabold uppercase tracking-wider">
                   Mulai Langkah Karir
                 </span>
-                <h2 className="text-2xl sm:text-3xl xl:text-4xl font-bold tracking-tight text-white leading-[1.15]">
-                  Seluruh perangkat cerdas ini siap memetakan karir terbaik Anda
+                <h2 className="text-2xl sm:text-3xl xl:text-4xl font-extrabold tracking-tight text-white leading-[1.2]">
+                  Petakan langkah menuju{" "}
+                  <span className="inline-block bg-[#ce2731] text-white px-3 py-0.5 rounded-xl mt-1">
+                    karir terbaik Anda.
+                  </span>
                 </h2>
                 <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
                   Pastikan CV Anda terbaca sempurna oleh sistem ATS, perkuat poin pencapaian, dan temukan posisi kerja yang paling pas bana.
