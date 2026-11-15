@@ -361,16 +361,16 @@ export default function AboutPage() {
                   }}
                   onMouseEnter={() => setActiveMemberIdx(idx)}
                   onClick={() => setActiveMemberIdx(idx)}
-                  className={`rounded-[28px] p-6 sm:p-7 cursor-pointer transition-colors duration-300 flex flex-col sm:flex-row items-center sm:items-stretch gap-5 text-center sm:text-left min-h-[210px] ${
+                  className={`rounded-[24px] p-5 sm:p-5 cursor-pointer transition-colors duration-300 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left ${
                     isSelected
                       ? "bg-[#0f2c56] lg:bg-transparent text-white"
                       : "bg-white border border-slate-200 text-[#0f2c56]"
                   }`}
                 >
                   {/* Left: Pop-Out Portrait Stage */}
-                  <div className="relative w-36 h-44 sm:w-40 sm:h-48 -mt-8 sm:mt-0 sm:self-center shrink-0 rounded-b-2xl overflow-hidden flex items-end justify-center">
+                  <div className="relative w-32 h-36 shrink-0 rounded-b-2xl overflow-hidden flex items-end justify-center">
                     <div
-                      className={`absolute inset-x-0 bottom-0 h-36 sm:h-40 rounded-2xl transition-colors duration-500 ${
+                      className={`absolute inset-x-0 bottom-0 h-28 rounded-2xl transition-colors duration-500 ${
                         isSelected ? "bg-white" : "bg-[#edf2f9]"
                       }`}
                     />
@@ -379,7 +379,7 @@ export default function AboutPage() {
                       alt={member.name}
                       width={200}
                       height={340}
-                      className={`relative z-10 w-32 h-36 sm:w-36 sm:h-40 object-cover object-top origin-bottom transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                      className={`relative z-10 w-28 h-32 object-cover object-top origin-bottom transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                         isSelected
                           ? "grayscale-0 scale-[1.12]"
                           : "grayscale opacity-90 scale-100"
@@ -388,8 +388,8 @@ export default function AboutPage() {
                   </div>
 
                   {/* Right: Role, Name, Focus, NIM */}
-                  <div className="flex flex-col justify-between gap-3 flex-1 min-w-0">
-                    <div className="space-y-2">
+                  <div className="flex flex-col justify-center gap-2.5 flex-1 min-w-0">
+                    <div className="space-y-1.5">
                       <span
                         className={`inline-flex items-center px-3 py-0.5 rounded-full text-[11px] font-bold transition-colors duration-300 ${
                           isSelected
