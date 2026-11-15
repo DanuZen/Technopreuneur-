@@ -18,6 +18,12 @@ import {
 } from "lucide-react";
 import { DashboardPageHeading } from "@/components/dashboard/dashboard-page-heading";
 import { DashboardPageSkeleton } from "@/components/ui/dashboard-skeleton";
+import {
+  CompanyFunnelDiagram,
+  CompanyTrendDiagram,
+  AdminModerationDiagram,
+  AdminPipelineDiagram,
+} from "@/components/dashboard/dashboard-diagrams";
 import { isValidDashboardRole } from "@/lib/routes";
 
 type ApplicantStatus = "submitted" | "reviewed" | "shortlisted" | "rejected";
@@ -122,6 +128,8 @@ function CompanyDashboardView() {
   };
 
   const shortlistedCount = applicants.filter((a) => a.status === "shortlisted").length;
+  const reviewedCount = applicants.filter((a) => a.status === "reviewed").length;
+  const rejectedCount = applicants.filter((a) => a.status === "rejected").length;
 
   return (
     <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-5">
@@ -348,6 +356,22 @@ function CompanyDashboardView() {
           </p>
         </div>
       </div>
+
+      {/* Baris Diagram Analitik Rekrutmen */}
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
+        <div className="xl:col-span-5">
+          <CompanyFunnelDiagram
+            totalJobs={jobs.length}
+            totalApplicants={applicants.length}
+            reviewedCount={reviewedCount}
+            shortlistedCount={shortlistedCount}
+            rejectedCount={rejectedCount}
+          />
+        </div>
+        <div className="xl:col-span-7">
+          <CompanyTrendDiagram />
+        </div>
+      </div>
     </main>
   );
 }
@@ -397,6 +421,7 @@ function AdminDashboardView() {
 
   const pendingCount = moderationList.filter((m) => m.status === "pending").length;
   const approvedCount = moderationList.filter((m) => m.status === "approved").length;
+  const rejectedCount = moderationList.filter((m) => m.status === "rejected").length;
 
   return (
     <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-5">
@@ -588,6 +613,20 @@ function AdminDashboardView() {
           <p className="text-xs font-medium">
             Lowongan yang disetujui otomatis dibuatkan embedding vektor untuk pencocokan kandidat.
           </p>
+        </div>
+      </div>
+
+      {/* Baris Diagram Analitik Platform & Pipeline AI */}
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
+        <div className="xl:col-span-5">
+          <AdminModerationDiagram
+            pendingCount={pendingCount}
+            approvedCount={approvedCount}
+            rejectedCount={rejectedCount}
+          />
+        </div>
+        <div className="xl:col-span-7">
+          <AdminPipelineDiagram />
         </div>
       </div>
     </main>
