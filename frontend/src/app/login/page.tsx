@@ -434,15 +434,15 @@ export default function LoginPage() {
 
                 {/* Nama & Tagline Sejajar di Kanan */}
                 <div className="flex flex-col justify-center space-y-2 text-left animate-fade-in-up delay-200">
-                  <h2 className="text-5xl xl:text-6xl font-black tracking-[0.06em] text-white leading-none uppercase">
+                  <h2 className="text-4xl xl:text-5xl font-black tracking-[0.06em] text-white leading-none uppercase">
                     PASBANA
                   </h2>
-                  <p className="w-full flex items-center justify-between text-[13px] xl:text-[16px] font-bold text-white/85 uppercase tracking-[0.14em] leading-none">
-                    <span>KARIR</span>
-                    <span>YANG</span>
-                    <span>PAS</span>
-                    <span>BANA</span>
-                  </p>
+                  <div className="w-full flex items-center justify-between gap-3">
+                    <span className="w-6 h-1 rounded-full bg-[#ce2731] shrink-0" />
+                    <p className="text-[10.5px] xl:text-xs font-bold text-white/85 uppercase tracking-[0.2em] leading-none whitespace-nowrap">
+                      KARIR YANG PAS BANA
+                    </p>
+                  </div>
                 </div>
               </div>
 
