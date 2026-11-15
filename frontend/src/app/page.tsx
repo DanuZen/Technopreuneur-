@@ -387,9 +387,8 @@ export default function HomePage() {
           <div
             className={`lg:col-span-6 px-4 sm:px-8 lg:px-12 space-y-5 sm:space-y-6 text-left ${getChildAnimClass(0, "left", "delay-75")}`}
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white">
-              <span className="w-2 h-2 rounded-full bg-[#ce2731]" />
-              <span>Pasbana AI • Evaluasi CV &amp; Karir</span>
+            <div className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white">
+              Pasbana AI • Evaluasi CV &amp; Karir
             </div>
 
             <h1 className="text-3xl sm:text-5xl xl:text-[52px] font-extrabold tracking-tight text-[#0f2c56] leading-[1.18]">
@@ -615,7 +614,7 @@ export default function HomePage() {
           <div
             className={`lg:col-span-6 space-y-5 sm:space-y-6 text-left lg:pl-8 ${getChildAnimClass(1, "right", "delay-150")}`}
           >
-            <span className="inline-block px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-extrabold uppercase tracking-wider text-white">
+            <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white">
               Pemeriksa Format ATS
             </span>
             <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-extrabold tracking-tight text-white leading-[1.22]">
@@ -651,7 +650,7 @@ export default function HomePage() {
           <div
             className={`lg:col-span-6 px-4 sm:px-8 lg:px-12 space-y-5 sm:space-y-6 text-left ${getChildAnimClass(2, "left", "delay-75")}`}
           >
-            <span className="inline-block text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
+            <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white">
               Ekosistem Persiapan Karir
             </span>
             <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-extrabold tracking-tight text-[#0f2c56] leading-[1.22]">
@@ -873,7 +872,7 @@ export default function HomePage() {
           <div
             className={`lg:col-span-6 space-y-5 sm:space-y-6 text-left lg:pl-10 ${getChildAnimClass(3, "right", "delay-150")}`}
           >
-            <span className="inline-block px-3.5 py-1 rounded-full bg-[#ce2731] text-xs font-extrabold uppercase tracking-wider text-white">
+            <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#ce2731] text-xs font-bold text-white">
               Asisten Kalimat Aktif
             </span>
             <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-extrabold tracking-tight text-white leading-[1.22]">
@@ -912,8 +911,8 @@ export default function HomePage() {
           className="relative w-full h-full mx-auto px-4 sm:px-8 lg:px-12 flex flex-col justify-center gap-6"
         >
           {/* Top-Left Section Header */}
-          <div className={`space-y-2 text-left max-w-2xl ${getChildAnimClass(4, "down", "delay-75")}`}>
-            <span className="text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
+          <div className={`space-y-3 text-left max-w-2xl ${getChildAnimClass(4, "down", "delay-75")}`}>
+            <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white">
               Fitur &amp; Prinsip
             </span>
             <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-extrabold tracking-tight text-[#0f2c56] leading-[1.22]">
@@ -1022,16 +1021,19 @@ export default function HomePage() {
           <div
             className={`lg:col-span-6 space-y-5 sm:space-y-6 text-left ${getChildAnimClass(5, "left", "delay-100")}`}
           >
-            <div className="space-y-2.5">
-              <p className="text-xs sm:text-sm text-slate-300 font-semibold">
-                Berhenti membuang waktu, biarkan sistem mengevaluasi secara otomatis
-              </p>
+            <div className="space-y-4">
+              <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#ce2731] text-xs font-bold text-white">
+                Cara Kerja Otomatis
+              </span>
               <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-extrabold tracking-tight text-white leading-[1.22]">
                 Dapatkan analisis terbaik untuk{" "}
                 <span className="inline-block bg-[#ce2731] text-white px-3 py-0.5 rounded-xl mt-1.5">
                   kesiapan karir!
                 </span>
               </h2>
+              <p className="text-sm sm:text-base text-slate-300 max-w-lg leading-relaxed">
+                Berhenti membuang waktu, biarkan sistem mengevaluasi secara otomatis.
+              </p>
             </div>
 
             {/* Interactive Dimension / Step Slider */}
@@ -1138,7 +1140,7 @@ export default function HomePage() {
           >
             <div className="bg-[#0f2c56] lg:bg-transparent text-white rounded-[28px] p-6 sm:p-8 lg:p-10 flex flex-col justify-center items-center text-center gap-6 flex-1">
               <div className="space-y-4 flex flex-col items-center">
-                <span className="inline-block px-3.5 py-1 rounded-full bg-[#ce2731] text-white text-xs font-extrabold uppercase tracking-wider">
+                <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#ce2731] text-white text-xs font-bold">
                   Mulai Langkah Karir
                 </span>
                 <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-extrabold tracking-tight text-white leading-[1.22]">
@@ -1174,8 +1176,8 @@ export default function HomePage() {
           <div
             className={`lg:col-span-7 flex flex-col justify-center gap-3 py-2 lg:pl-4 ${getChildAnimClass(6, "right", "delay-150")}`}
           >
-            <div className="pb-2">
-              <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#ce2731]">
+            <div className="pb-2 space-y-2">
+              <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white">
                 Pertanyaan Umum
               </span>
               <h3 className="text-lg sm:text-2xl font-extrabold text-[#0f2c56]">
