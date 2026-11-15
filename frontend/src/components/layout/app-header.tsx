@@ -81,18 +81,15 @@ export function AppHeader({
         </button>
       </div>
 
-      {/* Right: Quick Action & User Dropdown */}
+      {/* Right: Dashboard Button & Profile Dropdown */}
       <div className="flex items-center gap-2.5 shrink-0">
-        {/* Quick CTA if not on evaluate */}
-        {pathname !== "/evaluate" && !pathname.includes("/dashboard/evaluasi") && (
-          <Link
-            href={`${baseDashboardPath}/evaluasi`}
-            className="hidden sm:inline-flex items-center gap-1.5 py-1.5 px-3.5 rounded-full bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors"
-          >
-            <FileCheck className="w-3.5 h-3.5 text-white" />
-            <span>Mulai Evaluasi</span>
-          </Link>
-        )}
+        <Link
+          href={baseDashboardPath}
+          className="morph-pill hidden sm:inline-flex items-center gap-1.5 py-1.5 px-3.5 rounded-full bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors"
+        >
+          <LayoutDashboard className="w-3.5 h-3.5 text-white" />
+          <span>Dashboard</span>
+        </Link>
 
         {/* Account Menu */}
         {user ? (
