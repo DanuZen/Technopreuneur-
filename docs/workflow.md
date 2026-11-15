@@ -454,3 +454,9 @@ erDiagram
 }
 ```
 
+---
+
+## 6. Dokumentasi Detail Peran, Tugas & Batasan Tiap Role
+
+Untuk rincian lengkap tugas, batasan wewenang, alur *end-to-end*, dan pemetaan halaman antarmuka masing-masing *role* (**Jobseeker**, **Company**, dan **Admin**), lihat dokumen [role-workflows.md](role-workflows.md).
+
