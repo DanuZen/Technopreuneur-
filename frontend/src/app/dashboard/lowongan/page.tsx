@@ -93,7 +93,7 @@ export default function LowonganCocokPage() {
   const userTechSkills = analysis?.profile.skills?.technical || [];
 
   return (
-    <main className="min-h-full w-full px-3.5 sm:px-6 pt-4 sm:pt-5 pb-5 sm:pb-6 space-y-6">
+    <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-6">
       <DashboardPageHeading
         badge="Lowongan Cocok"
         titleLine1="Temukan peluang karir"
@@ -218,9 +218,7 @@ export default function LowonganCocokPage() {
                 </a>
               ) : (
                 <Link
-                  href={`/apply?jobId=${job.id}&title=${encodeURIComponent(
-                    job.title
-                  )}&company=${encodeURIComponent(job.companyName)}`}
+                  href={`/apply/${job.id}`}
                   className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors"
                 >
                   <span>Kirim Lamaran Profil</span>
