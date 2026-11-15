@@ -65,10 +65,10 @@ export function SplashScreen({
         {/* Floating Logo with Blue Glow */}
         <div className="relative w-24 h-24 sm:w-28 sm:h-28 drop-shadow-[0_20px_40px_rgba(37,99,235,0.7)] animate-float-slow">
           <Image
-            src="/logo-app-white.webp"
+            src="/logo-white.webp"
             alt="Logo Pasbana AI"
             fill
-            className="object-contain rounded-2xl"
+            className="object-contain"
             priority
           />
         </div>

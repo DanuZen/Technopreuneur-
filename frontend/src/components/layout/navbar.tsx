@@ -110,11 +110,11 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
           >
             <div className="relative w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center shrink-0">
               <Image
-                src="/logo-app-white.webp"
+                src="/logo-white.webp"
                 alt="Pasbana AI Logo"
                 width={32}
                 height={32}
-                className="rounded-full object-contain group-hover:scale-105 transition-transform"
+                className="object-contain group-hover:scale-105 transition-transform"
                 priority
               />
             </div>

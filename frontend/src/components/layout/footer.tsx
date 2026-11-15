@@ -11,11 +11,11 @@ export function Footer() {
             <Link href="/" className="flex items-center gap-2.5 group">
               <div className="relative w-8 h-8 flex items-center justify-center shrink-0">
                 <Image
-                  src="/logo-app-white.webp"
+                  src="/logo-white.webp"
                   alt="Pasbana AI Logo"
                   width={32}
                   height={32}
-                  className="rounded-lg object-contain shrink-0 group-hover:scale-105 transition-transform"
+                  className="object-contain shrink-0 group-hover:scale-105 transition-transform"
                 />
               </div>
               <span className="font-bold text-white tracking-tight text-lg">

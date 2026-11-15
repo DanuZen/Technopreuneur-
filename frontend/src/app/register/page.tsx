@@ -100,10 +100,10 @@ export default function RegisterPage() {
             <Link href="/" className="flex items-center gap-3 group cursor-pointer">
               <div className="w-10 h-10 relative shrink-0 transition-transform duration-300 group-hover:scale-105">
                 <Image
-                  src="/logo-app-navy.webp"
+                  src="/logo-navy.webp"
                   alt="Logo Pasbana AI"
                   fill
-                  className="object-contain rounded-xl"
+                  className="object-contain"
                   priority
                 />
               </div>

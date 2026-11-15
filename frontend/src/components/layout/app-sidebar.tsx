@@ -210,7 +210,7 @@ export function AppSidebar({
               >
                 <div className="relative w-6 h-6 flex items-center justify-center">
                   <Image
-                    src="/logo-app.webp"
+                    src="/logo-navy.webp"
                     alt="Pasbana AI"
                     width={24}
                     height={24}
@@ -309,12 +309,12 @@ export function AppSidebar({
                   onClick={onCloseMobile}
                   className="flex items-center gap-2.5 group"
                 >
-                  <div className="w-8 h-8 rounded-xl bg-[#0f2c56] p-1.5 flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 flex items-center justify-center shrink-0">
                     <Image
-                      src="/logo-app-white.webp"
+                      src="/logo-navy.webp"
                       alt="Pasbana AI"
-                      width={22}
-                      height={22}
+                      width={28}
+                      height={28}
                       className="object-contain"
                     />
                   </div>
