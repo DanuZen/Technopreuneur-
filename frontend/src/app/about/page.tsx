@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import { Compass, Users, Shield, Cpu, ArrowLeft, ArrowUpRight } from "lucide-react";
+import { Compass, Users, Shield, Cpu, ArrowUpRight } from "lucide-react";
 
 const TOTAL_SLIDES = 4;
 
@@ -248,20 +248,9 @@ export default function AboutPage() {
       >
         <div className="w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-center">
           <div className="lg:col-span-6 px-4 sm:px-8 lg:px-12 space-y-5 text-left">
-            <div className={getTextRevealClass(0, "delay-75")}>
-              <Link
-                href="/"
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0f2c56] hover:text-[#ce2731] transition-colors mb-3"
-              >
-                <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
-                <span>Kembali ke Beranda</span>
-              </Link>
-              <div>
-                <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white">
-                  Tentang Pasbana AI
-                </span>
-              </div>
-            </div>
+            <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white ${getTextRevealClass(0, "delay-75")}`}>
+              Tentang Pasbana AI
+            </span>
 
             <h1 className={`text-3xl sm:text-5xl font-extrabold tracking-tight text-[#0f2c56] leading-[1.18] ${getTextRevealClass(0, "delay-150")}`}>
               Mengenal Filosofi{" "}
