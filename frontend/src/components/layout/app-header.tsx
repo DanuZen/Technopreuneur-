@@ -160,24 +160,24 @@ export function AppHeader({
                 {/* Navigation Links */}
                 <div className="space-y-1">
                   <Link
-                    href={baseDashboardPath}
-                    onClick={() => setMenuOpen(false)}
-                    className="flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-bold text-[#0f2c56] hover:bg-[#edf2f9] transition-colors"
-                  >
-                    <span className="w-7 h-7 rounded-lg bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
-                      <LayoutDashboard className="w-3.5 h-3.5" />
-                    </span>
-                    <span>Dashboard ATS</span>
-                  </Link>
-                  <Link
                     href={`${baseDashboardPath}/evaluasi`}
                     onClick={() => setMenuOpen(false)}
                     className="flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-bold text-[#0f2c56] hover:bg-[#edf2f9] transition-colors"
                   >
-                    <span className="w-7 h-7 rounded-lg bg-[#ce2731] text-white flex items-center justify-center shrink-0">
+                    <span className="w-7 h-7 rounded-lg bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
                       <FileCheck className="w-3.5 h-3.5" />
                     </span>
-                    <span>Evaluasi CV 5D</span>
+                    <span>Evaluasi CV &amp; Chat AI</span>
+                  </Link>
+                  <Link
+                    href={`${baseDashboardPath}/dokumen`}
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-bold text-[#0f2c56] hover:bg-[#edf2f9] transition-colors"
+                  >
+                    <span className="w-7 h-7 rounded-lg bg-[#ce2731] text-white flex items-center justify-center shrink-0">
+                      <LayoutDashboard className="w-3.5 h-3.5" />
+                    </span>
+                    <span>Dokumen CV ATS</span>
                   </Link>
                   <Link
                     href="/jobs"

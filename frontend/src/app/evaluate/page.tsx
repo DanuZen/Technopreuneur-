@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
@@ -10,24 +10,54 @@ import {
 } from "lucide-react";
 import { CVDropzone } from "@/components/cv/cv-dropzone";
 import { DashboardPageHeading } from "@/components/dashboard/dashboard-page-heading";
+import { CvEvaluationChat } from "@/components/evaluate/cv-evaluation-chat";
 import { CVAnalysisResult } from "@/types";
 import { api } from "@/lib/api";
 
 function EvaluateContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [analysis, setAnalysis] = useState<CVAnalysisResult | null>(null);
 
   useEffect(() => {
     const tabParam = searchParams.get("tab");
     if (tabParam === "questionnaire" || tabParam === "onboarding") {
       router.replace("/user/dashboard/onboarding");
+      return;
+    }
+
+    if (searchParams.get("new") === "true") {
+      setAnalysis(null);
+      return;
+    }
+
+    const current = api.getCurrentAnalysis();
+    if (current) {
+      setAnalysis(current);
     }
   }, [searchParams, router]);
 
   const handleAnalysisSuccess = (result: CVAnalysisResult) => {
     api.saveAnalysis(result);
-    router.push("/user/dashboard");
+    setAnalysis(result);
   };
+
+  if (analysis) {
+    return (
+      <div className="min-h-full w-full px-3.5 sm:px-6 py-5 sm:py-6 flex flex-col gap-5">
+        <DashboardPageHeading
+          badge="Hasil & Konsultasi CV"
+          titleLine1="Diskusikan hasil evaluasi"
+          titleLine2Prefix="untuk skor"
+          titleHighlight="paling optimal!"
+        />
+        <CvEvaluationChat
+          analysis={analysis}
+          onResetUpload={() => setAnalysis(null)}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-full w-full px-3.5 sm:px-6 py-5 sm:py-6 flex flex-col gap-6">
@@ -49,7 +79,7 @@ function EvaluateContent() {
       />
 
       {/* Area Unggah Dokumen CV */}
-      <CVDropzone onAnalysisComplete={handleAnalysisSuccess} />
+      <CVDropzone autoRedirect={false} onAnalysisComplete={handleAnalysisSuccess} />
 
       {/* Banner Pintasan Onboarding & Langkah Cepat di Bawah Dropzone */}
       <div className="mt-auto pt-5 border-t border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">

@@ -8,7 +8,6 @@ import {
   Search,
   FileCheck,
   Briefcase,
-  LayoutDashboard,
   Home,
   FileText,
   X,
@@ -112,7 +111,7 @@ export function AppSidebar({
 
   const handlePilihRiwayat = () => {
     onCloseMobile();
-    router.push(baseDashboardPath);
+    router.push(`${baseDashboardPath}/evaluasi`);
   };
 
   const handleHapusRiwayat = (id: string, e: React.MouseEvent) => {
@@ -126,18 +125,13 @@ export function AppSidebar({
 
   const navLinks = [
     {
-      label: "Dashboard Skor ATS",
-      href: baseDashboardPath,
-      icon: LayoutDashboard,
-      desc: "Analisis profil 5 dimensi",
-      isActive: pathname === baseDashboardPath || pathname === "/dashboard",
-    },
-    {
       label: "Evaluasi CV",
       href: `${baseDashboardPath}/evaluasi`,
       icon: FileCheck,
       desc: "Unggah berkas PDF / DOCX",
       isActive:
+        pathname === baseDashboardPath ||
+        pathname === "/dashboard" ||
         pathname.startsWith(`${baseDashboardPath}/evaluasi`) ||
         pathname.startsWith(`${baseDashboardPath}/onboarding`) ||
         pathname === "/evaluate" ||

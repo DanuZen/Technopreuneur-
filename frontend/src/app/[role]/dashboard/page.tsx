@@ -1,9 +1,9 @@
 "use client";
 
-import { useParams, notFound } from "next/navigation";
+import { useEffect } from "react";
+import { useParams, useRouter, notFound } from "next/navigation";
 import Link from "next/link";
 import { Briefcase, Users, ShieldCheck, ArrowUpRight, FileCheck } from "lucide-react";
-import DashboardPage from "@/app/dashboard/page";
 import { DashboardPageHeading } from "@/components/dashboard/dashboard-page-heading";
 import { isValidDashboardRole } from "@/lib/routes";
 
@@ -103,7 +103,14 @@ function AdminDashboardView() {
 
 export default function RoleDashboardPage() {
   const params = useParams<{ role: string }>();
+  const router = useRouter();
   const role = params?.role || "";
+
+  useEffect(() => {
+    if (role === "user") {
+      router.replace("/user/dashboard/evaluasi");
+    }
+  }, [role, router]);
 
   if (!isValidDashboardRole(role)) {
     notFound();
@@ -117,6 +124,10 @@ export default function RoleDashboardPage() {
     return <AdminDashboardView />;
   }
 
-  return <DashboardPage />;
+  return (
+    <div className="min-h-[60vh] flex items-center justify-center">
+      <div className="w-10 h-10 border-4 border-[#0f2c56] border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
 }
 
