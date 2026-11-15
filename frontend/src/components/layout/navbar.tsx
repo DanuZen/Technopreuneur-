@@ -111,7 +111,7 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
             <div className="relative w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center shrink-0">
               <Image
                 src="/logo-white.webp"
-                alt="Pasbana AI Logo"
+                alt="Pasbana Logo"
                 width={32}
                 height={32}
                 className="object-contain group-hover:scale-105 transition-transform"
@@ -119,11 +119,11 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-white tracking-tight text-sm sm:text-base leading-none">
-                Pasbana<span className="text-[#ce2731] font-bold"> AI</span>
+              <span className="font-black text-white tracking-wider text-sm sm:text-base leading-none uppercase">
+                PASBANA
               </span>
-              <span className="text-[9px] text-slate-300 tracking-wider mt-0.5 hidden sm:inline">
-                Karir yang Pas Bana
+              <span className="text-[8.5px] font-bold text-white/80 tracking-[0.18em] uppercase mt-0.5 hidden sm:inline">
+                KARIR YANG PAS BANA
               </span>
             </div>
           </Link>
