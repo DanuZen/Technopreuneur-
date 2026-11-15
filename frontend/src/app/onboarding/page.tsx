@@ -195,7 +195,7 @@ export default function OnboardingPage() {
           {/* Kolom Kanan: Daftar Tahapan Flat tanpa Card Bersarang */}
           <div className="lg:col-span-5 flex flex-col justify-between gap-4 py-1 text-[#0f2c56]">
             <div className="flex-1 flex flex-col gap-3">
-              <p className="text-[11px] font-mono uppercase tracking-wider font-bold shrink-0">
+              <p className="text-base sm:text-lg font-heading font-extrabold tracking-tight text-[#0f2c56] shrink-0">
                 Tahapan Kuesioner (5 Langkah)
               </p>
               <div className="flex-1 flex flex-col divide-y divide-slate-200/80 border-y border-slate-200/80">
