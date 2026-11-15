@@ -307,25 +307,15 @@ export function AppSidebar({
                 <Link
                   href="/"
                   onClick={onCloseMobile}
-                  className="flex items-center gap-2.5 group"
+                  className="flex items-center group"
                 >
-                  <div className="w-8 h-8 flex items-center justify-center shrink-0">
-                    <Image
-                      src="/logo-navy.webp"
-                      alt="Pasbana AI"
-                      width={28}
-                      height={28}
-                      className="object-contain"
-                    />
-                  </div>
-                  <div className="flex flex-col min-w-0">
-                    <span className="font-heading font-extrabold text-[#0f2c56] text-sm tracking-tight leading-tight">
-                      Pasbana<span className="text-secondary"> AI</span>
-                    </span>
-                    <span className="text-[10px] text-slate-500 font-medium tracking-tight truncate">
-                      Karir yang Pas Bana
-                    </span>
-                  </div>
+                  <Image
+                    src="/logo-text-navy.webp"
+                    alt="Pasbana - Kerja Pas, Karir Naik Class"
+                    width={132}
+                    height={44}
+                    className="h-8 w-auto object-contain"
+                  />
                 </Link>
 
                 <button

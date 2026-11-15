@@ -460,32 +460,17 @@ export default function LoginPage() {
           }`}
         >
           <div className="relative w-full h-full rounded-[32px] xl:rounded-[40px] flex flex-col items-center justify-center p-10 xl:p-14 text-white overflow-hidden">
-            {/* Centered Large Splash-Style Lockup */}
+            {/* Centered Large Brand Text Logo */}
             <div className="relative z-10 flex flex-col items-center text-center space-y-7 max-w-lg mx-auto">
-              <div className="flex items-center gap-5 xl:gap-6">
-                {/* Logo di Kiri */}
-                <div className="relative w-24 h-24 xl:w-28 xl:h-28 shrink-0 drop-shadow-[0_20px_38px_rgba(0,0,0,0.35)]">
-                  <Image
-                    src="/logo-white.webp"
-                    alt="Logo Pasbana"
-                    fill
-                    className="object-contain"
-                    priority
-                  />
-                </div>
-
-                {/* Nama & Tagline Sejajar di Kanan */}
-                <div className="flex flex-col justify-center space-y-2 text-left animate-fade-in-up delay-200">
-                  <h2 className="text-3xl xl:text-4xl font-black tracking-[0.06em] text-white leading-none uppercase">
-                    PASBANA
-                  </h2>
-                  <div className="w-full flex items-center justify-between gap-2.5">
-                    <span className="w-5 h-1 rounded-full bg-[#ce2731] shrink-0" />
-                    <p className="text-[10px] xl:text-[11px] font-bold text-white/85 uppercase tracking-[0.14em] leading-none whitespace-nowrap">
-                      KARIR YANG PAS BANA
-                    </p>
-                  </div>
-                </div>
+              <div className="animate-fade-in-up delay-200">
+                <Image
+                  src="/logo-text-white.webp"
+                  alt="Pasbana - Kerja Pas, Karir Naik Class"
+                  width={360}
+                  height={118}
+                  className="w-64 xl:w-80 h-auto object-contain drop-shadow-[0_20px_38px_rgba(0,0,0,0.35)]"
+                  priority
+                />
               </div>
 
               <p className="text-sm xl:text-base text-slate-200/90 font-medium leading-relaxed max-w-md animate-fade-in-up delay-300">

@@ -8,19 +8,14 @@ export function Footer() {
       <div className="max-w-[1400px] w-full mx-auto px-4 py-14 sm:px-6 lg:px-10">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-10">
           <div className="md:col-span-2 space-y-4">
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="relative w-8 h-8 flex items-center justify-center shrink-0">
-                <Image
-                  src="/logo-white.webp"
-                  alt="Pasbana AI Logo"
-                  width={32}
-                  height={32}
-                  className="object-contain shrink-0 group-hover:scale-105 transition-transform"
-                />
-              </div>
-              <span className="font-bold text-white tracking-tight text-lg">
-                Pasbana<span className="text-[#ce2731]"> AI</span>
-              </span>
+            <Link href="/" className="inline-flex items-center group">
+              <Image
+                src="/logo-text-white.webp"
+                alt="Pasbana - Kerja Pas, Karir Naik Class"
+                width={150}
+                height={50}
+                className="h-10 w-auto object-contain group-hover:scale-105 transition-transform"
+              />
             </Link>
             <p className="text-xs text-slate-300 max-w-sm leading-relaxed">
               Berasal dari bahasa Minang &quot;pas bana&quot; (sangat cocok). Menghubungkan potensi talenta dengan kebutuhan spesifik industri secara presisi melalui evaluasi CV objektif dan pencocokan cerdas.

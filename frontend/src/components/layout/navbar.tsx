@@ -106,26 +106,16 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
           {/* Logo & Brand */}
           <Link
             href="/"
-            className="flex items-center gap-2.5 pl-1 pr-2 py-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full shrink-0"
+            className="flex items-center pl-1 pr-2 py-0.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full shrink-0"
           >
-            <div className="relative w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center shrink-0">
-              <Image
-                src="/logo-white.webp"
-                alt="Pasbana Logo"
-                width={32}
-                height={32}
-                className="object-contain group-hover:scale-105 transition-transform"
-                priority
-              />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-black text-white tracking-wider text-sm sm:text-base leading-none uppercase">
-                PASBANA
-              </span>
-              <span className="text-[8.5px] font-bold text-white/80 tracking-[0.18em] uppercase mt-0.5 hidden sm:inline">
-                KARIR YANG PAS BANA
-              </span>
-            </div>
+            <Image
+              src="/logo-text-white.webp"
+              alt="Pasbana - Kerja Pas, Karir Naik Class"
+              width={132}
+              height={44}
+              className="h-8 sm:h-9 w-auto object-contain group-hover:scale-105 transition-transform"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation (Single Flat Row Inside Pill) */}
