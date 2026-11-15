@@ -428,12 +428,12 @@ export default function HomePage() {
       case 6:
       default:
         return {
-          isWhite: false,
+          isWhite: true,
           style: {
-            top: "24px",
-            left: "calc(100% - 100px)",
-            width: "64px",
-            height: "64px",
+            top: "calc(56% - 64px)",
+            left: "56px",
+            width: "128px",
+            height: "128px",
             transform: "rotate(0deg)",
           },
         };
@@ -487,6 +487,22 @@ export default function HomePage() {
                 morphLogo.isWhite ? "opacity-0" : "opacity-95"
               }`}
             />
+
+            {/* Brand Name & Tagline Revealed to the Right of Logo on Slide 6 */}
+            <div
+              className={`absolute left-[calc(100%+20px)] top-1/2 -translate-y-1/2 whitespace-nowrap transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                activeSlide === 6
+                  ? "opacity-100 translate-x-0 delay-150"
+                  : "opacity-0 -translate-x-4"
+              }`}
+            >
+              <p className="text-3xl xl:text-4xl font-black tracking-wider text-white leading-none uppercase">
+                PASBANA
+              </p>
+              <p className="text-xs font-bold text-white/80 uppercase tracking-[0.22em] mt-2">
+                KARIR YANG PAS BANA
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -1191,15 +1207,26 @@ export default function HomePage() {
                 </p>
               </div>
 
-              {/* Large Brand Logo */}
-              <div className="my-4 flex items-center justify-center">
+              {/* Spacer on lg+ for Single Global Morphing Logo + Brand Name */}
+              <div className="hidden lg:block min-h-[150px]" aria-hidden="true" />
+
+              {/* Mobile-only Large Brand Logo + Name */}
+              <div className="lg:hidden my-4 flex items-center justify-center gap-4">
                 <Image
                   src="/logo-white.webp"
                   alt="Logo Pasbana"
-                  width={210}
-                  height={210}
-                  className="w-40 h-40 sm:w-52 sm:h-52 object-contain"
+                  width={96}
+                  height={96}
+                  className="w-24 h-24 object-contain shrink-0"
                 />
+                <div className="text-left">
+                  <p className="text-2xl font-black tracking-wider text-white leading-none uppercase">
+                    PASBANA
+                  </p>
+                  <p className="text-[10px] font-bold text-white/80 uppercase tracking-[0.2em] mt-1.5">
+                    KARIR YANG PAS BANA
+                  </p>
+                </div>
               </div>
 
               <div className="pt-2 flex flex-wrap items-center gap-3">
@@ -1224,7 +1251,7 @@ export default function HomePage() {
           <div
             className={`lg:col-span-7 flex flex-col justify-center gap-3 py-2 lg:pl-4 ${getChildAnimClass(6, "right", "delay-150")}`}
           >
-            <div className="pr-20 pb-2">
+            <div className="pb-2">
               <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#ce2731]">
                 Pertanyaan Umum
               </span>
