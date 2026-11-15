@@ -98,16 +98,10 @@ const INITIAL_APPLICANTS: CompanyApplicant[] = [
 
 function CompanyDashboardView() {
   const [jobs, setJobs] = useState<CompanyJobItem[]>(INITIAL_COMPANY_JOBS);
-  const [applicants, setApplicants] = useState<CompanyApplicant[]>(INITIAL_APPLICANTS);
+  const [applicants] = useState<CompanyApplicant[]>(INITIAL_APPLICANTS);
   const [showNewJobForm, setShowNewJobForm] = useState(false);
   const [newJobTitle, setNewJobTitle] = useState("");
   const [newJobLocation, setNewJobLocation] = useState("");
-
-  const handleStatusChange = (id: string, status: ApplicantStatus) => {
-    setApplicants((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, status } : item))
-    );
-  };
 
   const handleAddJob = (e: React.FormEvent) => {
     e.preventDefault();
@@ -275,91 +269,9 @@ function CompanyDashboardView() {
           </div>
         </div>
 
-        {/* Kolom Kanan: Daftar Pelamar Terkurasi AI */}
-        <div className="xl:col-span-7 bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 flex flex-col justify-between gap-4 text-[#0f2c56]">
-          <div className="space-y-4">
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
-                  <Users className="w-4 h-4" aria-hidden="true" />
-                </div>
-                <div>
-                  <p className="text-xs font-extrabold uppercase tracking-wider">
-                    Pelamar Terkurasi AI
-                  </p>
-                  <p className="text-xs font-medium">
-                    Diurutkan berdasarkan skor kecocokan ATS 5 dimensi
-                  </p>
-                </div>
-              </div>
-              <span className="px-3 py-1 rounded-full bg-[#edf2f9] text-[#0f2c56] text-[11px] font-bold">
-                Fairness Guard Aktif
-              </span>
-            </div>
-
-            <div className="divide-y divide-slate-200/80 border-y border-slate-200/80">
-              {applicants.map((cand) => {
-                const highScore = cand.atsScore >= 85;
-                return (
-                  <div key={cand.id} className="py-4 space-y-2.5">
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      <div>
-                        <p className="text-sm font-extrabold">{cand.codeName}</p>
-                        <p className="text-xs font-semibold">{cand.roleApplied}</p>
-                      </div>
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-extrabold text-white ${
-                          highScore ? "bg-[#0f2c56]" : "bg-[#ce2731]"
-                        }`}
-                      >
-                        Skor ATS {cand.atsScore}/100
-                      </span>
-                    </div>
-
-                    <p className="text-xs leading-relaxed">{cand.matchReason}</p>
-
-                    <div className="flex flex-wrap items-center gap-2 pt-1">
-                      {(
-                        [
-                          { key: "reviewed", label: "Reviewed" },
-                          { key: "shortlisted", label: "Shortlisted" },
-                          { key: "rejected", label: "Rejected" },
-                        ] as const
-                      ).map((btn) => {
-                        const active = cand.status === btn.key;
-                        return (
-                          <button
-                            key={btn.key}
-                            type="button"
-                            onClick={() => handleStatusChange(cand.id, btn.key)}
-                            className={`px-3 py-1.5 rounded-xl text-[11px] font-bold transition-colors cursor-pointer ${
-                              active
-                                ? btn.key === "rejected"
-                                  ? "bg-[#ce2731] text-white"
-                                  : "bg-[#0f2c56] text-white"
-                                : "bg-[#edf2f9] text-[#0f2c56] hover:bg-[#0f2c56] hover:text-white"
-                            }`}
-                          >
-                            {btn.label}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          <p className="text-xs font-medium">
-            Data sensitif (foto, gender, usia, status nikah) disaring otomatis sebelum proses scoring AI.
-          </p>
-        </div>
-      </div>
-
-      {/* Baris Diagram Analitik Rekrutmen */}
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
-        <div className="xl:col-span-5">
+        {/* Kolom Kanan: Diagram Analitik Rekrutmen */}
+        <div className="xl:col-span-7 flex flex-col gap-5">
+          <CompanyTrendDiagram />
           <CompanyFunnelDiagram
             totalJobs={jobs.length}
             totalApplicants={applicants.length}
@@ -367,9 +279,6 @@ function CompanyDashboardView() {
             shortlistedCount={shortlistedCount}
             rejectedCount={rejectedCount}
           />
-        </div>
-        <div className="xl:col-span-7">
-          <CompanyTrendDiagram />
         </div>
       </div>
     </main>
