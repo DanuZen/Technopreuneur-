@@ -736,8 +736,12 @@ export function AdminModerationSubpage() {
 
 export function AdminAuditSubpage() {
   const [minAtsScore, setMinAtsScore] = useState<number>(75);
-  const [blindScreeningRequired, setBlindScreeningRequired] = useState<boolean>(true);
   const [maxCvSizeMb, setMaxCvSizeMb] = useState<number>(5);
+  const [slaSeconds, setSlaSeconds] = useState<number>(60);
+  const [allowedFormat, setAllowedFormat] = useState<"pdf_docx" | "pdf_only">("pdf_docx");
+  const [blindScreeningRequired, setBlindScreeningRequired] = useState<boolean>(true);
+  const [requireFullLegality, setRequireFullLegality] = useState<boolean>(true);
+  const [retentionDays, setRetentionDays] = useState<string>("90");
   const [savedStandard, setSavedStandard] = useState<boolean>(false);
 
   const ecosystemStats = [
@@ -746,20 +750,61 @@ export function AdminAuditSubpage() {
       metric: "Total Jobseeker Terdaftar",
       value: "1.248 Akun",
       note: "Data agregat pencari kerja aktif di platform",
+      icon: Users,
     },
     {
       id: "s2",
       metric: "Company Bekerja Sama",
       value: "24 Perusahaan",
       note: "Mitra terverifikasi yang memenuhi standar platform",
+      icon: Building2,
     },
     {
       id: "s3",
-      metric: "Calon Mitra Dipantau",
+      metric: "Calon Mitra Dalam Audit",
       value: "3 Pengajuan",
-      note: "Sedang dipantau kelengkapan legalitas & standar PDP",
+      note: "Menunggu audit legalitas & kepatuhan standar PDP",
+      icon: ShieldCheck,
     },
   ];
+
+  const standardRules = [
+    {
+      id: "r1",
+      title: "Verifikasi Legalitas Usaha (NIB & NPWP)",
+      desc: "Wajib diaudit Admin sebelum perusahaan mendapat akses kemitraan.",
+      status: requireFullLegality ? "Wajib Penuh" : "NIB Saja",
+    },
+    {
+      id: "r2",
+      title: "Kebijakan Blind Screening Anti-Bias",
+      desc: "Identitas sensitif pelamar (usia, gender, agama, foto) disembunyikan otomatis.",
+      status: blindScreeningRequired ? "Wajib Aktif" : "Opsional",
+    },
+    {
+      id: "r3",
+      title: "Validasi Dokumen Berbasis Teks Digital",
+      desc: "Berkas CV hasil foto/scan otomatis ditolak sistem agar parsing AI akurat.",
+      status: `Maks ${maxCvSizeMb} MB`,
+    },
+    {
+      id: "r4",
+      title: "Ambang Kelayakan Skor ATS & SLA AI",
+      desc: "Standar evaluasi kualitas CV kandidat serta batas waktu pemrosesan asinkron.",
+      status: `Skor >= ${minAtsScore} / ${slaSeconds}d`,
+    },
+  ];
+
+  const handleReset = () => {
+    setMinAtsScore(75);
+    setMaxCvSizeMb(5);
+    setSlaSeconds(60);
+    setAllowedFormat("pdf_docx");
+    setBlindScreeningRequired(true);
+    setRequireFullLegality(true);
+    setRetentionDays("90");
+    setSavedStandard(false);
+  };
 
   return (
     <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-5">
@@ -771,127 +816,277 @@ export function AdminAuditSubpage() {
       />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {ecosystemStats.map((a) => (
-          <div
-            key={a.id}
-            className="morph-surface rounded-2xl border border-slate-200 bg-white p-5 space-y-2 shadow-xs"
-          >
-            <div className="w-9 h-9 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center">
-              <FileCheck className="w-4 h-4" />
+        {ecosystemStats.map((a) => {
+          const Icon = a.icon;
+          return (
+            <div
+              key={a.id}
+              className="morph-surface rounded-2xl border border-slate-200 bg-white p-5 space-y-2 shadow-xs"
+            >
+              <div className="w-9 h-9 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center">
+                <Icon className="w-4 h-4" />
+              </div>
+              <p className="text-xs font-bold text-slate-500">{a.metric}</p>
+              <p className="text-2xl font-black text-[#0f2c56]">{a.value}</p>
+              <p className="text-xs text-slate-500">{a.note}</p>
             </div>
-            <p className="text-xs font-bold text-slate-500">{a.metric}</p>
-            <p className="text-2xl font-black text-[#0f2c56]">{a.value}</p>
-            <p className="text-xs text-slate-500">{a.note}</p>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          setSavedStandard(true);
-        }}
-        className="rounded-2xl border border-slate-200 bg-white p-5 space-y-4 shadow-xs"
-      >
-        <div className="flex items-center justify-between gap-3">
-          <div>
-            <p className="text-xs font-extrabold text-[#0f2c56] uppercase tracking-wider">
-              Parameter Standarisasi Global Platform
-            </p>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Kebijakan standar yang berlaku untuk seluruh evaluasi CV dan kemitraan company.
-            </p>
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            setSavedStandard(true);
+          }}
+          className="xl:col-span-7 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 space-y-5 shadow-xs"
+        >
+          <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-100">
+            <div>
+              <p className="text-xs font-extrabold text-[#0f2c56] uppercase tracking-wider">
+                Parameter Standarisasi Global Platform
+              </p>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Aturan baku untuk evaluasi CV kandidat dan syarat audit pendaftaran company.
+              </p>
+            </div>
+            {savedStandard && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-[11px] font-bold">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>Standar Disimpan</span>
+              </span>
+            )}
           </div>
-          {savedStandard && (
-            <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-[11px] font-bold">
-              Standar Disimpan
-            </span>
-          )}
-        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <label className="space-y-1.5">
-            <span className="block text-[11px] font-bold uppercase text-slate-500">
-              Ambang Skor Minimum ATS
-            </span>
-            <input
-              type="number"
-              min={50}
-              max={95}
-              value={minAtsScore}
-              onChange={(e) => {
-                setMinAtsScore(Number(e.target.value));
-                setSavedStandard(false);
-              }}
-              className="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm font-bold text-[#0f2c56]"
-            />
-          </label>
+          <div className="space-y-3">
+            <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#0f2c56]">
+              1. Standar Dokumen &amp; Evaluasi ATS
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <label className="space-y-1.5">
+                <span className="block text-[11px] font-bold uppercase text-slate-500">
+                  Ambang Skor Minimum ATS
+                </span>
+                <input
+                  type="number"
+                  min={50}
+                  max={95}
+                  value={minAtsScore}
+                  onChange={(e) => {
+                    setMinAtsScore(Number(e.target.value));
+                    setSavedStandard(false);
+                  }}
+                  className="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm font-bold text-[#0f2c56]"
+                />
+                <span className="block text-[11px] text-slate-400">
+                  Batas minimal kelayakan CV standar ATS (50 - 95).
+                </span>
+              </label>
 
-          <label className="space-y-1.5">
-            <span className="block text-[11px] font-bold uppercase text-slate-500">
-              Batas Ukuran CV (MB)
-            </span>
-            <input
-              type="number"
-              min={2}
-              max={15}
-              value={maxCvSizeMb}
-              onChange={(e) => {
-                setMaxCvSizeMb(Number(e.target.value));
-                setSavedStandard(false);
-              }}
-              className="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm font-bold text-[#0f2c56]"
-            />
-          </label>
+              <label className="space-y-1.5">
+                <span className="block text-[11px] font-bold uppercase text-slate-500">
+                  Batas Ukuran CV (MB)
+                </span>
+                <input
+                  type="number"
+                  min={2}
+                  max={15}
+                  value={maxCvSizeMb}
+                  onChange={(e) => {
+                    setMaxCvSizeMb(Number(e.target.value));
+                    setSavedStandard(false);
+                  }}
+                  className="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm font-bold text-[#0f2c56]"
+                />
+                <span className="block text-[11px] text-slate-400">
+                  Ukuran berkas maksimal saat jobseeker mengunggah CV.
+                </span>
+              </label>
 
-          <div className="space-y-1.5">
-            <span className="block text-[11px] font-bold uppercase text-slate-500">
-              Standar Blind Screening PDP
-            </span>
+              <label className="space-y-1.5">
+                <span className="block text-[11px] font-bold uppercase text-slate-500">
+                  Format Dokumen Diizinkan
+                </span>
+                <select
+                  value={allowedFormat}
+                  onChange={(e) => {
+                    setAllowedFormat(e.target.value as "pdf_docx" | "pdf_only");
+                    setSavedStandard(false);
+                  }}
+                  className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm font-bold text-[#0f2c56]"
+                >
+                  <option value="pdf_docx">PDF &amp; DOCX Teks Digital</option>
+                  <option value="pdf_only">PDF Teks Digital Saja</option>
+                </select>
+              </label>
+
+              <label className="space-y-1.5">
+                <span className="block text-[11px] font-bold uppercase text-slate-500">
+                  Target SLA Analisis AI (Detik)
+                </span>
+                <input
+                  type="number"
+                  min={15}
+                  max={120}
+                  value={slaSeconds}
+                  onChange={(e) => {
+                    setSlaSeconds(Number(e.target.value));
+                    setSavedStandard(false);
+                  }}
+                  className="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm font-bold text-[#0f2c56]"
+                />
+              </label>
+            </div>
+          </div>
+
+          <div className="space-y-3 pt-2 border-t border-slate-100">
+            <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#0f2c56]">
+              2. Standar Audit Kemitraan &amp; UU PDP
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="space-y-1.5">
+                <span className="block text-[11px] font-bold uppercase text-slate-500">
+                  Blind Screening PDP
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setBlindScreeningRequired((prev) => !prev);
+                    setSavedStandard(false);
+                  }}
+                  className={`w-full rounded-xl px-3.5 py-2.5 text-xs font-extrabold text-left transition-colors cursor-pointer ${
+                    blindScreeningRequired
+                      ? "bg-[#0f2c56] text-white"
+                      : "bg-slate-100 text-slate-600"
+                  }`}
+                >
+                  {blindScreeningRequired ? "Wajib Semua Mitra" : "Opsional"}
+                </button>
+              </div>
+
+              <div className="space-y-1.5">
+                <span className="block text-[11px] font-bold uppercase text-slate-500">
+                  Syarat Legalitas Company
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setRequireFullLegality((prev) => !prev);
+                    setSavedStandard(false);
+                  }}
+                  className={`w-full rounded-xl px-3.5 py-2.5 text-xs font-extrabold text-left transition-colors cursor-pointer ${
+                    requireFullLegality
+                      ? "bg-[#0f2c56] text-white"
+                      : "bg-slate-100 text-slate-600"
+                  }`}
+                >
+                  {requireFullLegality ? "Wajib NIB + NPWP" : "NIB Saja"}
+                </button>
+              </div>
+
+              <label className="space-y-1.5">
+                <span className="block text-[11px] font-bold uppercase text-slate-500">
+                  Retensi Data CV
+                </span>
+                <select
+                  value={retentionDays}
+                  onChange={(e) => {
+                    setRetentionDays(e.target.value);
+                    setSavedStandard(false);
+                  }}
+                  className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-bold text-[#0f2c56]"
+                >
+                  <option value="90">90 Hari Tidak Aktif</option>
+                  <option value="180">180 Hari Tidak Aktif</option>
+                  <option value="manual">Sesuai Permintaan User</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-end gap-2.5 pt-2 border-t border-slate-100">
             <button
               type="button"
-              onClick={() => {
-                setBlindScreeningRequired((prev) => !prev);
-                setSavedStandard(false);
-              }}
-              className={`w-full rounded-xl px-3.5 py-2.5 text-xs font-extrabold text-left transition-colors cursor-pointer ${
-                blindScreeningRequired
-                  ? "bg-[#0f2c56] text-white"
-                  : "bg-slate-100 text-slate-600"
-              }`}
+              onClick={handleReset}
+              className="px-4 py-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-600 text-xs font-bold cursor-pointer"
             >
-              {blindScreeningRequired ? "Wajib Aktif untuk Semua Mitra" : "Opsional"}
+              Reset Default
+            </button>
+            <button
+              type="submit"
+              className="morph-pill px-5 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-extrabold cursor-pointer"
+            >
+              Simpan Standarisasi
             </button>
           </div>
-        </div>
+        </form>
 
-        <div className="flex justify-end pt-1">
-          <button
-            type="submit"
-            className="morph-pill px-5 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-extrabold cursor-pointer"
-          >
-            Simpan Standarisasi
-          </button>
-        </div>
-      </form>
+        <div className="xl:col-span-5 space-y-4">
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 space-y-4 shadow-xs">
+            <div className="flex items-center justify-between gap-2">
+              <div>
+                <p className="text-xs font-extrabold text-[#0f2c56] uppercase tracking-wider">
+                  Standar Wajib Calon Mitra
+                </p>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Acuan audit saat Admin memverifikasi pendaftaran company.
+                </p>
+              </div>
+              <span className="px-2.5 py-1 rounded-full bg-[#edf2f9] text-[#0f2c56] text-[11px] font-bold">
+                4 Aturan Aktif
+              </span>
+            </div>
 
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 flex items-center justify-between gap-4">
+            <div className="space-y-2.5">
+              {standardRules.map((rule) => (
+                <div
+                  key={rule.id}
+                  className="rounded-xl border border-slate-200 bg-[#f8fafd] p-3.5 flex items-start justify-between gap-3"
+                >
+                  <div className="space-y-0.5">
+                    <p className="text-xs font-extrabold text-[#0f2c56]">{rule.title}</p>
+                    <p className="text-[11px] text-slate-500 leading-relaxed">{rule.desc}</p>
+                  </div>
+                  <span className="shrink-0 px-2.5 py-1 rounded-full bg-white border border-slate-200 text-[#0f2c56] text-[10px] font-extrabold">
+                    {rule.status}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-[#0f2c56] text-white p-5 space-y-2.5">
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-[#ce2731]" />
+              <p className="text-xs font-extrabold uppercase tracking-wider">
+                Batasan Wewenang Standarisasi
+              </p>
+            </div>
+            <p className="text-xs text-white/90 leading-relaxed">
+              Admin menetapkan standar global dan mengaudit legalitas pendaftaran company, tanpa masuk ke pengelolaan lowongan atau proses seleksi kandidat di dalam perusahaan.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="rounded-2xl border border-slate-200 bg-white p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <AlertTriangle className="w-5 h-5 text-[#ce2731] shrink-0" />
           <div>
             <p className="text-xs sm:text-sm font-extrabold text-[#0f2c56]">
-              Pemantauan Pipeline AI &amp; Ekstraksi Teks
+              Pemantauan Pipeline AI &amp; Validasi Standar Dokumen
             </p>
             <p className="text-xs text-slate-500">
-              Seluruh parser PDF/DOCX dan validasi standar dokumen berjalan normal tanpa kendala.
+              Seluruh parser {allowedFormat === "pdf_docx" ? "PDF/DOCX" : "PDF"} berjalan normal dengan SLA target {slaSeconds} detik.
             </p>
           </div>
         </div>
         <Link
-          href="/admin/dashboard"
-          className="morph-pill px-4 py-2 rounded-xl bg-[#0f2c56] text-white text-xs font-bold shrink-0"
+          href="/admin/dashboard/lowongan"
+          className="morph-pill px-4 py-2 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold shrink-0"
         >
-          Kembali ke Ringkasan
+          Audit Calon Mitra
         </Link>
       </div>
     </main>
@@ -899,6 +1094,65 @@ export function AdminAuditSubpage() {
 }
 
 export function AdminReportSubpage() {
+  const [period, setPeriod] = useState<"bulan" | "kuartal" | "tahun">("bulan");
+
+  const periodLabel =
+    period === "bulan"
+      ? "November 2026"
+      : period === "kuartal"
+      ? "Q4 2026 (Okt - Des)"
+      : "Tahun Penuh 2026";
+
+  const summaryCards = [
+    {
+      id: "r1",
+      title: "Total Jobseeker Terdaftar",
+      value: "1.248 Akun",
+      note: "+14% pertumbuhan agregat dibanding periode lalu",
+      icon: Users,
+      accent: "text-[#0f2c56]",
+    },
+    {
+      id: "r2",
+      title: "Company Bekerja Sama",
+      value: "24 Perusahaan",
+      note: "Seluruh mitra lulus audit legalitas NIB & NPWP",
+      icon: Building2,
+      accent: "text-[#0f2c56]",
+    },
+    {
+      id: "r3",
+      title: "Audit Pendaftaran Company",
+      value: "27 Pengajuan",
+      note: "24 Terverifikasi · 3 Dalam antrean audit Admin",
+      icon: FileCheck,
+      accent: "text-[#0f2c56]",
+    },
+    {
+      id: "r4",
+      title: "Kepatuhan Privasi UU PDP",
+      value: "100% Anonimisasi",
+      note: "Kode ATS terenkripsi & blind screening aktif",
+      icon: ShieldCheck,
+      accent: "text-[#ce2731]",
+    },
+  ];
+
+  const monthlyBreakdown = [
+    { month: "Juni 2026", jobseekers: 820, companies: 14, auditPassRate: "93%" },
+    { month: "Juli 2026", jobseekers: 910, companies: 16, auditPassRate: "94%" },
+    { month: "Agustus 2026", jobseekers: 985, companies: 18, auditPassRate: "95%" },
+    { month: "September 2026", jobseekers: 1070, companies: 20, auditPassRate: "96%" },
+    { month: "Oktober 2026", jobseekers: 1160, companies: 22, auditPassRate: "98%" },
+    { month: "November 2026", jobseekers: 1248, companies: 24, auditPassRate: "100%" },
+  ];
+
+  const complianceMetrics = [
+    { label: "Kelengkapan Legalitas Mitra (NIB & NPWP)", value: "24 / 24", pct: 100, color: "#0f2c56" },
+    { label: "Kepatuhan Blind Screening Anti-Bias", value: "24 / 24", pct: 100, color: "#0f2c56" },
+    { label: "Dokumen CV Memenuhi Standar ATS (>= 75)", value: "1.023 / 1.248", pct: 82, color: "#ce2731" },
+  ];
+
   return (
     <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-5">
       <DashboardPageHeading
@@ -907,46 +1161,161 @@ export function AdminReportSubpage() {
         titleLine2Prefix="dan performa"
         titleHighlight="ekosistem Pasbana!"
         rightSlot={
-          <button
-            type="button"
-            onClick={() => window.print()}
-            className="morph-pill inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold cursor-pointer"
-          >
-            <Printer className="w-3.5 h-3.5" />
-            <span>Cetak Laporan</span>
-          </button>
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="inline-flex rounded-xl border border-slate-200 bg-white p-1">
+              {[
+                { key: "bulan", label: "Bulan Ini" },
+                { key: "kuartal", label: "Kuartal" },
+                { key: "tahun", label: "2026" },
+              ].map((opt) => (
+                <button
+                  key={opt.key}
+                  type="button"
+                  onClick={() => setPeriod(opt.key as "bulan" | "kuartal" | "tahun")}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
+                    period === opt.key
+                      ? "bg-[#0f2c56] text-white"
+                      : "text-slate-600 hover:bg-slate-50"
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={() => window.print()}
+              className="morph-pill inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold cursor-pointer"
+            >
+              <Printer className="w-3.5 h-3.5" />
+              <span>Cetak Laporan</span>
+            </button>
+          </div>
         }
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 space-y-2 shadow-xs">
-          <div className="flex items-center gap-2 text-[#0f2c56]">
-            <Users className="w-4 h-4" />
-            <span className="text-xs font-extrabold uppercase">Pertumbuhan Pengguna</span>
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+        {summaryCards.map((card) => {
+          const Icon = card.icon;
+          return (
+            <div
+              key={card.id}
+              className="morph-surface rounded-2xl border border-slate-200 bg-white p-5 space-y-2 shadow-xs"
+            >
+              <div className={`flex items-center gap-2 ${card.accent}`}>
+                <Icon className="w-4 h-4" />
+                <span className="text-xs font-extrabold uppercase">{card.title}</span>
+              </div>
+              <p className="text-2xl font-black text-[#0f2c56]">{card.value}</p>
+              <p className="text-xs text-slate-500">{card.note}</p>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
+        <div className="xl:col-span-7 rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-xs flex flex-col">
+          <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between gap-3">
+            <div>
+              <p className="text-xs font-extrabold uppercase tracking-wider text-[#0f2c56]">
+                Rekap Pertumbuhan Agregat &amp; Kemitraan
+              </p>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Periode aktif: {periodLabel} (tanpa data individu/internal perusahaan)
+              </p>
+            </div>
+            <span className="px-2.5 py-1 rounded-full bg-[#edf2f9] text-[#0f2c56] text-[11px] font-bold">
+              6 Bulan Terakhir
+            </span>
           </div>
-          <p className="text-2xl font-black text-[#0f2c56]">3.420 Akun</p>
-          <p className="text-xs text-slate-500">
-            Mencakup pencari kerja aktif, mitra perusahaan, dan administrator kampus.
-          </p>
+
+          <div className="grid grid-cols-12 gap-2 px-5 py-2.5 bg-slate-50 border-b border-slate-100 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
+            <span className="col-span-4">Periode</span>
+            <span className="col-span-3 text-right">Jobseeker</span>
+            <span className="col-span-3 text-right">Company Mitra</span>
+            <span className="col-span-2 text-right">Patuh</span>
+          </div>
+
+          <div className="divide-y divide-slate-100">
+            {monthlyBreakdown.map((row) => (
+              <div
+                key={row.month}
+                className="grid grid-cols-12 gap-2 px-5 py-3 text-xs items-center"
+              >
+                <span className="col-span-4 font-bold text-[#0f2c56]">{row.month}</span>
+                <span className="col-span-3 text-right font-semibold text-slate-700">
+                  {row.jobseekers.toLocaleString("id-ID")}
+                </span>
+                <span className="col-span-3 text-right font-semibold text-slate-700">
+                  {row.companies} Perusahaan
+                </span>
+                <span className="col-span-2 text-right font-extrabold text-[#0f2c56]">
+                  {row.auditPassRate}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 space-y-2 shadow-xs">
-          <div className="flex items-center gap-2 text-[#ce2731]">
-            <ShieldCheck className="w-4 h-4" />
-            <span className="text-xs font-extrabold uppercase">Kepatuhan Privasi</span>
+        <div className="xl:col-span-5 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 flex flex-col justify-between gap-5 shadow-xs">
+          <div className="space-y-4">
+            <div>
+              <p className="text-xs font-extrabold uppercase tracking-wider text-[#0f2c56]">
+                Ringkasan Kepatuhan Standar Ekosistem
+              </p>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Evaluasi kepatuhan mitra terhadap standarisasi platform dan UU PDP.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              {complianceMetrics.map((m) => (
+                <div key={m.label} className="space-y-1.5">
+                  <div className="flex items-center justify-between gap-2 text-xs font-bold">
+                    <span className="text-slate-700">{m.label}</span>
+                    <span className="text-[#0f2c56] shrink-0">
+                      {m.value} ({m.pct}%)
+                    </span>
+                  </div>
+                  <div className="h-2.5 w-full rounded-full bg-[#edf2f9] overflow-hidden">
+                    <div
+                      className="h-full rounded-full"
+                      style={{ width: `${m.pct}%`, backgroundColor: m.color }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-          <p className="text-2xl font-black text-[#0f2c56]">100% Anonimisasi</p>
-          <p className="text-xs text-slate-500">
-            Data kandidat pada portal perusahaan ditampilkan dengan kode ATS terenkripsi.
-          </p>
+
+          <div className="rounded-xl bg-[#f4f7fb] p-4 space-y-1.5">
+            <div className="flex items-center gap-2 text-[#0f2c56]">
+              <Clock className="w-3.5 h-3.5" />
+              <p className="text-[11px] font-extrabold uppercase tracking-wider">
+                Catatan Audit Periode {periodLabel}
+              </p>
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Seluruh 24 company mitra aktif telah terverifikasi legalitasnya dan menerapkan mode blind screening secara penuh. Tiga pengajuan company baru sedang berada dalam antrean audit Admin.
+            </p>
+          </div>
         </div>
       </div>
 
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 flex items-center gap-3">
-        <Sparkles className="w-5 h-5 text-[#0f2c56] shrink-0" />
-        <p className="text-xs text-slate-600">
-          Gunakan tombol <strong>Cetak Laporan</strong> di kanan atas untuk mengekspor ringkasan periodik dalam format PDF A4.
-        </p>
+      <div className="rounded-2xl border border-slate-200 bg-white p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <Sparkles className="w-5 h-5 text-[#0f2c56] shrink-0" />
+          <p className="text-xs text-slate-600">
+            Gunakan tombol <strong>Cetak Laporan</strong> di kanan atas untuk mengekspor ringkasan periodik ({periodLabel}) dalam format PDF A4.
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={() => window.print()}
+          className="px-4 py-2 rounded-xl bg-[#edf2f9] hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white text-xs font-bold transition-colors cursor-pointer shrink-0"
+        >
+          Ekspor PDF A4
+        </button>
       </div>
     </main>
   );
