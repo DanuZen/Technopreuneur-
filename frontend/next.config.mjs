@@ -17,9 +17,8 @@ const nextConfig = {
   async redirects() {
     return [
       { source: '/evaluasi', destination: '/evaluate', permanent: true },
-      { source: '/onboarding', destination: '/evaluate?tab=questionnaire', permanent: true },
       { source: '/cv', destination: '/evaluate', permanent: true },
-      { source: '/cv-builder', destination: '/evaluate?tab=questionnaire', permanent: true },
+      { source: '/cv-builder', destination: '/onboarding', permanent: true },
       { source: '/lowongan', destination: '/jobs', permanent: true },
       { source: '/loker', destination: '/jobs', permanent: true },
       { source: '/karir', destination: '/jobs', permanent: true },

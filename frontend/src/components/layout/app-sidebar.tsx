@@ -298,9 +298,6 @@ export function AppSidebar({
                       <div className="flex-1 min-w-0">
                         <p className="truncate leading-tight">{item.label}</p>
                       </div>
-                      {item.isActive && (
-                        <span className="w-2 h-2 rounded-full bg-[#ce2731] shrink-0" />
-                      )}
                     </Link>
                   );
                 })}
