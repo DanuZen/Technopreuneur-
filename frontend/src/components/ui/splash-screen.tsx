@@ -64,13 +64,13 @@ export function SplashScreen({
       role="dialog"
       aria-modal="true"
       aria-label="Splash Screen Pasbana"
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#eceef0] text-[#0f2c56] overflow-hidden transition-opacity duration-500 ease-out select-none ${
+      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white text-[#0f2c56] overflow-hidden transition-opacity duration-500 ease-out select-none ${
         fade ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
     >
       <div className="relative z-10 flex flex-col items-center justify-center px-6 text-center">
-        {/* Compact Centered Video Splash */}
-        <div className="w-[240px] sm:w-[300px] md:w-[340px] aspect-video overflow-hidden rounded-2xl">
+        {/* Centered Video Splash */}
+        <div className="w-[320px] sm:w-[440px] md:w-[540px] lg:w-[620px] aspect-video overflow-hidden">
           <video
             ref={videoRef}
             src="/splash-screen.webm"
@@ -82,7 +82,7 @@ export function SplashScreen({
               if (!duration) dismiss();
             }}
             onError={dismiss}
-            className="w-full h-full object-contain mix-blend-multiply"
+            className="w-full h-full object-contain mix-blend-multiply brightness-[1.08] contrast-[1.05]"
           >
             <source src="/splash-screen.webm" type="video/webm" />
           </video>
