@@ -355,10 +355,10 @@ export default function AboutPage() {
                       alt={member.name}
                       width={200}
                       height={340}
-                      className={`relative z-10 w-32 h-36 sm:w-36 sm:h-40 object-cover object-top transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                      className={`relative z-10 w-32 h-36 sm:w-36 sm:h-40 object-cover object-top origin-bottom transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                         isSelected
-                          ? "grayscale-0 -translate-y-4 scale-110"
-                          : "grayscale opacity-90 translate-y-1 scale-95"
+                          ? "grayscale-0 scale-[1.12]"
+                          : "grayscale opacity-90 scale-100"
                       }`}
                     />
                   </div>
