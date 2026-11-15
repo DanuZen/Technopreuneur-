@@ -1156,39 +1156,137 @@ export default function HomePage() {
       </section>
 
       {/* =====================================================================
-          SLIDE 6 (#mulai): ACCORDION LIST ON OPEN WHITE CANVAS (Matching Video 00:15)
+          SLIDE 6 (#mulai): 12-COL ASYMMETRIC BENTO + SOLID ACCORDION CARDS
           ===================================================================== */}
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(6)}`}
       >
-        <div className="w-full h-full mx-auto flex flex-col justify-center">
-          {/* Top Heading + 5 Expandable Horizontal Rows on Open White Canvas */}
-          <div className={`px-4 sm:px-8 space-y-6 ${getChildAnimClass(6, "down", "delay-75")}`}>
-            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#0f2c56] leading-[1.14] max-w-xl text-left">
-              Seluruh perangkat cerdas ini juga
-              <br />
-              siap memetakan peluang karir terbaik Anda
-            </h2>
+        <div className="w-full h-full mx-auto px-2 sm:px-4 grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+          {/* Left 5 Cols: Solid Navy CTA Card + 2 Solid Highlight Tiles */}
+          <div
+            className={`lg:col-span-5 flex flex-col gap-4 py-2 ${getChildAnimClass(6, "left", "delay-75")}`}
+          >
+            <div className="bg-[#0f2c56] text-white rounded-[28px] p-6 sm:p-8 flex flex-col justify-between flex-1">
+              <div className="space-y-4">
+                <span className="inline-block px-3.5 py-1 rounded-full bg-[#ce2731] text-white text-[11px] font-extrabold uppercase tracking-wider">
+                  Mulai Langkah Karir
+                </span>
+                <h2 className="text-2xl sm:text-3xl xl:text-4xl font-bold tracking-tight text-white leading-[1.15]">
+                  Seluruh perangkat cerdas ini siap memetakan karir terbaik Anda
+                </h2>
+                <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
+                  Pastikan CV Anda terbaca sempurna oleh sistem ATS, perkuat poin pencapaian, dan temukan posisi kerja yang paling pas bana.
+                </p>
+              </div>
 
-            <div className="border-t border-slate-200">
-              {ACCORDION_ITEMS.map((item) => {
+              <div className="pt-6 flex flex-wrap items-center gap-3">
+                <Link
+                  href="/evaluate"
+                  className="px-6 py-3 rounded-xl bg-[#ce2731] hover:bg-white text-white hover:text-[#0f2c56] text-xs sm:text-sm font-bold transition-colors inline-flex items-center gap-2"
+                >
+                  <span>Evaluasi CV Sekarang</span>
+                  <ArrowUpRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  href="/onboarding"
+                  className="px-5 py-3 rounded-xl bg-white hover:bg-[#ce2731] text-[#0f2c56] hover:text-white text-xs sm:text-sm font-bold transition-colors"
+                >
+                  Buat dari Kuesioner
+                </Link>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-[#ce2731] text-white rounded-2xl p-5 flex flex-col justify-between">
+                <span className="text-[11px] font-extrabold uppercase tracking-wider text-white/80">
+                  Evaluasi
+                </span>
+                <div className="mt-2">
+                  <p className="text-2xl font-black text-white">5 Dimensi</p>
+                  <p className="text-[11px] text-white/85 mt-0.5 leading-snug">
+                    Penilaian objektif standar ATS
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-[#f8fafc] border border-slate-200 text-[#0f2c56] rounded-2xl p-5 flex flex-col justify-between">
+                <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#ce2731]">
+                  Akses Penuh
+                </span>
+                <div className="mt-2">
+                  <p className="text-2xl font-black text-[#0f2c56]">Gratis</p>
+                  <p className="text-[11px] text-slate-500 mt-0.5 leading-snug">
+                    Tanpa biaya berlangganan
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right 7 Cols: Clean Header + 5 Solid Interactive Accordion Cards */}
+          <div
+            className={`lg:col-span-7 flex flex-col justify-center gap-3 py-2 lg:pl-4 ${getChildAnimClass(6, "right", "delay-150")}`}
+          >
+            <div className="pr-20 pb-2">
+              <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#ce2731]">
+                Pertanyaan Umum
+              </span>
+              <h3 className="text-lg sm:text-2xl font-extrabold text-[#0f2c56]">
+                Semua yang perlu Anda ketahui tentang Pasbana AI
+              </h3>
+            </div>
+
+            <div className="space-y-2.5">
+              {ACCORDION_ITEMS.map((item, idx) => {
                 const isOpen = openAccordionId === item.id;
                 return (
-                  <div key={item.id} className="border-b border-slate-200">
+                  <div
+                    key={item.id}
+                    className={`rounded-2xl transition-colors duration-200 ${
+                      isOpen
+                        ? "bg-[#0f2c56] text-white"
+                        : "bg-[#f8fafc] border border-slate-200 hover:border-[#0f2c56] text-[#0f2c56]"
+                    }`}
+                  >
                     <button
                       type="button"
                       onClick={() => setOpenAccordionId(isOpen ? null : item.id)}
-                      className="w-full py-3.5 sm:py-4 flex items-center justify-between gap-4 text-left cursor-pointer group"
+                      className="w-full px-5 py-3.5 sm:py-4 flex items-center justify-between gap-4 text-left cursor-pointer"
                     >
-                      <span className="text-xs sm:text-sm font-semibold text-[#0f2c56] group-hover:text-[#ce2731] transition">
-                        {item.question}
-                      </span>
-                      <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-slate-300 group-hover:border-[#0f2c56] flex items-center justify-center text-slate-500 shrink-0 transition">
-                        {isOpen ? <Minus className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
+                      <div className="flex items-center gap-3.5 min-w-0">
+                        <span
+                          className={`w-7 h-7 rounded-lg font-mono text-xs font-black flex items-center justify-center shrink-0 ${
+                            isOpen
+                              ? "bg-[#ce2731] text-white"
+                              : "bg-[#0f2c56] text-white"
+                          }`}
+                        >
+                          0{idx + 1}
+                        </span>
+                        <span
+                          className={`text-xs sm:text-sm font-bold leading-snug ${
+                            isOpen ? "text-white" : "text-[#0f2c56]"
+                          }`}
+                        >
+                          {item.question}
+                        </span>
+                      </div>
+                      <span
+                        className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shrink-0 transition-colors ${
+                          isOpen
+                            ? "bg-[#ce2731] text-white"
+                            : "bg-white border border-slate-200 text-[#0f2c56]"
+                        }`}
+                      >
+                        {isOpen ? (
+                          <Minus className="w-3.5 h-3.5" />
+                        ) : (
+                          <Plus className="w-3.5 h-3.5" />
+                        )}
                       </span>
                     </button>
                     {isOpen && (
-                      <div className="pb-4 pr-10 text-xs text-slate-600 leading-relaxed max-w-3xl">
+                      <div className="px-5 pb-4 pl-[62px] pr-10 text-xs sm:text-sm text-white/85 leading-relaxed">
                         {item.answer}
                       </div>
                     )}
