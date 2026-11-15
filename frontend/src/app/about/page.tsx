@@ -350,7 +350,7 @@ export default function AboutPage() {
             </h2>
           </div>
 
-          <div ref={teamGridRef} className="relative grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-7 pt-6">
+          <div ref={teamGridRef} className="relative grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-7 pt-12">
             {TEAM_MEMBERS.map((member, idx) => {
               const isSelected = activeMemberIdx === idx;
               return (
@@ -368,7 +368,7 @@ export default function AboutPage() {
                   }`}
                 >
                   {/* Left: Pop-Out Portrait Stage */}
-                  <div className="relative w-36 h-40 shrink-0 rounded-b-2xl overflow-hidden flex items-end justify-center">
+                  <div className="relative w-40 h-28 shrink-0 flex items-end justify-center">
                     <div
                       className={`absolute inset-x-0 bottom-0 h-28 rounded-2xl transition-colors duration-500 ${
                         isSelected ? "bg-white" : "bg-[#edf2f9]"
@@ -379,9 +379,9 @@ export default function AboutPage() {
                       alt={member.name}
                       width={200}
                       height={340}
-                      className={`relative z-10 w-36 h-40 object-cover object-top origin-bottom transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                      className={`relative z-10 w-[124px] h-40 object-cover object-top origin-bottom transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                         isSelected
-                          ? "grayscale-0 scale-[1.12]"
+                          ? "grayscale-0 scale-[1.28]"
                           : "grayscale opacity-90 scale-100"
                       }`}
                     />
