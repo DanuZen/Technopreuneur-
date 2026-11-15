@@ -18,7 +18,7 @@ import {
 import { JobItem } from "@/types";
 import { api } from "@/lib/api";
 
-const TOTAL_SLIDES = 3;
+const TOTAL_SLIDES = 2;
 
 export default function JobsPage() {
   const [keyword, setKeyword] = useState("");
@@ -185,22 +185,13 @@ export default function JobsPage() {
           backgroundColor: "#0f2c56",
         };
       case 1:
+      default:
         return {
           top: "0px",
           left: "0px",
           width: "100%",
           height: "100%",
           borderRadius: "34px",
-          backgroundColor: "#0f2c56",
-        };
-      case 2:
-      default:
-        return {
-          top: "4px",
-          left: "16px",
-          width: "calc(41.666667% - 25px)",
-          height: "calc(100% - 8px)",
-          borderRadius: "28px",
           backgroundColor: "#0f2c56",
         };
     }
@@ -390,73 +381,6 @@ export default function JobsPage() {
                 ))}
               </div>
             )}
-          </div>
-        </div>
-      </section>
-
-      {/* SLIDE 2: TINGKATKAN SKOR KECOCOKAN CV */}
-      <section
-        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(2)}`}
-      >
-        <div className="w-full h-full mx-auto px-2 sm:px-4 grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-          <div className="lg:col-span-5 flex flex-col py-1">
-            <div className="bg-[#0f2c56] lg:bg-transparent text-white rounded-[28px] p-6 sm:p-8 lg:p-10 flex flex-col justify-center items-center text-center gap-6 flex-1">
-              <div className="space-y-4 flex flex-col items-center">
-                <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#ce2731] text-white text-xs font-bold ${getTextRevealClass(2, "delay-75")}`}>
-                  Optimasi Lamaran
-                </span>
-                <h2 className={`text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-[1.22] ${getTextRevealClass(2, "delay-150")}`}>
-                  Tingkatkan skor{" "}
-                  <span className={`inline-block bg-[#ce2731] text-white px-3 py-0.5 rounded-xl mt-1.5 ${getHighlightPopClass(2, "delay-300")}`}>
-                    kecocokan CV Anda.
-                  </span>
-                </h2>
-                <p className={`text-sm text-white/85 max-w-md mx-auto leading-relaxed ${getTextRevealClass(2, "delay-200")}`}>
-                  Sebelum melamar, pastikan CV Anda lolos pembacaan ATS dan memiliki kata kunci kompetensi yang sesuai dengan posisi impian.
-                </p>
-              </div>
-
-              <div className={`flex flex-wrap items-center justify-center gap-3 ${getTextRevealClass(2, "delay-300")}`}>
-                <Link
-                  href="/evaluate"
-                  className="px-6 py-3.5 rounded-xl bg-[#ce2731] hover:bg-white text-white hover:text-[#0f2c56] text-xs sm:text-sm font-bold transition-colors inline-flex items-center gap-2"
-                >
-                  <span>Evaluasi CV Sekarang</span>
-                  <ArrowUpRight className="w-4 h-4" />
-                </Link>
-                <Link
-                  href="/onboarding"
-                  className="px-6 py-3.5 rounded-xl bg-white hover:bg-[#ce2731] text-[#0f2c56] hover:text-white text-xs sm:text-sm font-bold transition-colors"
-                >
-                  Buat CV
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          <div className="lg:col-span-7 flex flex-col justify-center gap-4 py-2 lg:pl-4">
-            <div className={`rounded-[28px] bg-white border border-slate-200 p-6 sm:p-8 space-y-4 ${getTextRevealClass(2, "delay-150")}`}>
-              <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-white text-xs font-bold">
-                Keunggulan Pencocokan Pasbana
-              </span>
-              <h3 className="text-xl sm:text-2xl font-extrabold text-[#0f2c56]">
-                Mengapa melamar lewat rekomendasi Pasbana AI?
-              </h3>
-              <ul className="space-y-3 text-sm text-slate-600">
-                <li className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0 mt-0.5" aria-hidden="true" />
-                  <span>Pencocokan semantik berbasis keahlian inti, bukan sekadar kata kunci judul posisi.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0 mt-0.5" aria-hidden="true" />
-                  <span>Gabungan lowongan mitra terverifikasi dan portal kerja aktif Jooble Indonesia.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0 mt-0.5" aria-hidden="true" />
-                  <span>100% gratis tanpa batasan jumlah lamaran maupun akses evaluasi CV.</span>
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
       </section>
