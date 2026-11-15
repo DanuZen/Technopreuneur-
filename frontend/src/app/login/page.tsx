@@ -20,36 +20,37 @@ import {
 } from "lucide-react";
 import { SplashScreen } from "@/components/ui/splash-screen";
 import { api } from "@/lib/api";
+import { getDashboardBasePath } from "@/lib/routes";
 
 const QUICK_ROLES = [
   {
-    id: "jobseeker",
-    label: "Pencari Kerja",
+    id: "user",
+    label: "Pencari Kerja (User)",
     email: "wira@student.unp.ac.id",
     name: "Wira Fikri Ramadanu",
     role: "jobseeker",
     desc: "Fresh Graduate • Evaluasi CV & Kuesioner ATS",
-    path: "/evaluate",
+    path: "/user/dashboard",
     icon: GraduationCap,
   },
   {
-    id: "dashboard",
-    label: "Dashboard ATS",
-    email: "kandidat@pasbana.ai",
-    name: "Danu Pratama",
-    role: "jobseeker",
-    desc: "Kandidat Aktif • Hasil Analisis 5 Dimensi",
-    path: "/dashboard",
-    icon: UserCheck,
-  },
-  {
-    id: "employer",
-    label: "Pemberi Kerja / HRD",
+    id: "company",
+    label: "Perusahaan (Company)",
     email: "hr@nusantara.co.id",
     name: "PT Nusantara Inovasi",
     role: "employer",
-    desc: "Mitra Industri • Eksplorasi Lowongan & Talenta",
-    path: "/jobs",
+    desc: "Mitra Industri • Kelola Lowongan & Talenta",
+    path: "/company/dashboard",
+    icon: UserCheck,
+  },
+  {
+    id: "admin",
+    label: "Administrator (Admin)",
+    email: "admin@pasbana.ai",
+    name: "Admin Pasbana AI",
+    role: "admin",
+    desc: "Pengelola Sistem • Monitoring Platform & Pengguna",
+    path: "/admin/dashboard",
     icon: ShieldCheck,
   },
 ];
@@ -61,15 +62,15 @@ const FAQ_ITEMS = [
   },
   {
     q: "Bagaimana jika saya belum memiliki berkas CV?",
-    a: "Pasbana AI menyediakan fitur Kuesioner Terpandu di halaman Evaluasi CV sehingga Anda dapat menyusun resume standar ATS dari nol secara otomatis.",
+    a: "Pasbana AI menyediakan fitur Kuesioner Terpandu di halaman Onboarding sehingga Anda dapat menyusun resume standar ATS dari nol secara otomatis.",
   },
   {
     q: "Role apa saja yang tersedia di Pasbana AI?",
-    a: "Pasbana AI menyediakan akses untuk Pencari Kerja / Fresh Graduate (Evaluasi CV 5 Dimensi, Kuesioner ATS, Rekomendasi Loker) serta Pemberi Kerja / HRD Mitra Industri.",
+    a: "Pasbana AI menyediakan 3 role utama: Pencari Kerja (User) untuk evaluasi CV dan rekomendasi karir, Perusahaan (Company) untuk mitra rekrutmen, serta Administrator (Admin) untuk pengelolaan sistem.",
   },
 ];
 
-const PORTAL_PREFIXES = ["/evaluate", "/dashboard", "/jobs", "/apply"];
+const PORTAL_PREFIXES = ["/evaluate", "/dashboard", "/user", "/company", "/admin", "/jobs", "/apply"];
 
 export default function LoginPage() {
   const router = useRouter();
@@ -94,9 +95,9 @@ export default function LoginPage() {
   useEffect(() => {
     router.prefetch("/");
     router.prefetch("/register");
-    router.prefetch("/evaluate");
-    router.prefetch("/dashboard");
-    router.prefetch("/jobs");
+    router.prefetch("/user/dashboard");
+    router.prefetch("/company/dashboard");
+    router.prefetch("/admin/dashboard");
     try {
       sessionStorage.setItem("pasbana_prev_path", "/login");
     } catch {
@@ -168,7 +169,7 @@ export default function LoginPage() {
 
     try {
       const res = await api.login({ email: identifier.trim(), password });
-      triggerPortalTransition("/evaluate", "Ruang Evaluasi CV", {
+      triggerPortalTransition(getDashboardBasePath(res.user.role), "Dashboard Akun", {
         id: res.user.id,
         name: res.user.name,
         email: res.user.email,
@@ -180,9 +181,8 @@ export default function LoginPage() {
         (r) =>
           val === r.email.toLowerCase() ||
           val.includes(r.id) ||
-          val.includes("wira") ||
-          val.includes("hr") ||
-          val.includes("kandidat")
+          (r.id === "user" && (val.includes("wira") || val.includes("kandidat"))) ||
+          (r.id === "company" && val.includes("hr"))
       );
 
       if (matchedQuick || password.length >= 4) {
@@ -424,7 +424,7 @@ export default function LoginPage() {
                           role: role.role,
                         })
                       }
-                      className="group relative w-11 h-11 rounded-xl border border-slate-200 hover:border-[#0f2c56] bg-slate-50 hover:bg-[#0f2c56] text-slate-600 hover:text-white flex items-center justify-center transition-all duration-200 shadow-2xs hover:shadow-md hover:shadow-[#0f2c56]/25 hover:-translate-y-0.5 cursor-pointer"
+                      className="morph-pill group relative w-11 h-11 rounded-xl border border-slate-200 hover:border-[#0f2c56] bg-slate-50 hover:bg-[#0f2c56] text-slate-600 hover:text-white flex items-center justify-center shadow-2xs hover:shadow-md hover:shadow-[#0f2c56]/25 hover:-translate-y-0.5 cursor-pointer"
                     >
                       <RoleIcon className="w-5 h-5 transition-transform duration-200 group-hover:scale-110" />
                       <span className="pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap px-2 py-0.5 rounded-md bg-[#0f2c56] text-white text-[10px] font-bold shadow-sm z-20">
