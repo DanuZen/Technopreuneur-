@@ -32,21 +32,6 @@ interface AppSidebarProps {
   onToggleDesktopCollapse: () => void;
 }
 
-const CONTOH_RIWAYAT_DEFAULT: ItemRiwayatEvaluasi[] = [
-  {
-    id: "demo-ats-wira",
-    judul: "CV Wira Fikri - Standar ATS",
-    skor: 88,
-    tanggal: "Hari ini",
-  },
-  {
-    id: "demo-frontend-freshgrad",
-    judul: "Resume Frontend Fresh Graduate",
-    skor: 82,
-    tanggal: "Kemarin",
-  },
-];
-
 export function AppSidebar({
   isMobileOpen,
   onCloseMobile,
@@ -56,7 +41,7 @@ export function AppSidebar({
   const pathname = usePathname();
   const router = useRouter();
 
-  const [daftarRiwayat, setDaftarRiwayat] = useState<ItemRiwayatEvaluasi[]>(CONTOH_RIWAYAT_DEFAULT);
+  const [daftarRiwayat, setDaftarRiwayat] = useState<ItemRiwayatEvaluasi[]>([]);
   const [cariTerbuka, setCariTerbuka] = useState(false);
   const [kataKunci, setKataKunci] = useState("");
   const [userRole, setUserRole] = useState<string | null>(null);
@@ -102,8 +87,8 @@ export function AppSidebar({
             const judul = parsed?.fileName
               ? rawCvName
               : /^(cv|resume)\b/i.test(rawCvName)
-              ? rawCvName
-              : `CV ${rawCvName}`;
+              ? `${rawCvName} (Onboarding)`
+              : `CV ${rawCvName} (Onboarding)`;
             return {
               id: parsed.cvId || "eval-terbaru",
               judul,
@@ -113,10 +98,7 @@ export function AppSidebar({
           })
           .filter((item): item is ItemRiwayatEvaluasi => item !== null);
 
-        const defaultFiltered = CONTOH_RIWAYAT_DEFAULT.filter(
-          (demo) => !mappedFromStorage.some((m) => m.id === demo.id)
-        );
-        setDaftarRiwayat([...mappedFromStorage, ...defaultFiltered]);
+        setDaftarRiwayat(mappedFromStorage);
       } catch {
         // ignore parse error
       }
@@ -394,7 +376,9 @@ export function AppSidebar({
                 <div className="space-y-1.5">
                   {riwayatTersaring.length === 0 ? (
                     <p className="px-2 py-3 text-[11px] text-slate-500 bg-white/60 rounded-xl">
-                      Tidak ada riwayat evaluasi yang sesuai.
+                      {kataKunci.trim()
+                        ? "Tidak ada riwayat evaluasi yang sesuai."
+                        : "Belum ada CV yang dievaluasi atau disusun."}
                     </p>
                   ) : (
                     riwayatTersaring.map((item) => {
