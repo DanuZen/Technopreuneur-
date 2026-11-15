@@ -56,7 +56,7 @@ export function AppHeader({
     api.removeToken();
     setUser(null);
     setMenuOpen(false);
-    router.push("/");
+    router.push("/login");
   };
 
   const roleInUrl = /^\/(user|company|admin)\/dashboard(\/|$)/.test(pathname)

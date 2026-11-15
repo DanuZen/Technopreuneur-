@@ -90,7 +90,7 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
   const handleLogout = () => {
     api.removeToken();
     setUser(null);
-    window.location.href = "/";
+    window.location.href = "/login";
   };
 
   return (
