@@ -184,7 +184,7 @@ export default function RiwayatSesiDetailPage() {
             <div className="flex flex-wrap items-center gap-2">
               <Link
                 href={`/${role}/dashboard/dokumen`}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 text-[#0f2c56] border border-slate-200 text-xs font-bold transition-colors"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors"
               >
                 <FileText className="w-3.5 h-3.5" />
                 <span>Lihat Dokumen CV ATS</span>

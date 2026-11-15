@@ -124,7 +124,7 @@ export default function DokumenCvAtsPage() {
               <button
                 type="button"
                 onClick={() => router.push("/user/dashboard/onboarding")}
-                className="px-4 py-2.5 bg-white hover:bg-slate-50 text-[#0f2c56] text-xs font-bold rounded-xl border border-slate-200 transition flex items-center gap-1.5 cursor-pointer"
+                className="px-4 py-2.5 bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5 cursor-pointer"
               >
                 <Edit3 className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>Edit Data</span>
