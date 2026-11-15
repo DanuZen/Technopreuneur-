@@ -106,7 +106,7 @@ export default function RegisterPage() {
             <div className="relative z-10 flex flex-col items-center text-center space-y-7 max-w-lg mx-auto">
               <div className="flex items-center gap-5 xl:gap-6">
                 {/* Logo di Kiri */}
-                <div className="relative w-24 h-24 xl:w-28 xl:h-28 shrink-0 drop-shadow-[0_20px_38px_rgba(0,0,0,0.35)] animate-float-slow">
+                <div className="relative w-20 h-20 xl:w-24 xl:h-24 shrink-0 drop-shadow-[0_20px_38px_rgba(0,0,0,0.35)]">
                   <Image
                     src="/logo-white.webp"
                     alt="Logo Pasbana"
@@ -116,17 +116,17 @@ export default function RegisterPage() {
                   />
                 </div>
 
-                {/* Nama & Tagline di Kanan */}
-                <div className="space-y-2 text-left animate-fade-in-up delay-200">
-                  <h2 className="text-5xl xl:text-6xl font-black tracking-wider text-white leading-none uppercase">
+                {/* Nama & Tagline Sejajar di Kanan */}
+                <div className="flex flex-col justify-center space-y-2 text-left animate-fade-in-up delay-200">
+                  <h2 className="text-5xl xl:text-6xl font-black tracking-[0.06em] text-white leading-none uppercase">
                     PASBANA
                   </h2>
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-1 rounded-full bg-[#ce2731]" />
-                    <p className="text-xs xl:text-sm font-bold text-white/85 uppercase tracking-[0.26em]">
-                      KARIR YANG PAS BANA
-                    </p>
-                  </div>
+                  <p className="w-full flex items-center justify-between text-[13px] xl:text-[16px] font-bold text-white/85 uppercase tracking-[0.14em] leading-none">
+                    <span>KARIR</span>
+                    <span>YANG</span>
+                    <span>PAS</span>
+                    <span>BANA</span>
+                  </p>
                 </div>
               </div>
 
