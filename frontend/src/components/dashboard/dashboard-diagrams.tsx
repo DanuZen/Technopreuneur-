@@ -240,7 +240,6 @@ export function CompanyTrendDiagram() {
                   height={barH}
                   rx="6"
                   fill="#0f2c56"
-                  opacity="0.16"
                 />
                 <text
                   x={cx}
@@ -272,13 +271,21 @@ export function CompanyTrendDiagram() {
             const cy = padY + usableH - (w.qualified / maxVal) * usableH;
             return (
               <g key={`dot-${w.label}`}>
-                <circle cx={cx} cy={cy} r="4.5" fill="#ffffff" stroke="#ce2731" strokeWidth="2.5" />
+                <circle cx={cx} cy={cy} r="5" fill="#ce2731" stroke="#ffffff" strokeWidth="2" />
+                <rect
+                  x={cx - 11}
+                  y={cy - 22}
+                  width="22"
+                  height="14"
+                  rx="4"
+                  fill="#ce2731"
+                />
                 <text
                   x={cx}
-                  y={cy - 8}
+                  y={cy - 12}
                   textAnchor="middle"
-                  fontSize="9.5"
-                  fill="#ce2731"
+                  fontSize="9"
+                  fill="#ffffff"
                   fontWeight="800"
                 >
                   {w.qualified}
@@ -490,7 +497,6 @@ export function AdminPipelineDiagram() {
                   height={barH}
                   rx="6"
                   fill="#0f2c56"
-                  opacity="0.16"
                 />
                 <text
                   x={cx}
@@ -520,13 +526,21 @@ export function AdminPipelineDiagram() {
             const cy = padY + usableH - (d.match / maxVal) * usableH;
             return (
               <g key={`dot-${d.day}`}>
-                <circle cx={cx} cy={cy} r="4.5" fill="#ffffff" stroke="#ce2731" strokeWidth="2.5" />
+                <circle cx={cx} cy={cy} r="5" fill="#ce2731" stroke="#ffffff" strokeWidth="2" />
+                <rect
+                  x={cx - 13}
+                  y={cy - 22}
+                  width="26"
+                  height="14"
+                  rx="4"
+                  fill="#ce2731"
+                />
                 <text
                   x={cx}
-                  y={cy - 8}
+                  y={cy - 12}
                   textAnchor="middle"
-                  fontSize="9.5"
-                  fill="#ce2731"
+                  fontSize="9"
+                  fill="#ffffff"
                   fontWeight="800"
                 >
                   {d.match}
@@ -539,3 +553,4 @@ export function AdminPipelineDiagram() {
     </div>
   );
 }
+
