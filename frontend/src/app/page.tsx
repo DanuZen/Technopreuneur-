@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import {
   ArrowUpRight,
   Eye,
@@ -357,92 +356,6 @@ export default function HomePage() {
     }
   };
 
-  const getMorphLogoConfig = (slide: number): { style: React.CSSProperties; isWhite: boolean } => {
-    switch (slide) {
-      case 0:
-        return {
-          isWhite: true,
-          style: {
-            top: "28px",
-            left: "calc(50% + 40px)",
-            width: "44px",
-            height: "44px",
-            transform: "rotate(0deg)",
-          },
-        };
-      case 1:
-        return {
-          isWhite: true,
-          style: {
-            top: "28px",
-            left: "calc(100% - 92px)",
-            width: "64px",
-            height: "64px",
-            transform: "rotate(6deg)",
-          },
-        };
-      case 2:
-        return {
-          isWhite: true,
-          style: {
-            top: "28px",
-            left: "calc(50% + 40px)",
-            width: "52px",
-            height: "52px",
-            transform: "rotate(0deg)",
-          },
-        };
-      case 3:
-        return {
-          isWhite: true,
-          style: {
-            top: "28px",
-            left: "calc(100% - 104px)",
-            width: "72px",
-            height: "72px",
-            transform: "rotate(-6deg)",
-          },
-        };
-      case 4:
-        return {
-          isWhite: false,
-          style: {
-            top: "24px",
-            left: "calc(100% - 92px)",
-            width: "56px",
-            height: "56px",
-            transform: "rotate(0deg)",
-          },
-        };
-      case 5:
-        return {
-          isWhite: true,
-          style: {
-            top: "28px",
-            left: "calc(100% - 88px)",
-            width: "48px",
-            height: "48px",
-            transform: "rotate(6deg)",
-          },
-        };
-      case 6:
-      default:
-        return {
-          isWhite: true,
-          style: {
-            top: "28px",
-            left: "calc(100% - 88px)",
-            width: "48px",
-            height: "48px",
-            opacity: 0,
-            transform: "scale(0.75)",
-          },
-        };
-    }
-  };
-
-  const morphLogo = getMorphLogoConfig(activeSlide);
-
   return (
     <div
       onTouchStart={handleTouchStart}
@@ -459,36 +372,6 @@ export default function HomePage() {
             className="absolute transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
             style={getGlobalMorphStyle(activeSlide)}
           />
-        </div>
-      </div>
-
-      {/* GLOBAL PERSISTENT MORPHING LOGO (Desktop lg+): Changes size, position & color per slide */}
-      <div
-        className="hidden lg:block absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 pointer-events-none z-[25]"
-        aria-hidden="true"
-      >
-        <div className="relative w-full h-full">
-          <div
-            className="absolute transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
-            style={morphLogo.style}
-          >
-            <Image
-              src="/logo-white.webp"
-              alt=""
-              fill
-              className={`object-contain transition-opacity duration-500 ${
-                morphLogo.isWhite ? "opacity-95" : "opacity-0"
-              }`}
-            />
-            <Image
-              src="/logo-navy.webp"
-              alt=""
-              fill
-              className={`object-contain transition-opacity duration-500 ${
-                morphLogo.isWhite ? "opacity-0" : "opacity-95"
-              }`}
-            />
-          </div>
         </div>
       </div>
 
