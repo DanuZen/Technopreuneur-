@@ -417,9 +417,6 @@ export default function LoginPage() {
             <div className="absolute inset-0 pointer-events-none opacity-55 bg-[radial-gradient(ellipse_at_center,rgba(206,39,49,0.28)_0%,transparent_72%)] animate-pulse-glow" />
             <div className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#ce2731]/25 blur-3xl pointer-events-none" />
 
-            {/* Subtle Geometric Grid */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0d_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0d_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
-
             {/* Centered Graphic Showcase */}
             <div className="relative z-10 my-auto text-center space-y-6 py-12 max-w-lg mx-auto">
               {/* Floating Emblem Container */}
