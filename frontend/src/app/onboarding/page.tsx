@@ -223,22 +223,6 @@ export default function OnboardingPage() {
                 })}
               </div>
             </div>
-
-            <div className="shrink-0 flex items-center justify-between gap-4 pt-1 text-xs">
-              <div>
-                <p className="text-[10px] font-mono uppercase tracking-wider font-bold">
-                  Output Standar
-                </p>
-                <p className="font-extrabold">PDF A4 1-Kolom</p>
-              </div>
-              <div className="h-7 w-px bg-slate-200" aria-hidden="true" />
-              <div>
-                <p className="text-[10px] font-mono uppercase tracking-wider font-bold">
-                  Setelah Selesai
-                </p>
-                <p className="font-extrabold">Skor &amp; Konsultasi AI</p>
-              </div>
-            </div>
           </div>
         </div>
       ) : (
