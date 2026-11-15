@@ -419,41 +419,18 @@ function AdminDashboardView() {
             </div>
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-3xl p-5 flex-1 space-y-3 text-[#0f2c56]">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
-                <Sparkles className="w-4 h-4" aria-hidden="true" />
-              </div>
-              <p className="text-xs font-extrabold uppercase tracking-wider">
-                Status Layanan &amp; Pipeline AI
-              </p>
-            </div>
-
-            <div className="space-y-2.5 text-xs">
-              <div className="flex items-center justify-between py-2 border-b border-slate-100">
-                <span className="font-bold">Ekstraksi Teks PDF/DOCX</span>
-                <span className="px-2.5 py-0.5 rounded-full bg-[#0f2c56] text-white text-[11px] font-bold">
-                  Optimal
-                </span>
-              </div>
-              <div className="flex items-center justify-between py-2 border-b border-slate-100">
-                <span className="font-bold">Two-Stage Vector Matching</span>
-                <span className="px-2.5 py-0.5 rounded-full bg-[#0f2c56] text-white text-[11px] font-bold">
-                  Optimal
-                </span>
-              </div>
-              <div className="flex items-center justify-between py-2">
-                <span className="font-bold">Sanitasi PII &amp; Blind Scoring</span>
-                <span className="px-2.5 py-0.5 rounded-full bg-[#0f2c56] text-white text-[11px] font-bold">
-                  Aktif
-                </span>
-              </div>
-            </div>
+          <div className="flex-1 min-h-0">
+            <AdminModerationDiagram
+              pendingCount={pendingCount}
+              approvedCount={approvedCount}
+              rejectedCount={rejectedCount}
+            />
           </div>
         </div>
 
-        {/* Kolom Kanan: Antrean Moderasi Lowongan Mitra */}
-        <div className="xl:col-span-7 bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 flex flex-col justify-between gap-4 text-[#0f2c56]">
+        {/* Kolom Kanan: Antrean Moderasi Lowongan Mitra + Diagram Pipeline AI */}
+        <div className="xl:col-span-7 flex flex-col gap-5">
+          <div className="bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 flex flex-col justify-between gap-4 text-[#0f2c56]">
           <div className="space-y-4">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-2.5">
@@ -519,23 +496,14 @@ function AdminDashboardView() {
             </div>
           </div>
 
-          <p className="text-xs font-medium">
-            Lowongan yang disetujui otomatis dibuatkan embedding vektor untuk pencocokan kandidat.
-          </p>
-        </div>
-      </div>
+            <p className="text-xs font-medium">
+              Lowongan yang disetujui otomatis dibuatkan embedding vektor untuk pencocokan kandidat.
+            </p>
+          </div>
 
-      {/* Baris Diagram Analitik Platform & Pipeline AI */}
-      <div className="flex-1 min-h-0 grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
-        <div className="xl:col-span-5">
-          <AdminModerationDiagram
-            pendingCount={pendingCount}
-            approvedCount={approvedCount}
-            rejectedCount={rejectedCount}
-          />
-        </div>
-        <div className="xl:col-span-7">
-          <AdminPipelineDiagram />
+          <div className="flex-1 min-h-0">
+            <AdminPipelineDiagram />
+          </div>
         </div>
       </div>
     </main>
