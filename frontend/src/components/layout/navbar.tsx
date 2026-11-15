@@ -137,9 +137,9 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
                   key={item.href}
                   href={item.href}
                   onClick={(e) => handleSectionClick(e, item.href, item.slide)}
-                  className={`text-xs font-medium px-2.5 py-1.5 rounded-full transition whitespace-nowrap ${
+                  className={`text-xs font-medium px-3 py-1.5 rounded-full transition whitespace-nowrap ${
                     isActive
-                      ? "bg-white/15 text-white font-semibold"
+                      ? "bg-white text-[#0f2c56] font-bold"
                       : "text-slate-200 hover:text-white hover:bg-white/10"
                   }`}
                 >
@@ -149,9 +149,9 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
             })}
             <Link
               href="/jobs"
-              className={`text-xs font-medium px-2.5 py-1.5 rounded-full transition whitespace-nowrap ${
+              className={`text-xs font-medium px-3 py-1.5 rounded-full transition whitespace-nowrap ${
                 pathname === "/jobs"
-                  ? "bg-white/15 text-white font-semibold"
+                  ? "bg-white text-[#0f2c56] font-bold"
                   : "text-slate-200 hover:text-white hover:bg-white/10"
               }`}
               title="Pencocokan Lowongan AI"
@@ -160,9 +160,9 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
             </Link>
             <Link
               href="/about"
-              className={`text-xs font-medium px-2.5 py-1.5 rounded-full transition whitespace-nowrap ${
+              className={`text-xs font-medium px-3 py-1.5 rounded-full transition whitespace-nowrap ${
                 pathname === "/about"
-                  ? "bg-white/15 text-white font-semibold"
+                  ? "bg-white text-[#0f2c56] font-bold"
                   : "text-slate-200 hover:text-white hover:bg-white/10"
               }`}
             >
@@ -178,16 +178,16 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
                 <button
                   type="button"
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="flex items-center gap-2 text-xs bg-white/10 hover:bg-white/15 text-white px-3.5 py-1.5 rounded-full border border-white/10 transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                  className="flex items-center gap-2 text-xs bg-white hover:bg-slate-100 text-[#0f2c56] px-3.5 py-1.5 rounded-full transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                   aria-expanded={userDropdownOpen}
                 >
-                  <UserIcon className="w-3.5 h-3.5 text-slate-300" />
-                  <span className="font-semibold max-w-[120px] truncate">{user.name}</span>
+                  <UserIcon className="w-3.5 h-3.5 text-[#0f2c56]" />
+                  <span className="font-bold max-w-[120px] truncate">{user.name}</span>
                   <span className="uppercase text-[9px] bg-[#ce2731] text-white px-1.5 py-0.5 rounded-full font-mono font-bold">
                     {user.role}
                   </span>
                   <ChevronDown
-                    className={`w-3.5 h-3.5 text-slate-300 transition-transform duration-200 ${
+                    className={`w-3.5 h-3.5 text-[#0f2c56] transition-transform duration-200 ${
                       userDropdownOpen ? "rotate-180" : ""
                     }`}
                   />
