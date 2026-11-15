@@ -17,6 +17,7 @@ import {
 import { User } from "@/types";
 import { api } from "@/lib/api";
 import { getDashboardBasePath } from "@/lib/routes";
+import { UserProfilePopup } from "./user-profile-popup";
 
 const LANDING_SECTIONS = [
   { label: "Beranda", href: "/", slide: 0 },
@@ -32,6 +33,7 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
   const [user, setUser] = useState<User | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [profilePopupOpen, setProfilePopupOpen] = useState(false);
   const [activeLandingSlide, setActiveLandingSlide] = useState<number>(0);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -198,7 +200,7 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
                       </span>
                     </div>
 
-                    {/* Navigation Links */}
+                    {/* Navigation Links: Dashboard & Detail Profil */}
                     <div className="space-y-1">
                       <Link
                         href={getDashboardBasePath(user.role)}
@@ -208,28 +210,21 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
                         <span className="w-7 h-7 rounded-lg bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
                           <LayoutDashboard className="w-3.5 h-3.5" />
                         </span>
-                        <span>Dashboard ATS</span>
+                        <span>Dashboard</span>
                       </Link>
-                      <Link
-                        href={`${getDashboardBasePath(user.role)}/evaluasi`}
-                        onClick={() => setUserDropdownOpen(false)}
-                        className="flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-bold text-[#0f2c56] hover:bg-[#edf2f9] transition-colors"
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setUserDropdownOpen(false);
+                          setProfilePopupOpen(true);
+                        }}
+                        className="w-full flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-bold text-[#0f2c56] hover:bg-[#edf2f9] transition-colors cursor-pointer text-left"
                       >
                         <span className="w-7 h-7 rounded-lg bg-[#ce2731] text-white flex items-center justify-center shrink-0">
-                          <FileCheck className="w-3.5 h-3.5" />
+                          <UserIcon className="w-3.5 h-3.5" />
                         </span>
-                        <span>Evaluasi CV 5D</span>
-                      </Link>
-                      <Link
-                        href="/jobs"
-                        onClick={() => setUserDropdownOpen(false)}
-                        className="flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-bold text-[#0f2c56] hover:bg-[#edf2f9] transition-colors"
-                      >
-                        <span className="w-7 h-7 rounded-lg bg-[#163861] text-white flex items-center justify-center shrink-0">
-                          <Briefcase className="w-3.5 h-3.5" />
-                        </span>
-                        <span>Pencocokan Lowongan</span>
-                      </Link>
+                        <span>Detail Profil</span>
+                      </button>
                     </div>
 
                     {/* Divider */}
@@ -242,14 +237,24 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
                         setUserDropdownOpen(false);
                         handleLogout();
                       }}
-                      className="w-full flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-bold text-[#ce2731] hover:bg-[#ce2731] hover:text-white transition-colors cursor-pointer group"
+                      className="w-full flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-bold text-white bg-[#ce2731] hover:bg-[#b01e27] transition-colors cursor-pointer"
                     >
-                      <span className="w-7 h-7 rounded-lg bg-[#ce2731]/10 group-hover:bg-white/20 flex items-center justify-center shrink-0 transition-colors">
+                      <span className="w-7 h-7 rounded-lg bg-white/15 flex items-center justify-center shrink-0">
                         <LogOut className="w-3.5 h-3.5" />
                       </span>
                       <span>Keluar dari Akun</span>
                     </button>
                   </div>
+                )}
+
+                {profilePopupOpen && (
+                  <UserProfilePopup
+                    user={user}
+                    baseDashboardPath={getDashboardBasePath(user.role)}
+                    onClose={() => setProfilePopupOpen(false)}
+                    onLogout={handleLogout}
+                    onUserUpdated={(updated) => setUser(updated)}
+                  />
                 )}
               </div>
             ) : (
