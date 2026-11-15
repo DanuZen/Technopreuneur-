@@ -3,7 +3,15 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { UploadCloud, FileSpreadsheet, ArrowUpRight, Edit3, Printer } from "lucide-react";
+import {
+  UploadCloud,
+  FileSpreadsheet,
+  ArrowUpRight,
+  Edit3,
+  Printer,
+  CheckCircle2,
+  FileText,
+} from "lucide-react";
 import { api } from "@/lib/api";
 import { CVAnalysisResult } from "@/types";
 import { AtsCvPreview } from "@/components/dashboard/ats-cv-preview";
@@ -51,7 +59,7 @@ export default function DokumenCvAtsPage() {
 
   if (!analysis) {
     return (
-      <main className="min-h-full w-full px-3.5 sm:px-6 pt-4 sm:pt-5 pb-5 sm:pb-6 space-y-6">
+      <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-6">
         <DashboardPageHeading
           badge="Dokumen CV ATS"
           titleLine1="Pratinjau & cetak CV"
@@ -101,7 +109,7 @@ export default function DokumenCvAtsPage() {
   }
 
   return (
-    <main className="min-h-full w-full px-3.5 sm:px-6 pt-4 sm:pt-5 pb-5 sm:pb-6 space-y-6">
+    <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-6">
       <DashboardPageHeading
         badge="Dokumen CV ATS"
         titleLine1="Pratinjau & cetak CV"
@@ -128,10 +136,88 @@ export default function DokumenCvAtsPage() {
           </div>
         }
       />
-      <AtsCvPreview
-        profile={analysis.profile}
-        hideToolbar
-      />
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+        {/* Kolom Kiri: Card Keterangan & Spesifikasi Dokumen A4 */}
+        <aside className="xl:col-span-4 space-y-4 print:hidden">
+          <div className="bg-[#0f2c56] text-white rounded-3xl p-6 space-y-4">
+            <div className="flex items-center justify-between gap-2">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ce2731] text-white text-[11px] font-bold uppercase tracking-wider">
+                <FileText className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>Standar A4 ATS</span>
+              </span>
+              <span className="text-xs font-extrabold text-white/80">
+                Skor {analysis.overallScore}/100
+              </span>
+            </div>
+
+            <div>
+              <h2 className="text-lg font-extrabold tracking-tight leading-snug">
+                Keterangan Dokumen CV
+              </h2>
+              <p className="text-xs text-white/75 mt-1 leading-relaxed">
+                Pratinjau di samping menggunakan proporsi kertas standar A4 (210 x 297 mm) dengan tata letak 1-kolom ramah ATS.
+              </p>
+            </div>
+
+            <div className="rounded-2xl bg-white/10 border border-white/15 p-4 space-y-2.5 text-xs">
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-white/70">Nama Kandidat</span>
+                <span className="font-bold text-white text-right truncate">
+                  {analysis.profile.fullName}
+                </span>
+              </div>
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-white/70">Target Peran</span>
+                <span className="font-bold text-white text-right truncate">
+                  {analysis.profile.headline || "Kandidat Profesional"}
+                </span>
+              </div>
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-white/70">Ukuran Kertas</span>
+                <span className="font-bold text-white">A4 (210 x 297 mm)</span>
+              </div>
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-white/70">Format Struktur</span>
+                <span className="font-bold text-white">1-Kolom Bersih</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 space-y-3">
+            <p className="text-xs font-extrabold uppercase tracking-wider text-[#0f2c56]">
+              Panduan &amp; Tips Cetak PDF
+            </p>
+            <div className="space-y-2.5">
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0 mt-0.5" />
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  <span className="font-bold text-[#0f2c56]">Proporsi A4 Akurat:</span> lebar 210 mm dan tinggi 297 mm agar hasil ekspor PDF tetap rapi saat dibuka rekruter.
+                </p>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0 mt-0.5" />
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  <span className="font-bold text-[#0f2c56]">100% Terbaca Parser ATS:</span> bebas tabel rumit, kolom ganda, maupun elemen grafis yang menghambat ekstraksi teks.
+                </p>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0 mt-0.5" />
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  <span className="font-bold text-[#0f2c56]">Pengaturan Cetak:</span> klik tombol <span className="font-semibold">Cetak / Unduh PDF</span>, pilih ukuran kertas <span className="font-semibold">A4</span>, lalu nonaktifkan opsi <span className="font-semibold">Headers and footers</span>.
+                </p>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        {/* Kolom Kanan: Pratinjau Lembar Dokumen CV Ukuran A4 */}
+        <div className="xl:col-span-8 w-full print:block">
+          <AtsCvPreview
+            profile={analysis.profile}
+            hideToolbar
+          />
+        </div>
+      </div>
     </main>
   );
 }

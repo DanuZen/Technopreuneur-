@@ -50,8 +50,8 @@ export function AtsCvPreview({ profile, onEdit, hideToolbar = false }: AtsCvPrev
         </div>
       )}
 
-      {/* ATS DOCUMENT PAPER SHEET */}
-      <div className="bg-white p-8 sm:p-14 rounded-2xl border border-slate-200 shadow-md font-sans text-slate-900 space-y-6 max-w-4xl mx-auto print:shadow-none print:border-none print:p-0">
+      {/* ATS DOCUMENT PAPER SHEET (A4: 210mm x 297mm) */}
+      <div className="bg-white p-8 sm:p-12 rounded-2xl border border-slate-200 shadow-md font-sans text-slate-900 space-y-6 w-full max-w-[794px] sm:min-h-[1123px] mx-auto print:w-[210mm] print:min-h-[297mm] print:max-w-none print:shadow-none print:border-none print:p-0">
         {/* ATS Header */}
         <header className="border-b border-slate-300 pb-4 text-center space-y-1">
           <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900 uppercase">
