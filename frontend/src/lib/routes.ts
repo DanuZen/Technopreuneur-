@@ -23,3 +23,4 @@ export function getRoleFromPathname(pathname: string): DashboardRoleSegment {
   }
   return "user";
 }
+
