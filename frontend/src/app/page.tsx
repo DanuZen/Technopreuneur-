@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowUpRight,
   Eye,
@@ -387,8 +388,14 @@ export default function HomePage() {
           <div
             className={`lg:col-span-6 px-4 sm:px-8 lg:px-12 space-y-5 sm:space-y-6 text-left ${getChildAnimClass(0, "left", "delay-75")}`}
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white">
-              <span className="w-2 h-2 rounded-full bg-[#ce2731]" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0f2c56] text-xs font-bold text-white">
+              <Image
+                src="/logo-white.webp"
+                alt="Pasbana AI"
+                width={18}
+                height={18}
+                className="object-contain"
+              />
               <span>Pasbana AI • Evaluasi CV &amp; Karir</span>
             </div>
 
@@ -586,9 +593,16 @@ export default function HomePage() {
           <div
             className={`lg:col-span-6 space-y-4 sm:space-y-5 text-left lg:pl-8 ${getChildAnimClass(1, "right", "delay-150")}`}
           >
-            <span className="inline-block px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-extrabold uppercase tracking-wider text-white">
-              Pemeriksa Format ATS
-            </span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0f2c56] text-xs font-extrabold uppercase tracking-wider text-white">
+              <Image
+                src="/logo-white.webp"
+                alt="Pasbana AI"
+                width={18}
+                height={18}
+                className="object-contain"
+              />
+              <span>Pemeriksa Format ATS</span>
+            </div>
             <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-white leading-[1.14]">
               Berhenti mengirim CV
               <br />
@@ -621,9 +635,16 @@ export default function HomePage() {
           <div
             className={`lg:col-span-6 px-4 sm:px-8 lg:px-12 space-y-4 sm:space-y-5 text-left ${getChildAnimClass(2, "left", "delay-75")}`}
           >
-            <span className="inline-block text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
-              Ekosistem Persiapan Karir
-            </span>
+            <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
+              <Image
+                src="/logo-navy.webp"
+                alt="Pasbana AI"
+                width={20}
+                height={20}
+                className="object-contain"
+              />
+              <span>Ekosistem Persiapan Karir</span>
+            </div>
             <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-[#0f2c56] leading-[1.14]">
               Tingkatkan peluang lolos
               <br />
@@ -792,9 +813,16 @@ export default function HomePage() {
           <div
             className={`lg:col-span-6 space-y-4 sm:space-y-5 text-left lg:pl-10 ${getChildAnimClass(3, "right", "delay-150")}`}
           >
-            <span className="inline-block px-3.5 py-1 rounded-full bg-[#ce2731] text-xs font-extrabold uppercase tracking-wider text-white">
-              Asisten Kalimat Aktif
-            </span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ce2731] text-xs font-extrabold uppercase tracking-wider text-white">
+              <Image
+                src="/logo-white.webp"
+                alt="Pasbana AI"
+                width={18}
+                height={18}
+                className="object-contain"
+              />
+              <span>Asisten Kalimat Aktif</span>
+            </div>
             <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-white leading-[1.14]">
               Pahami bagaimana Struktur
               <br />
@@ -831,9 +859,16 @@ export default function HomePage() {
         >
           {/* Top-Left Section Header */}
           <div className={`space-y-1.5 text-left max-w-2xl ${getChildAnimClass(4, "down", "delay-75")}`}>
-            <span className="text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
-              Fitur &amp; Prinsip
-            </span>
+            <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
+              <Image
+                src="/logo-navy.webp"
+                alt="Pasbana AI"
+                width={20}
+                height={20}
+                className="object-contain"
+              />
+              <span>Fitur &amp; Prinsip</span>
+            </div>
             <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#0f2c56] leading-[1.15]">
               Optimalkan kesiapan karir Anda dengan perangkat evaluasi presisi
             </h2>
@@ -938,6 +973,16 @@ export default function HomePage() {
             className={`lg:col-span-6 space-y-5 text-left ${getChildAnimClass(5, "left", "delay-100")}`}
           >
             <div className="space-y-2">
+              <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white/90">
+                <Image
+                  src="/logo-white.webp"
+                  alt="Pasbana AI"
+                  width={20}
+                  height={20}
+                  className="object-contain"
+                />
+                <span>Pencocokan Cerdas Pasbana AI</span>
+              </div>
               <p className="text-xs text-slate-300">
                 Berhenti membuang waktu, biarkan sistem mengevaluasi secara otomatis
               </p>
@@ -1048,11 +1093,23 @@ export default function HomePage() {
         <div className="w-full h-full mx-auto flex flex-col justify-center">
           {/* Top Heading + 5 Expandable Horizontal Rows on Open White Canvas */}
           <div className={`px-4 sm:px-8 space-y-6 ${getChildAnimClass(6, "down", "delay-75")}`}>
-            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#0f2c56] leading-[1.14] max-w-xl text-left">
-              Seluruh perangkat cerdas ini juga
-              <br />
-              siap memetakan peluang karir terbaik Anda
-            </h2>
+            <div className="space-y-2">
+              <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
+                <Image
+                  src="/logo-navy.webp"
+                  alt="Pasbana AI"
+                  width={20}
+                  height={20}
+                  className="object-contain"
+                />
+                <span>Tentang &amp; Pertanyaan Umum</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#0f2c56] leading-[1.14] max-w-xl text-left">
+                Seluruh perangkat cerdas ini juga
+                <br />
+                siap memetakan peluang karir terbaik Anda
+              </h2>
+            </div>
 
             <div className="border-t border-slate-200">
               {ACCORDION_ITEMS.map((item) => {
