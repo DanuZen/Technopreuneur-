@@ -1,9 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams, useRouter, notFound } from "next/navigation";
 import Link from "next/link";
-import { FileText, UploadCloud, FileSpreadsheet } from "lucide-react";
+import {
+  FileText,
+  UploadCloud,
+  FileSpreadsheet,
+  ChevronDown,
+  Check,
+} from "lucide-react";
 import { api } from "@/lib/api";
 import { isValidDashboardRole } from "@/lib/routes";
 import { CVAnalysisResult } from "@/types";
@@ -19,6 +25,18 @@ export default function HasilEvaluasiPage() {
   const [loading, setLoading] = useState(true);
   const [historyList, setHistoryList] = useState<CVAnalysisResult[]>([]);
   const [analysis, setAnalysis] = useState<CVAnalysisResult | null>(null);
+  const [docMenuOpen, setDocMenuOpen] = useState(false);
+  const docMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (docMenuRef.current && !docMenuRef.current.contains(e.target as Node)) {
+        setDocMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   if (!isValidDashboardRole(role) || role !== "user") {
     notFound();
@@ -85,24 +103,82 @@ export default function HasilEvaluasiPage() {
           rightSlot={
             <div className="flex flex-wrap items-center gap-2">
               {historyList.length > 1 && (
-                <select
-                  aria-label="Pilih dokumen hasil evaluasi"
-                  value={analysis.cvId}
-                  onChange={(e) => {
-                    const found = historyList.find((h) => h.cvId === e.target.value);
-                    if (found) {
-                      api.saveAnalysis(found);
-                      setAnalysis(found);
-                    }
-                  }}
-                  className="px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs font-bold text-[#0f2c56] focus:outline-none focus:border-[#0f2c56]"
-                >
-                  {historyList.map((item) => (
-                    <option key={item.cvId} value={item.cvId}>
-                      {item.fileName || item.profile?.fullName || "CV Tersimpan"}
-                    </option>
-                  ))}
-                </select>
+                <div className="relative" ref={docMenuRef}>
+                  <button
+                    type="button"
+                    onClick={() => setDocMenuOpen((s) => !s)}
+                    aria-label="Pilih dokumen hasil evaluasi"
+                    aria-expanded={docMenuOpen}
+                    aria-haspopup="listbox"
+                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border border-slate-200 hover:border-[#0f2c56] bg-white text-xs font-bold text-[#0f2c56] shadow-2xs transition-colors cursor-pointer max-w-[230px]"
+                  >
+                    <FileText className="w-3.5 h-3.5 text-[#ce2731] shrink-0" />
+                    <span className="truncate">
+                      {analysis.fileName || analysis.profile?.fullName || "CV Tersimpan"}
+                    </span>
+                    <ChevronDown
+                      className={`w-3.5 h-3.5 text-slate-400 shrink-0 transition-transform duration-200 ${
+                        docMenuOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+
+                  {docMenuOpen && (
+                    <div
+                      role="listbox"
+                      aria-label="Daftar dokumen evaluasi CV"
+                      className="absolute right-0 top-full mt-2 w-72 rounded-2xl bg-white border border-slate-200 shadow-2xl p-1.5 z-50 space-y-1 animate-page-enter"
+                    >
+                      <p className="px-2.5 pt-1 pb-0.5 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
+                        Pilih Dokumen Evaluasi ({historyList.length})
+                      </p>
+                      {historyList.map((item) => {
+                        const isSelected = item.cvId === analysis.cvId;
+                        const label =
+                          item.fileName || item.profile?.fullName || "CV Tersimpan";
+                        return (
+                          <button
+                            key={item.cvId}
+                            type="button"
+                            role="option"
+                            aria-selected={isSelected}
+                            onClick={() => {
+                              api.saveAnalysis(item);
+                              setAnalysis(item);
+                              setDocMenuOpen(false);
+                            }}
+                            className={`w-full flex items-center justify-between gap-2.5 px-3 py-2 rounded-xl text-left text-xs font-bold transition-colors cursor-pointer ${
+                              isSelected
+                                ? "bg-[#0f2c56] text-white"
+                                : "text-[#0f2c56] hover:bg-[#edf2f9]"
+                            }`}
+                          >
+                            <div className="flex items-center gap-2 min-w-0">
+                              <FileText
+                                className={`w-3.5 h-3.5 shrink-0 ${
+                                  isSelected ? "text-white" : "text-[#ce2731]"
+                                }`}
+                              />
+                              <span className="truncate">{label}</span>
+                            </div>
+                            <div className="flex items-center gap-1.5 shrink-0">
+                              <span
+                                className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold ${
+                                  isSelected
+                                    ? "bg-[#ce2731] text-white"
+                                    : "bg-slate-100 text-[#0f2c56]"
+                                }`}
+                              >
+                                {item.overallScore || 85}
+                              </span>
+                              {isSelected && <Check className="w-3.5 h-3.5 text-white" />}
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
               )}
               <Link
                 href="/user/dashboard/dokumen"
