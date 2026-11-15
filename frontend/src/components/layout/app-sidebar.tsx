@@ -218,16 +218,8 @@ export function AppSidebar({
               </div>
             </div>
 
-            {/* Bottom Rail: Back to Home + User + Expand Toggle */}
+            {/* Bottom Rail: Expand Toggle + Back to Home */}
             <div className="flex flex-col items-center gap-2 pb-2">
-              <Link
-                href="/"
-                className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-[#0f2c56] hover:bg-[#ce2731] hover:text-white border border-slate-200 transition-colors"
-                title="Kembali ke Beranda"
-                aria-label="Kembali ke Beranda"
-              >
-                <Home className="w-4 h-4" aria-hidden="true" />
-              </Link>
               <button
                 type="button"
                 onClick={onToggleDesktopCollapse}
@@ -237,6 +229,14 @@ export function AppSidebar({
               >
                 <PanelLeftOpen className="w-4 h-4" aria-hidden="true" />
               </button>
+              <Link
+                href="/"
+                className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white transition-colors"
+                title="Kembali ke Beranda"
+                aria-label="Kembali ke Beranda"
+              >
+                <Home className="w-4 h-4" aria-hidden="true" />
+              </Link>
             </div>
           </div>
 
@@ -405,18 +405,18 @@ export function AppSidebar({
                   )}
                 </div>
               </div>
+            </div>
 
-              {/* 1 Button Route Keluar */}
-              <div className="pt-2 border-t border-slate-200/80">
-                <Link
-                  href="/"
-                  onClick={onCloseMobile}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-[#0f2c56] bg-white hover:bg-[#0f2c56] hover:text-white border border-slate-200 transition-colors"
-                >
-                  <Home className="w-4 h-4 shrink-0" aria-hidden="true" />
-                  <span>Kembali ke Beranda</span>
-                </Link>
-              </div>
+            {/* Bottom Pinned Footer: Kembali ke Beranda */}
+            <div className="shrink-0 p-3.5 border-t border-slate-200/80 bg-[#edf2f9]">
+              <Link
+                href="/"
+                onClick={onCloseMobile}
+                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-bold text-white bg-[#ce2731] hover:bg-[#b01e27] transition-colors"
+              >
+                <Home className="w-4 h-4 shrink-0" aria-hidden="true" />
+                <span>Kembali ke Beranda</span>
+              </Link>
             </div>
           </div>
         </div>
