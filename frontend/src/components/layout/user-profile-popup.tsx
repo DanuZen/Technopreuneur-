@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import {
   X,
@@ -68,6 +69,11 @@ export function UserProfilePopup({
 
   const [activeTab, setActiveTab] = useState<ProfileSectionTab>("identitas");
   const [savedNotice, setSavedNotice] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const [draft, setDraft] = useState<UserProfileDraft>({
     name: user.name,
@@ -310,18 +316,18 @@ export function UserProfilePopup({
     });
   };
 
-  return (
+  const modalContent = (
     <div
       role="dialog"
       aria-modal="true"
       aria-label="Detail Profil Pengguna"
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-[#0f2c56]/40 p-4"
+      className="fixed inset-0 z-[999] flex items-center justify-center bg-slate-950/45 backdrop-blur-[2px] p-4"
       onClick={onClose}
     >
       <div
         className={`w-full ${
           isUserRole ? "max-w-xl" : "max-w-sm"
-        } max-h-[86dvh] flex flex-col overflow-hidden rounded-[28px] bg-white border border-slate-200 text-[#0f2c56] shadow-2xl animate-page-enter`}
+        } max-h-[86dvh] flex flex-col overflow-hidden rounded-[28px] bg-white border border-slate-200 text-[#0f2c56] shadow-[0_24px_60px_-15px_rgba(15,44,86,0.35)] animate-page-enter`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -755,4 +761,7 @@ export function UserProfilePopup({
       </div>
     </div>
   );
+
+  if (!mounted) return null;
+  return createPortal(modalContent, document.body);
 }
