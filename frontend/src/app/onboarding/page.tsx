@@ -100,6 +100,72 @@ export default function OnboardingPage() {
               </p>
             </div>
 
+            {/* Ilustrasi Pratinjau Struktur CV ATS 1-Kolom */}
+            <div className="rounded-2xl bg-white/10 border border-white/15 p-4 sm:p-5 flex flex-col sm:flex-row items-center gap-5">
+              <div className="relative shrink-0">
+                <svg
+                  viewBox="0 0 180 144"
+                  className="w-40 sm:w-44 h-auto drop-shadow-sm"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
+                  <rect x="14" y="6" width="136" height="132" rx="12" fill="#FFFFFF" />
+                  <rect x="28" y="20" width="58" height="8" rx="4" fill="#0F2C56" />
+                  <rect x="28" y="33" width="92" height="4" rx="2" fill="#94A3B8" />
+                  <rect x="28" y="45" width="108" height="1.5" fill="#E2E8F0" />
+
+                  <rect x="28" y="54" width="42" height="5" rx="2.5" fill="#CE2731" />
+                  <rect x="28" y="64" width="106" height="4" rx="2" fill="#CBD5E1" />
+                  <rect x="28" y="72" width="90" height="4" rx="2" fill="#CBD5E1" />
+
+                  <rect x="28" y="85" width="50" height="5" rx="2.5" fill="#0F2C56" />
+                  <circle cx="31" cy="97" r="2.5" fill="#CE2731" />
+                  <rect x="38" y="95" width="92" height="4" rx="2" fill="#CBD5E1" />
+                  <circle cx="31" cy="107" r="2.5" fill="#CE2731" />
+                  <rect x="38" y="105" width="78" height="4" rx="2" fill="#CBD5E1" />
+                  <circle cx="31" cy="117" r="2.5" fill="#CE2731" />
+                  <rect x="38" y="115" width="84" height="4" rx="2" fill="#CBD5E1" />
+
+                  <rect x="116" y="14" width="54" height="22" rx="11" fill="#CE2731" />
+                  <path
+                    d="M127 25L130.5 28.5L137 21.5"
+                    stroke="#FFFFFF"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <rect x="141" y="23" width="20" height="4" rx="2" fill="#FFFFFF" />
+                </svg>
+              </div>
+
+              <div className="space-y-2.5 flex-1 min-w-0">
+                <p className="text-[11px] font-mono uppercase tracking-wider text-white/70 font-bold">
+                  Output Dokumen Standar Rekruter
+                </p>
+                <div className="space-y-2">
+                  <div className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0 mt-0.5" />
+                    <p className="text-xs text-white/90 leading-snug">
+                      <span className="font-bold text-white">Struktur 1-Kolom Rapi:</span> bebas tabel rumit agar mudah dipindai mesin ATS.
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0 mt-0.5" />
+                    <p className="text-xs text-white/90 leading-snug">
+                      <span className="font-bold text-white">Panduan Kalimat Dampak:</span> dilengkapi contoh penulisan pengalaman yang terukur.
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0 mt-0.5" />
+                    <p className="text-xs text-white/90 leading-snug">
+                      <span className="font-bold text-white">Siap Cetak &amp; Evaluasi:</span> langsung tersimpan ke Dokumen CV ATS dan Riwayat Sesi.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <button
                 type="button"
