@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { BarChart3, PieChart, Activity, TrendingUp } from "lucide-react";
 
 interface CompanyFunnelDiagramProps {
@@ -427,34 +427,36 @@ export function AdminModerationDiagram({
 }
 
 export function AdminPipelineDiagram() {
+  const [hoveredIdx, setHoveredIdx] = useState<number>(4);
+
   const days = [
-    { day: "Sen", cv: 145, match: 98 },
-    { day: "Sel", cv: 172, match: 120 },
-    { day: "Rab", cv: 164, match: 115 },
-    { day: "Kam", cv: 210, match: 158 },
-    { day: "Jum", cv: 238, match: 184 },
-    { day: "Sab", cv: 190, match: 142 },
-    { day: "Min", cv: 129, match: 96 },
+    { day: "Sen", fullDay: "Senin", cv: 145, pass: 102 },
+    { day: "Sel", fullDay: "Selasa", cv: 172, pass: 124 },
+    { day: "Rab", fullDay: "Rabu", cv: 164, pass: 118 },
+    { day: "Kam", fullDay: "Kamis", cv: 210, pass: 158 },
+    { day: "Jum", fullDay: "Jumat", cv: 238, pass: 184 },
+    { day: "Sab", fullDay: "Sabtu", cv: 190, pass: 142 },
+    { day: "Min", fullDay: "Minggu", cv: 129, pass: 85 },
   ];
 
-  const maxVal = 250;
-  const chartW = 480;
-  const chartH = 150;
-  const padX = 28;
-  const padY = 18;
-  const usableW = chartW - padX * 2;
-  const usableH = chartH - padY * 2;
+  const totalCv = days.reduce((acc, d) => acc + d.cv, 0);
+  const totalPass = days.reduce((acc, d) => acc + d.pass, 0);
+  const passRate = Math.round((totalPass / totalCv) * 100);
+  const activeDay = days[hoveredIdx] || days[4];
 
-  const linePoints = days
-    .map((d, idx) => {
-      const x = padX + (idx * usableW) / (days.length - 1);
-      const y = padY + usableH - (d.match / maxVal) * usableH;
-      return `${x},${y}`;
-    })
-    .join(" ");
+  const maxVal = 260;
+  const chartW = 680;
+  const chartH = 196;
+  const padLeft = 40;
+  const padRight = 18;
+  const padTop = 24;
+  const padBottom = 26;
+  const usableW = chartW - padLeft - padRight;
+  const usableH = chartH - padTop - padBottom;
+  const slotW = usableW / days.length;
 
   return (
-    <div className="morph-surface h-full flex flex-col gap-3 bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 text-[#0f2c56]">
+    <div className="morph-surface h-full flex flex-col justify-between gap-3 bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 text-[#0f2c56]">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-[#ce2731] text-white flex items-center justify-center shrink-0">
@@ -465,48 +467,51 @@ export function AdminPipelineDiagram() {
               Aktivitas Pipeline AI Mingguan
             </p>
             <p className="text-xs font-medium text-slate-500">
-              Volume evaluasi CV &amp; matching dua tahap (Target G1 &lt; 60 dtk)
+              Volume evaluasi CV &amp; pemenuhan standar ATS (Target G1 &lt; 60 dtk)
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-3 text-[11px] font-bold">
+        <div className="flex flex-wrap items-center gap-3 text-[11px] font-bold">
           <span className="inline-flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-sm bg-[#0f2c56]" />
             Evaluasi CV
           </span>
           <span className="inline-flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#ce2731]" />
-            Lamaran Tercipta
+            <span className="w-2.5 h-2.5 rounded-sm bg-[#ce2731]" />
+            Lolos Standar ATS
+          </span>
+          <span className="px-2.5 py-1 rounded-full bg-[#edf2f9] text-[#0f2c56]">
+            {activeDay.fullDay}: {activeDay.cv} CV / {activeDay.pass} Lolos
           </span>
         </div>
       </div>
 
-      <div className="flex-1 min-h-0 w-full flex items-center overflow-hidden">
+      <div className="flex-1 min-h-0 w-full flex items-center">
         <svg
-          viewBox={`0 0 ${chartW} ${chartH + 22}`}
-          className="w-full h-full min-h-[160px] max-h-52"
+          viewBox={`0 0 ${chartW} ${chartH}`}
+          className="w-full h-auto"
           role="img"
-          aria-label="Diagram aktivitas pipeline evaluasi CV dan matching AI mingguan"
+          aria-label="Diagram aktivitas pipeline evaluasi CV dan pemenuhan standar ATS mingguan"
         >
           {[0, 0.25, 0.5, 0.75, 1].map((ratio, idx) => {
-            const y = padY + usableH * (1 - ratio);
+            const y = padTop + usableH * (1 - ratio);
             return (
               <g key={idx}>
                 <line
-                  x1={padX}
+                  x1={padLeft}
                   y1={y}
-                  x2={chartW - padX}
+                  x2={chartW - padRight}
                   y2={y}
-                  stroke="#e2e8f0"
-                  strokeDasharray="3 3"
+                  stroke={idx === 0 ? "#cbd5e1" : "#e2e8f0"}
+                  strokeDasharray={idx === 0 ? undefined : "4 4"}
                   strokeWidth="1"
                 />
                 <text
-                  x={padX - 6}
-                  y={y + 3}
+                  x={padLeft - 8}
+                  y={y + 3.5}
                   textAnchor="end"
-                  fontSize="9"
+                  fontSize="10"
                   fill="#64748b"
                   fontWeight="600"
                 >
@@ -517,71 +522,101 @@ export function AdminPipelineDiagram() {
           })}
 
           {days.map((d, idx) => {
-            const cx = padX + (idx * usableW) / (days.length - 1);
-            const barW = 22;
-            const barH = (d.cv / maxVal) * usableH;
-            const barY = padY + usableH - barH;
+            const slotX = padLeft + idx * slotW;
+            const centerX = slotX + slotW / 2;
+            const barW = 20;
+            const gap = 5;
+            const cvH = (d.cv / maxVal) * usableH;
+            const passH = (d.pass / maxVal) * usableH;
+            const cvY = padTop + usableH - cvH;
+            const passY = padTop + usableH - passH;
+            const isActive = idx === hoveredIdx;
+
             return (
-              <g key={d.day}>
+              <g
+                key={d.day}
+                onMouseEnter={() => setHoveredIdx(idx)}
+                onClick={() => setHoveredIdx(idx)}
+                className="cursor-pointer"
+              >
                 <rect
-                  x={cx - barW / 2}
-                  y={barY}
+                  x={slotX + 8}
+                  y={padTop - 4}
+                  width={slotW - 16}
+                  height={usableH + 4}
+                  rx="10"
+                  fill={isActive ? "#edf2f9" : "transparent"}
+                />
+
+                {/* Bar Evaluasi CV */}
+                <rect
+                  x={centerX - barW - gap / 2}
+                  y={cvY}
                   width={barW}
-                  height={barH}
+                  height={cvH}
                   rx="6"
                   fill="#0f2c56"
                 />
                 <text
-                  x={cx}
-                  y={chartH + 12}
+                  x={centerX - barW / 2 - gap / 2}
+                  y={cvY - 6}
                   textAnchor="middle"
-                  fontSize="10"
+                  fontSize="9.5"
                   fill="#0f2c56"
-                  fontWeight="700"
+                  fontWeight="800"
+                >
+                  {d.cv}
+                </text>
+
+                {/* Bar Lolos Standar ATS */}
+                <rect
+                  x={centerX + gap / 2}
+                  y={passY}
+                  width={barW}
+                  height={passH}
+                  rx="6"
+                  fill="#ce2731"
+                />
+                <text
+                  x={centerX + barW / 2 + gap / 2}
+                  y={passY - 6}
+                  textAnchor="middle"
+                  fontSize="9.5"
+                  fill="#ce2731"
+                  fontWeight="800"
+                >
+                  {d.pass}
+                </text>
+
+                <text
+                  x={centerX}
+                  y={chartH - 7}
+                  textAnchor="middle"
+                  fontSize="11"
+                  fill={isActive ? "#ce2731" : "#0f2c56"}
+                  fontWeight="800"
                 >
                   {d.day}
                 </text>
               </g>
             );
           })}
-
-          <polyline
-            fill="none"
-            stroke="#ce2731"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            points={linePoints}
-          />
-
-          {days.map((d, idx) => {
-            const cx = padX + (idx * usableW) / (days.length - 1);
-            const cy = padY + usableH - (d.match / maxVal) * usableH;
-            return (
-              <g key={`dot-${d.day}`}>
-                <circle cx={cx} cy={cy} r="5" fill="#ce2731" stroke="#ffffff" strokeWidth="2" />
-                <rect
-                  x={cx - 13}
-                  y={cy - 22}
-                  width="26"
-                  height="14"
-                  rx="4"
-                  fill="#ce2731"
-                />
-                <text
-                  x={cx}
-                  y={cy - 12}
-                  textAnchor="middle"
-                  fontSize="9"
-                  fill="#ffffff"
-                  fontWeight="800"
-                >
-                  {d.match}
-                </text>
-              </g>
-            );
-          })}
         </svg>
+      </div>
+
+      <div className="shrink-0 grid grid-cols-3 gap-2.5 pt-3 border-t border-slate-100">
+        <div className="rounded-xl bg-[#f4f7fb] px-3 py-2">
+          <p className="text-[10px] font-bold uppercase text-slate-500">Total Evaluasi</p>
+          <p className="text-sm font-black text-[#0f2c56]">{totalCv.toLocaleString("id-ID")} CV</p>
+        </div>
+        <div className="rounded-xl bg-[#f4f7fb] px-3 py-2">
+          <p className="text-[10px] font-bold uppercase text-slate-500">Lolos Standar ATS</p>
+          <p className="text-sm font-black text-[#ce2731]">{passRate}% ({totalPass})</p>
+        </div>
+        <div className="rounded-xl bg-[#f4f7fb] px-3 py-2">
+          <p className="text-[10px] font-bold uppercase text-slate-500">Rata-rata SLA AI</p>
+          <p className="text-sm font-black text-[#0f2c56]">38 Detik</p>
+        </div>
       </div>
     </div>
   );
