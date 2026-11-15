@@ -430,11 +430,12 @@ export default function HomePage() {
         return {
           isWhite: true,
           style: {
-            top: "calc(50% - 202px)",
-            left: "calc(20.8% - 150px)",
-            width: "104px",
-            height: "104px",
-            transform: "rotate(0deg)",
+            top: "28px",
+            left: "calc(100% - 88px)",
+            width: "48px",
+            height: "48px",
+            opacity: 0,
+            transform: "scale(0.75)",
           },
         };
     }
@@ -487,22 +488,6 @@ export default function HomePage() {
                 morphLogo.isWhite ? "opacity-0" : "opacity-95"
               }`}
             />
-
-            {/* Brand Name & Tagline Revealed to the Right of Logo on Slide 6 */}
-            <div
-              className={`absolute left-[calc(100%+20px)] top-1/2 -translate-y-1/2 whitespace-nowrap transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                activeSlide === 6
-                  ? "opacity-100 translate-x-0 delay-150"
-                  : "opacity-0 -translate-x-4"
-              }`}
-            >
-              <p className="text-3xl xl:text-4xl font-black tracking-wider text-white leading-none uppercase">
-                PASBANA
-              </p>
-              <p className="text-xs font-bold text-white/80 uppercase tracking-[0.22em] mt-2">
-                KARIR YANG PAS BANA
-              </p>
-            </div>
           </div>
         </div>
       </div>
@@ -1192,28 +1177,6 @@ export default function HomePage() {
             className={`lg:col-span-5 flex flex-col py-1 ${getChildAnimClass(6, "left", "delay-75")}`}
           >
             <div className="bg-[#0f2c56] text-white rounded-[28px] p-6 sm:p-8 lg:p-10 flex flex-col justify-center items-center text-center gap-6 flex-1">
-              {/* Spacer on lg+ for Single Global Morphing Logo + Brand Name Above Title */}
-              <div className="hidden lg:block h-[104px]" aria-hidden="true" />
-
-              {/* Mobile-only Large Brand Logo + Name Above Title */}
-              <div className="lg:hidden flex items-center justify-center gap-4">
-                <Image
-                  src="/logo-white.webp"
-                  alt="Logo Pasbana"
-                  width={88}
-                  height={88}
-                  className="w-20 h-20 object-contain shrink-0"
-                />
-                <div className="text-left">
-                  <p className="text-2xl font-black tracking-wider text-white leading-none uppercase">
-                    PASBANA
-                  </p>
-                  <p className="text-[10px] font-bold text-white/80 uppercase tracking-[0.2em] mt-1.5">
-                    KARIR YANG PAS BANA
-                  </p>
-                </div>
-              </div>
-
               <div className="space-y-4 flex flex-col items-center">
                 <span className="inline-block px-3.5 py-1 rounded-full bg-[#ce2731] text-white text-xs font-extrabold uppercase tracking-wider">
                   Mulai Langkah Karir
