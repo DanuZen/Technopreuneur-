@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import {
   Send,
   CheckCircle2,
   AlertTriangle,
-  Bot,
   User as UserIcon,
 } from "lucide-react";
 import { CVAnalysisResult } from "@/types";
@@ -204,8 +204,14 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
 
             return (
               <div key={msg.id} className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-full bg-[#ce2731] text-white flex items-center justify-center shrink-0 mt-0.5">
-                  <Bot className="w-4 h-4" />
+                <div className="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center shrink-0 mt-0.5 overflow-hidden">
+                  <Image
+                    src="/logo-navy.webp"
+                    alt="Pasbana AI"
+                    width={20}
+                    height={20}
+                    className="object-contain"
+                  />
                 </div>
                 <div className="flex-1 max-w-4xl space-y-4">
                   <div className="bg-white border border-slate-200 rounded-2xl rounded-tl-sm p-4 sm:p-5 space-y-4">
@@ -451,8 +457,14 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
 
           return (
             <div key={msg.id} className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-full bg-[#ce2731] text-white flex items-center justify-center shrink-0 mt-0.5">
-                <Bot className="w-4 h-4" />
+              <div className="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center shrink-0 mt-0.5 overflow-hidden">
+                <Image
+                  src="/logo-navy.webp"
+                  alt="Pasbana AI"
+                  width={20}
+                  height={20}
+                  className="object-contain"
+                />
               </div>
               <div className="max-w-2xl rounded-2xl rounded-tl-sm bg-white border border-slate-200 px-4 py-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
                 {msg.text}
@@ -463,8 +475,14 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
 
         {isTyping && (
           <div className="flex items-start gap-3">
-            <div className="w-8 h-8 rounded-full bg-[#ce2731] text-white flex items-center justify-center shrink-0">
-              <Bot className="w-4 h-4" />
+            <div className="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center shrink-0 overflow-hidden">
+              <Image
+                src="/logo-navy.webp"
+                alt="Pasbana AI"
+                width={20}
+                height={20}
+                className="object-contain"
+              />
             </div>
             <div className="rounded-2xl rounded-tl-sm bg-white border border-slate-200 px-4 py-3 text-xs text-slate-500 font-medium">
               Pasbana AI sedang menyusun jawaban...
