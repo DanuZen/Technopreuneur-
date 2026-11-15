@@ -6,16 +6,13 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   Menu,
   User as UserIcon,
-  LogOut,
   ChevronDown,
   LayoutDashboard,
-  X,
-  Mail,
-  ShieldCheck,
 } from "lucide-react";
 import { User } from "@/types";
 import { api } from "@/lib/api";
 import { getDashboardBasePath, getRoleFromPathname } from "@/lib/routes";
+import { UserProfilePopup } from "./user-profile-popup";
 
 interface AppHeaderProps {
   onToggleMobile: () => void;
@@ -114,82 +111,13 @@ export function AppHeader({
             </button>
 
             {menuOpen && (
-              <div
-                role="dialog"
-                aria-modal="true"
-                aria-label="Profil Akun"
-                className="fixed inset-0 z-[100] flex items-center justify-center bg-[#0f2c56]/40 p-4"
-                onClick={() => setMenuOpen(false)}
-              >
-                <div
-                  className="w-full max-w-sm rounded-[28px] bg-white border border-slate-200 text-[#0f2c56] shadow-2xl p-6 space-y-5 animate-page-enter"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {/* Popup Header */}
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-12 h-12 rounded-2xl bg-[#0f2c56] text-white text-lg font-extrabold flex items-center justify-center shrink-0">
-                        {user.name.charAt(0).toUpperCase()}
-                      </div>
-                      <div className="min-w-0">
-                        <h2 className="text-base font-extrabold text-[#0f2c56] truncate">
-                          {user.name}
-                        </h2>
-                        <span className="inline-block mt-1 uppercase text-[10px] bg-[#ce2731] text-white px-2.5 py-0.5 rounded-full font-mono font-bold">
-                          Role: {user.role}
-                        </span>
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => setMenuOpen(false)}
-                      aria-label="Tutup popup profil"
-                      className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#0f2c56] flex items-center justify-center transition-colors cursor-pointer shrink-0"
-                    >
-                      <X className="w-4 h-4" />
-                    </button>
-                  </div>
-
-                  {/* Account Details */}
-                  <div className="rounded-2xl bg-[#f4f7fb] p-4 space-y-2.5 text-xs">
-                    <div className="flex items-center gap-2.5 text-[#0f2c56]">
-                      <Mail className="w-4 h-4 text-[#ce2731] shrink-0" />
-                      <span className="font-semibold truncate">
-                        {user.email || "Akun Terverifikasi"}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2.5 text-[#0f2c56]">
-                      <ShieldCheck className="w-4 h-4 text-[#0f2c56] shrink-0" />
-                      <span className="font-semibold">
-                        Sesi Aktif &middot; Pasbana AI
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Actions: Dashboard & Logout */}
-                  <div className="flex flex-col gap-2">
-                    <Link
-                      href={baseDashboardPath}
-                      onClick={() => setMenuOpen(false)}
-                      className="morph-pill w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs font-bold"
-                    >
-                      <LayoutDashboard className="w-4 h-4" />
-                      <span>Buka Dashboard</span>
-                    </Link>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setMenuOpen(false);
-                        handleLogout();
-                      }}
-                      className="morph-pill w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs font-bold cursor-pointer"
-                    >
-                      <LogOut className="w-4 h-4" />
-                      <span>Keluar dari Akun</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <UserProfilePopup
+                user={user}
+                baseDashboardPath={baseDashboardPath}
+                onClose={() => setMenuOpen(false)}
+                onLogout={handleLogout}
+                onUserUpdated={(updated) => setUser(updated)}
+              />
             )}
           </div>
         ) : (
