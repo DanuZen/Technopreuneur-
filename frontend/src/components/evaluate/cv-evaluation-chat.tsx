@@ -1,11 +1,8 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import Link from "next/link";
 import {
   Send,
-  FileText,
-  UploadCloud,
   CheckCircle2,
   AlertTriangle,
   Bot,
@@ -23,7 +20,6 @@ interface ChatMessage {
 
 interface CvEvaluationChatProps {
   analysis: CVAnalysisResult;
-  onResetUpload: () => void;
 }
 
 const QUICK_QUESTIONS = [
@@ -74,7 +70,7 @@ function buildContextualAnswer(question: string, analysis: CVAnalysisResult): st
   return `Berdasarkan hasil evaluasi CV **${analysis.profile.fullName}** (skor ${analysis.overallScore}/100), fokus utama yang paling berdampak untuk ditingkatkan adalah **${lowestDim.key}** (${lowestDim.score}/100). Rekomendasi utama: ${topRec}`;
 }
 
-export function CvEvaluationChat({ analysis, onResetUpload }: CvEvaluationChatProps) {
+export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
   const cvDisplayName = analysis.fileName
     ? analysis.fileName.replace(/\.[^/.]+$/, "").replace(/[-_]+/g, " ").trim()
     : analysis.profile.fullName;
@@ -165,24 +161,6 @@ export function CvEvaluationChat({ analysis, onResetUpload }: CvEvaluationChatPr
 
   return (
     <div className="flex flex-col flex-1 min-h-0 overflow-hidden gap-3">
-      {/* Top Action Bar for Current Evaluated CV */}
-      <div className="shrink-0 flex flex-wrap items-center justify-end gap-2 pb-3.5 border-b border-slate-200/80">
-        <Link
-            href="/user/dashboard/dokumen"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 text-[#0f2c56] border border-slate-200 text-xs font-bold transition-colors"
-          >
-            <FileText className="w-3.5 h-3.5" />
-            <span>Lihat Dokumen CV ATS</span>
-          </Link>
-          <button
-            type="button"
-            onClick={onResetUpload}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors cursor-pointer"
-          >
-            <UploadCloud className="w-3.5 h-3.5" />
-            <span>Evaluasi CV Baru</span>
-          </button>
-      </div>
 
       {/* Chat Messages Thread (Only this section scrolls) */}
       <div className="flex-1 min-h-0 overflow-y-auto scrollbar-none space-y-5 py-2 pr-1">

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter, notFound } from "next/navigation";
 import Link from "next/link";
-import { UploadCloud } from "lucide-react";
+import { FileText, UploadCloud } from "lucide-react";
 import { api } from "@/lib/api";
 import { isValidDashboardRole } from "@/lib/routes";
 import { CVAnalysisResult } from "@/types";
@@ -149,7 +149,7 @@ export default function RiwayatSesiDetailPage() {
 
   if (!analysis) {
     return (
-      <main className="min-h-full w-full px-3.5 sm:px-6 pt-4 sm:pt-5 pb-5 sm:pb-6 space-y-6">
+      <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-6">
         <DashboardPageHeading
           badge="Riwayat Sesi"
           titleLine1="Sesi evaluasi CV"
@@ -173,19 +173,35 @@ export default function RiwayatSesiDetailPage() {
   }
 
   return (
-    <div className="h-full overflow-hidden w-full px-3.5 sm:px-6 pt-4 sm:pt-5 pb-3 flex flex-col gap-4">
-      <div className="shrink-0">
+    <div className="h-full overflow-hidden w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-3 flex flex-col gap-4">
+      <div className="shrink-0 pb-4 border-b border-slate-200/80">
         <DashboardPageHeading
           badge="Hasil & Konsultasi CV"
           titleLine1="Diskusikan hasil evaluasi"
           titleLine2Prefix="untuk skor"
           titleHighlight="paling optimal!"
+          rightSlot={
+            <div className="flex flex-wrap items-center gap-2">
+              <Link
+                href={`/${role}/dashboard/dokumen`}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 text-[#0f2c56] border border-slate-200 text-xs font-bold transition-colors"
+              >
+                <FileText className="w-3.5 h-3.5" />
+                <span>Lihat Dokumen CV ATS</span>
+              </Link>
+              <button
+                type="button"
+                onClick={() => router.push(`/${role}/dashboard/evaluasi`)}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors cursor-pointer"
+              >
+                <UploadCloud className="w-3.5 h-3.5" />
+                <span>Evaluasi CV Baru</span>
+              </button>
+            </div>
+          }
         />
       </div>
-      <CvEvaluationChat
-        analysis={analysis}
-        onResetUpload={() => router.push(`/${role}/dashboard/evaluasi`)}
-      />
+      <CvEvaluationChat analysis={analysis} />
     </div>
   );
 }
