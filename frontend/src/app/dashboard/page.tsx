@@ -42,6 +42,7 @@ function DashboardContent() {
 
   useEffect(() => {
     const queryOnboarding = searchParams.get("onboarding") === "true";
+    const tabParam = searchParams.get("tab");
     const current = api.getCurrentAnalysis();
 
     if (current) {
@@ -49,6 +50,16 @@ function DashboardContent() {
       if (queryOnboarding) {
         router.replace("/onboarding");
         return;
+      }
+      if (
+        tabParam === "dimensions" ||
+        tabParam === "preview" ||
+        tabParam === "jobs" ||
+        tabParam === "upload"
+      ) {
+        setActiveTab(tabParam);
+      } else {
+        setActiveTab("dimensions");
       }
       setIsOnboarding(false);
     } else {

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { usePathname } from "next/navigation";
 import { AppSidebar } from "./app-sidebar";
 import { AppHeader } from "./app-header";
@@ -78,12 +78,14 @@ export function AppShell({ children }: AppShellProps) {
   return (
     <div className="flex h-dvh w-full overflow-hidden bg-[#edf2f9] text-primary select-auto font-sans">
       {/* ChatGPT-style Collapsible AppSidebar */}
-      <AppSidebar
-        isMobileOpen={isMobileOpen}
-        onCloseMobile={() => setIsMobileOpen(false)}
-        isDesktopCollapsed={isDesktopCollapsed}
-        onToggleDesktopCollapse={handleToggleDesktopCollapse}
-      />
+      <Suspense fallback={null}>
+        <AppSidebar
+          isMobileOpen={isMobileOpen}
+          onCloseMobile={() => setIsMobileOpen(false)}
+          isDesktopCollapsed={isDesktopCollapsed}
+          onToggleDesktopCollapse={handleToggleDesktopCollapse}
+        />
+      </Suspense>
 
       {/* Main Workspace Stage (Rounded Clay Stage on Desktop) */}
       <div className="flex flex-1 flex-col overflow-hidden bg-[#fefefd] clay-stage lg:my-2 lg:mr-2 lg:rounded-[32px] relative isolate shadow-2xl shadow-primary/10">

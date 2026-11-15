@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Plus,
   Search,
@@ -11,7 +11,8 @@ import {
   Briefcase,
   LayoutDashboard,
   Home,
-  ShieldCheck,
+  FileText,
+  FileSpreadsheet,
   User as UserIcon,
   LogOut,
   ChevronRight,
@@ -19,7 +20,6 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   Trash2,
-  Info,
 } from "lucide-react";
 import { User, CVAnalysisResult } from "@/types";
 import { api } from "@/lib/api";
@@ -60,7 +60,9 @@ export function AppSidebar({
   onToggleDesktopCollapse,
 }: AppSidebarProps) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const router = useRouter();
+  const currentTab = searchParams.get("tab");
 
   const [user, setUser] = useState<User | null>(null);
   const [daftarRiwayat, setDaftarRiwayat] = useState<ItemRiwayatEvaluasi[]>(CONTOH_RIWAYAT_DEFAULT);
@@ -124,34 +126,39 @@ export function AppSidebar({
 
   const navLinks = [
     {
-      label: "Evaluasi CV",
-      href: "/evaluate",
-      icon: FileCheck,
-      desc: "Uji berkas & skor 5 dimensi",
-    },
-    {
-      label: "Rekomendasi Lowongan",
-      href: "/jobs",
-      icon: Briefcase,
-      desc: "Pencocokan karir presisi",
-    },
-    {
       label: "Dashboard Skor ATS",
       href: "/dashboard",
       icon: LayoutDashboard,
       desc: "Analisis profil 5 dimensi",
+      isActive: pathname === "/dashboard" && (!currentTab || currentTab === "dimensions"),
     },
     {
-      label: "Beranda",
-      href: "/",
-      icon: Home,
-      desc: "Halaman utama Pasbana",
+      label: "Dokumen CV ATS",
+      href: "/dashboard?tab=preview",
+      icon: FileText,
+      desc: "Pratinjau & cetak CV standar ATS",
+      isActive: pathname === "/dashboard" && currentTab === "preview",
     },
     {
-      label: "Tentang Kami",
-      href: "/about",
-      icon: Info,
-      desc: "Filosofi pas bana & visi",
+      label: "Lowongan Cocok",
+      href: "/dashboard?tab=jobs",
+      icon: Briefcase,
+      desc: "Rekomendasi karir di dashboard",
+      isActive: pathname === "/dashboard" && currentTab === "jobs",
+    },
+    {
+      label: "Evaluasi CV",
+      href: "/evaluate",
+      icon: FileCheck,
+      desc: "Unggah berkas PDF / DOCX",
+      isActive: pathname === "/evaluate",
+    },
+    {
+      label: "Onboarding CV ATS",
+      href: "/onboarding",
+      icon: FileSpreadsheet,
+      desc: "Susun CV dari kuesioner",
+      isActive: pathname === "/onboarding",
     },
   ];
 
@@ -226,14 +233,13 @@ export function AppSidebar({
               {/* Quick Nav Icons */}
               <div className="w-full flex flex-col items-center gap-1.5 pt-2">
                 {navLinks.map((item) => {
-                  const isActive = pathname === item.href;
                   const Icon = item.icon;
                   return (
                     <Link
                       key={item.href}
                       href={item.href}
                       className={`flex h-10 w-10 items-center justify-center rounded-xl transition-all ${
-                        isActive
+                        item.isActive
                           ? "bg-[#0f2c56] text-white shadow-xs font-bold"
                           : "text-slate-600 hover:text-primary hover:bg-white/80"
                       }`}
@@ -246,8 +252,16 @@ export function AppSidebar({
               </div>
             </div>
 
-            {/* Bottom Rail: User / Privacy / Expand Toggle */}
+            {/* Bottom Rail: Back to Home + User + Expand Toggle */}
             <div className="flex flex-col items-center gap-2 pb-2">
+              <Link
+                href="/"
+                className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-[#0f2c56] hover:bg-[#ce2731] hover:text-white border border-slate-200 transition-colors"
+                title="Kembali ke Beranda"
+                aria-label="Kembali ke Beranda"
+              >
+                <Home className="w-4 h-4" aria-hidden="true" />
+              </Link>
               <button
                 type="button"
                 onClick={onToggleDesktopCollapse}
@@ -352,7 +366,6 @@ export function AppSidebar({
                   Menu Utama
                 </p>
                 {navLinks.map((item) => {
-                  const isActive = pathname === item.href;
                   const Icon = item.icon;
                   return (
                     <Link
@@ -360,7 +373,7 @@ export function AppSidebar({
                       href={item.href}
                       onClick={onCloseMobile}
                       className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
-                        isActive
+                        item.isActive
                           ? "bg-[#0f2c56] text-white"
                           : "text-slate-700 hover:bg-white hover:text-[#0f2c56]"
                       }`}
@@ -369,7 +382,7 @@ export function AppSidebar({
                       <div className="flex-1 min-w-0">
                         <p className="truncate leading-tight">{item.label}</p>
                       </div>
-                      {isActive && (
+                      {item.isActive && (
                         <span className="w-2 h-2 rounded-full bg-[#ce2731] shrink-0" />
                       )}
                     </Link>
@@ -467,8 +480,16 @@ export function AppSidebar({
               </div>
             </div>
 
-            {/* Bottom Footer Section: User Profile & Account */}
-            <div className="shrink-0 p-3 bg-white border-t border-slate-200 space-y-2">
+            {/* Bottom Footer Section: 1 External Route Button + User Profile & Account */}
+            <div className="shrink-0 p-3 bg-white border-t border-slate-200 space-y-2.5">
+              <Link
+                href="/"
+                onClick={onCloseMobile}
+                className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-bold text-[#0f2c56] bg-[#edf2f9] hover:bg-[#0f2c56] hover:text-white border border-slate-200 transition-colors"
+              >
+                <Home className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+                <span>Kembali ke Beranda</span>
+              </Link>
               {user ? (
                 <div className="space-y-2">
                   <div className="flex items-center justify-between gap-2">
