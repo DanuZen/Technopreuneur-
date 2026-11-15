@@ -6,7 +6,6 @@ import Link from "next/link";
 import {
   FileSpreadsheet,
   ArrowUpRight,
-  ArrowRight,
 } from "lucide-react";
 import { CVDropzone } from "@/components/cv/cv-dropzone";
 import { DashboardPageHeading } from "@/components/dashboard/dashboard-page-heading";
@@ -30,22 +29,12 @@ function EvaluateContent() {
   };
 
   return (
-    <div className="min-h-full w-full px-3.5 sm:px-6 pt-4 sm:pt-5 pb-5 sm:pb-6 flex flex-col gap-6">
+    <div className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 flex flex-col gap-6">
       <DashboardPageHeading
         badge="Evaluasi Berkas Digital"
         titleLine1="Uji kualitas dokumen CV"
         titleLine2Prefix="dengan analisis"
         titleHighlight="standar ATS!"
-        rightSlot={
-          <Link
-            href="/user/dashboard/onboarding"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white font-bold text-xs transition-colors"
-          >
-            <FileSpreadsheet className="w-4 h-4" aria-hidden="true" />
-            <span>Belum Punya CV? Buat di Onboarding</span>
-            <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-          </Link>
-        }
       />
 
       {/* Area Unggah Dokumen CV */}
