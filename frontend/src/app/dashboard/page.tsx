@@ -6,8 +6,6 @@ import Link from "next/link";
 import {
   CheckCircle2,
   FileText,
-  Briefcase,
-  Target,
   RotateCcw,
   ExternalLink,
   ChevronRight,
@@ -274,7 +272,7 @@ function DashboardContent() {
             <div className="pt-2 flex flex-wrap items-center gap-3 print:hidden">
               <button
                 type="button"
-                onClick={() => setActiveTab("preview")}
+                onClick={() => router.push("/dashboard?tab=preview")}
                 className="px-5 py-2.5 bg-white hover:bg-[#ce2731] text-[#0f2c56] hover:text-white text-xs font-extrabold rounded-xl transition-colors flex items-center gap-2 cursor-pointer"
               >
                 <FileText className="w-3.5 h-3.5" aria-hidden="true" />
@@ -321,69 +319,6 @@ function DashboardContent() {
           </div>
         </div>
       </section>
-
-      {/* DASHBOARD TAB NAVIGATION BAR (Solid Clean Bar) */}
-      <nav
-        aria-label="Bagian Analisis Dashboard"
-        className="bg-white p-2 rounded-2xl border border-slate-200 print:hidden"
-      >
-        <div className="flex flex-wrap items-center gap-1.5">
-          <button
-            type="button"
-            onClick={() => setActiveTab("dimensions")}
-            className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm transition-colors flex items-center gap-2 cursor-pointer ${
-              activeTab === "dimensions"
-                ? "bg-[#0f2c56] text-white font-bold"
-                : "text-slate-600 hover:text-[#0f2c56] hover:bg-slate-100 font-semibold"
-            }`}
-          >
-            <Target className="w-4 h-4" aria-hidden="true" />
-            <span>Skor &amp; 5 Dimensi ATS</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveTab("preview")}
-            className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm transition-colors flex items-center gap-2 cursor-pointer ${
-              activeTab === "preview"
-                ? "bg-[#0f2c56] text-white font-bold"
-                : "text-slate-600 hover:text-[#0f2c56] hover:bg-slate-100 font-semibold"
-            }`}
-          >
-            <FileText className="w-4 h-4" aria-hidden="true" />
-            <span>Dokumen CV ATS (Pratinjau)</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveTab("jobs")}
-            className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm transition-colors flex items-center gap-2 cursor-pointer ${
-              activeTab === "jobs"
-                ? "bg-[#0f2c56] text-white font-bold"
-                : "text-slate-600 hover:text-[#0f2c56] hover:bg-slate-100 font-semibold"
-            }`}
-          >
-            <Briefcase className="w-4 h-4" aria-hidden="true" />
-            <span>Lowongan Kerja Cocok</span>
-            <span className="text-[10px] font-mono bg-[#ce2731] text-white px-2 py-0.5 rounded-full font-bold">
-              {jobs.length}
-            </span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveTab("upload")}
-            className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm transition-colors flex items-center gap-2 cursor-pointer ${
-              activeTab === "upload"
-                ? "bg-[#ce2731] text-white font-bold"
-                : "text-slate-600 hover:text-[#0f2c56] hover:bg-slate-100 font-semibold"
-            }`}
-          >
-            <UploadCloud className="w-4 h-4" aria-hidden="true" />
-            <span>Uji Berkas CV Lain</span>
-          </button>
-        </div>
-      </nav>
 
       {/* TAB CONTENT 1: SKOR & 5 DIMENSI */}
       {activeTab === "dimensions" && (
