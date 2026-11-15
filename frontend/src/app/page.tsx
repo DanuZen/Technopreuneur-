@@ -388,12 +388,12 @@ export default function HomePage() {
           <div
             className={`lg:col-span-6 px-4 sm:px-8 lg:px-12 space-y-5 sm:space-y-6 text-left ${getChildAnimClass(0, "left", "delay-75")}`}
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0f2c56] text-xs font-bold text-white">
+            <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-[#0f2c56]">
               <Image
-                src="/logo-white.webp"
+                src="/logo-navy.webp"
                 alt="Pasbana AI"
-                width={18}
-                height={18}
+                width={20}
+                height={20}
                 className="object-contain"
               />
               <span>Pasbana AI • Evaluasi CV &amp; Karir</span>
@@ -593,12 +593,12 @@ export default function HomePage() {
           <div
             className={`lg:col-span-6 space-y-4 sm:space-y-5 text-left lg:pl-8 ${getChildAnimClass(1, "right", "delay-150")}`}
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0f2c56] text-xs font-extrabold uppercase tracking-wider text-white">
+            <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-white">
               <Image
                 src="/logo-white.webp"
                 alt="Pasbana AI"
-                width={18}
-                height={18}
+                width={20}
+                height={20}
                 className="object-contain"
               />
               <span>Pemeriksa Format ATS</span>
@@ -813,12 +813,12 @@ export default function HomePage() {
           <div
             className={`lg:col-span-6 space-y-4 sm:space-y-5 text-left lg:pl-10 ${getChildAnimClass(3, "right", "delay-150")}`}
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ce2731] text-xs font-extrabold uppercase tracking-wider text-white">
+            <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-white">
               <Image
                 src="/logo-white.webp"
                 alt="Pasbana AI"
-                width={18}
-                height={18}
+                width={20}
+                height={20}
                 className="object-contain"
               />
               <span>Asisten Kalimat Aktif</span>
