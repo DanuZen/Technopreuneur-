@@ -430,11 +430,11 @@ export default function HomePage() {
 
           {/* Right 6 Cols: Solid Isometric Vector UI Illustration inside Solid #0f2c56 Stage */}
           <div
-            className={`lg:col-span-6 h-full rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent p-4 sm:p-8 flex items-center justify-center ${getChildAnimClass(0, "right", "delay-150")}`}
+            className={`lg:col-span-6 h-full rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent p-3 sm:p-5 lg:p-6 flex items-center justify-center ${getChildAnimClass(0, "right", "delay-150")}`}
           >
             <svg
               viewBox="0 0 560 420"
-              className="w-full max-w-[540px] h-auto overflow-visible"
+              className="w-full max-w-[680px] xl:max-w-[740px] max-h-[82vh] h-auto overflow-visible"
               role="img"
               aria-label="Ilustrasi Isometrik Evaluasi CV dan Pencocokan Karir"
             >
@@ -674,11 +674,11 @@ export default function HomePage() {
 
           {/* Right 6 Cols: Isometric Gauge Disc + Dot-Matrix Board inside Morphed Navy Stage */}
           <div
-            className={`lg:col-span-6 h-full rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent p-4 sm:p-8 flex items-center justify-center ${getChildAnimClass(2, "right", "delay-150")}`}
+            className={`lg:col-span-6 h-full rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent p-3 sm:p-5 lg:p-6 flex items-center justify-center ${getChildAnimClass(2, "right", "delay-150")}`}
           >
             <svg
               viewBox="0 0 560 400"
-              className="w-full max-w-[540px] h-auto overflow-visible"
+              className="w-full max-w-[680px] xl:max-w-[740px] max-h-[82vh] h-auto overflow-visible"
               role="img"
               aria-label="Ilustrasi Isometrik Kesiapan Karir dan Pemetaan Jadwal"
             >
