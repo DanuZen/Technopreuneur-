@@ -35,6 +35,7 @@ function EvaluateContent() {
         titleLine1="Uji kualitas dokumen CV"
         titleLine2Prefix="dengan analisis"
         titleHighlight="standar ATS!"
+        align="center"
       />
 
       {/* Area Unggah Dokumen CV */}

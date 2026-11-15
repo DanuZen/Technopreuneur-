@@ -8,6 +8,7 @@ interface DashboardPageHeadingProps {
   titleLine2Prefix: string;
   titleHighlight: string;
   rightSlot?: React.ReactNode;
+  align?: "left" | "center";
 }
 
 export function DashboardPageHeading({
@@ -16,10 +17,21 @@ export function DashboardPageHeading({
   titleLine2Prefix,
   titleHighlight,
   rightSlot,
+  align = "left",
 }: DashboardPageHeadingProps) {
+  const isCentered = align === "center" && !rightSlot;
+
   return (
-    <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 print:hidden">
-      <div className="space-y-3 text-left flex flex-col items-start">
+    <div
+      className={`flex flex-col sm:flex-row sm:items-end gap-4 print:hidden ${
+        isCentered ? "justify-center" : "justify-between"
+      }`}
+    >
+      <div
+        className={`space-y-3 flex flex-col ${
+          isCentered ? "text-center items-center" : "text-left items-start"
+        }`}
+      >
         <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white">
           {badge}
         </span>
@@ -37,3 +49,4 @@ export function DashboardPageHeading({
     </div>
   );
 }
+
