@@ -398,7 +398,7 @@ export default function HomePage() {
         <div className="w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-center">
           {/* Left 6 Cols: Editorial Headline with Inline Red Pill Icon Badge */}
           <div
-            className="lg:col-span-6 px-4 sm:px-8 lg:px-12 space-y-5 sm:space-y-6 text-left"
+            className="lg:col-span-6 px-4 sm:px-8 lg:px-12 space-y-5 sm:space-y-6 text-right flex flex-col items-end"
           >
             <div className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white ${getTextRevealClass(0, "delay-75")}`}>
               Pasbana AI • Evaluasi CV &amp; Karir
@@ -420,11 +420,11 @@ export default function HomePage() {
               </span>
             </h1>
 
-            <p className={`text-sm sm:text-base text-slate-600 max-w-lg leading-relaxed ${getTextRevealClass(0, "delay-200")}`}>
+            <p className={`text-sm sm:text-base text-slate-600 max-w-lg ml-auto leading-relaxed ${getTextRevealClass(0, "delay-200")}`}>
               Dapatkan analisis objektif 5 dimensi terhadap kesiapan CV Anda dan rekomendasi lowongan kerja secara otomatis!
             </p>
 
-            <div className={`pt-1 flex flex-wrap items-center gap-3 ${getTextRevealClass(0, "delay-300")}`}>
+            <div className={`pt-1 flex flex-wrap items-center justify-end gap-3 ${getTextRevealClass(0, "delay-300")}`}>
               <Link
                 href="/evaluate"
                 className="px-6 py-3.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition-colors"
@@ -658,7 +658,7 @@ export default function HomePage() {
       >
         <div className="w-full h-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-center">
           {/* Left 6 Cols: Clean Bold Heading & Subtitle on Open White Canvas */}
-          <div className="lg:col-span-6 px-4 sm:px-8 lg:px-12 space-y-5 sm:space-y-6 text-left">
+          <div className="lg:col-span-6 px-4 sm:px-8 lg:px-12 space-y-5 sm:space-y-6 text-right flex flex-col items-end">
             <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white ${getTextRevealClass(2, "delay-75")}`}>
               Ekosistem Persiapan Karir
             </span>
@@ -670,10 +670,10 @@ export default function HomePage() {
                 paling optimal!
               </span>
             </h2>
-            <p className={`text-sm sm:text-base text-slate-600 max-w-lg leading-relaxed ${getTextRevealClass(2, "delay-200")}`}>
+            <p className={`text-sm sm:text-base text-slate-600 max-w-lg ml-auto leading-relaxed ${getTextRevealClass(2, "delay-200")}`}>
               Baik sudah memiliki file PDF maupun belum punya CV sama sekali, ukur 5 dimensi kualitas resume Anda pada waktu yang tepat untuk hasil seleksi terbaik!
             </p>
-            <div className={`pt-1 flex flex-wrap items-center gap-3 ${getTextRevealClass(2, "delay-300")}`}>
+            <div className={`pt-1 flex flex-wrap items-center justify-end gap-3 ${getTextRevealClass(2, "delay-300")}`}>
               <Link
                 href="/onboarding"
                 className="px-6 py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors"
