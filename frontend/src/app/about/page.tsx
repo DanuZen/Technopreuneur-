@@ -347,7 +347,7 @@ export default function AboutPage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(2)}`}
       >
-        <div className="relative w-full h-full mx-auto px-4 sm:px-8 lg:px-12 flex flex-col justify-center gap-6">
+        <div className="relative w-full h-full mx-auto px-4 sm:px-8 lg:px-12 flex flex-col justify-center gap-10 sm:gap-14">
           <div className="space-y-3 text-center max-w-2xl mx-auto flex flex-col items-center">
             <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white ${getTextRevealClass(2, "delay-75")}`}>
               Tim Pengembang
@@ -360,7 +360,7 @@ export default function AboutPage() {
             </h2>
           </div>
 
-          <div ref={teamGridRef} className="relative grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div ref={teamGridRef} className="relative grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 pt-6">
             {TEAM_MEMBERS.map((member, idx) => {
               const isSelected = activeMemberIdx === idx;
               const isCrimson = idx % 2 === 1;
@@ -372,7 +372,7 @@ export default function AboutPage() {
                   }}
                   onMouseEnter={() => setActiveMemberIdx(idx)}
                   onClick={() => setActiveMemberIdx(idx)}
-                  className={`rounded-[28px] p-6 sm:p-8 cursor-pointer transition-colors duration-300 flex flex-col justify-between gap-5 min-h-[230px] ${
+                  className={`rounded-[28px] px-6 pb-7 pt-5 sm:px-8 sm:pb-8 sm:pt-6 cursor-pointer transition-colors duration-300 flex flex-col justify-between items-center text-center gap-5 min-h-[260px] ${
                     isSelected
                       ? isCrimson
                         ? "bg-[#ce2731] lg:bg-transparent text-white"
@@ -380,39 +380,48 @@ export default function AboutPage() {
                       : "bg-white border border-slate-200 text-[#0f2c56]"
                   }`}
                 >
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-4">
+                  <div className="space-y-4 flex flex-col items-center">
+                    {/* Pop-Out Portrait Stage matching protokoler.unp.ac.id */}
+                    <div className="relative w-36 h-36 -mt-14 rounded-b-2xl overflow-hidden flex items-end justify-center">
                       <div
-                        className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden shrink-0 border-2 transition-colors ${
+                        className={`absolute inset-x-0 bottom-0 h-24 rounded-2xl transition-colors duration-500 ${
                           isSelected
-                            ? "bg-white border-white"
-                            : "bg-[#fefefd] border-slate-200"
+                            ? isCrimson
+                              ? "bg-[#0f2c56]"
+                              : "bg-[#ce2731]"
+                            : "bg-[#edf2f9]"
+                        }`}
+                      />
+                      <Image
+                        src="/team-danu.png"
+                        alt={member.name}
+                        width={160}
+                        height={280}
+                        className={`relative z-10 w-28 h-28 object-cover object-top transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                          isSelected
+                            ? "grayscale-0 -translate-y-3 scale-110"
+                            : "grayscale opacity-90 translate-y-1 scale-95"
+                        }`}
+                      />
+                    </div>
+
+                    <div className="space-y-2 flex flex-col items-center">
+                      <span
+                        className={`inline-flex items-center px-3 py-0.5 rounded-full text-[11px] font-bold transition-colors duration-300 ${
+                          isSelected
+                            ? "bg-white text-[#0f2c56]"
+                            : isCrimson
+                            ? "bg-[#ce2731] text-white"
+                            : "bg-[#0f2c56] text-white"
                         }`}
                       >
-                        <Image
-                          src="/team-danu.png"
-                          alt={member.name}
-                          fill
-                          className="object-cover object-top"
-                        />
-                      </div>
-                      <div className="space-y-1.5 min-w-0">
-                        <span
-                          className={`inline-flex items-center px-3 py-0.5 rounded-full text-[11px] font-bold ${
-                            isSelected
-                              ? "bg-white text-[#0f2c56]"
-                              : isCrimson
-                              ? "bg-[#ce2731] text-white"
-                              : "bg-[#0f2c56] text-white"
-                          }`}
-                        >
-                          {member.role}
-                        </span>
-                        <h3 className="text-base sm:text-lg font-extrabold leading-snug">
-                          {member.name}
-                        </h3>
-                      </div>
+                        {member.role}
+                      </span>
+                      <h3 className="text-lg sm:text-xl font-extrabold leading-snug">
+                        {member.name}
+                      </h3>
                     </div>
+
                     <p
                       className={`text-xs sm:text-sm leading-relaxed ${
                         isSelected ? "text-white/85" : "text-slate-600"
