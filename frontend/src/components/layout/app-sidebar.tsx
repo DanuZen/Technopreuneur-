@@ -13,10 +13,13 @@ import {
   FileSpreadsheet,
   X,
   Trash2,
+  Building2,
+  ShieldCheck,
+  Users,
 } from "lucide-react";
 import { CVAnalysisResult } from "@/types";
 import { api } from "@/lib/api";
-import { getRoleFromPathname, getDashboardBasePath } from "@/lib/routes";
+import { getRoleFromPathname, getDashboardBasePath, getRoleSegment } from "@/lib/routes";
 
 export interface ItemRiwayatEvaluasi {
   id: string;
@@ -61,6 +64,7 @@ export function AppSidebar({
   const roleInUrl = /^\/(user|company|admin)\/dashboard(\/|$)/.test(pathname)
     ? getRoleFromPathname(pathname)
     : null;
+  const activeRole = roleInUrl || getRoleSegment(userRole);
   const baseDashboardPath = roleInUrl
     ? `/${roleInUrl}/dashboard`
     : getDashboardBasePath(userRole);
@@ -126,46 +130,113 @@ export function AppSidebar({
     item.judul.toLowerCase().includes(kataKunci.toLowerCase())
   );
 
-  const navLinks = [
-    {
-      label: "Evaluasi CV",
-      href: `${baseDashboardPath}/evaluasi`,
-      icon: FileCheck,
-      desc: "Unggah berkas PDF / DOCX",
-      isActive:
-        pathname === baseDashboardPath ||
-        pathname === "/dashboard" ||
-        pathname.startsWith(`${baseDashboardPath}/evaluasi`) ||
-        pathname === "/evaluate",
-    },
-    {
-      label: "Onboarding CV",
-      href: `${baseDashboardPath}/onboarding`,
-      icon: FileSpreadsheet,
-      desc: "Susun CV dari kuesioner",
-      isActive:
-        pathname.startsWith(`${baseDashboardPath}/onboarding`) ||
-        pathname === "/onboarding",
-    },
-    {
-      label: "Dokumen CV ATS",
-      href: `${baseDashboardPath}/dokumen`,
-      icon: FileText,
-      desc: "Pratinjau & cetak CV standar ATS",
-      isActive:
-        pathname.startsWith(`${baseDashboardPath}/dokumen`) ||
-        pathname.startsWith("/dashboard/dokumen"),
-    },
-    {
-      label: "Lowongan Cocok",
-      href: `${baseDashboardPath}/lowongan`,
-      icon: Briefcase,
-      desc: "Rekomendasi karir di dashboard",
-      isActive:
-        pathname.startsWith(`${baseDashboardPath}/lowongan`) ||
-        pathname.startsWith("/dashboard/lowongan"),
-    },
-  ];
+  const navLinks =
+    activeRole === "company"
+      ? [
+          {
+            label: "Beranda Perusahaan",
+            href: baseDashboardPath,
+            icon: Building2,
+            desc: "Ringkasan rekrutmen & kandidat",
+            isActive: pathname === baseDashboardPath,
+          },
+          {
+            label: "Kelola Lowongan",
+            href: `${baseDashboardPath}/lowongan`,
+            icon: Briefcase,
+            desc: "Pasang & kelola posisi aktif",
+            isActive: pathname.startsWith(`${baseDashboardPath}/lowongan`),
+          },
+          {
+            label: "Seleksi Kandidat",
+            href: `${baseDashboardPath}/evaluasi`,
+            icon: Users,
+            desc: "Tinjau skor ATS pelamar",
+            isActive: pathname.startsWith(`${baseDashboardPath}/evaluasi`),
+          },
+          {
+            label: "Profil Perusahaan",
+            href: `${baseDashboardPath}/dokumen`,
+            icon: FileText,
+            desc: "Identitas & standar mitra",
+            isActive:
+              pathname.startsWith(`${baseDashboardPath}/dokumen`) ||
+              pathname.startsWith(`${baseDashboardPath}/onboarding`),
+          },
+        ]
+      : activeRole === "admin"
+      ? [
+          {
+            label: "Ringkasan Sistem",
+            href: baseDashboardPath,
+            icon: ShieldCheck,
+            desc: "Statistik & kendali platform",
+            isActive: pathname === baseDashboardPath,
+          },
+          {
+            label: "Moderasi Lowongan",
+            href: `${baseDashboardPath}/lowongan`,
+            icon: Briefcase,
+            desc: "Verifikasi lowongan mitra",
+            isActive: pathname.startsWith(`${baseDashboardPath}/lowongan`),
+          },
+          {
+            label: "Audit Evaluasi CV",
+            href: `${baseDashboardPath}/evaluasi`,
+            icon: FileCheck,
+            desc: "Pantau kualitas skor ATS",
+            isActive: pathname.startsWith(`${baseDashboardPath}/evaluasi`),
+          },
+          {
+            label: "Laporan Platform",
+            href: `${baseDashboardPath}/dokumen`,
+            icon: FileSpreadsheet,
+            desc: "Ringkasan eksekutif & kepatuhan",
+            isActive:
+              pathname.startsWith(`${baseDashboardPath}/dokumen`) ||
+              pathname.startsWith(`${baseDashboardPath}/onboarding`),
+          },
+        ]
+      : [
+          {
+            label: "Evaluasi CV",
+            href: `${baseDashboardPath}/evaluasi`,
+            icon: FileCheck,
+            desc: "Unggah berkas PDF / DOCX",
+            isActive:
+              pathname === baseDashboardPath ||
+              pathname === "/dashboard" ||
+              pathname.startsWith(`${baseDashboardPath}/evaluasi`) ||
+              pathname === "/evaluate",
+          },
+          {
+            label: "Onboarding CV",
+            href: `${baseDashboardPath}/onboarding`,
+            icon: FileSpreadsheet,
+            desc: "Susun CV dari kuesioner",
+            isActive:
+              pathname.startsWith(`${baseDashboardPath}/onboarding`) ||
+              pathname === "/onboarding",
+          },
+          {
+            label: "Dokumen CV ATS",
+            href: `${baseDashboardPath}/dokumen`,
+            icon: FileText,
+            desc: "Pratinjau & cetak CV standar ATS",
+            isActive:
+              pathname.startsWith(`${baseDashboardPath}/dokumen`) ||
+              pathname.startsWith("/dashboard/dokumen"),
+          },
+          {
+            label: "Lowongan Cocok",
+            href: `${baseDashboardPath}/lowongan`,
+            icon: Briefcase,
+            desc: "Rekomendasi karir di dashboard",
+            isActive:
+              pathname.startsWith(`${baseDashboardPath}/lowongan`) ||
+              pathname.startsWith("/dashboard/lowongan"),
+          },
+        ];
 
   return (
     <>
