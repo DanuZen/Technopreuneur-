@@ -3,9 +3,9 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Compass, Shield, Cpu, ArrowUpRight } from "lucide-react";
+import { Compass, Shield } from "lucide-react";
 
-const TOTAL_SLIDES = 4;
+const TOTAL_SLIDES = 3;
 
 const TEAM_MEMBERS = [
   {
@@ -25,29 +25,6 @@ const TEAM_MEMBERS = [
     role: "Backend AI Lead",
     nim: "23343006",
     focus: "Pipeline NLP, penilaian CV 5 dimensi, dan pencocokan berbasis pgvector.",
-  },
-];
-
-const TECH_STACK = [
-  {
-    tag: "Frontend",
-    title: "Next.js & Tailwind CSS",
-    desc: "Antarmuka cepat dan responsif pada Vercel Hobby Tier.",
-  },
-  {
-    tag: "Backend API",
-    title: "Node.js & Express",
-    desc: "Orkestrasi layanan pengguna, sesi, dan portal lowongan.",
-  },
-  {
-    tag: "AI Engine",
-    title: "FastAPI & Gemini Free",
-    desc: "Evaluasi 5 dimensi dan asisten perbaikan kalimat aktif.",
-  },
-  {
-    tag: "Database",
-    title: "Supabase PostgreSQL",
-    desc: "Penyimpanan relasional dan pencarian vektor pgvector.",
   },
 ];
 
@@ -200,7 +177,8 @@ export default function AboutPage() {
           borderRadius: "34px",
           backgroundColor: "#ce2731",
         };
-      case 2: {
+      case 2:
+      default: {
         const isCrimson = activeMemberIdx % 2 === 1;
         return {
           top: `${memberRect.top}px`,
@@ -211,16 +189,6 @@ export default function AboutPage() {
           backgroundColor: isCrimson ? "#ce2731" : "#0f2c56",
         };
       }
-      case 3:
-      default:
-        return {
-          top: "4px",
-          left: "16px",
-          width: "calc(41.666667% - 25px)",
-          height: "calc(100% - 8px)",
-          borderRadius: "28px",
-          backgroundColor: "#0f2c56",
-        };
     }
   };
 
@@ -440,69 +408,6 @@ export default function AboutPage() {
                 </div>
               );
             })}
-          </div>
-        </div>
-      </section>
-
-      {/* SLIDE 3: ARSITEKTUR ZERO BUDGET & CTA */}
-      <section
-        className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(3)}`}
-      >
-        <div className="w-full h-full mx-auto px-2 sm:px-4 grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-          <div className="lg:col-span-5 flex flex-col py-1">
-            <div className="bg-[#0f2c56] lg:bg-transparent text-white rounded-[28px] p-6 sm:p-8 lg:p-10 flex flex-col justify-center items-center text-center gap-6 flex-1">
-              <div className="space-y-4 flex flex-col items-center">
-                <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#ce2731] text-white text-xs font-bold ${getTextRevealClass(3, "delay-75")}`}>
-                  Arsitektur Zero Budget
-                </span>
-                <h2 className={`text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-[1.22] ${getTextRevealClass(3, "delay-150")}`}>
-                  Infrastruktur modern{" "}
-                  <span className={`inline-block bg-[#ce2731] text-white px-3 py-0.5 rounded-xl mt-1.5 ${getHighlightPopClass(3, "delay-300")}`}>
-                    biaya Rp 0.
-                  </span>
-                </h2>
-                <p className={`text-sm text-white/85 max-w-md mx-auto leading-relaxed ${getTextRevealClass(3, "delay-200")}`}>
-                  Dirancang dengan strategi zero operational cost agar seluruh mahasiswa dan pencari kerja dapat menikmati evaluasi CV tanpa biaya berlangganan.
-                </p>
-              </div>
-
-              <div className={`flex flex-wrap items-center justify-center gap-3 ${getTextRevealClass(3, "delay-300")}`}>
-                <Link
-                  href="/evaluate"
-                  className="px-6 py-3.5 rounded-xl bg-[#ce2731] hover:bg-white text-white hover:text-[#0f2c56] text-xs sm:text-sm font-bold transition-colors inline-flex items-center gap-2"
-                >
-                  <span>Evaluasi CV Sekarang</span>
-                  <ArrowUpRight className="w-4 h-4" />
-                </Link>
-                <Link
-                  href="/"
-                  className="px-6 py-3.5 rounded-xl bg-white hover:bg-[#ce2731] text-[#0f2c56] hover:text-white text-xs sm:text-sm font-bold transition-colors"
-                >
-                  Halaman Utama
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          <div className="lg:col-span-7 flex flex-col justify-center gap-4 py-2 lg:pl-4">
-            <div className="flex items-center gap-2.5">
-              <Cpu className="w-5 h-5 text-[#ce2731]" aria-hidden="true" />
-              <span className="text-sm font-extrabold text-[#0f2c56]">Tumpukan Teknologi Terpadu</span>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {TECH_STACK.map((item, idx) => (
-                <div
-                  key={item.title}
-                  className={`rounded-[24px] bg-white border border-slate-200 p-6 space-y-2.5 ${getTextRevealClass(3, idx < 2 ? "delay-150" : "delay-200")}`}
-                >
-                  <span className="inline-flex items-center px-3 py-0.5 rounded-full bg-[#0f2c56] text-white text-[11px] font-bold">
-                    {item.tag}
-                  </span>
-                  <h3 className="text-base sm:text-lg font-extrabold text-[#0f2c56]">{item.title}</h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{item.desc}</p>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </section>
