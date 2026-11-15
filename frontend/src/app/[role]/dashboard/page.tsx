@@ -4,11 +4,18 @@ import { useParams, notFound } from "next/navigation";
 import Link from "next/link";
 import { Briefcase, Users, ShieldCheck, ArrowUpRight, FileCheck } from "lucide-react";
 import DashboardPage from "@/app/dashboard/page";
+import { DashboardPageHeading } from "@/components/dashboard/dashboard-page-heading";
 import { isValidDashboardRole } from "@/lib/routes";
 
 function CompanyDashboardView() {
   return (
     <main className="min-h-full max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      <DashboardPageHeading
+        badge="Portal Perusahaan"
+        titleLine1="Temukan talenta muda"
+        titleLine2Prefix="dengan kesiapan"
+        titleHighlight="paling sesuai!"
+      />
       <div className="bg-[#0f2c56] text-white rounded-[28px] p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div className="space-y-2 max-w-2xl">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ce2731] text-white text-[11px] font-bold uppercase tracking-wider">
@@ -62,6 +69,12 @@ function CompanyDashboardView() {
 function AdminDashboardView() {
   return (
     <main className="min-h-full max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      <DashboardPageHeading
+        badge="Panel Administrator"
+        titleLine1="Kelola ekosistem karir"
+        titleLine2Prefix="secara terpusat &"
+        titleHighlight="terukur!"
+      />
       <div className="bg-[#0f2c56] text-white rounded-[28px] p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div className="space-y-2 max-w-2xl">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ce2731] text-white text-[11px] font-bold uppercase tracking-wider">
@@ -106,3 +119,4 @@ export default function RoleDashboardPage() {
 
   return <DashboardPage />;
 }
+

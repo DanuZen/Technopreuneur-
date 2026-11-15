@@ -7,6 +7,7 @@ import { UploadCloud, FileSpreadsheet, ArrowUpRight } from "lucide-react";
 import { api } from "@/lib/api";
 import { CVAnalysisResult } from "@/types";
 import { AtsCvPreview } from "@/components/dashboard/ats-cv-preview";
+import { DashboardPageHeading } from "@/components/dashboard/dashboard-page-heading";
 
 export default function DokumenCvAtsPage() {
   const router = useRouter();
@@ -51,6 +52,12 @@ export default function DokumenCvAtsPage() {
   if (!analysis) {
     return (
       <main className="min-h-full max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+        <DashboardPageHeading
+          badge="Dokumen CV ATS"
+          titleLine1="Pratinjau & cetak CV"
+          titleLine2Prefix="dengan format"
+          titleHighlight="siap lamaran!"
+        />
         <div className="bg-white border border-slate-200 rounded-[28px] p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="space-y-2 max-w-2xl">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0f2c56] text-white text-[11px] font-bold uppercase tracking-wider">
@@ -95,6 +102,12 @@ export default function DokumenCvAtsPage() {
 
   return (
     <main className="min-h-full max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      <DashboardPageHeading
+        badge="Dokumen CV ATS"
+        titleLine1="Pratinjau & cetak CV"
+        titleLine2Prefix="dengan format"
+        titleHighlight="siap lamaran!"
+      />
       <AtsCvPreview
         profile={analysis.profile}
         onEdit={() => router.push("/user/dashboard/onboarding")}

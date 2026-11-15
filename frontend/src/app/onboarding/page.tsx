@@ -15,6 +15,7 @@ import {
   FileSpreadsheet,
 } from "lucide-react";
 import { AtsOnboardingWizard } from "@/components/dashboard/ats-onboarding-wizard";
+import { DashboardPageHeading } from "@/components/dashboard/dashboard-page-heading";
 import { CVAnalysisResult } from "@/types";
 import { api } from "@/lib/api";
 
@@ -86,6 +87,13 @@ export default function OnboardingPage() {
           </div>
         </div>
       </div>
+
+      <DashboardPageHeading
+        badge="Onboarding CV ATS"
+        titleLine1="Susun dokumen CV standar"
+        titleLine2Prefix="dengan struktur"
+        titleHighlight="ATS 1-kolom!"
+      />
 
       {/* Kontainer Utama: 12-Column Asymmetric Bento Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch flex-1">

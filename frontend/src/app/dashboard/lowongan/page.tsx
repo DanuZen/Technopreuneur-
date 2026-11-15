@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { api } from "@/lib/api";
 import { CVAnalysisResult, JobItem } from "@/types";
+import { DashboardPageHeading } from "@/components/dashboard/dashboard-page-heading";
 
 const DEFAULT_RECOMMENDED_JOBS: JobItem[] = [
   {
@@ -93,37 +94,32 @@ export default function LowonganCocokPage() {
 
   return (
     <main className="min-h-full max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-5 sm:p-6 rounded-2xl border border-slate-200">
-        <div>
-          <h1 className="text-lg sm:text-xl font-extrabold text-[#0f2c56]">
-            Rekomendasi Lowongan Sesuai Profil
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-600 mt-0.5">
-            {analysis
-              ? "Pencocokan berbasis keahlian teknis dan preferensi posisi yang Anda cantumkan."
-              : "Unggah CV Anda di Evaluasi CV untuk melihat persentase kecocokan keahlian pada setiap lowongan."}
-          </p>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
-          {!analysis && (
+      <DashboardPageHeading
+        badge="Lowongan Cocok"
+        titleLine1="Temukan peluang karir"
+        titleLine2Prefix="yang paling"
+        titleHighlight="sesuai profil!"
+        rightSlot={
+          <div className="flex flex-wrap items-center gap-2">
+            {!analysis && (
+              <Link
+                href="/user/dashboard/evaluasi"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors"
+              >
+                <UploadCloud className="w-3.5 h-3.5" />
+                <span>Evaluasi CV</span>
+              </Link>
+            )}
             <Link
-              href="/user/dashboard/evaluasi"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors"
+              href="/jobs"
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors"
             >
-              <UploadCloud className="w-3.5 h-3.5" />
-              <span>Evaluasi CV</span>
+              <span>Jelajahi Semua Lowongan</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
             </Link>
-          )}
-          <Link
-            href="/jobs"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors"
-          >
-            <span>Jelajahi Semua Lowongan</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-      </div>
+          </div>
+        }
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {jobs.map((job) => {

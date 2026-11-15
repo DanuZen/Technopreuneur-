@@ -9,6 +9,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { CVDropzone } from "@/components/cv/cv-dropzone";
+import { DashboardPageHeading } from "@/components/dashboard/dashboard-page-heading";
 import { CVAnalysisResult } from "@/types";
 import { api } from "@/lib/api";
 
@@ -30,29 +31,25 @@ function EvaluateContent() {
 
   return (
     <div className="min-h-full max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-6">
+      <DashboardPageHeading
+        badge="Evaluasi Berkas Digital"
+        titleLine1="Uji kualitas dokumen CV"
+        titleLine2Prefix="dengan analisis"
+        titleHighlight="standar ATS!"
+        rightSlot={
+          <Link
+            href="/user/dashboard/onboarding"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white font-bold text-xs transition-colors"
+          >
+            <FileSpreadsheet className="w-4 h-4" aria-hidden="true" />
+            <span>Belum Punya CV? Buat di Onboarding</span>
+            <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+          </Link>
+        }
+      />
+
       <div className="bg-white border border-slate-200 rounded-[28px] p-6 sm:p-8 flex flex-col justify-between gap-6 flex-1">
           <div>
-            {/* Header Panggung + Tombol Menuju Halaman Onboarding */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 mb-6 border-b border-slate-200/80">
-              <div>
-                <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#ce2731]">
-                  Evaluasi Berkas Digital
-                </span>
-                <h3 className="text-lg sm:text-xl font-extrabold text-[#0f2c56] font-heading">
-                  Unggah Dokumen CV Anda
-                </h3>
-              </div>
-
-              <Link
-                href="/user/dashboard/onboarding"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white font-bold text-xs transition-colors self-start sm:self-auto"
-              >
-                <FileSpreadsheet className="w-4 h-4" aria-hidden="true" />
-                <span>Belum Punya CV? Buat di Onboarding</span>
-                <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-              </Link>
-            </div>
-
             {/* Area Unggah Dokumen CV */}
             <CVDropzone onAnalysisComplete={handleAnalysisSuccess} />
           </div>
