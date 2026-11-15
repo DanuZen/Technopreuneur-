@@ -3,22 +3,17 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
-  Search,
   FileCheck,
   Briefcase,
   Home,
   FileText,
   FileSpreadsheet,
-  X,
-  Trash2,
   Building2,
   ShieldCheck,
   Users,
 } from "lucide-react";
-import { CVAnalysisResult } from "@/types";
-import { api } from "@/lib/api";
 import { getRoleFromPathname, getDashboardBasePath, getRoleSegment } from "@/lib/routes";
 
 export interface ItemRiwayatEvaluasi {
@@ -42,11 +37,6 @@ export function AppSidebar({
   onToggleDesktopCollapse,
 }: AppSidebarProps) {
   const pathname = usePathname();
-  const router = useRouter();
-
-  const [daftarRiwayat, setDaftarRiwayat] = useState<ItemRiwayatEvaluasi[]>([]);
-  const [cariTerbuka, setCariTerbuka] = useState(false);
-  const [kataKunci, setKataKunci] = useState("");
   const [userRole, setUserRole] = useState<string | null>(null);
 
   useEffect(() => {
@@ -68,67 +58,6 @@ export function AppSidebar({
   const baseDashboardPath = roleInUrl
     ? `/${roleInUrl}/dashboard`
     : getDashboardBasePath(userRole);
-
-  useEffect(() => {
-    const syncHistory = () => {
-      try {
-        const storedHistory = api.getHistory();
-        const fallbackCurrent = api.getCurrentAnalysis();
-        const combined = [...storedHistory];
-        if (
-          fallbackCurrent &&
-          !combined.some((entry) => entry.cvId === fallbackCurrent.cvId)
-        ) {
-          combined.unshift(fallbackCurrent);
-        }
-
-        const mappedFromStorage: ItemRiwayatEvaluasi[] = combined
-          .map((parsed) => {
-            const rawCvName = parsed?.fileName
-              ? parsed.fileName.replace(/\.[^/.]+$/, "").replace(/[-_]+/g, " ").trim()
-              : parsed?.profile?.fullName?.trim();
-            if (!rawCvName) return null;
-            const judul = parsed?.fileName
-              ? rawCvName
-              : /^(cv|resume)\b/i.test(rawCvName)
-              ? `${rawCvName} (Onboarding)`
-              : `CV ${rawCvName} (Onboarding)`;
-            return {
-              id: parsed.cvId || "eval-terbaru",
-              judul,
-              skor: parsed.overallScore || 85,
-              tanggal: "Aktif",
-            };
-          })
-          .filter((item): item is ItemRiwayatEvaluasi => item !== null);
-
-        setDaftarRiwayat(mappedFromStorage);
-      } catch {
-        // ignore parse error
-      }
-    };
-
-    syncHistory();
-    window.addEventListener("pasbana:history-updated", syncHistory);
-    return () => {
-      window.removeEventListener("pasbana:history-updated", syncHistory);
-    };
-  }, [pathname]);
-
-  const handlePilihRiwayat = (id: string) => {
-    onCloseMobile();
-    router.push(`${baseDashboardPath}/riwayat/${encodeURIComponent(id)}`);
-  };
-
-  const handleHapusRiwayat = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    api.removeHistory(id);
-    setDaftarRiwayat((prev) => prev.filter((item) => item.id !== id));
-  };
-
-  const riwayatTersaring = daftarRiwayat.filter((item) =>
-    item.judul.toLowerCase().includes(kataKunci.toLowerCase())
-  );
 
   const navLinks =
     activeRole === "company"
@@ -394,111 +323,6 @@ export function AppSidebar({
                     </Link>
                   );
                 })}
-              </div>
-
-              {/* Riwayat Evaluasi CV (Like ChatGPT Chats!) */}
-              <div className="pt-2 space-y-2">
-                <div className="flex items-center justify-between px-2">
-                  <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 font-bold">
-                    Riwayat Sesi ({daftarRiwayat.length})
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setCariTerbuka((s) => !s);
-                      setKataKunci("");
-                    }}
-                    className="flex h-7 w-7 items-center justify-center rounded-lg text-slate-500 hover:text-primary hover:bg-white/80 transition-colors"
-                    title="Cari riwayat CV"
-                    aria-label="Cari riwayat evaluasi"
-                  >
-                    <Search className="w-3.5 h-3.5" aria-hidden="true" />
-                  </button>
-                </div>
-
-                {/* Filter Search Input */}
-                {cariTerbuka && (
-                  <div className="relative px-1">
-                    <div className="flex items-center gap-1.5 rounded-xl bg-white px-2.5 py-1.5 shadow-xs">
-                      <Search className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                      <input
-                        type="text"
-                        value={kataKunci}
-                        onChange={(e) => setKataKunci(e.target.value)}
-                        placeholder="Cari riwayat evaluasi..."
-                        className="w-full text-xs text-primary bg-transparent focus:outline-none placeholder:text-slate-400"
-                        autoFocus
-                      />
-                      {kataKunci && (
-                        <button
-                          type="button"
-                          onClick={() => setKataKunci("")}
-                          className="text-slate-400 hover:text-slate-600"
-                          aria-label="Bersihkan pencarian"
-                        >
-                          <X className="w-3 h-3" />
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                {/* History Items List */}
-                <div className="space-y-1.5">
-                  {riwayatTersaring.length === 0 ? (
-                    <p className="px-2 py-3 text-[11px] text-slate-500 bg-white/60 rounded-xl">
-                      {kataKunci.trim()
-                        ? "Tidak ada riwayat evaluasi yang sesuai."
-                        : "Belum ada CV yang dievaluasi atau disusun."}
-                    </p>
-                  ) : (
-                    riwayatTersaring.map((item) => {
-                      const sessionHref = `${baseDashboardPath}/riwayat/${encodeURIComponent(
-                        item.id
-                      )}`;
-                      const isSessionActive =
-                        pathname === sessionHref ||
-                        decodeURIComponent(pathname) ===
-                          `${baseDashboardPath}/riwayat/${item.id}`;
-                      return (
-                        <div
-                          key={item.id}
-                          onClick={() => handlePilihRiwayat(item.id)}
-                          role="button"
-                          tabIndex={0}
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter" || e.key === " ") {
-                              handlePilihRiwayat(item.id);
-                            }
-                          }}
-                          className={`group flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[13px] font-semibold transition-all cursor-pointer ${
-                            isSessionActive
-                              ? "bg-[#0f2c56] text-white"
-                              : "text-slate-700 hover:bg-white hover:text-[#0f2c56]"
-                          }`}
-                        >
-                          <FileCheck className="w-[18px] h-[18px] shrink-0" aria-hidden="true" />
-                          <div className="flex-1 min-w-0">
-                            <p className="truncate leading-tight">{item.judul}</p>
-                          </div>
-                          <button
-                            type="button"
-                            onClick={(e) => handleHapusRiwayat(item.id, e)}
-                            className={`opacity-0 group-hover:opacity-100 p-1 transition-opacity shrink-0 ${
-                              isSessionActive
-                                ? "text-white/75 hover:text-white"
-                                : "text-slate-400 hover:text-[#ce2731]"
-                            }`}
-                            title="Hapus riwayat ini"
-                            aria-label={`Hapus ${item.judul}`}
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
-                      );
-                    })
-                  )}
-                </div>
               </div>
             </div>
 

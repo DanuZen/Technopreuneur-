@@ -41,7 +41,7 @@ export default function RiwayatSesiDetailPage() {
     return (
       <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-6">
         <DashboardPageHeading
-          badge="Riwayat Sesi"
+          badge="Hasil Evaluasi CV"
           titleLine1="Sesi evaluasi CV"
           titleLine2Prefix="tidak"
           titleHighlight="ditemukan!"

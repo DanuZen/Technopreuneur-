@@ -169,7 +169,7 @@ export default function OnboardingPage() {
                   <div className="flex items-start gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-white shrink-0 mt-0.5" />
                     <p className="text-xs text-white leading-snug">
-                      <span className="font-bold">Siap Cetak &amp; Evaluasi:</span> langsung tersimpan ke Dokumen CV ATS dan Riwayat Sesi.
+                      <span className="font-bold">Siap Cetak &amp; Evaluasi:</span> langsung tersimpan ke Dokumen CV ATS.
                     </p>
                   </div>
                 </div>
