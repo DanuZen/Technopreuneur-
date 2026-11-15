@@ -206,59 +206,57 @@ export default function DokumenCvAtsPage() {
             </div>
           </div>
 
-          <div className="flex-1 flex flex-col justify-between gap-3 px-1 text-[#0f2c56]">
+          <div className="bg-white border border-slate-200 rounded-3xl p-5 flex-1 flex flex-col justify-center gap-3 text-[#0f2c56]">
+            <p className="text-xs font-extrabold uppercase tracking-wider">
+              Panduan &amp; Tips Cetak PDF
+            </p>
             <div className="space-y-2.5">
-              <p className="text-xs font-extrabold uppercase tracking-wider">
-                Panduan &amp; Tips Cetak PDF
-              </p>
-              <div className="space-y-2">
-                <div className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#0f2c56] shrink-0 mt-0.5" />
-                  <p className="text-xs leading-relaxed">
-                    <span className="font-bold">Proporsi A4 Akurat:</span> lebar 210 mm dan tinggi 297 mm agar hasil ekspor PDF tetap rapi saat dibuka rekruter.
-                  </p>
-                </div>
-                <div className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#0f2c56] shrink-0 mt-0.5" />
-                  <p className="text-xs leading-relaxed">
-                    <span className="font-bold">100% Terbaca Parser ATS:</span> bebas tabel rumit, kolom ganda, maupun elemen grafis yang menghambat ekstraksi teks.
-                  </p>
-                </div>
-                <div className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#0f2c56] shrink-0 mt-0.5" />
-                  <p className="text-xs leading-relaxed">
-                    <span className="font-bold">Pengaturan Cetak:</span> klik <span className="font-semibold">Cetak / Unduh PDF</span>, pilih ukuran <span className="font-semibold">A4</span>, lalu nonaktifkan opsi <span className="font-semibold">Headers and footers</span>.
-                  </p>
-                </div>
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 className="w-4 h-4 text-[#0f2c56] shrink-0 mt-0.5" />
+                <p className="text-xs leading-relaxed">
+                  <span className="font-bold">Proporsi A4 Akurat:</span> lebar 210 mm dan tinggi 297 mm agar hasil ekspor PDF tetap rapi saat dibuka rekruter.
+                </p>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 className="w-4 h-4 text-[#0f2c56] shrink-0 mt-0.5" />
+                <p className="text-xs leading-relaxed">
+                  <span className="font-bold">100% Terbaca Parser ATS:</span> bebas tabel rumit, kolom ganda, maupun elemen grafis yang menghambat ekstraksi teks.
+                </p>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 className="w-4 h-4 text-[#0f2c56] shrink-0 mt-0.5" />
+                <p className="text-xs leading-relaxed">
+                  <span className="font-bold">Pengaturan Cetak:</span> klik <span className="font-semibold">Cetak / Unduh PDF</span>, pilih ukuran <span className="font-semibold">A4</span>, lalu nonaktifkan opsi <span className="font-semibold">Headers and footers</span>.
+                </p>
               </div>
             </div>
+          </div>
 
-            <div className="pt-3 border-t border-slate-200/80 space-y-2">
-              <p className="text-[11px] font-bold uppercase tracking-wider">
-                Kelengkapan Bagian CV
-              </p>
-              <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-                {[
-                  { label: "Ringkasan Profil", ok: Boolean(analysis.profile.summary) },
-                  { label: "Keahlian & Alat", ok: Boolean(analysis.profile.skills) },
-                  {
-                    label: "Pengalaman / Proyek",
-                    ok: Boolean(analysis.profile.experiences?.length),
-                  },
-                  {
-                    label: "Pendidikan Formal",
-                    ok: Boolean(analysis.profile.education?.length),
-                  },
-                ].map((item) => (
-                  <div
-                    key={item.label}
-                    className="text-xs font-bold flex items-center gap-2 text-[#0f2c56]"
-                  >
-                    <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-[#0f2c56]" />
-                    <span className="truncate">{item.label}</span>
-                  </div>
-                ))}
-              </div>
+          <div className="bg-[#edf2f9] rounded-3xl p-5 space-y-2.5 shrink-0 text-[#0f2c56]">
+            <p className="text-xs font-extrabold uppercase tracking-wider">
+              Kelengkapan Bagian CV
+            </p>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+              {[
+                { label: "Ringkasan Profil", ok: Boolean(analysis.profile.summary) },
+                { label: "Keahlian & Alat", ok: Boolean(analysis.profile.skills) },
+                {
+                  label: "Pengalaman / Proyek",
+                  ok: Boolean(analysis.profile.experiences?.length),
+                },
+                {
+                  label: "Pendidikan Formal",
+                  ok: Boolean(analysis.profile.education?.length),
+                },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className="text-xs font-bold flex items-center gap-2 text-[#0f2c56]"
+                >
+                  <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-[#0f2c56]" />
+                  <span className="truncate">{item.label}</span>
+                </div>
+              ))}
             </div>
           </div>
         </aside>
