@@ -23,7 +23,7 @@ export function DashboardPageHeading({
 
   return (
     <div
-      className={`flex flex-col sm:flex-row sm:items-start gap-4 print:hidden ${
+      className={`flex flex-col sm:flex-row sm:items-center gap-4 print:hidden ${
         isCentered ? "justify-center" : "justify-between"
       }`}
     >
