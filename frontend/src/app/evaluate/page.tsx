@@ -30,21 +30,23 @@ function EvaluateContent() {
 
   return (
     <div className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 flex flex-col gap-6">
-      <DashboardPageHeading
-        badge="Evaluasi Berkas Digital"
-        titleLine1="Uji kualitas dokumen CV"
-        titleLine2Prefix="dengan analisis"
-        titleHighlight="standar ATS!"
-        align="center"
-      />
+      <div className="flex-1 flex flex-col justify-center gap-6 py-4">
+        <DashboardPageHeading
+          badge="Evaluasi Berkas Digital"
+          titleLine1="Uji kualitas dokumen CV"
+          titleLine2Prefix="dengan analisis"
+          titleHighlight="standar ATS!"
+          align="center"
+        />
 
-      {/* Area Unggah Dokumen CV */}
-      <div className="w-full max-w-3xl mx-auto">
-        <CVDropzone autoRedirect={false} onAnalysisComplete={handleAnalysisSuccess} />
+        {/* Area Unggah Dokumen CV */}
+        <div className="w-full max-w-3xl mx-auto">
+          <CVDropzone autoRedirect={false} onAnalysisComplete={handleAnalysisSuccess} />
+        </div>
       </div>
 
       {/* Banner Pintasan Onboarding & Langkah Cepat di Bawah Dropzone */}
-      <div className="mt-auto pt-5 border-t border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="pt-5 border-t border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
             <FileSpreadsheet className="w-5 h-5" />
