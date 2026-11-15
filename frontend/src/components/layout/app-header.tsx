@@ -8,8 +8,8 @@ import {
   User as UserIcon,
   LogOut,
   ChevronDown,
+  LayoutDashboard,
   Briefcase,
-  ShieldCheck,
   FileCheck,
 } from "lucide-react";
 import { User } from "@/types";
@@ -118,43 +118,77 @@ export function AppHeader({
                 {user.name.charAt(0).toUpperCase()}
               </div>
               <span className="hidden md:inline max-w-[120px] truncate">{user.name}</span>
-              <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+              <ChevronDown
+                className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${
+                  menuOpen ? "rotate-180" : ""
+                }`}
+              />
             </button>
 
             {menuOpen && (
-              <div className="absolute right-0 mt-2 w-56 rounded-2xl bg-white border border-slate-200 shadow-lg py-2 z-50">
-                <div className="px-4 py-2 bg-slate-50 border-b border-slate-100">
-                  <p className="text-xs font-bold text-[#0f2c56] truncate">{user.name}</p>
-                  <p className="text-[11px] text-slate-500 truncate">{user.email}</p>
+              <div className="absolute right-0 top-full mt-2.5 w-64 rounded-[24px] bg-white border border-slate-200 text-[#0f2c56] shadow-2xl p-2.5 z-50">
+                {/* User Profile Header */}
+                <div className="px-4 py-3 rounded-2xl bg-[#0f2c56] text-white mb-2">
+                  <div className="text-xs font-extrabold text-white truncate">{user.name}</div>
+                  <div className="text-[11px] text-slate-300 truncate mt-0.5">
+                    {user.email || "Akun Terverifikasi"}
+                  </div>
+                  <span className="inline-block mt-2 uppercase text-[9px] bg-[#ce2731] text-white px-2.5 py-0.5 rounded-full font-mono font-bold">
+                    Role: {user.role}
+                  </span>
                 </div>
-                <div className="py-1">
+
+                {/* Navigation Links */}
+                <div className="space-y-1">
                   <Link
                     href="/dashboard"
                     onClick={() => setMenuOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-[#0f2c56] transition"
+                    className="flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-bold text-[#0f2c56] hover:bg-[#edf2f9] transition-colors"
                   >
-                    <FileCheck className="w-4 h-4 text-[#0f2c56]" />
-                    <span>Dashboard Evaluasi ATS</span>
+                    <span className="w-7 h-7 rounded-lg bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+                      <LayoutDashboard className="w-3.5 h-3.5" />
+                    </span>
+                    <span>Dashboard ATS</span>
+                  </Link>
+                  <Link
+                    href="/evaluate"
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-bold text-[#0f2c56] hover:bg-[#edf2f9] transition-colors"
+                  >
+                    <span className="w-7 h-7 rounded-lg bg-[#ce2731] text-white flex items-center justify-center shrink-0">
+                      <FileCheck className="w-3.5 h-3.5" />
+                    </span>
+                    <span>Evaluasi CV 5D</span>
                   </Link>
                   <Link
                     href="/jobs"
                     onClick={() => setMenuOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-[#0f2c56] transition"
+                    className="flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-bold text-[#0f2c56] hover:bg-[#edf2f9] transition-colors"
                   >
-                    <Briefcase className="w-4 h-4 text-[#ce2731]" />
-                    <span>Rekomendasi Karir</span>
+                    <span className="w-7 h-7 rounded-lg bg-[#163861] text-white flex items-center justify-center shrink-0">
+                      <Briefcase className="w-3.5 h-3.5" />
+                    </span>
+                    <span>Pencocokan Lowongan</span>
                   </Link>
                 </div>
-                <div className="pt-1 border-t border-slate-100 px-2">
-                  <button
-                    type="button"
-                    onClick={handleLogout}
-                    className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-[#ce2731] hover:bg-[#0f2c56] transition cursor-pointer"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    <span>Keluar Akun</span>
-                  </button>
-                </div>
+
+                {/* Divider */}
+                <div className="my-2 border-t border-slate-100" />
+
+                {/* Logout Option */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    handleLogout();
+                  }}
+                  className="w-full flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-bold text-[#ce2731] hover:bg-[#ce2731] hover:text-white transition-colors cursor-pointer group"
+                >
+                  <span className="w-7 h-7 rounded-lg bg-[#ce2731]/10 group-hover:bg-white/20 flex items-center justify-center shrink-0 transition-colors">
+                    <LogOut className="w-3.5 h-3.5" />
+                  </span>
+                  <span>Keluar dari Akun</span>
+                </button>
               </div>
             )}
           </div>
