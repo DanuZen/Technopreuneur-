@@ -29,7 +29,7 @@ function EvaluateContent() {
   };
 
   return (
-    <div className="min-h-full bg-[#f8fafc] max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-6">
+    <div className="min-h-full max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-6">
       <div className="bg-white border border-slate-200 rounded-[28px] p-6 sm:p-8 flex flex-col justify-between gap-6 flex-1">
           <div>
             {/* Header Panggung + Tombol Menuju Halaman Onboarding */}

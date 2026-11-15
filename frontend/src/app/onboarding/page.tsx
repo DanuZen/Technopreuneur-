@@ -61,7 +61,7 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="min-h-full bg-[#f8fafc] max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-5">
+    <div className="min-h-full max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-5">
       {/* Baris Atas: Navigasi Kembali ke Unggah CV */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <Link
