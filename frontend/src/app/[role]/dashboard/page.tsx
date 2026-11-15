@@ -126,7 +126,7 @@ function CompanyDashboardView() {
   const rejectedCount = applicants.filter((a) => a.status === "rejected").length;
 
   return (
-    <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-5">
+    <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4">
       <DashboardPageHeading
         badge="Portal Perusahaan"
         titleLine1="Temukan talenta muda"
@@ -188,7 +188,7 @@ function CompanyDashboardView() {
         </form>
       )}
 
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
+      <div className="flex-1 min-h-0 grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
         {/* Kolom Kiri: Panel Navy Ringkasan Rekrutmen + Daftar Lowongan Aktif */}
         <div className="xl:col-span-5 flex flex-col gap-4">
           <div className="bg-[#0f2c56] text-white rounded-3xl p-5 sm:p-6 space-y-4">
@@ -333,7 +333,7 @@ function AdminDashboardView() {
   const rejectedCount = moderationList.filter((m) => m.status === "rejected").length;
 
   return (
-    <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-5">
+    <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4">
       <DashboardPageHeading
         badge="Panel Administrator"
         titleLine1="Kelola ekosistem karir"
@@ -359,7 +359,7 @@ function AdminDashboardView() {
         }
       />
 
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
+      <div className="flex-1 min-h-0 grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
         {/* Kolom Kiri: Panel Navy Ringkasan Platform + Status Pipeline AI */}
         <div className="xl:col-span-5 flex flex-col gap-4">
           <div className="bg-[#0f2c56] text-white rounded-3xl p-5 sm:p-6 space-y-4">
@@ -526,7 +526,7 @@ function AdminDashboardView() {
       </div>
 
       {/* Baris Diagram Analitik Platform & Pipeline AI */}
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
+      <div className="flex-1 min-h-0 grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
         <div className="xl:col-span-5">
           <AdminModerationDiagram
             pendingCount={pendingCount}

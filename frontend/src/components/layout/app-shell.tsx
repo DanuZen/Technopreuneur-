@@ -49,9 +49,13 @@ export function AppShell({ children }: AppShellProps) {
   const isAuthPage =
     pathname.startsWith("/login") || pathname.startsWith("/register");
 
-  // Halaman autentikasi (/login dan /register): Tampilan split-screen penuh ala isi-learning-hub
+  // Halaman autentikasi (/login dan /register): Fit-viewport pada desktop, responsif pada mobile
   if (isAuthPage) {
-    return <main className="min-h-dvh w-full bg-white text-primary">{children}</main>;
+    return (
+      <main className="h-auto md:h-dvh md:overflow-hidden viewport-shell w-full bg-white text-primary">
+        {children}
+      </main>
+    );
   }
 
   // Halaman full-slide (/ , /jobs, /about): Terkunci 1 layar penuh dengan Navbar melayang di atas
@@ -78,9 +82,9 @@ export function AppShell({ children }: AppShellProps) {
     );
   }
 
-  // Tampilan khusus dashboard evaluasi (/evaluate dan /dashboard): Sidebar ala ChatGPT + Header
+  // Tampilan khusus dashboard evaluasi: Fit-Viewport 3-Layer Flex + Clean Scroll
   return (
-    <div className="flex h-dvh w-full overflow-hidden bg-[#edf2f9] text-primary select-auto font-sans">
+    <div className="flex h-dvh w-full overflow-hidden viewport-shell bg-[#edf2f9] text-primary select-auto font-sans">
       {/* ChatGPT-style Collapsible AppSidebar */}
       <Suspense fallback={null}>
         <AppSidebar
@@ -92,7 +96,7 @@ export function AppShell({ children }: AppShellProps) {
       </Suspense>
 
       {/* Main Workspace Stage (Rounded Clay Stage on Desktop) */}
-      <div className="flex flex-1 flex-col overflow-hidden bg-[#fefefd] clay-stage lg:my-2 lg:mr-2 lg:rounded-[32px] relative isolate shadow-2xl shadow-primary/10">
+      <div className="flex flex-1 flex-col min-w-0 min-h-0 h-full overflow-hidden bg-[#fefefd] clay-stage lg:my-2 lg:mr-2 lg:rounded-[32px] relative isolate shadow-2xl shadow-primary/10">
         <AppHeader
           onToggleMobile={() => setIsMobileOpen((s) => !s)}
           isDesktopCollapsed={isDesktopCollapsed}
@@ -102,7 +106,7 @@ export function AppShell({ children }: AppShellProps) {
         {/* Viewport Content */}
         <main
           id="konten-utama"
-          className="flex-1 overflow-y-auto scrollbar-none"
+          className="flex-1 min-h-0 overflow-y-auto scrollbar-none"
         >
           {children}
         </main>

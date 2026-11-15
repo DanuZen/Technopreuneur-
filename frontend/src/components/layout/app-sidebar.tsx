@@ -368,7 +368,7 @@ export function AppSidebar({
             </div>
 
             {/* Scrollable Middle Body: Navigation & Evaluation History */}
-            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
+            <div className="flex-1 min-h-0 overflow-y-auto scrollbar-none px-4 py-4 space-y-5">
               {/* Navigation Menu */}
               <div className="space-y-1.5">
                 <p className="px-2.5 pb-1 text-[11px] font-mono uppercase tracking-wider text-slate-500 font-bold">

@@ -248,6 +248,7 @@ export function CompanyJobsSubpage() {
 export function CompanyCandidatesSubpage() {
   const [candidates, setCandidates] = useState<CompanyCandidateItem[]>(INITIAL_COMPANY_CANDIDATES);
   const [filter, setFilter] = useState<"all" | ApplicantStatus>("all");
+  const [selectedId, setSelectedId] = useState<string>(INITIAL_COMPANY_CANDIDATES[0].id);
 
   const updateStatus = (id: string, status: ApplicantStatus) => {
     setCandidates((prev) =>
@@ -257,9 +258,11 @@ export function CompanyCandidatesSubpage() {
 
   const visible =
     filter === "all" ? candidates : candidates.filter((c) => c.status === filter);
+  const selected =
+    visible.find((c) => c.id === selectedId) || visible[0] || candidates[0];
 
   return (
-    <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-5">
+    <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4 lg:overflow-hidden">
       <DashboardPageHeading
         badge="Seleksi Kandidat"
         titleLine1="Tinjau kesiapan pelamar"
@@ -287,67 +290,127 @@ export function CompanyCandidatesSubpage() {
         }
       />
 
-      <div className="space-y-3">
-        {visible.map((cand) => (
-          <div
-            key={cand.id}
-            className="morph-surface rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4 shadow-xs"
-          >
-            <div className="space-y-1.5">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="text-sm font-extrabold text-[#0f2c56]">
-                  {cand.codeName}
+      <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-4 lg:overflow-hidden">
+        {/* Tabel List Ringkas (Tanpa Kolom Aksi) */}
+        <div className="flex-1 min-h-0 flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-xs">
+          <div className="shrink-0 grid grid-cols-12 gap-2 px-4 py-3 border-b border-slate-100 bg-slate-50/70 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
+            <span className="col-span-5">Kandidat</span>
+            <span className="col-span-4">Posisi Dilamar</span>
+            <span className="col-span-3 text-right">Skor &amp; Status</span>
+          </div>
+          <div className="flex-1 min-h-0 overflow-y-auto scrollbar-none divide-y divide-slate-100">
+            {visible.map((cand) => {
+              const isSelected = selected?.id === cand.id;
+              return (
+                <button
+                  key={cand.id}
+                  type="button"
+                  onClick={() => setSelectedId(cand.id)}
+                  className={`w-full text-left grid grid-cols-12 gap-2 items-center px-4 py-3.5 transition-colors cursor-pointer ${
+                    isSelected
+                      ? "bg-blue-50/70 border-l-4 border-l-[#0f2c56]"
+                      : "hover:bg-slate-50/80 border-l-4 border-l-transparent"
+                  }`}
+                >
+                  <div className="col-span-5 min-w-0">
+                    <p className="text-xs sm:text-sm font-extrabold text-[#0f2c56] truncate">
+                      {cand.codeName}
+                    </p>
+                  </div>
+                  <div className="col-span-4 min-w-0">
+                    <p className="text-xs font-semibold text-slate-600 truncate">
+                      {cand.roleApplied}
+                    </p>
+                  </div>
+                  <div className="col-span-3 flex items-center justify-end gap-1.5">
+                    <span className="px-2 py-0.5 rounded-full bg-[#0f2c56] text-white text-[10px] font-bold">
+                      {cand.atsScore}
+                    </span>
+                    <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[10px] font-bold capitalize">
+                      {cand.status}
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Live Side Detail Panel Card */}
+        {selected && (
+          <aside className="w-full lg:w-80 shrink-0 rounded-2xl border border-slate-200/80 bg-white p-5 flex flex-col justify-between gap-4 shadow-xs">
+            <div className="space-y-3">
+              <div className="flex items-center justify-between gap-2">
+                <span className="px-2.5 py-1 rounded-full bg-[#0f2c56] text-white text-[11px] font-bold">
+                  Skor ATS {selected.atsScore}/100
                 </span>
-                <span className="px-2.5 py-0.5 rounded-full bg-[#0f2c56]/10 text-[#0f2c56] text-[11px] font-bold">
-                  Skor ATS: {cand.atsScore}
-                </span>
-                <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[11px] font-semibold">
-                  {cand.roleApplied}
+                <span className="px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 text-[11px] font-bold capitalize">
+                  {selected.status}
                 </span>
               </div>
-              <p className="text-xs text-slate-600">{cand.matchReason}</p>
+              <div>
+                <h3 className="text-base font-extrabold text-[#0f2c56]">
+                  {selected.codeName}
+                </h3>
+                <p className="text-xs font-semibold text-slate-500">
+                  {selected.roleApplied}
+                </p>
+              </div>
+              <div className="rounded-xl bg-[#f4f7fb] p-3.5 space-y-1">
+                <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500">
+                  Ringkasan Kecocokan AI
+                </p>
+                <p className="text-xs text-[#0f2c56] leading-relaxed">
+                  {selected.matchReason}
+                </p>
+              </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2 shrink-0">
-              <button
-                type="button"
-                onClick={() => updateStatus(cand.id, "reviewed")}
-                className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-[11px] font-bold cursor-pointer ${
-                  cand.status === "reviewed"
-                    ? "bg-[#0f2c56] text-white"
-                    : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-                }`}
-              >
-                <Clock className="w-3.5 h-3.5" />
-                <span>Tinjau</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => updateStatus(cand.id, "shortlisted")}
-                className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-[11px] font-bold cursor-pointer ${
-                  cand.status === "shortlisted"
-                    ? "bg-emerald-600 text-white"
-                    : "bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
-                }`}
-              >
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>Shortlist</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => updateStatus(cand.id, "rejected")}
-                className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-[11px] font-bold cursor-pointer ${
-                  cand.status === "rejected"
-                    ? "bg-[#ce2731] text-white"
-                    : "bg-red-50 text-[#ce2731] hover:bg-red-100"
-                }`}
-              >
-                <XCircle className="w-3.5 h-3.5" />
-                <span>Tolak</span>
-              </button>
+            <div className="space-y-2 pt-3 border-t border-slate-100">
+              <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500">
+                Ubah Status Pelamar
+              </p>
+              <div className="grid grid-cols-3 gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => updateStatus(selected.id, "reviewed")}
+                  className={`inline-flex items-center justify-center gap-1 px-2 py-2 rounded-xl text-[11px] font-bold cursor-pointer ${
+                    selected.status === "reviewed"
+                      ? "bg-[#0f2c56] text-white"
+                      : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                  }`}
+                >
+                  <Clock className="w-3 h-3" />
+                  <span>Tinjau</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => updateStatus(selected.id, "shortlisted")}
+                  className={`inline-flex items-center justify-center gap-1 px-2 py-2 rounded-xl text-[11px] font-bold cursor-pointer ${
+                    selected.status === "shortlisted"
+                      ? "bg-emerald-600 text-white"
+                      : "bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
+                  }`}
+                >
+                  <CheckCircle2 className="w-3 h-3" />
+                  <span>Shortlist</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => updateStatus(selected.id, "rejected")}
+                  className={`inline-flex items-center justify-center gap-1 px-2 py-2 rounded-xl text-[11px] font-bold cursor-pointer ${
+                    selected.status === "rejected"
+                      ? "bg-[#ce2731] text-white"
+                      : "bg-red-50 text-[#ce2731] hover:bg-red-100"
+                  }`}
+                >
+                  <XCircle className="w-3 h-3" />
+                  <span>Tolak</span>
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          </aside>
+        )}
       </div>
     </main>
   );
@@ -487,13 +550,16 @@ const INITIAL_ADMIN_JOBS: AdminJobModeration[] = [
 
 export function AdminModerationSubpage() {
   const [items, setItems] = useState<AdminJobModeration[]>(INITIAL_ADMIN_JOBS);
+  const [selectedId, setSelectedId] = useState<string>(INITIAL_ADMIN_JOBS[0].id);
 
   const setStatus = (id: string, status: AdminJobModeration["status"]) => {
     setItems((prev) => prev.map((it) => (it.id === id ? { ...it, status } : it)));
   };
 
+  const selected = items.find((it) => it.id === selectedId) || items[0];
+
   return (
-    <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-5">
+    <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4 lg:overflow-hidden">
       <DashboardPageHeading
         badge="Moderasi Platform (FR-50)"
         titleLine1="Verifikasi lowongan mitra"
@@ -501,66 +567,126 @@ export function AdminModerationSubpage() {
         titleHighlight="pencari kerja!"
       />
 
-      <div className="space-y-3">
-        {items.map((item) => (
-          <div
-            key={item.id}
-            className="morph-surface rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs"
-          >
-            <div className="space-y-1">
-              <div className="flex flex-wrap items-center gap-2">
-                <Briefcase className="w-4 h-4 text-[#0f2c56]" />
-                <span className="text-sm font-extrabold text-[#0f2c56]">
-                  {item.title}
-                </span>
-                <span
-                  className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
-                    item.status === "approved"
-                      ? "bg-emerald-50 text-emerald-700"
-                      : item.status === "rejected"
-                      ? "bg-red-50 text-[#ce2731]"
-                      : item.status === "disabled"
-                      ? "bg-slate-100 text-slate-600"
-                      : "bg-amber-50 text-amber-700"
+      <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-4 lg:overflow-hidden">
+        {/* Tabel List Ringkas (Tanpa Kolom Aksi) */}
+        <div className="flex-1 min-h-0 flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-xs">
+          <div className="shrink-0 grid grid-cols-12 gap-2 px-4 py-3 border-b border-slate-100 bg-slate-50/70 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
+            <span className="col-span-5">Posisi Lowongan</span>
+            <span className="col-span-4">Perusahaan Mitra</span>
+            <span className="col-span-3 text-right">Status</span>
+          </div>
+          <div className="flex-1 min-h-0 overflow-y-auto scrollbar-none divide-y divide-slate-100">
+            {items.map((item) => {
+              const isSelected = selected?.id === item.id;
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => setSelectedId(item.id)}
+                  className={`w-full text-left grid grid-cols-12 gap-2 items-center px-4 py-3.5 transition-colors cursor-pointer ${
+                    isSelected
+                      ? "bg-blue-50/70 border-l-4 border-l-[#0f2c56]"
+                      : "hover:bg-slate-50/80 border-l-4 border-l-transparent"
                   }`}
                 >
-                  {item.status === "approved"
-                    ? "Disetujui (Embedding Aktif)"
-                    : item.status === "rejected"
-                    ? "Ditolak (Perlu Revisi)"
-                    : item.status === "disabled"
-                    ? "Dinonaktifkan"
-                    : "Menunggu Review"}
-                </span>
+                  <div className="col-span-5 min-w-0 flex items-center gap-2">
+                    <Briefcase className="w-3.5 h-3.5 text-[#0f2c56] shrink-0" />
+                    <span className="text-xs sm:text-sm font-extrabold text-[#0f2c56] truncate">
+                      {item.title}
+                    </span>
+                  </div>
+                  <div className="col-span-4 min-w-0">
+                    <span className="text-xs text-slate-500 truncate block">
+                      {item.company}
+                    </span>
+                  </div>
+                  <div className="col-span-3 flex justify-end">
+                    <span
+                      className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
+                        item.status === "approved"
+                          ? "bg-emerald-50 text-emerald-700"
+                          : item.status === "rejected"
+                          ? "bg-red-50 text-[#ce2731]"
+                          : item.status === "disabled"
+                          ? "bg-slate-100 text-slate-600"
+                          : "bg-amber-50 text-amber-700"
+                      }`}
+                    >
+                      {item.status}
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Live Side Detail Panel Card */}
+        {selected && (
+          <aside className="w-full lg:w-80 shrink-0 rounded-2xl border border-slate-200/80 bg-white p-5 flex flex-col justify-between gap-4 shadow-xs">
+            <div className="space-y-3">
+              <span
+                className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-bold uppercase ${
+                  selected.status === "approved"
+                    ? "bg-emerald-50 text-emerald-700"
+                    : selected.status === "rejected"
+                    ? "bg-red-50 text-[#ce2731]"
+                    : selected.status === "disabled"
+                    ? "bg-slate-100 text-slate-600"
+                    : "bg-amber-50 text-amber-700"
+                }`}
+              >
+                {selected.status === "approved"
+                  ? "Disetujui (Embedding Aktif)"
+                  : selected.status === "rejected"
+                  ? "Ditolak (Perlu Revisi)"
+                  : selected.status === "disabled"
+                  ? "Dinonaktifkan"
+                  : "Menunggu Review"}
+              </span>
+              <div>
+                <h3 className="text-base font-extrabold text-[#0f2c56]">
+                  {selected.title}
+                </h3>
+                <p className="text-xs font-semibold text-slate-500">
+                  Mitra: {selected.company}
+                </p>
               </div>
-              <p className="text-xs text-slate-500">Mitra: {item.company}</p>
+              <div className="rounded-xl bg-[#f4f7fb] p-3.5 text-xs text-slate-600 leading-relaxed">
+                Lowongan yang disetujui otomatis dibuatkan embedding vektor untuk pencocokan kandidat AI.
+              </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setStatus(item.id, "approved")}
-                className="px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-600 hover:text-white text-emerald-700 text-[11px] font-bold transition-colors cursor-pointer"
-              >
-                Setujui
-              </button>
-              <button
-                type="button"
-                onClick={() => setStatus(item.id, "rejected")}
-                className="px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-500 hover:text-white text-amber-700 text-[11px] font-bold transition-colors cursor-pointer"
-              >
-                Tolak / Revisi
-              </button>
-              <button
-                type="button"
-                onClick={() => setStatus(item.id, "disabled")}
-                className="px-3 py-1.5 rounded-xl bg-red-50 hover:bg-[#ce2731] hover:text-white text-[#ce2731] text-[11px] font-bold transition-colors cursor-pointer"
-              >
-                Nonaktifkan
-              </button>
+            <div className="space-y-2 pt-3 border-t border-slate-100">
+              <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500">
+                Keputusan Moderasi
+              </p>
+              <div className="grid grid-cols-3 gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => setStatus(selected.id, "approved")}
+                  className="px-2 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-600 hover:text-white text-emerald-700 text-[11px] font-bold transition-colors cursor-pointer"
+                >
+                  Setujui
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setStatus(selected.id, "rejected")}
+                  className="px-2 py-2 rounded-xl bg-amber-50 hover:bg-amber-500 hover:text-white text-amber-700 text-[11px] font-bold transition-colors cursor-pointer"
+                >
+                  Revisi
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setStatus(selected.id, "disabled")}
+                  className="px-2 py-2 rounded-xl bg-red-50 hover:bg-[#ce2731] hover:text-white text-[#ce2731] text-[11px] font-bold transition-colors cursor-pointer"
+                >
+                  Nonaktif
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          </aside>
+        )}
       </div>
     </main>
   );
