@@ -285,74 +285,68 @@ function CompanyDashboardView() {
   );
 }
 
-interface ModerationJob {
+interface PartnerMonitoringItem {
   id: string;
-  title: string;
   company: string;
+  sector: string;
   location: string;
-  status: "pending" | "approved" | "rejected";
+  complianceStatus: "verified" | "pending" | "incomplete";
+  standardScore: string;
 }
 
-const INITIAL_MODERATION_JOBS: ModerationJob[] = [
+const MONITORED_PARTNERS: PartnerMonitoringItem[] = [
   {
-    id: "mod-1",
-    title: "Frontend React Developer",
+    id: "pm-1",
     company: "PT Teknologi Nusantara",
+    sector: "Software & Cloud",
     location: "Jakarta Selatan",
-    status: "pending",
+    complianceStatus: "pending",
+    standardScore: "92% Siap",
   },
   {
-    id: "mod-2",
-    title: "Data Analyst Intern",
+    id: "pm-2",
     company: "Studio Analitik Indonesia",
+    sector: "Data & Riset",
     location: "Remote",
-    status: "pending",
+    complianceStatus: "pending",
+    standardScore: "84% Siap",
   },
   {
-    id: "mod-3",
-    title: "Mobile Flutter Engineer",
+    id: "pm-3",
     company: "Karya Digital Mandiri",
+    sector: "Produk Digital",
     location: "Yogyakarta",
-    status: "approved",
+    complianceStatus: "verified",
+    standardScore: "100% Patuh",
   },
 ];
 
 function AdminDashboardView() {
-  const [moderationList, setModerationList] = useState<ModerationJob[]>(
-    INITIAL_MODERATION_JOBS
-  );
-
-  const handleModeration = (id: string, status: "approved" | "rejected") => {
-    setModerationList((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, status } : item))
-    );
-  };
-
-  const pendingCount = moderationList.filter((m) => m.status === "pending").length;
-  const approvedCount = moderationList.filter((m) => m.status === "approved").length;
-  const rejectedCount = moderationList.filter((m) => m.status === "rejected").length;
+  const verifiedCount = MONITORED_PARTNERS.filter((p) => p.complianceStatus === "verified").length;
+  const pendingCount = MONITORED_PARTNERS.filter((p) => p.complianceStatus === "pending").length;
+  const incompleteCount = MONITORED_PARTNERS.filter((p) => p.complianceStatus === "incomplete").length;
 
   return (
     <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4">
       <DashboardPageHeading
         badge="Panel Administrator"
-        titleLine1="Kelola ekosistem karir"
-        titleLine2Prefix="secara terpusat &"
-        titleHighlight="terukur!"
+        titleLine1="Standarisasi ekosistem"
+        titleLine2Prefix="dan monitoring mitra"
+        titleHighlight="Pasbana!"
         rightSlot={
           <div className="flex flex-wrap items-center gap-2">
             <Link
-              href="/user/dashboard/evaluasi"
+              href="/admin/dashboard/evaluasi"
               className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors"
             >
               <FileCheck className="w-3.5 h-3.5" aria-hidden="true" />
-              <span>Pratinjau User</span>
+              <span>Atur Standarisasi</span>
             </Link>
             <Link
-              href="/jobs"
+              href="/admin/dashboard/lowongan"
               className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors"
             >
-              <span>Portal Lowongan</span>
+              <span>Monitoring Mitra</span>
               <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
             </Link>
           </div>
@@ -360,15 +354,15 @@ function AdminDashboardView() {
       />
 
       <div className="flex-1 min-h-0 grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
-        {/* Kolom Kiri: Panel Navy Ringkasan Platform + Status Pipeline AI */}
+        {/* Kolom Kiri: Panel Navy Ringkasan Ekosistem + Diagram Komposisi Mitra */}
         <div className="xl:col-span-5 flex flex-col gap-4">
           <div className="bg-[#0f2c56] text-white rounded-3xl p-5 sm:p-6 space-y-4">
             <div className="flex items-center justify-between gap-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ce2731] text-white text-[11px] font-bold uppercase tracking-wider">
                 <ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" />
-                <span>Kendali Platform</span>
+                <span>Tata Kelola Standar</span>
               </span>
-              <span className="text-xs font-extrabold text-white">Sistem Sehat</span>
+              <span className="text-xs font-extrabold text-white">Indikator Agregat</span>
             </div>
 
             <div className="flex items-center gap-4">
@@ -395,26 +389,26 @@ function AdminDashboardView() {
               </svg>
               <div>
                 <h2 className="text-base sm:text-lg font-extrabold tracking-tight leading-snug text-white">
-                  Ringkasan Ekosistem Pasbana AI
+                  Ringkasan Ekosistem &amp; Standarisasi
                 </h2>
                 <p className="text-xs text-white mt-1 leading-relaxed">
-                  Pantau moderasi lowongan mitra, performa pipeline evaluasi CV, dan kepatuhan UU PDP.
+                  Pantau jumlah agregat jobseeker, company yang bekerja sama, serta kepatuhan standar platform tanpa intervensi operasional rekrutmen.
                 </p>
               </div>
             </div>
 
             <div className="border-t border-white/15 divide-y divide-white/10 text-xs text-white">
               <div className="py-2 flex items-center justify-between gap-3">
-                <span>Menunggu Moderasi</span>
-                <span className="font-bold">{pendingCount} Lowongan</span>
+                <span>Total Jobseeker Terdaftar</span>
+                <span className="font-bold">1.248 Pencari Kerja</span>
               </div>
               <div className="py-2 flex items-center justify-between gap-3">
-                <span>Lowongan Disetujui</span>
-                <span className="font-bold">{approvedCount} Lowongan</span>
+                <span>Company Bekerja Sama</span>
+                <span className="font-bold">24 Perusahaan</span>
               </div>
               <div className="pt-2 flex items-center justify-between gap-3">
-                <span>Kepatuhan Consent PDP</span>
-                <span className="font-bold">100% Aktif</span>
+                <span>Calon Mitra Dipantau</span>
+                <span className="font-bold">{pendingCount} Pengajuan Baru</span>
               </div>
             </div>
           </div>
@@ -422,82 +416,72 @@ function AdminDashboardView() {
           <div className="flex-1 min-h-0">
             <AdminModerationDiagram
               pendingCount={pendingCount}
-              approvedCount={approvedCount}
-              rejectedCount={rejectedCount}
+              approvedCount={verifiedCount}
+              rejectedCount={incompleteCount}
             />
           </div>
         </div>
 
-        {/* Kolom Kanan: Antrean Moderasi Lowongan Mitra + Diagram Pipeline AI */}
+        {/* Kolom Kanan: Monitoring Pengajuan Kemitraan Company + Diagram Pipeline AI */}
         <div className="xl:col-span-7 flex flex-col gap-5">
           <div className="bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 flex flex-col justify-between gap-4 text-[#0f2c56]">
-          <div className="space-y-4">
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
-                  <Clock className="w-4 h-4" aria-hidden="true" />
+            <div className="space-y-4">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+                    <Clock className="w-4 h-4" aria-hidden="true" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-extrabold uppercase tracking-wider">
+                      Monitoring Pengajuan Kemitraan Company
+                    </p>
+                    <p className="text-xs font-medium text-slate-500">
+                      Pemantauan kesiapan standar dan legalitas perusahaan yang ingin bekerja sama
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-xs font-extrabold uppercase tracking-wider">
-                    Antrean Moderasi Lowongan
-                  </p>
-                  <p className="text-xs font-medium">
-                    Kurasi lowongan perusahaan sebelum tampil di Portal Lowongan
-                  </p>
-                </div>
+              </div>
+
+              <div className="divide-y divide-slate-200 border-y border-slate-200">
+                {MONITORED_PARTNERS.map((item) => (
+                  <div
+                    key={item.id}
+                    className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                  >
+                    <div className="space-y-0.5">
+                      <p className="text-sm font-extrabold">{item.company}</p>
+                      <p className="text-xs font-medium text-slate-500">
+                        {item.sector} &middot; {item.location}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-2 shrink-0">
+                      <span className="px-3 py-1 rounded-full bg-[#edf2f9] text-[#0f2c56] text-xs font-bold">
+                        {item.standardScore}
+                      </span>
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-bold text-white ${
+                          item.complianceStatus === "verified"
+                            ? "bg-[#0f2c56]"
+                            : item.complianceStatus === "incomplete"
+                            ? "bg-[#ce2731]"
+                            : "bg-amber-600"
+                        }`}
+                      >
+                        {item.complianceStatus === "verified"
+                          ? "Mitra Aktif"
+                          : item.complianceStatus === "incomplete"
+                          ? "Perlu Kelengkapan"
+                          : "Dalam Pemantauan"}
+                      </span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
-            <div className="divide-y divide-slate-200/80 border-y border-slate-200/80">
-              {moderationList.map((item) => (
-                <div
-                  key={item.id}
-                  className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
-                >
-                  <div className="space-y-0.5">
-                    <p className="text-sm font-extrabold">{item.title}</p>
-                    <p className="text-xs font-medium">
-                      {item.company} &middot; {item.location}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-2 shrink-0">
-                    {item.status === "pending" ? (
-                      <>
-                        <button
-                          type="button"
-                          onClick={() => handleModeration(item.id, "approved")}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors cursor-pointer"
-                        >
-                          <CheckCircle2 className="w-3.5 h-3.5" aria-hidden="true" />
-                          <span>Setujui</span>
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => handleModeration(item.id, "rejected")}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors cursor-pointer"
-                        >
-                          <XCircle className="w-3.5 h-3.5" aria-hidden="true" />
-                          <span>Tolak</span>
-                        </button>
-                      </>
-                    ) : (
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-bold text-white ${
-                          item.status === "approved" ? "bg-[#0f2c56]" : "bg-[#ce2731]"
-                        }`}
-                      >
-                        {item.status === "approved" ? "Disetujui" : "Ditolak"}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-            <p className="text-xs font-medium">
-              Lowongan yang disetujui otomatis dibuatkan embedding vektor untuk pencocokan kandidat.
+            <p className="text-xs font-medium text-slate-500">
+              Admin memantau pemenuhan standar kemitraan dan menetapkan kebijakan ATS global tanpa mengelola lowongan atau seleksi di dalam ranah company.
             </p>
           </div>
 

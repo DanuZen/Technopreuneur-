@@ -48,7 +48,7 @@ Produk melayani tiga role; pencari kerja adalah fokus utama MVP.
 | --- | --- | --- |
 | Pencari kerja | Fresh graduate dan profesional muda | Tahu kualitas CV, dapat lowongan cocok, melamar dengan mudah |
 | Employer | HRD, pemilik UMKM, rekruter | Pasang lowongan, lihat pelamar terurut kecocokan |
-| Admin | Tim internal | Moderasi lowongan dan pengguna, pantau sistem |
+| Admin | Tim internal | Pantau jumlah agregat jobseeker dan company mitra, tetapkan standarisasi, dan monitoring calon mitra company |
 
 **Rina, 22 tahun, lulusan S1 Informatika.** Belum pernah bekerja dan tidak yakin CV-nya layak. Ingin tahu skill apa yang kurang.
 
@@ -63,7 +63,7 @@ MVP mencakup alur lengkap pencari kerja dan employer dengan satu sumber lowongan
 | Pencari kerja | Registrasi dan login (email + Google); upload CV PDF/DOCX maks 5 MB; analisis AI (profil, skor, kekuatan, kelemahan, saran); koreksi profil manual; rekomendasi lowongan dengan skor, alasan, dan gap skill; simpan dan lamar; hapus CV dan akun |
 | Employer | Registrasi dan profil perusahaan; CRUD lowongan; daftar pelamar terurut skor; ubah status pelamar |
 | Sumber eksternal | Satu adaptor API resmi (mis. Jooble) sebagai uji coba, dengan tautan keluar ke sumber asli |
-| Admin | Moderasi lowongan; nonaktifkan pengguna atau lowongan |
+| Admin | Lihat jumlah agregat jobseeker & company bekerja sama; atur standarisasi platform; monitoring company calon mitra |
 
 **Ditunda setelah MVP:**
 
@@ -104,7 +104,7 @@ MVP memuat 24 kebutuhan wajib (P0) dan 8 kebutuhan tambahan (P1) di enam area.
 | FR-41 | Lamaran | Lowongan eksternal: tombol "Lamar di sumber" membuka tautan asli |
 | FR-43 | Lamaran | Employer melihat pelamar terurut skor dengan ringkasan AI |
 | FR-44 | Lamaran | Employer mengubah status pelamar |
-| FR-50 | Admin | Daftar dan moderasi lowongan (setujui, tolak, nonaktifkan) |
+| FR-50 | Admin | Monitoring pengajuan dan kesiapan standar company yang ingin bekerja sama tanpa mengintervensi ranah rekrutmen company |
 
 **Tambahan (P1)**
 
@@ -117,7 +117,7 @@ MVP memuat 24 kebutuhan wajib (P0) dan 8 kebutuhan tambahan (P1) di enam area.
 | FR-33 | Matching | Hasil di-cache; dihitung ulang saat profil berubah atau ada lowongan baru yang relevan |
 | FR-42 | Lamaran | Pelamar melihat status lamarannya |
 | FR-45 | Lamaran | Simpan atau bookmark lowongan |
-| FR-51 | Admin | Nonaktifkan akun dan lihat log aktivitas dasar |
+| FR-51 | Admin | Lihat jumlah agregat jobseeker dan company bekerja sama serta tetapkan standarisasi platform (ambang ATS, blind screening, batas dokumen) |
 
 ## Kebutuhan non-fungsional
 
@@ -152,7 +152,7 @@ Pencari kerja memiliki **2 opsi**: jika sudah memiliki CV dapat langsung mengung
 
 ![Alur Employer](diagrams/alur-employer.svg)
 
-Lowongan yang ditolak admin kembali ke employer untuk direvisi; lowongan yang disetujui otomatis dibuatkan embedding-nya.
+Lowongan yang memenuhi validasi standar sistem otomatis langsung aktif dan dibuatkan embedding-nya tanpa intervensi manual admin; admin berfokus pada standarisasi dan monitoring company calon mitra.
 
 **Pipeline AI (asinkron)**
 

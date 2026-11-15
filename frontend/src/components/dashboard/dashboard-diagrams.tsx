@@ -330,9 +330,9 @@ export function AdminModerationDiagram({
 }: AdminModerationDiagramProps) {
   const total = Math.max(pendingCount + approvedCount + rejectedCount, 1);
   const bars = [
-    { label: "Disetujui (Embedding Aktif)", count: approvedCount, color: "#0f2c56" },
-    { label: "Menunggu Review", count: pendingCount, color: "#f59e0b" },
-    { label: "Ditolak / Revisi", count: rejectedCount, color: "#ce2731" },
+    { label: "Mitra Terverifikasi", count: approvedCount, color: "#0f2c56" },
+    { label: "Pengajuan Mitra Baru", count: pendingCount, color: "#f59e0b" },
+    { label: "Perlu Kelengkapan", count: rejectedCount, color: "#ce2731" },
   ];
 
   const radius = 34;
@@ -348,15 +348,15 @@ export function AdminModerationDiagram({
           </div>
           <div>
             <p className="text-xs font-extrabold uppercase tracking-wider">
-              Distribusi Moderasi Lowongan
+              Komposisi Kemitraan Company
             </p>
             <p className="text-xs font-medium text-slate-500">
-              Status antrean verifikasi mitra (FR-50)
+              Monitoring kesiapan calon mitra (FR-50)
             </p>
           </div>
         </div>
         <span className="px-2.5 py-1 rounded-full bg-[#edf2f9] text-[#0f2c56] text-[11px] font-bold">
-          {total} Total
+          {total} Dipantau
         </span>
       </div>
 
@@ -380,7 +380,7 @@ export function AdminModerationDiagram({
               {Math.round((approvedCount / total) * 100)}%
             </span>
             <span className="text-[11px] font-bold text-slate-500 mt-1">
-              Disetujui
+              Terverifikasi
             </span>
           </div>
         </div>
@@ -410,16 +410,16 @@ export function AdminModerationDiagram({
 
       <div className="shrink-0 grid grid-cols-3 gap-2.5 pt-3 border-t border-slate-100">
         <div className="rounded-xl bg-[#f4f7fb] px-3 py-2">
-          <p className="text-[10px] font-bold uppercase text-slate-500">Mitra Aktif</p>
+          <p className="text-[10px] font-bold uppercase text-slate-500">Total Jobseeker</p>
+          <p className="text-sm font-black text-[#0f2c56]">1.248 Akun</p>
+        </div>
+        <div className="rounded-xl bg-[#f4f7fb] px-3 py-2">
+          <p className="text-[10px] font-bold uppercase text-slate-500">Company Mitra</p>
           <p className="text-sm font-black text-[#0f2c56]">24 Perusahaan</p>
         </div>
         <div className="rounded-xl bg-[#f4f7fb] px-3 py-2">
-          <p className="text-[10px] font-bold uppercase text-slate-500">Embedding</p>
-          <p className="text-sm font-black text-[#0f2c56]">100% Terindeks</p>
-        </div>
-        <div className="rounded-xl bg-[#f4f7fb] px-3 py-2">
-          <p className="text-[10px] font-bold uppercase text-slate-500">Privasi UU PDP</p>
-          <p className="text-sm font-black text-[#ce2731]">Patuh</p>
+          <p className="text-[10px] font-bold uppercase text-slate-500">Standar Min. ATS</p>
+          <p className="text-sm font-black text-[#ce2731]">Skor 75 / 100</p>
         </div>
       </div>
     </div>

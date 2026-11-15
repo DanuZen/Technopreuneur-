@@ -535,48 +535,76 @@ export function CompanyProfileSubpage() {
   );
 }
 
-interface AdminJobModeration {
+interface PartnerMonitoringRecord {
   id: string;
   company: string;
-  title: string;
-  status: "approved" | "pending" | "rejected" | "disabled";
+  sector: string;
+  location: string;
+  status: "verified" | "pending" | "incomplete";
+  legalityDoc: string;
+  pdpCompliance: string;
+  note: string;
 }
 
-const INITIAL_ADMIN_JOBS: AdminJobModeration[] = [
-  { id: "m-1", company: "PT Nusantara Inovasi", title: "Junior Frontend Developer", status: "approved" },
-  { id: "m-2", company: "Studio Karya Digital", title: "UI/UX Product Designer", status: "pending" },
-  { id: "m-3", company: "CV Sentosa Abadi", title: "Admin Operasional Magang", status: "rejected" },
+const MONITORED_COMPANY_APPLICATIONS: PartnerMonitoringRecord[] = [
+  {
+    id: "pm-1",
+    company: "PT Nusantara Inovasi",
+    sector: "Teknologi & Cloud",
+    location: "Jakarta Selatan",
+    status: "verified",
+    legalityDoc: "NIB & NPWP Terverifikasi",
+    pdpCompliance: "Blind Screening Aktif",
+    note: "Memenuhi seluruh standar kemitraan Pasbana dan siap mengelola rekrutmen secara mandiri.",
+  },
+  {
+    id: "pm-2",
+    company: "Studio Karya Digital",
+    sector: "Produk & Desain",
+    location: "Bandung",
+    status: "pending",
+    legalityDoc: "Menunggu Verifikasi NIB",
+    pdpCompliance: "Persetujuan UU PDP Tercatat",
+    note: "Pengajuan kemitraan baru sedang dipantau kelengkapan legalitas dan kesiapan standarnya.",
+  },
+  {
+    id: "pm-3",
+    company: "CV Sentosa Abadi",
+    sector: "Operasional & Jasa",
+    location: "Surabaya",
+    status: "incomplete",
+    legalityDoc: "NPWP Perlu Pembaruan",
+    pdpCompliance: "Belum Mengaktifkan Blind Screening",
+    note: "Belum memenuhi ambang standar kemitraan platform sebelum dapat bergabung sebagai mitra resmi.",
+  },
 ];
 
 export function AdminModerationSubpage() {
-  const [items, setItems] = useState<AdminJobModeration[]>(INITIAL_ADMIN_JOBS);
-  const [selectedId, setSelectedId] = useState<string>(INITIAL_ADMIN_JOBS[0].id);
+  const [selectedId, setSelectedId] = useState<string>(MONITORED_COMPANY_APPLICATIONS[0].id);
 
-  const setStatus = (id: string, status: AdminJobModeration["status"]) => {
-    setItems((prev) => prev.map((it) => (it.id === id ? { ...it, status } : it)));
-  };
-
-  const selected = items.find((it) => it.id === selectedId) || items[0];
+  const selected =
+    MONITORED_COMPANY_APPLICATIONS.find((it) => it.id === selectedId) ||
+    MONITORED_COMPANY_APPLICATIONS[0];
 
   return (
     <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4 lg:overflow-hidden">
       <DashboardPageHeading
-        badge="Moderasi Platform (FR-50)"
-        titleLine1="Verifikasi lowongan mitra"
-        titleLine2Prefix="demi keamanan"
-        titleHighlight="pencari kerja!"
+        badge="Monitoring Mitra (FR-50)"
+        titleLine1="Monitoring pengajuan"
+        titleLine2Prefix="kemitraan company"
+        titleHighlight="calon mitra!"
       />
 
       <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-4 lg:overflow-hidden">
-        {/* Tabel List Ringkas (Tanpa Kolom Aksi) */}
+        {/* Tabel List Ringkas (Read-only Monitoring) */}
         <div className="flex-1 min-h-0 flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs">
           <div className="shrink-0 grid grid-cols-12 gap-2 px-4 py-3 border-b border-slate-100 bg-slate-50 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
-            <span className="col-span-5">Posisi Lowongan</span>
-            <span className="col-span-4">Perusahaan Mitra</span>
-            <span className="col-span-3 text-right">Status</span>
+            <span className="col-span-5">Perusahaan</span>
+            <span className="col-span-4">Sektor &amp; Lokasi</span>
+            <span className="col-span-3 text-right">Status Kemitraan</span>
           </div>
           <div className="flex-1 min-h-0 overflow-y-auto scrollbar-none divide-y divide-slate-100">
-            {items.map((item) => {
+            {MONITORED_COMPANY_APPLICATIONS.map((item) => {
               const isSelected = selected?.id === item.id;
               return (
                 <button
@@ -592,27 +620,29 @@ export function AdminModerationSubpage() {
                   <div className="col-span-5 min-w-0 flex items-center gap-2">
                     <Briefcase className="w-3.5 h-3.5 text-[#0f2c56] shrink-0" />
                     <span className="text-xs sm:text-sm font-extrabold text-[#0f2c56] truncate">
-                      {item.title}
+                      {item.company}
                     </span>
                   </div>
                   <div className="col-span-4 min-w-0">
                     <span className="text-xs text-slate-500 truncate block">
-                      {item.company}
+                      {item.sector} &middot; {item.location}
                     </span>
                   </div>
                   <div className="col-span-3 flex justify-end">
                     <span
                       className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
-                        item.status === "approved"
+                        item.status === "verified"
                           ? "bg-emerald-50 text-emerald-700"
-                          : item.status === "rejected"
+                          : item.status === "incomplete"
                           ? "bg-red-50 text-[#ce2731]"
-                          : item.status === "disabled"
-                          ? "bg-slate-100 text-slate-600"
                           : "bg-amber-50 text-amber-700"
                       }`}
                     >
-                      {item.status}
+                      {item.status === "verified"
+                        ? "Terverifikasi"
+                        : item.status === "incomplete"
+                        ? "Perlu Kelengkapan"
+                        : "Dipantau"}
                     </span>
                   </div>
                 </button>
@@ -627,63 +657,45 @@ export function AdminModerationSubpage() {
             <div className="space-y-3">
               <span
                 className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-bold uppercase ${
-                  selected.status === "approved"
+                  selected.status === "verified"
                     ? "bg-emerald-50 text-emerald-700"
-                    : selected.status === "rejected"
+                    : selected.status === "incomplete"
                     ? "bg-red-50 text-[#ce2731]"
-                    : selected.status === "disabled"
-                    ? "bg-slate-100 text-slate-600"
                     : "bg-amber-50 text-amber-700"
                 }`}
               >
-                {selected.status === "approved"
-                  ? "Disetujui (Embedding Aktif)"
-                  : selected.status === "rejected"
-                  ? "Ditolak (Perlu Revisi)"
-                  : selected.status === "disabled"
-                  ? "Dinonaktifkan"
-                  : "Menunggu Review"}
+                {selected.status === "verified"
+                  ? "Mitra Bekerja Sama"
+                  : selected.status === "incomplete"
+                  ? "Belum Memenuhi Standar"
+                  : "Dalam Pemantauan Pengajuan"}
               </span>
               <div>
                 <h3 className="text-base font-extrabold text-[#0f2c56]">
-                  {selected.title}
+                  {selected.company}
                 </h3>
                 <p className="text-xs font-semibold text-slate-500">
-                  Mitra: {selected.company}
+                  {selected.sector} &middot; {selected.location}
                 </p>
               </div>
-              <div className="rounded-xl bg-[#f4f7fb] p-3.5 text-xs text-slate-600 leading-relaxed">
-                Lowongan yang disetujui otomatis dibuatkan embedding vektor untuk pencocokan kandidat AI.
+              <div className="space-y-2 rounded-xl bg-[#f4f7fb] p-3.5 text-xs text-slate-600">
+                <p>
+                  <strong className="text-[#0f2c56]">Legalitas:</strong> {selected.legalityDoc}
+                </p>
+                <p>
+                  <strong className="text-[#0f2c56]">Kepatuhan PDP:</strong> {selected.pdpCompliance}
+                </p>
               </div>
+              <p className="text-xs text-slate-600 leading-relaxed">{selected.note}</p>
             </div>
 
             <div className="space-y-2 pt-3 border-t border-slate-100">
               <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500">
-                Keputusan Moderasi
+                Batasan Wewenang Admin
               </p>
-              <div className="grid grid-cols-3 gap-1.5">
-                <button
-                  type="button"
-                  onClick={() => setStatus(selected.id, "approved")}
-                  className="px-2 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-600 hover:text-white text-emerald-700 text-[11px] font-bold transition-colors cursor-pointer"
-                >
-                  Setujui
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setStatus(selected.id, "rejected")}
-                  className="px-2 py-2 rounded-xl bg-amber-50 hover:bg-amber-500 hover:text-white text-amber-700 text-[11px] font-bold transition-colors cursor-pointer"
-                >
-                  Revisi
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setStatus(selected.id, "disabled")}
-                  className="px-2 py-2 rounded-xl bg-red-50 hover:bg-[#ce2731] hover:text-white text-[#ce2731] text-[11px] font-bold transition-colors cursor-pointer"
-                >
-                  Nonaktif
-                </button>
-              </div>
+              <p className="text-[11px] text-slate-500 leading-relaxed">
+                Admin hanya memantau pemenuhan standar kemitraan company tanpa masuk ke pengelolaan lowongan atau seleksi kandidat perusahaan.
+              </p>
             </div>
           </aside>
         )}
@@ -692,46 +704,44 @@ export function AdminModerationSubpage() {
   );
 }
 
-interface ManagedAccount {
-  id: string;
-  name: string;
-  email: string;
-  role: "user" | "company";
-  active: boolean;
-}
-
-const INITIAL_ACCOUNTS: ManagedAccount[] = [
-  { id: "u-1", name: "Wira Fikri Ramadanu", email: "wira@student.unp.ac.id", role: "user", active: true },
-  { id: "u-2", name: "PT Nusantara Inovasi", email: "hr@nusantara.co.id", role: "company", active: true },
-  { id: "u-3", name: "CV Sentosa Abadi", email: "rekrutmen@sentosa.id", role: "company", active: false },
-];
-
 export function AdminAuditSubpage() {
-  const [accounts, setAccounts] = useState<ManagedAccount[]>(INITIAL_ACCOUNTS);
+  const [minAtsScore, setMinAtsScore] = useState<number>(75);
+  const [blindScreeningRequired, setBlindScreeningRequired] = useState<boolean>(true);
+  const [maxCvSizeMb, setMaxCvSizeMb] = useState<number>(5);
+  const [savedStandard, setSavedStandard] = useState<boolean>(false);
 
-  const toggleAccount = (id: string) => {
-    setAccounts((prev) =>
-      prev.map((acc) => (acc.id === id ? { ...acc, active: !acc.active } : acc))
-    );
-  };
-
-  const audits = [
-    { id: "a1", metric: "Rata-rata Skor ATS Platform", value: "82.4 / 100", note: "Stabil dalam 7 hari terakhir" },
-    { id: "a2", metric: "Total Evaluasi CV Selesai", value: "1.248 berkas", note: "94% diproses di bawah 60 detik (G1)" },
-    { id: "a3", metric: "Anomali Parsing Terdeteksi", value: "3 berkas", note: "PDF hasil scan / non-teks (FR-11)" },
+  const ecosystemStats = [
+    {
+      id: "s1",
+      metric: "Total Jobseeker Terdaftar",
+      value: "1.248 Akun",
+      note: "Data agregat pencari kerja aktif di platform",
+    },
+    {
+      id: "s2",
+      metric: "Company Bekerja Sama",
+      value: "24 Perusahaan",
+      note: "Mitra terverifikasi yang memenuhi standar platform",
+    },
+    {
+      id: "s3",
+      metric: "Calon Mitra Dipantau",
+      value: "3 Pengajuan",
+      note: "Sedang dipantau kelengkapan legalitas & standar PDP",
+    },
   ];
 
   return (
     <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-5">
       <DashboardPageHeading
-        badge="Pengguna & Audit (FR-51)"
-        titleLine1="Kelola akun pengguna"
-        titleLine2Prefix="dan pantau kualitas"
-        titleHighlight="sistem ATS!"
+        badge="Standarisasi Platform (FR-51)"
+        titleLine1="Tetapkan standarisasi"
+        titleLine2Prefix="dan pantau agregat"
+        titleHighlight="ekosistem Pasbana!"
       />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {audits.map((a) => (
+        {ecosystemStats.map((a) => (
           <div
             key={a.id}
             className="morph-surface rounded-2xl border border-slate-200 bg-white p-5 space-y-2 shadow-xs"
@@ -746,40 +756,94 @@ export function AdminAuditSubpage() {
         ))}
       </div>
 
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 space-y-3 shadow-xs">
-        <p className="text-xs font-extrabold text-[#0f2c56] uppercase tracking-wider">
-          Manajemen Akun &amp; Status Aktivasi
-        </p>
-        <div className="space-y-2.5">
-          {accounts.map((acc) => (
-            <div
-              key={acc.id}
-              className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200"
-            >
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-extrabold text-[#0f2c56]">{acc.name}</span>
-                  <span className="px-2 py-0.5 rounded-full bg-white border border-slate-200 text-[10px] font-bold uppercase text-slate-600">
-                    {acc.role === "company" ? "Employer" : "Pencari Kerja"}
-                  </span>
-                </div>
-                <p className="text-[11px] text-slate-500">{acc.email}</p>
-              </div>
-              <button
-                type="button"
-                onClick={() => toggleAccount(acc.id)}
-                className={`px-3 py-1.5 rounded-xl text-[11px] font-bold transition-colors cursor-pointer ${
-                  acc.active
-                    ? "bg-red-50 hover:bg-[#ce2731] hover:text-white text-[#ce2731]"
-                    : "bg-emerald-50 hover:bg-emerald-600 hover:text-white text-emerald-700"
-                }`}
-              >
-                {acc.active ? "Nonaktifkan Akun" : "Aktifkan Kembali"}
-              </button>
-            </div>
-          ))}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          setSavedStandard(true);
+        }}
+        className="rounded-2xl border border-slate-200 bg-white p-5 space-y-4 shadow-xs"
+      >
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <p className="text-xs font-extrabold text-[#0f2c56] uppercase tracking-wider">
+              Parameter Standarisasi Global Platform
+            </p>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Kebijakan standar yang berlaku untuk seluruh evaluasi CV dan kemitraan company.
+            </p>
+          </div>
+          {savedStandard && (
+            <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-[11px] font-bold">
+              Standar Disimpan
+            </span>
+          )}
         </div>
-      </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <label className="space-y-1.5">
+            <span className="block text-[11px] font-bold uppercase text-slate-500">
+              Ambang Skor Minimum ATS
+            </span>
+            <input
+              type="number"
+              min={50}
+              max={95}
+              value={minAtsScore}
+              onChange={(e) => {
+                setMinAtsScore(Number(e.target.value));
+                setSavedStandard(false);
+              }}
+              className="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm font-bold text-[#0f2c56]"
+            />
+          </label>
+
+          <label className="space-y-1.5">
+            <span className="block text-[11px] font-bold uppercase text-slate-500">
+              Batas Ukuran CV (MB)
+            </span>
+            <input
+              type="number"
+              min={2}
+              max={15}
+              value={maxCvSizeMb}
+              onChange={(e) => {
+                setMaxCvSizeMb(Number(e.target.value));
+                setSavedStandard(false);
+              }}
+              className="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm font-bold text-[#0f2c56]"
+            />
+          </label>
+
+          <div className="space-y-1.5">
+            <span className="block text-[11px] font-bold uppercase text-slate-500">
+              Standar Blind Screening PDP
+            </span>
+            <button
+              type="button"
+              onClick={() => {
+                setBlindScreeningRequired((prev) => !prev);
+                setSavedStandard(false);
+              }}
+              className={`w-full rounded-xl px-3.5 py-2.5 text-xs font-extrabold text-left transition-colors cursor-pointer ${
+                blindScreeningRequired
+                  ? "bg-[#0f2c56] text-white"
+                  : "bg-slate-100 text-slate-600"
+              }`}
+            >
+              {blindScreeningRequired ? "Wajib Aktif untuk Semua Mitra" : "Opsional"}
+            </button>
+          </div>
+        </div>
+
+        <div className="flex justify-end pt-1">
+          <button
+            type="submit"
+            className="morph-pill px-5 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-extrabold cursor-pointer"
+          >
+            Simpan Standarisasi
+          </button>
+        </div>
+      </form>
 
       <div className="rounded-2xl border border-slate-200 bg-white p-5 flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
@@ -789,7 +853,7 @@ export function AdminAuditSubpage() {
               Pemantauan Pipeline AI &amp; Ekstraksi Teks
             </p>
             <p className="text-xs text-slate-500">
-              Seluruh parser PDF/DOCX dan job queue berjalan normal tanpa antrean tertunda.
+              Seluruh parser PDF/DOCX dan validasi standar dokumen berjalan normal tanpa kendala.
             </p>
           </div>
         </div>

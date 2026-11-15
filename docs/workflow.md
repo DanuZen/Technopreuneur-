@@ -82,10 +82,10 @@ flowchart TD
     B --> C[Dashboard Employer]
     C --> D[Buat Lowongan Baru\nJudul, Deskripsi, Kualifikasi, Lokasi, Gaji]
     D --> E[Submit Lowongan]
-    E --> F{Moderasi Admin}
-    F -- Ditolak / Perlu Revisi --> G[Kirim Notifikasi Revisi ke Employer]
+    E --> F{Validasi Standar Sistem Otomatis}
+    F -- Tidak Memenuhi Standar --> G[Kirim Notifikasi Penyesuaian ke Employer]
     G --> D
-    F -- Disetujui --> H[Status Lowongan Aktif]
+    F -- Memenuhi Standar --> H[Status Lowongan Aktif]
     H --> I[Worker: Generate Embedding Vektor Lowongan]
     I --> J[Tersedia di Sistem Pencarian & Matching]
     J --> K[Pelamar Mengajukan Lamaran]

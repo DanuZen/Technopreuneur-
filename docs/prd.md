@@ -75,7 +75,8 @@ Hal-hal berikut **TIDAK** masuk dalam lingkup rilis MVP:
 │    Goal: Rekrut staf     │ Butuh pelamar terkurasi     │
 ├──────────────────────────┼─────────────────────────────┤
 │ 3. Admin Internal        │ Tim Operasional Platform    │
-│    Goal: Moderasi loker  │ Monitor kualitas & anti-spam│
+│    Goal: Standarisasi    │ Pantau jumlah jobseeker &   │
+│    & monitoring mitra    │ company mitra serta standar │
 └──────────────────────────┴─────────────────────────────┘
 ```
 
@@ -90,8 +91,8 @@ Hal-hal berikut **TIDAK** masuk dalam lingkup rilis MVP:
    - **Kebutuhan:** Memasang lowongan dengan cepat, melihat daftar pelamar yang otomatis diurutkan berdasarkan skor kecocokan tertinggi.
 
 3. **Administrator (*Internal Ops*):**
-   - **Profil:** Tim pengelola platform CareerMatch AI.
-   - **Kebutuhan:** Dashboard kurasi lowongan internal, pemblokiran lowongan fiktif/berbahaya, monitoring konsumsi kuota token AI.
+   - **Profil:** Tim pengelola standar dan ekosistem platform.
+   - **Kebutuhan:** Melihat jumlah agregat *jobseeker* dan *company* yang bekerja sama, menentukan standarisasi platform (skor minimum ATS, aturan *blind screening*, validasi dokumen), serta memonitoring *company* yang ingin bekerja sama tanpa ikut campur langsung ke ranah operasional/rekrutmen *company*.
 
 ---
 
@@ -125,7 +126,7 @@ Hal-hal berikut **TIDAK** masuk dalam lingkup rilis MVP:
 | **FR-41** | Lamaran | External Redirect | Lowongan eksternal menyediakan tombol *Lamar di Sumber Asli* yang membuka tab baru ke URL mitra |
 | **FR-43** | Lamaran | Review Pelamar Employer | Employer melihat pelamar yang masuk terurut skor kecocokan tertinggi dan ringkasan AI |
 | **FR-44** | Lamaran | Update Status Lamaran | Employer dapat memperbarui status pelamar (`submitted`, `reviewed`, `shortlisted`, `rejected`) |
-| **FR-50** | Admin | Moderasi Konten Lowongan | Admin dapat meninjau, menyetujui, menolak, atau menonaktifkan lowongan yang melanggar |
+| **FR-50** | Admin | Monitoring Kemitraan Company | Admin dapat memantau pengajuan dan kesiapan standar company yang ingin bekerja sama tanpa mengintervensi lowongan atau seleksi company |
 
 ### 5.2 Prioritas P1 (Fitur Tambahan Pasca-P0)
 
@@ -138,7 +139,7 @@ Hal-hal berikut **TIDAK** masuk dalam lingkup rilis MVP:
 | **FR-33** | Matching | Caching hasil rekomendasi; re-compute saat profil diubah atau ada lowongan signifikan |
 | **FR-42** | Lamaran | Pelacak status lamaran di sisi pencari kerja (*Applied Jobs Dashboard*) |
 | **FR-45** | Lamaran | Fitur simpan/bookmark lowongan untuk dibaca nanti (*Saved Jobs*) |
-| **FR-51** | Admin | Fitur suspend user dan audit log aktivitas sistem |
+| **FR-51** | Admin | Agregat Ekosistem & Standarisasi | Admin hanya melihat jumlah agregat jobseeker dan company yang bekerja sama serta menetapkan standarisasi platform (ambang ATS, blind screening, batas dokumen) |
 
 ---
 
