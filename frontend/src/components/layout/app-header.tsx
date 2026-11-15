@@ -66,31 +66,9 @@ export function AppHeader({
     ? `/${roleInUrl}/dashboard`
     : getDashboardBasePath(user?.role);
 
-  const getViewTitle = () => {
-    if (pathname.startsWith("/evaluate") || pathname.includes("/dashboard/evaluasi"))
-      return "Ruang Evaluasi CV & Kesiapan Karir";
-    if (pathname.startsWith("/onboarding") || pathname.includes("/dashboard/onboarding"))
-      return "Onboarding Pembuatan CV Standar ATS";
-    if (pathname.includes("/dashboard/dokumen"))
-      return "Dokumen CV Standar ATS";
-    if (pathname.includes("/dashboard/lowongan"))
-      return "Rekomendasi Lowongan Cocok";
-    if (pathname.startsWith("/company/dashboard"))
-      return "Dashboard Rekrutmen Perusahaan";
-    if (pathname.startsWith("/admin/dashboard"))
-      return "Dashboard Administrator Pasbana";
-    if (pathname.startsWith("/dashboard") || pathname.startsWith("/user/dashboard"))
-      return "Dashboard Hasil Evaluasi 5 Dimensi";
-    if (pathname.startsWith("/jobs")) return "Rekomendasi Lowongan Kerja Cerdas";
-    if (pathname.startsWith("/about")) return "Tentang Kami • Visi & Nilai Pasbana";
-    if (pathname.startsWith("/login")) return "Masuk ke Akun Pasbana AI";
-    if (pathname.startsWith("/register")) return "Registrasi Talenta Baru";
-    return "Beranda • Platform Karir Cerdas";
-  };
-
   return (
     <header className="sticky top-0 z-30 flex min-h-[58px] sm:min-h-[64px] w-full shrink-0 items-center justify-between gap-3 bg-white px-3.5 sm:px-6 py-2">
-      {/* Left: Toggles & Title */}
+      {/* Left: Mobile Toggle */}
       <div className="flex items-center gap-2.5 min-w-0">
         {/* Mobile Hamburger Toggle */}
         <button
@@ -101,13 +79,6 @@ export function AppHeader({
         >
           <Menu className="w-4 h-4" />
         </button>
-
-        {/* Breadcrumb / Location Title */}
-        <div className="flex items-center min-w-0">
-          <h2 className="text-xs sm:text-sm font-bold text-[#0f2c56] truncate tracking-tight font-heading">
-            {getViewTitle()}
-          </h2>
-        </div>
       </div>
 
       {/* Right: Quick Action & User Dropdown */}
