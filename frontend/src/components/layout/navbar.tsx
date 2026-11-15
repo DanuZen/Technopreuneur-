@@ -195,48 +195,54 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
 
                 {/* Floating User Dropdown Menu */}
                 {userDropdownOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-64 rounded-2xl bg-[#0e2647]/95 backdrop-blur-2xl border border-white/15 text-white shadow-2xl p-2 z-50">
+                  <div className="absolute right-0 top-full mt-2.5 w-64 rounded-[24px] bg-white border border-slate-200 text-[#0f2c56] shadow-2xl p-2.5 z-50">
                     {/* User Profile Header */}
-                    <div className="px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 mb-1.5">
-                      <div className="text-xs font-bold text-white truncate">{user.name}</div>
+                    <div className="px-4 py-3 rounded-2xl bg-[#0f2c56] text-white mb-2">
+                      <div className="text-xs font-extrabold text-white truncate">{user.name}</div>
                       <div className="text-[11px] text-slate-300 truncate mt-0.5">
                         {user.email || "Akun Terverifikasi"}
                       </div>
-                      <span className="inline-block mt-1.5 uppercase text-[9px] bg-[#ce2731] text-white px-2 py-0.5 rounded-full font-mono font-bold">
+                      <span className="inline-block mt-2 uppercase text-[9px] bg-[#ce2731] text-white px-2.5 py-0.5 rounded-full font-mono font-bold">
                         Role: {user.role}
                       </span>
                     </div>
 
                     {/* Navigation Links */}
-                    <div className="space-y-0.5">
+                    <div className="space-y-1">
                       <Link
                         href="/dashboard"
                         onClick={() => setUserDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-200 hover:text-white hover:bg-white/10 transition"
+                        className="flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-bold text-[#0f2c56] hover:bg-[#edf2f9] transition-colors"
                       >
-                        <LayoutDashboard className="w-4 h-4 text-[#faa9ab]" />
+                        <span className="w-7 h-7 rounded-lg bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+                          <LayoutDashboard className="w-3.5 h-3.5" />
+                        </span>
                         <span>Dashboard ATS</span>
                       </Link>
                       <Link
                         href="/evaluate"
                         onClick={() => setUserDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-200 hover:text-white hover:bg-white/10 transition"
+                        className="flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-bold text-[#0f2c56] hover:bg-[#edf2f9] transition-colors"
                       >
-                        <FileCheck className="w-4 h-4 text-emerald-400" />
+                        <span className="w-7 h-7 rounded-lg bg-[#ce2731] text-white flex items-center justify-center shrink-0">
+                          <FileCheck className="w-3.5 h-3.5" />
+                        </span>
                         <span>Evaluasi CV 5D</span>
                       </Link>
                       <Link
                         href="/jobs"
                         onClick={() => setUserDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-200 hover:text-white hover:bg-white/10 transition"
+                        className="flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-bold text-[#0f2c56] hover:bg-[#edf2f9] transition-colors"
                       >
-                        <Briefcase className="w-4 h-4 text-sky-400" />
+                        <span className="w-7 h-7 rounded-lg bg-[#163861] text-white flex items-center justify-center shrink-0">
+                          <Briefcase className="w-3.5 h-3.5" />
+                        </span>
                         <span>Pencocokan Lowongan</span>
                       </Link>
                     </div>
 
                     {/* Divider */}
-                    <div className="my-1.5 border-t border-white/10" />
+                    <div className="my-2 border-t border-slate-100" />
 
                     {/* Logout Option */}
                     <button
@@ -245,9 +251,11 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
                         setUserDropdownOpen(false);
                         handleLogout();
                       }}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-rose-300 hover:text-rose-100 hover:bg-rose-500/20 transition cursor-pointer"
+                      className="w-full flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-bold text-[#ce2731] hover:bg-[#ce2731] hover:text-white transition-colors cursor-pointer group"
                     >
-                      <LogOut className="w-4 h-4" />
+                      <span className="w-7 h-7 rounded-lg bg-[#ce2731]/10 group-hover:bg-white/20 flex items-center justify-center shrink-0 transition-colors">
+                        <LogOut className="w-3.5 h-3.5" />
+                      </span>
                       <span>Keluar dari Akun</span>
                     </button>
                   </div>
