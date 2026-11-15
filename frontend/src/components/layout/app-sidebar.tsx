@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
-  Plus,
   Search,
   FileCheck,
   Briefcase,
@@ -103,11 +102,6 @@ export function AppSidebar({
     setUser(null);
     setKonfirmasiLogout(false);
     router.push("/");
-  };
-
-  const handleSelectNewEvaluation = () => {
-    onCloseMobile();
-    router.push("/evaluate");
   };
 
   const handlePilihRiwayat = () => {
@@ -219,17 +213,6 @@ export function AppSidebar({
                 </div>
               </button>
 
-              {/* Action (+) Button */}
-              <button
-                type="button"
-                onClick={handleSelectNewEvaluation}
-                className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#0f2c56] hover:bg-[#ce2731] text-white transition-colors cursor-pointer"
-                title="Mulai Evaluasi CV Baru (+)"
-                aria-label="Mulai evaluasi CV baru"
-              >
-                <Plus className="w-5 h-5 text-white" aria-hidden="true" />
-              </button>
-
               {/* Quick Nav Icons */}
               <div className="w-full flex flex-col items-center gap-1.5 pt-2">
                 {navLinks.map((item) => {
@@ -332,18 +315,6 @@ export function AppSidebar({
                   title="Lipat panel samping (Rail mode)"
                 >
                   <PanelLeftClose className="w-4 h-4" aria-hidden="true" />
-                </button>
-              </div>
-
-              {/* Primary Action Button (Mulai Evaluasi CV Baru) */}
-              <div className="mt-3.5">
-                <button
-                  type="button"
-                  onClick={handleSelectNewEvaluation}
-                  className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-2xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors cursor-pointer"
-                >
-                  <Plus className="w-4 h-4 text-white shrink-0" aria-hidden="true" />
-                  <span>Evaluasi CV Baru</span>
                 </button>
               </div>
             </div>
