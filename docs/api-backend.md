@@ -198,3 +198,4 @@ Dokumen ini menjadi acuan kontrak REST API antara *frontend* Next.js ([api.ts](.
 ## 6. Implementasi Client di Frontend
 
 Seluruh method pemanggilan endpoint di atas sudah tersedia pada class `ApiClient` di [api.ts](../frontend/src/lib/api.ts), termasuk tipe payload dan *response* TypeScript sehingga tim *backend* dan *frontend* dapat langsung melakukan integrasi bertahap.
+
