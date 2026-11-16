@@ -112,7 +112,7 @@ export function CompanyFunnelDiagram({
         </div>
 
         {/* Horizontal Funnel Bars */}
-        <div className="flex-1 w-full space-y-3">
+        <div className="flex-1 w-full space-y-2.5">
           {stages.map((s) => (
             <div key={s.label} className="space-y-1.5">
               <div className="flex items-center justify-between text-xs font-bold">
@@ -133,7 +133,7 @@ export function CompanyFunnelDiagram({
       </div>
 
       {/* Ringkasan Metrik Bawah */}
-      <div className="shrink-0 grid grid-cols-3 gap-2.5 pt-3 border-t border-slate-100">
+      <div className="shrink-0 grid grid-cols-3 gap-2.5 pt-2.5 border-t border-slate-100">
         <div className="rounded-xl bg-[#f4f7fb] px-3 py-2">
           <p className="text-[10px] font-bold uppercase text-slate-500">Rata-rata ATS</p>
           <p className="text-sm font-black text-[#0f2c56]">85.3 / 100</p>
@@ -340,8 +340,8 @@ export function AdminModerationDiagram({
   const approvedDash = (approvedCount / total) * circ;
 
   return (
-    <div className="morph-surface h-full flex flex-col gap-3 bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 text-[#0f2c56]">
-      <div className="flex items-center justify-between gap-3">
+    <div className="morph-surface h-full flex flex-col justify-between gap-2.5 bg-white border border-slate-200 rounded-3xl p-4 sm:p-5 text-[#0f2c56]">
+      <div className="flex items-center justify-between gap-3 shrink-0">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
             <BarChart3 className="w-4 h-4" aria-hidden="true" />
@@ -360,8 +360,8 @@ export function AdminModerationDiagram({
         </span>
       </div>
 
-      <div className="flex-1 flex flex-col sm:flex-row items-center gap-6 py-1">
-        <div className="relative w-36 h-36 shrink-0 flex items-center justify-center">
+      <div className="flex-1 min-h-0 flex flex-col sm:flex-row items-center gap-5 py-0.5">
+        <div className="relative w-28 h-28 sm:w-32 sm:h-32 shrink-0 flex items-center justify-center">
           <svg viewBox="0 0 90 90" className="w-full h-full -rotate-90" aria-hidden="true">
             <circle cx="45" cy="45" r={radius} fill="none" stroke="#edf2f9" strokeWidth="11" />
             <circle
@@ -385,7 +385,7 @@ export function AdminModerationDiagram({
           </div>
         </div>
 
-        <div className="flex-1 w-full space-y-3">
+        <div className="flex-1 w-full space-y-2.5">
           {bars.map((b) => {
             const pct = Math.round((b.count / total) * 100);
             return (
@@ -408,7 +408,7 @@ export function AdminModerationDiagram({
         </div>
       </div>
 
-      <div className="shrink-0 grid grid-cols-3 gap-2.5 pt-3 border-t border-slate-100">
+      <div className="shrink-0 grid grid-cols-3 gap-2.5 pt-2.5 border-t border-slate-100">
         <div className="rounded-xl bg-[#f4f7fb] px-3 py-2">
           <p className="text-[10px] font-bold uppercase text-slate-500">Total Jobseeker</p>
           <p className="text-sm font-black text-[#0f2c56]">1.248 Akun</p>
@@ -456,8 +456,8 @@ export function AdminPipelineDiagram() {
   const slotW = usableW / days.length;
 
   return (
-    <div className="morph-surface h-full flex flex-col justify-between gap-3 bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 text-[#0f2c56]">
-      <div className="flex flex-wrap items-center justify-between gap-3">
+    <div className="morph-surface h-full flex flex-col justify-between gap-2.5 bg-white border border-slate-200 rounded-3xl p-4 sm:p-5 text-[#0f2c56]">
+      <div className="flex flex-wrap items-center justify-between gap-2 shrink-0">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-[#ce2731] text-white flex items-center justify-center shrink-0">
             <Activity className="w-4 h-4" aria-hidden="true" />
@@ -487,10 +487,10 @@ export function AdminPipelineDiagram() {
         </div>
       </div>
 
-      <div className="flex-1 min-h-0 w-full flex items-center">
+      <div className="flex-1 min-h-0 w-full flex items-center justify-center">
         <svg
           viewBox={`0 0 ${chartW} ${chartH}`}
-          className="w-full h-auto"
+          className="w-full h-full max-h-[175px]"
           role="img"
           aria-label="Diagram aktivitas pipeline evaluasi CV dan pemenuhan standar ATS mingguan"
         >
@@ -604,7 +604,7 @@ export function AdminPipelineDiagram() {
         </svg>
       </div>
 
-      <div className="shrink-0 grid grid-cols-3 gap-2.5 pt-3 border-t border-slate-100">
+      <div className="shrink-0 grid grid-cols-3 gap-2.5 pt-2.5 border-t border-slate-100">
         <div className="rounded-xl bg-[#f4f7fb] px-3 py-2">
           <p className="text-[10px] font-bold uppercase text-slate-500">Total Evaluasi</p>
           <p className="text-sm font-black text-[#0f2c56]">{totalCv.toLocaleString("id-ID")} CV</p>

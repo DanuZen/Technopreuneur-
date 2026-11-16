@@ -126,7 +126,7 @@ function CompanyDashboardView() {
   const rejectedCount = applicants.filter((a) => a.status === "rejected").length;
 
   return (
-    <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4 lg:overflow-hidden">
+    <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-3 sm:pb-4 flex flex-col gap-3 lg:overflow-hidden">
       <DashboardPageHeading
         badge="Portal Perusahaan"
         titleLine1="Temukan talenta muda"
@@ -347,7 +347,7 @@ function AdminDashboardView() {
   const incompleteCount = partners.filter((p) => p.complianceStatus === "incomplete").length;
 
   return (
-    <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4 lg:overflow-hidden">
+    <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-3 sm:pb-4 flex flex-col gap-3 lg:overflow-hidden">
       <DashboardPageHeading
         badge="Panel Administrator"
         titleLine1="Standarisasi ekosistem"
@@ -373,10 +373,10 @@ function AdminDashboardView() {
         }
       />
 
-      <div className="flex-1 min-h-0 grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
+      <div className="flex-1 min-h-0 grid grid-cols-1 xl:grid-cols-12 gap-4 items-stretch">
         {/* Kolom Kiri: Panel Navy Ringkasan Ekosistem + Diagram Komposisi Mitra */}
-        <div className="xl:col-span-5 flex flex-col gap-4">
-          <div className="bg-[#0f2c56] text-white rounded-3xl p-5 sm:p-6 space-y-4">
+        <div className="xl:col-span-5 min-h-0 flex flex-col gap-3.5">
+          <div className="shrink-0 bg-[#0f2c56] text-white rounded-3xl p-4 sm:p-5 space-y-3">
             <div className="flex items-center justify-between gap-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ce2731] text-white text-[11px] font-bold uppercase tracking-wider">
                 <ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" />
@@ -418,15 +418,15 @@ function AdminDashboardView() {
             </div>
 
             <div className="border-t border-white/15 divide-y divide-white/10 text-xs text-white">
-              <div className="py-2 flex items-center justify-between gap-3">
+              <div className="py-1.5 flex items-center justify-between gap-3">
                 <span>Total Jobseeker Terdaftar</span>
                 <span className="font-bold">1.248 Pencari Kerja</span>
               </div>
-              <div className="py-2 flex items-center justify-between gap-3">
+              <div className="py-1.5 flex items-center justify-between gap-3">
                 <span>Company Bekerja Sama</span>
                 <span className="font-bold">24 Perusahaan</span>
               </div>
-              <div className="pt-2 flex items-center justify-between gap-3">
+              <div className="pt-1.5 flex items-center justify-between gap-3">
                 <span>Menunggu Audit &amp; Verifikasi</span>
                 <span className="font-bold">{pendingCount} Perusahaan</span>
               </div>
@@ -442,20 +442,20 @@ function AdminDashboardView() {
           </div>
         </div>
 
-        {/* Kolom Kanan: Monitoring Pengajuan Kemitraan Company + Diagram Pipeline AI */}
-        <div className="xl:col-span-7 flex flex-col gap-5">
-          <div className="bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 flex flex-col justify-between gap-4 text-[#0f2c56]">
-            <div className="space-y-4">
+        {/* Kolom Kanan: Audit & Verifikasi Pendaftaran Company + Diagram Pipeline AI */}
+        <div className="xl:col-span-7 min-h-0 flex flex-col gap-3.5">
+          <div className="shrink-0 bg-white border border-slate-200 rounded-3xl p-4 sm:p-5 flex flex-col justify-between gap-2.5 text-[#0f2c56]">
+            <div className="space-y-3">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
                     <Clock className="w-4 h-4" aria-hidden="true" />
                   </div>
                   <div>
                     <p className="text-xs font-extrabold uppercase tracking-wider">
                       Audit &amp; Verifikasi Pendaftaran Company
                     </p>
-                    <p className="text-xs font-medium text-slate-500">
+                    <p className="text-[11px] font-medium text-slate-500">
                       Audit legalitas dan verifikasi perusahaan yang mendaftar sebelum resmi bermitra
                     </p>
                   </div>
@@ -466,7 +466,7 @@ function AdminDashboardView() {
                 {partners.map((item) => (
                   <div
                     key={item.id}
-                    className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                    className="py-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5"
                   >
                     <div className="space-y-0.5">
                       <p className="text-sm font-extrabold">{item.company}</p>
