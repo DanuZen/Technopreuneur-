@@ -19,6 +19,10 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { DashboardPageHeading } from "@/components/dashboard/dashboard-page-heading";
+import {
+  CompanyFunnelDiagram,
+  CompanyTrendDiagram,
+} from "@/components/dashboard/dashboard-diagrams";
 
 type ApplicantStatus = "submitted" | "reviewed" | "shortlisted" | "rejected";
 
@@ -134,6 +138,12 @@ export function CompanyJobsSubpage() {
     );
   };
 
+  const activeJobsCount = jobs.filter((j) => j.active).length;
+  const totalApplicantsCount = jobs.reduce((acc, j) => acc + j.applicants, 0);
+  const reviewedEstimate = Math.round(totalApplicantsCount * 0.65);
+  const shortlistedEstimate = Math.round(totalApplicantsCount * 0.25);
+  const rejectedEstimate = Math.max(totalApplicantsCount - reviewedEstimate - shortlistedEstimate, 0);
+
   return (
     <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4 lg:overflow-hidden">
       <DashboardPageHeading
@@ -198,8 +208,8 @@ export function CompanyJobsSubpage() {
         </form>
       )}
 
-      <div className="flex-1 min-h-0 overflow-y-auto scrollbar-none">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 content-start">
+      <div className="flex-1 min-h-0 flex flex-col gap-4 overflow-y-auto lg:overflow-hidden scrollbar-none">
+        <div className="shrink-0 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 content-start">
           {jobs.map((job) => (
           <div
             key={job.id}
@@ -245,6 +255,21 @@ export function CompanyJobsSubpage() {
             </div>
           </div>
         ))}
+        </div>
+
+        <div className="flex-1 min-h-0 grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
+          <div className="xl:col-span-6 min-h-0">
+            <CompanyFunnelDiagram
+              totalJobs={activeJobsCount}
+              totalApplicants={totalApplicantsCount}
+              reviewedCount={reviewedEstimate}
+              shortlistedCount={shortlistedEstimate}
+              rejectedCount={rejectedEstimate}
+            />
+          </div>
+          <div className="xl:col-span-6 min-h-0">
+            <CompanyTrendDiagram />
+          </div>
         </div>
       </div>
     </main>
@@ -461,96 +486,155 @@ export function CompanyProfileSubpage() {
         titleHighlight="talenta akurat!"
       />
 
-      <form
-        onSubmit={handleSave}
-        className="flex-1 min-h-0 overflow-y-auto scrollbar-none rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 flex flex-col justify-between gap-4 w-full shadow-xs"
-      >
-        <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
-          <div className="w-10 h-10 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center">
-            <Building2 className="w-5 h-5" />
-          </div>
-          <div>
-            <p className="text-sm font-extrabold text-[#0f2c56]">{companyName}</p>
-            <p className="text-xs text-slate-500">Mitra Rekrutmen Terverifikasi</p>
-          </div>
-        </div>
+      <div className="flex-1 min-h-0 grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch overflow-y-auto lg:overflow-hidden scrollbar-none">
+        <form
+          onSubmit={handleSave}
+          className="xl:col-span-8 h-full rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 flex flex-col justify-between gap-4 shadow-xs"
+        >
+          <div className="flex-1 min-h-0 flex flex-col gap-4">
+            <div className="flex items-center gap-3 pb-3 border-b border-slate-100 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center">
+                <Building2 className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="text-sm font-extrabold text-[#0f2c56]">{companyName}</p>
+                <p className="text-xs text-slate-500">Mitra Rekrutmen Terverifikasi</p>
+              </div>
+            </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="space-y-1">
-            <label className="text-[11px] font-bold text-slate-500 uppercase">
-              Nama Perusahaan
-            </label>
-            <input
-              type="text"
-              value={companyName}
-              onChange={(e) => setCompanyName(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-[#0f2c56] focus:outline-none focus:border-[#0f2c56]"
-            />
-          </div>
-          <div className="space-y-1">
-            <label className="text-[11px] font-bold text-slate-500 uppercase">
-              Bidang Industri
-            </label>
-            <input
-              type="text"
-              value={industry}
-              onChange={(e) => setIndustry(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-[#0f2c56] focus:outline-none focus:border-[#0f2c56]"
-            />
-          </div>
-          <div className="space-y-1">
-            <label className="text-[11px] font-bold text-slate-500 uppercase">
-              Website Perusahaan
-            </label>
-            <input
-              type="url"
-              value={website}
-              onChange={(e) => setWebsite(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-[#0f2c56] focus:outline-none focus:border-[#0f2c56]"
-            />
-          </div>
-          <div className="space-y-1">
-            <label className="text-[11px] font-bold text-slate-500 uppercase">
-              Lokasi Kantor Utama
-            </label>
-            <input
-              type="text"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-[#0f2c56] focus:outline-none focus:border-[#0f2c56]"
-            />
-          </div>
-          <div className="space-y-1 sm:col-span-2">
-            <label className="text-[11px] font-bold text-slate-500 uppercase">
-              Deskripsi Singkat Perusahaan
-            </label>
-            <textarea
-              rows={3}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-[#0f2c56] focus:outline-none focus:border-[#0f2c56]"
-            />
-          </div>
-        </div>
+            <div className="flex-1 min-h-0 flex flex-col gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 shrink-0">
+                <div className="space-y-1">
+                  <label className="text-[11px] font-bold text-slate-500 uppercase">
+                    Nama Perusahaan
+                  </label>
+                  <input
+                    type="text"
+                    value={companyName}
+                    onChange={(e) => setCompanyName(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-[#0f2c56] focus:outline-none focus:border-[#0f2c56]"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] font-bold text-slate-500 uppercase">
+                    Bidang Industri
+                  </label>
+                  <input
+                    type="text"
+                    value={industry}
+                    onChange={(e) => setIndustry(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-[#0f2c56] focus:outline-none focus:border-[#0f2c56]"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] font-bold text-slate-500 uppercase">
+                    Website Perusahaan
+                  </label>
+                  <input
+                    type="url"
+                    value={website}
+                    onChange={(e) => setWebsite(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-[#0f2c56] focus:outline-none focus:border-[#0f2c56]"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] font-bold text-slate-500 uppercase">
+                    Lokasi Kantor Utama
+                  </label>
+                  <input
+                    type="text"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-[#0f2c56] focus:outline-none focus:border-[#0f2c56]"
+                  />
+                </div>
+              </div>
 
-        <div className="flex items-center justify-between pt-2">
-          {saved ? (
-            <span className="text-xs font-bold text-emerald-700">
-              Perubahan profil perusahaan tersimpan.
-            </span>
-          ) : (
-            <span className="text-xs text-slate-400">
-              Data ini tampil pada kartu lowongan mitra.
-            </span>
-          )}
-          <button
-            type="submit"
-            className="morph-pill px-5 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-extrabold cursor-pointer"
-          >
-            Simpan Profil
-          </button>
-        </div>
-      </form>
+              <div className="flex-1 min-h-0 flex flex-col gap-1.5">
+                <label className="text-[11px] font-bold text-slate-500 uppercase shrink-0">
+                  Deskripsi Singkat Perusahaan
+                </label>
+                <textarea
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="flex-1 min-h-[120px] w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-[#0f2c56] leading-relaxed focus:outline-none focus:border-[#0f2c56] resize-none"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="shrink-0 flex items-center justify-between pt-3 border-t border-slate-100">
+            {saved ? (
+              <span className="text-xs font-bold text-emerald-700">
+                Perubahan profil perusahaan tersimpan.
+              </span>
+            ) : (
+              <span className="text-xs text-slate-400">
+                Data ini tampil pada kartu lowongan mitra.
+              </span>
+            )}
+            <button
+              type="submit"
+              className="morph-pill px-5 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-extrabold cursor-pointer"
+            >
+              Simpan Profil
+            </button>
+          </div>
+        </form>
+
+        <aside className="xl:col-span-4 h-full flex flex-col gap-4">
+          <div className="flex-1 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 flex flex-col justify-between gap-4 shadow-xs">
+            <div className="space-y-3">
+              <div className="flex items-center justify-between gap-2">
+                <span className="px-2.5 py-1 rounded-full bg-emerald-600 text-white text-[10px] font-bold uppercase">
+                  Terverifikasi Admin
+                </span>
+                <span className="text-[11px] font-bold text-slate-400">Pratinjau Portal</span>
+              </div>
+              <div>
+                <h3 className="text-base font-extrabold text-[#0f2c56]">{companyName}</h3>
+                <p className="text-xs font-semibold text-slate-500 mt-0.5">{industry}</p>
+              </div>
+              <div className="space-y-1.5 text-xs text-slate-600">
+                <p className="inline-flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-[#ce2731] shrink-0" />
+                  <span>{city}</span>
+                </p>
+                <p className="text-[11px] font-semibold text-[#0f2c56] truncate">{website}</p>
+              </div>
+              <div className="rounded-xl bg-[#f4f7fb] p-3.5 text-xs text-slate-600 leading-relaxed">
+                {description}
+              </div>
+            </div>
+
+            <div className="pt-3 border-t border-slate-100 space-y-2">
+              <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500">
+                Status Audit &amp; Kepatuhan
+              </p>
+              <div className="grid grid-cols-2 gap-2 text-xs font-bold">
+                <div className="rounded-xl bg-[#edf2f9] px-3 py-2 text-[#0f2c56]">
+                  NIB &amp; NPWP Valid
+                </div>
+                <div className="rounded-xl bg-[#0f2c56] px-3 py-2 text-white">
+                  Blind Screening On
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="shrink-0 rounded-2xl bg-[#0f2c56] text-white p-5 space-y-1.5">
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-[#ce2731]" />
+              <p className="text-xs font-extrabold uppercase tracking-wider">
+                Standar Rekrutmen UU PDP
+              </p>
+            </div>
+            <p className="text-xs text-white/90 leading-relaxed">
+              Identitas pelamar ditampilkan dalam format kode ATS terenkripsi selama proses seleksi berlangsung.
+            </p>
+          </div>
+        </aside>
+      </div>
     </main>
   );
 }
@@ -835,8 +919,8 @@ export function AdminAuditSubpage() {
         titleHighlight="ekosistem Pasbana!"
       />
 
-      <div className="flex-1 min-h-0 overflow-y-auto scrollbar-none space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="flex-1 min-h-0 flex flex-col gap-4 overflow-y-auto lg:overflow-hidden scrollbar-none">
+      <div className="shrink-0 grid grid-cols-1 md:grid-cols-3 gap-4">
         {ecosystemStats.map((a) => {
           const Icon = a.icon;
           return (
@@ -855,13 +939,13 @@ export function AdminAuditSubpage() {
         })}
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
+      <div className="flex-1 min-h-0 grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             setSavedStandard(true);
           }}
-          className="xl:col-span-7 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 space-y-5 shadow-xs"
+          className="xl:col-span-7 h-full rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 flex flex-col justify-between gap-4 shadow-xs"
         >
           <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-100">
             <div>
@@ -1043,8 +1127,8 @@ export function AdminAuditSubpage() {
           </div>
         </form>
 
-        <div className="xl:col-span-5 space-y-4">
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 space-y-4 shadow-xs">
+        <div className="xl:col-span-5 h-full flex flex-col gap-4">
+          <div className="flex-1 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 flex flex-col justify-between gap-4 shadow-xs">
             <div className="flex items-center justify-between gap-2">
               <div>
                 <p className="text-xs font-extrabold text-[#0f2c56] uppercase tracking-wider">
@@ -1196,8 +1280,8 @@ export function AdminReportSubpage() {
         }
       />
 
-      <div className="flex-1 min-h-0 overflow-y-auto scrollbar-none space-y-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+      <div className="flex-1 min-h-0 flex flex-col gap-4 overflow-y-auto lg:overflow-hidden scrollbar-none">
+      <div className="shrink-0 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         {summaryCards.map((card) => {
           const Icon = card.icon;
           return (
@@ -1216,8 +1300,8 @@ export function AdminReportSubpage() {
         })}
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
-        <div className="xl:col-span-7 rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-xs flex flex-col">
+      <div className="flex-1 min-h-0 grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
+        <div className="xl:col-span-7 h-full rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-xs flex flex-col justify-between">
           <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between gap-3">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-wider text-[#0f2c56]">
@@ -1239,11 +1323,11 @@ export function AdminReportSubpage() {
             <span className="col-span-2 text-right">Patuh</span>
           </div>
 
-          <div className="divide-y divide-slate-100">
+          <div className="flex-1 divide-y divide-slate-100">
             {monthlyBreakdown.map((row) => (
               <div
                 key={row.month}
-                className="grid grid-cols-12 gap-2 px-5 py-3 text-xs items-center"
+                className="grid grid-cols-12 gap-2 px-5 py-3.5 text-xs items-center"
               >
                 <span className="col-span-4 font-bold text-[#0f2c56]">{row.month}</span>
                 <span className="col-span-3 text-right font-semibold text-slate-700">
@@ -1257,6 +1341,15 @@ export function AdminReportSubpage() {
                 </span>
               </div>
             ))}
+          </div>
+
+          <div className="shrink-0 px-5 py-3.5 bg-[#f4f7fb] border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">
+            <span className="font-bold text-slate-600">
+              Pertumbuhan 6 Bulan: <strong className="text-[#0f2c56]">+428 Jobseeker (+52%)</strong>
+            </span>
+            <span className="font-bold text-[#ce2731]">
+              +10 Company Mitra Terverifikasi
+            </span>
           </div>
         </div>
 
