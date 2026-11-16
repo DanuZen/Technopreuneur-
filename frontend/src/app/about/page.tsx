@@ -12,7 +12,7 @@ const TEAM_MEMBERS = [
     name: "Wira Fikri Ramadanu",
     role: "Frontend Lead",
     nim: "23343023",
-    photo: "/team-danu.png",
+    photo: "/team-danu-v2.png",
     focus: "Arsitektur UI/UX, responsivitas, dan antarmuka evaluasi CV interaktif.",
   },
   {
@@ -26,7 +26,7 @@ const TEAM_MEMBERS = [
     name: "Florensius Panca Gati",
     role: "Backend AI Lead",
     nim: "23343006",
-    photo: "/panca.png",
+    photo: "/team-panca-v2.png",
     focus: "Pipeline NLP, penilaian CV 5 dimensi, dan pencocokan berbasis pgvector.",
   },
 ];
