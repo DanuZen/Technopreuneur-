@@ -110,7 +110,7 @@ export default function DokumenCvAtsPage() {
   }
 
   return (
-    <main className="xl:h-full xl:overflow-hidden min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 flex flex-col gap-4 print:h-auto print:overflow-visible">
+    <main className="lg:h-full lg:overflow-hidden min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-3 flex flex-col gap-3 print:h-auto print:overflow-visible">
       <div className="shrink-0">
         <DashboardPageHeading
           badge="Dokumen CV ATS"
@@ -140,10 +140,10 @@ export default function DokumenCvAtsPage() {
         />
       </div>
 
-      <div className="flex-1 min-h-0 grid grid-cols-1 xl:grid-cols-12 gap-6 items-stretch print:block">
+      <div className="flex-1 min-h-0 grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch print:block">
         {/* Kolom Kiri: Panel Keterangan Solid Navy + Panduan Flat tanpa Card Bersarang */}
-        <aside className="xl:col-span-5 flex flex-col justify-between gap-4 xl:overflow-y-auto scrollbar-none print:hidden">
-          <div className="bg-[#0f2c56] text-white rounded-3xl p-5 sm:p-6 space-y-4 shrink-0">
+        <aside className="xl:col-span-5 min-h-0 flex flex-col justify-between gap-3 xl:overflow-hidden print:hidden">
+          <div className="bg-[#0f2c56] text-white rounded-3xl p-4 sm:p-5 space-y-2.5 shrink-0">
             <div className="flex items-center justify-between gap-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ce2731] text-white text-[11px] font-bold uppercase tracking-wider">
                 <FileText className="w-3.5 h-3.5" aria-hidden="true" />
@@ -154,10 +154,10 @@ export default function DokumenCvAtsPage() {
               </span>
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3.5">
               <svg
                 viewBox="0 0 96 112"
-                className="w-16 h-auto shrink-0"
+                className="w-14 h-auto shrink-0"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden="true"
@@ -184,33 +184,33 @@ export default function DokumenCvAtsPage() {
             </div>
 
             <div className="border-t border-white/15 divide-y divide-white/10 text-xs text-white">
-              <div className="py-2 flex items-center justify-between gap-3">
+              <div className="py-1.5 flex items-center justify-between gap-3">
                 <span>Nama Kandidat</span>
                 <span className="font-bold text-right truncate">
                   {analysis.profile.fullName}
                 </span>
               </div>
-              <div className="py-2 flex items-center justify-between gap-3">
+              <div className="py-1.5 flex items-center justify-between gap-3">
                 <span>Target Peran</span>
                 <span className="font-bold text-right truncate">
                   {analysis.profile.headline || "Kandidat Profesional"}
                 </span>
               </div>
-              <div className="py-2 flex items-center justify-between gap-3">
+              <div className="py-1.5 flex items-center justify-between gap-3">
                 <span>Ukuran Kertas</span>
                 <span className="font-bold">A4 (210 x 297 mm)</span>
               </div>
-              <div className="pt-2 flex items-center justify-between gap-3">
+              <div className="pt-1.5 flex items-center justify-between gap-3">
                 <span>Format Struktur</span>
                 <span className="font-bold">1-Kolom Bersih</span>
               </div>
             </div>
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-3xl p-5 flex-1 flex flex-col justify-center gap-3.5 text-[#0f2c56]">
-            <div className="flex items-center justify-between gap-4">
+          <div className="bg-white border border-slate-200 rounded-3xl p-4 flex-1 min-h-0 flex flex-col justify-center gap-2.5 text-[#0f2c56]">
+            <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+                <div className="w-8 h-8 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
                   <Printer className="w-4 h-4" aria-hidden="true" />
                 </div>
                 <div>
@@ -226,7 +226,7 @@ export default function DokumenCvAtsPage() {
               {/* Ilustrasi Mini Cetak PDF A4 */}
               <svg
                 viewBox="0 0 88 64"
-                className="w-20 h-auto shrink-0"
+                className="w-16 h-auto shrink-0"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden="true"
@@ -250,38 +250,38 @@ export default function DokumenCvAtsPage() {
               </svg>
             </div>
 
-            <div className="space-y-2.5">
-              <div className="flex items-start gap-3">
-                <div className="w-7 h-7 rounded-lg bg-[#edf2f9] text-[#0f2c56] flex items-center justify-center shrink-0 mt-0.5">
+            <div className="space-y-1.5">
+              <div className="flex items-start gap-2.5">
+                <div className="w-6 h-6 rounded-lg bg-[#edf2f9] text-[#0f2c56] flex items-center justify-center shrink-0 mt-0.5">
                   <Ruler className="w-3.5 h-3.5" aria-hidden="true" />
                 </div>
-                <p className="text-xs leading-relaxed">
+                <p className="text-[11px] leading-snug">
                   <span className="font-bold">Proporsi A4 Akurat:</span> lebar 210 mm dan tinggi 297 mm agar hasil ekspor PDF tetap rapi saat dibuka rekruter.
                 </p>
               </div>
-              <div className="flex items-start gap-3">
-                <div className="w-7 h-7 rounded-lg bg-[#edf2f9] text-[#0f2c56] flex items-center justify-center shrink-0 mt-0.5">
+              <div className="flex items-start gap-2.5">
+                <div className="w-6 h-6 rounded-lg bg-[#edf2f9] text-[#0f2c56] flex items-center justify-center shrink-0 mt-0.5">
                   <FileCheck2 className="w-3.5 h-3.5" aria-hidden="true" />
                 </div>
-                <p className="text-xs leading-relaxed">
+                <p className="text-[11px] leading-snug">
                   <span className="font-bold">100% Terbaca Parser ATS:</span> bebas tabel rumit, kolom ganda, maupun elemen grafis yang menghambat ekstraksi teks.
                 </p>
               </div>
-              <div className="flex items-start gap-3">
-                <div className="w-7 h-7 rounded-lg bg-[#edf2f9] text-[#0f2c56] flex items-center justify-center shrink-0 mt-0.5">
+              <div className="flex items-start gap-2.5">
+                <div className="w-6 h-6 rounded-lg bg-[#edf2f9] text-[#0f2c56] flex items-center justify-center shrink-0 mt-0.5">
                   <SlidersHorizontal className="w-3.5 h-3.5" aria-hidden="true" />
                 </div>
-                <p className="text-xs leading-relaxed">
+                <p className="text-[11px] leading-snug">
                   <span className="font-bold">Pengaturan Cetak:</span> klik <span className="font-semibold">Cetak / Unduh PDF</span>, pilih ukuran <span className="font-semibold">A4</span>, lalu nonaktifkan opsi <span className="font-semibold">Headers and footers</span>.
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-3xl p-5 flex-1 flex flex-col justify-center gap-3.5 text-[#0f2c56]">
-            <div className="flex items-center justify-between gap-4">
+          <div className="bg-white border border-slate-200 rounded-3xl p-4 shrink-0 flex flex-col justify-center gap-2.5 text-[#0f2c56]">
+            <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
+                <div className="w-8 h-8 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center shrink-0">
                   <CheckCircle2 className="w-4 h-4" aria-hidden="true" />
                 </div>
                 <div>
@@ -297,7 +297,7 @@ export default function DokumenCvAtsPage() {
               {/* Ilustrasi Mini Checklist Bagian CV */}
               <svg
                 viewBox="0 0 88 64"
-                className="w-20 h-auto shrink-0"
+                className="w-16 h-auto shrink-0"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden="true"
