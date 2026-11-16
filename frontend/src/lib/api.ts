@@ -340,6 +340,111 @@ class ApiClient {
       body: JSON.stringify({ jobId, coverLetter }),
     });
   }
+
+  // Jobseeker Profile CRUD
+  async getProfile<T = Record<string, unknown>>(): Promise<T> {
+    return this.request<T>("/profile");
+  }
+
+  async updateProfile<T = Record<string, unknown>>(payload: T): Promise<T> {
+    return this.request<T>("/profile", {
+      method: "PUT",
+      body: JSON.stringify(payload),
+    });
+  }
+
+  // Company Endpoints (Employer)
+  async getCompanyJobs<T = unknown[]>(): Promise<T> {
+    return this.request<T>("/company/jobs");
+  }
+
+  async createCompanyJob<T = unknown>(payload: {
+    title: string;
+    location: string;
+    type: string;
+  }): Promise<T> {
+    return this.request<T>("/company/jobs", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+  }
+
+  async toggleCompanyJob<T = unknown>(jobId: string, active: boolean): Promise<T> {
+    return this.request<T>(`/company/jobs/${jobId}`, {
+      method: "PATCH",
+      body: JSON.stringify({ active }),
+    });
+  }
+
+  async getCompanyApplicants<T = unknown[]>(status?: string): Promise<T> {
+    const query = status && status !== "all" ? `?status=${encodeURIComponent(status)}` : "";
+    return this.request<T>(`/company/applicants${query}`);
+  }
+
+  async updateCompanyApplicantStatus<T = unknown>(
+    applicantId: string,
+    status: "reviewed" | "shortlisted" | "rejected"
+  ): Promise<T> {
+    return this.request<T>(`/company/applicants/${applicantId}/status`, {
+      method: "PATCH",
+      body: JSON.stringify({ status }),
+    });
+  }
+
+  async getCompanyProfile<T = Record<string, unknown>>(): Promise<T> {
+    return this.request<T>("/company/profile");
+  }
+
+  async updateCompanyProfile<T = Record<string, unknown>>(payload: T): Promise<T> {
+    return this.request<T>("/company/profile", {
+      method: "PUT",
+      body: JSON.stringify(payload),
+    });
+  }
+
+  // Admin Endpoints (Aggregate, Partner Audit, Standards, Executive Reports)
+  async getAdminOverview<T = Record<string, unknown>>(): Promise<T> {
+    return this.request<T>("/admin/overview");
+  }
+
+  async getAdminPartners<T = unknown[]>(): Promise<T> {
+    return this.request<T>("/admin/partners");
+  }
+
+  async auditAdminPartner<T = unknown>(
+    partnerId: string,
+    payload: { status: "verified" | "pending" | "incomplete"; note?: string }
+  ): Promise<T> {
+    return this.request<T>(`/admin/partners/${partnerId}/audit`, {
+      method: "PATCH",
+      body: JSON.stringify(payload),
+    });
+  }
+
+  async getAdminStandards<T = Record<string, unknown>>(): Promise<T> {
+    return this.request<T>("/admin/standards");
+  }
+
+  async updateAdminStandards<T = Record<string, unknown>>(payload: {
+    minAtsScore: number;
+    maxCvSizeMb: number;
+    slaSeconds: number;
+    allowedFormat: "pdf_docx" | "pdf_only";
+    blindScreeningRequired: boolean;
+    requireFullLegality: boolean;
+    retentionDays: string;
+  }): Promise<T> {
+    return this.request<T>("/admin/standards", {
+      method: "PUT",
+      body: JSON.stringify(payload),
+    });
+  }
+
+  async getAdminReport<T = Record<string, unknown>>(
+    period: "bulan" | "kuartal" | "tahun" = "bulan"
+  ): Promise<T> {
+    return this.request<T>(`/admin/reports?period=${encodeURIComponent(period)}`);
+  }
 }
 
 export const api = new ApiClient();
