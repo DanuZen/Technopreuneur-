@@ -46,12 +46,12 @@ flowchart TD
 ```
 
 ### 2.3 Pemetaan Halaman Antarmuka Jobseeker
-- **Evaluasi CV** (`/user/dashboard/evaluasi`): Mengunggah berkas CV digital untuk dinilai oleh pipeline AI sesuai standar dokumen platform.
-- **Onboarding CV** (`/user/dashboard/onboarding`): Menyusun CV 1-kolom standar ATS secara bertahap bagi kandidat yang belum memiliki CV.
-- **Hasil Evaluasi** (`/user/dashboard/hasil`): Menampilkan skor ATS, ringkasan profil hasil ekstraksi AI, kekuatan, kelemahan, dan rekomendasi perbaikan.
-- **Dokumen CV ATS** (`/user/dashboard/dokumen`): Mengelola daftar dokumen CV tersimpan dan memilih CV aktif untuk melamar.
-- **Lowongan Cocok** (`/user/dashboard/lowongan` & `/jobs`): Melihat daftar lowongan terurut tingkat kecocokan, alasan kecocokan AI, dan *skill gap*.
-- **Detail Profil (Modal Header)**: Mengubah dan menambah data Identitas, Keahlian, Pengalaman, dan Pendidikan.
+- **Evaluasi CV** (`/user/dashboard/evaluasi` & `/evaluate`): Mengunggah berkas CV digital untuk dinilai oleh pipeline AI sesuai standar dokumen platform.
+- **Onboarding CV** (`/user/dashboard/onboarding` & `/onboarding`): Menyusun CV 1-kolom standar ATS secara bertahap bagi kandidat yang belum memiliki CV.
+- **Hasil Evaluasi** (`/user/dashboard/hasil-evaluasi` & `/user/dashboard/riwayat/[id]`): Menampilkan skor 5 dimensi ATS, ringkasan profil hasil ekstraksi AI, kekuatan, kelemahan, dan konsultasi perbaikan.
+- **Dokumen CV ATS** (`/user/dashboard/dokumen`): Pratinjau proporsi kertas A4 (210 x 297 mm), tips cetak PDF, kelengkapan 4 bagian CV, dan cetak/unduh PDF.
+- **Lowongan Cocok** (`/user/dashboard/lowongan`, `/jobs`, & `/apply/[id]`): Melihat daftar lowongan terurut tingkat kecocokan, alasan kecocokan AI, *skill gap*, dan mengajukan lamaran.
+- **Detail Profil (Modal Header)**: Mengubah dan menambah data Identitas, Keahlian, Pengalaman, dan Pendidikan secara CRUD.
 
 ---
 
@@ -87,10 +87,10 @@ flowchart TD
 ```
 
 ### 3.4 Pemetaan Halaman Antarmuka Company
-- **Ringkasan Rekrutmen** (`/company/dashboard`): Menampilkan ringkasan lowongan aktif, antrean pelamar terbaru dengan aksi cepat (`Tinjau`, `Shortlist`, `Tolak`), diagram *funnel* seleksi, dan grafik kualitas skor pelamar.
-- **Manajemen Lowongan** (`/company/dashboard/lowongan`): Membuat lowongan baru serta menjeda atau mengaktifkan kembali lowongan perusahaan.
-- **Seleksi Kandidat** (`/company/dashboard/pelamar`): Daftar pelamar dengan filter status (`Semua`, `Submitted`, `Reviewed`, `Shortlisted`, `Rejected`) dan panel detail kecocokan AI.
-- **Profil Mitra** (`/company/dashboard/profil`): Mengelola nama perusahaan, bidang industri, situs web, lokasi kantor utama, dan deskripsi perusahaan.
+- **Beranda Perusahaan** (`/company/dashboard`): Menampilkan ringkasan lowongan aktif, antrean pelamar terbaru dengan aksi cepat (`Tinjau`, `Shortlist`, `Tolak`), modal popup `Pasang Lowongan`, diagram *funnel* seleksi, dan grafik tren pelamar & lolos ATS.
+- **Kelola Lowongan** (`/company/dashboard/lowongan`): Membuat lowongan baru melalui modal popup, menjeda atau mengaktifkan kembali lowongan perusahaan, serta memantau `CompanyFunnelDiagram` dan `CompanyTrendDiagram`.
+- **Seleksi Kandidat** (`/company/dashboard/evaluasi`): Daftar pelamar dengan filter status (`Semua`, `Submitted`, `Reviewed`, `Shortlisted`, `Rejected`) dan panel detail kecocokan AI serta tombol status solid.
+- **Profil Perusahaan** (`/company/dashboard/dokumen`): Mengelola nama perusahaan, bidang industri, situs web, lokasi kantor utama, deskripsi perusahaan, serta pratinjau kartu mitra dan status kepatuhan UU PDP.
 
 ---
 
@@ -133,3 +133,4 @@ flowchart TD
 - **Monitoring Mitra** (`/admin/dashboard/lowongan`): Daftar pendaftaran *company* calon mitra dengan panel detail `Audit Legalitas`, `Kepatuhan PDP`, dan tombol `Keputusan Audit & Verifikasi` (`Verifikasi`, `Audit`, `Lengkapi`).
 - **Standarisasi Platform** (`/admin/dashboard/evaluasi`): Kartu agregat ekosistem, form `Parameter Standarisasi Global Platform`, dan daftar `Standar Wajib Calon Mitra`.
 - **Laporan Ekosistem** (`/admin/dashboard/dokumen`): Filter periode (`Bulan Ini`, `Kuartal`, `2026`), 4 kartu KPI eksekutif, tabel pertumbuhan agregat 6 bulan terakhir, ringkasan kepatuhan standar, dan tombol `Cetak Laporan`.
+
