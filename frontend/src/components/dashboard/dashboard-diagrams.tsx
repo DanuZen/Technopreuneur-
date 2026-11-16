@@ -154,6 +154,8 @@ export function CompanyFunnelDiagram({
 }
 
 export function CompanyTrendDiagram() {
+  const [hoveredIdx, setHoveredIdx] = useState<number>(5);
+
   const weeks = [
     { label: "Mgg 1", total: 12, qualified: 8 },
     { label: "Mgg 2", total: 18, qualified: 13 },
@@ -163,25 +165,25 @@ export function CompanyTrendDiagram() {
     { label: "Mgg 6", total: 30, qualified: 25 },
   ];
 
-  const maxVal = 32;
-  const chartW = 480;
-  const chartH = 150;
-  const padX = 28;
-  const padY = 18;
-  const usableW = chartW - padX * 2;
-  const usableH = chartH - padY * 2;
+  const totalApplicants = weeks.reduce((acc, w) => acc + w.total, 0);
+  const totalQualified = weeks.reduce((acc, w) => acc + w.qualified, 0);
+  const qualityRate = Math.round((totalQualified / totalApplicants) * 100);
+  const activeWeek = weeks[hoveredIdx] || weeks[5];
 
-  const linePoints = weeks
-    .map((w, idx) => {
-      const x = padX + (idx * usableW) / (weeks.length - 1);
-      const y = padY + usableH - (w.qualified / maxVal) * usableH;
-      return `${x},${y}`;
-    })
-    .join(" ");
+  const maxVal = 36;
+  const chartW = 640;
+  const chartH = 192;
+  const padLeft = 36;
+  const padRight = 16;
+  const padTop = 24;
+  const padBottom = 26;
+  const usableW = chartW - padLeft - padRight;
+  const usableH = chartH - padTop - padBottom;
+  const slotW = usableW / weeks.length;
 
   return (
-    <div className="morph-surface h-full flex flex-col gap-3 bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 text-[#0f2c56]">
-      <div className="flex flex-wrap items-center justify-between gap-3">
+    <div className="morph-surface h-full flex flex-col justify-between gap-2.5 bg-white border border-slate-200 rounded-3xl p-4 sm:p-5 text-[#0f2c56]">
+      <div className="flex flex-wrap items-center justify-between gap-2 shrink-0">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-[#ce2731] text-white flex items-center justify-center shrink-0">
             <TrendingUp className="w-4 h-4" aria-hidden="true" />
@@ -191,49 +193,51 @@ export function CompanyTrendDiagram() {
               Tren Pelamar &amp; Lolos ATS (6 Minggu)
             </p>
             <p className="text-xs font-medium text-slate-500">
-              Perbandingan total pelamar vs kandidat dengan skor ATS &ge; 75
+              Perbandingan total pelamar vs kandidat skor ATS &ge; 75
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-3 text-[11px] font-bold">
+        <div className="flex flex-wrap items-center gap-3 text-[11px] font-bold">
           <span className="inline-flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-sm bg-[#0f2c56]" />
             Total Pelamar
           </span>
           <span className="inline-flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#ce2731]" />
+            <span className="w-2.5 h-2.5 rounded-sm bg-[#ce2731]" />
             Lolos ATS
+          </span>
+          <span className="px-2.5 py-1 rounded-full bg-[#edf2f9] text-[#0f2c56]">
+            {activeWeek.label}: {activeWeek.total} / {activeWeek.qualified} Lolos
           </span>
         </div>
       </div>
 
-      <div className="flex-1 min-h-0 w-full flex items-center overflow-hidden">
+      <div className="flex-1 min-h-0 w-full flex items-center justify-center">
         <svg
-          viewBox={`0 0 ${chartW} ${chartH + 22}`}
-          className="w-full h-full min-h-[160px] max-h-52"
+          viewBox={`0 0 ${chartW} ${chartH}`}
+          className="w-full h-full max-h-[175px]"
           role="img"
           aria-label="Diagram tren pelamar dan kandidat lolos ATS selama 6 minggu"
         >
-          {/* Horizontal grid lines */}
           {[0, 0.25, 0.5, 0.75, 1].map((ratio, idx) => {
-            const y = padY + usableH * (1 - ratio);
+            const y = padTop + usableH * (1 - ratio);
             return (
               <g key={idx}>
                 <line
-                  x1={padX}
+                  x1={padLeft}
                   y1={y}
-                  x2={chartW - padX}
+                  x2={chartW - padRight}
                   y2={y}
-                  stroke="#e2e8f0"
-                  strokeDasharray="3 3"
+                  stroke={idx === 0 ? "#cbd5e1" : "#e2e8f0"}
+                  strokeDasharray={idx === 0 ? undefined : "4 4"}
                   strokeWidth="1"
                 />
                 <text
-                  x={padX - 6}
-                  y={y + 3}
+                  x={padLeft - 8}
+                  y={y + 3.5}
                   textAnchor="end"
-                  fontSize="9"
+                  fontSize="10"
                   fill="#64748b"
                   fontWeight="600"
                 >
@@ -243,75 +247,102 @@ export function CompanyTrendDiagram() {
             );
           })}
 
-          {/* Bars for Total Applicants */}
           {weeks.map((w, idx) => {
-            const cx = padX + (idx * usableW) / (weeks.length - 1);
-            const barW = 24;
-            const barH = (w.total / maxVal) * usableH;
-            const barY = padY + usableH - barH;
+            const slotX = padLeft + idx * slotW;
+            const centerX = slotX + slotW / 2;
+            const barW = 22;
+            const gap = 6;
+            const totalH = (w.total / maxVal) * usableH;
+            const qualH = (w.qualified / maxVal) * usableH;
+            const totalY = padTop + usableH - totalH;
+            const qualY = padTop + usableH - qualH;
+            const isActive = idx === hoveredIdx;
+
             return (
-              <g key={w.label}>
+              <g
+                key={w.label}
+                onMouseEnter={() => setHoveredIdx(idx)}
+                onClick={() => setHoveredIdx(idx)}
+                className="cursor-pointer"
+              >
                 <rect
-                  x={cx - barW / 2}
-                  y={barY}
+                  x={slotX + 8}
+                  y={padTop - 4}
+                  width={slotW - 16}
+                  height={usableH + 4}
+                  rx="10"
+                  fill={isActive ? "#edf2f9" : "transparent"}
+                />
+
+                {/* Bar Total Pelamar */}
+                <rect
+                  x={centerX - barW - gap / 2}
+                  y={totalY}
                   width={barW}
-                  height={barH}
+                  height={totalH}
                   rx="6"
                   fill="#0f2c56"
                 />
                 <text
-                  x={cx}
-                  y={chartH + 12}
+                  x={centerX - barW / 2 - gap / 2}
+                  y={totalY - 6}
                   textAnchor="middle"
                   fontSize="10"
                   fill="#0f2c56"
-                  fontWeight="700"
+                  fontWeight="800"
+                >
+                  {w.total}
+                </text>
+
+                {/* Bar Lolos ATS */}
+                <rect
+                  x={centerX + gap / 2}
+                  y={qualY}
+                  width={barW}
+                  height={qualH}
+                  rx="6"
+                  fill="#ce2731"
+                />
+                <text
+                  x={centerX + barW / 2 + gap / 2}
+                  y={qualY - 6}
+                  textAnchor="middle"
+                  fontSize="10"
+                  fill="#ce2731"
+                  fontWeight="800"
+                >
+                  {w.qualified}
+                </text>
+
+                <text
+                  x={centerX}
+                  y={chartH - 7}
+                  textAnchor="middle"
+                  fontSize="11"
+                  fill={isActive ? "#ce2731" : "#0f2c56"}
+                  fontWeight="800"
                 >
                   {w.label}
                 </text>
               </g>
             );
           })}
-
-          {/* Line for ATS Qualified */}
-          <polyline
-            fill="none"
-            stroke="#ce2731"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            points={linePoints}
-          />
-
-          {/* Data dots */}
-          {weeks.map((w, idx) => {
-            const cx = padX + (idx * usableW) / (weeks.length - 1);
-            const cy = padY + usableH - (w.qualified / maxVal) * usableH;
-            return (
-              <g key={`dot-${w.label}`}>
-                <circle cx={cx} cy={cy} r="5" fill="#ce2731" stroke="#ffffff" strokeWidth="2" />
-                <rect
-                  x={cx - 11}
-                  y={cy - 22}
-                  width="22"
-                  height="14"
-                  rx="4"
-                  fill="#ce2731"
-                />
-                <text
-                  x={cx}
-                  y={cy - 12}
-                  textAnchor="middle"
-                  fontSize="9"
-                  fill="#ffffff"
-                  fontWeight="800"
-                >
-                  {w.qualified}
-                </text>
-              </g>
-            );
-          })}
         </svg>
+      </div>
+
+      <div className="shrink-0 grid grid-cols-3 gap-2.5 pt-2.5 border-t border-slate-100">
+        <div className="rounded-xl bg-[#f4f7fb] px-3 py-2">
+          <p className="text-[10px] font-bold uppercase text-slate-500">Pelamar 6 Mgg</p>
+          <p className="text-sm font-black text-[#0f2c56]">{totalApplicants} Orang</p>
+        </div>
+        <div className="rounded-xl bg-[#f4f7fb] px-3 py-2">
+          <p className="text-[10px] font-bold uppercase text-slate-500">Lolos ATS (&ge; 75)</p>
+          <p className="text-sm font-black text-[#ce2731]">{totalQualified} Orang</p>
+        </div>
+        <div className="rounded-xl bg-[#f4f7fb] px-3 py-2">
+          <p className="text-[10px] font-bold uppercase text-slate-500">Rasio Kualitas</p>
+          <p className="text-sm font-black text-[#0f2c56]">{qualityRate}%</p>
+        </div>
       </div>
     </div>
   );
