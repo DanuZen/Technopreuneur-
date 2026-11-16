@@ -12,18 +12,21 @@ const TEAM_MEMBERS = [
     name: "Wira Fikri Ramadanu",
     role: "Frontend Lead",
     nim: "23343023",
+    photo: "/team-danu.png",
     focus: "Arsitektur UI/UX, responsivitas, dan antarmuka evaluasi CV interaktif.",
   },
   {
     name: "Muhammad Gilang Ramadhan",
     role: "Backend Lead",
     nim: "23346013",
+    photo: "/gilang.png",
     focus: "REST API, autentikasi pengguna, dan integrasi data lowongan kerja.",
   },
   {
     name: "Florensius Panca Gati",
     role: "Backend AI Lead",
     nim: "23343006",
+    photo: "/panca.png",
     focus: "Pipeline NLP, penilaian CV 5 dimensi, dan pencocokan berbasis pgvector.",
   },
 ];
@@ -375,7 +378,7 @@ export default function AboutPage() {
                       }`}
                     />
                     <Image
-                      src="/team-danu.png"
+                      src={member.photo}
                       alt={member.name}
                       width={200}
                       height={340}
