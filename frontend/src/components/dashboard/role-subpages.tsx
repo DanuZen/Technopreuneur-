@@ -15,6 +15,7 @@ import {
   ShieldCheck,
   Sparkles,
   Users,
+  X,
   XCircle,
   AlertTriangle,
 } from "lucide-react";
@@ -154,58 +155,106 @@ export function CompanyJobsSubpage() {
         rightSlot={
           <button
             type="button"
-            onClick={() => setShowForm((v) => !v)}
+            onClick={() => setShowForm(true)}
             className="morph-pill inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold cursor-pointer"
           >
             <Plus className="w-3.5 h-3.5" aria-hidden="true" />
-            <span>{showForm ? "Tutup Form" : "Pasang Lowongan"}</span>
+            <span>Pasang Lowongan</span>
           </button>
         }
       />
 
       {showForm && (
-        <form
-          onSubmit={handleAdd}
-          className="rounded-2xl border border-slate-200 bg-white p-5 space-y-4 shadow-xs"
+        <div
+          className="fixed inset-0 z-50 bg-[#0f2c56]/40 backdrop-blur-[2px] flex items-center justify-center p-4"
+          onClick={() => setShowForm(false)}
         >
-          <p className="text-xs font-extrabold text-[#0f2c56] uppercase tracking-wider">
-            Publikasikan Lowongan Baru
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Nama posisi (misal: Data Analyst)"
-              className="px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-[#0f2c56] focus:outline-none focus:border-[#0f2c56]"
-              required
-            />
-            <input
-              type="text"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="Lokasi (misal: Jakarta / Remote)"
-              className="px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-[#0f2c56] focus:outline-none focus:border-[#0f2c56]"
-            />
-            <select
-              value={type}
-              onChange={(e) => setType(e.target.value)}
-              className="px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-[#0f2c56] focus:outline-none focus:border-[#0f2c56]"
-            >
-              <option value="Full-time">Full-time</option>
-              <option value="Contract">Contract</option>
-              <option value="Internship">Internship</option>
-            </select>
-          </div>
-          <div className="flex justify-end">
-            <button
-              type="submit"
-              className="morph-pill px-5 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-extrabold cursor-pointer"
-            >
-              Simpan &amp; Terbitkan
-            </button>
-          </div>
-        </form>
+          <form
+            onSubmit={handleAdd}
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-lg rounded-3xl border border-slate-200 bg-white p-6 space-y-5 shadow-2xl"
+          >
+            <div className="flex items-center justify-between gap-3 pb-3 border-b border-slate-100">
+              <div>
+                <p className="text-sm font-extrabold text-[#0f2c56]">
+                  Publikasikan Lowongan Baru
+                </p>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Lowongan aktif otomatis terindeks oleh sistem pencocokan AI.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowForm(false)}
+                aria-label="Tutup popup"
+                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-[#0f2c56] flex items-center justify-center cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="space-y-3.5">
+              <label className="block space-y-1.5">
+                <span className="text-[11px] font-bold uppercase text-slate-500">
+                  Nama Posisi
+                </span>
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="Misal: Data Analyst"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-[#0f2c56] focus:outline-none focus:border-[#0f2c56]"
+                  required
+                />
+              </label>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <label className="block space-y-1.5">
+                  <span className="text-[11px] font-bold uppercase text-slate-500">
+                    Lokasi
+                  </span>
+                  <input
+                    type="text"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    placeholder="Misal: Jakarta / Remote"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-[#0f2c56] focus:outline-none focus:border-[#0f2c56]"
+                  />
+                </label>
+                <label className="block space-y-1.5">
+                  <span className="text-[11px] font-bold uppercase text-slate-500">
+                    Tipe Pekerjaan
+                  </span>
+                  <select
+                    value={type}
+                    onChange={(e) => setType(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-[#0f2c56] focus:outline-none focus:border-[#0f2c56]"
+                  >
+                    <option value="Full-time">Full-time</option>
+                    <option value="Contract">Contract</option>
+                    <option value="Internship">Internship</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end gap-2.5 pt-2 border-t border-slate-100">
+              <button
+                type="button"
+                onClick={() => setShowForm(false)}
+                className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#0f2c56] text-xs font-bold cursor-pointer"
+              >
+                Batal
+              </button>
+              <button
+                type="submit"
+                className="morph-pill px-5 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-extrabold cursor-pointer"
+              >
+                Simpan &amp; Terbitkan
+              </button>
+            </div>
+          </form>
+        </div>
       )}
 
       <div className="flex-1 min-h-0 flex flex-col gap-4 overflow-y-auto lg:overflow-hidden scrollbar-none">

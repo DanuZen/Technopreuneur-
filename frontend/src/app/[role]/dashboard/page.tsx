@@ -15,6 +15,7 @@ import {
   Sparkles,
   Building2,
   Plus,
+  X,
 } from "lucide-react";
 import { DashboardPageHeading } from "@/components/dashboard/dashboard-page-heading";
 import { DashboardPageSkeleton } from "@/components/ui/dashboard-skeleton";
@@ -154,38 +155,71 @@ function CompanyDashboardView() {
       />
 
       {showNewJobForm && (
-        <form
-          onSubmit={handleAddJob}
-          className="bg-white border border-slate-200 rounded-3xl p-5 flex flex-col sm:flex-row items-stretch sm:items-end gap-3 text-[#0f2c56]"
+        <div
+          className="fixed inset-0 z-50 bg-[#0f2c56]/40 backdrop-blur-[2px] flex items-center justify-center p-4"
+          onClick={() => setShowNewJobForm(false)}
         >
-          <div className="flex-1 space-y-1">
-            <label className="text-xs font-bold block">Judul Posisi Lowongan</label>
-            <input
-              type="text"
-              value={newJobTitle}
-              onChange={(e) => setNewJobTitle(e.target.value)}
-              placeholder="Contoh: Junior Product Manager"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#0f2c56]"
-              required
-            />
-          </div>
-          <div className="flex-1 space-y-1">
-            <label className="text-xs font-bold block">Lokasi / Sistem Kerja</label>
-            <input
-              type="text"
-              value={newJobLocation}
-              onChange={(e) => setNewJobLocation(e.target.value)}
-              placeholder="Contoh: Jakarta (Hybrid)"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#0f2c56]"
-            />
-          </div>
-          <button
-            type="submit"
-            className="px-5 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-extrabold transition-colors cursor-pointer shrink-0"
+          <form
+            onSubmit={handleAddJob}
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-md bg-white border border-slate-200 rounded-3xl p-6 space-y-4 text-[#0f2c56] shadow-2xl"
           >
-            Publikasikan
-          </button>
-        </form>
+            <div className="flex items-center justify-between gap-3 pb-3 border-b border-slate-100">
+              <div>
+                <p className="text-sm font-extrabold">Publikasikan Lowongan Baru</p>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Tambahkan posisi kerja baru tanpa mengganggu tata letak dashboard.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowNewJobForm(false)}
+                aria-label="Tutup popup"
+                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-[#0f2c56] flex items-center justify-center cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="space-y-3">
+              <div className="space-y-1">
+                <label className="text-xs font-bold block">Judul Posisi Lowongan</label>
+                <input
+                  type="text"
+                  value={newJobTitle}
+                  onChange={(e) => setNewJobTitle(e.target.value)}
+                  placeholder="Contoh: Junior Product Manager"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#0f2c56]"
+                  required
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-xs font-bold block">Lokasi / Sistem Kerja</label>
+                <input
+                  type="text"
+                  value={newJobLocation}
+                  onChange={(e) => setNewJobLocation(e.target.value)}
+                  placeholder="Contoh: Jakarta (Hybrid)"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#0f2c56]"
+                />
+              </div>
+            </div>
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+              <button
+                type="button"
+                onClick={() => setShowNewJobForm(false)}
+                className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#0f2c56] text-xs font-bold cursor-pointer"
+              >
+                Batal
+              </button>
+              <button
+                type="submit"
+                className="px-5 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-extrabold transition-colors cursor-pointer shrink-0"
+              >
+                Publikasikan
+              </button>
+            </div>
+          </form>
+        </div>
       )}
 
       <div className="flex-1 min-h-0 grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
