@@ -1,0 +1,50 @@
+# Nama tampilan untuk setiap skill kanonik. Kunci harus sama dengan skills.yaml.
+python: Python
+fastapi: FastAPI
+flask: Flask
+django: Django
+nodejs: Node.js
+express: Express.js
+javascript: JavaScript
+typescript: TypeScript
+react: React
+nextjs: Next.js
+tailwind: Tailwind CSS
+html_css: HTML/CSS
+java: Java
+"c#": C#
+golang: Go
+postgresql: PostgreSQL
+mysql: MySQL
+mongodb: MongoDB
+redis: Redis
+sql: SQL
+docker: Docker
+kubernetes: Kubernetes
+git: Git
+github: GitHub
+linux: Linux
+aws: AWS
+rest_api: REST API
+machine_learning: Machine Learning
+mlflow: MLflow
+pandas: Pandas
+data_analysis: Analisis Data
+project_management: Manajemen Proyek
+akuntansi: Akuntansi
+excel: Microsoft Excel
+komunikasi: Komunikasi
+kepemimpinan: Kepemimpinan
+keperawatan: Keperawatan
+perawatan_pasien: Perawatan Pasien
+keuangan: Keuangan
+perpajakan: Perpajakan
+audit: Audit
+rekrutmen: Rekrutmen
+pemasaran: Pemasaran
+penjualan: Penjualan
+layanan_pelanggan: Layanan Pelanggan
+administrasi: Administrasi
+microsoft_office: Microsoft Office
+powerpoint: Microsoft PowerPoint
+bahasa_inggris: Bahasa Inggris

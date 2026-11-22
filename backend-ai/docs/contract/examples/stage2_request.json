@@ -1,0 +1,11 @@
+{
+  "sanitized_text": "Membangun REST API dengan FastAPI dan PostgreSQL. Menggunakan Docker untuk deployment.",
+  "candidates": [
+    {
+      "job_id": "42",
+      "title": "Backend Developer",
+      "description": "Dibutuhkan FastAPI, Docker, dan Kubernetes.",
+      "skills": []
+    }
+  ]
+}
