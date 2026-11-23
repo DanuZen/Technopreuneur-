@@ -1,0 +1,34 @@
+{
+  "data": [
+    {
+      "slug": "contoh-backend-engineer-1",
+      "company_name": "Contoh Perusahaan A",
+      "title": "Backend Engineer",
+      "description": "&lt;p&gt;Membangun &lt;strong&gt;REST API&lt;/strong&gt; dengan Python dan FastAPI.&lt;/p&gt;",
+      "remote": true,
+      "url": "https://example.com/jobs/1",
+      "location": "Remote",
+      "created_at": 1795179320
+    },
+    {
+      "slug": "contoh-tanpa-judul",
+      "company_name": "Contoh Perusahaan B",
+      "title": "",
+      "description": "Deskripsi ada tetapi judul kosong.",
+      "remote": false,
+      "url": "https://example.com/jobs/2",
+      "location": "Berlin",
+      "created_at": 1795178413
+    },
+    {
+      "slug": "contoh-data-analyst-3",
+      "company_name": "Contoh Perusahaan C",
+      "title": "Data Analyst",
+      "description": "Analisis data dengan SQL dan Excel untuk tim operasional.",
+      "remote": false,
+      "url": null,
+      "location": "Jakarta",
+      "created_at": null
+    }
+  ]
+}

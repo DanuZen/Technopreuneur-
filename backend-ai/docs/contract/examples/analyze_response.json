@@ -1,0 +1,28 @@
+{
+  "ats": {
+    "overall_score": 79,
+    "dimensions": [
+      {"name": "readability", "score": 100, "weight": 0.25},
+      {"name": "sections", "score": 100, "weight": 0.2},
+      {"name": "keywords", "score": null, "weight": 0.25},
+      {"name": "content", "score": 20, "weight": 0.2},
+      {"name": "contact_length", "score": 100, "weight": 0.1}
+    ],
+    "flags": {"is_scanned": false, "is_empty": false, "has_multi_column": false, "has_table": false, "has_image": false, "has_contact_info": true, "page_count": 1, "char_count": 3170},
+    "issues": [{"code": "LOW_METRIC_USAGE", "severity": "warning", "dimension": "content", "message": "Sebagian besar poin tidak menyebut angka atau hasil. Tambahkan metrik jika memungkinkan."}],
+    "detected_sections": ["education", "experience", "skills"],
+    "is_estimate": true,
+    "rules_version": "1.0.0",
+    "sanitization": {"removed_categories": [], "removed_lines": 0}
+  },
+  "advice": {
+    "summary": "CV sudah memenuhi aturan dasar. Pertahankan format ini dan sesuaikan keyword dengan lowongan.",
+    "suggestions": [],
+    "provider": "mock",
+    "is_mock": true
+  },
+  "advice_status": "ok",
+  "advice_message": null,
+  "cv_embedding": [0.0, 0.0],
+  "sanitized_text": "Nama Contoh Pelamar contoh.pelamar@example.com"
+}

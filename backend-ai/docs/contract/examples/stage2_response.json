@@ -1,0 +1,21 @@
+{
+  "results": [
+    {
+      "job_id": "42",
+      "match_score": 67,
+      "verdict": "cukup",
+      "reasons": [
+        {
+          "text": "Memiliki pengalaman dengan Docker",
+          "evidence": "Menggunakan Docker untuk deployment."
+        },
+        {
+          "text": "Memiliki pengalaman dengan FastAPI",
+          "evidence": "Membangun REST API dengan FastAPI dan PostgreSQL."
+        }
+      ],
+      "missing_skills": ["kubernetes"],
+      "verified": true
+    }
+  ]
+}
