@@ -449,13 +449,7 @@ export default function HomePage() {
             <h1 className={`text-[28px] sm:text-5xl xl:text-[50px] font-extrabold tracking-normal text-[#0f2c56] leading-[1.3] sm:leading-[1.34] ${getTextRevealClass(0, "delay-150")}`}>
               Hemat waktu evaluasi
               <br />
-              dan{" "}
-              <span className="inline-flex items-center justify-center align-middle w-13 sm:w-20 h-7 sm:h-11 rounded-full bg-[#ce2731] mx-1 sm:mx-1.5">
-                <span className="w-4.5 h-4.5 sm:w-6 sm:h-6 rounded-full border-2 border-white flex items-center justify-center">
-                  <Play className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white fill-white ml-0.5" />
-                </span>
-              </span>{" "}
-              temukan
+              dan temukan
               <br />
               <span className={`inline-block bg-[#ce2731] text-white px-3.5 py-1 sm:px-4 sm:py-1 rounded-xl mt-2 sm:mt-2.5 ${getHighlightPopClass(0, "delay-300")}`}>
                 Karir Pas Bana.
