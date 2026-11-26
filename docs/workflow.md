@@ -49,7 +49,7 @@ flowchart TD
     M --> P[Riwayat Sesi & Chat Konsultasi AI\nSkor 0-100, Diagram Radar 5 Dimensi & Tanya Jawab]
     O --> P
     P --> Q{Ingin Tinjau / Cetak CV A4?}
-    Q -- Ya --> R[Dokumen CV ATS Ukuran A4\nPratinjau, Edit Data via Onboarding & Cetak PDF]
+    Q -- Ya --> R[Dokumen CV ATS Ukuran A4\nPratinjau, Popup Edit Data CV & Cetak PDF]
     R --> S[Simpan Profil Final & Update Embedding]
     Q -- Tidak --> S
     S --> T[Jalankan Engine Matching 2-Tahap]

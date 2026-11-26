@@ -168,8 +168,8 @@ gantt
 - [x] Halaman Evaluasi CV (`/user/dashboard/evaluasi`) dengan Drag-and-Drop Dropzone (.pdf / .docx maks 5 MB), validasi scan gambar, dan pintasan menuju Onboarding CV
 - [x] Halaman Onboarding CV (`/user/dashboard/onboarding`) dengan halaman pengantar terpisah sebelum memulai *Multi-step Form Wizard* 5 langkah (Identitas, Pendidikan, Target Peran, Skill, Pengalaman/Proyek)
 - [x] Halaman Riwayat Sesi & Konsultasi AI (`/user/dashboard/riwayat/[id]`) yang menyimpan hasil evaluasi/onboarding nyata (tanpa data dummy), menampilkan Circular Score Gauge (0–100), Diagram Radar 5 Dimensi, kartu solid Kekuatan Utama & Rekomendasi Perbaikan, serta chat konsultasi AI interaktif
-- [x] Halaman Dokumen CV ATS (`/user/dashboard/dokumen`) dengan pratinjau lembar ukuran A4 (210 x 297 mm), card keterangan dokumen, panduan cetak PDF, kelengkapan bagian CV, serta tombol aksi **Edit Data** dan **Cetak / Unduh PDF**
-- [x] Halaman Lowongan Cocok (`/user/dashboard/lowongan`) dengan badge sumber (*Internal* vs *Jooble*), alasan kecocokan, label *missing skills*, serta tombol lamar ke `/apply/[id]` (internal) dan portal eksternal
+- [x] Halaman Dokumen CV ATS (`/user/dashboard/dokumen`) dengan pratinjau lembar ukuran A4 (210 x 297 mm), card keterangan dokumen, panduan cetak PDF, kelengkapan bagian CV, popup modal **Edit Data** langsung di halaman (`EditCvDataModal`), serta tombol **Cetak / Unduh PDF**
+- [x] Halaman Lowongan Cocok (`/user/dashboard/lowongan`) dengan 3 tab (**Rekomendasi**, **Tersimpan**, **Lamaran Saya**), badge sumber (*Internal* vs *Jooble*), alasan kecocokan AI, label *missing skills*, penanda sudah dilamar, serta tombol lamar ke `/apply/[id]` (terhubung `POST /api/applications`) dan portal eksternal
 - [x] Fitur simpan/bookmark lowongan untuk dibaca nanti (*Saved Jobs*)
 
 #### D. Modul Pemberi Kerja (Company / Employer)

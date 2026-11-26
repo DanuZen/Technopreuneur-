@@ -61,9 +61,9 @@ flowchart TD
 - **Evaluasi CV** (`/user/dashboard/evaluasi` & `/evaluate`): Popup pengecekan awal kepemilikan CV, area unggah PDF/DOCX, dan tombol **Buka Halaman Onboarding**.
 - **Onboarding CV** (`/user/dashboard/evaluasi/onboarding`): Sub-halaman Evaluasi CV (tanpa item terpisah di sidebar) untuk menyusun CV 1-kolom standar ATS dari 5 langkah kuesioner.
 - **Hasil Evaluasi** (`/user/dashboard/hasil-evaluasi` & `/user/dashboard/riwayat/[id]`): Antarmuka **Chatbot Interaktif** (`CvEvaluationChat`), badge pembeda `Hasil Unggah CV (PDF/DOCX)` vs `Hasil Onboarding CV Baru`, banner rekomendasi otomatis **Buat Ulang CV ATS**, dan tombol **Unduh / Dokumen CV ATS**.
-- **Dokumen CV ATS** (`/user/dashboard/dokumen`): Halaman pembuatan ulang/koreksi data via Onboarding, pratinjau proporsi kertas A4 (210 x 297 mm), dan tombol **Cetak / Unduh PDF**.
-- **Lowongan Cocok** (`/user/dashboard/lowongan`, `/jobs`, & `/apply/[id]`): Daftar lowongan terurut skor kecocokan skill terhadap kata kunci perusahaan, alasan kecocokan berkutipan CV, *missing skills*, dan pengajuan lamaran.
-- **Detail Profil (Modal Header)**: CRUD terintegrasi API (`/api/profile`) untuk Identitas, Keahlian, Pengalaman, dan Pendidikan.
+- **Dokumen CV ATS** (`/user/dashboard/dokumen`): Pratinjau lembar kertas A4 (210 x 297 mm), tombol **Edit Data** yang membuka popup modal langsung (`Identitas & Ringkasan`, `Keahlian & Alat`, `Pengalaman`, `Pendidikan`) untuk memperbarui isi CV seketika, serta tombol **Cetak / Unduh PDF**.
+- **Lowongan Cocok** (`/user/dashboard/lowongan`, `/jobs`, & `/apply/[id]`): 3 tab (**Rekomendasi**, **Tersimpan**, **Lamaran Saya**), daftar lowongan terurut skor kecocokan skill terhadap kata kunci perusahaan, alasan kecocokan berkutipan CV, *missing skills*, dan pengajuan lamaran nyata via `/apply/[id]`.
+- **Detail Profil & Privasi (Modal Header)**: CRUD terintegrasi API (`/api/profile`) untuk Identitas, Keahlian, Pengalaman, Pendidikan, serta tab **Privasi & CV** untuk hapus CV permanen (`DELETE /api/cvs/:id`) dan hapus akun permanen (`DELETE /api/users/me`).
 
 ---
 
