@@ -602,7 +602,7 @@ export default function HomePage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(1)}`}
       >
-        <div className="w-full h-full mx-auto rounded-[28px] sm:rounded-[34px] bg-[#ce2731] lg:bg-transparent px-5 py-5 lg:py-0 sm:px-12 lg:px-16 flex flex-col justify-between lg:grid lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 lg:items-center text-white overflow-hidden">
+        <div className="w-full h-full mx-auto rounded-[28px] sm:rounded-[34px] bg-[#ce2731] lg:bg-transparent px-5 py-5 lg:py-0 sm:px-12 lg:px-16 flex flex-col justify-center lg:grid lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 lg:items-center text-white overflow-hidden">
           {/* Left 6 Cols: Cropped Solid Device Frame Rising from Bottom + Overlapping Solid Gauge */}
           <div
             className={`lg:col-span-6 h-auto lg:h-full shrink-0 flex items-center lg:items-end justify-center lg:pt-8 relative ${getChildAnimClass(1, "up", "delay-100")}`}
@@ -858,7 +858,7 @@ export default function HomePage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(3)}`}
       >
-        <div className="w-full h-full mx-auto rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent px-5 py-5 lg:py-0 sm:px-12 lg:px-16 flex flex-col justify-between lg:grid lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 lg:items-center text-white overflow-hidden">
+        <div className="w-full h-full mx-auto rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent px-5 py-5 lg:py-0 sm:px-12 lg:px-16 flex flex-col justify-center lg:grid lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 lg:items-center text-white overflow-hidden">
           {/* Left 6 Cols: Cropped White Wireframe Rising from Bottom + Eye Badge + Upward Arrow */}
           <div
             className={`lg:col-span-6 h-auto lg:h-full shrink-0 flex items-center lg:items-end justify-center lg:pt-8 relative ${getChildAnimClass(3, "up", "delay-100")}`}
@@ -955,7 +955,7 @@ export default function HomePage() {
       >
         <div
           ref={slide4ContainerRef}
-          className="relative w-full h-full mx-auto px-1.5 sm:px-8 lg:px-12 flex flex-col justify-between lg:justify-center py-1 lg:py-0 gap-3 sm:gap-5 lg:gap-6"
+          className="relative w-full h-full mx-auto px-1.5 sm:px-8 lg:px-12 flex flex-col justify-center gap-3.5 sm:gap-5 lg:gap-6"
         >
           {/* Top-Center Section Header */}
           <div className="space-y-2.5 sm:space-y-4 text-center max-w-2xl mx-auto flex flex-col items-center shrink-0">
@@ -973,7 +973,7 @@ export default function HomePage() {
           {/* 2 Columns on Mobile, 3 Columns x 2 Rows on Desktop Feature Grid */}
           <div
             ref={slide4GridRef}
-            className={`flex-1 lg:flex-none grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4 lg:gap-5 ${getChildAnimClass(4, "up", "delay-150")}`}
+            className={`grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4 lg:gap-5 ${getChildAnimClass(4, "up", "delay-150")}`}
           >
             {FEATURE_GRID_ITEMS.map((item, idx) => {
               const isSelected = activeFeatureIdx === idx;
@@ -1063,7 +1063,7 @@ export default function HomePage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(5)}`}
       >
-        <div className="w-full h-full mx-auto rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent px-5 py-6 lg:py-0 sm:px-12 lg:px-16 flex flex-col justify-between lg:grid lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 lg:items-center text-white overflow-hidden">
+        <div className="w-full h-full mx-auto rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent px-5 py-6 lg:py-0 sm:px-12 lg:px-16 flex flex-col justify-center lg:grid lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 lg:items-center text-white overflow-hidden">
           {/* Left 6 Cols: Subtitle, Bold Title, Interactive Range Slider, 2 Toggle Buttons */}
           <div className="lg:col-span-6 space-y-4 sm:space-y-6 lg:space-y-7 text-left">
             <div className="space-y-3.5 sm:space-y-5">

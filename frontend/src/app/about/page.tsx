@@ -296,7 +296,7 @@ export default function AboutPage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(1)}`}
       >
-        <div className="w-full h-full mx-auto rounded-[28px] sm:rounded-[34px] bg-[#ce2731] lg:bg-transparent px-5 py-5 lg:py-0 sm:px-12 lg:px-16 flex flex-col justify-between lg:grid lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 lg:items-center text-white overflow-hidden">
+        <div className="w-full h-full mx-auto rounded-[28px] sm:rounded-[34px] bg-[#ce2731] lg:bg-transparent px-5 py-5 lg:py-0 sm:px-12 lg:px-16 flex flex-col justify-center lg:grid lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 lg:items-center text-white overflow-hidden">
           <div className="lg:col-span-5 space-y-3.5 sm:space-y-5 text-left">
             <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white ${getTextRevealClass(1, "delay-75")}`}>
               Misi &amp; Privasi
@@ -340,7 +340,7 @@ export default function AboutPage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(2)}`}
       >
-        <div className="relative w-full h-full mx-auto px-2 sm:px-8 lg:px-12 flex flex-col justify-between lg:justify-center py-2 lg:py-0 gap-4 sm:gap-10 lg:gap-14">
+        <div className="relative w-full h-full mx-auto px-2 sm:px-8 lg:px-12 flex flex-col justify-center gap-4 sm:gap-10 lg:gap-14">
           <div className="space-y-2.5 sm:space-y-3 text-center max-w-2xl mx-auto flex flex-col items-center">
             <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white ${getTextRevealClass(2, "delay-75")}`}>
               Tim Pengembang
