@@ -14,6 +14,7 @@ import {
   ArrowLeft,
   Sparkles,
   Plus,
+  X,
 } from "lucide-react";
 import { QuestionnaireData, CVAnalysisResult } from "@/types";
 import { api } from "@/lib/api";
@@ -116,18 +117,15 @@ function isOneEditAway(a: string, b: string): boolean {
   return true;
 }
 
-function getTechnicalRecommendations(rawInput: string): {
+function getTechnicalRecommendations(
+  activeDraft: string,
+  committedTags: string[]
+): {
   activeToken: string;
   suggestions: string[];
 } {
-  const parts = rawInput.split(",");
-  const activeToken = (parts[parts.length - 1] || "").trim().toLowerCase();
-  const committed = new Set(
-    parts
-      .slice(0, -1)
-      .map((p) => p.trim().toLowerCase())
-      .filter(Boolean)
-  );
+  const activeToken = activeDraft.trim().toLowerCase();
+  const committed = new Set(committedTags.map((t) => t.trim().toLowerCase()));
 
   const available = TECHNICAL_SKILL_CATALOG.filter(
     (item) =>
@@ -167,16 +165,18 @@ function getTechnicalRecommendations(rawInput: string): {
   };
 }
 
-function applySkillSuggestion(currentValue: string, chosenSkill: string): string {
-  const parts = currentValue.split(",");
-  const committed = parts
-    .slice(0, -1)
-    .map((p) => p.trim())
-    .filter(Boolean);
-  if (!committed.some((c) => c.toLowerCase() === chosenSkill.toLowerCase())) {
-    committed.push(chosenSkill);
-  }
-  return `${committed.join(", ")}, `;
+function normalizeTechnicalSkillLabel(raw: string): string {
+  const cleaned = raw.trim();
+  if (!cleaned) return "";
+  const lower = cleaned.toLowerCase();
+  const stripped = lower.replace(/[.\s/-]+/g, "");
+  const exact = TECHNICAL_SKILL_CATALOG.find(
+    (item) =>
+      item.label.toLowerCase() === lower ||
+      item.label.toLowerCase().replace(/[.\s/-]+/g, "") === stripped ||
+      item.keywords[0]?.toLowerCase() === lower
+  );
+  return exact ? exact.label : cleaned;
 }
 
 interface AtsOnboardingWizardProps {
@@ -207,8 +207,60 @@ export function AtsOnboardingWizard({
     portfolioLink: "",
   });
 
+  const [techTags, setTechTags] = useState<string[]>([]);
+  const [techDraft, setTechDraft] = useState("");
+  const [softTags, setSoftTags] = useState<string[]>([]);
+  const [softDraft, setSoftDraft] = useState("");
+
   const updateField = (field: keyof QuestionnaireData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const syncTechnicalField = (nextTags: string[], nextDraft: string) => {
+    setTechTags(nextTags);
+    setTechDraft(nextDraft);
+    const all = [
+      ...nextTags,
+      ...(nextDraft.trim() ? [normalizeTechnicalSkillLabel(nextDraft)] : []),
+    ];
+    updateField("technicalSkills", all.join(", "));
+  };
+
+  const addTechTag = (rawSkill: string) => {
+    const normalized = normalizeTechnicalSkillLabel(rawSkill);
+    if (!normalized) return;
+    const exists = techTags.some(
+      (t) => t.toLowerCase() === normalized.toLowerCase()
+    );
+    const nextTags = exists ? techTags : [...techTags, normalized];
+    syncTechnicalField(nextTags, "");
+  };
+
+  const removeTechTag = (indexToRemove: number) => {
+    const nextTags = techTags.filter((_, idx) => idx !== indexToRemove);
+    syncTechnicalField(nextTags, techDraft);
+  };
+
+  const syncSoftField = (nextTags: string[], nextDraft: string) => {
+    setSoftTags(nextTags);
+    setSoftDraft(nextDraft);
+    const all = [...nextTags, ...(nextDraft.trim() ? [nextDraft.trim()] : [])];
+    updateField("softSkills", all.join(", "));
+  };
+
+  const addSoftTag = (rawSkill: string) => {
+    const cleaned = rawSkill.trim();
+    if (!cleaned) return;
+    const exists = softTags.some(
+      (t) => t.toLowerCase() === cleaned.toLowerCase()
+    );
+    const nextTags = exists ? softTags : [...softTags, cleaned];
+    syncSoftField(nextTags, "");
+  };
+
+  const removeSoftTag = (indexToRemove: number) => {
+    const nextTags = softTags.filter((_, idx) => idx !== indexToRemove);
+    syncSoftField(nextTags, softDraft);
   };
 
   const changeStep = (nextStep: number) => {
@@ -491,23 +543,79 @@ export function AtsOnboardingWizard({
             <h3>Keahlian Teknis &amp; Alat Kerja (Skills Section)</h3>
           </div>
           <p className="text-xs text-slate-500 leading-relaxed">
-            Bagian terpenting dalam penyaringan ATS. Cantumkan kata kunci teknologi, framework, dan tools yang Anda kuasai.
+            Bagian terpenting dalam penyaringan ATS. Ketik keahlian lalu tekan <strong>Enter</strong> (atau klik rekomendasi) agar kata kunci terbungkus menjadi tag keahlian.
           </p>
 
           <div>
             <label className="block text-xs font-bold text-[#0f2c56] uppercase tracking-wider mb-1.5">
               Keahlian Teknis / Bahasa Pemrograman / Software *
             </label>
-            <textarea
-              rows={3}
-              value={formData.technicalSkills}
-              onChange={(e) => updateField("technicalSkills", e.target.value)}
-              placeholder="Contoh: React, Next.js, TypeScript, Tailwind CSS, Git, REST API, Figma"
-              className="w-full px-3.5 py-2.5 text-sm bg-[#f8fafc] border border-slate-200 rounded-xl text-[#0f2c56] font-medium focus:outline-none focus:border-[#0f2c56]"
-            />
+            <div className="w-full min-h-[54px] px-3 py-2 bg-[#f8fafc] border border-slate-200 rounded-xl flex flex-wrap items-center gap-2 focus-within:border-[#0f2c56] focus-within:bg-white transition-colors">
+              {techTags.map((tag, idx) => (
+                <span
+                  key={`${tag}-${idx}`}
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#0f2c56] text-white text-xs font-bold"
+                >
+                  <span>{tag}</span>
+                  <button
+                    type="button"
+                    onClick={() => removeTechTag(idx)}
+                    aria-label={`Hapus ${tag}`}
+                    className="w-4 h-4 rounded-full bg-white/15 hover:bg-[#ce2731] flex items-center justify-center transition-colors cursor-pointer"
+                  >
+                    <X className="w-2.5 h-2.5" />
+                  </button>
+                </span>
+              ))}
+              <input
+                type="text"
+                value={techDraft}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val.includes(",")) {
+                    const segments = val.split(",");
+                    const toCommit = segments
+                      .slice(0, -1)
+                      .map((s) => normalizeTechnicalSkillLabel(s))
+                      .filter(Boolean);
+                    const remaining = segments[segments.length - 1] || "";
+                    const nextTags = [...techTags];
+                    for (const item of toCommit) {
+                      if (!nextTags.some((t) => t.toLowerCase() === item.toLowerCase())) {
+                        nextTags.push(item);
+                      }
+                    }
+                    syncTechnicalField(nextTags, remaining);
+                  } else {
+                    syncTechnicalField(techTags, val);
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === ",") {
+                    e.preventDefault();
+                    if (techDraft.trim()) {
+                      addTechTag(techDraft);
+                    }
+                  } else if (
+                    e.key === "Backspace" &&
+                    !techDraft &&
+                    techTags.length > 0
+                  ) {
+                    removeTechTag(techTags.length - 1);
+                  }
+                }}
+                placeholder={
+                  techTags.length === 0
+                    ? "Ketik skill (misal: Next.js) lalu tekan Enter..."
+                    : "Tambah skill lain lalu tekan Enter..."
+                }
+                className="flex-1 min-w-[180px] py-1 text-sm bg-transparent text-[#0f2c56] font-medium focus:outline-none"
+              />
+            </div>
             {(() => {
               const { activeToken, suggestions } = getTechnicalRecommendations(
-                formData.technicalSkills
+                techDraft,
+                techTags
               );
               return (
                 <div className="mt-2 p-3 rounded-xl bg-[#f4f7fb] border border-slate-200/90 space-y-2">
@@ -519,7 +627,7 @@ export function AtsOnboardingWizard({
                         : "Rekomendasi Keahlian Standar ATS (Klik untuk menambah):"}
                     </span>
                     <span className="text-[10px] text-slate-400 font-semibold">
-                      Pisahkan dengan koma
+                      Tekan Enter untuk membungkus kata
                     </span>
                   </div>
                   {suggestions.length > 0 ? (
@@ -528,12 +636,7 @@ export function AtsOnboardingWizard({
                         <button
                           key={sug}
                           type="button"
-                          onClick={() =>
-                            updateField(
-                              "technicalSkills",
-                              applySkillSuggestion(formData.technicalSkills, sug)
-                            )
-                          }
+                          onClick={() => addTechTag(sug)}
                           className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white border border-slate-200 hover:border-[#0f2c56] text-xs font-bold transition-colors cursor-pointer"
                         >
                           <Plus className="w-3 h-3" />
@@ -543,7 +646,7 @@ export function AtsOnboardingWizard({
                     </div>
                   ) : (
                     <p className="text-[11px] text-slate-500">
-                      Tekan koma (,) untuk melanjutkan mengetik keahlian berikutnya.
+                      Tekan <strong>Enter</strong> untuk membungkus kata kunci yang sedang diketik menjadi tag.
                     </p>
                   )}
                 </div>
@@ -555,21 +658,72 @@ export function AtsOnboardingWizard({
             <label className="block text-xs font-bold text-[#0f2c56] uppercase tracking-wider mb-1.5">
               Keterampilan Non-Teknis (Soft Skills)
             </label>
-            <input
-              type="text"
-              value={formData.softSkills}
-              onChange={(e) => updateField("softSkills", e.target.value)}
-              placeholder="Contoh: Problem Solving, Komunikasi Tim, Berpikir Analitis"
-              className="w-full px-3.5 py-2.5 text-sm bg-[#f8fafc] border border-slate-200 rounded-xl text-[#0f2c56] font-medium focus:outline-none focus:border-[#0f2c56]"
-            />
+            <div className="w-full min-h-[48px] px-3 py-1.5 bg-[#f8fafc] border border-slate-200 rounded-xl flex flex-wrap items-center gap-2 focus-within:border-[#0f2c56] focus-within:bg-white transition-colors">
+              {softTags.map((tag, idx) => (
+                <span
+                  key={`${tag}-${idx}`}
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#0f2c56] text-white text-xs font-bold"
+                >
+                  <span>{tag}</span>
+                  <button
+                    type="button"
+                    onClick={() => removeSoftTag(idx)}
+                    aria-label={`Hapus ${tag}`}
+                    className="w-4 h-4 rounded-full bg-white/15 hover:bg-[#ce2731] flex items-center justify-center transition-colors cursor-pointer"
+                  >
+                    <X className="w-2.5 h-2.5" />
+                  </button>
+                </span>
+              ))}
+              <input
+                type="text"
+                value={softDraft}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val.includes(",")) {
+                    const segments = val.split(",");
+                    const toCommit = segments
+                      .slice(0, -1)
+                      .map((s) => s.trim())
+                      .filter(Boolean);
+                    const remaining = segments[segments.length - 1] || "";
+                    const nextTags = [...softTags];
+                    for (const item of toCommit) {
+                      if (!nextTags.some((t) => t.toLowerCase() === item.toLowerCase())) {
+                        nextTags.push(item);
+                      }
+                    }
+                    syncSoftField(nextTags, remaining);
+                  } else {
+                    syncSoftField(softTags, val);
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === ",") {
+                    e.preventDefault();
+                    if (softDraft.trim()) {
+                      addSoftTag(softDraft);
+                    }
+                  } else if (
+                    e.key === "Backspace" &&
+                    !softDraft &&
+                    softTags.length > 0
+                  ) {
+                    removeSoftTag(softTags.length - 1);
+                  }
+                }}
+                placeholder={
+                  softTags.length === 0
+                    ? "Ketik soft skill (misal: Problem Solving) lalu tekan Enter..."
+                    : "Tambah soft skill lain lalu tekan Enter..."
+                }
+                className="flex-1 min-w-[180px] py-1 text-sm bg-transparent text-[#0f2c56] font-medium focus:outline-none"
+              />
+            </div>
             {(() => {
-              const parts = formData.softSkills.split(",");
-              const activeSoft = (parts[parts.length - 1] || "").trim().toLowerCase();
+              const activeSoft = softDraft.trim().toLowerCase();
               const committedSoft = new Set(
-                parts
-                  .slice(0, -1)
-                  .map((p) => p.trim().toLowerCase())
-                  .filter(Boolean)
+                softTags.map((t) => t.trim().toLowerCase())
               );
               const filteredSoft = SOFT_SKILL_CATALOG.filter(
                 (s) =>
@@ -588,12 +742,7 @@ export function AtsOnboardingWizard({
                     <button
                       key={sug}
                       type="button"
-                      onClick={() =>
-                        updateField(
-                          "softSkills",
-                          applySkillSuggestion(formData.softSkills, sug)
-                        )
-                      }
+                      onClick={() => addSoftTag(sug)}
                       className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#f4f7fb] hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white border border-slate-200 text-[11px] font-bold transition-colors cursor-pointer"
                     >
                       <Plus className="w-3 h-3" />
