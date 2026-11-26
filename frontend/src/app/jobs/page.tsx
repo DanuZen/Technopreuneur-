@@ -348,12 +348,12 @@ export default function JobsPage() {
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(1)}`}
       >
         <div className="w-full h-full mx-auto rounded-[24px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent px-3.5 sm:px-10 lg:px-14 py-4 sm:py-6 flex flex-col gap-3 sm:gap-5 text-white overflow-hidden">
-          <div className="flex items-center justify-between gap-2 sm:gap-4 shrink-0">
-            <div className="space-y-0.5 sm:space-y-1.5 min-w-0">
+          <div className="flex items-start sm:items-center justify-between gap-2 sm:gap-4 shrink-0">
+            <div className="space-y-1 sm:space-y-1.5 min-w-0 flex-1">
               <span className={`inline-flex items-center px-2.5 py-0.5 sm:px-3.5 sm:py-1 rounded-full bg-[#ce2731] text-[10px] sm:text-xs font-bold text-white ${getTextRevealClass(1, "delay-75")}`}>
                 Lowongan Terkurasi
               </span>
-              <h2 className={`text-lg sm:text-3xl font-extrabold text-white truncate ${getTextRevealClass(1, "delay-150")}`}>
+              <h2 className={`text-lg sm:text-3xl font-extrabold text-white leading-tight ${getTextRevealClass(1, "delay-150")}`}>
                 Menampilkan {jobs.length} Peluang Aktif
               </h2>
             </div>
@@ -467,7 +467,7 @@ function JobCard({ job }: { job: JobItem }) {
         )}
       </div>
 
-      <p className="text-[11px] sm:text-xs text-slate-600 line-clamp-1 sm:line-clamp-2 leading-snug sm:leading-relaxed">{job.description}</p>
+      <p className="text-[11px] sm:text-xs text-slate-600 line-clamp-2 leading-snug sm:leading-relaxed">{job.description}</p>
 
       <div className="flex flex-wrap items-center gap-1 sm:gap-1.5">
         {job.requiredSkills.map((skill, idx) => (
