@@ -240,20 +240,20 @@ export default function AboutPage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(0)}`}
       >
-        <div className="w-full h-full mx-auto flex flex-col justify-between lg:grid lg:grid-cols-12 gap-3 sm:gap-5 lg:gap-6 lg:items-center">
-          <div className="lg:col-span-6 px-2 sm:px-8 lg:px-12 pt-1 lg:pt-0 space-y-2.5 sm:space-y-5 text-left shrink-0">
-            <span className={`inline-flex items-center px-3 py-1 sm:px-3.5 rounded-full bg-[#0f2c56] text-[11px] sm:text-xs font-bold text-white ${getTextRevealClass(0, "delay-75")}`}>
+        <div className="w-full h-full mx-auto flex flex-col justify-between lg:grid lg:grid-cols-12 gap-4 sm:gap-5 lg:gap-6 lg:items-center">
+          <div className="lg:col-span-6 px-3 sm:px-8 lg:px-12 pt-2.5 sm:pt-4 lg:pt-0 space-y-4 sm:space-y-5 text-left shrink-0">
+            <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white ${getTextRevealClass(0, "delay-75")}`}>
               Tentang Pasbana AI
             </span>
 
-            <h1 className={`text-2xl sm:text-5xl font-extrabold tracking-tight text-[#0f2c56] leading-[1.18] ${getTextRevealClass(0, "delay-150")}`}>
+            <h1 className={`text-[28px] sm:text-5xl font-extrabold tracking-tight text-[#0f2c56] leading-[1.2] sm:leading-[1.18] ${getTextRevealClass(0, "delay-150")}`}>
               Mengenal Filosofi{" "}
-              <span className={`inline-block bg-[#ce2731] text-white px-3 py-0.5 sm:px-3.5 rounded-xl mt-1 sm:mt-1.5 ${getHighlightPopClass(0, "delay-300")}`}>
+              <span className={`inline-block bg-[#ce2731] text-white px-3.5 py-0.5 rounded-xl mt-1.5 ${getHighlightPopClass(0, "delay-300")}`}>
                 Pas Bana.
               </span>
             </h1>
 
-            <p className={`text-xs sm:text-base text-slate-600 max-w-lg leading-relaxed ${getTextRevealClass(0, "delay-200")}`}>
+            <p className={`text-xs sm:text-base text-slate-600 max-w-lg leading-[1.7] sm:leading-relaxed ${getTextRevealClass(0, "delay-200")}`}>
               Platform bimbingan karir dan pencocokan lowongan kerja presisi berbasis kecerdasan buatan untuk menghubungkan talenta muda dengan industri secara adil dan transparan.
             </p>
 
@@ -261,25 +261,25 @@ export default function AboutPage() {
               <button
                 type="button"
                 onClick={() => goToSlide(1)}
-                className="px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition-colors cursor-pointer"
+                className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition-colors cursor-pointer"
               >
                 Misi &amp; Privasi
               </button>
               <button
                 type="button"
                 onClick={() => goToSlide(2)}
-                className="px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors cursor-pointer"
+                className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors cursor-pointer"
               >
                 Tim Pengembang
               </button>
             </div>
           </div>
 
-          <div className="lg:col-span-6 flex-1 min-h-0 lg:h-full rounded-[24px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent p-4 sm:p-10 lg:p-14 flex flex-col justify-center gap-2.5 sm:gap-5 text-white overflow-hidden">
-            <span className={`inline-flex items-center self-start px-3 py-1 sm:px-3.5 rounded-full bg-[#ce2731] text-[11px] sm:text-xs font-bold text-white ${getTextRevealClass(0, "delay-100")}`}>
+          <div className="lg:col-span-6 flex-1 min-h-0 lg:h-full rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent p-5 sm:p-10 lg:p-14 flex flex-col justify-center gap-3.5 sm:gap-5 text-white overflow-hidden">
+            <span className={`inline-flex items-center self-start px-3.5 py-1 rounded-full bg-[#ce2731] text-xs font-bold text-white ${getTextRevealClass(0, "delay-100")}`}>
               Filosofi Minang
             </span>
-            <h2 className={`text-lg sm:text-3xl font-extrabold text-white leading-snug ${getTextRevealClass(0, "delay-150")}`}>
+            <h2 className={`text-xl sm:text-3xl font-extrabold text-white leading-snug ${getTextRevealClass(0, "delay-150")}`}>
               Dari Bahasa Minang &quot;Pas Bana&quot;: Sangat Pas, Sangat Cocok
             </h2>
             <p className={`text-xs sm:text-sm text-white/85 leading-relaxed ${getTextRevealClass(0, "delay-200")}`}>
@@ -296,26 +296,26 @@ export default function AboutPage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(1)}`}
       >
-        <div className="w-full h-full mx-auto rounded-[24px] sm:rounded-[34px] bg-[#ce2731] lg:bg-transparent px-4 py-4 lg:py-0 sm:px-12 lg:px-16 flex flex-col justify-center lg:grid lg:grid-cols-12 gap-3.5 sm:gap-6 lg:gap-8 lg:items-center text-white overflow-hidden">
-          <div className="lg:col-span-5 space-y-2.5 sm:space-y-5 text-left">
-            <span className={`inline-flex items-center px-3 py-1 sm:px-3.5 rounded-full bg-[#0f2c56] text-[11px] sm:text-xs font-bold text-white ${getTextRevealClass(1, "delay-75")}`}>
+        <div className="w-full h-full mx-auto rounded-[28px] sm:rounded-[34px] bg-[#ce2731] lg:bg-transparent px-5 py-5 lg:py-0 sm:px-12 lg:px-16 flex flex-col justify-between lg:grid lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 lg:items-center text-white overflow-hidden">
+          <div className="lg:col-span-5 space-y-3.5 sm:space-y-5 text-left">
+            <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white ${getTextRevealClass(1, "delay-75")}`}>
               Misi &amp; Privasi
             </span>
-            <h2 className={`text-xl sm:text-4xl lg:text-[40px] font-extrabold tracking-tight text-white leading-[1.22] ${getTextRevealClass(1, "delay-150")}`}>
+            <h2 className={`text-[24px] sm:text-4xl lg:text-[40px] font-extrabold tracking-tight text-white leading-[1.24] sm:leading-[1.22] ${getTextRevealClass(1, "delay-150")}`}>
               Menjembatani talenta{" "}
-              <span className={`inline-block bg-[#0f2c56] text-white px-2.5 py-0.5 sm:px-3 rounded-xl mt-1 sm:mt-1.5 ${getHighlightPopClass(1, "delay-300")}`}>
+              <span className={`inline-block bg-[#0f2c56] text-white px-3 py-0.5 rounded-xl mt-1.5 ${getHighlightPopClass(1, "delay-300")}`}>
                 secara adil &amp; aman.
               </span>
             </h2>
-            <p className={`text-xs sm:text-base text-white/90 max-w-md leading-relaxed ${getTextRevealClass(1, "delay-200")}`}>
+            <p className={`text-xs sm:text-base text-white/90 max-w-md leading-[1.7] sm:leading-relaxed ${getTextRevealClass(1, "delay-200")}`}>
               Kami menggabungkan penilaian kualitas resume 5 dimensi yang objektif dengan standar perlindungan data pribadi sesuai regulasi Indonesia.
             </p>
           </div>
 
-          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5">
-            <div className={`bg-white text-[#0f2c56] rounded-[20px] sm:rounded-[28px] p-4 sm:p-8 space-y-2 sm:space-y-4 ${getTextRevealClass(1, "delay-150")}`}>
-              <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#0f2c56] text-white flex items-center justify-center">
-                <Compass className="w-4 h-4 sm:w-6 sm:h-6" aria-hidden="true" />
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-5">
+            <div className={`bg-white text-[#0f2c56] rounded-[24px] sm:rounded-[28px] p-4 sm:p-8 space-y-2.5 sm:space-y-4 ${getTextRevealClass(1, "delay-150")}`}>
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#0f2c56] text-white flex items-center justify-center">
+                <Compass className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden="true" />
               </div>
               <h3 className="text-base sm:text-xl font-extrabold text-[#0f2c56]">Misi Kami</h3>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
@@ -323,9 +323,9 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className={`bg-[#0f2c56] text-white rounded-[20px] sm:rounded-[28px] p-4 sm:p-8 space-y-2 sm:space-y-4 ${getTextRevealClass(1, "delay-200")}`}>
-              <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#ce2731] text-white flex items-center justify-center">
-                <Shield className="w-4 h-4 sm:w-6 sm:h-6" aria-hidden="true" />
+            <div className={`bg-[#0f2c56] text-white rounded-[24px] sm:rounded-[28px] p-4 sm:p-8 space-y-2.5 sm:space-y-4 ${getTextRevealClass(1, "delay-200")}`}>
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#ce2731] text-white flex items-center justify-center">
+                <Shield className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden="true" />
               </div>
               <h3 className="text-base sm:text-xl font-extrabold text-white">Komitmen Privasi (UU PDP No. 27/2022)</h3>
               <p className="text-xs sm:text-sm text-white/85 leading-relaxed">
@@ -340,14 +340,14 @@ export default function AboutPage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(2)}`}
       >
-        <div className="relative w-full h-full mx-auto px-2 sm:px-8 lg:px-12 flex flex-col justify-center gap-4 sm:gap-10 lg:gap-14">
-          <div className="space-y-1.5 sm:space-y-3 text-center max-w-2xl mx-auto flex flex-col items-center">
-            <span className={`inline-flex items-center px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-full bg-[#0f2c56] text-[10px] sm:text-xs font-bold text-white ${getTextRevealClass(2, "delay-75")}`}>
+        <div className="relative w-full h-full mx-auto px-2 sm:px-8 lg:px-12 flex flex-col justify-between lg:justify-center py-2 lg:py-0 gap-4 sm:gap-10 lg:gap-14">
+          <div className="space-y-2.5 sm:space-y-3 text-center max-w-2xl mx-auto flex flex-col items-center">
+            <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white ${getTextRevealClass(2, "delay-75")}`}>
               Tim Pengembang
             </span>
-            <h2 className={`text-xl sm:text-4xl lg:text-[40px] font-extrabold tracking-tight text-[#0f2c56] leading-[1.22] ${getTextRevealClass(2, "delay-150")}`}>
+            <h2 className={`text-[24px] sm:text-4xl lg:text-[40px] font-extrabold tracking-tight text-[#0f2c56] leading-[1.24] sm:leading-[1.22] ${getTextRevealClass(2, "delay-150")}`}>
               Dibangun oleh kolaborasi{" "}
-              <span className={`inline-block bg-[#ce2731] text-white px-2.5 py-0.5 sm:px-3 rounded-xl mt-1 sm:mt-1.5 ${getHighlightPopClass(2, "delay-300")}`}>
+              <span className={`inline-block bg-[#ce2731] text-white px-3 py-0.5 rounded-xl mt-1.5 ${getHighlightPopClass(2, "delay-300")}`}>
                 tiga peran inti.
               </span>
             </h2>

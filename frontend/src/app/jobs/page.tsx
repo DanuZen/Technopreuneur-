@@ -244,20 +244,20 @@ export default function JobsPage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(0)}`}
       >
-        <div className="w-full h-full mx-auto flex flex-col justify-between lg:grid lg:grid-cols-12 gap-3 sm:gap-5 lg:gap-6 lg:items-center">
-          <div className="lg:col-span-6 px-2 sm:px-8 lg:px-12 pt-1 lg:pt-0 space-y-2.5 sm:space-y-5 text-left shrink-0">
-            <span className={`inline-flex items-center px-3 py-1 sm:px-3.5 rounded-full bg-[#0f2c56] text-[11px] sm:text-xs font-bold text-white ${getTextRevealClass(0, "delay-75")}`}>
+        <div className="w-full h-full mx-auto flex flex-col justify-between lg:grid lg:grid-cols-12 gap-4 sm:gap-5 lg:gap-6 lg:items-center">
+          <div className="lg:col-span-6 px-3 sm:px-8 lg:px-12 pt-2.5 sm:pt-4 lg:pt-0 space-y-4 sm:space-y-5 text-left shrink-0">
+            <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white ${getTextRevealClass(0, "delay-75")}`}>
               Pencocokan Karir
             </span>
 
-            <h1 className={`text-2xl sm:text-5xl font-extrabold tracking-tight text-[#0f2c56] leading-[1.18] ${getTextRevealClass(0, "delay-150")}`}>
+            <h1 className={`text-[28px] sm:text-5xl font-extrabold tracking-tight text-[#0f2c56] leading-[1.2] sm:leading-[1.18] ${getTextRevealClass(0, "delay-150")}`}>
               Eksplorasi{" "}
-              <span className={`inline-block bg-[#ce2731] text-white px-3 py-0.5 sm:px-3.5 rounded-xl mt-1 sm:mt-1.5 ${getHighlightPopClass(0, "delay-300")}`}>
+              <span className={`inline-block bg-[#ce2731] text-white px-3.5 py-0.5 rounded-xl mt-1.5 ${getHighlightPopClass(0, "delay-300")}`}>
                 Lowongan Kerja
               </span>
             </h1>
 
-            <p className={`text-xs sm:text-base text-slate-600 max-w-lg leading-relaxed ${getTextRevealClass(0, "delay-200")}`}>
+            <p className={`text-xs sm:text-base text-slate-600 max-w-lg leading-[1.7] sm:leading-relaxed ${getTextRevealClass(0, "delay-200")}`}>
               Temukan lowongan dari mitra internal terverifikasi dan agregasi portal Jooble Indonesia, lengkap dengan analisis kesesuaian keahlian Pasbana AI.
             </p>
 
@@ -265,21 +265,21 @@ export default function JobsPage() {
               <button
                 type="button"
                 onClick={() => goToSlide(1)}
-                className="px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition-colors cursor-pointer inline-flex items-center gap-2"
+                className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition-colors cursor-pointer inline-flex items-center gap-2"
               >
                 <span>Lihat {jobs.length} Lowongan Aktif</span>
                 <ArrowUpRight className="w-4 h-4" />
               </button>
               <Link
                 href="/evaluate"
-                className="px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors"
+                className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors"
               >
                 Cek Kecocokan CV
               </Link>
             </div>
           </div>
 
-          <div className="lg:col-span-6 flex-1 min-h-0 lg:h-full rounded-[24px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent p-3.5 sm:p-10 lg:p-14 flex flex-col justify-center">
+          <div className="lg:col-span-6 flex-1 min-h-0 lg:h-full rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent p-4 sm:p-10 lg:p-14 flex flex-col justify-center">
             <form
               onSubmit={handleSearch}
               className="bg-white text-[#0f2c56] rounded-[22px] sm:rounded-[28px] p-4 sm:p-8 space-y-2.5 sm:space-y-4 shadow-2xl"

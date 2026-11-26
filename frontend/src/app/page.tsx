@@ -437,32 +437,32 @@ export default function HomePage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(0)}`}
       >
-        <div className="w-full h-full mx-auto flex flex-col justify-center lg:grid lg:grid-cols-12 gap-4 sm:gap-5 lg:gap-6 lg:items-center">
+        <div className="w-full h-full mx-auto flex flex-col justify-between lg:grid lg:grid-cols-12 gap-4 sm:gap-5 lg:gap-6 lg:items-center">
           {/* Left 6 Cols: Editorial Headline with Inline Red Pill Icon Badge */}
           <div
-            className="lg:col-span-6 px-2 sm:px-8 lg:px-12 space-y-3 sm:space-y-5 lg:space-y-7 text-left lg:text-right flex flex-col items-start lg:items-end shrink-0"
+            className="lg:col-span-6 px-3 sm:px-8 lg:px-12 pt-2.5 sm:pt-4 lg:pt-0 space-y-4 sm:space-y-6 lg:space-y-7 text-left lg:text-right flex flex-col items-start lg:items-end shrink-0"
           >
-            <div className={`inline-flex items-center px-3 py-1 sm:px-3.5 rounded-full bg-[#0f2c56] text-[11px] sm:text-xs font-bold text-white ${getTextRevealClass(0, "delay-75")}`}>
+            <div className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white ${getTextRevealClass(0, "delay-75")}`}>
               Pasbana AI · Evaluasi CV &amp; Karir
             </div>
 
-            <h1 className={`text-2xl sm:text-4xl xl:text-[50px] font-extrabold tracking-normal text-[#0f2c56] leading-[1.24] sm:leading-[1.34] ${getTextRevealClass(0, "delay-150")}`}>
+            <h1 className={`text-[28px] sm:text-5xl xl:text-[50px] font-extrabold tracking-normal text-[#0f2c56] leading-[1.3] sm:leading-[1.34] ${getTextRevealClass(0, "delay-150")}`}>
               Hemat waktu evaluasi
               <br />
               dan{" "}
-              <span className="inline-flex items-center justify-center align-middle w-11 sm:w-20 h-6 sm:h-11 rounded-full bg-[#ce2731] mx-1">
-                <span className="w-4 h-4 sm:w-6 sm:h-6 rounded-full border-2 border-white flex items-center justify-center">
-                  <Play className="w-2 h-2 sm:w-3 sm:h-3 text-white fill-white ml-0.5" />
+              <span className="inline-flex items-center justify-center align-middle w-13 sm:w-20 h-7 sm:h-11 rounded-full bg-[#ce2731] mx-1 sm:mx-1.5">
+                <span className="w-4.5 h-4.5 sm:w-6 sm:h-6 rounded-full border-2 border-white flex items-center justify-center">
+                  <Play className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white fill-white ml-0.5" />
                 </span>
               </span>{" "}
               temukan
               <br />
-              <span className={`inline-block bg-[#ce2731] text-white px-3 py-0.5 sm:px-4 sm:py-1 rounded-xl mt-1.5 sm:mt-2.5 ${getHighlightPopClass(0, "delay-300")}`}>
+              <span className={`inline-block bg-[#ce2731] text-white px-3.5 py-1 sm:px-4 sm:py-1 rounded-xl mt-2 sm:mt-2.5 ${getHighlightPopClass(0, "delay-300")}`}>
                 Karir Pas Bana.
               </span>
             </h1>
 
-            <p className={`text-xs sm:text-base text-slate-600 max-w-lg lg:ml-auto leading-relaxed sm:leading-[1.8] ${getTextRevealClass(0, "delay-200")}`}>
+            <p className={`text-xs sm:text-base text-slate-600 max-w-lg lg:ml-auto leading-[1.7] sm:leading-[1.8] ${getTextRevealClass(0, "delay-200")}`}>
               Dapatkan analisis objektif 5 dimensi terhadap kesiapan CV Anda dan rekomendasi lowongan kerja secara otomatis.
             </p>
 
@@ -470,7 +470,7 @@ export default function HomePage() {
               <Link
                 href="/user/dashboard/evaluasi"
                 onClick={(e) => handleAuthFlowLink(e, "/user/dashboard/evaluasi")}
-                className="px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition-colors"
+                className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition-colors"
               >
                 Evaluasi CV Saya
               </Link>
@@ -479,7 +479,7 @@ export default function HomePage() {
                 onClick={(e) =>
                   handleAuthFlowLink(e, "/user/dashboard/evaluasi/onboarding")
                 }
-                className="px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors"
+                className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors"
               >
                 Belum Punya CV
               </Link>
@@ -488,11 +488,11 @@ export default function HomePage() {
 
           {/* Right 6 Cols: Solid Isometric Vector UI Illustration inside Solid #0f2c56 Stage */}
           <div
-            className={`lg:col-span-6 h-[180px] sm:h-[240px] lg:h-full shrink-0 rounded-[22px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent p-2.5 sm:p-5 lg:p-6 flex items-center justify-center overflow-hidden ${getChildAnimClass(0, "right", "delay-150")}`}
+            className={`lg:col-span-6 flex-1 min-h-0 w-full lg:h-full rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent p-3 sm:p-5 lg:p-6 flex items-center justify-center overflow-hidden ${getChildAnimClass(0, "right", "delay-150")}`}
           >
             <svg
               viewBox="0 0 560 420"
-              className="w-auto lg:w-full max-w-[260px] sm:max-w-[380px] lg:max-w-[680px] xl:max-w-[740px] max-h-[155px] sm:max-h-[210px] lg:max-h-[82vh] h-auto overflow-visible"
+              className="w-full h-full max-w-[340px] sm:max-w-[520px] lg:max-w-[680px] xl:max-w-[740px] max-h-full lg:max-h-[82vh] overflow-visible"
               role="img"
               aria-label="Ilustrasi Isometrik Evaluasi CV dan Pencocokan Karir"
             >
@@ -608,36 +608,36 @@ export default function HomePage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(1)}`}
       >
-        <div className="w-full h-full mx-auto rounded-[24px] sm:rounded-[34px] bg-[#ce2731] lg:bg-transparent px-4 py-3.5 lg:py-0 sm:px-12 lg:px-16 flex flex-col justify-center lg:grid lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 lg:items-center text-white overflow-hidden">
+        <div className="w-full h-full mx-auto rounded-[28px] sm:rounded-[34px] bg-[#ce2731] lg:bg-transparent px-5 py-5 lg:py-0 sm:px-12 lg:px-16 flex flex-col justify-between lg:grid lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 lg:items-center text-white overflow-hidden">
           {/* Left 6 Cols: Cropped Solid Device Frame Rising from Bottom + Overlapping Solid Gauge */}
           <div
             className={`lg:col-span-6 h-auto lg:h-full shrink-0 flex items-center lg:items-end justify-center lg:pt-8 relative ${getChildAnimClass(1, "up", "delay-100")}`}
           >
-            <div className="relative w-full max-w-[310px] sm:max-w-[390px] h-auto lg:h-[88%] bg-white rounded-[20px] lg:rounded-t-[36px] lg:rounded-b-none border-4 lg:border-b-0 border-[#0f2c56] p-3 sm:px-6 sm:pt-6 sm:pb-0 flex flex-col gap-2 sm:gap-5 text-[#0f2c56] overflow-hidden sm:overflow-visible">
+            <div className="relative w-full max-w-[340px] sm:max-w-[390px] h-auto lg:h-[88%] bg-white rounded-[24px] lg:rounded-t-[36px] lg:rounded-b-none border-4 lg:border-b-0 border-[#0f2c56] p-3.5 sm:px-6 sm:pt-6 sm:pb-0 flex flex-col gap-2.5 sm:gap-5 text-[#0f2c56] overflow-hidden sm:overflow-visible">
               {/* Top 3 Solid Circular Indicators inside Frame */}
-              <div className="rounded-xl sm:rounded-2xl bg-[#0f2c56] p-2 sm:p-4 flex items-center justify-around shrink-0">
-                <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-white flex items-center justify-center text-[#0f2c56] text-[10px] sm:text-xs font-black">
+              <div className="rounded-xl sm:rounded-2xl bg-[#0f2c56] p-2.5 sm:p-4 flex items-center justify-around shrink-0">
+                <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white flex items-center justify-center text-[#0f2c56] text-[11px] sm:text-xs font-black">
                   94%
                 </div>
-                <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-[#ce2731] flex items-center justify-center text-white text-[10px] sm:text-xs font-black animate-pulse">
+                <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#ce2731] flex items-center justify-center text-white text-[11px] sm:text-xs font-black animate-pulse">
                   5D
                 </div>
-                <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-white flex items-center justify-center text-[#0f2c56] text-[10px] sm:text-xs font-black">
+                <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white flex items-center justify-center text-[#0f2c56] text-[11px] sm:text-xs font-black">
                   88
                 </div>
               </div>
 
               {/* Clean CV Solid Preview inside Frame */}
-              <div className="flex-none lg:flex-1 rounded-xl lg:rounded-t-2xl lg:rounded-b-none border-2 lg:border-b-0 border-slate-200 p-2.5 sm:p-5 space-y-1.5 sm:space-y-3 bg-white">
-                <div className="w-3/4 h-1.5 sm:h-2.5 rounded-full bg-[#0f2c56]" />
-                <div className="w-1/2 h-1.5 sm:h-2.5 rounded-full bg-slate-300" />
-                <div className="mt-1.5 sm:mt-4 h-12 sm:h-24 rounded-lg sm:rounded-xl bg-[#0f2c56] text-white flex items-center justify-center gap-2 sm:gap-3 px-2.5 sm:px-4">
-                  <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-md sm:rounded-lg bg-[#ce2731] text-white flex items-center justify-center shrink-0 animate-pulse">
-                    <Play className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 fill-white ml-0.5" />
+              <div className="flex-none lg:flex-1 rounded-xl lg:rounded-t-2xl lg:rounded-b-none border-2 lg:border-b-0 border-slate-200 p-3 sm:p-5 space-y-2 sm:space-y-3 bg-white">
+                <div className="w-3/4 h-2 sm:h-2.5 rounded-full bg-[#0f2c56]" />
+                <div className="w-1/2 h-2 sm:h-2.5 rounded-full bg-slate-300" />
+                <div className="mt-2 sm:mt-4 h-14 sm:h-24 rounded-xl bg-[#0f2c56] text-white flex items-center justify-center gap-2.5 sm:gap-3 px-3 sm:px-4">
+                  <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#ce2731] text-white flex items-center justify-center shrink-0 animate-pulse">
+                    <Play className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-white ml-0.5" />
                   </span>
                   <div className="flex-1 space-y-0.5 sm:space-y-1 min-w-0">
-                    <div className="text-[10px] sm:text-xs font-bold text-white truncate">Resume_Standar_ATS.pdf</div>
-                    <div className="text-[9px] sm:text-[10px] text-slate-300 truncate">Struktur 1-Kolom Terverifikasi</div>
+                    <div className="text-[11px] sm:text-xs font-bold text-white truncate">Resume_Standar_ATS.pdf</div>
+                    <div className="text-[10px] text-slate-300 truncate">Struktur 1-Kolom Terverifikasi</div>
                   </div>
                 </div>
                 <div className="w-full h-1.5 sm:h-2 rounded-full bg-slate-300 animate-pulse" />
@@ -670,23 +670,23 @@ export default function HomePage() {
           </div>
 
           {/* Right 6 Cols: Clean Solid White Editorial Copy */}
-          <div className="lg:col-span-6 space-y-2.5 sm:space-y-5 lg:space-y-7 text-left lg:pl-8 shrink-0">
-            <span className={`inline-flex items-center px-3 py-1 sm:px-3.5 rounded-full bg-[#0f2c56] text-[11px] sm:text-xs font-bold text-white ${getTextRevealClass(1, "delay-75")}`}>
+          <div className="lg:col-span-6 space-y-3.5 sm:space-y-6 lg:space-y-7 text-left lg:pl-8 shrink-0">
+            <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white ${getTextRevealClass(1, "delay-75")}`}>
               Pemeriksa Format ATS
             </span>
-            <h2 className={`text-xl sm:text-4xl lg:text-[40px] font-extrabold tracking-normal text-white leading-[1.26] sm:leading-[1.35] ${getTextRevealClass(1, "delay-150")}`}>
+            <h2 className={`text-[24px] sm:text-4xl lg:text-[40px] font-extrabold tracking-normal text-white leading-[1.3] sm:leading-[1.35] ${getTextRevealClass(1, "delay-150")}`}>
               Berhenti mengirim CV yang{" "}
-              <span className={`inline-block bg-[#0f2c56] text-white px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-xl mt-1.5 sm:mt-2.5 ${getHighlightPopClass(1, "delay-300")}`}>
+              <span className={`inline-block bg-[#0f2c56] text-white px-3.5 py-1 rounded-xl mt-2 sm:mt-2.5 ${getHighlightPopClass(1, "delay-300")}`}>
                 gagal dibaca sistem.
               </span>
             </h2>
-            <p className={`text-xs sm:text-base text-white max-w-lg leading-relaxed sm:leading-[1.8] ${getTextRevealClass(1, "delay-200")}`}>
+            <p className={`text-xs sm:text-base text-white max-w-lg leading-[1.7] sm:leading-[1.8] ${getTextRevealClass(1, "delay-200")}`}>
               Banyak kandidat gugur saat melamar kerja bukan karena kurang kompeten, melainkan karena susunan resume gagal dipahami mesin ATS. Ketahui letak celah CV Anda dan ikuti alur perbaikannya secara instan.
             </p>
             <div className={`pt-0.5 ${getTextRevealClass(1, "delay-300")}`}>
               <Link
                 href="/evaluate"
-                className="inline-flex items-center gap-2 px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition-colors"
               >
                 <span>Coba Pemeriksa Struktur ATS</span>
                 <ArrowUpRight className="w-4 h-4" />
@@ -702,33 +702,33 @@ export default function HomePage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(2)}`}
       >
-        <div className="w-full h-full mx-auto flex flex-col justify-center lg:grid lg:grid-cols-12 gap-4 sm:gap-5 lg:gap-6 lg:items-center">
+        <div className="w-full h-full mx-auto flex flex-col justify-between lg:grid lg:grid-cols-12 gap-4 sm:gap-5 lg:gap-6 lg:items-center">
           {/* Right 6 Cols: Clean Bold Heading & Subtitle on Open White Canvas */}
-          <div className="lg:col-span-6 lg:order-2 px-2 sm:px-8 lg:px-12 space-y-2.5 sm:space-y-5 lg:space-y-7 text-left flex flex-col items-start shrink-0">
-            <span className={`inline-flex items-center px-3 py-1 sm:px-3.5 rounded-full bg-[#0f2c56] text-[11px] sm:text-xs font-bold text-white ${getTextRevealClass(2, "delay-75")}`}>
+          <div className="lg:col-span-6 lg:order-2 px-3 sm:px-8 lg:px-12 pt-2.5 sm:pt-4 lg:pt-0 space-y-4 sm:space-y-6 lg:space-y-7 text-left flex flex-col items-start shrink-0">
+            <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white ${getTextRevealClass(2, "delay-75")}`}>
               Ekosistem Persiapan Karir
             </span>
-            <h2 className={`text-xl sm:text-4xl lg:text-[40px] font-extrabold tracking-normal text-[#0f2c56] leading-[1.26] sm:leading-[1.35] ${getTextRevealClass(2, "delay-150")}`}>
+            <h2 className={`text-[26px] sm:text-4xl lg:text-[40px] font-extrabold tracking-normal text-[#0f2c56] leading-[1.3] sm:leading-[1.35] ${getTextRevealClass(2, "delay-150")}`}>
               Tingkatkan peluang lolos
               <br />
               dengan kesiapan{" "}
-              <span className={`inline-block bg-[#ce2731] text-white px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-xl mt-1.5 sm:mt-2.5 ${getHighlightPopClass(2, "delay-300")}`}>
+              <span className={`inline-block bg-[#ce2731] text-white px-3.5 py-1 rounded-xl mt-2 sm:mt-2.5 ${getHighlightPopClass(2, "delay-300")}`}>
                 paling optimal.
               </span>
             </h2>
-            <p className={`text-xs sm:text-base text-slate-600 max-w-lg leading-relaxed sm:leading-[1.8] ${getTextRevealClass(2, "delay-200")}`}>
+            <p className={`text-xs sm:text-base text-slate-600 max-w-lg leading-[1.7] sm:leading-[1.8] ${getTextRevealClass(2, "delay-200")}`}>
               Baik sudah memiliki file PDF maupun belum punya CV sama sekali, ukur 5 dimensi kualitas resume Anda pada waktu yang tepat untuk hasil seleksi terbaik.
             </p>
             <div className={`pt-0.5 flex flex-wrap items-center justify-start gap-2.5 sm:gap-3 ${getTextRevealClass(2, "delay-300")}`}>
               <Link
                 href="/onboarding"
-                className="px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors"
+                className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors"
               >
                 Buat CV
               </Link>
               <Link
                 href="/evaluate"
-                className="px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-xl border border-slate-200 hover:border-[#0f2c56] text-[#0f2c56] text-xs sm:text-sm font-bold transition-colors"
+                className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl border border-slate-200 hover:border-[#0f2c56] text-[#0f2c56] text-xs sm:text-sm font-bold transition-colors"
               >
                 Unggah PDF CV
               </Link>
@@ -737,11 +737,11 @@ export default function HomePage() {
 
           {/* Left 6 Cols: Isometric Gauge Disc + Dot-Matrix Board inside Morphed Navy Stage */}
           <div
-            className={`lg:col-span-6 lg:order-1 h-[180px] sm:h-[240px] lg:h-full shrink-0 rounded-[22px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent p-2.5 sm:p-5 lg:p-6 flex items-center justify-center overflow-hidden ${getChildAnimClass(2, "left", "delay-150")}`}
+            className={`lg:col-span-6 lg:order-1 flex-1 min-h-0 w-full lg:h-full rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent p-3 sm:p-5 lg:p-6 flex items-center justify-center overflow-hidden ${getChildAnimClass(2, "left", "delay-150")}`}
           >
             <svg
               viewBox="0 0 560 400"
-              className="w-auto lg:w-full max-w-[260px] sm:max-w-[380px] lg:max-w-[680px] xl:max-w-[740px] max-h-[155px] sm:max-h-[210px] lg:max-h-[82vh] h-auto overflow-visible"
+              className="w-full h-full max-w-[340px] sm:max-w-[520px] lg:max-w-[680px] xl:max-w-[740px] max-h-full lg:max-h-[82vh] overflow-visible"
               role="img"
               aria-label="Ilustrasi Isometrik Kesiapan Karir dan Pemetaan Jadwal"
             >
@@ -864,20 +864,20 @@ export default function HomePage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(3)}`}
       >
-        <div className="w-full h-full mx-auto rounded-[24px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent px-4 py-3.5 lg:py-0 sm:px-12 lg:px-16 flex flex-col justify-center lg:grid lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 lg:items-center text-white overflow-hidden">
+        <div className="w-full h-full mx-auto rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent px-5 py-5 lg:py-0 sm:px-12 lg:px-16 flex flex-col justify-between lg:grid lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 lg:items-center text-white overflow-hidden">
           {/* Left 6 Cols: Cropped White Wireframe Rising from Bottom + Eye Badge + Upward Arrow */}
           <div
             className={`lg:col-span-6 h-auto lg:h-full shrink-0 flex items-center lg:items-end justify-center lg:pt-8 relative ${getChildAnimClass(3, "up", "delay-100")}`}
           >
-            <div className="relative w-full max-w-[310px] sm:max-w-[390px] h-auto lg:h-[88%] bg-white rounded-[20px] lg:rounded-t-[36px] lg:rounded-b-none border-4 lg:border-b-0 border-slate-200 p-3 sm:px-6 sm:pt-6 sm:pb-0 flex flex-col gap-2 sm:gap-4 text-[#0f2c56] overflow-hidden sm:overflow-visible">
+            <div className="relative w-full max-w-[340px] sm:max-w-[390px] h-auto lg:h-[88%] bg-white rounded-[24px] lg:rounded-t-[36px] lg:rounded-b-none border-4 lg:border-b-0 border-slate-200 p-3.5 sm:px-6 sm:pt-6 sm:pb-0 flex flex-col gap-2.5 sm:gap-4 text-[#0f2c56] overflow-hidden sm:overflow-visible">
               {/* Card 1 inside Device Frame: Before / Passive */}
-              <div className="rounded-xl sm:rounded-2xl bg-white border-2 border-slate-200 p-2 sm:p-4 space-y-1.5 sm:space-y-2.5 shrink-0">
+              <div className="rounded-xl sm:rounded-2xl bg-white border-2 border-slate-200 p-2.5 sm:p-4 space-y-1.5 sm:space-y-2.5 shrink-0">
                 <div className="w-2/3 h-1.5 sm:h-2 rounded-full bg-slate-300" />
                 <div className="w-1/2 h-1.5 sm:h-2 rounded-full bg-slate-200" />
-                <div className="h-11 sm:h-16 rounded-lg sm:rounded-xl bg-[#0f2c56] text-white flex items-center justify-between px-2.5 sm:px-4">
+                <div className="h-12 sm:h-16 rounded-xl bg-[#0f2c56] text-white flex items-center justify-between px-3 sm:px-4">
                   <div className="space-y-0.5 sm:space-y-1 min-w-0">
                     <div className="text-[9px] sm:text-[10px] font-bold uppercase text-slate-300">Kalimat Awal</div>
-                    <div className="text-[10px] sm:text-xs font-semibold text-slate-300 line-through truncate">
+                    <div className="text-[11px] sm:text-xs font-semibold text-slate-300 line-through truncate">
                       Membantu kegiatan acara kampus
                     </div>
                   </div>
@@ -888,12 +888,12 @@ export default function HomePage() {
               </div>
 
               {/* Card 2 inside Device Frame: After / Active Impact */}
-              <div className="flex-none lg:flex-1 rounded-xl lg:rounded-t-2xl lg:rounded-b-none bg-white border-2 lg:border-b-0 border-slate-200 p-2 sm:p-4 space-y-1.5 sm:space-y-2.5">
+              <div className="flex-none lg:flex-1 rounded-xl lg:rounded-t-2xl lg:rounded-b-none bg-white border-2 lg:border-b-0 border-slate-200 p-2.5 sm:p-4 space-y-1.5 sm:space-y-2.5">
                 <div className="w-3/4 h-1.5 sm:h-2 rounded-full bg-[#0f2c56]" />
-                <div className="h-11 sm:h-16 rounded-lg sm:rounded-xl bg-[#ce2731] text-white flex items-center justify-between px-2.5 sm:px-4">
+                <div className="h-12 sm:h-16 rounded-xl bg-[#ce2731] text-white flex items-center justify-between px-3 sm:px-4">
                   <div className="space-y-0.5 sm:space-y-1 min-w-0">
                     <div className="text-[9px] sm:text-[10px] font-bold uppercase text-white">Saran Pasbana AI (+24 Poin)</div>
-                    <div className="text-[10px] sm:text-xs font-bold text-white truncate">
+                    <div className="text-[11px] sm:text-xs font-bold text-white truncate">
                       Mengelola seminar 350+ peserta
                     </div>
                   </div>
@@ -924,25 +924,25 @@ export default function HomePage() {
           </div>
 
           {/* Right 6 Cols: Bold White Heading & Clean Subtitle */}
-          <div className="lg:col-span-6 space-y-2.5 sm:space-y-5 lg:space-y-7 text-left lg:pl-10 shrink-0">
-            <span className={`inline-flex items-center px-3 py-1 sm:px-3.5 rounded-full bg-[#ce2731] text-[11px] sm:text-xs font-bold text-white ${getTextRevealClass(3, "delay-75")}`}>
+          <div className="lg:col-span-6 space-y-3.5 sm:space-y-6 lg:space-y-7 text-left lg:pl-10 shrink-0">
+            <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#ce2731] text-xs font-bold text-white ${getTextRevealClass(3, "delay-75")}`}>
               Asisten Kalimat Aktif
             </span>
-            <h2 className={`text-xl sm:text-4xl lg:text-[40px] font-extrabold tracking-normal text-white leading-[1.26] sm:leading-[1.35] ${getTextRevealClass(3, "delay-150")}`}>
+            <h2 className={`text-[24px] sm:text-4xl lg:text-[40px] font-extrabold tracking-normal text-white leading-[1.3] sm:leading-[1.35] ${getTextRevealClass(3, "delay-150")}`}>
               Pahami Struktur dan
               <br />
               Kalimat Aktif dalam{" "}
-              <span className={`inline-block bg-[#ce2731] text-white px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-xl mt-1.5 sm:mt-2.5 ${getHighlightPopClass(3, "delay-300")}`}>
+              <span className={`inline-block bg-[#ce2731] text-white px-3.5 py-1 rounded-xl mt-2 sm:mt-2.5 ${getHighlightPopClass(3, "delay-300")}`}>
                 penilaian HRD.
               </span>
             </h2>
-            <p className={`text-xs sm:text-base text-slate-200 max-w-lg leading-relaxed sm:leading-[1.8] ${getTextRevealClass(3, "delay-200")}`}>
+            <p className={`text-xs sm:text-base text-slate-200 max-w-lg leading-[1.7] sm:leading-[1.8] ${getTextRevealClass(3, "delay-200")}`}>
               Lihat perubahan skor kesiapan secara langsung setelah Anda mengganti kalimat pasif menjadi pencapaian terukur, struktur yang rapi, dan kata kunci keahlian yang tepat.
             </p>
             <div className="pt-0.5">
               <Link
                 href="/evaluate"
-                className="inline-flex items-center gap-2 px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors"
               >
                 <span>Uji Kalimat CV Sekarang</span>
                 <ArrowUpRight className="w-4 h-4" />
@@ -961,16 +961,16 @@ export default function HomePage() {
       >
         <div
           ref={slide4ContainerRef}
-          className="relative w-full h-full mx-auto px-1 sm:px-8 lg:px-12 flex flex-col justify-center gap-2.5 sm:gap-5 lg:gap-6"
+          className="relative w-full h-full mx-auto px-1.5 sm:px-8 lg:px-12 flex flex-col justify-between lg:justify-center py-1 lg:py-0 gap-3 sm:gap-5 lg:gap-6"
         >
           {/* Top-Center Section Header */}
-          <div className="space-y-1.5 sm:space-y-4 text-center max-w-2xl mx-auto flex flex-col items-center shrink-0">
-            <span className={`inline-flex items-center px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-full bg-[#0f2c56] text-[10px] sm:text-xs font-bold text-white ${getTextRevealClass(4, "delay-75")}`}>
+          <div className="space-y-2.5 sm:space-y-4 text-center max-w-2xl mx-auto flex flex-col items-center shrink-0">
+            <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white ${getTextRevealClass(4, "delay-75")}`}>
               Fitur &amp; Prinsip
             </span>
-            <h2 className={`text-lg sm:text-4xl lg:text-[40px] font-extrabold tracking-normal text-[#0f2c56] leading-[1.25] sm:leading-[1.35] ${getTextRevealClass(4, "delay-150")}`}>
+            <h2 className={`text-[22px] sm:text-4xl lg:text-[40px] font-extrabold tracking-normal text-[#0f2c56] leading-[1.3] sm:leading-[1.35] ${getTextRevealClass(4, "delay-150")}`}>
               Optimalkan kesiapan karir dengan{" "}
-              <span className={`inline-block bg-[#ce2731] text-white px-2.5 py-0.5 sm:px-3.5 sm:py-1 rounded-lg sm:rounded-xl mt-1 sm:mt-2.5 ${getHighlightPopClass(4, "delay-300")}`}>
+              <span className={`inline-block bg-[#ce2731] text-white px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-xl mt-1.5 sm:mt-2.5 ${getHighlightPopClass(4, "delay-300")}`}>
                 evaluasi presisi.
               </span>
             </h2>
@@ -979,7 +979,7 @@ export default function HomePage() {
           {/* 2 Columns on Mobile, 3 Columns x 2 Rows on Desktop Feature Grid */}
           <div
             ref={slide4GridRef}
-            className={`grid grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-5 ${getChildAnimClass(4, "up", "delay-150")}`}
+            className={`flex-1 lg:flex-none grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4 lg:gap-5 ${getChildAnimClass(4, "up", "delay-150")}`}
           >
             {FEATURE_GRID_ITEMS.map((item, idx) => {
               const isSelected = activeFeatureIdx === idx;
@@ -1069,20 +1069,20 @@ export default function HomePage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(5)}`}
       >
-        <div className="w-full h-full mx-auto rounded-[24px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent px-4 py-4 lg:py-0 sm:px-12 lg:px-16 flex flex-col justify-center lg:grid lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 lg:items-center text-white overflow-hidden">
+        <div className="w-full h-full mx-auto rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent px-5 py-6 lg:py-0 sm:px-12 lg:px-16 flex flex-col justify-between lg:grid lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 lg:items-center text-white overflow-hidden">
           {/* Left 6 Cols: Subtitle, Bold Title, Interactive Range Slider, 2 Toggle Buttons */}
-          <div className="lg:col-span-6 space-y-3 sm:space-y-6 lg:space-y-7 text-left">
-            <div className="space-y-2.5 sm:space-y-5">
-              <span className={`inline-flex items-center px-3 py-1 sm:px-3.5 rounded-full bg-[#ce2731] text-[11px] sm:text-xs font-bold text-white ${getTextRevealClass(5, "delay-75")}`}>
+          <div className="lg:col-span-6 space-y-4 sm:space-y-6 lg:space-y-7 text-left">
+            <div className="space-y-3.5 sm:space-y-5">
+              <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#ce2731] text-xs font-bold text-white ${getTextRevealClass(5, "delay-75")}`}>
                 Cara Kerja Otomatis
               </span>
-              <h2 className={`text-xl sm:text-4xl lg:text-[40px] font-extrabold tracking-normal text-white leading-[1.26] sm:leading-[1.35] ${getTextRevealClass(5, "delay-150")}`}>
+              <h2 className={`text-[24px] sm:text-4xl lg:text-[40px] font-extrabold tracking-normal text-white leading-[1.3] sm:leading-[1.35] ${getTextRevealClass(5, "delay-150")}`}>
                 Dapatkan analisis terbaik untuk{" "}
-                <span className={`inline-block bg-[#ce2731] text-white px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-xl mt-1.5 sm:mt-2.5 ${getHighlightPopClass(5, "delay-300")}`}>
+                <span className={`inline-block bg-[#ce2731] text-white px-3.5 py-1 rounded-xl mt-2 sm:mt-2.5 ${getHighlightPopClass(5, "delay-300")}`}>
                   kesiapan karir.
                 </span>
               </h2>
-              <p className={`text-xs sm:text-base text-slate-200 max-w-lg leading-relaxed sm:leading-[1.8] ${getTextRevealClass(5, "delay-200")}`}>
+              <p className={`text-xs sm:text-base text-slate-200 max-w-lg leading-[1.7] sm:leading-[1.8] ${getTextRevealClass(5, "delay-200")}`}>
                 Berhenti membuang waktu, biarkan sistem mengevaluasi secara otomatis.
               </p>
             </div>
@@ -1092,7 +1092,7 @@ export default function HomePage() {
               <button
                 type="button"
                 onClick={() => setInputMode("pdf")}
-                className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+                className={`px-4 py-2.5 sm:px-5 sm:py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
                   inputMode === "pdf"
                     ? "bg-white text-[#0f2c56]"
                     : "border border-white/30 text-white hover:border-white"
@@ -1103,7 +1103,7 @@ export default function HomePage() {
               <button
                 type="button"
                 onClick={() => setInputMode("questionnaire")}
-                className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+                className={`px-4 py-2.5 sm:px-5 sm:py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
                   inputMode === "questionnaire"
                     ? "bg-white text-[#0f2c56]"
                     : "border border-white/30 text-white hover:border-white"
@@ -1116,12 +1116,12 @@ export default function HomePage() {
 
           {/* Right 6 Cols: Single Clean White Card */}
           <div className={`lg:col-span-6 ${getChildAnimClass(5, "right", "delay-150")}`}>
-            <div className="bg-white text-[#0f2c56] rounded-[24px] sm:rounded-[32px] p-4 sm:p-8 lg:p-9 shadow-2xl space-y-3 sm:space-y-5 max-w-lg mx-auto">
+            <div className="bg-white text-[#0f2c56] rounded-[26px] sm:rounded-[32px] p-5 sm:p-8 lg:p-9 shadow-2xl space-y-4 sm:space-y-5 max-w-lg mx-auto">
               <h3 className="text-base sm:text-2xl font-bold text-[#0f2c56] leading-snug">
                 Satu alur terpadu yang menjawab seluruh kebutuhan persiapan karir Anda
               </h3>
 
-              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-slate-500">
+              <ul className="space-y-2 text-xs sm:text-sm text-slate-500">
                 <li className="flex items-start gap-2">
                   <span className="text-[#0f2c56] font-bold">•</span>
                   <span>Evaluasi mendalam 5 dimensi kesiapan ATS dan standar HRD</span>
@@ -1142,13 +1142,13 @@ export default function HomePage() {
 
               <div className="pt-1 sm:pt-2 flex flex-wrap items-center justify-between gap-3 sm:gap-4">
                 <div className="flex items-baseline gap-2">
-                  <span className="text-2xl sm:text-5xl font-black text-[#0f2c56]">Gratis</span>
+                  <span className="text-3xl sm:text-5xl font-black text-[#0f2c56]">Gratis</span>
                   <span className="text-[11px] sm:text-xs text-slate-400 font-semibold">Rp 0 / Selamanya</span>
                 </div>
 
                 <Link
                   href={inputMode === "pdf" ? "/evaluate" : "/onboarding"}
-                  className="px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors"
+                  className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors"
                 >
                   Mulai Sekarang
                 </Link>
@@ -1164,36 +1164,36 @@ export default function HomePage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(6)}`}
       >
-        <div className="w-full h-full mx-auto px-1 sm:px-4 flex flex-col justify-between lg:grid lg:grid-cols-12 gap-2.5 sm:gap-4 lg:gap-5 lg:items-stretch">
+        <div className="w-full h-full mx-auto px-1 sm:px-4 flex flex-col justify-between lg:grid lg:grid-cols-12 gap-3 sm:gap-4 lg:gap-5 lg:items-stretch">
           {/* Left 5 Cols: Solid Navy CTA Card */}
           <div className="lg:col-span-5 flex flex-col lg:py-1 shrink-0">
-            <div className="bg-[#0f2c56] lg:bg-transparent text-white rounded-[22px] sm:rounded-[28px] p-3.5 sm:p-7 lg:p-10 flex flex-col justify-center items-center text-center gap-2.5 sm:gap-5 lg:gap-6 flex-1">
-              <div className="space-y-1.5 sm:space-y-4 lg:space-y-5 flex flex-col items-center">
-                <span className={`inline-flex items-center px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-full bg-[#ce2731] text-white text-[10px] sm:text-xs font-bold ${getTextRevealClass(6, "delay-75")}`}>
+            <div className="bg-[#0f2c56] lg:bg-transparent text-white rounded-[24px] sm:rounded-[28px] p-4 sm:p-7 lg:p-10 flex flex-col justify-center items-center text-center gap-3 sm:gap-5 lg:gap-6 flex-1">
+              <div className="space-y-2 sm:space-y-4 lg:space-y-5 flex flex-col items-center">
+                <span className={`inline-flex items-center px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-full bg-[#ce2731] text-white text-[11px] sm:text-xs font-bold ${getTextRevealClass(6, "delay-75")}`}>
                   Mulai Langkah Karir
                 </span>
-                <h2 className={`text-lg sm:text-3xl lg:text-[40px] font-extrabold tracking-normal text-white leading-tight sm:leading-[1.35] ${getTextRevealClass(6, "delay-150")}`}>
+                <h2 className={`text-xl sm:text-3xl lg:text-[40px] font-extrabold tracking-normal text-white leading-[1.28] sm:leading-[1.35] ${getTextRevealClass(6, "delay-150")}`}>
                   Petakan langkah menuju{" "}
-                  <span className={`inline-block bg-[#ce2731] text-white px-2.5 py-0.5 sm:px-3.5 sm:py-1 rounded-lg sm:rounded-xl mt-1 sm:mt-2.5 ${getHighlightPopClass(6, "delay-300")}`}>
+                  <span className={`inline-block bg-[#ce2731] text-white px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-xl mt-1.5 sm:mt-2.5 ${getHighlightPopClass(6, "delay-300")}`}>
                     karir terbaik Anda.
                   </span>
                 </h2>
-                <p className={`text-[11px] sm:text-sm lg:text-base text-white/95 max-w-md mx-auto leading-snug sm:leading-[1.8] ${getTextRevealClass(6, "delay-200")}`}>
+                <p className={`text-xs sm:text-sm lg:text-base text-white/95 max-w-md mx-auto leading-relaxed sm:leading-[1.8] ${getTextRevealClass(6, "delay-200")}`}>
                   Pastikan CV Anda terbaca sempurna oleh sistem ATS, perkuat poin pencapaian, dan temukan posisi kerja yang paling pas bana.
                 </p>
               </div>
 
-              <div className={`flex flex-wrap items-center justify-center gap-2 sm:gap-3 ${getTextRevealClass(6, "delay-300")}`}>
+              <div className={`flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 ${getTextRevealClass(6, "delay-300")}`}>
                 <Link
                   href="/evaluate"
-                  className="px-4 py-2 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-white text-white hover:text-[#0f2c56] text-xs sm:text-sm font-bold transition-colors inline-flex items-center gap-1.5 sm:gap-2"
+                  className="px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-white text-white hover:text-[#0f2c56] text-xs sm:text-sm font-bold transition-colors inline-flex items-center gap-1.5 sm:gap-2"
                 >
                   <span>Evaluasi CV Sekarang</span>
                   <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </Link>
                 <Link
                   href="/onboarding"
-                  className="px-4 py-2 sm:px-6 sm:py-3.5 rounded-xl bg-white hover:bg-[#ce2731] text-[#0f2c56] hover:text-white text-xs sm:text-sm font-bold transition-colors"
+                  className="px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-xl bg-white hover:bg-[#ce2731] text-[#0f2c56] hover:text-white text-xs sm:text-sm font-bold transition-colors"
                 >
                   Buat CV
                 </Link>
@@ -1203,13 +1203,13 @@ export default function HomePage() {
 
           {/* Right 7 Cols: Clean Header + 5 Solid Interactive Accordion Cards */}
           <div
-            className={`lg:col-span-7 flex-1 min-h-0 flex flex-col justify-center gap-1.5 sm:gap-3 lg:py-2 lg:pl-4 ${getChildAnimClass(6, "right", "delay-150")}`}
+            className={`lg:col-span-7 flex-1 min-h-0 flex flex-col justify-center gap-2 sm:gap-3 lg:py-2 lg:pl-4 ${getChildAnimClass(6, "right", "delay-150")}`}
           >
-            <div className="pb-0.5 sm:pb-2 space-y-1 sm:space-y-2 shrink-0">
-              <span className="inline-flex items-center px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-full bg-[#0f2c56] text-[10px] sm:text-xs font-bold text-white">
+            <div className="pb-0.5 sm:pb-2 space-y-1.5 sm:space-y-2 shrink-0">
+              <span className="inline-flex items-center px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-full bg-[#0f2c56] text-[11px] sm:text-xs font-bold text-white">
                 Pertanyaan Umum
               </span>
-              <h3 className="text-sm sm:text-2xl font-extrabold text-[#0f2c56] leading-tight">
+              <h3 className="text-base sm:text-2xl font-extrabold text-[#0f2c56] leading-snug">
                 Semua yang perlu Anda ketahui tentang Pasbana AI
               </h3>
             </div>
