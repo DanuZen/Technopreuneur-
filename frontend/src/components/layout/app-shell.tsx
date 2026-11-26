@@ -116,6 +116,7 @@ export function AppShell({ children }: AppShellProps) {
           />
         )}
         <AppHeader
+          isMobileOpen={isMobileOpen}
           onToggleMobile={() => setIsMobileOpen((s) => !s)}
           isDesktopCollapsed={isDesktopCollapsed}
           onToggleDesktopCollapse={handleToggleDesktopCollapse}
