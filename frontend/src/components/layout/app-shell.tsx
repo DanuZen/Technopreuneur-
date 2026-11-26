@@ -84,8 +84,8 @@ export function AppShell({ children }: AppShellProps) {
 
   // Tampilan khusus dashboard evaluasi: Fit-Viewport 3-Layer Flex + Clean Scroll
   return (
-    <div className="flex h-dvh w-full overflow-hidden viewport-shell bg-[#edf2f9] text-primary select-auto font-sans">
-      {/* ChatGPT-style Collapsible AppSidebar */}
+    <div className="flex h-dvh w-full overflow-hidden viewport-shell bg-[#edf2f9] text-primary select-auto font-sans relative">
+      {/* ChatGPT-style Collapsible AppSidebar (Reveal pattern on mobile) */}
       <Suspense fallback={null}>
         <AppSidebar
           isMobileOpen={isMobileOpen}
@@ -95,8 +95,26 @@ export function AppShell({ children }: AppShellProps) {
         />
       </Suspense>
 
-      {/* Main Workspace Stage (Rounded Clay Stage on Desktop) */}
-      <div className="flex flex-1 flex-col min-w-0 min-h-0 overflow-hidden bg-[#fefefd] clay-stage lg:my-2 lg:mr-2 lg:rounded-[32px] relative isolate shadow-2xl shadow-primary/10">
+      {/* Main Workspace Stage (Steps back with Reveal animation on mobile, Rounded Clay Stage on Desktop) */}
+      <div
+        className={`flex flex-1 flex-col min-w-0 min-h-0 overflow-hidden bg-[#fefefd] clay-stage lg:my-2 lg:mr-2 lg:rounded-[32px] relative z-20 isolate transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] origin-left lg:translate-x-0 lg:scale-100 ${
+          isMobileOpen
+            ? "translate-x-[232px] sm:translate-x-[256px] scale-[0.84] rounded-[28px] shadow-[0_24px_60px_rgba(15,44,86,0.22)] ring-1 ring-[#0f2c56]/10"
+            : "translate-x-0 scale-100 rounded-none shadow-2xl shadow-primary/10"
+        }`}
+      >
+        {isMobileOpen && (
+          <div
+            role="button"
+            tabIndex={0}
+            aria-label="Tutup menu dan kembali ke halaman"
+            onClick={() => setIsMobileOpen(false)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") setIsMobileOpen(false);
+            }}
+            className="absolute inset-0 z-50 lg:hidden cursor-pointer"
+          />
+        )}
         <AppHeader
           onToggleMobile={() => setIsMobileOpen((s) => !s)}
           isDesktopCollapsed={isDesktopCollapsed}

@@ -172,28 +172,14 @@ export function AppSidebar({
 
   return (
     <>
-      {/* Mobile Backdrop */}
-      {isMobileOpen && (
-        <div
-          role="button"
-          tabIndex={0}
-          aria-label="Tutup panel navigasi"
-          onClick={onCloseMobile}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") onCloseMobile();
-          }}
-          className="fixed inset-0 z-40 bg-[#0f2c56]/60 backdrop-blur-xs lg:hidden transition-opacity"
-        />
-      )}
-
-      {/* Sidebar Container */}
+      {/* Sidebar Container (Reveal pattern on mobile: sits on left canvas as main page steps back) */}
       <aside
         aria-label="Navigasi aplikasi dan riwayat evaluasi"
-        className={`fixed top-0 bottom-0 left-0 z-50 flex shrink-0 flex-col bg-[#edf2f9] text-primary overflow-hidden lg:static transition-[width,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`fixed top-0 bottom-0 left-0 z-10 flex shrink-0 flex-col bg-[#edf2f9] text-primary overflow-hidden lg:static lg:z-auto transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           isMobileOpen
-            ? "translate-x-0 shadow-2xl w-[85vw] max-w-[310px]"
-            : "-translate-x-full lg:translate-x-0"
-        } ${isDesktopCollapsed ? "lg:w-[72px]" : "lg:w-[310px]"} w-[85vw] max-w-[310px]`}
+            ? "translate-x-0 scale-100 opacity-100 pointer-events-auto"
+            : "-translate-x-8 scale-[0.96] opacity-0 pointer-events-none lg:translate-x-0 lg:scale-100 lg:opacity-100 lg:pointer-events-auto"
+        } ${isDesktopCollapsed ? "lg:w-[72px]" : "lg:w-[310px]"} w-[232px] sm:w-[256px]`}
       >
         <div className="relative h-full w-full overflow-hidden flex flex-col justify-between">
           {/* ============================================================= */}
