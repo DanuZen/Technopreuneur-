@@ -275,20 +275,44 @@ gantt
 
 ---
 
-## 5. Keputusan Kunci & Pembagian Tugas Lanjutan per Anggota Tim
+## 5. Keputusan Kunci & Poin Lanjutan Terarah per Anggota Tim
 
 ### 5.1 Keputusan Prioritas Tim
 1. **Lingkup Role Admin:** Admin berfokus pada agregat ekosistem, audit/verifikasi legalitas perusahaan calon mitra, standarisasi global, dan laporan eksekutif (tidak memoderasi lowongan atau seleksi pelamar internal milik perusahaan).
 2. **Alur Onboarding & Evaluasi:** Halaman Onboarding ditempatkan sebagai sub-alur Evaluasi CV (`/user/dashboard/evaluasi/onboarding`), sedangkan hasil analisis ditampilkan di antarmuka Chatbot Interaktif (`/user/dashboard/hasil-evaluasi`) lengkap dengan pembeda sumber CV dan rekomendasi buat ulang di `/user/dashboard/dokumen`.
 3. **Masa Retensi CV:** Mengikuti pengaturan standar global Admin (`retentionDays`, default 90 hari; dapat disesuaikan hingga 12 bulan sebelum *auto-purge*).
 
-### 5.2 Tugas Lanjutan Masing-Masing Anggota Tim (Sprint Berikutnya)
-- **Wira Fikri Ramadanu (`frontend/`):**
-  - Melakukan QA menyeluruh dan penyesuaian tampilan responsif mobile (`360px-430px`) untuk seluruh halaman (`user`, `company`, dan `admin`).
-- **Muhammad Gilang Ramadhan (`backend-api/`):**
-  - Menghubungkan PostgreSQL cloud (`Supabase` / `Neon`) dengan ekstensi `pgvector` aktif agar menggantikan `local-json-vault` di environment produksi.
-  - Memindahkan penyimpanan berkas fisik CV dari `backend-api/uploads/` ke Object Storage privat (Supabase Storage / Cloudflare R2) dengan *pre-signed URL*.
-  - Menambahkan *rate limiting* (`express-rate-limit`), endpoint `DELETE /api/users/me`, serta endpoint bookmark lowongan (`/api/saved-jobs`).
-- **Florensius Panca Gati (`backend-ai/`):**
-  - Menambahkan klien HTTP live Jooble Publisher API menggunakan `JOOBLE_API_KEY` dan skrip sinkronisasi periodik lowongan Indonesia + pembuatan embedding otomatis.
-  - Melakukan *benchmarking* akurasi pencocokan & skor ATS menggunakan **Golden Dataset (20 CV uji)** bersama seluruh tim sebelum rilis Beta.
+### 5.2 Poin Tugas Lanjutan Terarah per Anggota Tim
+
+#### 1. Wira Fikri Ramadanu - *Frontend Lead* (`frontend/`)
+- **Poin 1 (Prioritas Utama - Mobile & QA Menyeluruh):**
+  - Melakukan audit responsivitas khusus layar mobile (`360px-430px`) pada seluruh halaman utama (`/`, `/login`, `/register`, `/user/dashboard/*`, `/company/dashboard/*`, `/admin/dashboard/*`, `/jobs`, `/apply/[id]`).
+  - Memastikan seluruh tombol aksi dan navigasi memiliki area sentuh minimal `44 x 44 px`, tidak ada overflow horizontal, serta tabel/diagram tetap terbaca rapi.
+  - Menjalankan uji alur *end-to-end* untuk ketiga role (`user`, `company`, `admin`) menggunakan layanan lokal aktif (`:3000`, `:5000`, `:8000`).
+- **Poin 2 (Sinkronisasi Saved Jobs ke Backend):**
+  - Setelah Gilang menyelesaikan endpoint `/api/saved-jobs`, hubungkan `api.getSavedJobIds()` dan `api.toggleSavedJob()` di `frontend/src/lib/api.ts` agar bookmark tersimpan persisten di database akun (tidak hanya `localStorage`).
+- **Poin 3 (Deployment Frontend):**
+  - Menyiapkan konfigurasi `NEXT_PUBLIC_API_URL` untuk deployment produksi di **Vercel** dan memverifikasi build produksi (`npm run build`).
+
+#### 2. Muhammad Gilang Ramadhan - *Backend Lead* (`backend-api/`)
+- **Poin 1 (Prioritas Utama - Database PostgreSQL `pgvector` Produksi):**
+  - Melakukan provisioning PostgreSQL cloud (**Supabase / Neon**) dengan ekstensi `vector` aktif, menjalankan `backend-api/sql/schema.sql`, serta mengisi `DATABASE_URL` agar menggantikan mode `local-json-vault`.
+- **Poin 2 (Object Storage Privat & Pre-signed URL):**
+  - Memindahkan penyimpanan berkas fisik CV dari direktori lokal `backend-api/uploads/` ke **Supabase Storage / Cloudflare R2 / S3** menggunakan *pre-signed URL* (masa berlaku 15 menit).
+- **Poin 3 (Endpoint Bookmark & Hardening Keamanan):**
+  - Menambahkan endpoint `GET/POST/DELETE /api/saved-jobs` agar bookmark lowongan sinkron lintas perangkat.
+  - Menambahkan *rate limiting* (`express-rate-limit`) pada endpoint `/api/auth/login` dan `/api/cvs/upload`, logika deduplikasi lowongan eksternal, serta *auto-hide* lowongan kedaluwarsa (`expires_at`).
+- **Poin 4 (Observabilitas & Email Transaksional):**
+  - Mengaktifkan Sentry untuk pelacakan error produksi dan Resend/Brevo untuk notifikasi akun/status lamaran.
+
+#### 3. Florensius Panca Gati - *Backend AI Lead* (`backend-ai/`)
+- **Poin 1 (Prioritas Utama - Klien Live Jooble Publisher API):**
+  - Mendaftarkan `JOOBLE_API_KEY` resmi, menambahkan klien HTTP penarikan lowongan Indonesia di `backend-ai/app/jobs/`, serta menghubungkan modul `normalize_jooble()` ke penjadwalan sinkronisasi berkala menuju `backend-api`.
+- **Poin 2 (Golden Dataset & Kalibrasi Akurasi AI):**
+  - Mengumpulkan **30-50 CV uji anonim** (`.pdf` & `.docx`, ID & EN) dan **100+ sampel lowongan**, lalu mengevaluasi akurasi skor ATS serta peringkat `stage2` bersama tim menggunakan **20 CV Golden Dataset**.
+- **Poin 3 (Deployment Service AI):**
+  - Menyiapkan deployment `backend-ai` (Render / Railway / Hugging Face Spaces) dengan variabel `.env` produksi (`GEMINI_API_KEY`, `GEMINI_MODEL`, `INTERNAL_TOKEN`) dan memastikan endpoint `/health` siap dipantau.
+
+### 5.3 Koordinasi Lintas Tim Sebelum Rilis Beta
+- [ ] Uji coba *end-to-end* alur lengkap: Registrasi Company (NIB/NPWP) -> Audit Admin -> Publikasi Lowongan (Embed 1536d) -> Registrasi Jobseeker -> Upload/Onboarding CV -> Konsultasi Chat AI -> Lamar Kerja -> Seleksi Kandidat oleh Company.
+- [ ] Finalisasi teks Kebijakan Privasi, *Terms of Service* UU PDP, serta surat permohonan kemitraan data resmi ke Pasker ID / Kemnaker RI.

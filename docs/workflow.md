@@ -193,10 +193,10 @@ flowchart TD
   - Autentikasi JWT / Sessions, RBAC role middleware, Pre-signed Storage URL handler.
 - **Backend AI (`backend-ai/` - Florensius Panca Gati):**
   - Python 3.11+ dengan **FastAPI**, Pydantic v2, Uvicorn.
-  - Ekstraksi Dokumen: `pypdf`, `python-docx` / `pdfplumber`.
-  - AI Orchestration: LangChain / LiteLLM / Gemini SDK / OpenAI SDK.
-  - Vector & Embedding: Embedding 1536-dimensi, hybrid cosine matching engine.
-  - Integrasi API Eksternal: Jooble API Ingestion Client.
+  - Ekstraksi Dokumen: `pdfplumber` dan `python-docx` (deteksi scan, tabel, multi-kolom, serta *List Bullet* Word).
+  - AI Orchestration: Google GenAI SDK (`gemini-2.5-flash` dengan fallback otomatis, sanitasi UU PDP, chatbot evaluasi, dan ekstraktor profil terstruktur).
+  - Vector & Embedding: `gemini-embedding-001` 1536-dimensi (`POST /internal/v1/embed`), matching tahap 2 hingga `50` kandidat dengan dukungan *keywords* kustom perusahaan.
+  - Integrasi API Eksternal: Modul normalisasi **Jooble** (`normalize_jooble`) & **Arbeitnow** (`app/jobs/normalizer.py`).
 
 ---
 
