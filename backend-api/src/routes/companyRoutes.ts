@@ -5,6 +5,7 @@ import {
   requireRole,
 } from "../middlewares/auth";
 import { getDb, saveDb } from "../store/dataStore";
+import { embedTextsWithBackendAi } from "../services/aiService";
 
 const router = Router();
 
@@ -53,7 +54,7 @@ router.post(
   "/jobs",
   authenticateJWT,
   requireRole(["employer"]),
-  (req: AuthenticatedRequest, res: Response) => {
+  async (req: AuthenticatedRequest, res: Response) => {
     const db = getDb();
     const company = getEmployerCompany(req.user?.userId);
 
@@ -99,7 +100,14 @@ router.post(
       postedAt: new Date().toISOString(),
     };
 
-    db.jobs.unshift(newJob);
+    const jobSummaryText = `${newJob.title}. ${newJob.description}. Kata kunci: ${newJob.requiredSkills.join(", ")}`;
+    const vectors = await embedTextsWithBackendAi([jobSummaryText]);
+    const enrichedJob = {
+      ...newJob,
+      ...(vectors && vectors[0] ? { jobEmbedding: vectors[0] } : {}),
+    };
+
+    db.jobs.unshift(enrichedJob);
     saveDb(db);
 
     return res.status(201).json({

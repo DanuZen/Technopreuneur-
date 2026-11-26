@@ -1,0 +1,6 @@
+# Sinonim istilah umum untuk normalisasi kata kunci lowongan
+frontend: [front-end, frontend developer, front end]
+backend: [back-end, backend developer, back end]
+fullstack: [full-stack, full stack]
+ui_ux: [ui/ux, user interface, user experience, product design]
+data_analyst: [analis data, data analysis]

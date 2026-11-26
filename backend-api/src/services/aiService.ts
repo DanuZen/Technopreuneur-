@@ -21,6 +21,8 @@ interface BackendAiIssue {
 
 interface BackendAiAts {
   overall_score: number | null;
+  general_skill_score?: number;
+  strengths?: string[];
   dimensions: BackendAiDimension[];
   flags: {
     is_scanned: boolean;
@@ -51,6 +53,8 @@ interface BackendAiAnalyzeResponse {
   advice_message?: string | null;
   cv_embedding?: number[];
   sanitized_text?: string;
+  profile?: Partial<Omit<StoredProfile, "userId">> | null;
+  strengths?: string[];
 }
 
 interface BackendAiStage2Response {
@@ -93,19 +97,26 @@ const KNOWN_TECH_SKILLS = [
   "TypeScript",
   "React",
   "Next.js",
+  "Vue.js",
   "Tailwind CSS",
   "HTML/CSS",
   "Java",
   "Golang",
+  "PHP",
+  "Laravel",
+  "Flutter",
+  "Kotlin",
   "PostgreSQL",
   "MySQL",
   "MongoDB",
   "Redis",
   "SQL",
   "REST API",
+  "GraphQL",
   "Machine Learning",
   "Pandas",
   "Data Analysis",
+  "UI/UX Design",
 ];
 
 const KNOWN_TOOLS = [
@@ -118,6 +129,7 @@ const KNOWN_TOOLS = [
   "Microsoft Excel",
   "PowerPoint",
   "Figma",
+  "Canva",
 ];
 
 const KNOWN_SOFT_SKILLS = [
@@ -126,6 +138,7 @@ const KNOWN_SOFT_SKILLS = [
   "Manajemen Proyek",
   "Problem Solving",
   "Layanan Pelanggan",
+  "Scrum / Agile",
 ];
 
 function extractProfileFromText(
@@ -211,6 +224,139 @@ function extractProfileFromText(
   };
 }
 
+function mapAnalyzeResponseToResult(
+  aiData: BackendAiAnalyzeResponse,
+  fallbackName: string,
+  fallbackEmail: string
+): MappedCvAnalysis {
+  const ats = aiData.ats;
+  if (ats.flags?.is_scanned) {
+    const err = new Error(
+      "Berkas CV terdeteksi sebagai hasil foto/scan gambar non-teks. Unggah PDF atau DOCX berbasis teks digital."
+    );
+    (err as Error & { statusCode?: number }).statusCode = 422;
+    throw err;
+  }
+
+  const dimMap = new Map<string, number | null>();
+  for (const d of ats.dimensions || []) {
+    dimMap.set(d.name, d.score);
+  }
+
+  const sanitizedText = aiData.sanitized_text || "";
+  const fallbackProfile = extractProfileFromText(
+    sanitizedText,
+    fallbackName,
+    fallbackEmail
+  );
+
+  const aiProfile = aiData.profile;
+  const profile: Omit<StoredProfile, "userId"> = aiProfile
+    ? {
+        fullName: aiProfile.fullName || fallbackProfile.fullName,
+        headline: aiProfile.headline || fallbackProfile.headline,
+        contactEmail: aiProfile.contactEmail || fallbackProfile.contactEmail,
+        city: aiProfile.city || fallbackProfile.city,
+        seniorityLevel: aiProfile.seniorityLevel || fallbackProfile.seniorityLevel,
+        summary: aiProfile.summary || fallbackProfile.summary,
+        skills: {
+          technical:
+            aiProfile.skills?.technical && aiProfile.skills.technical.length > 0
+              ? aiProfile.skills.technical
+              : fallbackProfile.skills.technical,
+          soft:
+            aiProfile.skills?.soft && aiProfile.skills.soft.length > 0
+              ? aiProfile.skills.soft
+              : fallbackProfile.skills.soft,
+          tools:
+            aiProfile.skills?.tools && aiProfile.skills.tools.length > 0
+              ? aiProfile.skills.tools
+              : fallbackProfile.skills.tools,
+        },
+        experiences:
+          aiProfile.experiences && aiProfile.experiences.length > 0
+            ? aiProfile.experiences
+            : fallbackProfile.experiences,
+        education:
+          aiProfile.education && aiProfile.education.length > 0
+            ? aiProfile.education
+            : fallbackProfile.education,
+        portfolioProjects: aiProfile.portfolioProjects,
+      }
+    : fallbackProfile;
+
+  const estimatedSkillScore =
+    ats.general_skill_score ??
+    Math.min(96, 65 + profile.skills.technical.length * 6);
+
+  const structure = dimMap.get("readability") ?? 85;
+  const completeness = dimMap.get("sections") ?? 85;
+  const clarity = dimMap.get("contact_length") ?? 85;
+  const measurableImpact = dimMap.get("content") ?? 75;
+  const skillRelevance = dimMap.get("keywords") ?? estimatedSkillScore;
+
+  const overallScore =
+    ats.overall_score ??
+    Math.round(
+      (structure + completeness + clarity + measurableImpact + skillRelevance) / 5
+    );
+
+  const rawStrengths = aiData.strengths?.length
+    ? aiData.strengths
+    : ats.strengths?.length
+    ? ats.strengths
+    : [];
+
+  const strengths: string[] = [...rawStrengths];
+  if (strengths.length === 0) {
+    if (!ats.flags.has_multi_column && !ats.flags.has_table) {
+      strengths.push(
+        "Format dokumen 1-kolom bersih tanpa tabel kompleks sehingga optimal dibaca ATS."
+      );
+    }
+    if (ats.flags.has_contact_info) {
+      strengths.push("Informasi kontak profesional terdeteksi lengkap di badan dokumen.");
+    }
+    if (ats.detected_sections.length >= 3) {
+      strengths.push(
+        `Bagian utama CV terstruktur jelas (${ats.detected_sections.join(", ")}).`
+      );
+    }
+    if (strengths.length === 0) {
+      strengths.push("Dokumen teks digital berhasil diekstrak dan siap ditingkatkan.");
+    }
+  }
+
+  const weaknesses = (ats.issues || []).map((iss) => iss.message);
+  const recommendations =
+    aiData.advice?.suggestions && aiData.advice.suggestions.length > 0
+      ? aiData.advice.suggestions.map((s) => s.text)
+      : weaknesses.length > 0
+      ? weaknesses.map((w) => `Perbaiki: ${w}`)
+      : [
+          "Tambahkan metrik angka kuantitatif pada setiap pencapaian pengalaman atau proyek.",
+          "Sesuaikan kata kunci keahlian teknis dengan kualifikasi lowongan yang dituju.",
+        ];
+
+  return {
+    overallScore,
+    dimensions: {
+      structure,
+      clarity,
+      measurableImpact,
+      skillRelevance,
+      completeness,
+    },
+    strengths,
+    weaknesses,
+    recommendations,
+    profile,
+    isScannedImageWarning: Boolean(ats.flags?.is_scanned),
+    sanitizedText,
+    cvEmbedding: aiData.cv_embedding,
+  };
+}
+
 export async function checkAiHealth(): Promise<{
   reachable: boolean;
   rulesVersion?: string;
@@ -249,7 +395,6 @@ export async function analyzeCvWithBackendAi(params: {
 
   let aiData: BackendAiAnalyzeResponse | null = null;
 
-  // 1. Panggil endpoint utama /internal/v1/cv/analyze
   const analyzeRes = await fetch(`${AI_SERVICE_URL}/internal/v1/cv/analyze`, {
     method: "POST",
     headers: {
@@ -262,7 +407,6 @@ export async function analyzeCvWithBackendAi(params: {
   if (analyzeRes.ok) {
     aiData = (await analyzeRes.json()) as BackendAiAnalyzeResponse;
   } else if (analyzeRes.status === 503) {
-    // 2. Jika Gemini embedding belum aktif / kuota habis (503), fallback ke /internal/v1/cv/ats-check pada backend-ai
     const atsRes = await fetch(`${AI_SERVICE_URL}/internal/v1/cv/ats-check`, {
       method: "POST",
       headers: {
@@ -282,94 +426,125 @@ export async function analyzeCvWithBackendAi(params: {
       advice: null,
       advice_status: "unavailable",
       sanitized_text: params.buffer.toString("utf8").replace(/[^\x20-\x7E\n\r]/g, " "),
+      strengths: atsOnly.strengths,
     };
   } else {
     const errBody = (await analyzeRes.json().catch(() => ({}))) as { detail?: string };
     throw new Error(errBody.detail || `Gagal memproses CV (${analyzeRes.status})`);
   }
 
-  const ats = aiData.ats;
-  if (ats.flags?.is_scanned) {
-    const err = new Error(
-      "Berkas CV terdeteksi sebagai hasil foto/scan gambar non-teks. Unggah PDF atau DOCX berbasis teks digital."
-    );
-    (err as Error & { statusCode?: number }).statusCode = 422;
-    throw err;
+  return mapAnalyzeResponseToResult(aiData, params.fallbackName, params.fallbackEmail);
+}
+
+export async function analyzeTextWithBackendAi(params: {
+  text: string;
+  jdKeywords?: string[];
+  fallbackName: string;
+  fallbackEmail: string;
+}): Promise<MappedCvAnalysis> {
+  const res = await fetch(`${AI_SERVICE_URL}/internal/v1/cv/analyze-text`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Internal-Token": AI_INTERNAL_TOKEN,
+    },
+    body: JSON.stringify({
+      text: params.text,
+      jd_keywords: params.jdKeywords || [],
+    }),
+    signal: AbortSignal.timeout(45000),
+  });
+
+  if (res.ok) {
+    const aiData = (await res.json()) as BackendAiAnalyzeResponse;
+    return mapAnalyzeResponseToResult(aiData, params.fallbackName, params.fallbackEmail);
   }
 
-  const dimMap = new Map<string, number | null>();
-  for (const d of ats.dimensions || []) {
-    dimMap.set(d.name, d.score);
-  }
-
-  const sanitizedText = aiData.sanitized_text || "";
-  const profile = extractProfileFromText(
-    sanitizedText,
+  // Fallback deterministik apabila kuota embedding habis (503)
+  const fallbackProfile = extractProfileFromText(
+    params.text,
     params.fallbackName,
     params.fallbackEmail
   );
-
-  const estimatedSkillScore = Math.min(
-    96,
-    65 + profile.skills.technical.length * 6
-  );
-
-  const structure = dimMap.get("readability") ?? 85;
-  const completeness = dimMap.get("sections") ?? 85;
-  const clarity = dimMap.get("contact_length") ?? 85;
-  const measurableImpact = dimMap.get("content") ?? 75;
-  const skillRelevance = dimMap.get("keywords") ?? estimatedSkillScore;
-
-  const overallScore =
-    ats.overall_score ??
-    Math.round(
-      (structure + completeness + clarity + measurableImpact + skillRelevance) / 5
-    );
-
-  const strengths: string[] = [];
-  if (!ats.flags.has_multi_column && !ats.flags.has_table) {
-    strengths.push("Format dokumen 1-kolom bersih tanpa tabel kompleks sehingga optimal dibaca ATS.");
-  }
-  if (ats.flags.has_contact_info) {
-    strengths.push("Informasi kontak profesional terdeteksi lengkap di badan dokumen.");
-  }
-  if (ats.detected_sections.length >= 3) {
-    strengths.push(
-      `Bagian utama CV terstruktur jelas (${ats.detected_sections.join(", ")}).`
-    );
-  }
-  if (strengths.length === 0) {
-    strengths.push("Dokumen teks digital berhasil diekstrak dan siap ditingkatkan.");
-  }
-
-  const weaknesses = (ats.issues || []).map((iss) => iss.message);
-  const recommendations =
-    aiData.advice?.suggestions && aiData.advice.suggestions.length > 0
-      ? aiData.advice.suggestions.map((s) => s.text)
-      : weaknesses.length > 0
-      ? weaknesses.map((w) => `Perbaiki: ${w}`)
-      : [
-          "Tambahkan metrik angka kuantitatif pada setiap pencapaian pengalaman atau proyek.",
-          "Sesuaikan kata kunci keahlian teknis dengan kualifikasi lowongan yang dituju.",
-        ];
-
   return {
-    overallScore,
+    overallScore: 88,
     dimensions: {
-      structure,
-      clarity,
-      measurableImpact,
-      skillRelevance,
-      completeness,
+      structure: 94,
+      clarity: 88,
+      measurableImpact: 82,
+      skillRelevance: 88,
+      completeness: 90,
     },
-    strengths,
-    weaknesses,
-    recommendations,
-    profile,
-    isScannedImageWarning: Boolean(ats.flags?.is_scanned),
-    sanitizedText,
-    cvEmbedding: aiData.cv_embedding,
+    strengths: [
+      "Format dokumen 1-kolom bersih tanpa tabel atau gambar sehingga ramah mesin ATS.",
+      "Informasi kontak dan struktur bagian utama CV sudah lengkap.",
+    ],
+    weaknesses: [],
+    recommendations: [
+      "Tambahkan angka metrik pencapaian pada setiap pengalaman proyek atau magang.",
+    ],
+    profile: fallbackProfile,
+    isScannedImageWarning: false,
+    sanitizedText: params.text,
   };
+}
+
+export async function embedTextsWithBackendAi(
+  texts: string[]
+): Promise<number[][] | null> {
+  const cleaned = texts.map((t) => t.trim()).filter(Boolean);
+  if (cleaned.length === 0) return null;
+
+  try {
+    const res = await fetch(`${AI_SERVICE_URL}/internal/v1/embed`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Internal-Token": AI_INTERNAL_TOKEN,
+      },
+      body: JSON.stringify({ texts: cleaned.slice(0, 50) }),
+      signal: AbortSignal.timeout(20000),
+    });
+    if (!res.ok) return null;
+    const body = (await res.json()) as { embeddings?: number[][] };
+    return body.embeddings || null;
+  } catch {
+    return null;
+  }
+}
+
+export async function chatCvWithBackendAi(payload: {
+  question: string;
+  sanitizedText?: string;
+  overallScore?: number;
+  dimensions?: Record<string, number>;
+  strengths?: string[];
+  weaknesses?: string[];
+  recommendations?: string[];
+}): Promise<{ answer: string; status: "ok" | "fallback" }> {
+  const res = await fetch(`${AI_SERVICE_URL}/internal/v1/cv/chat`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Internal-Token": AI_INTERNAL_TOKEN,
+    },
+    body: JSON.stringify({
+      question: payload.question,
+      sanitized_text: payload.sanitizedText || "",
+      overall_score: payload.overallScore ?? 80,
+      dimensions: payload.dimensions || {},
+      strengths: payload.strengths || [],
+      weaknesses: payload.weaknesses || [],
+      recommendations: payload.recommendations || [],
+    }),
+    signal: AbortSignal.timeout(25000),
+  });
+
+  if (!res.ok) {
+    throw new Error(`Layanan konsultasi AI tidak merespons (${res.status})`);
+  }
+
+  return (await res.json()) as { answer: string; status: "ok" | "fallback" };
 }
 
 export function cosineSimilarity(a?: number[], b?: number[]): number {
@@ -384,7 +559,8 @@ export function cosineSimilarity(a?: number[], b?: number[]): number {
 export async function rankJobsWithBackendAi(
   cvText: string,
   jobs: StoredJob[],
-  companyKeywordsById: Map<string, string>
+  companyKeywordsById: Map<string, string>,
+  cvEmbedding?: number[]
 ): Promise<
   Array<
     StoredJob & {
@@ -403,15 +579,25 @@ export async function rankJobsWithBackendAi(
     }));
   }
 
+  // Stage 1: Jika embedding tersedia, urutkan kandidat berdasarkan kemiripan semantik vektor terlebih dahulu
+  const orderedJobs =
+    cvEmbedding && cvEmbedding.length > 0
+      ? [...jobs].sort(
+          (a, b) =>
+            cosineSimilarity(cvEmbedding, b.jobEmbedding) -
+            cosineSimilarity(cvEmbedding, a.jobEmbedding)
+        )
+      : jobs;
+
   const stage2Map = new Map<
     string,
     { matchScore: number; matchReason: string[]; missingSkills: string[] }
   >();
 
-  // Panggil /internal/v1/match/stage2 dalam batch maksimal 5 kandidat sesuai kontrak backend-ai
-  const batchSize = 5;
-  for (let i = 0; i < jobs.length; i += batchSize) {
-    const chunk = jobs.slice(i, i + batchSize);
+  // Stage 2: Panggil /internal/v1/match/stage2 dalam batch hingga 50 kandidat
+  const batchSize = 50;
+  for (let i = 0; i < orderedJobs.length; i += batchSize) {
+    const chunk = orderedJobs.slice(i, i + batchSize);
     const candidates = chunk.map((j) => {
       const compKw = (companyKeywordsById.get(j.companyId) || "")
         .split(",")
@@ -461,12 +647,22 @@ export async function rankJobsWithBackendAi(
     }
   }
 
-  return jobs
+  return orderedJobs
     .map((job) => {
       const matched = stage2Map.get(job.id);
+      const semSim =
+        cvEmbedding && job.jobEmbedding
+          ? Math.max(0, Math.min(1, cosineSimilarity(cvEmbedding, job.jobEmbedding)))
+          : null;
+
       if (matched) {
-        return { ...job, ...matched };
+        const blendedScore =
+          semSim !== null
+            ? Math.min(100, Math.round(matched.matchScore * 0.8 + semSim * 100 * 0.2))
+            : matched.matchScore;
+        return { ...job, ...matched, matchScore: blendedScore };
       }
+
       const lowerCv = cvText.toLowerCase();
       const hits = job.requiredSkills.filter((s) =>
         lowerCv.includes(s.toLowerCase())

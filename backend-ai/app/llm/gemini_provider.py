@@ -3,7 +3,7 @@ import time
 
 from google import genai
 from google.genai import types
-from google.genai.errors import ServerError
+from google.genai.errors import ClientError, ServerError
 
 from app.config import GEMINI_API_KEY, GEMINI_MODEL, LLM_ALLOW_MOCK, LLM_TIMEOUT_SECONDS
 from app.llm.fallback import FallbackProvider
@@ -11,6 +11,7 @@ from app.llm.fallback import FallbackProvider
 logger = logging.getLogger(__name__)
 
 MAX_ATTEMPTS = 3
+FALLBACK_GEMINI_MODELS = ["gemini-2.5-flash", "gemini-2.0-flash"]
 
 
 class GeminiProvider:
@@ -26,30 +27,47 @@ class GeminiProvider:
         )
         self._model = model
 
+    def _call_model(self, model_name: str, system_prompt: str, user_prompt: str) -> str:
+        response = self._client.models.generate_content(
+            model=model_name,
+            contents=user_prompt,
+            config=types.GenerateContentConfig(
+                system_instruction=system_prompt,
+                response_mime_type="application/json",
+                temperature=0.2,
+            ),
+        )
+        return response.text or ""
+
     def generate_json(self, system_prompt: str, user_prompt: str) -> str:
-        last_error = None
-        for attempt in range(MAX_ATTEMPTS):
-            try:
-                response = self._client.models.generate_content(
-                    model=self._model,
-                    contents=user_prompt,
-                    config=types.GenerateContentConfig(
-                        system_instruction=system_prompt,
-                        response_mime_type="application/json",
-                        temperature=0.2,
-                    ),
-                )
-                return response.text or ""
-            except ServerError as exc:
-                # 5xx bersifat sementara: coba lagi. Pesan dari server tidak dicatat, hanya kodenya.
-                last_error = exc
-                logger.warning(
-                    "Gemini sibuk (percobaan %d/%d), kode=%s",
-                    attempt + 1, MAX_ATTEMPTS, getattr(exc, "code", "?"),
-                )
-                if attempt < MAX_ATTEMPTS - 1:
-                    time.sleep(10 * (attempt + 1))  # 10 lalu 20 detik # 3 lalu 6 detik
-        raise last_error
+        models_to_try = [self._model] + [
+            m for m in FALLBACK_GEMINI_MODELS if m != self._model
+        ]
+        last_error: Exception | None = None
+
+        for model_name in models_to_try:
+            for attempt in range(MAX_ATTEMPTS):
+                try:
+                    return self._call_model(model_name, system_prompt, user_prompt)
+                except ClientError as exc:
+                    code = getattr(exc, "code", None)
+                    # Jika nama model belum tersedia (404), otomatis coba model fallback resmi
+                    if code == 404:
+                        last_error = exc
+                        logger.warning("Model %s tidak ditemukan (404), mencoba fallback.", model_name)
+                        break
+                    raise
+                except ServerError as exc:
+                    last_error = exc
+                    logger.warning(
+                        "Gemini sibuk (percobaan %d/%d), kode=%s",
+                        attempt + 1, MAX_ATTEMPTS, getattr(exc, "code", "?"),
+                    )
+                    if attempt < MAX_ATTEMPTS - 1:
+                        time.sleep(2 * (attempt + 1))
+        if last_error:
+            raise last_error
+        raise RuntimeError("Tidak ada model Gemini yang berhasil dipanggil")
 
 
 def get_provider() -> FallbackProvider:

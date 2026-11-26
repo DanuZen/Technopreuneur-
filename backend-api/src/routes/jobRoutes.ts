@@ -7,7 +7,10 @@ import {
   AuthUserPayload,
   requireRole,
 } from "../middlewares/auth";
-import { rankJobsWithBackendAi } from "../services/aiService";
+import {
+  embedTextsWithBackendAi,
+  rankJobsWithBackendAi,
+} from "../services/aiService";
 
 const router = Router();
 
@@ -60,7 +63,8 @@ router.get("/recommendations", async (req: Request, res: Response) => {
   const ranked = await rankJobsWithBackendAi(
     cvText,
     activeJobs,
-    companyKeywordsById
+    companyKeywordsById,
+    latestCv?.cvEmbedding
   );
 
   return res.json(ranked);
@@ -110,7 +114,8 @@ router.get("/", async (req: Request, res: Response) => {
     const ranked = await rankJobsWithBackendAi(
       latestCv.cvTextExcerpt,
       filtered,
-      companyKeywordsById
+      companyKeywordsById,
+      latestCv.cvEmbedding
     );
     return res.json(ranked);
   }
@@ -123,7 +128,7 @@ router.post(
   "/",
   authenticateJWT,
   requireRole(["employer"]),
-  (req: AuthenticatedRequest, res: Response) => {
+  async (req: AuthenticatedRequest, res: Response) => {
     const db = getDb();
     const company = db.companies.find((c) => c.ownerUserId === req.user?.userId);
     if (!company) {
@@ -170,10 +175,17 @@ router.post(
       postedAt: new Date().toISOString(),
     };
 
-    db.jobs.unshift(newJob);
+    const jobSummaryText = `${newJob.title}. ${newJob.description}. Keahlian: ${newJob.requiredSkills.join(", ")}`;
+    const vectors = await embedTextsWithBackendAi([jobSummaryText]);
+    const enrichedJob = {
+      ...newJob,
+      ...(vectors && vectors[0] ? { jobEmbedding: vectors[0] } : {}),
+    };
+
+    db.jobs.unshift(enrichedJob);
     saveDb(db);
 
-    return res.status(201).json(newJob);
+    return res.status(201).json(enrichedJob);
   }
 );
 

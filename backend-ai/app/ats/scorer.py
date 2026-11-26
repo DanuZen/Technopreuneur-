@@ -1,5 +1,9 @@
 import re
+from functools import lru_cache
+from pathlib import Path
 from typing import Optional
+
+import yaml
 
 from app.ats.checks import run_document_checks
 from app.ats.schema import (
@@ -11,6 +15,7 @@ from app.ats.schema import (
     Severity,
 )
 from app.ingestion.models import ExtractedDocument
+from app.matching.keywords import extract_skills
 
 WEIGHTS: dict[DimensionName, float] = {
     DimensionName.READABILITY: 0.25,
@@ -26,14 +31,26 @@ PENALTY: dict[Severity, int] = {
     Severity.INFO: 5,
 }
 
-# Kamus heading dwibahasa. Nanti dipindahkan ke resources/heading_aliases.yaml.
-REQUIRED_SECTIONS: dict[str, list[str]] = {
+HEADING_ALIASES_PATH = Path(__file__).resolve().parents[1] / "resources" / "heading_aliases.yaml"
+
+DEFAULT_REQUIRED_SECTIONS: dict[str, list[str]] = {
     "experience": ["pengalaman kerja", "riwayat pekerjaan", "pengalaman", "work experience", "experience"],
     "education": ["pendidikan", "riwayat pendidikan", "education"],
     "skills": ["keterampilan", "kemampuan", "keahlian", "skills"],
 }
 
-BULLET_RE = re.compile(r"^\s*[•\-\*]\s+")
+
+@lru_cache(maxsize=1)
+def _load_required_sections() -> dict[str, list[str]]:
+    if HEADING_ALIASES_PATH.exists():
+        with HEADING_ALIASES_PATH.open(encoding="utf-8") as f:
+            loaded = yaml.safe_load(f) or {}
+        if isinstance(loaded, dict) and loaded:
+            return {k: [str(v).lower() for v in vals] for k, vals in loaded.items()}
+    return DEFAULT_REQUIRED_SECTIONS
+
+
+BULLET_RE = re.compile(r"^\s*(?:[•\-\*▪◦‣–—]|\d+[.)])\s+")
 EMAIL_RE = re.compile(r"[\w.+-]+@[\w-]+\.[\w.]+")
 PHONE_RE = re.compile(r"(\+62|62|0)[\s-]?\d{2,4}[\s-]?\d{3,4}[\s-]?\d{3,4}")
 
@@ -44,22 +61,23 @@ def _penalty_score(issues: list[ATSIssue], dimension: DimensionName) -> int:
 
 
 def _detect_sections(lines: list[str]) -> set[str]:
+    required = _load_required_sections()
     found: set[str] = set()
     for line in lines:
-        # Hapus isi kurung, misalnya "Keahlian (SKILLS)" menjadi "keahlian"
         norm = re.sub(r"\([^)]*\)", "", line).strip().rstrip(":").strip().lower()
-        if not norm or len(norm) > 40:  # heading biasanya pendek
+        if not norm or len(norm) > 40:
             continue
-        for section, aliases in REQUIRED_SECTIONS.items():
+        for section, aliases in required.items():
             if any(norm.startswith(alias) for alias in aliases):
                 found.add(section)
     return found
 
 
 def _sections_dimension(lines: list[str]) -> tuple[int, list[str], list[ATSIssue]]:
+    required = _load_required_sections()
     found = _detect_sections(lines)
-    missing = set(REQUIRED_SECTIONS) - found
-    score = round(100 * (len(REQUIRED_SECTIONS) - len(missing)) / len(REQUIRED_SECTIONS))
+    missing = set(required) - found
+    score = round(100 * (len(required) - len(missing)) / len(required))
 
     issues = [
         ATSIssue(
@@ -67,7 +85,7 @@ def _sections_dimension(lines: list[str]) -> tuple[int, list[str], list[ATSIssue
             severity=Severity.WARNING,
             dimension=DimensionName.SECTIONS,
             message=f"Section {name} tidak terdeteksi. Gunakan heading standar, misalnya "
-                    f"{REQUIRED_SECTIONS[name][0].title()}.",
+                    f"{required[name][0].title()}.",
         )
         for name in sorted(missing)
     ]
@@ -104,7 +122,14 @@ def _keyword_dimension(text: str, jd_keywords: list[str]) -> tuple[Optional[int]
         return None, []
 
     keywords = [k.strip().lower() for k in jd_keywords if k.strip()]
-    matched = [k for k in keywords if re.search(rf"\b{re.escape(k)}\b", text, re.IGNORECASE)]
+    if not keywords:
+        return None, []
+
+    matched = [
+        k
+        for k in keywords
+        if re.search(rf"(?<![a-z0-9+#]){re.escape(k)}(?![a-z0-9+#])", text, re.IGNORECASE)
+    ]
     score = round(100 * len(matched) / len(keywords))
 
     issues: list[ATSIssue] = []
@@ -119,6 +144,42 @@ def _keyword_dimension(text: str, jd_keywords: list[str]) -> tuple[Optional[int]
     return score, issues
 
 
+def _build_strengths(
+    readability: int,
+    sections_score: int,
+    content_score: int,
+    contact_score: int,
+    detected_skill_count: int,
+    flags: DocumentFlags,
+) -> list[str]:
+    strengths: list[str] = []
+    if readability >= 85 and not flags.has_multi_column and not flags.has_table:
+        strengths.append(
+            "Tata letak dokumen 1-kolom bersih tanpa tabel rumit sehingga optimal dibaca mesin ATS."
+        )
+    if sections_score == 100:
+        strengths.append(
+            "Seluruh bagian utama CV (Pendidikan, Pengalaman Kerja, dan Keahlian) terstruktur lengkap."
+        )
+    if content_score >= 70:
+        strengths.append(
+            "Poin pengalaman kerja telah mencantumkan metrik kuantitatif dan capaian terukur."
+        )
+    if contact_score >= 85 and flags.has_contact_info:
+        strengths.append(
+            "Informasi kontak profesional tercantum jelas di badan utama dokumen."
+        )
+    if detected_skill_count >= 3:
+        strengths.append(
+            f"Terdeteksi {detected_skill_count} kata kunci keahlian yang relevan dengan industri."
+        )
+    if not strengths and not flags.is_scanned and not flags.is_empty:
+        strengths.append(
+            "Dokumen berbasis teks digital berhasil diekstrak dan siap ditingkatkan."
+        )
+    return strengths
+
+
 def evaluate_cv(doc: ExtractedDocument, jd_keywords: Optional[list[str]] = None) -> ATSCheckResult:
     text = doc.plain_text
     lines = text.splitlines()
@@ -130,6 +191,9 @@ def evaluate_cv(doc: ExtractedDocument, jd_keywords: Optional[list[str]] = None)
     content_score, content_issues = _content_dimension(lines)
     keyword_score, keyword_issues = _keyword_dimension(text, jd_keywords or [])
     contact_score = _penalty_score(issues, DimensionName.CONTACT_LENGTH)
+
+    detected_skills = extract_skills(text)
+    general_skill_score = min(98, 60 + len(detected_skills) * 7) if detected_skills else 55
 
     issues = issues + section_issues + content_issues + keyword_issues
 
@@ -162,10 +226,21 @@ def evaluate_cv(doc: ExtractedDocument, jd_keywords: Optional[list[str]] = None)
         char_count=doc.char_count,
     )
 
+    strengths = _build_strengths(
+        readability=readability,
+        sections_score=sections_score,
+        content_score=content_score,
+        contact_score=contact_score,
+        detected_skill_count=len(detected_skills),
+        flags=flags,
+    )
+
     return ATSCheckResult(
         overall_score=overall,
+        general_skill_score=general_skill_score,
         dimensions=dimensions,
         flags=flags,
         issues=issues,
+        strengths=strengths,
         detected_sections=detected,
     )

@@ -11,7 +11,7 @@ router = APIRouter(
     dependencies=[Depends(require_internal_token)],
 )
 
-MAX_CANDIDATES = 5
+MAX_CANDIDATES = 50
 MAX_CV_CHARS = 30000
 MAX_DESCRIPTION_CHARS = 20000
 
@@ -43,7 +43,7 @@ def match_stage2(payload: Stage2Request) -> Stage2Response:
     results = []
     for cand in payload.candidates:
         job_text = " ".join([cand.title, cand.description, " ".join(cand.skills)])
-        m = match_cv_to_job(payload.sanitized_text, job_text)
+        m = match_cv_to_job(payload.sanitized_text, job_text, explicit_skills=cand.skills)
         reasons = build_reasons(payload.sanitized_text, m.matched)
         results.append(Stage2Result(
             job_id=cand.job_id,

@@ -314,6 +314,22 @@ class ApiClient {
     }
   }
 
+  // Interactive CV Evaluation Chat (Connected to backend-ai /internal/v1/cv/chat)
+  async chatCV(payload: {
+    cvId: string;
+    question: string;
+    overallScore: number;
+    dimensions: CVAnalysisResult["dimensions"];
+    strengths: string[];
+    weaknesses: string[];
+    recommendations: string[];
+  }): Promise<{ answer: string; status?: string }> {
+    return this.request<{ answer: string; status?: string }>("/cvs/chat", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+  }
+
   // Jobs & Recommendations
   async getRecommendedJobs(): Promise<JobItem[]> {
     return this.request<JobItem[]>("/jobs/recommendations");

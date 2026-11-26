@@ -23,8 +23,8 @@ def _has_numbering(p) -> bool:
         style = style.base_style
 
     # Cadangan: nama style daftar standar
-    name = p.style.name if p.style is not None else ""
-    return name in {"List Bullet", "List Bullet 2", "List Bullet 3", "List Number"}
+    name = (p.style.name if p.style is not None else "") or ""
+    return "list" in name.lower()
 
 
 def _paragraph_text(p) -> str:

@@ -9,6 +9,7 @@ import {
   User as UserIcon,
 } from "lucide-react";
 import { CVAnalysisResult } from "@/types";
+import { api } from "@/lib/api";
 
 interface ChatMessage {
   id: string;
@@ -119,7 +120,7 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
-  const handleSend = (textToSend?: string) => {
+  const handleSend = async (textToSend?: string) => {
     const trimmed = (textToSend ?? input).trim();
     if (!trimmed || isTyping) return;
 
@@ -135,18 +136,31 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
     if (!textToSend) setInput("");
     setIsTyping(true);
 
-    setTimeout(() => {
-      const replyText = buildContextualAnswer(trimmed, analysis);
-      const aiMsg: ChatMessage = {
-        id: `ai-${Date.now()}`,
-        sender: "assistant",
-        type: "text",
-        text: replyText,
-        timestamp: "Sekarang",
-      };
-      setMessages((prev) => [...prev, aiMsg]);
-      setIsTyping(false);
-    }, 350);
+    let replyText = "";
+    try {
+      const res = await api.chatCV({
+        cvId: analysis.cvId,
+        question: trimmed,
+        overallScore: analysis.overallScore,
+        dimensions: analysis.dimensions,
+        strengths: analysis.strengths,
+        weaknesses: analysis.weaknesses,
+        recommendations: analysis.recommendations,
+      });
+      replyText = res.answer || buildContextualAnswer(trimmed, analysis);
+    } catch {
+      replyText = buildContextualAnswer(trimmed, analysis);
+    }
+
+    const aiMsg: ChatMessage = {
+      id: `ai-${Date.now()}`,
+      sender: "assistant",
+      type: "text",
+      text: replyText.replace(/\*\*/g, ""),
+      timestamp: "Sekarang",
+    };
+    setMessages((prev) => [...prev, aiMsg]);
+    setIsTyping(false);
   };
 
   const dimensionList = [

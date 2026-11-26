@@ -29,3 +29,5 @@ class AnalyzeResponse(BaseModel):
     advice_message: str | None = None
     cv_embedding: list[float] = Field(min_length=1536, max_length=1536)
     sanitized_text: str
+    profile: dict | None = None
+    strengths: list[str] = Field(default_factory=list)

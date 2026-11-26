@@ -2,21 +2,17 @@ import tempfile
 from pathlib import Path
 from typing import Optional
 
-from fastapi import APIRouter, File, Form, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
+from fastapi.concurrency import run_in_threadpool
+from pydantic import BaseModel
 
+from app.advice.service import CVAdvice
+from app.api.security import require_internal_token
 from app.ats.schema import ATSCheckResult
-from app.pipeline import analyze_document
 from app.config import MAX_FILE_SIZE_BYTES, SUPPORTED_EXTENSIONS
 from app.ingestion.dispatcher import UnsupportedFileError, extract
-
-from pydantic import BaseModel
-from app.advice.service import CVAdvice
 from app.llm.gemini_provider import get_provider
-from app.pipeline import build_advice
-
-from app.api.security import require_internal_token
-
-from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
+from app.pipeline import analyze_document, build_advice
 
 router = APIRouter(
     prefix="/internal/v1/cv",
@@ -61,7 +57,9 @@ async def cv_advice(
     finally:
         tmp_path.unlink(missing_ok=True)
 
-    ats, advice, error = build_advice(doc, get_provider(), jd_keywords=keywords)
+    ats, advice, error = await run_in_threadpool(
+        build_advice, doc, get_provider(), keywords
+    )
     return AdviceResponse(ats=ats, advice=advice, advice_error=error)
 
 @router.post("/ats-check", response_model=ATSCheckResult)

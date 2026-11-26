@@ -10,7 +10,11 @@ import {
   UPLOADS_DIR,
 } from "../store/dataStore";
 import { AuthUserPayload, AuthenticatedRequest, authenticateJWT } from "../middlewares/auth";
-import { analyzeCvWithBackendAi } from "../services/aiService";
+import {
+  analyzeCvWithBackendAi,
+  analyzeTextWithBackendAi,
+  chatCvWithBackendAi,
+} from "../services/aiService";
 import { buildDocxFromLines } from "../utils/docxBuilder";
 
 const router = Router();
@@ -187,8 +191,14 @@ router.post(
           data.institution || "Perguruan Tinggi"
         } (${data.graduationYear || "2026"})`,
         "Pengalaman Kerja",
-        data.experienceSummary ||
-          "Mengembangkan proyek kolaboratif dengan peningkatan efisiensi terukur sebesar 30%.",
+        ...(String(
+          data.experienceSummary ||
+            "Mengembangkan proyek kolaboratif dengan peningkatan efisiensi terukur sebesar 30%."
+        )
+          .split(/\r?\n/)
+          .map((l) => l.trim())
+          .filter(Boolean)
+          .map((l) => (/^[•\-\*]/.test(l) ? l : `- ${l}`))),
         "Keahlian",
         `Keahlian Teknis: ${data.technicalSkills || "Analisis Data, Komunikasi"}`,
         `Soft Skills: ${data.softSkills || "Komunikasi, Kepemimpinan"}`,
@@ -199,16 +209,6 @@ router.post(
       const savedPath = path.join(UPLOADS_DIR, `${cvId}.docx`);
       fs.writeFileSync(savedPath, docxBuffer);
 
-      const mapped = await analyzeCvWithBackendAi({
-        buffer: docxBuffer,
-        fileName: `${(data.fullName || "CV-Onboarding").replace(/\s+/g, "-")}.docx`,
-        mimeType:
-          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        jdKeywords: data.technicalSkills || undefined,
-        fallbackName: data.fullName || dbUser?.name || "Kandidat Pasbana",
-        fallbackEmail: data.email || dbUser?.email || "kandidat@pasbana.ai",
-      });
-
       const techSkills = String(data.technicalSkills || "")
         .split(",")
         .map((s) => s.trim())
@@ -217,6 +217,13 @@ router.post(
         .split(",")
         .map((s) => s.trim())
         .filter(Boolean);
+
+      const mapped = await analyzeTextWithBackendAi({
+        text: lines.join("\n"),
+        jdKeywords: techSkills,
+        fallbackName: data.fullName || dbUser?.name || "Kandidat Pasbana",
+        fallbackEmail: data.email || dbUser?.email || "kandidat@pasbana.ai",
+      });
 
       const structuredProfile = {
         userId,
@@ -317,6 +324,57 @@ router.post(
     }
   }
 );
+
+// POST /api/cvs/chat (Konsultasi Chatbot Evaluasi CV terhubung ke backend-ai /internal/v1/cv/chat)
+router.post("/chat", async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const {
+      cvId,
+      question,
+      overallScore,
+      dimensions,
+      strengths,
+      weaknesses,
+      recommendations,
+    } = req.body || {};
+
+    if (!question || !String(question).trim()) {
+      return res.status(400).json({ message: "Pertanyaan konsultasi wajib diisi." });
+    }
+
+    const db = getDb();
+    const optUser = resolveOptionalUser(req);
+    const storedCv = cvId
+      ? db.cvs.find((c) => c.cvId === cvId)
+      : optUser
+      ? db.cvs.find((c) => c.userId === optUser.userId)
+      : db.cvs[0];
+
+    const chatRes = await chatCvWithBackendAi({
+      question: String(question).trim(),
+      sanitizedText: storedCv?.cvTextExcerpt || "",
+      overallScore:
+        typeof overallScore === "number"
+          ? overallScore
+          : storedCv?.overallScore ?? 80,
+      dimensions: dimensions || storedCv?.dimensions || {},
+      strengths: Array.isArray(strengths) ? strengths : storedCv?.strengths || [],
+      weaknesses: Array.isArray(weaknesses) ? weaknesses : storedCv?.weaknesses || [],
+      recommendations: Array.isArray(recommendations)
+        ? recommendations
+        : storedCv?.recommendations || [],
+    });
+
+    return res.json(chatRes);
+  } catch (err) {
+    return res.status(503).json({
+      message:
+        err instanceof Error
+          ? err.message
+          : "Layanan konsultasi AI sedang tidak tersedia.",
+    });
+  }
+});
 
 // GET /api/cvs (Daftar riwayat CV milik pengguna)
 router.get("/", authenticateJWT, (req: AuthenticatedRequest, res: Response) => {

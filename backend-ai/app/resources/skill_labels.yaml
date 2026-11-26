@@ -9,15 +9,25 @@ javascript: JavaScript
 typescript: TypeScript
 react: React
 nextjs: Next.js
+vue: Vue.js
 tailwind: Tailwind CSS
 html_css: HTML/CSS
+php: PHP
+laravel: Laravel
 java: Java
+kotlin: Kotlin
+swift: Swift
+flutter: Flutter
 "c#": C#
 golang: Go
+graphql: GraphQL
 postgresql: PostgreSQL
 mysql: MySQL
 mongodb: MongoDB
 redis: Redis
+prisma: Prisma
+supabase: Supabase
+firebase: Firebase
 sql: SQL
 docker: Docker
 kubernetes: Kubernetes
@@ -26,6 +36,12 @@ github: GitHub
 linux: Linux
 aws: AWS
 rest_api: REST API
+jest: Jest
+cypress: Cypress
+figma: Figma
+ui_ux: UI/UX Design
+canva: Canva
+scrum: Scrum & Agile
 machine_learning: Machine Learning
 mlflow: MLflow
 pandas: Pandas
@@ -42,6 +58,9 @@ perpajakan: Perpajakan
 audit: Audit
 rekrutmen: Rekrutmen
 pemasaran: Pemasaran
+digital_marketing: Digital Marketing
+seo: SEO
+copywriting: Copywriting
 penjualan: Penjualan
 layanan_pelanggan: Layanan Pelanggan
 administrasi: Administrasi

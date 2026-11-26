@@ -26,8 +26,6 @@ class Suggestion(BaseModel):
             return None
         return value.strip()
 
-def _norm(text: str) -> str:
-    return re.sub(r"\s+", " ", text.lower()).strip()
 
 class CVAdvice(BaseModel):
     summary: str = Field(min_length=5, max_length=500)

@@ -75,10 +75,28 @@ def test_job_without_known_skills_scores_zero_with_no_reasons():
     assert result["reasons"] == []
 
 
-def test_more_than_five_candidates_rejected():
-    candidates = [_cand(str(i), "Backend", "Docker") for i in range(6)]
+def test_more_than_max_candidates_rejected():
+    candidates = [_cand(str(i), "Backend", "Docker") for i in range(51)]
     r = client.post(ENDPOINT, json={"sanitized_text": CV, "candidates": candidates}, headers=HEADERS)
     assert r.status_code == 422
+
+
+def test_ten_candidates_accepted():
+    candidates = [_cand(str(i), "Backend", "Docker") for i in range(10)]
+    r = client.post(ENDPOINT, json={"sanitized_text": CV, "candidates": candidates}, headers=HEADERS)
+    assert r.status_code == 200
+    assert len(r.json()["results"]) == 10
+
+
+def test_custom_company_keywords_outside_yaml_are_matched():
+    cv_custom = "Mengintegrasikan autentikasi NextAuth dan Midtrans Payment Gateway pada aplikasi web."
+    job = _cand("99", "Fullstack Engineer", "Membangun fitur pembayaran.", skills=["NextAuth", "Midtrans Payment Gateway", "RabbitMQ"])
+    r = client.post(ENDPOINT, json={"sanitized_text": cv_custom, "candidates": [job]}, headers=HEADERS)
+    assert r.status_code == 200
+    res = r.json()["results"][0]
+    assert res["match_score"] == 67
+    assert res["verified"] is True
+    assert "rabbitmq" in res["missing_skills"]
 
 
 def test_empty_candidates_rejected():

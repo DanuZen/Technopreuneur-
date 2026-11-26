@@ -55,9 +55,11 @@ class SanitizationSummary(BaseModel):
 
 class ATSCheckResult(BaseModel):
     overall_score: Optional[int] = Field(default=None, ge=0, le=100)
+    general_skill_score: int = Field(default=75, ge=0, le=100)
     dimensions: list[ATSDimension]
     flags: DocumentFlags
     issues: list[ATSIssue] = Field(default_factory=list)
+    strengths: list[str] = Field(default_factory=list)
     detected_sections: list[str] = Field(default_factory=list)
     is_estimate: Literal[True] = True   # selalu True: ini heuristik, bukan jaminan lolos ATS
     rules_version: str = RULES_VERSION
