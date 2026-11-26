@@ -12,6 +12,8 @@ import {
   Sparkles,
   CheckCircle2,
   Clock,
+  Eye,
+  X,
 } from "lucide-react";
 import { api } from "@/lib/api";
 import { CVAnalysisResult, JobItem, MyApplicationItem } from "@/types";
@@ -75,6 +77,7 @@ export default function LowonganCocokPage() {
   const [applications, setApplications] = useState<MyApplicationItem[]>([]);
   const [savedIds, setSavedIds] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState<"all" | "saved" | "applied">("all");
+  const [selectedJob, setSelectedJob] = useState<JobItem | null>(null);
 
   useEffect(() => {
     const current = api.getCurrentAnalysis();
@@ -307,30 +310,42 @@ export default function LowonganCocokPage() {
             return (
               <div
                 key={job.id}
-                className="p-3.5 sm:p-5 bg-white border border-slate-200 rounded-2xl flex flex-col justify-between space-y-2.5 sm:space-y-4"
+                role="button"
+                tabIndex={0}
+                onClick={() => setSelectedJob(job)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setSelectedJob(job);
+                  }
+                }}
+                className="p-3.5 sm:p-4 bg-white hover:border-[#0f2c56] border border-slate-200 rounded-2xl flex flex-col justify-between gap-3 transition-colors cursor-pointer group"
               >
-                <div className="space-y-2 sm:space-y-3">
+                <div className="space-y-2">
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-1.5">
                       <span
-                        className={`text-[11px] font-mono px-2.5 py-1 rounded-full text-white font-bold ${
+                        className={`text-[10px] sm:text-[11px] font-mono px-2.5 py-0.5 rounded-full text-white font-bold ${
                           matchPercent !== null ? "bg-[#ce2731]" : "bg-[#0f2c56]"
                         }`}
                       >
                         {matchPercent !== null ? `${matchPercent}% Cocok` : "Terbuka"}
                       </span>
-                      <span className="text-[10px] uppercase font-mono px-2 py-1 rounded-md bg-slate-100 text-[#0f2c56] font-bold">
+                      <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded-md bg-slate-100 text-[#0f2c56] font-bold">
                         {job.source === "jooble" ? "Jooble" : "Internal"}
                       </span>
                     </div>
 
                     <div className="flex items-center gap-1.5">
-                      <span className="text-[10px] uppercase font-mono px-2 py-1 rounded-md bg-slate-100 text-[#0f2c56] font-bold">
+                      <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded-md bg-slate-100 text-[#0f2c56] font-bold">
                         {job.workType}
                       </span>
                       <button
                         type="button"
-                        onClick={() => handleToggleSave(job.id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleToggleSave(job.id);
+                        }}
                         aria-label={isSaved ? "Hapus dari tersimpan" : "Simpan lowongan"}
                         className={`p-1.5 rounded-lg border transition-colors cursor-pointer ${
                           isSaved
@@ -344,114 +359,320 @@ export default function LowonganCocokPage() {
                   </div>
 
                   <div>
-                    <h2 className="text-sm font-extrabold text-[#0f2c56] line-clamp-1">
+                    <h2 className="text-sm font-extrabold text-[#0f2c56] group-hover:text-[#ce2731] transition-colors line-clamp-1">
                       {job.title}
                     </h2>
-                    <p className="text-xs text-slate-600 font-semibold mt-0.5">
+                    <p className="text-xs text-slate-600 font-semibold mt-0.5 truncate">
                       {job.companyName}
                     </p>
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500">
+                  <div className="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-[11px] text-slate-500">
                     <span className="flex items-center gap-1">
-                      <MapPin className="w-3.5 h-3.5 text-[#ce2731]" />
+                      <MapPin className="w-3 h-3 text-[#ce2731] shrink-0" />
                       {job.location}
                     </span>
-                    {job.salaryRange && <span>{job.salaryRange}</span>}
+                    {job.salaryRange && (
+                      <>
+                        <span>•</span>
+                        <span className="font-semibold text-[#0f2c56]">{job.salaryRange}</span>
+                      </>
+                    )}
                   </div>
 
-                  {job.matchReason && job.matchReason.length > 0 && (
-                    <div className="p-2.5 rounded-xl bg-[#edf2f9] border border-slate-200/80 space-y-1">
-                      <div className="flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider text-[#0f2c56]">
-                        <Sparkles className="w-3 h-3 text-[#ce2731]" />
-                        <span>Alasan Kecocokan AI</span>
-                      </div>
-                      <p className="text-[11px] text-slate-700 leading-relaxed line-clamp-2">
-                        {job.matchReason[0]}
-                      </p>
-                    </div>
-                  )}
-
-                  <div className="space-y-1.5 pt-1">
-                    <span className="text-[10px] font-mono uppercase text-slate-400 font-bold">
-                      Skill Lowongan:
-                    </span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {job.requiredSkills.map((req, i) => {
-                        const isMatched = userTechSkills.some(
-                          (u) =>
-                            u.toLowerCase().includes(req.toLowerCase()) ||
-                            req.toLowerCase().includes(u.toLowerCase())
-                        );
-                        return (
-                          <span
-                            key={i}
-                            className={`text-[10px] font-mono px-2 py-0.5 rounded font-bold ${
-                              isMatched
-                                ? "bg-[#0f2c56] text-white"
-                                : "bg-slate-100 text-slate-600"
-                            }`}
-                          >
-                            {req}
-                          </span>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {job.missingSkills && job.missingSkills.length > 0 && (
-                    <div className="space-y-1 pt-0.5">
-                      <span className="text-[10px] font-mono uppercase text-[#ce2731] font-bold">
-                        Perlu Ditingkatkan:
+                  <div className="flex flex-wrap items-center gap-1 pt-0.5">
+                    {job.requiredSkills.slice(0, 3).map((req, i) => {
+                      const isMatched = userTechSkills.some(
+                        (u) =>
+                          u.toLowerCase().includes(req.toLowerCase()) ||
+                          req.toLowerCase().includes(u.toLowerCase())
+                      );
+                      return (
+                        <span
+                          key={i}
+                          className={`text-[10px] font-mono px-2 py-0.5 rounded font-bold ${
+                            isMatched
+                              ? "bg-[#0f2c56] text-white"
+                              : "bg-slate-100 text-slate-600"
+                          }`}
+                        >
+                          {req}
+                        </span>
+                      );
+                    })}
+                    {job.requiredSkills.length > 3 && (
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#edf2f9] text-[#0f2c56] font-bold">
+                        +{job.requiredSkills.length - 3} skill
                       </span>
-                      <div className="flex flex-wrap gap-1">
-                        {job.missingSkills.slice(0, 4).map((ms, idx) => (
-                          <span
-                            key={idx}
-                            className="text-[10px] font-mono px-2 py-0.5 rounded bg-red-50 text-[#ce2731] border border-red-200 font-bold"
-                          >
-                            {ms}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
 
-                {job.source === "jooble" && job.externalUrl ? (
-                  <a
-                    href={job.externalUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors"
-                  >
-                    <span>Lamar di Sumber Asli</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                ) : alreadyApplied ? (
+                <div className="pt-2 border-t border-slate-100 grid grid-cols-2 gap-2">
                   <button
                     type="button"
-                    onClick={() => setActiveTab("applied")}
-                    className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#0f2c56] text-xs font-bold transition-colors cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedJob(job);
+                    }}
+                    className="inline-flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl bg-[#edf2f9] hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white text-xs font-bold transition-colors cursor-pointer"
                   >
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#0f2c56]" />
-                    <span>Sudah Dilamar (Lihat Status)</span>
+                    <Eye className="w-3.5 h-3.5 shrink-0" />
+                    <span className="truncate">Detail &amp; AI</span>
                   </button>
-                ) : (
-                  <Link
-                    href={`/apply/${job.id}`}
-                    className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors"
-                  >
-                    <span>Kirim Lamaran Profil</span>
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </Link>
-                )}
+
+                  {job.source === "jooble" && job.externalUrl ? (
+                    <a
+                      href={job.externalUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="inline-flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors"
+                    >
+                      <span className="truncate">Lamar</span>
+                      <ExternalLink className="w-3.5 h-3.5 shrink-0" />
+                    </a>
+                  ) : alreadyApplied ? (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveTab("applied");
+                      }}
+                      className="inline-flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#0f2c56] text-xs font-bold transition-colors cursor-pointer"
+                    >
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#0f2c56] shrink-0" />
+                      <span className="truncate">Dilamar</span>
+                    </button>
+                  ) : (
+                    <Link
+                      href={`/apply/${job.id}`}
+                      onClick={(e) => e.stopPropagation()}
+                      className="inline-flex items-center justify-center gap-1 py-2 px-2.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors"
+                    >
+                      <span className="truncate">Lamar Cepat</span>
+                      <ChevronRight className="w-3.5 h-3.5 shrink-0" />
+                    </Link>
+                  )}
+                </div>
               </div>
             );
           })}
         </div>
       )}
       </div>
+
+      {/* POPUP MODAL DETAIL LOWONGAN & ANALISIS KECOCOKAN AI (Mobile & Desktop) */}
+      {selectedJob && (() => {
+        const matchedSkillsCount = selectedJob.requiredSkills.filter((req) =>
+          userTechSkills.some(
+            (u) =>
+              u.toLowerCase().includes(req.toLowerCase()) ||
+              req.toLowerCase().includes(u.toLowerCase())
+          )
+        ).length;
+
+        const computedLocal =
+          analysis && selectedJob.requiredSkills.length > 0
+            ? Math.min(
+                98,
+                Math.max(
+                  65,
+                  Math.round((matchedSkillsCount / selectedJob.requiredSkills.length) * 100)
+                )
+              )
+            : null;
+
+        const modalMatchPercent =
+          typeof selectedJob.matchScore === "number" && selectedJob.matchScore > 0
+            ? selectedJob.matchScore
+            : computedLocal;
+
+        const isModalSaved = savedIds.includes(selectedJob.id);
+        const isModalApplied = appliedJobIds.has(selectedJob.id);
+
+        return (
+          <div
+            className="fixed inset-0 z-50 bg-[#0f2c56]/55 backdrop-blur-[2px] flex items-center justify-center p-3.5 sm:p-6"
+            onClick={() => setSelectedJob(null)}
+          >
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-lg max-h-[88dvh] bg-white border border-slate-200 rounded-[28px] shadow-2xl overflow-hidden flex flex-col text-[#0f2c56] animate-page-enter"
+            >
+              {/* Solid Navy Modal Header */}
+              <div className="bg-[#0f2c56] text-white p-5 sm:p-6 space-y-3 shrink-0">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-[#ce2731] text-white font-bold">
+                      {modalMatchPercent !== null ? `${modalMatchPercent}% Cocok` : "Lowongan Terbuka"}
+                    </span>
+                    <span className="text-[10px] uppercase font-mono px-2.5 py-0.5 rounded-full bg-white/15 text-white font-bold">
+                      {selectedJob.source === "jooble" ? "Jooble" : "Mitra Internal"}
+                    </span>
+                    <span className="text-[10px] uppercase font-mono px-2.5 py-0.5 rounded-full bg-white/15 text-white font-bold">
+                      {selectedJob.workType}
+                    </span>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setSelectedJob(null)}
+                    aria-label="Tutup detail lowongan"
+                    className="w-8 h-8 rounded-full bg-white/15 hover:bg-[#ce2731] text-white flex items-center justify-center shrink-0 transition-colors cursor-pointer"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+
+                <div>
+                  <h2 className="text-lg sm:text-xl font-extrabold text-white leading-snug">
+                    {selectedJob.title}
+                  </h2>
+                  <p className="text-xs sm:text-sm text-white/80 font-semibold mt-0.5">
+                    {selectedJob.companyName}
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-white/90 pt-0.5">
+                  <span className="flex items-center gap-1">
+                    <MapPin className="w-3.5 h-3.5 text-[#ce2731] shrink-0" />
+                    {selectedJob.location}
+                  </span>
+                  {selectedJob.salaryRange && (
+                    <>
+                      <span>•</span>
+                      <span className="font-bold text-white">{selectedJob.salaryRange}</span>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              {/* Scrollable Modal Body */}
+              <div className="flex-1 min-h-0 overflow-y-auto scrollbar-none p-5 sm:p-6 space-y-4">
+                <div className="space-y-1.5">
+                  <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#0f2c56]">
+                    Deskripsi Pekerjaan
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    {selectedJob.description}
+                  </p>
+                </div>
+
+                {selectedJob.matchReason && selectedJob.matchReason.length > 0 && (
+                  <div className="p-3.5 rounded-2xl bg-[#edf2f9] border border-slate-200/80 space-y-1.5">
+                    <div className="flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-[#0f2c56]">
+                      <Sparkles className="w-3.5 h-3.5 text-[#ce2731]" />
+                      <span>Alasan Kecocokan AI</span>
+                    </div>
+                    <ul className="space-y-1 text-xs text-slate-700 leading-relaxed">
+                      {selectedJob.matchReason.map((reason, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <span className="text-[#0f2c56] font-bold">•</span>
+                          <span>{reason}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                <div className="space-y-2">
+                  <span className="block text-xs font-extrabold uppercase tracking-wider text-[#0f2c56]">
+                    Skill Lowongan ({selectedJob.requiredSkills.length})
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {selectedJob.requiredSkills.map((req, i) => {
+                      const isMatched = userTechSkills.some(
+                        (u) =>
+                          u.toLowerCase().includes(req.toLowerCase()) ||
+                          req.toLowerCase().includes(u.toLowerCase())
+                      );
+                      return (
+                        <span
+                          key={i}
+                          className={`text-xs font-mono px-2.5 py-1 rounded-lg font-bold ${
+                            isMatched
+                              ? "bg-[#0f2c56] text-white"
+                              : "bg-slate-100 text-slate-700 border border-slate-200"
+                          }`}
+                        >
+                          {req}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {selectedJob.missingSkills && selectedJob.missingSkills.length > 0 && (
+                  <div className="space-y-2">
+                    <span className="block text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
+                      Skill Perlu Ditingkatkan ({selectedJob.missingSkills.length})
+                    </span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {selectedJob.missingSkills.map((ms, idx) => (
+                        <span
+                          key={idx}
+                          className="text-xs font-mono px-2.5 py-1 rounded-lg bg-red-50 text-[#ce2731] border border-red-200 font-bold"
+                        >
+                          {ms}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Pinned Modal Footer */}
+              <div className="shrink-0 p-4 sm:px-6 border-t border-slate-200 bg-[#f8fafc] flex items-center justify-between gap-3">
+                <button
+                  type="button"
+                  onClick={() => handleToggleSave(selectedJob.id)}
+                  className={`px-4 py-2.5 rounded-xl border text-xs font-bold inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer ${
+                    isModalSaved
+                      ? "bg-[#0f2c56] border-[#0f2c56] text-white"
+                      : "bg-white border-slate-200 text-[#0f2c56] hover:border-[#0f2c56]"
+                  }`}
+                >
+                  <Bookmark className={`w-3.5 h-3.5 ${isModalSaved ? "fill-current" : ""}`} />
+                  <span>{isModalSaved ? "Tersimpan" : "Simpan"}</span>
+                </button>
+
+                {selectedJob.source === "jooble" && selectedJob.externalUrl ? (
+                  <a
+                    href={selectedJob.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors"
+                  >
+                    <span>Lamar di Sumber Asli</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                ) : isModalApplied ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedJob(null);
+                      setActiveTab("applied");
+                    }}
+                    className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-slate-200 hover:bg-slate-300 text-[#0f2c56] text-xs font-bold transition-colors cursor-pointer"
+                  >
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#0f2c56]" />
+                    <span>Sudah Dilamar (Lihat Status)</span>
+                  </button>
+                ) : (
+                  <Link
+                    href={`/apply/${selectedJob.id}`}
+                    className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors"
+                  >
+                    <span>Kirim Lamaran Profil</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </Link>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      })()}
     </main>
   );
 }
