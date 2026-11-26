@@ -314,6 +314,48 @@ class ApiClient {
     }
   }
 
+  async deleteCV(cvId: string): Promise<void> {
+    try {
+      await this.request<{ success: boolean }>(`/cvs/${encodeURIComponent(cvId)}`, {
+        method: "DELETE",
+      });
+    } catch {
+      // Tetap bersihkan data lokal meskipun sesi sedang offline atau memakai riwayat lokal
+    } finally {
+      this.removeHistory(cvId);
+      const current = this.getCurrentAnalysis();
+      if (current && current.cvId === cvId) {
+        this.clearAnalysis();
+      }
+    }
+  }
+
+  getSavedJobIds(): string[] {
+    if (typeof window !== "undefined") {
+      try {
+        const raw = localStorage.getItem("pasbana_saved_jobs");
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+    return [];
+  }
+
+  toggleSavedJob(jobId: string): string[] {
+    if (typeof window !== "undefined") {
+      const current = this.getSavedJobIds();
+      const updated = current.includes(jobId)
+        ? current.filter((id) => id !== jobId)
+        : [jobId, ...current];
+      localStorage.setItem("pasbana_saved_jobs", JSON.stringify(updated));
+      window.dispatchEvent(new Event("pasbana:saved-jobs-updated"));
+      return updated;
+    }
+    return [];
+  }
+
   // Interactive CV Evaluation Chat (Connected to backend-ai /internal/v1/cv/chat)
   async chatCV(payload: {
     cvId: string;

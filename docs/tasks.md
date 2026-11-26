@@ -161,7 +161,7 @@ gantt
 - [x] Halaman Pendaftaran (*Register* di `/register`) dengan opsi seleksi role: `jobseeker` vs `employer`
 - [x] Halaman Masuk (*Login* di `/login`) dengan email/password
 - [x] Modal dialog Persetujuan Consent Pemrosesan Data Pribadi (UU PDP) sebelum unggah CV
-- [ ] Halaman Pengaturan Akun: tombol hapus CV dan tombol hapus akun permanen (*Right to be Forgotten*)
+- [x] Tab **Privasi & CV** pada popup profil pengguna: tombol hapus permanen dokumen CV (`DELETE /api/cvs/:id`, *Right to be Forgotten*)
 
 #### C. Modul Pencari Kerja (Job Seeker)
 - [x] Routing dashboard berbasis role (`/[role]/dashboard/*` untuk `user`, `company`, dan `admin` beserta sub-route `evaluasi`, `onboarding`, `dokumen`, `lowongan`, dan `riwayat/[id]`)

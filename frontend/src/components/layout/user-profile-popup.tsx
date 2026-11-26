@@ -15,8 +15,10 @@ import {
   Check,
   LayoutDashboard,
   LogOut,
+  ShieldCheck,
+  FileText,
 } from "lucide-react";
-import { User } from "@/types";
+import { CVAnalysisResult, User } from "@/types";
 import { api } from "@/lib/api";
 
 interface ExperienceEntry {
@@ -55,7 +57,12 @@ interface UserProfilePopupProps {
   onUserUpdated: (updated: User) => void;
 }
 
-type ProfileSectionTab = "identitas" | "keahlian" | "pengalaman" | "pendidikan";
+type ProfileSectionTab =
+  | "identitas"
+  | "keahlian"
+  | "pengalaman"
+  | "pendidikan"
+  | "privasi";
 
 export function UserProfilePopup({
   user,
@@ -70,15 +77,25 @@ export function UserProfilePopup({
   const [activeTab, setActiveTab] = useState<ProfileSectionTab>("identitas");
   const [savedNotice, setSavedNotice] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [cvList, setCvList] = useState<CVAnalysisResult[]>([]);
+  const [deletingCvId, setDeletingCvId] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
+    setCvList(api.getHistory());
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [onClose]);
+
+  const handleDeleteCv = async (cvId: string) => {
+    setDeletingCvId(cvId);
+    await api.deleteCV(cvId);
+    setCvList(api.getHistory());
+    setDeletingCvId(null);
+  };
 
   const [draft, setDraft] = useState<UserProfileDraft>({
     name: user.name,
@@ -454,6 +471,7 @@ export function UserProfilePopup({
                 { id: "keahlian", label: "Keahlian", icon: Sparkles },
                 { id: "pengalaman", label: "Pengalaman", icon: Briefcase },
                 { id: "pendidikan", label: "Pendidikan", icon: GraduationCap },
+                { id: "privasi", label: "Privasi & CV", icon: ShieldCheck },
               ] as const
             ).map((tab) => {
               const TabIcon = tab.icon;
@@ -813,6 +831,64 @@ export function UserProfilePopup({
                   </div>
                 ))}
               </div>
+            </div>
+          )}
+
+          {isUserRole && activeTab === "privasi" && (
+            <div className="space-y-4">
+              <div className="p-3.5 rounded-2xl bg-[#edf2f9] border border-slate-200 space-y-1">
+                <p className="text-xs font-extrabold text-[#0f2c56]">
+                  Hak Penghapusan Data Permanen (UU PDP)
+                </p>
+                <p className="text-[11px] text-slate-600 leading-relaxed">
+                  Anda berhak menghapus riwayat dokumen CV, teks terekstrak, dan vektor embedding kapan saja. Penghapusan bersifat permanen.
+                </p>
+              </div>
+
+              {cvList.length === 0 ? (
+                <div className="p-5 rounded-2xl border border-slate-200 bg-white text-center space-y-1">
+                  <p className="text-xs font-bold text-[#0f2c56]">
+                    Tidak ada dokumen CV tersimpan.
+                  </p>
+                  <p className="text-[11px] text-slate-500">
+                    Riwayat unggahan atau CV Onboarding Anda akan muncul di sini.
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  {cvList.map((item) => (
+                    <div
+                      key={item.cvId}
+                      className="flex items-center justify-between gap-3 p-3 rounded-xl border border-slate-200 bg-white"
+                    >
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <div className="w-8 h-8 rounded-lg bg-[#edf2f9] text-[#0f2c56] flex items-center justify-center shrink-0">
+                          <FileText className="w-4 h-4" />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-xs font-extrabold text-[#0f2c56] truncate">
+                            {item.fileName || item.profile?.fullName || "CV Onboarding"}
+                          </p>
+                          <p className="text-[11px] text-slate-500">
+                            Skor ATS: {item.overallScore}/100
+                          </p>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        disabled={deletingCvId === item.cvId}
+                        onClick={() => handleDeleteCv(item.cvId)}
+                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-red-50 hover:bg-[#ce2731] text-[#ce2731] hover:text-white text-[11px] font-bold transition-colors cursor-pointer shrink-0 disabled:opacity-50"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                        <span>
+                          {deletingCvId === item.cvId ? "Menghapus..." : "Hapus Permanen"}
+                        </span>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>
