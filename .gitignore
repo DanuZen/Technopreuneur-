@@ -48,3 +48,6 @@ tmp/
 *.pdf
 *.docx
 
+# Proposal & Tugas Akhir (lokal)
+proposal/
+
