@@ -60,8 +60,8 @@ MVP mencakup alur lengkap pencari kerja dan employer dengan satu sumber lowongan
 
 | Role | Masuk MVP |
 | --- | --- |
-| Pencari kerja | Registrasi dan login (email + Google); upload CV PDF/DOCX maks 5 MB; analisis AI (profil, skor, kekuatan, kelemahan, saran); koreksi profil manual; rekomendasi lowongan dengan skor, alasan, dan gap skill; simpan dan lamar; hapus CV dan akun |
-| Employer | Registrasi dan profil perusahaan; CRUD lowongan; daftar pelamar terurut skor; ubah status pelamar |
+| Pencari kerja | Login/registrasi dari CTA landing page; pengecekan kepemilikan CV; upload CV PDF/DOCX atau buat CV via Onboarding (`/user/dashboard/evaluasi/onboarding`); hasil evaluasi berbasis chatbot interaktif (dibedakan sumber upload vs onboarding) + rekomendasi buat ulang & unduh di Dokumen CV ATS; koreksi profil CRUD; rekomendasi lowongan cocok berbasis skill & keywords perusahaan; lamar & hapus CV |
+| Employer | Registrasi legalitas (diaudit Admin); profil perusahaan beserta *keywords* pencocokan; CRUD lowongan via popup; seleksi pelamar terpusat terurut skor lengkap dengan ringkasan isi CV sistem (*blind screening*); ubah status pelamar |
 | Sumber eksternal | Satu adaptor API resmi (mis. Jooble) sebagai uji coba, dengan tautan keluar ke sumber asli |
 | Admin | Lihat jumlah agregat jobseeker & company bekerja sama; atur standarisasi platform; audit dan verifikasi pendaftaran company |
 
@@ -88,11 +88,11 @@ MVP memuat 24 kebutuhan wajib (P0) dan 8 kebutuhan tambahan (P1) di enam area.
 | FR-10 | CV | Unggah CV PDF/DOCX maks 5 MB dengan validasi tipe dan ukuran |
 | FR-11 | CV | Ekstraksi teks; bila kosong (PDF hasil scan), tampilkan pesan yang jelas |
 | FR-12 | CV | AI menghasilkan profil terstruktur (format di bagian Model data) |
-| FR-13 | CV | AI menghasilkan skor CV 0 sampai 100 dengan rincian per aspek dan saran perbaikan |
-| FR-14 | CV | Pengguna dapat mengoreksi profil hasil ekstraksi sebelum dipakai matching |
+| FR-13 | CV | AI menghasilkan skor CV 0 sampai 100 dalam antarmuka chatbot interaktif, membedakan sumber upload vs onboarding, serta memberi rekomendasi buat ulang ke Dokumen CV ATS |
+| FR-14 | CV | Pengguna dapat menyusun ulang/mengoreksi profil & mengunduh CV standar A4 melalui Dokumen CV ATS (`/user/dashboard/dokumen`) |
 | FR-16 | CV | Hapus CV (file, teks, profil) secara permanen |
 | FR-17 | CV | Batas analisis per pengguna gratis, mis. 5 per bulan |
-| FR-20 | Lowongan | Employer membuat, mengubah, dan menutup lowongan |
+| FR-20 | Lowongan | Employer mengatur profil & *keywords* pencocokan perusahaan serta membuat, menjeda, dan mengaktifkan lowongan |
 | FR-21 | Lowongan | Embedding dibuat otomatis untuk lowongan baru |
 | FR-22 | Lowongan | Pencarian dan filter (kata kunci, lokasi, tipe kerja) |
 | FR-23 | Lowongan | Lowongan eksternal ditarik berkala lewat API, dinormalisasi, dan ditandai sumbernya |
@@ -102,7 +102,7 @@ MVP memuat 24 kebutuhan wajib (P0) dan 8 kebutuhan tambahan (P1) di enam area.
 | FR-34 | Matching | Usia, gender, agama, foto, dan status pernikahan tidak dipakai dalam skor |
 | FR-40 | Lamaran | Melamar lowongan internal dengan CV dan profil tersimpan |
 | FR-41 | Lamaran | Lowongan eksternal: tombol "Lamar di sumber" membuka tautan asli |
-| FR-43 | Lamaran | Employer melihat pelamar terurut skor dengan ringkasan AI |
+| FR-43 | Lamaran | Employer melihat pelamar lintas lowongan terurut skor dengan ringkasan kecocokan AI dan isi CV/profil di sistem (*blind screening*) |
 | FR-44 | Lamaran | Employer mengubah status pelamar |
 | FR-50 | Admin | Audit legalitas dan verifikasi pendaftaran company yang ingin bekerja sama tanpa mengintervensi ranah rekrutmen company |
 

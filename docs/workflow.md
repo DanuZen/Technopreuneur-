@@ -8,11 +8,11 @@ Dokumen ini mendefinisikan seluruh alur operasional pengguna, rancangan pipeline
 
 ### 1.1 Alur Pencari Kerja (Job Seeker Flow)
 
-Pencari kerja diberikan **2 pilihan metode input profil** di dalam dashboard berbasis role (`/[role]/dashboard/*`):
-1. **Opsi A (Sudah Memiliki CV — `/user/dashboard/evaluasi`):** Mengunggah berkas CV format PDF atau DOCX (maks 5 MB). AI worker akan mengekstrak teks, menilai kualitas 5 dimensi, dan menyusun profil terstruktur.
-2. **Opsi B (Belum Memiliki CV — `/user/dashboard/onboarding`):** Halaman pengantar terlebih dahulu menampilkan ringkasan manfaat dan 5 tahapan kuesioner, lalu pengguna dapat memulai **kuesioner pertanyaan terpandu (*Guided Wizard Form*)** seputar identitas, pendidikan, target peran, keahlian, dan pengalaman/proyek. AI akan **secara otomatis membuatkan resume/CV terstruktur standar ATS 1-kolom**.
+Pengunjung yang menekan tombol **Evaluasi CV Saya** atau **Belum Punya CV** pada Landing Page diarahkan ke halaman **Login / Registrasi** terlebih dahulu apabila belum masuk. Saat masuk ke halaman evaluasi (`/user/dashboard/evaluasi`), sistem menampilkan **Pengecekan Awal Kepemilikan CV** dengan **2 pilihan metode input profil**:
+1. **Opsi A (Sudah Memiliki CV - `/user/dashboard/evaluasi`):** Mengunggah berkas CV format PDF atau DOCX (batas ukuran mengikuti standar Admin, default 5 MB). Layanan AI mengekstrak teks, menilai kualitas 5 dimensi, dan menyusun profil terstruktur.
+2. **Opsi B (Belum Memiliki CV - `/user/dashboard/evaluasi/onboarding`):** Dibuka langsung dari halaman Evaluasi CV (tanpa item terpisah di sidebar) melalui **kuesioner pertanyaan terpandu (*Guided Wizard Form*)** 5 langkah. Sistem menyusun berkas CV standar ATS 1-kolom dan memprosesnya melalui pipeline AI.
 
-Kedua opsi bermuara ke **Riwayat Sesi & Konsultasi AI (`/user/dashboard/riwayat/[id]`)** yang menampilkan hasil evaluasi 5 dimensi (Circular Score Gauge, Diagram Radar Pentagon, Kekuatan Utama, dan Rekomendasi Perbaikan) dalam format chat interaktif untuk berdiskusi dengan Pasbana AI. Pengguna kemudian dapat meninjau serta mencetak **Dokumen CV ATS ukuran A4 (`/user/dashboard/dokumen`)** atau melamar **Lowongan Cocok (`/user/dashboard/lowongan` -> `/apply/[id]`)**.
+Kedua opsi bermuara ke **Hasil Evaluasi (`/user/dashboard/hasil-evaluasi`)** berupa antarmuka **Chatbot Interaktif** yang membedakan badge sumber (`Hasil Unggah CV (PDF/DOCX)` vs `Hasil Onboarding CV Baru`). Apabila CV unggahan lama terdeteksi memiliki kelemahan atau skor di bawah ambang optimal, sistem merekomendasikan pembuatan ulang pada **Dokumen CV ATS (`/user/dashboard/dokumen`)** sekaligus menyediakan akses unduh/cetak PDF A4. Selanjutnya sistem mencocokkan *skill* di CV dengan kata kunci (*keywords*) perusahaan serta kualifikasi lowongan untuk menampilkan **Lowongan Cocok (`/user/dashboard/lowongan` -> `/apply/[id]`)**.
 
 > 🎨 **Diagram Desain Interaktif:** [Buka Versi HTML Interaktif](diagrams/alur-pencari-kerja.html) · [Buka Berkas Vektor SVG](diagrams/alur-pencari-kerja.svg)
 
@@ -67,7 +67,7 @@ flowchart TD
 
 ### 1.2 Alur Pemberi Kerja (Employer Flow)
 
-Employer mendaftarkan profil perusahaan, mempublikasikan lowongan pekerjaan baru, dan meninjau pelamar yang telah diperingkat oleh AI.
+Employer mendaftarkan akun beserta legalitas perusahaan untuk diaudit dan diverifikasi Admin, mengatur profil serta **kata kunci (*keywords*)** pencocokan perusahaan, mempublikasikan lowongan pekerjaan melalui modal popup, dan meninjau pelamar terurut skor kecocokan beserta ringkasan isi CV/profil sistem dalam mode *blind screening* UU PDP.
 
 > 🎨 **Diagram Desain Interaktif:** [Buka Versi HTML Interaktif](diagrams/alur-employer.html) · [Buka Berkas Vektor SVG](diagrams/alur-employer.svg)
 

@@ -109,12 +109,12 @@ Hal-hal berikut **TIDAK** masuk dalam lingkup rilis MVP:
 | **FR-10** | CV | Upload Dokumen | Mendukung format `.pdf` dan `.docx` dengan batas ukuran maksimal 5 MB |
 | **FR-11** | CV | Validasi & Ekstraksi Teks | Validasi tipe MIME file asli; deteksi jika teks kosong (scan) dengan pesan error edukatif |
 | **FR-12** | CV | Ekstraksi Profil Terstruktur | AI memetakan CV menjadi JSON (ringkasan, skill, pengalaman, edukasi, bahasa) |
-| **FR-13** | CV | Scoring, Diagram & Konsultasi AI | AI menghasilkan skor 0–100, breakdown & diagram radar 5 dimensi, kekuatan utama, rekomendasi perbaikan, serta sesi chat konsultasi AI pada Riwayat Sesi (`/user/dashboard/riwayat/[id]`) |
-| **FR-14** | CV | Pratinjau A4 & Koreksi Profil | Pengguna dapat meninjau CV standar ATS 1-kolom ukuran A4, mencetak/unduh PDF, serta mengedit data profil melalui Onboarding (`/user/dashboard/dokumen` & `/user/dashboard/onboarding`) |
+| **FR-13** | CV | Scoring, Chatbot & Pembeda Sumber CV | AI menghasilkan skor 0-100, rincian 5 dimensi, kekuatan, kelemahan, dan saran dalam antarmuka **Chatbot Interaktif** (`/user/dashboard/hasil-evaluasi`) dengan pembeda hasil Unggah CV vs Onboarding, rekomendasi buat ulang otomatis, serta akses unduh CV |
+| **FR-14** | CV | Dokumen CV ATS Ukuran A4 & Buat Ulang | Pengguna dapat menyusun ulang/mengoreksi CV standar ATS 1-kolom ukuran A4 melalui `/user/dashboard/dokumen` & `/user/dashboard/evaluasi/onboarding` serta mencetak/unduh PDF |
 | **FR-16** | CV | Penghapusan Data Permanen | Pengguna dapat menghapus dokumen CV, teks mentah, profil, dan embedding kapan saja |
 | **FR-17** | CV | Rate Limiting Analisis | Batas analisis CV akun gratis (misal: kuota 5 kali analisis per bulan) |
 | **FR-18** | CV & Form | Kuesioner Pembuatan CV (User Tanpa CV) | Form interaktif terpandu (pendidikan, skill, pengalaman/organisasi/proyek, minat karir); AI otomatis menghasilkan profil & resume terstruktur |
-| **FR-20** | Lowongan | Manajemen Lowongan Employer | Employer dapat membuat (Create), mengubah (Update), dan menutup (Close) lowongan |
+| **FR-20** | Lowongan | Profil Keywords & Manajemen Lowongan Employer | Employer mengatur profil & *keywords* pencocokan perusahaan (`/company/dashboard/dokumen`) serta membuat, menjeda, dan mengaktifkan lowongan (`/company/dashboard/lowongan`) |
 | **FR-21** | Lowongan | Otomasi Embedding Lowongan | Sistem otomatis men-generate embedding vektor saat lowongan baru dipublikasikan |
 | **FR-22** | Lowongan | Pencarian & Filter | Job seeker dapat memfilter lowongan berdasarkan kata kunci, lokasi, tipe kerja (*remote/on-site*) |
 | **FR-23** | Lowongan | Ingestion API Eksternal | Sistem menarik lowongan eksternal via API resmi (misal: Jooble), menormalisasi skema, dan mencantumkan sumber |
@@ -124,7 +124,7 @@ Hal-hal berikut **TIDAK** masuk dalam lingkup rilis MVP:
 | **FR-34** | Matching | AI Fairness Enforcement | Atribut sensitif (foto, gender, umur, agama, status nikah) disanitasi sebelum prompt scoring |
 | **FR-40** | Lamaran | Quick Apply Internal | Job seeker dapat melamar lowongan internal platform dengan 1 klik menggunakan profil aktif |
 | **FR-41** | Lamaran | External Redirect | Lowongan eksternal menyediakan tombol *Lamar di Sumber Asli* yang membuka tab baru ke URL mitra |
-| **FR-43** | Lamaran | Review Pelamar Employer | Employer melihat pelamar yang masuk terurut skor kecocokan tertinggi dan ringkasan AI |
+| **FR-43** | Lamaran | Review Pelamar & Isi CV Sistem | Employer melihat seluruh pelamar lintas lowongan terurut skor kecocokan AI lengkap dengan kode ATS anonim (*blind screening*), ringkasan kecocokan, dan isi CV/profil di sistem (`/company/dashboard/evaluasi`) |
 | **FR-44** | Lamaran | Update Status Lamaran | Employer dapat memperbarui status pelamar (`submitted`, `reviewed`, `shortlisted`, `rejected`) |
 | **FR-50** | Admin | Audit & Verifikasi Pendaftaran Company | Admin mengaudit legalitas dan memverifikasi company yang mendaftar untuk bekerja sama sebelum disetujui sebagai mitra resmi, tanpa mengintervensi lowongan atau seleksi company |
 
