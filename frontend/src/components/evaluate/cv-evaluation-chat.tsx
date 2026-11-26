@@ -568,24 +568,24 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
                     </div>
 
                     {isOnboarding && (
-                      <div className="pt-1 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200/80">
+                      <div className="pt-1 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 border-t border-slate-200/80">
                         <p className="text-xs text-slate-600 font-medium">
                           Draf dokumen CV ATS 1-kolom Anda sudah tersimpan dan siap dilengkapi atau diunduh:
                         </p>
-                        <div className="flex flex-wrap items-center gap-2">
+                        <div className="grid grid-cols-2 sm:flex items-center gap-2 w-full sm:w-auto">
                           <Link
                             href="/user/dashboard/dokumen"
-                            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs font-bold transition-colors"
+                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 sm:px-3.5 sm:py-2 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs font-bold transition-colors text-center"
                           >
-                            <FileText className="w-3.5 h-3.5" />
-                            <span>Lihat &amp; Unduh Draf CV ATS Saya</span>
+                            <FileText className="w-3.5 h-3.5 shrink-0" />
+                            <span className="truncate">Unduh Draf CV</span>
                           </Link>
                           <Link
                             href="/user/dashboard/dokumen?edit=true"
-                            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs font-bold transition-colors"
+                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 sm:px-3.5 sm:py-2 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs font-bold transition-colors text-center"
                           >
-                            <Edit3 className="w-3.5 h-3.5" />
-                            <span>Lengkapi Isi Data CV</span>
+                            <Edit3 className="w-3.5 h-3.5 shrink-0" />
+                            <span className="truncate">Edit Isi CV</span>
                           </Link>
                         </div>
                       </div>

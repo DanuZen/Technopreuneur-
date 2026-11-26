@@ -257,18 +257,18 @@ export default function AboutPage() {
               Platform bimbingan karir dan pencocokan lowongan kerja presisi berbasis kecerdasan buatan untuk menghubungkan talenta muda dengan industri secara adil dan transparan.
             </p>
 
-            <div className={`pt-0.5 flex flex-wrap items-center gap-2.5 sm:gap-3 ${getTextRevealClass(0, "delay-300")}`}>
+            <div className={`pt-0.5 grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2.5 sm:gap-3 w-full sm:w-auto ${getTextRevealClass(0, "delay-300")}`}>
               <button
                 type="button"
                 onClick={() => goToSlide(1)}
-                className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition-colors cursor-pointer"
+                className="px-4 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition-colors cursor-pointer text-center"
               >
                 Misi &amp; Privasi
               </button>
               <button
                 type="button"
                 onClick={() => goToSlide(2)}
-                className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors cursor-pointer"
+                className="px-4 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors cursor-pointer text-center"
               >
                 Tim Pengembang
               </button>

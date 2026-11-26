@@ -71,21 +71,21 @@ export default function RiwayatSesiDetailPage() {
           titleLine2Prefix="untuk skor"
           titleHighlight="paling optimal!"
           rightSlot={
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="grid grid-cols-2 sm:flex items-center gap-2 w-full sm:w-auto">
               <Link
                 href={`/${role}/dashboard/dokumen`}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors"
+                className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 sm:px-3.5 sm:py-2 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors text-center"
               >
-                <FileText className="w-3.5 h-3.5" />
-                <span>Lihat Dokumen CV ATS</span>
+                <FileText className="w-3.5 h-3.5 shrink-0" />
+                <span className="truncate">Dokumen CV ATS</span>
               </Link>
               <button
                 type="button"
                 onClick={() => router.push(`/${role}/dashboard/evaluasi`)}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors cursor-pointer"
+                className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 sm:px-3.5 sm:py-2 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors cursor-pointer text-center"
               >
-                <UploadCloud className="w-3.5 h-3.5" />
-                <span>Evaluasi CV Baru</span>
+                <UploadCloud className="w-3.5 h-3.5 shrink-0" />
+                <span className="truncate">Evaluasi CV Baru</span>
               </button>
             </div>
           }

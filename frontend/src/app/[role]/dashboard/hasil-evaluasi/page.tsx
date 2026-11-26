@@ -71,19 +71,19 @@ export default function HasilEvaluasiPage() {
           <p className="text-sm text-slate-600">
             Unggah berkas CV PDF/DOCX atau susun CV standar ATS melalui Onboarding Terpandu untuk melihat skor 5 dimensi dan berkonsultasi dengan AI.
           </p>
-          <div className="flex flex-wrap items-center gap-2 shrink-0">
+          <div className="grid grid-cols-2 sm:flex items-center gap-2 w-full sm:w-auto shrink-0">
             <Link
               href="/user/dashboard/evaluasi"
-              className="morph-pill inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors"
             >
-              <UploadCloud className="w-4 h-4" />
+              <UploadCloud className="w-4 h-4 shrink-0" />
               <span>Evaluasi CV</span>
             </Link>
             <Link
               href="/user/dashboard/evaluasi/onboarding"
-              className="morph-pill inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors"
             >
-              <FileSpreadsheet className="w-4 h-4" />
+              <FileSpreadsheet className="w-4 h-4 shrink-0" />
               <span>Onboarding CV</span>
             </Link>
           </div>
@@ -110,21 +110,23 @@ export default function HasilEvaluasiPage() {
           titleLine2Prefix="untuk skor"
           titleHighlight="paling optimal!"
           rightSlot={
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-2 w-full sm:w-auto">
               {historyList.length > 1 && (
-                <div className="relative" ref={docMenuRef}>
+                <div className="relative w-full sm:w-auto" ref={docMenuRef}>
                   <button
                     type="button"
                     onClick={() => setDocMenuOpen((s) => !s)}
                     aria-label="Pilih dokumen hasil evaluasi"
                     aria-expanded={docMenuOpen}
                     aria-haspopup="listbox"
-                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border border-slate-200 hover:border-[#0f2c56] bg-white text-xs font-bold text-[#0f2c56] shadow-2xs transition-colors cursor-pointer max-w-[230px]"
+                    className="w-full sm:w-auto inline-flex items-center justify-between sm:justify-start gap-2 px-3.5 py-2.5 sm:py-2 rounded-xl border border-slate-200 hover:border-[#0f2c56] bg-white text-xs font-bold text-[#0f2c56] shadow-2xs transition-colors cursor-pointer sm:max-w-[230px]"
                   >
-                    <FileText className="w-3.5 h-3.5 text-[#ce2731] shrink-0" />
-                    <span className="truncate">
-                      {analysis.fileName || analysis.profile?.fullName || "CV Tersimpan"}
-                    </span>
+                    <div className="flex items-center gap-2 min-w-0">
+                      <FileText className="w-3.5 h-3.5 text-[#ce2731] shrink-0" />
+                      <span className="truncate">
+                        {analysis.fileName || analysis.profile?.fullName || "CV Tersimpan"}
+                      </span>
+                    </div>
                     <ChevronDown
                       className={`w-3.5 h-3.5 text-slate-400 shrink-0 transition-transform duration-200 ${
                         docMenuOpen ? "rotate-180" : ""
@@ -136,7 +138,7 @@ export default function HasilEvaluasiPage() {
                     <div
                       role="listbox"
                       aria-label="Daftar dokumen evaluasi CV"
-                      className="absolute right-0 top-full mt-2 w-72 rounded-2xl bg-white border border-slate-200 shadow-2xl p-1.5 z-50 space-y-1 animate-page-enter"
+                      className="absolute left-0 right-0 sm:left-auto sm:right-0 top-full mt-2 sm:w-72 rounded-2xl bg-white border border-slate-200 shadow-2xl p-1.5 z-50 space-y-1 animate-page-enter"
                     >
                       <p className="px-2.5 pt-1 pb-0.5 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
                         Pilih Dokumen Evaluasi ({historyList.length})
@@ -189,21 +191,23 @@ export default function HasilEvaluasiPage() {
                   )}
                 </div>
               )}
-              <Link
-                href="/user/dashboard/dokumen"
-                className="morph-pill inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold"
-              >
-                <FileText className="w-3.5 h-3.5" />
-                <span>Unduh / Dokumen CV ATS</span>
-              </Link>
-              <button
-                type="button"
-                onClick={() => router.push("/user/dashboard/evaluasi")}
-                className="morph-pill inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold cursor-pointer"
-              >
-                <UploadCloud className="w-3.5 h-3.5" />
-                <span>Evaluasi CV Baru</span>
-              </button>
+              <div className="grid grid-cols-2 sm:flex items-center gap-2 w-full sm:w-auto">
+                <Link
+                  href="/user/dashboard/dokumen"
+                  className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 sm:px-3.5 sm:py-2 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors text-center"
+                >
+                  <FileText className="w-3.5 h-3.5 shrink-0" />
+                  <span className="truncate">Dokumen CV ATS</span>
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => router.push("/user/dashboard/evaluasi")}
+                  className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 sm:px-3.5 sm:py-2 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors cursor-pointer text-center"
+                >
+                  <UploadCloud className="w-3.5 h-3.5 shrink-0" />
+                  <span className="truncate">Evaluasi CV Baru</span>
+                </button>
+              </div>
             </div>
           }
         />

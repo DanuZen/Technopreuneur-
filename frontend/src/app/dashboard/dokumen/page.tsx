@@ -99,28 +99,28 @@ export default function DokumenCvAtsPage() {
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 shrink-0">
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2.5 sm:gap-3 w-full sm:w-auto shrink-0">
             <Link
               href="/user/dashboard/evaluasi"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors"
             >
-              <UploadCloud className="w-4 h-4" />
+              <UploadCloud className="w-4 h-4 shrink-0" />
               <span>Evaluasi CV</span>
             </Link>
             <Link
               href="/user/dashboard/evaluasi/onboarding"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white text-xs font-bold transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white text-xs font-bold transition-colors"
             >
-              <FileSpreadsheet className="w-4 h-4" />
-              <span>Onboarding CV ATS</span>
+              <FileSpreadsheet className="w-4 h-4 shrink-0" />
+              <span>Onboarding CV</span>
             </Link>
             <button
               type="button"
               onClick={handleLoadSampleAnalysis}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-[#0f2c56] text-[#0f2c56] hover:bg-[#0f2c56] hover:text-white text-xs font-bold transition-colors cursor-pointer"
+              className="col-span-2 sm:col-span-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-[#0f2c56] text-[#0f2c56] hover:bg-[#0f2c56] hover:text-white text-xs font-bold transition-colors cursor-pointer"
             >
               <span>Muat Sampel CV Demo</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              <ArrowUpRight className="w-3.5 h-3.5 shrink-0" />
             </button>
           </div>
         </div>
@@ -137,21 +137,21 @@ export default function DokumenCvAtsPage() {
           titleLine2Prefix="dengan format"
           titleHighlight="siap lamaran!"
           rightSlot={
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="grid grid-cols-2 sm:flex items-center gap-2 w-full sm:w-auto">
               <button
                 type="button"
                 onClick={() => setEditModalOpen(true)}
-                className="px-4 py-2.5 bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5 cursor-pointer"
+                className="px-4 py-2.5 bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer"
               >
-                <Edit3 className="w-3.5 h-3.5" aria-hidden="true" />
+                <Edit3 className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
                 <span>Edit Data</span>
               </button>
               <button
                 type="button"
                 onClick={() => window.print()}
-                className="px-4 py-2.5 bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5 cursor-pointer"
+                className="px-4 py-2.5 bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer"
               >
-                <Printer className="w-3.5 h-3.5" aria-hidden="true" />
+                <Printer className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
                 <span>Cetak / Unduh PDF</span>
               </button>
             </div>

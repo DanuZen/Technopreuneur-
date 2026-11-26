@@ -466,11 +466,11 @@ export default function HomePage() {
               Dapatkan analisis objektif 5 dimensi terhadap kesiapan CV Anda dan rekomendasi lowongan kerja secara otomatis.
             </p>
 
-            <div className={`pt-0.5 flex flex-wrap items-center justify-start lg:justify-end gap-2.5 sm:gap-3 ${getTextRevealClass(0, "delay-300")}`}>
+            <div className={`pt-0.5 grid grid-cols-2 sm:flex sm:flex-wrap items-center justify-start lg:justify-end gap-2.5 sm:gap-3 w-full sm:w-auto ${getTextRevealClass(0, "delay-300")}`}>
               <Link
                 href="/user/dashboard/evaluasi"
                 onClick={(e) => handleAuthFlowLink(e, "/user/dashboard/evaluasi")}
-                className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition-colors"
+                className="px-4 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition-colors text-center"
               >
                 Evaluasi CV Saya
               </Link>
@@ -479,7 +479,7 @@ export default function HomePage() {
                 onClick={(e) =>
                   handleAuthFlowLink(e, "/user/dashboard/evaluasi/onboarding")
                 }
-                className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors"
+                className="px-4 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors text-center"
               >
                 Belum Punya CV
               </Link>
@@ -719,16 +719,16 @@ export default function HomePage() {
             <p className={`text-xs sm:text-base text-slate-600 max-w-lg leading-[1.7] sm:leading-[1.8] ${getTextRevealClass(2, "delay-200")}`}>
               Baik sudah memiliki file PDF maupun belum punya CV sama sekali, ukur 5 dimensi kualitas resume Anda pada waktu yang tepat untuk hasil seleksi terbaik.
             </p>
-            <div className={`pt-0.5 flex flex-wrap items-center justify-start gap-2.5 sm:gap-3 ${getTextRevealClass(2, "delay-300")}`}>
+            <div className={`pt-0.5 grid grid-cols-2 sm:flex sm:flex-wrap items-center justify-start gap-2.5 sm:gap-3 w-full sm:w-auto ${getTextRevealClass(2, "delay-300")}`}>
               <Link
                 href="/onboarding"
-                className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors"
+                className="px-4 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors text-center"
               >
                 Buat CV
               </Link>
               <Link
                 href="/evaluate"
-                className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl border border-slate-200 hover:border-[#0f2c56] text-[#0f2c56] text-xs sm:text-sm font-bold transition-colors"
+                className="px-4 py-3 sm:px-6 sm:py-3.5 rounded-xl border border-slate-200 hover:border-[#0f2c56] text-[#0f2c56] text-xs sm:text-sm font-bold transition-colors text-center"
               >
                 Unggah PDF CV
               </Link>
@@ -1088,11 +1088,11 @@ export default function HomePage() {
             </div>
 
             {/* 2 Mode Toggle Buttons */}
-            <div className={`flex items-center gap-2.5 sm:gap-3 pt-0.5 ${getTextRevealClass(5, "delay-300")}`}>
+            <div className={`grid grid-cols-2 sm:flex items-center gap-2.5 sm:gap-3 pt-0.5 w-full sm:w-auto ${getTextRevealClass(5, "delay-300")}`}>
               <button
                 type="button"
                 onClick={() => setInputMode("pdf")}
-                className={`px-4 py-2.5 sm:px-5 sm:py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+                className={`px-4 py-2.5 sm:px-5 sm:py-2.5 rounded-xl text-xs font-bold transition cursor-pointer text-center ${
                   inputMode === "pdf"
                     ? "bg-white text-[#0f2c56]"
                     : "border border-white/30 text-white hover:border-white"
@@ -1103,7 +1103,7 @@ export default function HomePage() {
               <button
                 type="button"
                 onClick={() => setInputMode("questionnaire")}
-                className={`px-4 py-2.5 sm:px-5 sm:py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+                className={`px-4 py-2.5 sm:px-5 sm:py-2.5 rounded-xl text-xs font-bold transition cursor-pointer text-center ${
                   inputMode === "questionnaire"
                     ? "bg-white text-[#0f2c56]"
                     : "border border-white/30 text-white hover:border-white"

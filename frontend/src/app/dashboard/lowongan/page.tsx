@@ -128,12 +128,12 @@ export default function LowonganCocokPage() {
         titleLine2Prefix="yang paling"
         titleHighlight="sesuai profil!"
         rightSlot={
-          <div className="flex flex-wrap items-center gap-2">
-            <div className="inline-flex items-center p-1 rounded-xl bg-slate-100 border border-slate-200">
+          <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-2 w-full sm:w-auto">
+            <div className="grid grid-cols-3 sm:inline-flex items-center p-1 rounded-xl bg-slate-100 border border-slate-200 w-full sm:w-auto">
               <button
                 type="button"
                 onClick={() => setActiveTab("all")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
+                className={`px-2 py-2 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold transition-colors cursor-pointer text-center truncate ${
                   activeTab === "all"
                     ? "bg-[#0f2c56] text-white"
                     : "text-slate-600 hover:text-[#0f2c56]"
@@ -144,7 +144,7 @@ export default function LowonganCocokPage() {
               <button
                 type="button"
                 onClick={() => setActiveTab("saved")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
+                className={`px-2 py-2 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold transition-colors cursor-pointer text-center truncate ${
                   activeTab === "saved"
                     ? "bg-[#ce2731] text-white"
                     : "text-slate-600 hover:text-[#0f2c56]"
@@ -155,31 +155,33 @@ export default function LowonganCocokPage() {
               <button
                 type="button"
                 onClick={() => setActiveTab("applied")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
+                className={`px-2 py-2 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold transition-colors cursor-pointer text-center truncate ${
                   activeTab === "applied"
                     ? "bg-[#0f2c56] text-white"
                     : "text-slate-600 hover:text-[#0f2c56]"
                 }`}
               >
-                Lamaran Saya ({applications.length})
+                Lamaran ({applications.length})
               </button>
             </div>
-            {!analysis && (
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              {!analysis && (
+                <Link
+                  href="/user/dashboard/evaluasi"
+                  className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors"
+                >
+                  <UploadCloud className="w-3.5 h-3.5 shrink-0" />
+                  <span>Evaluasi CV</span>
+                </Link>
+              )}
               <Link
-                href="/user/dashboard/evaluasi"
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors"
+                href="/jobs"
+                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors"
               >
-                <UploadCloud className="w-3.5 h-3.5" />
-                <span>Evaluasi CV</span>
+                <span>Jelajahi Semua Lowongan</span>
+                <ArrowUpRight className="w-3.5 h-3.5 shrink-0" />
               </Link>
-            )}
-            <Link
-              href="/jobs"
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors"
-            >
-              <span>Jelajahi Semua Lowongan</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </Link>
+            </div>
           </div>
         }
       />

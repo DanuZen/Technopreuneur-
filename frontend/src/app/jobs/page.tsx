@@ -261,18 +261,18 @@ export default function JobsPage() {
               Temukan lowongan dari mitra internal terverifikasi dan agregasi portal Jooble Indonesia, lengkap dengan analisis kesesuaian keahlian Pasbana AI.
             </p>
 
-            <div className={`pt-0.5 flex flex-wrap items-center gap-2.5 sm:gap-3 ${getTextRevealClass(0, "delay-300")}`}>
+            <div className={`pt-0.5 grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2.5 sm:gap-3 w-full sm:w-auto ${getTextRevealClass(0, "delay-300")}`}>
               <button
                 type="button"
                 onClick={() => goToSlide(1)}
-                className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition-colors cursor-pointer inline-flex items-center gap-2"
+                className="px-3.5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition-colors cursor-pointer inline-flex items-center justify-center gap-1.5"
               >
-                <span>Lihat {jobs.length} Lowongan Aktif</span>
-                <ArrowUpRight className="w-4 h-4" />
+                <span className="truncate">Lihat {jobs.length} Lowongan</span>
+                <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
               </button>
               <Link
                 href="/evaluate"
-                className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors"
+                className="px-3.5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors inline-flex items-center justify-center text-center"
               >
                 Cek Kecocokan CV
               </Link>
