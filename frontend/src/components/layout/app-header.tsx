@@ -71,30 +71,29 @@ export function AppHeader({
     : getDashboardBasePath(user?.role);
 
   return (
-    <header className="sticky top-0 z-30 flex min-h-[52px] lg:min-h-[50px] w-full shrink-0 items-center justify-between gap-3 bg-white px-2.5 sm:px-4 lg:px-6 pt-2.5 pb-1.5 lg:py-1.5">
-      {/* Mobile Floating Pill Header (< lg): Brand Logo on Left (Toggles Sidebar, never routes to landing page) + Menu Button on Right */}
-      <div className="flex lg:hidden w-full items-center justify-between gap-2 bg-[#0f2c56] text-white rounded-full shadow-lg shadow-[#0f2c56]/15 px-4 py-2">
-        <button
-          type="button"
-          onClick={onToggleMobile}
-          className="flex items-center pl-1 pr-2 py-0.5 rounded-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white shrink-0"
-          aria-label="Buka atau tutup panel samping dashboard"
-        >
+    <header className="sticky top-0 z-30 flex min-h-[52px] lg:min-h-[50px] w-full shrink-0 items-center justify-between gap-3 bg-white px-4 sm:px-6 py-2 lg:py-1.5">
+      {/* Left: Mobile Brand Logo (Hidden on Desktop lg+, does not route to landing page) */}
+      <div className="flex items-center gap-2.5 min-w-0">
+        <div className="flex lg:hidden items-center py-0.5 shrink-0 select-none">
           <Image
-            src="/logo-text-white.webp"
+            src="/logo-text-navy.webp"
             alt="Pasbana - Kerja Pas, Karir Naik Class"
-            width={132}
+            width={136}
             height={44}
             className="h-8 sm:h-9 w-auto object-contain"
             priority
           />
-        </button>
+        </div>
+      </div>
 
+      {/* Right: Mobile Hamburger Menu Toggle (< lg) & Desktop Profile Dropdown (lg+) */}
+      <div className="flex items-center gap-2.5 shrink-0">
+        {/* Mobile Hamburger Toggle on the Right */}
         <button
           type="button"
           onClick={onToggleMobile}
-          className="min-h-[40px] px-3.5 py-1.5 rounded-full text-xs font-bold text-white bg-white/12 hover:bg-[#ce2731] flex items-center gap-1.5 transition-colors cursor-pointer"
-          aria-label="Toggle menu samping navigasi"
+          className="flex lg:hidden min-h-[42px] px-3.5 gap-2 items-center justify-center rounded-xl bg-slate-100 hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white text-xs font-extrabold transition-colors cursor-pointer"
+          aria-label="Buka menu samping navigasi"
           aria-expanded={isMobileOpen}
         >
           {isMobileOpen ? (
@@ -104,14 +103,9 @@ export function AppHeader({
           )}
           <span>{isMobileOpen ? "Tutup" : "Menu"}</span>
         </button>
-      </div>
 
-      {/* Desktop Left Spacer (lg+) */}
-      <div className="hidden lg:flex items-center gap-2.5 min-w-0" />
-
-      {/* Desktop Right: Profile Dropdown (lg+ only, moved to Sidebar on mobile) */}
-      <div className="hidden lg:flex items-center gap-2.5 shrink-0">
-        <div>
+        {/* Desktop Account Menu (lg+ only, moved to Sidebar on mobile) */}
+        <div className="hidden lg:flex items-center gap-2.5">
         {user ? (
           <div className="relative" ref={menuRef}>
             <button
