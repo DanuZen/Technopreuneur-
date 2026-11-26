@@ -293,7 +293,7 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
 
       {/* Mobile Menu Floating Dropdown Card */}
       {mobileMenuOpen && (
-        <div className="pointer-events-auto lg:hidden mt-2 w-full max-w-sm rounded-3xl bg-[#0e2647]/95 backdrop-blur-xl text-white shadow-2xl px-4 py-4 space-y-1.5">
+        <div className="pointer-events-auto lg:hidden absolute top-full left-2.5 right-2.5 sm:left-auto sm:right-4 sm:w-80 mt-1 rounded-3xl bg-[#0e2647]/95 backdrop-blur-xl border border-white/15 text-white shadow-2xl px-4 py-3.5 space-y-1 z-50">
           {LANDING_SECTIONS.map((item) => {
             const isActive = pathname === "/" && activeLandingSlide === item.slide;
             return (
