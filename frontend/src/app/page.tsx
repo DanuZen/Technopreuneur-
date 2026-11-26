@@ -449,7 +449,13 @@ export default function HomePage() {
             <h1 className={`text-[28px] sm:text-5xl xl:text-[50px] font-extrabold tracking-normal text-[#0f2c56] leading-[1.3] sm:leading-[1.34] ${getTextRevealClass(0, "delay-150")}`}>
               Hemat waktu evaluasi
               <br />
-              dan temukan
+              dan{" "}
+              <span className="hidden lg:inline-flex items-center justify-center align-middle w-20 h-11 rounded-full bg-[#ce2731] mx-1.5">
+                <span className="w-6 h-6 rounded-full border-2 border-white flex items-center justify-center">
+                  <Play className="w-3 h-3 text-white fill-white ml-0.5" />
+                </span>
+              </span>{" "}
+              temukan
               <br />
               <span className={`inline-block bg-[#ce2731] text-white px-3.5 py-1 sm:px-4 sm:py-1 rounded-xl mt-2 sm:mt-2.5 ${getHighlightPopClass(0, "delay-300")}`}>
                 Karir Pas Bana.
@@ -1163,6 +1169,9 @@ export default function HomePage() {
           <div className="lg:col-span-5 flex flex-col lg:py-1 shrink-0">
             <div className="bg-[#0f2c56] lg:bg-transparent text-white rounded-[24px] sm:rounded-[28px] p-4 sm:p-7 lg:p-10 flex flex-col justify-center items-center text-center gap-3.5 sm:gap-5 lg:gap-6 flex-1">
               <div className="space-y-2.5 sm:space-y-4 lg:space-y-5 flex flex-col items-center">
+                <span className={`hidden lg:inline-flex items-center px-3.5 py-1 rounded-full bg-[#ce2731] text-white text-xs font-bold ${getTextRevealClass(6, "delay-75")}`}>
+                  Mulai Langkah Karir
+                </span>
                 <h2 className={`text-xl sm:text-3xl lg:text-[40px] font-extrabold tracking-normal text-white leading-[1.28] sm:leading-[1.35] ${getTextRevealClass(6, "delay-150")}`}>
                   Petakan langkah menuju{" "}
                   <span className={`inline-block bg-[#ce2731] text-white px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-xl mt-1.5 sm:mt-2.5 ${getHighlightPopClass(6, "delay-300")}`}>
