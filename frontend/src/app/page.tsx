@@ -1158,14 +1158,11 @@ export default function HomePage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(6)}`}
       >
-        <div className="w-full h-full mx-auto px-1.5 sm:px-4 flex flex-col justify-center lg:grid lg:grid-cols-12 gap-4 sm:gap-5 lg:items-stretch">
+        <div className="w-full h-full mx-auto px-1.5 sm:px-4 flex flex-col justify-start lg:grid lg:grid-cols-12 gap-3.5 sm:gap-5 lg:items-stretch">
           {/* Left 5 Cols: Solid Navy CTA Card */}
           <div className="lg:col-span-5 flex flex-col lg:py-1 shrink-0">
             <div className="bg-[#0f2c56] lg:bg-transparent text-white rounded-[24px] sm:rounded-[28px] p-4 sm:p-7 lg:p-10 flex flex-col justify-center items-center text-center gap-3.5 sm:gap-5 lg:gap-6 flex-1">
               <div className="space-y-2.5 sm:space-y-4 lg:space-y-5 flex flex-col items-center">
-                <span className={`inline-flex items-center px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-full bg-[#ce2731] text-white text-[11px] sm:text-xs font-bold ${getTextRevealClass(6, "delay-75")}`}>
-                  Mulai Langkah Karir
-                </span>
                 <h2 className={`text-xl sm:text-3xl lg:text-[40px] font-extrabold tracking-normal text-white leading-[1.28] sm:leading-[1.35] ${getTextRevealClass(6, "delay-150")}`}>
                   Petakan langkah menuju{" "}
                   <span className={`inline-block bg-[#ce2731] text-white px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-xl mt-1.5 sm:mt-2.5 ${getHighlightPopClass(6, "delay-300")}`}>
