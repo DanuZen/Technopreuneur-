@@ -12,7 +12,6 @@ import {
   Sparkles,
   CheckCircle2,
   Clock,
-  Eye,
   X,
 } from "lucide-react";
 import { api } from "@/lib/api";
@@ -408,28 +407,16 @@ export default function LowonganCocokPage() {
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-slate-100 grid grid-cols-2 gap-2">
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedJob(job);
-                    }}
-                    className="inline-flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl bg-[#edf2f9] hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white text-xs font-bold transition-colors cursor-pointer"
-                  >
-                    <Eye className="w-3.5 h-3.5 shrink-0" />
-                    <span className="truncate">Detail &amp; AI</span>
-                  </button>
-
+                <div className="pt-2 border-t border-slate-100">
                   {job.source === "jooble" && job.externalUrl ? (
                     <a
                       href={job.externalUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
-                      className="inline-flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors"
+                      className="w-full inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors"
                     >
-                      <span className="truncate">Lamar</span>
+                      <span className="truncate">Lamar di Sumber Asli</span>
                       <ExternalLink className="w-3.5 h-3.5 shrink-0" />
                     </a>
                   ) : alreadyApplied ? (
@@ -439,18 +426,18 @@ export default function LowonganCocokPage() {
                         e.stopPropagation();
                         setActiveTab("applied");
                       }}
-                      className="inline-flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#0f2c56] text-xs font-bold transition-colors cursor-pointer"
+                      className="w-full inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#0f2c56] text-xs font-bold transition-colors cursor-pointer"
                     >
                       <CheckCircle2 className="w-3.5 h-3.5 text-[#0f2c56] shrink-0" />
-                      <span className="truncate">Dilamar</span>
+                      <span className="truncate">Sudah Dilamar (Lihat Status)</span>
                     </button>
                   ) : (
                     <Link
                       href={`/apply/${job.id}`}
                       onClick={(e) => e.stopPropagation()}
-                      className="inline-flex items-center justify-center gap-1 py-2 px-2.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors"
+                      className="w-full inline-flex items-center justify-center gap-1 py-2 px-3 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors"
                     >
-                      <span className="truncate">Lamar Cepat</span>
+                      <span className="truncate">Kirim Lamaran Profil</span>
                       <ChevronRight className="w-3.5 h-3.5 shrink-0" />
                     </Link>
                   )}
