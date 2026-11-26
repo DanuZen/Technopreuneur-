@@ -125,7 +125,7 @@ export function AppShell({ children }: AppShellProps) {
         {/* Viewport Content */}
         <main
           id="konten-utama"
-          className="flex-1 min-h-0 overflow-y-auto scrollbar-none"
+          className="flex-1 min-h-0 overflow-y-auto scrollbar-none pt-3.5 lg:pt-0"
         >
           {children}
         </main>

@@ -207,10 +207,10 @@ export function AppHeader({
         )}
         </div>
       </div>
-      {/* Soft bottom white gradient fade */}
+      {/* Soft bottom white gradient fade (Desktop lg+ only so it never overlaps mobile badges) */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-full h-3 bg-gradient-to-b from-white via-white/80 to-transparent"
+        className="hidden lg:block pointer-events-none absolute inset-x-0 top-full h-3 bg-gradient-to-b from-white via-white/80 to-transparent"
       />
     </header>
   );
