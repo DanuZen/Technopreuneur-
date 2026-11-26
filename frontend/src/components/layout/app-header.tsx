@@ -88,20 +88,19 @@ export function AppHeader({
 
       {/* Right: Mobile Hamburger Menu Toggle (< lg) & Desktop Profile Dropdown (lg+) */}
       <div className="flex items-center gap-2.5 shrink-0">
-        {/* Mobile Hamburger Toggle on the Right */}
+        {/* Mobile Hamburger Toggle on the Right (Clean icon only, no card background) */}
         <button
           type="button"
           onClick={onToggleMobile}
-          className="flex lg:hidden min-h-[42px] px-3.5 gap-2 items-center justify-center rounded-xl bg-slate-100 hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white text-xs font-extrabold transition-colors cursor-pointer"
+          className="flex lg:hidden w-10 h-10 items-center justify-center text-[#0f2c56] hover:text-[#ce2731] transition-colors cursor-pointer"
           aria-label="Buka menu samping navigasi"
           aria-expanded={isMobileOpen}
         >
           {isMobileOpen ? (
-            <X className="w-4 h-4 shrink-0" />
+            <X className="w-6 h-6 shrink-0" />
           ) : (
-            <Menu className="w-4 h-4 shrink-0" />
+            <Menu className="w-6 h-6 shrink-0" />
           )}
-          <span>{isMobileOpen ? "Tutup" : "Menu"}</span>
         </button>
 
         {/* Desktop Account Menu (lg+ only, moved to Sidebar on mobile) */}
