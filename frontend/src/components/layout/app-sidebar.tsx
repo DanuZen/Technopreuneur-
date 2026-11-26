@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   FileCheck,
   Briefcase,
@@ -14,8 +14,13 @@ import {
   ShieldCheck,
   Users,
   MessageSquareText,
+  User as UserIcon,
+  LogOut,
 } from "lucide-react";
+import { User } from "@/types";
+import { api } from "@/lib/api";
 import { getRoleFromPathname, getDashboardBasePath, getRoleSegment } from "@/lib/routes";
+import { UserProfilePopup } from "./user-profile-popup";
 
 export interface ItemRiwayatEvaluasi {
   id: string;
@@ -38,19 +43,32 @@ export function AppSidebar({
   onToggleDesktopCollapse,
 }: AppSidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const [userRole, setUserRole] = useState<string | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [profilePopupOpen, setProfilePopupOpen] = useState(false);
 
   useEffect(() => {
     try {
       const storedUser = localStorage.getItem("cm_user");
       if (storedUser) {
         const parsed = JSON.parse(storedUser);
+        setUser(parsed);
         if (parsed?.role) setUserRole(parsed.role);
+      } else {
+        setUser(null);
       }
     } catch {
       // ignore
     }
   }, [pathname]);
+
+  const handleLogout = () => {
+    api.removeToken();
+    setUser(null);
+    onCloseMobile();
+    router.push("/login");
+  };
 
   const roleInUrl = /^\/(user|company|admin)\/dashboard(\/|$)/.test(pathname)
     ? getRoleFromPathname(pathname)
@@ -315,8 +333,59 @@ export function AppSidebar({
               </div>
             </div>
 
-            {/* Bottom Pinned Footer: Kembali ke Beranda */}
-            <div className="shrink-0 p-4 border-t border-slate-200/80 bg-[#edf2f9]">
+            {/* Bottom Pinned Footer: Mobile Account Section (< lg) + Kembali ke Beranda */}
+            <div className="shrink-0 p-3.5 sm:p-4 border-t border-slate-200/80 bg-[#edf2f9] space-y-2.5">
+              {/* Mobile Account Card (Moved from AppHeader on mobile < lg) */}
+              <div className="lg:hidden">
+                {user ? (
+                  <div className="p-2.5 rounded-2xl bg-white border border-slate-200/90 space-y-2">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-full bg-[#0f2c56] text-white text-xs font-extrabold flex items-center justify-center shrink-0">
+                        {user.name.charAt(0).toUpperCase()}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-extrabold text-[#0f2c56] truncate">
+                          {user.name}
+                        </p>
+                        <p className="text-[10px] text-slate-500 truncate">
+                          {user.email || "Akun Terverifikasi"}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-1.5 pt-1 border-t border-slate-100">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          onCloseMobile();
+                          setProfilePopupOpen(true);
+                        }}
+                        className="flex items-center justify-center gap-1.5 py-2 px-2 rounded-xl bg-[#edf2f9] hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white text-[11px] font-bold transition-colors cursor-pointer"
+                      >
+                        <UserIcon className="w-3.5 h-3.5 shrink-0" />
+                        <span>Profil</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleLogout}
+                        className="flex items-center justify-center gap-1.5 py-2 px-2 rounded-xl bg-slate-100 hover:bg-[#ce2731] text-[#ce2731] hover:text-white text-[11px] font-bold transition-colors cursor-pointer"
+                      >
+                        <LogOut className="w-3.5 h-3.5 shrink-0" />
+                        <span>Keluar</span>
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <Link
+                    href="/login"
+                    onClick={onCloseMobile}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-bold text-white bg-[#0f2c56] hover:bg-[#163861] transition-colors"
+                  >
+                    <UserIcon className="w-3.5 h-3.5 shrink-0" />
+                    <span>Masuk Akun</span>
+                  </Link>
+                )}
+              </div>
+
               <Link
                 href="/"
                 onClick={onCloseMobile}
@@ -329,6 +398,16 @@ export function AppSidebar({
           </div>
         </div>
       </aside>
+
+      {profilePopupOpen && user && (
+        <UserProfilePopup
+          user={user}
+          baseDashboardPath={baseDashboardPath}
+          onClose={() => setProfilePopupOpen(false)}
+          onLogout={handleLogout}
+          onUserUpdated={(updated) => setUser(updated)}
+        />
+      )}
     </>
   );
 }

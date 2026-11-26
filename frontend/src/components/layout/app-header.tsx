@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Menu,
@@ -67,24 +68,40 @@ export function AppHeader({
     : getDashboardBasePath(user?.role);
 
   return (
-    <header className="sticky top-0 z-30 flex min-h-[46px] sm:min-h-[50px] w-full shrink-0 items-center justify-between gap-3 bg-white px-3.5 sm:px-6 py-1.5">
-      {/* Left: Mobile Toggle */}
+    <header className="sticky top-0 z-30 flex min-h-[52px] lg:min-h-[50px] w-full shrink-0 items-center justify-between gap-3 bg-white px-4 sm:px-6 py-2 lg:py-1.5">
+      {/* Left: Mobile Brand Logo (Hidden on Desktop lg+) */}
       <div className="flex items-center gap-2.5 min-w-0">
-        {/* Mobile Hamburger Toggle (Labeled + >= 44px tap target) */}
+        <Link
+          href="/"
+          className="flex lg:hidden items-center py-0.5 shrink-0"
+          aria-label="Beranda Pasbana AI"
+        >
+          <Image
+            src="/logo-text-navy.webp"
+            alt="Pasbana - Kerja Pas, Karir Naik Class"
+            width={136}
+            height={44}
+            className="h-8 sm:h-9 w-auto object-contain"
+            priority
+          />
+        </Link>
+      </div>
+
+      {/* Right: Mobile Hamburger Menu Toggle (< lg) & Desktop Profile Dropdown (lg+) */}
+      <div className="flex items-center gap-2.5 shrink-0">
+        {/* Mobile Hamburger Toggle on the Right (Labeled + >= 44px tap target) */}
         <button
           type="button"
           onClick={onToggleMobile}
-          className="flex lg:hidden min-h-[44px] px-3.5 gap-2 items-center justify-center rounded-xl bg-slate-100 hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white text-xs font-extrabold transition-colors cursor-pointer"
+          className="flex lg:hidden min-h-[42px] px-3.5 gap-2 items-center justify-center rounded-xl bg-slate-100 hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white text-xs font-extrabold transition-colors cursor-pointer"
           aria-label="Buka menu samping navigasi"
         >
           <Menu className="w-4 h-4 shrink-0" />
           <span>Menu</span>
         </button>
-      </div>
 
-      {/* Right: Profile Dropdown */}
-      <div className="flex items-center gap-2.5 shrink-0">
-        {/* Account Menu */}
+        {/* Desktop Account Menu (lg+ only, moved to Sidebar on mobile) */}
+        <div className="hidden lg:flex items-center gap-2.5">
         {user ? (
           <div className="relative" ref={menuRef}>
             <button
@@ -184,6 +201,7 @@ export function AppHeader({
             </Link>
           </div>
         )}
+        </div>
       </div>
       {/* Soft bottom white gradient fade */}
       <div
