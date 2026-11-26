@@ -602,7 +602,7 @@ export default function HomePage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(1)}`}
       >
-        <div className="w-full h-full mx-auto rounded-[28px] sm:rounded-[34px] bg-[#ce2731] lg:bg-transparent px-5 py-5 lg:py-0 sm:px-12 lg:px-16 flex flex-col justify-center lg:grid lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 lg:items-center text-white overflow-hidden">
+        <div className="w-full h-full mx-auto rounded-[28px] sm:rounded-[34px] bg-[#ce2731] lg:bg-transparent px-5 py-6 lg:py-0 sm:px-12 lg:px-16 flex flex-col justify-center lg:grid lg:grid-cols-12 gap-6 sm:gap-6 lg:gap-8 lg:items-center text-white overflow-hidden">
           {/* Left 6 Cols: Cropped Solid Device Frame Rising from Bottom + Overlapping Solid Gauge */}
           <div
             className={`lg:col-span-6 h-auto lg:h-full shrink-0 flex items-center lg:items-end justify-center lg:pt-8 relative ${getChildAnimClass(1, "up", "delay-100")}`}
@@ -858,7 +858,7 @@ export default function HomePage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(3)}`}
       >
-        <div className="w-full h-full mx-auto rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent px-5 py-5 lg:py-0 sm:px-12 lg:px-16 flex flex-col justify-center lg:grid lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 lg:items-center text-white overflow-hidden">
+        <div className="w-full h-full mx-auto rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent px-5 py-6 lg:py-0 sm:px-12 lg:px-16 flex flex-col justify-center lg:grid lg:grid-cols-12 gap-6 sm:gap-6 lg:gap-8 lg:items-center text-white overflow-hidden">
           {/* Left 6 Cols: Cropped White Wireframe Rising from Bottom + Eye Badge + Upward Arrow */}
           <div
             className={`lg:col-span-6 h-auto lg:h-full shrink-0 flex items-center lg:items-end justify-center lg:pt-8 relative ${getChildAnimClass(3, "up", "delay-100")}`}
@@ -955,7 +955,7 @@ export default function HomePage() {
       >
         <div
           ref={slide4ContainerRef}
-          className="relative w-full h-full mx-auto px-1.5 sm:px-8 lg:px-12 flex flex-col justify-center gap-3.5 sm:gap-5 lg:gap-6"
+          className="relative w-full h-full mx-auto px-2 sm:px-8 lg:px-12 py-2 lg:py-0 flex flex-col justify-center gap-4 sm:gap-5 lg:gap-6"
         >
           {/* Top-Center Section Header */}
           <div className="space-y-2.5 sm:space-y-4 text-center max-w-2xl mx-auto flex flex-col items-center shrink-0">
@@ -973,7 +973,7 @@ export default function HomePage() {
           {/* 2 Columns on Mobile, 3 Columns x 2 Rows on Desktop Feature Grid */}
           <div
             ref={slide4GridRef}
-            className={`grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4 lg:gap-5 ${getChildAnimClass(4, "up", "delay-150")}`}
+            className={`grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-5 ${getChildAnimClass(4, "up", "delay-150")}`}
           >
             {FEATURE_GRID_ITEMS.map((item, idx) => {
               const isSelected = activeFeatureIdx === idx;
@@ -986,14 +986,14 @@ export default function HomePage() {
                   }}
                   onMouseEnter={() => setActiveFeatureIdx(idx)}
                   onClick={() => setActiveFeatureIdx(idx)}
-                  className={`p-3 sm:p-5 lg:p-6 rounded-2xl sm:rounded-[28px] text-left transition-colors duration-300 cursor-pointer ${
+                  className={`p-3.5 sm:p-5 lg:p-6 rounded-[20px] sm:rounded-[28px] text-left transition-colors duration-300 cursor-pointer ${
                     isSelected
                       ? `${isCrimson ? "bg-[#ce2731]" : "bg-[#0f2c56]"} text-white`
                       : "bg-white border-2 border-slate-200 hover:border-[#0f2c56] text-[#0f2c56]"
                   }`}
                 >
                   {/* Custom Mini UI Illustration Badge at Top (100% Solid Colors) */}
-                  <div className="h-7 sm:h-11 flex items-center mb-1.5 sm:mb-3 origin-left scale-90 sm:scale-100">
+                  <div className="h-8 sm:h-11 flex items-center mb-2 sm:mb-3 origin-left scale-90 sm:scale-100">
                     {item.badgeType === "eye" && (
                       <div className="px-3.5 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[#ce2731] inline-flex items-center justify-center">
                         <Eye className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
@@ -1036,14 +1036,14 @@ export default function HomePage() {
                   </div>
 
                   <h3
-                    className={`text-xs sm:text-base font-bold leading-snug sm:leading-relaxed mb-1 sm:mb-2 transition-colors duration-300 ${
+                    className={`text-xs sm:text-base font-bold leading-snug sm:leading-relaxed mb-1.5 sm:mb-2 transition-colors duration-300 ${
                       isSelected ? "text-white" : "text-[#0f2c56]"
                     }`}
                   >
                     {item.title}
                   </h3>
                   <p
-                    className={`text-[11px] sm:text-xs leading-snug sm:leading-[1.7] line-clamp-3 sm:line-clamp-none transition-colors duration-300 ${
+                    className={`text-[11px] sm:text-xs leading-relaxed sm:leading-[1.7] transition-colors duration-300 ${
                       isSelected ? "text-white" : "text-slate-600"
                     }`}
                   >
@@ -1158,11 +1158,11 @@ export default function HomePage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(6)}`}
       >
-        <div className="w-full h-full mx-auto px-1 sm:px-4 flex flex-col justify-between lg:grid lg:grid-cols-12 gap-3 sm:gap-4 lg:gap-5 lg:items-stretch">
+        <div className="w-full h-full mx-auto px-1.5 sm:px-4 flex flex-col justify-center lg:grid lg:grid-cols-12 gap-4 sm:gap-5 lg:items-stretch">
           {/* Left 5 Cols: Solid Navy CTA Card */}
           <div className="lg:col-span-5 flex flex-col lg:py-1 shrink-0">
-            <div className="bg-[#0f2c56] lg:bg-transparent text-white rounded-[24px] sm:rounded-[28px] p-4 sm:p-7 lg:p-10 flex flex-col justify-center items-center text-center gap-3 sm:gap-5 lg:gap-6 flex-1">
-              <div className="space-y-2 sm:space-y-4 lg:space-y-5 flex flex-col items-center">
+            <div className="bg-[#0f2c56] lg:bg-transparent text-white rounded-[24px] sm:rounded-[28px] p-4 sm:p-7 lg:p-10 flex flex-col justify-center items-center text-center gap-3.5 sm:gap-5 lg:gap-6 flex-1">
+              <div className="space-y-2.5 sm:space-y-4 lg:space-y-5 flex flex-col items-center">
                 <span className={`inline-flex items-center px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-full bg-[#ce2731] text-white text-[11px] sm:text-xs font-bold ${getTextRevealClass(6, "delay-75")}`}>
                   Mulai Langkah Karir
                 </span>
@@ -1197,9 +1197,9 @@ export default function HomePage() {
 
           {/* Right 7 Cols: Clean Header + 5 Solid Interactive Accordion Cards */}
           <div
-            className={`lg:col-span-7 flex-1 min-h-0 flex flex-col justify-center gap-2 sm:gap-3 lg:py-2 lg:pl-4 ${getChildAnimClass(6, "right", "delay-150")}`}
+            className={`lg:col-span-7 flex flex-col justify-center gap-2 sm:gap-3 lg:py-2 lg:pl-4 ${getChildAnimClass(6, "right", "delay-150")}`}
           >
-            <div className="pb-0.5 sm:pb-2 space-y-1.5 sm:space-y-2 shrink-0">
+            <div className="pb-1 sm:pb-2 space-y-1.5 sm:space-y-2 shrink-0">
               <span className="inline-flex items-center px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-full bg-[#0f2c56] text-[11px] sm:text-xs font-bold text-white">
                 Pertanyaan Umum
               </span>
@@ -1208,7 +1208,7 @@ export default function HomePage() {
               </h3>
             </div>
 
-            <div className="space-y-1.5 sm:space-y-2.5">
+            <div className="space-y-2 sm:space-y-2.5">
               {ACCORDION_ITEMS.map((item, idx) => {
                 const isOpen = openAccordionId === item.id;
                 return (
@@ -1223,7 +1223,7 @@ export default function HomePage() {
                     <button
                       type="button"
                       onClick={() => setOpenAccordionId(isOpen ? null : item.id)}
-                      className="w-full px-3 py-2 sm:px-5 sm:py-3.5 lg:py-4 flex items-center justify-between gap-2.5 sm:gap-4 text-left cursor-pointer"
+                      className="w-full px-3.5 py-2.5 sm:px-5 sm:py-3.5 lg:py-4 flex items-center justify-between gap-2.5 sm:gap-4 text-left cursor-pointer"
                     >
                       <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
                         <span
