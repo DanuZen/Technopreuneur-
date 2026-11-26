@@ -169,6 +169,55 @@ export function UserProfilePopup({
     } catch {
       // ignore storage errors
     }
+
+    // Sinkronkan dari Backend API jika sesi aktif
+    api
+      .getProfile<{
+        fullName?: string;
+        headline?: string;
+        contactEmail?: string;
+        city?: string;
+        summary?: string;
+        skills?: { technical?: string[] };
+        experiences?: Array<{ title: string; organization: string; period: string }>;
+        education?: Array<{ degree: string; field: string; institution: string; graduationYear: string }>;
+      }>()
+      .then((remote) => {
+        if (!remote) return;
+        setDraft((prev) => ({
+          ...prev,
+          name: remote.fullName || prev.name,
+          email: remote.contactEmail || prev.email,
+          location: remote.city || prev.location,
+          field: remote.headline || prev.field,
+          summary: remote.summary || prev.summary,
+          skills:
+            remote.skills?.technical && remote.skills.technical.length > 0
+              ? remote.skills.technical
+              : prev.skills,
+          experiences:
+            remote.experiences && remote.experiences.length > 0
+              ? remote.experiences.map((ex, idx) => ({
+                  id: `exp-r-${idx}`,
+                  title: ex.title,
+                  company: ex.organization,
+                  period: ex.period,
+                }))
+              : prev.experiences,
+          education:
+            remote.education && remote.education.length > 0
+              ? remote.education.map((ed, idx) => ({
+                  id: `edu-r-${idx}`,
+                  degree: `${ed.degree} ${ed.field}`.trim(),
+                  institution: ed.institution,
+                  year: ed.graduationYear,
+                }))
+              : prev.education,
+        }));
+      })
+      .catch(() => {
+        // tetap gunakan localStorage jika offline
+      });
   }, [user.name, user.email]);
 
   const persistDraft = (next: UserProfileDraft) => {
@@ -185,6 +234,33 @@ export function UserProfilePopup({
     } catch {
       // ignore
     }
+
+    api
+      .updateProfile({
+        fullName: next.name.trim() || user.name,
+        contactEmail: next.email.trim() || user.email,
+        city: next.location,
+        headline: next.field,
+        seniorityLevel: next.seniority,
+        summary: next.summary,
+        skills: { technical: next.skills, soft: [], tools: [] },
+        experiences: next.experiences.map((ex) => ({
+          title: ex.title,
+          organization: ex.company,
+          period: ex.period,
+          description: ex.title,
+        })),
+        education: next.education.map((ed) => ({
+          degree: ed.degree,
+          field: "",
+          institution: ed.institution,
+          graduationYear: ed.year,
+        })),
+      })
+      .catch(() => {
+        // tetap tersimpan lokal jika offline
+      });
+
     setSavedNotice(true);
     setTimeout(() => setSavedNotice(false), 2000);
   };

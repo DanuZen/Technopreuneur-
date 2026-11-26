@@ -26,6 +26,7 @@ import {
   AdminPipelineDiagram,
 } from "@/components/dashboard/dashboard-diagrams";
 import { isValidDashboardRole } from "@/lib/routes";
+import { api } from "@/lib/api";
 
 type ApplicantStatus = "submitted" | "reviewed" | "shortlisted" | "rejected";
 
@@ -99,24 +100,51 @@ const INITIAL_APPLICANTS: CompanyApplicant[] = [
 
 function CompanyDashboardView() {
   const [jobs, setJobs] = useState<CompanyJobItem[]>(INITIAL_COMPANY_JOBS);
-  const [applicants] = useState<CompanyApplicant[]>(INITIAL_APPLICANTS);
+  const [applicants, setApplicants] = useState<CompanyApplicant[]>(INITIAL_APPLICANTS);
   const [showNewJobForm, setShowNewJobForm] = useState(false);
   const [newJobTitle, setNewJobTitle] = useState("");
   const [newJobLocation, setNewJobLocation] = useState("");
 
-  const handleAddJob = (e: React.FormEvent) => {
+  useEffect(() => {
+    api
+      .getCompanyJobs<CompanyJobItem[]>()
+      .then((res) => {
+        if (Array.isArray(res) && res.length > 0) setJobs(res);
+      })
+      .catch(() => {});
+
+    api
+      .getCompanyApplicants<CompanyApplicant[]>("all")
+      .then((res) => {
+        if (Array.isArray(res) && res.length > 0) setApplicants(res);
+      })
+      .catch(() => {});
+  }, []);
+
+  const handleAddJob = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newJobTitle.trim()) return;
-    setJobs((prev) => [
-      {
-        id: `job-${Date.now()}`,
-        title: newJobTitle.trim(),
-        location: newJobLocation.trim() || "Indonesia (Remote)",
+    const cleanTitle = newJobTitle.trim();
+    const cleanLoc = newJobLocation.trim() || "Indonesia (Remote)";
+    try {
+      const created = await api.createCompanyJob<CompanyJobItem>({
+        title: cleanTitle,
+        location: cleanLoc,
         type: "Full-time",
-        applicants: 0,
-      },
-      ...prev,
-    ]);
+      });
+      setJobs((prev) => [created, ...prev]);
+    } catch {
+      setJobs((prev) => [
+        {
+          id: `job-${Date.now()}`,
+          title: cleanTitle,
+          location: cleanLoc,
+          type: "Full-time",
+          applicants: 0,
+        },
+        ...prev,
+      ]);
+    }
     setNewJobTitle("");
     setNewJobLocation("");
     setShowNewJobForm(false);
@@ -357,6 +385,58 @@ const MONITORED_PARTNERS: PartnerMonitoringItem[] = [
 
 function AdminDashboardView() {
   const [partners, setPartners] = useState<PartnerMonitoringItem[]>(MONITORED_PARTNERS);
+  const [totalJobseekers, setTotalJobseekers] = useState<number>(1248);
+  const [totalPartnerCompanies, setTotalPartnerCompanies] = useState<number>(24);
+
+  useEffect(() => {
+    api
+      .getAdminOverview<{
+        totalJobseekers?: number;
+        totalPartnerCompanies?: number;
+      }>()
+      .then((ov) => {
+        if (!ov) return;
+        if (typeof ov.totalJobseekers === "number") {
+          setTotalJobseekers(ov.totalJobseekers);
+        }
+        if (typeof ov.totalPartnerCompanies === "number") {
+          setTotalPartnerCompanies(ov.totalPartnerCompanies);
+        }
+      })
+      .catch(() => {});
+
+    api
+      .getAdminPartners<
+        Array<{
+          id: string;
+          company: string;
+          sector: string;
+          location: string;
+          status: "verified" | "pending" | "incomplete";
+          legalityDoc: string;
+        }>
+      >()
+      .then((res) => {
+        if (Array.isArray(res) && res.length > 0) {
+          setPartners(
+            res.map((r) => ({
+              id: r.id,
+              company: r.company,
+              sector: r.sector,
+              location: r.location,
+              complianceStatus: r.status,
+              standardScore:
+                r.status === "verified"
+                  ? "100% Patuh"
+                  : r.status === "incomplete"
+                  ? "Perlu Revisi"
+                  : r.legalityDoc,
+            }))
+          );
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const handlePartnerAudit = (
     id: string,
@@ -374,6 +454,7 @@ function AdminDashboardView() {
           : item
       )
     );
+    api.auditAdminPartner(id, { status: complianceStatus }).catch(() => {});
   };
 
   const verifiedCount = partners.filter((p) => p.complianceStatus === "verified").length;
@@ -454,11 +535,13 @@ function AdminDashboardView() {
             <div className="border-t border-white/15 divide-y divide-white/10 text-xs text-white">
               <div className="py-1.5 flex items-center justify-between gap-3">
                 <span>Total Jobseeker Terdaftar</span>
-                <span className="font-bold">1.248 Pencari Kerja</span>
+                <span className="font-bold">
+                  {totalJobseekers.toLocaleString("id-ID")} Pencari Kerja
+                </span>
               </div>
               <div className="py-1.5 flex items-center justify-between gap-3">
                 <span>Company Bekerja Sama</span>
-                <span className="font-bold">24 Perusahaan</span>
+                <span className="font-bold">{totalPartnerCompanies} Perusahaan</span>
               </div>
               <div className="pt-1.5 flex items-center justify-between gap-3">
                 <span>Menunggu Audit &amp; Verifikasi</span>

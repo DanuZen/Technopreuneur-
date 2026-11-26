@@ -137,16 +137,34 @@ export default function LoginPage() {
     }, 340);
   };
 
+  const getPostLoginTarget = (defaultPath: string, roleName: string): string => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const next = params.get("next");
+      if (
+        next &&
+        next.startsWith("/") &&
+        (roleName === "jobseeker" || roleName === "user")
+      ) {
+        return next;
+      }
+    }
+    return defaultPath;
+  };
+
   const triggerPortalTransition = (
     targetPath: string,
     roleLabel: string,
-    userObj?: { id: string; name: string; email: string; role: string }
+    userObj?: { id: string; name: string; email: string; role: string },
+    isDemoFallback = false
   ) => {
     if (exitDirection) return;
     if (userObj) {
       try {
         localStorage.setItem("cm_user", JSON.stringify(userObj));
-        localStorage.setItem("cm_token", "demo-session-token-pasbana");
+        if (isDemoFallback) {
+          localStorage.setItem("cm_token", "demo-session-token-pasbana");
+        }
       } catch {
         // ignore
       }
@@ -159,6 +177,40 @@ export default function LoginPage() {
     });
   };
 
+  const handleQuickRoleLogin = async (role: (typeof QUICK_ROLES)[number]) => {
+    if (exitDirection || loading) return;
+    setError(null);
+    setLoading(true);
+    try {
+      const res = await api.login({ email: role.email, password: "pasbana2026" });
+      const dest = getPostLoginTarget(
+        getDashboardBasePath(res.user.role),
+        res.user.role
+      );
+      triggerPortalTransition(dest, role.label, {
+        id: res.user.id,
+        name: res.user.name,
+        email: res.user.email,
+        role: res.user.role,
+      });
+    } catch {
+      const dest = getPostLoginTarget(role.path, role.role);
+      triggerPortalTransition(
+        dest,
+        role.label,
+        {
+          id: `demo-${role.id}`,
+          name: role.name,
+          email: role.email,
+          role: role.role,
+        },
+        true
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (exitDirection) return;
@@ -169,7 +221,11 @@ export default function LoginPage() {
 
     try {
       const res = await api.login({ email: identifier.trim(), password });
-      triggerPortalTransition(getDashboardBasePath(res.user.role), "Dashboard Akun", {
+      const dest = getPostLoginTarget(
+        getDashboardBasePath(res.user.role),
+        res.user.role
+      );
+      triggerPortalTransition(dest, "Dashboard Akun", {
         id: res.user.id,
         name: res.user.name,
         email: res.user.email,
@@ -187,12 +243,18 @@ export default function LoginPage() {
 
       if (matchedQuick || password.length >= 4) {
         const chosen = matchedQuick || QUICK_ROLES[0];
-        triggerPortalTransition(chosen.path, chosen.label, {
+        const dest = getPostLoginTarget(chosen.path, chosen.role);
+        triggerPortalTransition(
+          dest,
+          chosen.label,
+          {
           id: `demo-${chosen.id}`,
           name: chosen.name,
           email: identifier.trim() || chosen.email,
           role: chosen.role,
-        });
+        },
+        true
+        );
       } else {
         setError("Gagal masuk. Periksa kembali alamat email dan kata sandi Anda.");
         setLoading(false);
@@ -416,14 +478,7 @@ export default function LoginPage() {
                       type="button"
                       title={`${role.label} - ${role.name} (${role.email})`}
                       aria-label={`Login cepat sebagai ${role.label}`}
-                      onClick={() =>
-                        triggerPortalTransition(role.path, role.label, {
-                          id: `demo-${role.id}`,
-                          name: role.name,
-                          email: role.email,
-                          role: role.role,
-                        })
-                      }
+                      onClick={() => handleQuickRoleLogin(role)}
                       className="morph-pill group relative w-11 h-11 rounded-xl border border-slate-200 hover:border-[#0f2c56] bg-slate-50 hover:bg-[#0f2c56] text-slate-600 hover:text-white flex items-center justify-center shadow-2xs hover:shadow-md hover:shadow-[#0f2c56]/25 hover:-translate-y-0.5 cursor-pointer"
                     >
                       <RoleIcon className="w-5 h-5 transition-transform duration-200 group-hover:scale-110" />

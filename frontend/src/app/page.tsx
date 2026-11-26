@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   ArrowUpRight,
   Eye,
@@ -101,7 +102,24 @@ const ACCORDION_ITEMS: AccordionItem[] = [
 ];
 
 export default function HomePage() {
+  const router = useRouter();
   const [activeSlide, setActiveSlide] = useState<number>(0);
+
+  const handleAuthFlowLink = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    targetPath: string
+  ) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    try {
+      const hasToken = Boolean(localStorage.getItem("cm_token"));
+      if (!hasToken) {
+        e.preventDefault();
+        router.push(`/login?next=${encodeURIComponent(targetPath)}`);
+      }
+    } catch {
+      // biarkan navigasi standar jika akses storage gagal
+    }
+  };
   const [prevSlide, setPrevSlide] = useState<number>(0);
   const [scrollDir, setScrollDir] = useState<"down" | "up">("down");
   const [isEntered, setIsEntered] = useState<boolean>(false);
@@ -450,13 +468,17 @@ export default function HomePage() {
 
             <div className={`pt-1 flex flex-wrap items-center justify-end gap-3 ${getTextRevealClass(0, "delay-300")}`}>
               <Link
-                href="/evaluate"
+                href="/user/dashboard/evaluasi"
+                onClick={(e) => handleAuthFlowLink(e, "/user/dashboard/evaluasi")}
                 className="px-6 py-3.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs sm:text-sm font-bold transition-colors"
               >
                 Evaluasi CV Saya
               </Link>
               <Link
-                href="/onboarding"
+                href="/user/dashboard/evaluasi/onboarding"
+                onClick={(e) =>
+                  handleAuthFlowLink(e, "/user/dashboard/evaluasi/onboarding")
+                }
                 className="px-6 py-3.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs sm:text-sm font-bold transition-colors"
               >
                 Belum Punya CV

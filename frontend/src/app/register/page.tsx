@@ -156,7 +156,9 @@ export default function RegisterPage() {
           subMessage="Mengarahkan ke ruang evaluasi CV & pencocokan karir"
           duration={1000}
           onFinish={() => {
-            router.push(role === "employer" ? "/jobs" : "/evaluate");
+            router.push(
+              role === "employer" ? "/company/dashboard" : "/user/dashboard/evaluasi"
+            );
           }}
         />
       )}

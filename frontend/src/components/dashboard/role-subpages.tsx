@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Briefcase,
@@ -24,6 +24,7 @@ import {
   CompanyFunnelDiagram,
   CompanyTrendDiagram,
 } from "@/components/dashboard/dashboard-diagrams";
+import { api } from "@/lib/api";
 
 type ApplicantStatus = "submitted" | "reviewed" | "shortlisted" | "rejected";
 
@@ -43,6 +44,13 @@ interface CompanyCandidateItem {
   atsScore: number;
   matchReason: string;
   status: ApplicantStatus;
+  candidateSummary?: {
+    headline: string;
+    education: string;
+    skills: string[];
+    experienceHighlight: string;
+    cvSource: "upload" | "onboarding";
+  };
 }
 
 const INITIAL_COMPANY_JOBS: CompanyJobItem[] = [
@@ -80,6 +88,14 @@ const INITIAL_COMPANY_CANDIDATES: CompanyCandidateItem[] = [
     atsScore: 91,
     matchReason: "Menguasai React, Next.js, TypeScript, dan portofolio proyek terukur.",
     status: "shortlisted",
+    candidateSummary: {
+      headline: "Junior Frontend & Fullstack Developer",
+      education: "S1 Teknik Informatika - Universitas Negeri Padang (2026)",
+      skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "REST API"],
+      experienceHighlight:
+        "Membangun antarmuka web interaktif Next.js dengan peningkatan kecepatan muat 38%.",
+      cvSource: "upload",
+    },
   },
   {
     id: "cand-02",
@@ -88,6 +104,14 @@ const INITIAL_COMPANY_CANDIDATES: CompanyCandidateItem[] = [
     atsScore: 86,
     matchReason: "Struktur pengalaman desain sistem rapi dan metrik konversi jelas.",
     status: "reviewed",
+    candidateSummary: {
+      headline: "UI/UX & Product Designer",
+      education: "S1 Desain Komunikasi Visual (2025)",
+      skills: ["Design System", "Prototyping", "Wireframing", "HTML/CSS"],
+      experienceHighlight:
+        "Merancang ulang alur checkout aplikasi mobile dan meningkatkan konversi pengguna.",
+      cvSource: "onboarding",
+    },
   },
   {
     id: "cand-03",
@@ -114,29 +138,56 @@ export function CompanyJobsSubpage() {
   const [location, setLocation] = useState("");
   const [type, setType] = useState("Full-time");
 
-  const handleAdd = (e: React.FormEvent) => {
+  useEffect(() => {
+    api
+      .getCompanyJobs<CompanyJobItem[]>()
+      .then((res) => {
+        if (Array.isArray(res) && res.length > 0) setJobs(res);
+      })
+      .catch(() => {});
+  }, []);
+
+  const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim()) return;
-    setJobs((prev) => [
-      {
-        id: `job-${Date.now()}`,
-        title: title.trim(),
-        location: location.trim() || "Indonesia (Remote)",
+    const cleanTitle = title.trim();
+    const cleanLoc = location.trim() || "Indonesia (Remote)";
+    try {
+      const created = await api.createCompanyJob<CompanyJobItem>({
+        title: cleanTitle,
+        location: cleanLoc,
         type,
-        applicants: 0,
-        active: true,
-      },
-      ...prev,
-    ]);
+      });
+      setJobs((prev) => [created, ...prev]);
+    } catch {
+      setJobs((prev) => [
+        {
+          id: `job-${Date.now()}`,
+          title: cleanTitle,
+          location: cleanLoc,
+          type,
+          applicants: 0,
+          active: true,
+        },
+        ...prev,
+      ]);
+    }
     setTitle("");
     setLocation("");
     setShowForm(false);
   };
 
-  const toggleActive = (id: string) => {
+  const toggleActive = async (id: string) => {
+    const target = jobs.find((j) => j.id === id);
+    const nextActive = target ? !target.active : true;
     setJobs((prev) =>
-      prev.map((j) => (j.id === id ? { ...j, active: !j.active } : j))
+      prev.map((j) => (j.id === id ? { ...j, active: nextActive } : j))
     );
+    try {
+      await api.toggleCompanyJob(id, nextActive);
+    } catch {
+      // tetap gunakan state optimis lokal jika offline
+    }
   };
 
   const activeJobsCount = jobs.filter((j) => j.active).length;
@@ -330,10 +381,25 @@ export function CompanyCandidatesSubpage() {
   const [filter, setFilter] = useState<"all" | ApplicantStatus>("all");
   const [selectedId, setSelectedId] = useState<string>(INITIAL_COMPANY_CANDIDATES[0].id);
 
+  useEffect(() => {
+    api
+      .getCompanyApplicants<CompanyCandidateItem[]>("all")
+      .then((res) => {
+        if (Array.isArray(res) && res.length > 0) {
+          setCandidates(res);
+          setSelectedId(res[0].id);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   const updateStatus = (id: string, status: ApplicantStatus) => {
     setCandidates((prev) =>
       prev.map((c) => (c.id === id ? { ...c, status } : c))
     );
+    if (status !== "submitted") {
+      api.updateCompanyApplicantStatus(id, status).catch(() => {});
+    }
   };
 
   const visible =
@@ -464,6 +530,42 @@ export function CompanyCandidatesSubpage() {
                   {selected.matchReason}
                 </p>
               </div>
+
+              {selected.candidateSummary && (
+                <div className="rounded-xl border border-slate-200 bg-white p-3.5 space-y-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="text-[10px] font-extrabold uppercase tracking-wider text-[#0f2c56]">
+                      Isi CV &amp; Profil di Sistem
+                    </p>
+                    <span className="px-2 py-0.5 rounded-full bg-[#edf2f9] text-[#0f2c56] text-[10px] font-bold">
+                      {selected.candidateSummary.cvSource === "onboarding"
+                        ? "CV Onboarding"
+                        : "CV Unggahan"}
+                    </span>
+                  </div>
+                  <p className="text-xs font-bold text-[#0f2c56]">
+                    {selected.candidateSummary.headline}
+                  </p>
+                  <p className="text-[11px] text-slate-600">
+                    {selected.candidateSummary.education}
+                  </p>
+                  <p className="text-[11px] text-slate-600 leading-relaxed">
+                    {selected.candidateSummary.experienceHighlight}
+                  </p>
+                  {selected.candidateSummary.skills.length > 0 && (
+                    <div className="flex flex-wrap gap-1 pt-0.5">
+                      {selected.candidateSummary.skills.slice(0, 5).map((sk) => (
+                        <span
+                          key={sk}
+                          className="px-2 py-0.5 rounded-full bg-[#0f2c56] text-white text-[10px] font-bold"
+                        >
+                          {sk}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="space-y-2 pt-3 border-t border-slate-100">
@@ -528,8 +630,40 @@ export function CompanyProfileSubpage() {
     .map((k) => k.trim())
     .filter(Boolean);
 
+  useEffect(() => {
+    api
+      .getCompanyProfile<{
+        companyName?: string;
+        industry?: string;
+        website?: string;
+        city?: string;
+        keywords?: string;
+        description?: string;
+      }>()
+      .then((res) => {
+        if (!res) return;
+        if (res.companyName) setCompanyName(res.companyName);
+        if (res.industry) setIndustry(res.industry);
+        if (res.website) setWebsite(res.website);
+        if (res.city) setCity(res.city);
+        if (res.keywords) setKeywords(res.keywords);
+        if (res.description) setDescription(res.description);
+      })
+      .catch(() => {});
+  }, []);
+
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
+    api
+      .updateCompanyProfile({
+        companyName,
+        industry,
+        website,
+        city,
+        keywords,
+        description,
+      })
+      .catch(() => {});
     setSaved(true);
     setTimeout(() => setSaved(false), 2500);
   };
@@ -770,6 +904,18 @@ export function AdminModerationSubpage() {
   );
   const [selectedId, setSelectedId] = useState<string>(MONITORED_COMPANY_APPLICATIONS[0].id);
 
+  useEffect(() => {
+    api
+      .getAdminPartners<PartnerMonitoringRecord[]>()
+      .then((res) => {
+        if (Array.isArray(res) && res.length > 0) {
+          setItems(res);
+          setSelectedId(res[0].id);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   const setAuditStatus = (
     id: string,
     status: PartnerMonitoringRecord["status"]
@@ -777,6 +923,16 @@ export function AdminModerationSubpage() {
     setItems((prev) =>
       prev.map((it) => (it.id === id ? { ...it, status } : it))
     );
+    api
+      .auditAdminPartner<PartnerMonitoringRecord>(id, { status })
+      .then((updated) => {
+        if (updated && updated.id) {
+          setItems((prev) =>
+            prev.map((it) => (it.id === id ? updated : it))
+          );
+        }
+      })
+      .catch(() => {});
   };
 
   const selected = items.find((it) => it.id === selectedId) || items[0];
@@ -928,26 +1084,77 @@ export function AdminAuditSubpage() {
   const [requireFullLegality, setRequireFullLegality] = useState<boolean>(true);
   const [retentionDays, setRetentionDays] = useState<string>("90");
   const [savedStandard, setSavedStandard] = useState<boolean>(false);
+  const [aggCounts, setAggCounts] = useState({
+    totalJobseekers: 1248,
+    totalPartnerCompanies: 24,
+    pendingCompanyAudits: 3,
+  });
+
+  useEffect(() => {
+    api
+      .getAdminOverview<{
+        totalJobseekers?: number;
+        totalPartnerCompanies?: number;
+        pendingCompanyAudits?: number;
+      }>()
+      .then((ov) => {
+        if (!ov) return;
+        setAggCounts((prev) => ({
+          totalJobseekers: ov.totalJobseekers ?? prev.totalJobseekers,
+          totalPartnerCompanies:
+            ov.totalPartnerCompanies ?? prev.totalPartnerCompanies,
+          pendingCompanyAudits:
+            ov.pendingCompanyAudits ?? prev.pendingCompanyAudits,
+        }));
+      })
+      .catch(() => {});
+
+    api
+      .getAdminStandards<{
+        minAtsScore?: number;
+        maxCvSizeMb?: number;
+        slaSeconds?: number;
+        allowedFormat?: "pdf_docx" | "pdf_only";
+        blindScreeningRequired?: boolean;
+        requireFullLegality?: boolean;
+        retentionDays?: string;
+      }>()
+      .then((std) => {
+        if (!std) return;
+        if (typeof std.minAtsScore === "number") setMinAtsScore(std.minAtsScore);
+        if (typeof std.maxCvSizeMb === "number") setMaxCvSizeMb(std.maxCvSizeMb);
+        if (typeof std.slaSeconds === "number") setSlaSeconds(std.slaSeconds);
+        if (std.allowedFormat) setAllowedFormat(std.allowedFormat);
+        if (typeof std.blindScreeningRequired === "boolean") {
+          setBlindScreeningRequired(std.blindScreeningRequired);
+        }
+        if (typeof std.requireFullLegality === "boolean") {
+          setRequireFullLegality(std.requireFullLegality);
+        }
+        if (std.retentionDays) setRetentionDays(std.retentionDays);
+      })
+      .catch(() => {});
+  }, []);
 
   const ecosystemStats = [
     {
       id: "s1",
       metric: "Total Jobseeker Terdaftar",
-      value: "1.248 Akun",
+      value: `${aggCounts.totalJobseekers.toLocaleString("id-ID")} Akun`,
       note: "Data agregat pencari kerja aktif di platform",
       icon: Users,
     },
     {
       id: "s2",
       metric: "Company Bekerja Sama",
-      value: "24 Perusahaan",
+      value: `${aggCounts.totalPartnerCompanies} Perusahaan`,
       note: "Mitra terverifikasi yang memenuhi standar platform",
       icon: Building2,
     },
     {
       id: "s3",
       metric: "Calon Mitra Dalam Audit",
-      value: "3 Pengajuan",
+      value: `${aggCounts.pendingCompanyAudits} Pengajuan`,
       note: "Menunggu audit legalitas & kepatuhan standar PDP",
       icon: ShieldCheck,
     },
@@ -1024,6 +1231,17 @@ export function AdminAuditSubpage() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
+            api
+              .updateAdminStandards({
+                minAtsScore,
+                maxCvSizeMb,
+                slaSeconds,
+                allowedFormat,
+                blindScreeningRequired,
+                requireFullLegality,
+                retentionDays,
+              })
+              .catch(() => {});
             setSavedStandard(true);
           }}
           className="xl:col-span-7 h-full rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 flex flex-col justify-between gap-4 shadow-xs"
@@ -1262,6 +1480,35 @@ export function AdminAuditSubpage() {
 
 export function AdminReportSubpage() {
   const [period, setPeriod] = useState<"bulan" | "kuartal" | "tahun">("bulan");
+  const [reportCounts, setReportCounts] = useState({
+    totalJobseekers: 1248,
+    totalPartnerCompanies: 24,
+    totalPartnerAudits: 27,
+    pdpAnonymizationRate: 100,
+  });
+
+  useEffect(() => {
+    api
+      .getAdminReport<{
+        totalJobseekers?: number;
+        totalPartnerCompanies?: number;
+        totalPartnerAudits?: number;
+        pdpAnonymizationRate?: number;
+      }>(period)
+      .then((rep) => {
+        if (!rep) return;
+        setReportCounts((prev) => ({
+          totalJobseekers: rep.totalJobseekers ?? prev.totalJobseekers,
+          totalPartnerCompanies:
+            rep.totalPartnerCompanies ?? prev.totalPartnerCompanies,
+          totalPartnerAudits:
+            rep.totalPartnerAudits ?? prev.totalPartnerAudits,
+          pdpAnonymizationRate:
+            rep.pdpAnonymizationRate ?? prev.pdpAnonymizationRate,
+        }));
+      })
+      .catch(() => {});
+  }, [period]);
 
   const periodLabel =
     period === "bulan"
@@ -1274,7 +1521,7 @@ export function AdminReportSubpage() {
     {
       id: "r1",
       title: "Total Jobseeker Terdaftar",
-      value: "1.248 Akun",
+      value: `${reportCounts.totalJobseekers.toLocaleString("id-ID")} Akun`,
       note: "+14% pertumbuhan agregat dibanding periode lalu",
       icon: Users,
       accent: "text-[#0f2c56]",
@@ -1282,7 +1529,7 @@ export function AdminReportSubpage() {
     {
       id: "r2",
       title: "Company Bekerja Sama",
-      value: "24 Perusahaan",
+      value: `${reportCounts.totalPartnerCompanies} Perusahaan`,
       note: "Seluruh mitra lulus audit legalitas NIB & NPWP",
       icon: Building2,
       accent: "text-[#0f2c56]",
@@ -1290,7 +1537,7 @@ export function AdminReportSubpage() {
     {
       id: "r3",
       title: "Audit Pendaftaran Company",
-      value: "27 Pengajuan",
+      value: `${reportCounts.totalPartnerAudits} Pengajuan`,
       note: "24 Terverifikasi · 3 Dalam antrean audit Admin",
       icon: FileCheck,
       accent: "text-[#0f2c56]",
