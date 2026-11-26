@@ -79,6 +79,8 @@ export function UserProfilePopup({
   const [mounted, setMounted] = useState(false);
   const [cvList, setCvList] = useState<CVAnalysisResult[]>([]);
   const [deletingCvId, setDeletingCvId] = useState<string | null>(null);
+  const [confirmDeleteAccount, setConfirmDeleteAccount] = useState(false);
+  const [deletingAccount, setDeletingAccount] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -95,6 +97,17 @@ export function UserProfilePopup({
     await api.deleteCV(cvId);
     setCvList(api.getHistory());
     setDeletingCvId(null);
+  };
+
+  const handleDeleteAccount = async () => {
+    setDeletingAccount(true);
+    try {
+      await api.deleteAccount();
+      onClose();
+      onLogout();
+    } finally {
+      setDeletingAccount(false);
+    }
   };
 
   const [draft, setDraft] = useState<UserProfileDraft>({
@@ -889,6 +902,45 @@ export function UserProfilePopup({
                   ))}
                 </div>
               )}
+
+              <div className="p-3.5 rounded-2xl bg-red-50 border border-red-200 space-y-2.5">
+                <div className="space-y-1">
+                  <p className="text-xs font-extrabold text-[#ce2731]">
+                    Hapus Akun Secara Permanen
+                  </p>
+                  <p className="text-[11px] text-slate-600 leading-relaxed">
+                    Menghapus seluruh akun, profil, dokumen CV, dan riwayat lamaran Anda dari sistem secara permanen.
+                  </p>
+                </div>
+                {!confirmDeleteAccount ? (
+                  <button
+                    type="button"
+                    onClick={() => setConfirmDeleteAccount(true)}
+                    className="px-3.5 py-2 rounded-xl bg-white border border-red-300 text-[#ce2731] hover:bg-[#ce2731] hover:text-white text-xs font-bold transition-colors cursor-pointer"
+                  >
+                    Hapus Akun Saya
+                  </button>
+                ) : (
+                  <div className="flex flex-wrap items-center gap-2">
+                    <button
+                      type="button"
+                      disabled={deletingAccount}
+                      onClick={handleDeleteAccount}
+                      className="px-3.5 py-2 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs font-bold transition-colors cursor-pointer disabled:opacity-50"
+                    >
+                      {deletingAccount ? "Menghapus Akun..." : "Ya, Hapus Permanen"}
+                    </button>
+                    <button
+                      type="button"
+                      disabled={deletingAccount}
+                      onClick={() => setConfirmDeleteAccount(false)}
+                      className="px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-slate-600 text-xs font-bold cursor-pointer"
+                    >
+                      Batal
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>

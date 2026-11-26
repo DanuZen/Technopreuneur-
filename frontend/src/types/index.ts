@@ -117,3 +117,13 @@ export interface JobItem {
   missingSkills?: string[];
 }
 
+export interface MyApplicationItem {
+  id: string;
+  jobId: string;
+  roleApplied: string;
+  atsScore: number;
+  matchReason: string;
+  status: "submitted" | "reviewed" | "shortlisted" | "rejected";
+  createdAt: string;
+}
+

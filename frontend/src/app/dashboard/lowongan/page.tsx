@@ -10,9 +10,11 @@ import {
   UploadCloud,
   Bookmark,
   Sparkles,
+  CheckCircle2,
+  Clock,
 } from "lucide-react";
 import { api } from "@/lib/api";
-import { CVAnalysisResult, JobItem } from "@/types";
+import { CVAnalysisResult, JobItem, MyApplicationItem } from "@/types";
 import { DashboardPageHeading } from "@/components/dashboard/dashboard-page-heading";
 import { LowonganPageSkeleton } from "@/components/ui/dashboard-skeleton";
 
@@ -56,12 +58,23 @@ const DEFAULT_RECOMMENDED_JOBS: JobItem[] = [
   },
 ];
 
+const APP_STATUS_META: Record<
+  MyApplicationItem["status"],
+  { label: string; badgeClass: string }
+> = {
+  submitted: { label: "Terkirim", badgeClass: "bg-slate-100 text-[#0f2c56]" },
+  reviewed: { label: "Ditinjau HR", badgeClass: "bg-[#edf2f9] text-[#0f2c56]" },
+  shortlisted: { label: "Shortlisted", badgeClass: "bg-[#0f2c56] text-white" },
+  rejected: { label: "Belum Sesuai", badgeClass: "bg-[#ce2731] text-white" },
+};
+
 export default function LowonganCocokPage() {
   const [loading, setLoading] = useState(true);
   const [analysis, setAnalysis] = useState<CVAnalysisResult | null>(null);
   const [jobs, setJobs] = useState<JobItem[]>(DEFAULT_RECOMMENDED_JOBS);
+  const [applications, setApplications] = useState<MyApplicationItem[]>([]);
   const [savedIds, setSavedIds] = useState<string[]>([]);
-  const [activeTab, setActiveTab] = useState<"all" | "saved">("all");
+  const [activeTab, setActiveTab] = useState<"all" | "saved" | "applied">("all");
 
   useEffect(() => {
     const current = api.getCurrentAnalysis();
@@ -70,32 +83,22 @@ export default function LowonganCocokPage() {
     }
     setSavedIds(api.getSavedJobIds());
 
-    const loadJobs = async () => {
-      try {
-        const recData = await api.getRecommendedJobs();
-        if (recData && recData.length > 0) {
-          setJobs(recData);
-          return;
-        }
-        const fallbackData = await api.getJobs();
-        if (fallbackData && fallbackData.length > 0) {
-          setJobs(fallbackData);
-        }
-      } catch {
-        try {
-          const fallbackData = await api.getJobs();
-          if (fallbackData && fallbackData.length > 0) {
-            setJobs(fallbackData);
-          }
-        } catch {
-          setJobs(DEFAULT_RECOMMENDED_JOBS);
-        }
-      } finally {
-        setLoading(false);
+    const loadAll = async () => {
+      const [recResult, appsResult] = await Promise.all([
+        api
+          .getRecommendedJobs()
+          .catch(() => api.getJobs().catch(() => DEFAULT_RECOMMENDED_JOBS)),
+        api.getMyApplications().catch(() => []),
+      ]);
+
+      if (recResult && recResult.length > 0) {
+        setJobs(recResult);
       }
+      setApplications(appsResult);
+      setLoading(false);
     };
 
-    loadJobs();
+    loadAll();
   }, []);
 
   const handleToggleSave = (jobId: string) => {
@@ -111,6 +114,8 @@ export default function LowonganCocokPage() {
     ...(analysis?.profile.skills?.technical || []),
     ...(analysis?.profile.skills?.tools || []),
   ];
+
+  const appliedJobIds = new Set(applications.map((a) => a.jobId));
 
   const visibleJobs =
     activeTab === "saved" ? jobs.filter((j) => savedIds.includes(j.id)) : jobs;
@@ -147,6 +152,17 @@ export default function LowonganCocokPage() {
               >
                 Tersimpan ({savedIds.length})
               </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab("applied")}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
+                  activeTab === "applied"
+                    ? "bg-[#0f2c56] text-white"
+                    : "text-slate-600 hover:text-[#0f2c56]"
+                }`}
+              >
+                Lamaran Saya ({applications.length})
+              </button>
             </div>
             {!analysis && (
               <Link
@@ -168,7 +184,75 @@ export default function LowonganCocokPage() {
         }
       />
 
-      {visibleJobs.length === 0 ? (
+      {activeTab === "applied" ? (
+        applications.length === 0 ? (
+          <div className="bg-white border border-slate-200 rounded-[24px] p-8 text-center space-y-3">
+            <p className="text-sm font-bold text-[#0f2c56]">
+              Anda belum mengirim lamaran pekerjaan.
+            </p>
+            <p className="text-xs text-slate-500">
+              Pilih lowongan pada tab Rekomendasi dan tekan Kirim Lamaran Profil untuk melacak statusnya di sini.
+            </p>
+            <button
+              type="button"
+              onClick={() => setActiveTab("all")}
+              className="px-4 py-2 rounded-xl bg-[#0f2c56] text-white text-xs font-bold cursor-pointer"
+            >
+              Jelajahi Rekomendasi
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {applications.map((appItem) => {
+              const meta = APP_STATUS_META[appItem.status] || APP_STATUS_META.submitted;
+              const appliedDate = appItem.createdAt
+                ? new Date(appItem.createdAt).toLocaleDateString("id-ID", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                  })
+                : "Baru saja";
+
+              return (
+                <div
+                  key={appItem.id}
+                  className="p-5 bg-white border border-slate-200 rounded-2xl flex flex-col justify-between space-y-3"
+                >
+                  <div className="space-y-2.5">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-[#0f2c56] text-white font-bold">
+                        Skor ATS {appItem.atsScore}%
+                      </span>
+                      <span
+                        className={`text-[10px] uppercase font-mono px-2.5 py-1 rounded-full font-bold ${meta.badgeClass}`}
+                      >
+                        {meta.label}
+                      </span>
+                    </div>
+
+                    <h2 className="text-sm font-extrabold text-[#0f2c56]">
+                      {appItem.roleApplied}
+                    </h2>
+                    <p className="text-xs text-slate-600 leading-relaxed line-clamp-2">
+                      {appItem.matchReason}
+                    </p>
+                  </div>
+
+                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+                    <span className="inline-flex items-center gap-1">
+                      <Clock className="w-3.5 h-3.5 text-[#ce2731]" />
+                      Dikirim {appliedDate}
+                    </span>
+                    <span className="font-mono font-bold text-[#0f2c56]">
+                      #{appItem.id.slice(-6)}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )
+      ) : visibleJobs.length === 0 ? (
         <div className="bg-white border border-slate-200 rounded-[24px] p-8 text-center space-y-3">
           <p className="text-sm font-bold text-[#0f2c56]">
             Belum ada lowongan yang Anda simpan.
@@ -210,6 +294,7 @@ export default function LowonganCocokPage() {
               typeof job.matchScore === "number" ? job.matchScore : computedLocal;
 
             const isSaved = savedIds.includes(job.id);
+            const alreadyApplied = appliedJobIds.has(job.id);
 
             return (
               <div
@@ -335,6 +420,15 @@ export default function LowonganCocokPage() {
                     <span>Lamar di Sumber Asli</span>
                     <ExternalLink className="w-3.5 h-3.5" />
                   </a>
+                ) : alreadyApplied ? (
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab("applied")}
+                    className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#0f2c56] text-xs font-bold transition-colors cursor-pointer"
+                  >
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#0f2c56]" />
+                    <span>Sudah Dilamar (Lihat Status)</span>
+                  </button>
                 ) : (
                   <Link
                     href={`/apply/${job.id}`}

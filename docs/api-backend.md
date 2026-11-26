@@ -99,6 +99,8 @@ Dokumen ini menjadi acuan kontrak REST API antara *frontend* Next.js ([api.ts](.
 - **GET** `/jobs/recommendations` — Daftar lowongan aktif terurut skor kecocokan AI + `missingSkills` + `matchReasons`.
 - **GET** `/jobs?keyword=&location=&workType=` — Pencarian portal lowongan publik.
 - **POST** `/applications` — Mengajukan lamaran (`{ "jobId": "job-1", "coverLetter": "..." }`).
+- **GET** `/applications/me` — Mengambil daftar riwayat lamaran milik pengguna beserta status terbaru (`submitted`, `reviewed`, `shortlisted`, `rejected`).
+- **DELETE** `/users/me` — Menghapus permanen akun pengguna, dokumen CV, profil, dan riwayat lamaran (UU PDP *Right to be Forgotten*).
 
 ---
 

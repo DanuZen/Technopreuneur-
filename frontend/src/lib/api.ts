@@ -5,6 +5,7 @@ import {
   CVAnalysisResult,
   QuestionnaireData,
   JobItem,
+  MyApplicationItem,
 } from "@/types";
 
 const API_BASE_URL =
@@ -340,6 +341,28 @@ class ApiClient {
     }
   }
 
+  async deleteAccount(): Promise<void> {
+    try {
+      await this.request<{ success: boolean }>("/users/me", {
+        method: "DELETE",
+      });
+    } catch (err) {
+      const status = (err as Error & { status?: number })?.status;
+      if (status && status >= 400 && status < 500 && status !== 401 && status !== 404) {
+        throw err;
+      }
+    } finally {
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("cm_token");
+        localStorage.removeItem("cm_user");
+        localStorage.removeItem("cm_analysis");
+        localStorage.removeItem("cm_history");
+        localStorage.removeItem("pasbana_user_profile_detail");
+        localStorage.removeItem("pasbana_saved_jobs");
+      }
+    }
+  }
+
   getSavedJobIds(): string[] {
     if (typeof window !== "undefined") {
       try {
@@ -407,6 +430,14 @@ class ApiClient {
       method: "POST",
       body: JSON.stringify({ jobId, coverLetter }),
     });
+  }
+
+  async getMyApplications(): Promise<MyApplicationItem[]> {
+    try {
+      return await this.request<MyApplicationItem[]>("/applications/me");
+    } catch {
+      return [];
+    }
   }
 
   // Jobseeker Profile CRUD

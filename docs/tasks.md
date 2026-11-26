@@ -161,7 +161,7 @@ gantt
 - [x] Halaman Pendaftaran (*Register* di `/register`) dengan opsi seleksi role: `jobseeker` vs `employer`
 - [x] Halaman Masuk (*Login* di `/login`) dengan email/password
 - [x] Modal dialog Persetujuan Consent Pemrosesan Data Pribadi (UU PDP) sebelum unggah CV
-- [x] Tab **Privasi & CV** pada popup profil pengguna: tombol hapus permanen dokumen CV (`DELETE /api/cvs/:id`, *Right to be Forgotten*)
+- [x] Tab **Privasi & CV** pada popup profil pengguna: tombol hapus permanen dokumen CV (`DELETE /api/cvs/:id`) dan hapus akun permanen (`DELETE /api/users/me`, *Right to be Forgotten*)
 
 #### C. Modul Pencari Kerja (Job Seeker)
 - [x] Routing dashboard berbasis role (`/[role]/dashboard/*` untuk `user`, `company`, dan `admin` beserta sub-route `evaluasi`, `onboarding`, `dokumen`, `lowongan`, dan `riwayat/[id]`)
@@ -214,7 +214,7 @@ gantt
 - [x] Endpoint penerimaan data kuesioner profil bagi pengguna tanpa CV (`POST /api/cvs/from-questionnaire` terhubung ke `/internal/v1/cv/analyze-text`)
 - [x] Endpoint konsultasi chatbot evaluasi CV (`POST /api/cvs/chat` terhubung ke `/internal/v1/cv/chat`)
 - [x] Endpoint penghapusan berkas CV permanen (`DELETE /api/cvs/:id`)
-- [ ] Endpoint penghapusan akun pengguna menyeluruh (`DELETE /api/users/me`)
+- [x] Endpoint penghapusan akun pengguna menyeluruh (`DELETE /api/users/me`)
 
 #### D. API Manajemen Lowongan Kerja & Company (`Jobs & Company API`)
 - [x] Endpoint pembuatan lowongan kerja oleh employer (`POST /api/jobs` & `POST /api/company/jobs`) lengkap dengan pembuatan `jobEmbedding` via `/internal/v1/embed`
@@ -284,9 +284,7 @@ gantt
 
 ### 5.2 Tugas Lanjutan Masing-Masing Anggota Tim (Sprint Berikutnya)
 - **Wira Fikri Ramadanu (`frontend/`):**
-  - Menambahkan tombol aksi hapus CV permanen & hapus akun di popup profil pengguna agar terhubung ke `DELETE /api/cvs/:id` dan `DELETE /api/users/me`.
-  - Menghubungkan fitur *Saved Jobs* pada halaman Lowongan Cocok agar tersimpan persisten ke database backend (tidak hanya `localStorage`).
-  - Melakukan uji coba end-to-end UI seluruh role (`user`, `company`, `admin`) pada viewport desktop dan mobile.
+  - Melakukan QA menyeluruh dan penyesuaian tampilan responsif mobile (`360px-430px`) untuk seluruh halaman (`user`, `company`, dan `admin`).
 - **Muhammad Gilang Ramadhan (`backend-api/`):**
   - Menghubungkan PostgreSQL cloud (`Supabase` / `Neon`) dengan ekstensi `pgvector` aktif agar menggantikan `local-json-vault` di environment produksi.
   - Memindahkan penyimpanan berkas fisik CV dari `backend-api/uploads/` ke Object Storage privat (Supabase Storage / Cloudflare R2) dengan *pre-signed URL*.

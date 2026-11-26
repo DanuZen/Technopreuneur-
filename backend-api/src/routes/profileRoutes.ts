@@ -1,3 +1,4 @@
+import fs from "fs";
 import { Router, Response } from "express";
 import { authenticateJWT, AuthenticatedRequest } from "../middlewares/auth";
 import { getDb, saveDb } from "../store/dataStore";
@@ -80,6 +81,33 @@ router.put("/", authenticateJWT, (req: AuthenticatedRequest, res: Response) => {
 
   saveDb(db);
   return res.json(updated);
+});
+
+// DELETE /api/users/me (UU PDP Right to be Forgotten: hapus akun, CV, file fisik, profil, dan lamaran)
+router.delete("/me", authenticateJWT, (req: AuthenticatedRequest, res: Response) => {
+  const db = getDb();
+  const userId = req.user?.userId || "";
+  const userIdx = db.users.findIndex((u) => u.id === userId);
+  if (userIdx < 0) {
+    return res.status(404).json({ message: "Akun pengguna tidak ditemukan." });
+  }
+
+  for (const cv of db.cvs.filter((c) => c.userId === userId)) {
+    if (cv.storedFilePath && fs.existsSync(cv.storedFilePath)) {
+      fs.unlinkSync(cv.storedFilePath);
+    }
+  }
+
+  db.cvs = db.cvs.filter((c) => c.userId !== userId);
+  db.profiles = db.profiles.filter((p) => p.userId !== userId);
+  db.applications = db.applications.filter((a) => a.userId !== userId);
+  db.users = db.users.filter((u) => u.id !== userId);
+  saveDb(db);
+
+  return res.json({
+    success: true,
+    message: "Akun, dokumen CV, profil, dan riwayat lamaran berhasil dihapus permanen.",
+  });
 });
 
 export default router;
