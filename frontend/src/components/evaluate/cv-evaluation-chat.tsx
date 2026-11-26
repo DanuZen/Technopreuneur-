@@ -271,16 +271,16 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
     <div className="flex flex-col flex-1 min-h-0 overflow-hidden gap-3">
 
       {/* Chat Messages Thread (Only this section scrolls) */}
-      <div className="flex-1 min-h-0 overflow-y-auto scrollbar-none space-y-5 py-2 pr-1">
+      <div className="flex-1 min-h-0 overflow-y-auto scrollbar-none space-y-3.5 sm:space-y-5 py-1.5 sm:py-2 pr-0.5 sm:pr-1">
         {messages.map((msg) => {
           if (msg.sender === "user") {
             return (
-              <div key={msg.id} className="flex justify-end items-start gap-2.5">
-                <div className="max-w-xl rounded-2xl rounded-tr-sm bg-[#0f2c56] text-white px-4 py-3 text-xs sm:text-sm font-medium leading-relaxed">
+              <div key={msg.id} className="flex justify-end items-start gap-2 sm:gap-2.5">
+                <div className="max-w-[78%] sm:max-w-xl rounded-2xl rounded-tr-sm bg-[#0f2c56] text-white px-3.5 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm font-medium leading-snug sm:leading-relaxed shadow-2xs">
                   {msg.text}
                 </div>
-                <div className="w-8 h-8 rounded-full bg-slate-200 text-[#0f2c56] flex items-center justify-center shrink-0">
-                  <UserIcon className="w-4 h-4" />
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-200 text-[#0f2c56] flex items-center justify-center shrink-0 mt-0.5">
+                  <UserIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </div>
               </div>
             );
@@ -311,8 +311,25 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
               ringCircumference - (Math.min(100, Math.max(0, analysis.overallScore)) / 100) * ringCircumference;
 
             return (
-              <div key={msg.id} className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center shrink-0 mt-0.5 overflow-hidden">
+              <div key={msg.id} className="flex flex-col sm:flex-row items-start gap-2 sm:gap-3">
+                {/* Mobile Inline Sender Header (< sm) */}
+                <div className="flex sm:hidden items-center gap-2 pl-0.5">
+                  <div className="w-6 h-6 rounded-full bg-white border border-slate-200 flex items-center justify-center shrink-0 overflow-hidden">
+                    <Image
+                      src="/logo-navy.webp"
+                      alt="Pasbana AI"
+                      width={16}
+                      height={16}
+                      className="object-contain"
+                    />
+                  </div>
+                  <span className="text-[11px] font-extrabold text-[#0f2c56]">
+                    Pasbana AI · Ringkasan Evaluasi
+                  </span>
+                </div>
+
+                {/* Desktop Side Avatar (sm+) */}
+                <div className="hidden sm:flex w-8 h-8 rounded-full bg-white border border-slate-200 items-center justify-center shrink-0 mt-0.5 overflow-hidden">
                   <Image
                     src="/logo-navy.webp"
                     alt="Pasbana AI"
@@ -321,27 +338,27 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
                     className="object-contain"
                   />
                 </div>
-                <div className="flex-1 max-w-4xl space-y-4">
-                  <div className="bg-white border border-slate-200 rounded-2xl rounded-tl-sm p-4 sm:p-5 space-y-4">
+                <div className="w-full sm:flex-1 max-w-4xl space-y-3 sm:space-y-4">
+                  <div className="bg-white border border-slate-200 rounded-2xl rounded-tl-sm p-3 sm:p-5 space-y-3 sm:space-y-4">
                     {/* Solid Navy Hero Summary */}
-                    <div className="bg-[#0f2c56] text-white rounded-2xl p-4 sm:p-5 flex flex-wrap items-center justify-between gap-4">
-                      <div className="space-y-1">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#ce2731] text-white text-[10px] font-bold uppercase tracking-wider">
+                    <div className="bg-[#0f2c56] text-white rounded-xl sm:rounded-2xl p-3.5 sm:p-5 flex items-center justify-between gap-2.5 sm:gap-4">
+                      <div className="space-y-1 min-w-0 flex-1">
+                        <span className="inline-flex items-center px-2 py-0.5 sm:px-2.5 rounded-full bg-[#ce2731] text-white text-[9px] sm:text-[10px] font-bold uppercase tracking-wider">
                           {isOnboarding
                             ? "Evaluasi Kesiapan Konten CV Baru"
                             : "Hasil Audit Dokumen CV ATS"}
                         </span>
-                        <h2 className="text-lg sm:text-xl font-extrabold text-white pt-1">
+                        <h2 className="text-base sm:text-xl font-extrabold text-white pt-0.5 sm:pt-1 leading-tight truncate">
                           {analysis.profile.fullName}
                         </h2>
-                        <p className="text-xs text-white/75">
+                        <p className="text-[11px] sm:text-xs text-white/75 truncate">
                           {analysis.profile.headline || "Kandidat Profesional Muda"}
                         </p>
                       </div>
 
-                      <div className="flex items-center gap-3.5 bg-white text-[#0f2c56] px-4 py-2.5 rounded-2xl shrink-0">
-                        <div className="relative w-14 h-14 flex items-center justify-center shrink-0">
-                          <svg viewBox="0 0 64 64" className="w-14 h-14 -rotate-90" aria-hidden="true">
+                      <div className="flex items-center gap-2 sm:gap-3.5 bg-white text-[#0f2c56] px-2.5 py-2 sm:px-4 sm:py-2.5 rounded-xl sm:rounded-2xl shrink-0">
+                        <div className="relative w-11 h-11 sm:w-14 sm:h-14 flex items-center justify-center shrink-0">
+                          <svg viewBox="0 0 64 64" className="w-11 h-11 sm:w-14 sm:h-14 -rotate-90" aria-hidden="true">
                             <circle
                               cx="32"
                               cy="32"
@@ -362,16 +379,16 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
                               strokeDashoffset={ringOffset}
                             />
                           </svg>
-                          <span className="absolute text-sm font-black font-mono text-[#0f2c56]">
+                          <span className="absolute text-xs sm:text-sm font-black font-mono text-[#0f2c56]">
                             {analysis.overallScore}
                           </span>
                         </div>
-                        <div className="space-y-1">
-                          <p className="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold">
+                        <div className="space-y-0.5 sm:space-y-1">
+                          <p className="text-[9px] sm:text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold">
                             {isOnboarding ? "Skor Substansi" : "Skor ATS"}
                           </p>
                           <span
-                            className={`inline-block px-2.5 py-1 rounded-full text-[11px] font-bold text-white ${
+                            className={`inline-block px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[10px] sm:text-[11px] font-bold text-white ${
                               isHighReady ? "bg-[#0f2c56]" : "bg-[#ce2731]"
                             }`}
                           >
@@ -382,9 +399,9 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
                     </div>
 
                     {isOnboarding && (
-                      <div className="px-4 py-3 rounded-xl bg-[#edf2f9] border border-slate-200 flex items-start gap-2.5 text-[#0f2c56]">
+                      <div className="px-3 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-[#edf2f9] border border-slate-200 flex items-start gap-2 sm:gap-2.5 text-[#0f2c56]">
                         <ShieldCheck className="w-4 h-4 text-[#0f2c56] shrink-0 mt-0.5" />
-                        <p className="text-xs font-semibold leading-relaxed">
+                        <p className="text-[11px] sm:text-xs font-semibold leading-snug sm:leading-relaxed">
                           <strong>Format 1-Kolom Standar ATS telah otomatis diterapkan oleh Pasbana.</strong>{" "}
                           Penilaian 5 dimensi di bawah ini berfokus mengaudit kekuatan substansi profil dan pengalaman Anda terhadap target posisi{" "}
                           <strong>{analysis.profile.headline || "pilihan Anda"}</strong>.
@@ -601,17 +618,17 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
           }
 
           return (
-            <div key={msg.id} className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center shrink-0 mt-0.5 overflow-hidden">
+            <div key={msg.id} className="flex items-start gap-2 sm:gap-3">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center shrink-0 mt-0.5 overflow-hidden">
                 <Image
                   src="/logo-navy.webp"
                   alt="Pasbana AI"
-                  width={20}
-                  height={20}
+                  width={18}
+                  height={18}
                   className="object-contain"
                 />
               </div>
-              <div className="max-w-2xl rounded-2xl rounded-tl-sm bg-white border border-slate-200 px-4 py-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
+              <div className="max-w-[82%] sm:max-w-2xl rounded-2xl rounded-tl-sm bg-white border border-slate-200 px-3.5 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm text-slate-700 leading-snug sm:leading-relaxed shadow-2xs">
                 {msg.text}
               </div>
             </div>
