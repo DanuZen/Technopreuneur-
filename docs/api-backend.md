@@ -125,7 +125,7 @@ Dokumen ini menjadi acuan kontrak REST API antara *frontend* Next.js ([api.ts](.
 
 ### 4.3 Profil Perusahaan
 - **GET** `/company/profile` — Mengambil profil perusahaan dan status verifikasi Admin.
-- **PUT** `/company/profile` — Memperbarui `companyName`, `industry`, `website`, `city`, dan `description`.
+- **PUT** `/company/profile` — Memperbarui `companyName`, `industry`, `website`, `city`, `keywords` (daftar kata kunci untuk pencocokan skill *jobseeker*), dan `description`.
 
 ---
 

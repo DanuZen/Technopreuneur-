@@ -80,7 +80,7 @@ export default function HasilEvaluasiPage() {
               <span>Evaluasi CV</span>
             </Link>
             <Link
-              href="/user/dashboard/onboarding"
+              href="/user/dashboard/evaluasi/onboarding"
               className="morph-pill inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold"
             >
               <FileSpreadsheet className="w-4 h-4" />
@@ -92,11 +92,20 @@ export default function HasilEvaluasiPage() {
     );
   }
 
+  const isOnboardingCv = analysis.cvId.startsWith("cv-gen-") || !analysis.fileName;
+  const needsRebuildRecommendation =
+    !isOnboardingCv &&
+    ((analysis.weaknesses?.length ?? 0) > 0 || (analysis.overallScore ?? 0) < 85);
+
   return (
-    <div className="h-full min-h-0 overflow-hidden w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-3 flex flex-col gap-4">
-      <div className="shrink-0 pb-4 border-b border-slate-200">
+    <div className="h-full min-h-0 overflow-hidden w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-3 flex flex-col gap-3">
+      <div className="shrink-0 pb-3 border-b border-slate-200 space-y-2.5">
         <DashboardPageHeading
-          badge="Hasil & Konsultasi CV"
+          badge={
+            isOnboardingCv
+              ? "Hasil Onboarding CV Baru"
+              : "Hasil Unggah CV (PDF/DOCX)"
+          }
           titleLine1="Diskusikan hasil evaluasi"
           titleLine2Prefix="untuk skor"
           titleHighlight="paling optimal!"
@@ -185,7 +194,7 @@ export default function HasilEvaluasiPage() {
                 className="morph-pill inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold"
               >
                 <FileText className="w-3.5 h-3.5" />
-                <span>Lihat Dokumen CV ATS</span>
+                <span>Unduh / Dokumen CV ATS</span>
               </Link>
               <button
                 type="button"
@@ -198,6 +207,19 @@ export default function HasilEvaluasiPage() {
             </div>
           }
         />
+        {needsRebuildRecommendation && (
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 rounded-2xl bg-[#edf2f9] px-4 py-2.5 text-xs text-[#0f2c56]">
+            <span>
+              <strong>Rekomendasi Sistem:</strong> Terdeteksi beberapa poin perbaikan pada CV unggahan Anda. Anda dapat menyusun ulang CV standar 1-kolom dan mengunduhnya melalui <strong>Dokumen CV ATS</strong>.
+            </span>
+            <Link
+              href="/user/dashboard/dokumen"
+              className="shrink-0 px-3 py-1.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white font-bold transition-colors"
+            >
+              Buat Ulang CV ATS
+            </Link>
+          </div>
+        )}
       </div>
       <CvEvaluationChat analysis={analysis} />
     </div>

@@ -515,10 +515,18 @@ export function CompanyProfileSubpage() {
   const [industry, setIndustry] = useState("Teknologi Informasi & Produk Digital");
   const [website, setWebsite] = useState("https://nusantara.co.id");
   const [city, setCity] = useState("Jakarta Selatan (Hybrid)");
+  const [keywords, setKeywords] = useState(
+    "React, Next.js, TypeScript, Tailwind CSS, REST API"
+  );
   const [description, setDescription] = useState(
     "Perusahaan teknologi yang berfokus pada pengembangan talenta digital dan solusi perangkat lunak modern di Indonesia."
   );
   const [saved, setSaved] = useState(false);
+
+  const keywordList = keywords
+    .split(",")
+    .map((k) => k.trim())
+    .filter(Boolean);
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
@@ -597,6 +605,18 @@ export function CompanyProfileSubpage() {
                     className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-[#0f2c56] focus:outline-none focus:border-[#0f2c56]"
                   />
                 </div>
+                <div className="space-y-1 sm:col-span-2">
+                  <label className="text-[11px] font-bold text-slate-500 uppercase">
+                    Kata Kunci Pencocokan (Keywords)
+                  </label>
+                  <input
+                    type="text"
+                    value={keywords}
+                    onChange={(e) => setKeywords(e.target.value)}
+                    placeholder="Pisahkan dengan koma, misal: React, TypeScript, Node.js"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-[#0f2c56] focus:outline-none focus:border-[#0f2c56]"
+                  />
+                </div>
               </div>
 
               <div className="flex-1 min-h-0 flex flex-col gap-1.5">
@@ -606,7 +626,7 @@ export function CompanyProfileSubpage() {
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="flex-1 min-h-[120px] w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-[#0f2c56] leading-relaxed focus:outline-none focus:border-[#0f2c56] resize-none"
+                  className="flex-1 min-h-[96px] w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-[#0f2c56] leading-relaxed focus:outline-none focus:border-[#0f2c56] resize-none"
                 />
               </div>
             </div>
@@ -654,6 +674,18 @@ export function CompanyProfileSubpage() {
               <div className="rounded-xl bg-[#f4f7fb] p-3.5 text-xs text-slate-600 leading-relaxed">
                 {description}
               </div>
+              {keywordList.length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                  {keywordList.map((kw) => (
+                    <span
+                      key={kw}
+                      className="px-2.5 py-1 rounded-full bg-[#edf2f9] text-[#0f2c56] text-[10px] font-bold"
+                    >
+                      {kw}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="pt-3 border-t border-slate-100 space-y-2">
