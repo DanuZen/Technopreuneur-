@@ -60,7 +60,9 @@ class ApiClient {
         data.message ||
         data.error ||
         `Request gagal dengan status ${response.status}`;
-      throw new Error(errorMessage);
+      const err = new Error(errorMessage) as Error & { status?: number };
+      err.status = response.status;
+      throw err;
     }
 
     return data as T;
@@ -107,8 +109,12 @@ class ApiClient {
       };
       this.saveAnalysis(resultWithFileName);
       return resultWithFileName;
-    } catch {
-      // Fallback local mock simulation when backend API is offline
+    } catch (err) {
+      const status = (err as Error & { status?: number })?.status;
+      if (status && status >= 400 && status < 500) {
+        throw err;
+      }
+      // Fallback local mock simulation only when backend API is unreachable
       const mockResult: CVAnalysisResult = {
         cvId: `cv-${Date.now()}`,
         fileName: file.name,
@@ -176,8 +182,12 @@ class ApiClient {
       });
       this.saveAnalysis(res);
       return res;
-    } catch {
-      // Fallback local ATS generator simulation when backend is offline
+    } catch (err) {
+      const status = (err as Error & { status?: number })?.status;
+      if (status && status >= 400 && status < 500) {
+        throw err;
+      }
+      // Fallback local ATS generator simulation only when backend is unreachable
       const techSkills = data.technicalSkills
         .split(",")
         .map((s) => s.trim())

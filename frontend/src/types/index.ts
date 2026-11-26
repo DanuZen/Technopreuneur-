@@ -24,6 +24,12 @@ export interface RegisterPayload {
   name: string;
   role: UserRole;
   pdpConsent: boolean;
+  legality?: {
+    nib?: string;
+    npwp?: string;
+    sector?: string;
+    location?: string;
+  };
 }
 
 // 5 Dimensi Evaluasi Kualitas CV

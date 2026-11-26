@@ -415,6 +415,15 @@ export default function JobsPage() {
 function JobCard({ job }: { job: JobItem }) {
   const [saved, setSaved] = useState(false);
 
+  useEffect(() => {
+    setSaved(api.getSavedJobIds().includes(job.id));
+  }, [job.id]);
+
+  const handleToggleSave = () => {
+    const updated = api.toggleSavedJob(job.id);
+    setSaved(updated.includes(job.id));
+  };
+
   return (
     <article className="p-5 sm:p-6 bg-white text-[#0f2c56] border border-slate-200 rounded-[24px] space-y-3.5">
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2.5">
@@ -474,7 +483,7 @@ function JobCard({ job }: { job: JobItem }) {
       <div className="flex items-center justify-between pt-2.5 border-t border-slate-100">
         <button
           type="button"
-          onClick={() => setSaved(!saved)}
+          onClick={handleToggleSave}
           className={`text-xs font-bold px-3.5 py-2 rounded-xl border transition-colors flex items-center gap-1.5 cursor-pointer ${
             saved
               ? "bg-[#0f2c56] border-[#0f2c56] text-white"

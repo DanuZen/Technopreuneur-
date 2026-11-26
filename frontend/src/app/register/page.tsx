@@ -46,6 +46,10 @@ export default function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [pdpConsent, setPdpConsent] = useState(false);
+  const [companyNib, setCompanyNib] = useState("");
+  const [companyNpwp, setCompanyNpwp] = useState("");
+  const [companySector, setCompanySector] = useState("");
+  const [companyLocation, setCompanyLocation] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [splashActive, setSplashActive] = useState(false);
@@ -124,10 +128,30 @@ export default function RegisterPage() {
         password,
         role,
         pdpConsent,
+        ...(role === "employer"
+          ? {
+              legality: {
+                nib: companyNib.trim() || undefined,
+                npwp: companyNpwp.trim() || undefined,
+                sector: companySector.trim() || undefined,
+                location: companyLocation.trim() || undefined,
+              },
+            }
+          : {}),
       });
       setSplashActive(true);
-    } catch {
-      // Fallback sesi lokal apabila layanan backend sedang offline
+    } catch (err) {
+      const status = (err as Error & { status?: number })?.status;
+      if (status && status >= 400 && status < 500) {
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Pendaftaran gagal. Periksa kembali data yang dimasukkan."
+        );
+        setLoading(false);
+        return;
+      }
+      // Fallback sesi lokal apabila layanan backend sedang tidak terjangkau
       try {
         localStorage.setItem(
           "cm_user",
@@ -391,6 +415,47 @@ export default function RegisterPage() {
                   <div className="absolute -bottom-[1px] left-2 right-2 h-[2px] rounded-full bg-gradient-to-r from-[#0f2c56] via-[#ce2731] to-[#0f2c56] scale-x-0 group-focus-within:scale-x-100 transition-transform duration-500 ease-out origin-center pointer-events-none" />
                 </div>
               </div>
+
+              {/* Company Legality Fields (Employer Only) */}
+              {role === "employer" && (
+                <div className="p-3 rounded-xl bg-[#edf2f9] border border-slate-200 space-y-2.5">
+                  <p className="text-[11px] font-extrabold text-[#0f2c56] uppercase tracking-wider">
+                    Legalitas Mitra Perusahaan (Untuk Audit Admin)
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <input
+                      type="text"
+                      required
+                      value={companyNib}
+                      onChange={(e) => setCompanyNib(e.target.value)}
+                      placeholder="Nomor NIB (13 digit)"
+                      className="px-3 py-2 text-xs font-semibold text-[#0f2c56] bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-[#0f2c56]"
+                    />
+                    <input
+                      type="text"
+                      required
+                      value={companyNpwp}
+                      onChange={(e) => setCompanyNpwp(e.target.value)}
+                      placeholder="NPWP Perusahaan"
+                      className="px-3 py-2 text-xs font-semibold text-[#0f2c56] bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-[#0f2c56]"
+                    />
+                    <input
+                      type="text"
+                      value={companySector}
+                      onChange={(e) => setCompanySector(e.target.value)}
+                      placeholder="Bidang Industri (mis. Teknologi)"
+                      className="px-3 py-2 text-xs font-semibold text-[#0f2c56] bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-[#0f2c56]"
+                    />
+                    <input
+                      type="text"
+                      value={companyLocation}
+                      onChange={(e) => setCompanyLocation(e.target.value)}
+                      placeholder="Kota Domisili (mis. Jakarta)"
+                      className="px-3 py-2 text-xs font-semibold text-[#0f2c56] bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-[#0f2c56]"
+                    />
+                  </div>
+                </div>
+              )}
 
               {/* Consent Box */}
               <div className="p-3 bg-slate-50 rounded-xl space-y-1.5">
