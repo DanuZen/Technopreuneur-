@@ -20,8 +20,9 @@ import {
   GraduationCap,
 } from "lucide-react";
 import { api } from "@/lib/api";
-import { CVAnalysisResult } from "@/types";
+import { CVAnalysisResult, CVProfileData } from "@/types";
 import { AtsCvPreview } from "@/components/dashboard/ats-cv-preview";
+import { EditCvDataModal } from "@/components/dashboard/edit-cv-data-modal";
 import { DashboardPageHeading } from "@/components/dashboard/dashboard-page-heading";
 import { DokumenPageSkeleton } from "@/components/ui/dashboard-skeleton";
 
@@ -29,6 +30,21 @@ export default function DokumenCvAtsPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [analysis, setAnalysis] = useState<CVAnalysisResult | null>(null);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+
+  const handleSaveEditedProfile = (updatedProfile: CVProfileData) => {
+    if (!analysis) return;
+    const updatedAnalysis: CVAnalysisResult = {
+      ...analysis,
+      profile: updatedProfile,
+    };
+    api.saveAnalysis(updatedAnalysis);
+    setAnalysis(updatedAnalysis);
+    setEditModalOpen(false);
+    api.updateProfile(updatedProfile).catch(() => {
+      // tetap tersimpan lokal jika sesi belum login / offline
+    });
+  };
 
   useEffect(() => {
     const current = api.getCurrentAnalysis();
@@ -121,7 +137,7 @@ export default function DokumenCvAtsPage() {
             <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button"
-                onClick={() => router.push("/user/dashboard/evaluasi/onboarding")}
+                onClick={() => setEditModalOpen(true)}
                 className="px-4 py-2.5 bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5 cursor-pointer"
               >
                 <Edit3 className="w-3.5 h-3.5" aria-hidden="true" />
@@ -364,6 +380,14 @@ export default function DokumenCvAtsPage() {
           />
         </div>
       </div>
+
+      {editModalOpen && (
+        <EditCvDataModal
+          profile={analysis.profile}
+          onClose={() => setEditModalOpen(false)}
+          onSave={handleSaveEditedProfile}
+        />
+      )}
     </main>
   );
 }
