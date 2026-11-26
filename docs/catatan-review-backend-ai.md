@@ -1,70 +1,101 @@
-# Catatan Review & Evaluasi Teknis Layanan `backend-ai`
+# Catatan Review & Evaluasi Teknis Rinci Layanan `backend-ai`
 
-Dokumen ini merangkum hasil audit menyeluruh terhadap layanan **`backend-ai/`** tanpa mengubah satu pun kode di dalam direktori `backend-ai/`. Seluruh penyesuaian jembatan skema saat ini telah ditangani di lapisan **`backend-api/`** ([aiService.ts](../backend-api/src/services/aiService.ts)), dan poin-poin di bawah menjadi daftar catatan untuk tim pengembang AI.
-
----
-
-## 1. Bagian yang Sudah Sesuai Rencana & Siap Produksi
-
-1. **Ekstraksi Dokumen Teks Digital (`app/ingestion/`)**:
-   - Mendukung `.pdf` (`pdfplumber`) dan `.docx` (`python-docx`) dengan deteksi PDF hasil scan (`is_scanned`), tata letak multi-kolom (`has_multi_column`), tabel (`has_table`), batas 10 halaman, dan batas 5 MB.
-2. **Sanitasi Data Sensitif UU PDP (`app/sanitization/sanitizer.py`)**:
-   - Menghapus baris berlabel sensitif (`DATE_OF_BIRTH`, `GENDER`, `RELIGION`, `MARITAL_STATUS`) sebelum dikirim ke LLM serta tidak pernah mencatat nilai asli ke dalam laporan atau log.
-3. **Penilaian ATS 5 Dimensi Deterministik (`app/ats/`)**:
-   - Menghitung skor `0-100` dengan validasi ketat total bobot `1.0` dan daftar `issues` berbahasa Indonesia.
-4. **Anti-Halusinasi pada Saran LLM & Pencocokan (`app/advice/service.py` & `app/matching/scorer.py`)**:
-   - Fungsi `_filter_unsupported` membuang saran yang mencantumkan kutipan palsu (tidak ada di teks CV).
-   - Kegagalan kuota/jaringan LLM pada saran tidak menjatuhkan request HTTP (`advice_status`: `ok` / `quota_exhausted` / `unavailable`).
-5. **Keamanan Internal & Pengujian**:
-   - Seluruh endpoint `/internal/v1/*` dilindungi header `X-Internal-Token` dan 142 unit test `pytest` lulus 100%.
+Dokumen ini merangkum hasil audit kode baris-demi-baris terhadap layanan **`backend-ai/`** (tanpa mengubah satu pun berkas di dalam `backend-ai/`). Seluruh jembatan penyesuaian sementara sudah ditangani di sisi **`backend-api/`** ([aiService.ts](../backend-api/src/services/aiService.ts)), dan rincian di bawah ditujukan sebagai panduan teknis langsung untuk tim `backend-ai`.
 
 ---
 
-## 2. Daftar Catatan & Ketidaksesuaian pada `backend-ai` (Untuk Tindak Lanjut Tim AI)
+## 1. Ringkasan Bagian yang Sudah Sesuai Rencana
 
-### Catatan 1: `/internal/v1/cv/analyze` Belum Mengembalikan JSON `profile` Terstruktur
-- **Rencana Awal / PRD (`FR-12` & `workflow.md` Bagian 5.1)**: Layanan AI mengekstrak struktur profil kandidat (`fullName`, `headline`, `summary`, `education[]`, `skills: { technical, soft, tools }`, `experiences[]`) agar pengguna bisa langsung meninjau dan mengeditnya serta untuk pratinjau kandidat di sisi *Company*.
-- **Kondisi Saat Ini di `backend-ai`**: `AnalyzeResponse` hanya mengembalikan `ats`, `advice`, `cv_embedding`, dan `sanitized_text` mentah.
-- **Penanganan Sementara di `backend-api`**: `aiService.ts` mengekstrak estimasi profil dari `sanitized_text`.
-- **Rekomendasi untuk `backend-ai`**: Tambahkan ekstraksi `profile` terstruktur (melalui skema JSON Gemini atau parser terstruktur) pada `AnalyzeResponse`.
+- **Ekstraksi Dokumen (`app/ingestion/`)**: Ekstraksi `.pdf` (`pdfplumber`) dan `.docx` (`python-docx`) berjalan stabil lengkap dengan deteksi berkas scan gambar (`is_scanned`), multi-kolom (`has_multi_column`), tabel (`has_table`), batas 10 halaman, dan ukuran maksimal 5 MB.
+- **Sanitasi UU PDP (`app/sanitization/sanitizer.py`)**: Baris berlabel atribut sensitif (`DATE_OF_BIRTH`, `GENDER`, `RELIGION`, `MARITAL_STATUS`) dihapus sebelum menyentuh prompt LLM dan tidak pernah bocor ke log.
+- **Anti-Halusinasi Kutipan (`app/advice/service.py` & `app/matching/scorer.py`)**: Saran LLM dan alasan kecocokan diverifikasi terhadap teks CV asli (`_filter_unsupported` & `evidence_in_text`), serta kegagalan kuota LLM tidak membatalkan hasil ATS (`advice_status`).
+- **Keamanan Internal & Unit Test**: Proteksi `X-Internal-Token` aktif pada seluruh route `/internal/v1/*` dan **142 unit test `pytest`** lulus 100%.
 
-### Catatan 2: Perbedaan Nama 5 Dimensi & Nilai `null` pada Dimensi `keywords`
-- **Rencana Kontrak Frontend (`CVDimensionScore`)**: Membutuhkan 5 angka wajib (`0-100`): `structure`, `clarity`, `measurableImpact`, `skillRelevance`, dan `completeness`.
-- **Kondisi Saat Ini di `backend-ai`**: Memakai nama `readability`, `sections`, `keywords`, `content`, `contact_length`, dan **`keywords.score` bernilai `null`** apabila form `jd_keywords` tidak dikirim saat pengguna mengunggah CV umum.
-- **Penanganan Sementara di `backend-api`**: `aiService.ts` memetakan kelima dimensi tersebut dan menghitung skor estimasi relevansi skill apabila `keywords.score` bernilai `null`.
-- **Rekomendasi untuk `backend-ai`**: Sediakan skor kesiapan kata kunci umum berbasis kamus `skills.yaml` ketika `jd_keywords` kosong sehingga kelima dimensi selalu berupa integer `0-100`.
+---
 
-### Catatan 3: Belum Ada Daftar Kekuatan CV (`strengths`) pada Respons Analisis
-- **Rencana Kontrak Frontend**: Menampilkan tiga bagian umpan balik: `strengths[]`, `weaknesses[]`, dan `recommendations[]`.
-- **Kondisi Saat Ini di `backend-ai`**: Hanya mengembalikan `ats.issues[]` (masalah) dan `advice.suggestions[]` (saran), belum ada poin kekuatan (`strengths`).
-- **Rekomendasi untuk `backend-ai`**: Tambahkan pembentukan `strengths[]` deterministik pada `ATSCheckResult` atau `CVAdvice` berdasarkan kriteria yang sudah terpenuhi baik oleh kandidat.
+## 2. Penjelasan Rinci 9 Catatan untuk Tim `backend-ai`
 
-### Catatan 4: Belum Ada Endpoint HTTP untuk Embedding Lowongan (`job_embedding`) & Input Kuesioner Onboarding
-- **Rencana Arsitektur Dua Tahap**: Stage 1 (`pgvector`) memerlukan `job_embedding` (1536 dimensi) dari model yang sama persis (`gemini-embedding-001`) setiap kali *Company* mempublikasikan lowongan baru atau memperbarui `keywords` perusahaan. Selain itu terdapat alur **Onboarding Kuesioner** bagi pencari kerja yang belum memiliki file PDF/DOCX.
-- **Kondisi Saat Ini di `backend-ai`**: Class `GeminiEmbedder` sudah ada di `app/embedding/gemini_embedder.py`, namun belum diekspos sebagai endpoint HTTP (misalnya `POST /internal/v1/embed`). Endpoint analisis juga hanya menerima upload file fisik (`.pdf` / `.docx`).
-- **Penanganan Sementara di `backend-api`**: `docxBuilder.ts` menyusun berkas `.docx` standar secara dinamis dari jawaban kuesioner agar tetap bisa dikirim ke `/internal/v1/cv/analyze`.
-- **Rekomendasi untuk `backend-ai`**:
-  1. Tambahkan endpoint `POST /internal/v1/embed` (menerima array teks lowongan/keyword perusahaan dan mengembalikan vektor 1536d).
-  2. Tambahkan endpoint `POST /internal/v1/cv/analyze-text` atau dukungan payload teks terstruktur untuk alur Onboarding.
+### Catatan 1: Ekstraksi `profile` JSON Terstruktur Belum Ada di `/internal/v1/cv/analyze`
+- **Lokasi Kode**: `backend-ai/app/api/analyze_routes.py` (baris 72-79) & `backend-ai/app/contract/schemas.py` (baris 25-31).
+- **Akar Masalah**: `AnalyzeResponse` saat ini hanya mengembalikan `ats`, `advice`, `cv_embedding`, dan `sanitized_text` (string mentah). Belum ada objek `profile` terstruktur (`fullName`, `headline`, `summary`, `education[]`, `skills: { technical, soft, tools }`, `experiences[]`) sebagaimana dirancang pada PRD (`FR-12`) dan dibutuhkan oleh halaman *Hasil Evaluasi*, *Dokumen CV ATS*, *Modal Detail Profil*, serta panel *Seleksi Kandidat Company*.
+- **Dampak**: Tanpa ekstraksi terstruktur dari AI, data riwayat pendidikan, organisasi, dan jabatan tidak terpisah rapi per item.
+- **Workaround Saat Ini di `backend-api`**: `extractProfileFromText()` pada `aiService.ts` melakukan ekstraksi heuristik berbasis regex dari `sanitized_text`.
+- **Solusi yang Disarankan untuk `backend-ai`**: Perluas prompt JSON Gemini pada `app/advice/prompts.py` (atau tambahkan extractor terstruktur) agar sekalian mengembalikan objek `profile` tervalidasi Pydantic dalam 1 panggilan LLM yang sama (hemat kuota RPM).
 
-### Catatan 5: Batas `MAX_CANDIDATES = 5` & Cakupan Kamus `skills.yaml` pada `/internal/v1/match/stage2`
-- **Kondisi Saat Ini di `backend-ai`**:
-  1. `match_routes.py` membatasi `MAX_CANDIDATES = 5` per request (padahal Stage 1 dirancang mengirim Top 20-50 kandidat lowongan). Saat ini `backend-api` harus memecahnya menjadi beberapa panggilan *batch* per 5 lowongan.
-  2. Pencocokan di `app/matching/scorer.py` 100% bergantung pada 49 entri statis di `app/resources/skills.yaml`. Skill populer seperti `Figma`, `UI/UX`, `Flutter`, `Kotlin`, `Swift`, `PHP`, `Laravel`, `Vue`, `GraphQL`, atau `Scrum` belum terdaftar, sehingga lowongan dengan skill tersebut akan memperoleh `match_score: 0`.
-- **Rekomendasi untuk `backend-ai`**: Naikkan `MAX_CANDIDATES` menjadi minimal `25-50` (karena `stage2` berjalan lokal tanpa kuota LLM sehingga sangat ringan) dan perluas `skills.yaml` + `skill_labels.yaml` atau tambahkan *fallback token matching* untuk `cand.skills` yang dikirim oleh perusahaan.
+---
 
-### Catatan 6: Belum Ada Endpoint Konsultasi Chatbot Interaktif
-- **Kondisi Saat Ini**: Halaman **Hasil Evaluasi** memiliki fitur chatbot konsultasi CV interaktif, tetapi `backend-ai` belum menyediakan endpoint tanya-jawab kontekstual (misalnya `POST /internal/v1/cv/chat` dengan konteks hasil `ats` dan `sanitized_text`).
+### Catatan 2: Perbedaan Nama 5 Dimensi ATS & Skor `keywords = null` Saat Tanpa JD
+- **Lokasi Kode**: `backend-ai/app/ats/schema.py` (baris 11-16) & `backend-ai/app/ats/scorer.py` (baris 102-108).
+- **Akar Masalah**:
+  1. Nama dimensi di `backend-ai` adalah `readability`, `sections`, `keywords`, `content`, `contact_length`, sedangkan kontrak UI `frontend` memakai `structure`, `clarity`, `measurableImpact`, `skillRelevance`, `completeness`.
+  2. Pada `_keyword_dimension()` (`scorer.py` baris 103): ketika pengguna mengunggah CV di menu Evaluasi Umum (tanpa melampirkan `jd_keywords` lowongan tertentu), fungsi langsung mengembalikan `(None, [])`. Selain itu di baris 107 dipakai regex `\b{re.escape(k)}\b` yang **gagal mencocokkan skill berkarakter simbol** seperti `C#` atau `C++` karena `#` dan `+` bukan karakter `\w` (sehingga batas kata `\b` setelah `#` tidak pernah terpenuhi).
+- **Dampak**: `skillRelevance` kosong (`null`) pada evaluasi CV umum, dan kata kunci seperti `C#` atau `Next.js` (di akhir kalimat) berisiko tidak terhitung.
+- **Workaround Saat Ini di `backend-api`**: `aiService.ts` memetakan kelima nama dimensi dan memberi nilai estimasi berbasis jumlah skill terdeteksi apabila `keywords` bernilai `null`.
+- **Solusi yang Disarankan untuk `backend-ai`**:
+  - Saat `jd_keywords` kosong, hitung skor kesiapan kata kunci berdasarkan keterdeteksian skill dari `skills.yaml`.
+  - Ganti `\b...\b` di `scorer.py` baris 107 dengan *lookaround* `(?<![a-z0-9])...(?![a-z0-9])` seperti yang sudah dipakai dengan benar di `app/matching/keywords.py`.
 
-### Catatan 7: Ketidaksinkronan `.env.example`, Port, Nama Model Default, dan Normalizer Lowongan
-1. **Berkas `backend-ai/.env.example` Tertinggal**: Masih mencantumkan variabel lama (`PORT=8001`, `OPENAI_API_KEY`, `DEFAULT_LLM_MODEL=gpt-4o-mini`, `DATABASE_URL`, `JOOBLE_API_KEY`) dan belum mencantumkan variabel yang benar-benar dibaca `app/config.py` (`INTERNAL_TOKEN`, `GEMINI_MODEL`, `LLM_ALLOW_MOCK`).
-2. **Nama Model Default `GEMINI_MODEL`**: Di `app/config.py` tertulis default `"gemini-3.5-flash-lite"`. Pastikan nama model sesuai dengan ID model resmi yang aktif pada Google GenAI API `v1beta` (misalnya `gemini-2.5-flash` atau `gemini-2.0-flash`) agar tidak memicu kegagalan generasi saran (`advice_status: "unavailable"`).
-3. **Parameter Batas Ukuran Dinamis**: `MAX_FILE_SIZE_BYTES` masih statis `5 MB` di `app/config.py`, sedangkan Admin memiliki fitur pengaturan batas ukuran CV pada menu *Standarisasi Platform* (saat ini divalidasi di `backend-api`).
-4. **Normalizer Sumber Eksternal**: `app/jobs/normalizer.py` mengimplementasikan normalizer `arbeitnow` (bukan `jooble` sebagaimana tertulis di PRD) dan belum dihubungkan ke route HTTP mana pun.
+---
 
-### Catatan 8: Kebersihan Kode Internal (`Minor Cleanup`)
-- Duplikasi definisi/import `_norm` di `app/advice/service.py` (baris 10 dan 29).
-- Duplikasi import `APIRouter, File, Form, HTTPException, UploadFile` di `app/api/ats_routes.py` (baris 5 dan 19).
-- Duplikasi import `_compiled_patterns, extract_skills` di `app/matching/scorer.py` (baris 5 dan 7).
-- Pemanggilan `time.sleep(10 * (attempt + 1))` sinkron di `GeminiProvider.generate_json` yang dipanggil dari route `async def analyze` sebaiknya dijalankan melalui threadpool (`anyio.to_thread.run_sync`) atau `asyncio.sleep` agar tidak memblokir *event loop* saat terjadi retry `5xx`.
-- Berkas `app/resources/heading_aliases.yaml` dan `app/resources/keyword_synonyms.yaml` masih kosong (`0 byte`).
+### Catatan 3: Deteksi Bullet di Dimensi `content` Terlalu Ketat pada File DOCX (`NO_BULLET_POINTS`)
+- **Lokasi Kode**: `backend-ai/app/ats/scorer.py` (baris 36 & 77-86) & `backend-ai/app/ingestion/docx_extractor.py`.
+- **Akar Masalah**: `BULLET_RE` hanya mencari karakter literal `•`, `-`, atau `*` di awal baris (`^\s*[•\-\*]\s+`). Pada dokumen Word (`.docx`) asli yang memakai fitur *Bulleted List* bawaan Microsoft Word (`<w:numPr>`), pustaka `python-docx` membaca `paragraph.text` **tanpa karakter bullet di depannya**. Akibatnya `bullets` dianggap kosong (`[]`) dan skor `content` (`measurableImpact`) langsung jatuh ke **`40`** meskipun kalimat pengalaman kandidat sudah memuat angka persentase/metrik!
+- **Dampak**: Terbukti pada uji integrasi langsung, CV `.docx` dengan kalimat *"meningkatkan kecepatan sebesar 38%"* tetap mendapat skor `measurableImpact: 40`.
+- **Solusi yang Disarankan untuk `backend-ai`**: Di `docx_extractor.py`, tambahkan prefix `"- "` ketika `paragraph.style.name` mengandung `"List"` atau elemen XML `p._p.pPr.numPr` tidak `None`.
+
+---
+
+### Catatan 4: Belum Ada Field `strengths[]` pada Respons Analisis
+- **Lokasi Kode**: `backend-ai/app/ats/schema.py` (baris 56-65) & `backend-ai/app/advice/service.py` (baris 32-37).
+- **Akar Masalah**: `backend-ai` hanya mengembalikan `ats.issues[]` (kelemahan/peringatan) dan `advice.suggestions[]` (rekomendasi), tetapi belum menyediakan array `strengths[]` (kekuatan utama CV).
+- **Workaround Saat Ini di `backend-api`**: `aiService.ts` menurunkan daftar `strengths` dari `ats.flags` (mis. format 1-kolom bersih, kontak lengkap, section lengkap).
+- **Solusi yang Disarankan untuk `backend-ai`**: Tambahkan generator `strengths: list[str]` deterministik di `scorer.py` untuk dimensi yang skornya `>= 80`.
+
+---
+
+### Catatan 5: Belum Ada Endpoint HTTP untuk Embedding Lowongan (`job_embedding`) & Input Onboarding
+- **Lokasi Kode**: `backend-ai/app/embedding/gemini_embedder.py` & `backend-ai/app/main.py`.
+- **Akar Masalah**:
+  1. Class `GeminiEmbedder` (1536 dimensi, `gemini-embedding-001`) sudah dibuat, tetapi hanya dipanggil internal saat upload CV dan **belum memiliki route HTTP** (mis. `POST /internal/v1/embed`). Padahal agar pencarian vektor *Stage 1* (`pgvector <=>`) di PostgreSQL akurat, setiap lowongan baru dan *keywords* profil *Company* wajib di-embed memakai model `gemini-embedding-001` yang sama persis.
+  2. Belum ada endpoint untuk menganalisis data JSON kuesioner *Onboarding* secara langsung tanpa berkas fisik.
+- **Workaround Saat Ini di `backend-api`**: `docxBuilder.ts` merakit file `.docx` di memori dari isian kuesioner lalu mengirimnya ke `/internal/v1/cv/analyze`.
+- **Solusi yang Disarankan untuk `backend-ai`**: Ekspos `POST /internal/v1/embed` (menerima `{ "texts": ["..."] }`, mengembalikan `{ "embeddings": [[...]] }`) dan opsional `POST /internal/v1/cv/analyze-text`.
+
+---
+
+### Catatan 6: Batas `MAX_CANDIDATES = 5` & Cakupan Kamus Statis `skills.yaml` pada `stage2`
+- **Lokasi Kode**: `backend-ai/app/api/match_routes.py` (baris 14 & 28) & `backend-ai/app/resources/skills.yaml` (baris 1-49).
+- **Akar Masalah**:
+  1. `MAX_CANDIDATES = 5` menolak payload berisi lebih dari 5 lowongan dengan HTTP `422`, padahal rancangan *Two-Stage Matching* mengirim 20-50 kandidat dari Stage 1. Karena `match_stage2` di `backend-ai` murni komputasi regex lokal (tanpa memanggil Gemini, sangat cepat `< 10ms`), batas 5 terlalu kecil.
+  2. `extract_skills()` hanya mengenali 49 skill yang tertulis di `skills.yaml`. Jika *Company* memasukkan *keywords* atau `requiredSkills` populer di luar daftar itu (misalnya `Figma`, `UI/UX`, `Flutter`, `Laravel`, `PHP`, `Vue`, `Kotlin`, `GraphQL`, `Scrum`), `job_skills` menjadi kosong atau tidak terhitung sehingga skor kecocokan menjadi `0` atau tidak akurat.
+- **Workaround Saat Ini di `backend-api`**: `rankJobsWithBackendAi()` memotong daftar lowongan menjadi beberapa panggilan *batch* isi 5 lowongan.
+- **Solusi yang Disarankan untuk `backend-ai`**:
+  - Naikkan `MAX_CANDIDATES` menjadi `50`.
+  - Di `match_routes.py` / `scorer.py`, selain mencocokkan dari `skills.yaml`, izinkan pencocokan langsung terhadap item eksplisit di `cand.skills` (termasuk *keywords* dari profil perusahaan) agar kata kunci kustom dari *Company* selalu ikut dihitung!
+
+---
+
+### Catatan 7: Belum Ada Endpoint Konsultasi Chatbot Interaktif
+- **Lokasi Kode**: `backend-ai/app/api/`.
+- **Akar Masalah**: Halaman **Hasil Evaluasi** (`/user/dashboard/hasil-evaluasi`) menyediakan antarmuka chatbot agar *jobseeker* bisa bertanya tentang hasil evaluasi CV-nya, namun saat ini percakapan masih ditangani secara lokal di frontend (`cv-evaluation-chat.tsx`) karena belum ada endpoint `POST /internal/v1/cv/chat` di `backend-ai`.
+- **Solusi yang Disarankan untuk `backend-ai`**: Tambahkan route `POST /internal/v1/cv/chat` yang menerima ringkasan `ats`, kutipan CV tersanitasi, dan pertanyaan pengguna dengan batasan *system prompt* hanya menjawab konteks evaluasi CV & karir.
+
+---
+
+### Catatan 8: Ketidaksinkronan `.env.example`, Port, Nama Model Default, dan Sumber Eksternal
+- **Lokasi Kode**: `backend-ai/.env.example`, `backend-ai/app/config.py` (baris 18-24), & `backend-ai/app/jobs/normalizer.py`.
+- **Rincian**:
+  1. `backend-ai/.env.example` masih memuat variabel lama (`PORT=8001`, `OPENAI_API_KEY`, `DEFAULT_LLM_MODEL=gpt-4o-mini`, `DATABASE_URL`, `JOOBLE_API_KEY`) dan **belum memuat** `INTERNAL_TOKEN`, `GEMINI_MODEL`, serta `LLM_ALLOW_MOCK` yang dibaca oleh `app/config.py`.
+  2. Default `GEMINI_MODEL` di `app/config.py` baris 19 tertulis `"gemini-3.5-flash-lite"`. Perlu diverifikasi terhadap daftar model resmi Google GenAI API `v1beta` (mis. `gemini-2.5-flash` / `gemini-2.5-flash-lite`) agar panggilan saran LLM tidak gagal diam-diam menjadi `advice_status: "unavailable"`.
+  3. `app/jobs/normalizer.py` dibuat untuk struktur payload **Arbeitnow**, sedangkan spesifikasi dokumen menyebut **Jooble**, serta fungsi normalizer tersebut belum dipanggil oleh endpoint mana pun.
+
+---
+
+### Catatan 9: Kebersihan Kode & Non-Blocking Async (`Minor Cleanup`)
+- **Duplikasi Import/Fungsi**:
+  - `app/advice/service.py`: fungsi `_norm` di-import di baris 10 lalu didefinisikan ulang di baris 29.
+  - `app/api/ats_routes.py`: `APIRouter, File, Form, HTTPException, UploadFile` di-import dua kali (baris 5 dan 19).
+  - `app/matching/scorer.py`: `_compiled_patterns, extract_skills` di-import dua kali (baris 5 dan 7).
+- **Blocking Sleep di Route `async`**:
+  - Di `app/llm/gemini_provider.py` baris 51 terdapat `time.sleep(10 * (attempt + 1))` sinkron yang dipanggil dari dalam `async def analyze(...)` (`analyze_routes.py`). Jika Gemini mengembalikan `5xx`, seluruh *event loop* Uvicorn akan terhenti selama 10-20 detik. Sebaiknya ubah endpoint menjadi `def analyze(...)` biasa (agar dijalankan FastAPI di *threadpool*) atau gunakan `asyncio.sleep` dengan client async.
+- **File Resource Kosong**: `app/resources/heading_aliases.yaml` dan `app/resources/keyword_synonyms.yaml` masih berukuran `0 byte` (kamus masih tertulis *hardcoded* di Python).
