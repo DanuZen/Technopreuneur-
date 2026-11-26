@@ -20,7 +20,7 @@ function EvaluateContent() {
   useEffect(() => {
     const tabParam = searchParams.get("tab");
     if (tabParam === "questionnaire" || tabParam === "onboarding") {
-      router.replace("/user/dashboard/onboarding");
+      router.replace("/user/dashboard/evaluasi/onboarding");
     }
   }, [searchParams, router]);
 
@@ -73,7 +73,7 @@ function EvaluateContent() {
         </div>
 
         <Link
-          href="/user/dashboard/onboarding"
+          href="/user/dashboard/evaluasi/onboarding"
           className="morph-pill inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-extrabold shrink-0"
         >
           <span>Buka Halaman Onboarding</span>

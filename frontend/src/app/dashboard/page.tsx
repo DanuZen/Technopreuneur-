@@ -13,7 +13,7 @@ function DashboardRedirect() {
     const tabParam = searchParams.get("tab");
 
     if (queryOnboarding) {
-      router.replace("/user/dashboard/onboarding");
+      router.replace("/user/dashboard/evaluasi/onboarding");
       return;
     }
 
