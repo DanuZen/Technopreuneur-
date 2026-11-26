@@ -121,7 +121,8 @@ export default function LowonganCocokPage() {
     activeTab === "saved" ? jobs.filter((j) => savedIds.includes(j.id)) : jobs;
 
   return (
-    <main className="min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-5 sm:pb-6 space-y-6">
+    <main className="h-full min-h-0 overflow-hidden w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-3 sm:pb-4 flex flex-col gap-3 sm:gap-4">
+      <div className="shrink-0">
       <DashboardPageHeading
         badge="Lowongan Cocok"
         titleLine1="Temukan peluang karir"
@@ -185,6 +186,9 @@ export default function LowonganCocokPage() {
           </div>
         }
       />
+      </div>
+
+      <div className="flex-1 min-h-0 overflow-y-auto scrollbar-none rounded-[24px] bg-slate-50/80 sm:bg-transparent border border-slate-200/80 sm:border-0 p-2.5 sm:p-0">
 
       {activeTab === "applied" ? (
         applications.length === 0 ? (
@@ -447,6 +451,7 @@ export default function LowonganCocokPage() {
           })}
         </div>
       )}
+      </div>
     </main>
   );
 }

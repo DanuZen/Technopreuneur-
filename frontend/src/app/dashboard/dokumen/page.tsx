@@ -129,7 +129,7 @@ export default function DokumenCvAtsPage() {
   }
 
   return (
-    <main className="lg:h-full lg:overflow-hidden min-h-full w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-3 flex flex-col gap-3 print:h-auto print:overflow-visible">
+    <main className="h-full min-h-0 overflow-hidden w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-3 flex flex-col gap-3 print:h-auto print:overflow-visible">
       <div className="shrink-0">
         <DashboardPageHeading
           badge="Dokumen CV ATS"
