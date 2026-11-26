@@ -347,22 +347,22 @@ export default function JobsPage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(1)}`}
       >
-        <div className="w-full h-full mx-auto rounded-[28px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent px-5 sm:px-10 lg:px-14 py-6 flex flex-col gap-5 text-white overflow-hidden">
-          <div className="flex flex-wrap items-center justify-between gap-4 shrink-0">
-            <div className="space-y-1.5">
-              <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#ce2731] text-xs font-bold text-white ${getTextRevealClass(1, "delay-75")}`}>
+        <div className="w-full h-full mx-auto rounded-[24px] sm:rounded-[34px] bg-[#0f2c56] lg:bg-transparent px-3.5 sm:px-10 lg:px-14 py-4 sm:py-6 flex flex-col gap-3 sm:gap-5 text-white overflow-hidden">
+          <div className="flex items-center justify-between gap-2 sm:gap-4 shrink-0">
+            <div className="space-y-0.5 sm:space-y-1.5 min-w-0">
+              <span className={`inline-flex items-center px-2.5 py-0.5 sm:px-3.5 sm:py-1 rounded-full bg-[#ce2731] text-[10px] sm:text-xs font-bold text-white ${getTextRevealClass(1, "delay-75")}`}>
                 Lowongan Terkurasi
               </span>
-              <h2 className={`text-2xl sm:text-3xl font-extrabold text-white ${getTextRevealClass(1, "delay-150")}`}>
+              <h2 className={`text-lg sm:text-3xl font-extrabold text-white truncate ${getTextRevealClass(1, "delay-150")}`}>
                 Menampilkan {jobs.length} Peluang Aktif
               </h2>
             </div>
 
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2 shrink-0">
               <button
                 type="button"
                 onClick={() => goToSlide(0)}
-                className="px-4 py-2.5 rounded-xl bg-white text-[#0f2c56] hover:bg-[#ce2731] hover:text-white text-xs font-bold transition-colors inline-flex items-center gap-1.5 cursor-pointer"
+                className="px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl bg-white text-[#0f2c56] hover:bg-[#ce2731] hover:text-white text-[11px] sm:text-xs font-bold transition-colors inline-flex items-center gap-1.5 cursor-pointer"
               >
                 <SlidersHorizontal className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>Ubah Filter</span>
@@ -372,7 +372,7 @@ export default function JobsPage() {
 
           <div
             data-jobs-scroll="true"
-            className="flex-1 min-h-0 overflow-y-auto pr-1 space-y-4 select-text"
+            className="flex-1 min-h-0 overflow-y-auto pr-1 space-y-2.5 sm:space-y-4 select-text"
           >
             {loading && (
               <div className="h-full flex flex-col items-center justify-center gap-3 py-12">
@@ -399,7 +399,7 @@ export default function JobsPage() {
             )}
 
             {!loading && !error && jobs.length > 0 && (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-2">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-2.5 sm:gap-4 pb-2">
                 {jobs.map((job) => (
                   <JobCard key={job.id} job={job} />
                 ))}
@@ -425,13 +425,13 @@ function JobCard({ job }: { job: JobItem }) {
   };
 
   return (
-    <article className="p-5 sm:p-6 bg-white text-[#0f2c56] border border-slate-200 rounded-[24px] space-y-3.5">
-      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2.5">
-        <div className="space-y-1">
-          <div className="flex flex-wrap items-center gap-2">
-            <h3 className="text-base sm:text-lg font-extrabold text-[#0f2c56]">{job.title}</h3>
+    <article className="p-3.5 sm:p-6 bg-white text-[#0f2c56] border border-slate-200 rounded-[20px] sm:rounded-[24px] space-y-2 sm:space-y-3.5">
+      <div className="flex items-start justify-between gap-2">
+        <div className="space-y-0.5 sm:space-y-1 min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+            <h3 className="text-sm sm:text-lg font-extrabold text-[#0f2c56] leading-snug">{job.title}</h3>
             <span
-              className={`text-[10px] px-2.5 py-0.5 rounded-full font-bold ${
+              className={`text-[9px] sm:text-[10px] px-2 py-0.5 sm:px-2.5 rounded-full font-bold shrink-0 ${
                 job.source === "internal"
                   ? "bg-[#0f2c56] text-white"
                   : "border border-slate-200 text-[#0f2c56] bg-white"
@@ -441,11 +441,11 @@ function JobCard({ job }: { job: JobItem }) {
             </span>
           </div>
 
-          <p className="text-xs sm:text-sm font-bold text-slate-700">{job.companyName}</p>
+          <p className="text-[11px] sm:text-sm font-bold text-slate-700 truncate">{job.companyName}</p>
 
-          <div className="flex flex-wrap items-center gap-2.5 text-xs text-slate-600 pt-0.5">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 sm:gap-2.5 text-[11px] sm:text-xs text-slate-600 pt-0.5">
             <span className="flex items-center gap-1 font-semibold">
-              <MapPin className="w-3.5 h-3.5 text-[#ce2731]" aria-hidden="true" />
+              <MapPin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#ce2731] shrink-0" aria-hidden="true" />
               {job.location}
             </span>
             <span>•</span>
@@ -459,39 +459,39 @@ function JobCard({ job }: { job: JobItem }) {
           </div>
         </div>
 
-        {job.matchScore !== undefined && (
-          <div className="inline-flex items-center gap-1 px-3 py-1 bg-[#ce2731] text-white rounded-full text-[11px] font-bold self-start shrink-0">
-            <CheckCircle2 className="w-3.5 h-3.5 text-white" aria-hidden="true" />
+        {job.matchScore !== undefined && job.matchScore > 0 && (
+          <div className="inline-flex items-center gap-1 px-2.5 py-0.5 sm:px-3 sm:py-1 bg-[#ce2731] text-white rounded-full text-[10px] sm:text-[11px] font-bold self-start shrink-0">
+            <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" aria-hidden="true" />
             <span>{job.matchScore}% Cocok</span>
           </div>
         )}
       </div>
 
-      <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">{job.description}</p>
+      <p className="text-[11px] sm:text-xs text-slate-600 line-clamp-1 sm:line-clamp-2 leading-snug sm:leading-relaxed">{job.description}</p>
 
-      <div className="flex flex-wrap items-center gap-1.5">
+      <div className="flex flex-wrap items-center gap-1 sm:gap-1.5">
         {job.requiredSkills.map((skill, idx) => (
           <span
             key={idx}
-            className="text-[11px] px-2.5 py-0.5 rounded-lg border border-slate-200 bg-white text-[#0f2c56] font-bold"
+            className="text-[10px] sm:text-[11px] px-2 py-0.5 sm:px-2.5 rounded-md sm:rounded-lg border border-slate-200 bg-white text-[#0f2c56] font-bold"
           >
             {skill}
           </span>
         ))}
       </div>
 
-      <div className="flex items-center justify-between pt-2.5 border-t border-slate-100">
+      <div className="flex items-center justify-between pt-2 sm:pt-2.5 border-t border-slate-100">
         <button
           type="button"
           onClick={handleToggleSave}
-          className={`text-xs font-bold px-3.5 py-2 rounded-xl border transition-colors flex items-center gap-1.5 cursor-pointer ${
+          className={`text-[11px] sm:text-xs font-bold px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg sm:rounded-xl border transition-colors flex items-center gap-1.5 cursor-pointer ${
             saved
               ? "bg-[#0f2c56] border-[#0f2c56] text-white"
               : "bg-white border-slate-200 text-[#0f2c56] hover:border-[#0f2c56]"
           }`}
           aria-label={saved ? "Hapus dari simpanan" : "Simpan lowongan ini"}
         >
-          <Bookmark className={`w-3.5 h-3.5 ${saved ? "fill-white text-white" : ""}`} aria-hidden="true" />
+          <Bookmark className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${saved ? "fill-white text-white" : ""}`} aria-hidden="true" />
           {saved ? "Disimpan" : "Simpan"}
         </button>
 
@@ -500,15 +500,15 @@ function JobCard({ job }: { job: JobItem }) {
             href={job.externalUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs font-bold px-4 py-2 bg-[#0f2c56] hover:bg-[#ce2731] text-white rounded-xl transition-colors flex items-center gap-1.5"
+            className="text-[11px] sm:text-xs font-bold px-3.5 py-1.5 sm:px-4 sm:py-2 bg-[#0f2c56] hover:bg-[#ce2731] text-white rounded-lg sm:rounded-xl transition-colors flex items-center gap-1.5"
           >
             Lamar di Sumber Asli
-            <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+            <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5" aria-hidden="true" />
           </a>
         ) : (
           <Link
             href={`/apply/${job.id}`}
-            className="text-xs font-bold px-4 py-2 bg-[#ce2731] hover:bg-[#b01e27] text-white rounded-xl transition-colors inline-flex items-center"
+            className="text-[11px] sm:text-xs font-bold px-3.5 py-1.5 sm:px-4 sm:py-2 bg-[#ce2731] hover:bg-[#b01e27] text-white rounded-lg sm:rounded-xl transition-colors inline-flex items-center"
           >
             Kirim Lamaran Cepat
           </Link>

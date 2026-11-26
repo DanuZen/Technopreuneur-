@@ -269,7 +269,7 @@ export default function LowonganCocokPage() {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {visibleJobs.map((job) => {
             const matchedSkillsCount = job.requiredSkills.filter((req) =>
               userTechSkills.some(
@@ -291,7 +291,9 @@ export default function LowonganCocokPage() {
                 : null;
 
             const matchPercent =
-              typeof job.matchScore === "number" ? job.matchScore : computedLocal;
+              typeof job.matchScore === "number" && job.matchScore > 0
+                ? job.matchScore
+                : computedLocal;
 
             const isSaved = savedIds.includes(job.id);
             const alreadyApplied = appliedJobIds.has(job.id);
@@ -299,9 +301,9 @@ export default function LowonganCocokPage() {
             return (
               <div
                 key={job.id}
-                className="p-5 bg-white border border-slate-200 rounded-2xl flex flex-col justify-between space-y-4"
+                className="p-3.5 sm:p-5 bg-white border border-slate-200 rounded-2xl flex flex-col justify-between space-y-2.5 sm:space-y-4"
               >
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3">
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-1.5">
                       <span
