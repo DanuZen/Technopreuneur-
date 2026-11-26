@@ -73,6 +73,7 @@ export interface CVProfileData {
 export interface CVAnalysisResult {
   cvId: string;
   fileName?: string;
+  source?: "upload" | "onboarding";
   overallScore: number; // 0-100
   dimensions: CVDimensionScore;
   strengths: string[];

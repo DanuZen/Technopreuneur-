@@ -2,11 +2,15 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   Send,
   CheckCircle2,
   AlertTriangle,
   User as UserIcon,
+  FileText,
+  Edit3,
+  ShieldCheck,
 } from "lucide-react";
 import { CVAnalysisResult } from "@/types";
 import { api } from "@/lib/api";
@@ -23,44 +27,130 @@ interface CvEvaluationChatProps {
   analysis: CVAnalysisResult;
 }
 
-const QUICK_QUESTIONS = [
+const UPLOAD_QUICK_QUESTIONS = [
   "Bagaimana cara menaikkan skor terendah saya?",
   "Apakah struktur CV saya sudah ramah ATS?",
   "Skill apa yang sebaiknya saya tonjolkan?",
   "Contoh kalimat pencapaian yang terukur?",
 ];
 
+const ONBOARDING_QUICK_QUESTIONS = [
+  "Skill apa lagi yang wajib ditambahkan untuk posisi target saya?",
+  "Bantu buatkan 3 poin pengalaman proyek untuk posisi ini",
+  "Bagaimana cara menaikkan skor substansi terendah saya?",
+  "Bagaimana cara memperkuat kredibilitas & portofolio fresh graduate?",
+];
+
+function isOnboardingAnalysis(analysis: CVAnalysisResult): boolean {
+  return (
+    analysis.source === "onboarding" ||
+    analysis.cvId.startsWith("cv-gen-") ||
+    (!analysis.fileName && analysis.cvId.includes("gen"))
+  );
+}
+
+function getDimensionList(analysis: CVAnalysisResult, isOnboarding: boolean) {
+  if (isOnboarding) {
+    return [
+      {
+        label: "Kesesuaian Target Posisi",
+        shortLabel: "Target",
+        score: analysis.dimensions.structure,
+      },
+      {
+        label: "Kedalaman Narasi Pengalaman",
+        shortLabel: "Narasi",
+        score: analysis.dimensions.clarity,
+      },
+      {
+        label: "Bukti Dampak & Angka",
+        shortLabel: "Dampak",
+        score: analysis.dimensions.measurableImpact,
+      },
+      {
+        label: "Kekuatan Kata Kerja Aksi",
+        shortLabel: "Kata Aksi",
+        score: analysis.dimensions.skillRelevance,
+      },
+      {
+        label: "Kredibilitas & Portofolio",
+        shortLabel: "Portofolio",
+        score: analysis.dimensions.completeness,
+      },
+    ];
+  }
+  return [
+    {
+      label: "Struktur & Format ATS",
+      shortLabel: "Struktur",
+      score: analysis.dimensions.structure,
+    },
+    {
+      label: "Kejelasan Bahasa",
+      shortLabel: "Kejelasan",
+      score: analysis.dimensions.clarity,
+    },
+    {
+      label: "Dampak Terukur",
+      shortLabel: "Dampak",
+      score: analysis.dimensions.measurableImpact,
+    },
+    {
+      label: "Relevansi Skill",
+      shortLabel: "Relevansi",
+      score: analysis.dimensions.skillRelevance,
+    },
+    {
+      label: "Kelengkapan Profil",
+      shortLabel: "Kelengkapan",
+      score: analysis.dimensions.completeness,
+    },
+  ];
+}
+
 function buildContextualAnswer(question: string, analysis: CVAnalysisResult): string {
   const q = question.toLowerCase();
-  const dims = [
-    { key: "Struktur ATS", score: analysis.dimensions.structure },
-    { key: "Kejelasan Bahasa", score: analysis.dimensions.clarity },
-    { key: "Dampak Terukur", score: analysis.dimensions.measurableImpact },
-    { key: "Relevansi Skill", score: analysis.dimensions.skillRelevance },
-    { key: "Kelengkapan Profil", score: analysis.dimensions.completeness },
-  ];
+  const isOnboarding = isOnboardingAnalysis(analysis);
+  const dims = getDimensionList(analysis, isOnboarding).map((d) => ({
+    key: d.label,
+    score: d.score,
+  }));
   const lowestDim = [...dims].sort((a, b) => a.score - b.score)[0];
+  const targetRole = analysis.profile.headline || "Posisi Target Anda";
   const techSkills = analysis.profile.skills?.technical?.join(", ") || "skill teknis utama Anda";
-  const topRec = analysis.recommendations?.[0] || "Tambahkan metrik angka pada setiap pengalaman kerja.";
+  const topRec =
+    analysis.recommendations?.[0] ||
+    "Tambahkan metrik angka pada setiap pengalaman kerja atau proyek.";
+
+  if (q.includes("poin pengalaman") || q.includes("3 poin") || q.includes("proyek")) {
+    return `Berikut 3 contoh poin pengalaman proyek berpola Kata Kerja Aksi + Teknologi + Dampak Angka untuk posisi ${targetRole}: 1) Mengembangkan aplikasi web modular menggunakan ${techSkills} yang mempercepat waktu muat halaman hingga 35%. 2) Merancang dan mengintegrasikan antarmuka responsif bersama tim beranggotakan 4 orang untuk 150+ pengguna uji coba. 3) Mengoptimalkan struktur kode dan alur pengujian sehingga menurunkan temuan bug fungsional sebesar 25%.`;
+  }
+
+  if (q.includes("kredibilitas") || q.includes("portofolio") || q.includes("fresh graduate")) {
+    return `Skor Kredibilitas & Portofolio Anda saat ini adalah ${analysis.dimensions.completeness}/100. Untuk memperkuat profil fresh graduate pada posisi ${targetRole}: 1) Cantumkan tautan GitHub, LinkedIn, atau demo proyek aktif. 2) Lengkapi minimal 4 sampai 5 keahlian teknis inti dan 2 sampai 3 Soft Skills pendukung. 3) Pastikan nomor telepon/WhatsApp dan email profesional tertulis lengkap di header CV.`;
+  }
 
   if (q.includes("skor") || q.includes("naik") || q.includes("rendah") || q.includes("tingkat")) {
-    return `Dimensi dengan skor paling berpotensi ditingkatkan saat ini adalah **${lowestDim.key}** (${lowestDim.score}/100). Saran prioritas untuk CV ${analysis.profile.fullName}: ${topRec} Dengan memperbaiki bagian ini, skor total (${analysis.overallScore}/100) dapat naik mendekati 95+.`;
+    return `Dimensi dengan skor paling berpotensi ditingkatkan saat ini adalah ${lowestDim.key} (${lowestDim.score}/100). Saran prioritas untuk CV ${analysis.profile.fullName}: ${topRec} Dengan melengkapi bagian ini melalui tombol Edit Isi Data CV, skor total (${analysis.overallScore}/100) dapat meningkat signifikan.`;
   }
 
   if (q.includes("ats") || q.includes("struktur") || q.includes("format")) {
-    return `Skor **Struktur ATS** Anda saat ini adalah **${analysis.dimensions.structure}/100**. ${
+    if (isOnboarding) {
+      return `Karena CV Anda dibuat melalui Kuesioner Onboarding Pasbana, tata letak dokumen sudah 100% menggunakan format 1-kolom standar ATS. Fokus penilaian pada jalur ini adalah Kesesuaian Target Posisi (${analysis.dimensions.structure}/100) dan Kedalaman Narasi Pengalaman (${analysis.dimensions.clarity}/100).`;
+    }
+    return `Skor Struktur & Format ATS Anda saat ini adalah ${analysis.dimensions.structure}/100. ${
       analysis.dimensions.structure >= 85
         ? "Format dokumen sudah terbaca rapi oleh sistem parser ATS. Pastikan tetap menggunakan layout 1-kolom tanpa tabel kompleks atau grafik."
         : "Disarankan menyederhanakan tata letak menjadi 1-kolom standar tanpa kotak teks atau kolom ganda agar parser ATS membaca semua informasi secara akurat."
     }`;
   }
 
-  if (q.includes("skill") || q.includes("keahlian") || q.includes("tonjol")) {
-    return `Berdasarkan profil CV Anda (${analysis.profile.headline || "Kandidat"}), keahlian teknis yang sudah terdeteksi meliputi: **${techSkills}** (skor Relevansi Skill: ${analysis.dimensions.skillRelevance}/100). Letakkan skill yang paling relevan dengan lowongan target di bagian atas agar langsung terbaca perekrut dan ATS.`;
+  if (q.includes("skill") || q.includes("keahlian") || q.includes("tonjol") || q.includes("wajib")) {
+    return `Untuk target posisi ${targetRole}, keahlian teknis yang sudah tercatat di profil Anda adalah: ${techSkills}. ${topRec}`;
   }
 
   if (q.includes("terukur") || q.includes("kalimat") || q.includes("contoh") || q.includes("dampak")) {
-    return `Untuk meningkatkan **Dampak Terukur** (saat ini ${analysis.dimensions.measurableImpact}/100), gunakan pola **Kata Kerja Aksi + Tugas + Hasil Angka**. Contoh: "Mengoptimalkan komponen antarmuka Next.js sehingga mempercepat waktu muat halaman hingga 35% dan menurunkan bounce rate 18%."`;
+    return `Untuk meningkatkan Bukti Dampak & Angka (saat ini ${analysis.dimensions.measurableImpact}/100), gunakan pola Kata Kerja Aksi + Tugas + Hasil Angka. Contoh: "Mengoptimalkan komponen antarmuka Next.js sehingga mempercepat waktu muat halaman hingga 35% dan menurunkan bounce rate 18%."`;
   }
 
   if (q.includes("kekuatan") || q.includes("kelebihan") || q.includes("bagus")) {
@@ -68,20 +158,27 @@ function buildContextualAnswer(question: string, analysis: CVAnalysisResult): st
     return `Kekuatan utama pada CV Anda saat ini: ${strengthsText}`;
   }
 
-  return `Berdasarkan hasil evaluasi CV **${analysis.profile.fullName}** (skor ${analysis.overallScore}/100), fokus utama yang paling berdampak untuk ditingkatkan adalah **${lowestDim.key}** (${lowestDim.score}/100). Rekomendasi utama: ${topRec}`;
+  return `Berdasarkan hasil evaluasi CV ${analysis.profile.fullName} (skor ${analysis.overallScore}/100), fokus utama yang paling berdampak untuk ditingkatkan adalah ${lowestDim.key} (${lowestDim.score}/100). Rekomendasi utama: ${topRec}`;
 }
 
 export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
+  const isOnboarding = isOnboardingAnalysis(analysis);
   const cvDisplayName = analysis.fileName
     ? analysis.fileName.replace(/\.[^/.]+$/, "").replace(/[-_]+/g, " ").trim()
     : analysis.profile.fullName;
+
+  const initialUserText = isOnboarding
+    ? `Tolong evaluasi kesiapan isi CV baru saya untuk posisi ${
+        analysis.profile.headline || "Target Karir"
+      } (${analysis.profile.fullName})`
+    : `Tolong analisis dokumen CV saya: ${cvDisplayName}`;
 
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: "msg-user-upload",
       sender: "user",
       type: "text",
-      text: `Tolong analisis CV saya: ${cvDisplayName}`,
+      text: initialUserText,
       timestamp: "Baru saja",
     },
     {
@@ -103,7 +200,7 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
         id: `msg-user-${analysis.cvId}`,
         sender: "user",
         type: "text",
-        text: `Tolong analisis CV saya: ${cvDisplayName}`,
+        text: initialUserText,
         timestamp: "Baru saja",
       },
       {
@@ -114,7 +211,7 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
         timestamp: "Baru saja",
       },
     ]);
-  }, [analysis.cvId, cvDisplayName]);
+  }, [analysis.cvId, initialUserText]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -163,13 +260,10 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
     setIsTyping(false);
   };
 
-  const dimensionList = [
-    { label: "Struktur ATS", score: analysis.dimensions.structure },
-    { label: "Kejelasan Bahasa", score: analysis.dimensions.clarity },
-    { label: "Dampak Terukur", score: analysis.dimensions.measurableImpact },
-    { label: "Relevansi Skill", score: analysis.dimensions.skillRelevance },
-    { label: "Kelengkapan Profil", score: analysis.dimensions.completeness },
-  ];
+  const dimensionList = getDimensionList(analysis, isOnboarding);
+  const quickQuestions = isOnboarding
+    ? ONBOARDING_QUICK_QUESTIONS
+    : UPLOAD_QUICK_QUESTIONS;
 
   const isHighReady = analysis.overallScore >= 85;
 
@@ -233,7 +327,9 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
                     <div className="bg-[#0f2c56] text-white rounded-2xl p-4 sm:p-5 flex flex-wrap items-center justify-between gap-4">
                       <div className="space-y-1">
                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#ce2731] text-white text-[10px] font-bold uppercase tracking-wider">
-                          Hasil Evaluasi Pasbana AI
+                          {isOnboarding
+                            ? "Evaluasi Kesiapan Konten CV Baru"
+                            : "Hasil Audit Dokumen CV ATS"}
                         </span>
                         <h2 className="text-lg sm:text-xl font-extrabold text-white pt-1">
                           {analysis.profile.fullName}
@@ -272,7 +368,7 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
                         </div>
                         <div className="space-y-1">
                           <p className="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold">
-                            Skor ATS
+                            {isOnboarding ? "Skor Substansi" : "Skor ATS"}
                           </p>
                           <span
                             className={`inline-block px-2.5 py-1 rounded-full text-[11px] font-bold text-white ${
@@ -284,6 +380,17 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
                         </div>
                       </div>
                     </div>
+
+                    {isOnboarding && (
+                      <div className="px-4 py-3 rounded-xl bg-[#edf2f9] border border-slate-200 flex items-start gap-2.5 text-[#0f2c56]">
+                        <ShieldCheck className="w-4 h-4 text-[#0f2c56] shrink-0 mt-0.5" />
+                        <p className="text-xs font-semibold leading-relaxed">
+                          <strong>Format 1-Kolom Standar ATS telah otomatis diterapkan oleh Pasbana.</strong>{" "}
+                          Penilaian 5 dimensi di bawah ini berfokus mengaudit kekuatan substansi profil dan pengalaman Anda terhadap target posisi{" "}
+                          <strong>{analysis.profile.headline || "pilihan Anda"}</strong>.
+                        </p>
+                      </div>
+                    )}
 
                     {/* Diagram Radar 5 Dimensi + Rincian Skor Solid */}
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
@@ -353,7 +460,7 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
                             const optimal = dim.score >= 85;
                             const anchor =
                               idx === 0 ? "middle" : idx === 1 || idx === 2 ? "start" : "end";
-                            const shortLabel = dim.label.split(" ")[0];
+                            const shortLabel = dim.shortLabel;
                             return (
                               <g key={dim.label}>
                                 <circle
@@ -460,6 +567,30 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
                       </div>
                     </div>
 
+                    {isOnboarding && (
+                      <div className="pt-1 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200/80">
+                        <p className="text-xs text-slate-600 font-medium">
+                          Draf dokumen CV ATS 1-kolom Anda sudah tersimpan dan siap dilengkapi atau diunduh:
+                        </p>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <Link
+                            href="/user/dashboard/dokumen"
+                            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs font-bold transition-colors"
+                          >
+                            <FileText className="w-3.5 h-3.5" />
+                            <span>Lihat &amp; Unduh Draf CV ATS Saya</span>
+                          </Link>
+                          <Link
+                            href="/user/dashboard/dokumen?edit=true"
+                            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs font-bold transition-colors"
+                          >
+                            <Edit3 className="w-3.5 h-3.5" />
+                            <span>Lengkapi Isi Data CV</span>
+                          </Link>
+                        </div>
+                      </div>
+                    )}
+
                     <p className="text-xs text-slate-500 pt-1">
                       Ada bagian dari hasil evaluasi ini yang ingin Anda diskusikan atau perbaiki? Silakan ajukan pertanyaan di bawah.
                     </p>
@@ -509,7 +640,7 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
       {/* Bottom Fixed Chat Input + Quick Suggestions */}
       <div className="shrink-0 bg-[#fefefd] pt-2.5 sm:pt-3 pb-1 border-t border-slate-200/70 space-y-2">
         <div className="flex overflow-x-auto scrollbar-none sm:flex-wrap gap-1.5 pb-0.5">
-          {QUICK_QUESTIONS.map((q) => (
+          {quickQuestions.map((q) => (
             <button
               key={q}
               type="button"

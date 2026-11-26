@@ -143,6 +143,7 @@ router.post(
       return res.json({
         cvId: storedCv.cvId,
         fileName: storedCv.fileName,
+        source: "upload",
         overallScore: storedCv.overallScore,
         dimensions: storedCv.dimensions,
         strengths: storedCv.strengths,
@@ -164,7 +165,102 @@ router.post(
   }
 );
 
-// POST /api/cvs/from-questionnaire (Bangun .docx standar ATS -> panggil backend-ai)
+function getRoleBenchmarkSkills(targetRoleRaw: string): string[] {
+  const role = targetRoleRaw.toLowerCase();
+  if (
+    role.includes("frontend") ||
+    role.includes("front-end") ||
+    role.includes("ui engineer") ||
+    role.includes("web")
+  ) {
+    return [
+      "HTML/CSS",
+      "JavaScript",
+      "TypeScript",
+      "React",
+      "Next.js",
+      "Tailwind CSS",
+      "Git",
+      "REST API",
+    ];
+  }
+  if (role.includes("backend") || role.includes("back-end") || role.includes("api")) {
+    return [
+      "Node.js",
+      "TypeScript",
+      "Express.js",
+      "PostgreSQL",
+      "REST API",
+      "Docker",
+      "Git",
+      "Redis",
+    ];
+  }
+  if (role.includes("fullstack") || role.includes("full-stack") || role.includes("software")) {
+    return [
+      "TypeScript",
+      "React",
+      "Next.js",
+      "Node.js",
+      "PostgreSQL",
+      "REST API",
+      "Git",
+      "Docker",
+    ];
+  }
+  if (role.includes("data") || role.includes("analyst") || role.includes("ai") || role.includes("ml")) {
+    return [
+      "Python",
+      "SQL",
+      "PostgreSQL",
+      "Data Analysis",
+      "Pandas",
+      "Power BI",
+      "Tableau",
+      "Microsoft Excel",
+    ];
+  }
+  if (role.includes("ui") || role.includes("ux") || role.includes("design") || role.includes("product")) {
+    return [
+      "Figma",
+      "UI/UX Design",
+      "Wireframing",
+      "Prototyping",
+      "Design System",
+      "User Research",
+    ];
+  }
+  if (role.includes("mobile") || role.includes("android") || role.includes("ios") || role.includes("flutter")) {
+    return [
+      "Flutter",
+      "React Native",
+      "Kotlin",
+      "REST API",
+      "Git",
+      "Firebase",
+    ];
+  }
+  if (role.includes("marketing") || role.includes("content") || role.includes("seo") || role.includes("social")) {
+    return [
+      "Digital Marketing",
+      "SEO",
+      "Copywriting",
+      "Google Analytics",
+      "Canva",
+      "Content Strategy",
+    ];
+  }
+  return [
+    "Komunikasi Profesional",
+    "Analisis Data",
+    "Microsoft Excel",
+    "Manajemen Proyek",
+    "Git",
+    "Problem Solving",
+  ];
+}
+
+// POST /api/cvs/from-questionnaire (Bangun .docx standar ATS -> evaluasi substansi berbasis Target Posisi)
 router.post(
   "/from-questionnaire",
   async (req: AuthenticatedRequest, res: Response) => {
@@ -176,6 +272,16 @@ router.post(
         ? db.users.find((u) => u.id === optUser.userId)
         : db.users[0];
       const userId = dbUser?.id || "usr-1";
+
+      const rawExperience = String(data.experienceSummary || "").trim();
+      const experienceLines = (
+        rawExperience ||
+        "Mengerjakan proyek akademik dan pengembangan kompetensi sesuai bidang studi."
+      )
+        .split(/\r?\n/)
+        .map((l) => l.trim())
+        .filter(Boolean)
+        .map((l) => (/^[•\-\*]/.test(l) ? l : `- ${l}`));
 
       const lines = [
         data.fullName || dbUser?.name || "Kandidat Pasbana",
@@ -191,17 +297,10 @@ router.post(
           data.institution || "Perguruan Tinggi"
         } (${data.graduationYear || "2026"})`,
         "Pengalaman Kerja",
-        ...(String(
-          data.experienceSummary ||
-            "Mengembangkan proyek kolaboratif dengan peningkatan efisiensi terukur sebesar 30%."
-        )
-          .split(/\r?\n/)
-          .map((l) => l.trim())
-          .filter(Boolean)
-          .map((l) => (/^[•\-\*]/.test(l) ? l : `- ${l}`))),
+        ...experienceLines,
         "Keahlian",
-        `Keahlian Teknis: ${data.technicalSkills || "Analisis Data, Komunikasi"}`,
-        `Soft Skills: ${data.softSkills || "Komunikasi, Kepemimpinan"}`,
+        `Keahlian Teknis: ${data.technicalSkills || "-"}`,
+        `Soft Skills: ${data.softSkills || "-"}`,
       ];
 
       const docxBuffer = buildDocxFromLines(lines);
@@ -218,17 +317,178 @@ router.post(
         .map((s) => s.trim())
         .filter(Boolean);
 
+      const targetRole = String(data.targetRole || "Profesional Muda").trim();
+      const roleBenchmarks = getRoleBenchmarkSkills(targetRole);
+
       const mapped = await analyzeTextWithBackendAi({
         text: lines.join("\n"),
-        jdKeywords: techSkills,
+        jdKeywords: roleBenchmarks,
         fallbackName: data.fullName || dbUser?.name || "Kandidat Pasbana",
         fallbackEmail: data.email || dbUser?.email || "kandidat@pasbana.ai",
       });
 
+      // Hitung 5 Dimensi Substansi khusus Onboarding ("Belum Punya CV") secara realistis:
+      // 1. Kesesuaian Target Posisi (structure slot)
+      const lowerUserSkills = techSkills.map((s) => s.toLowerCase());
+      const matchedBenchmarks = roleBenchmarks.filter((b) =>
+        lowerUserSkills.some(
+          (u) =>
+            u.includes(b.toLowerCase()) ||
+            b.toLowerCase().includes(u) ||
+            (b.toLowerCase() === "html/css" && (u.includes("html") || u.includes("css")))
+        )
+      );
+      const missingBenchmarks = roleBenchmarks.filter(
+        (b) => !matchedBenchmarks.includes(b)
+      );
+      const skillCountScore = Math.min(100, 42 + techSkills.length * 11);
+      const benchmarkRatioScore =
+        roleBenchmarks.length > 0
+          ? Math.min(
+              100,
+              Math.round((matchedBenchmarks.length / Math.min(5, roleBenchmarks.length)) * 100)
+            )
+          : 75;
+      const roleAlignmentScore = Math.max(
+        48,
+        Math.min(98, Math.round(skillCountScore * 0.45 + Math.max(benchmarkRatioScore, mapped.dimensions.skillRelevance) * 0.55))
+      );
+
+      // 2. Kedalaman Narasi Pengalaman (clarity slot)
+      const expWords = rawExperience
+        ? rawExperience.split(/\s+/).filter(Boolean).length
+        : 0;
+      const expBulletCount = rawExperience
+        ? rawExperience
+            .split(/\r?\n|[.;]/)
+            .map((s) => s.trim())
+            .filter((s) => s.length > 8).length
+        : 0;
+      let narrativeDepthScore = 52;
+      if (expWords >= 45 && expBulletCount >= 2) {
+        narrativeDepthScore = 92;
+      } else if (expWords >= 28) {
+        narrativeDepthScore = 84;
+      } else if (expWords >= 15) {
+        narrativeDepthScore = 73;
+      } else if (expWords >= 6) {
+        narrativeDepthScore = 62;
+      }
+
+      // 3. Bukti Dampak & Angka (measurableImpact slot)
+      const hasNumericImpact =
+        /\d+\s*(%|persen|x|\+|orang|pengguna|user|peserta|klien|proyek|aplikasi|fitur|tim|bulan|minggu|hari|detik|ms|juta|ribu|ipk)/i.test(
+          rawExperience
+        ) || /\b\d{2,}\b/.test(rawExperience);
+      const impactScore = hasNumericImpact
+        ? Math.max(84, mapped.dimensions.measurableImpact)
+        : Math.min(66, Math.max(52, Math.round(mapped.dimensions.measurableImpact * 0.68)));
+
+      // 4. Kekuatan Kata Kerja Aksi (skillRelevance slot)
+      const actionVerbMatches =
+        rawExperience.match(
+          /\b(mengembangkan|merancang|membangun|mengoptimalkan|memimpin|mengelola|menganalisis|menyusun|meningkatkan|mengimplementasikan|membuat|mengintegrasikan|berkolaborasi|menyelesaikan|built|developed|designed|optimized|led|created|implemented)\b/gi
+        ) || [];
+      const actionVerbScore = Math.min(
+        96,
+        Math.max(
+          56,
+          Math.round(
+            mapped.dimensions.clarity * 0.55 +
+              Math.min(100, 54 + actionVerbMatches.length * 16) * 0.45
+          )
+        )
+      );
+
+      // 5. Kredibilitas & Portofolio (completeness slot)
+      let credibilityScore = 56;
+      if (String(data.phone || "").trim().length >= 8) credibilityScore += 10;
+      if (String(data.portfolioLink || "").trim().length >= 8) credibilityScore += 16;
+      if (softSkills.length >= 2) credibilityScore += 9;
+      else if (softSkills.length === 1) credibilityScore += 5;
+      if (techSkills.length >= 4) credibilityScore += 9;
+      else if (techSkills.length >= 2) credibilityScore += 5;
+      credibilityScore = Math.min(98, credibilityScore);
+
+      const onboardingDimensions = {
+        structure: roleAlignmentScore,
+        clarity: narrativeDepthScore,
+        measurableImpact: impactScore,
+        skillRelevance: actionVerbScore,
+        completeness: credibilityScore,
+      };
+
+      const onboardingOverallScore = Math.round(
+        (onboardingDimensions.structure +
+          onboardingDimensions.clarity +
+          onboardingDimensions.measurableImpact +
+          onboardingDimensions.skillRelevance +
+          onboardingDimensions.completeness) /
+          5
+      );
+
+      const onboardingStrengths: string[] = [
+        "Dokumen CV telah disusun otomatis dengan tata letak 1-kolom standar ATS Pasbana (100% bebas masalah keterbacaan format).",
+      ];
+      if (matchedBenchmarks.length > 0) {
+        onboardingStrengths.push(
+          `Memuat keahlian inti yang relevan untuk posisi ${targetRole}: ${matchedBenchmarks.join(", ")}.`
+        );
+      } else if (techSkills.length > 0) {
+        onboardingStrengths.push(
+          `Telah mencantumkan kompetensi teknis dasar (${techSkills.slice(0, 4).join(", ")}) pada bagian keahlian.`
+        );
+      }
+      if (hasNumericImpact) {
+        onboardingStrengths.push(
+          "Deskripsi pengalaman/proyek sudah menyertakan bukti angka atau skala pencapaian konkret."
+        );
+      } else if (String(data.portfolioLink || "").trim()) {
+        onboardingStrengths.push(
+          "Menyertakan tautan portofolio atau profil profesional untuk memperkuat verifikasi perekrut."
+        );
+      } else {
+        onboardingStrengths.push(
+          `Profil akademik ${data.educationLevel || "S1"} ${data.major || ""} dari ${data.institution || "Perguruan Tinggi"} tertulis jelas sesuai urutan kronologis.`
+        );
+      }
+
+      const onboardingRecommendations: string[] = [];
+      if (missingBenchmarks.length > 0 && techSkills.length < 5) {
+        onboardingRecommendations.push(
+          `Untuk posisi ${targetRole}, tambahkan keahlian standar industri yang sering dicari ATS seperti: ${missingBenchmarks.slice(0, 4).join(", ")}.`
+        );
+      }
+      if (expWords < 25) {
+        onboardingRecommendations.push(
+          "Perdalam narasi pengalaman atau proyek menjadi minimal 2 sampai 3 kalimat rincian (jelaskan peran Anda, teknologi yang dipakai, dan hasil akhirnya)."
+        );
+      }
+      if (!hasNumericImpact) {
+        onboardingRecommendations.push(
+          "Tambahkan metrik angka pada cerita pengalaman/proyek (contoh: 'Mengembangkan aplikasi web untuk 150+ pengguna' atau 'Mempercepat proses laporan 35%')."
+        );
+      }
+      if (!String(data.portfolioLink || "").trim()) {
+        onboardingRecommendations.push(
+          "Sertakan tautan LinkedIn, GitHub, atau portofolio proyek agar skor Kredibilitas & Portofolio meningkat."
+        );
+      }
+      if (softSkills.length < 2) {
+        onboardingRecommendations.push(
+          "Tambahkan minimal 2 sampai 3 Soft Skills pendukung (seperti Problem Solving atau Komunikasi Tim) untuk menyeimbangkan profil."
+        );
+      }
+      if (onboardingRecommendations.length === 0) {
+        onboardingRecommendations.push(
+          `Pertahankan kelengkapan profil dan sesuaikan penekanan proyek utama dengan deskripsi lowongan ${targetRole} yang dilamar.`
+        );
+      }
+
       const structuredProfile = {
         userId,
         fullName: data.fullName || mapped.profile.fullName,
-        headline: data.targetRole || mapped.profile.headline,
+        headline: targetRole || mapped.profile.headline,
         contactEmail: data.email || mapped.profile.contactEmail,
         city: "Indonesia",
         seniorityLevel: "Junior / Fresh Graduate",
@@ -241,10 +501,12 @@ router.post(
         },
         experiences: [
           {
-            title: `Proyek & Pengalaman: ${data.targetRole || "Kandidat"}`,
+            title: `Proyek & Pengalaman: ${targetRole || "Kandidat"}`,
             organization: data.institution || "Pengalaman Akademik / Magang",
             period: `${data.graduationYear || "2025"} - Sekarang`,
-            description: lines[7],
+            description:
+              rawExperience ||
+              "Mengerjakan proyek akademik dan pengembangan kompetensi sesuai bidang studi.",
           },
         ],
         education: [
@@ -271,20 +533,11 @@ router.post(
         userId,
         source: "onboarding",
         storedFilePath: savedPath,
-        overallScore: Math.max(mapped.overallScore, 85),
-        dimensions: {
-          structure: Math.max(mapped.dimensions.structure, 92),
-          clarity: Math.max(mapped.dimensions.clarity, 86),
-          measurableImpact: mapped.dimensions.measurableImpact,
-          skillRelevance: mapped.dimensions.skillRelevance,
-          completeness: Math.max(mapped.dimensions.completeness, 90),
-        },
-        strengths: [
-          "Disusun otomatis menggunakan struktur 1-kolom standar ATS Pasbana.",
-          ...mapped.strengths.slice(0, 2),
-        ],
+        overallScore: onboardingOverallScore,
+        dimensions: onboardingDimensions,
+        strengths: onboardingStrengths,
         weaknesses: mapped.weaknesses,
-        recommendations: mapped.recommendations,
+        recommendations: onboardingRecommendations.slice(0, 4),
         profile: structuredProfile,
         cvTextExcerpt: lines.join("\n"),
         cvEmbedding: mapped.cvEmbedding,
@@ -307,6 +560,7 @@ router.post(
 
       return res.json({
         cvId: storedCv.cvId,
+        source: "onboarding",
         overallScore: storedCv.overallScore,
         dimensions: storedCv.dimensions,
         strengths: storedCv.strengths,

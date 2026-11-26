@@ -106,6 +106,7 @@ class ApiClient {
       });
       const resultWithFileName: CVAnalysisResult = {
         ...res,
+        source: res.source || "upload",
         fileName: res.fileName || file.name,
       };
       this.saveAnalysis(resultWithFileName);
@@ -118,6 +119,7 @@ class ApiClient {
       // Fallback local mock simulation only when backend API is unreachable
       const mockResult: CVAnalysisResult = {
         cvId: `cv-${Date.now()}`,
+        source: "upload",
         fileName: file.name,
         overallScore: 88,
         dimensions: {
@@ -181,8 +183,12 @@ class ApiClient {
         method: "POST",
         body: JSON.stringify(data),
       });
-      this.saveAnalysis(res);
-      return res;
+      const resultWithSource: CVAnalysisResult = {
+        ...res,
+        source: res.source || "onboarding",
+      };
+      this.saveAnalysis(resultWithSource);
+      return resultWithSource;
     } catch (err) {
       const status = (err as Error & { status?: number })?.status;
       if (status && status >= 400 && status < 500) {
@@ -200,13 +206,14 @@ class ApiClient {
 
       const mockResult: CVAnalysisResult = {
         cvId: `cv-gen-${Date.now()}`,
-        overallScore: 89,
+        source: "onboarding",
+        overallScore: 76,
         dimensions: {
-          structure: 95,
-          clarity: 88,
-          measurableImpact: 82,
-          skillRelevance: 91,
-          completeness: 89,
+          structure: Math.min(94, 54 + techSkills.length * 10),
+          clarity: data.experienceSummary.trim().split(/\s+/).length >= 25 ? 84 : 68,
+          measurableImpact: /\d+/.test(data.experienceSummary) ? 86 : 62,
+          skillRelevance: 78,
+          completeness: data.portfolioLink ? 88 : 72,
         },
         strengths: [
           "Format resume disusun mengikuti standar tata letak ATS industri 100%.",

@@ -50,6 +50,9 @@ export default function DokumenCvAtsPage() {
     const current = api.getCurrentAnalysis();
     if (current) {
       setAnalysis(current);
+      if (typeof window !== "undefined" && window.location.search.includes("edit=true")) {
+        setEditModalOpen(true);
+      }
     }
     setLoading(false);
   }, []);
