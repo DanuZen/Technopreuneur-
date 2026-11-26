@@ -515,6 +515,7 @@ export async function embedTextsWithBackendAi(
 
 export async function chatCvWithBackendAi(payload: {
   question: string;
+  source?: "upload" | "onboarding";
   sanitizedText?: string;
   overallScore?: number;
   dimensions?: Record<string, number>;
@@ -530,6 +531,7 @@ export async function chatCvWithBackendAi(payload: {
     },
     body: JSON.stringify({
       question: payload.question,
+      source: payload.source || "upload",
       sanitized_text: payload.sanitizedText || "",
       overall_score: payload.overallScore ?? 80,
       dimensions: payload.dimensions || {},

@@ -604,8 +604,14 @@ router.post("/chat", async (req: AuthenticatedRequest, res: Response) => {
       ? db.cvs.find((c) => c.userId === optUser.userId)
       : db.cvs[0];
 
+    const resolvedSource: "upload" | "onboarding" =
+      storedCv?.source === "onboarding" || String(cvId || "").startsWith("cv-gen-")
+        ? "onboarding"
+        : "upload";
+
     const chatRes = await chatCvWithBackendAi({
       question: String(question).trim(),
+      source: resolvedSource,
       sanitizedText: storedCv?.cvTextExcerpt || "",
       overallScore:
         typeof overallScore === "number"

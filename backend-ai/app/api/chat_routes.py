@@ -26,6 +26,7 @@ SYSTEM_PROMPT = (
 
 class CvChatRequest(BaseModel):
     question: str = Field(min_length=1, max_length=1000)
+    source: Literal["upload", "onboarding"] = Field(default="upload")
     sanitized_text: str = Field(default="", max_length=15000)
     overall_score: int = Field(default=80, ge=0, le=100)
     dimensions: dict[str, int] = Field(default_factory=dict)
@@ -43,22 +44,35 @@ class CvChatResponse(BaseModel):
     status: Literal["ok", "fallback"]
 
 
-def _deterministic_chat_answer(payload: CvChatRequest) -> str:
-    q = payload.question.lower()
-    dim_labels = {
-        "structure": "Struktur ATS",
+def _get_dim_labels(source: str) -> dict[str, str]:
+    if source == "onboarding":
+        return {
+            "structure": "Kesesuaian Target Posisi",
+            "clarity": "Kedalaman Narasi Pengalaman",
+            "measurableImpact": "Bukti Dampak & Angka",
+            "skillRelevance": "Kekuatan Kata Kerja Aksi",
+            "completeness": "Kredibilitas & Portofolio",
+        }
+    return {
+        "structure": "Struktur & Format ATS",
         "clarity": "Kejelasan Bahasa",
         "measurableImpact": "Dampak Terukur",
         "skillRelevance": "Relevansi Skill",
         "completeness": "Kelengkapan Profil",
     }
+
+
+def _deterministic_chat_answer(payload: CvChatRequest) -> str:
+    q = payload.question.lower()
+    is_onboarding = payload.source == "onboarding"
+    dim_labels = _get_dim_labels(payload.source)
     scored_dims = [
         (dim_labels.get(k, k), v) for k, v in payload.dimensions.items() if isinstance(v, int)
     ]
     lowest_name, lowest_score = (
         min(scored_dims, key=lambda item: item[1])
         if scored_dims
-        else ("Dampak Terukur", payload.overall_score)
+        else ("Bukti Dampak & Angka" if is_onboarding else "Dampak Terukur", payload.overall_score)
     )
     top_rec = (
         payload.recommendations[0]
@@ -66,26 +80,53 @@ def _deterministic_chat_answer(payload: CvChatRequest) -> str:
         else "Tambahkan metrik angka kuantitatif pada setiap poin pengalaman kerja atau proyek."
     )
 
+    if any(w in q for w in ("poin pengalaman", "3 poin", "proyek")):
+        return (
+            "Gunakan pola Kata Kerja Aksi + Teknologi/Peran + Hasil Terukur dalam 3 poin: "
+            "1) Mengembangkan fitur aplikasi menggunakan teknologi inti proyek sehingga mempercepat proses kerja hingga 30%. "
+            "2) Berkolaborasi dalam tim beranggotakan 4 orang untuk menyelesaikan modul utama sesuai target waktu. "
+            "3) Menguji dan mengoptimalkan kualitas hasil proyek berdasarkan umpan balik pengguna."
+        )
+
+    if any(w in q for w in ("kredibilitas", "portofolio", "fresh graduate")):
+        comp_score = payload.dimensions.get("completeness", payload.overall_score)
+        return (
+            f"Skor Kredibilitas & Portofolio Anda saat ini {comp_score}/100. "
+            "Untuk meningkatkannya, cantumkan tautan GitHub, LinkedIn, atau demo proyek aktif, lengkapi nomor telepon/WhatsApp, serta tambahkan minimal 4 keahlian teknis dan 2 soft skills."
+        )
+
     if any(w in q for w in ("ats", "struktur", "format", "kolom", "tabel")):
         struct_score = payload.dimensions.get("structure", payload.overall_score)
+        if is_onboarding:
+            return (
+                "Karena CV Anda dibuat melalui Kuesioner Onboarding Pasbana, format dokumen sudah 100% menggunakan struktur 1-kolom standar ATS. "
+                f"Fokus utama Anda sekarang adalah meningkatkan Kesesuaian Target Posisi ({struct_score}/100) dan Kedalaman Narasi Pengalaman."
+            )
         if struct_score >= 85:
             return (
-                f"Skor Struktur ATS Anda sudah sangat baik ({struct_score}/100). "
+                f"Skor Struktur & Format ATS Anda sudah sangat baik ({struct_score}/100). "
                 "Pertahankan tata letak 1-kolom tanpa tabel bersarang atau kotak teks agar mesin parser rekruter membaca seluruh isi secara akurat."
             )
         return (
-            f"Skor Struktur ATS Anda saat ini {struct_score}/100. "
+            f"Skor Struktur & Format ATS Anda saat ini {struct_score}/100. "
             "Sederhanakan dokumen ke format 1-kolom bersih tanpa tabel, header grafis, atau multi-kolom supaya seluruh riwayat terbaca utuh oleh ATS."
         )
 
     if any(w in q for w in ("terukur", "kalimat", "contoh", "dampak", "angka", "metrik")):
         impact_score = payload.dimensions.get("measurableImpact", payload.overall_score)
+        label = "Bukti Dampak & Angka" if is_onboarding else "Dampak Terukur"
         return (
-            f"Untuk menaikkan skor Dampak Terukur (saat ini {impact_score}/100), gunakan pola Kata Kerja Aksi + Tugas + Hasil Angka. "
+            f"Untuk menaikkan skor {label} (saat ini {impact_score}/100), gunakan pola Kata Kerja Aksi + Tugas + Hasil Angka. "
             'Contoh: "Mengoptimalkan endpoint API dan query database sehingga memangkas waktu respons hingga 35% untuk 5.000 pengguna harian."'
         )
 
-    if any(w in q for w in ("skill", "keahlian", "kata kunci", "keyword", "tonjol")):
+    if any(w in q for w in ("skill", "keahlian", "kata kunci", "keyword", "tonjol", "wajib")):
+        if is_onboarding:
+            role_score = payload.dimensions.get("structure", payload.overall_score)
+            return (
+                f"Skor Kesesuaian Target Posisi Anda saat ini {role_score}/100. "
+                f"{top_rec}"
+            )
         skill_score = payload.dimensions.get("skillRelevance", payload.overall_score)
         return (
             f"Skor Relevansi Skill Anda berada di angka {skill_score}/100. "
@@ -102,10 +143,18 @@ def _deterministic_chat_answer(payload: CvChatRequest) -> str:
 def cv_chat(payload: CvChatRequest) -> CvChatResponse:
     safe_cv = sanitize_text(payload.sanitized_text).text[:4000]
     safe_question = sanitize_text(payload.question).text.strip() or payload.question.strip()
+    dim_labels = _get_dim_labels(payload.source)
+    labeled_dimensions = {dim_labels.get(k, k): v for k, v in payload.dimensions.items()}
+    mode_desc = (
+        "Jalur Onboarding (Belum Punya CV - Format 1-kolom ATS sudah otomatis diterapkan oleh Pasbana, fokus evaluasi pada substansi isi terhadap target posisi)"
+        if payload.source == "onboarding"
+        else "Jalur Upload Dokumen CV (Audit keterbacaan format ATS dan kualitas isi dokumen)"
+    )
 
     user_prompt = (
+        f"Mode Evaluasi: {mode_desc}\n"
         f"Skor Keseluruhan CV: {payload.overall_score}/100\n"
-        f"Skor Dimensi: {json.dumps(payload.dimensions, ensure_ascii=False)}\n"
+        f"Skor 5 Dimensi: {json.dumps(labeled_dimensions, ensure_ascii=False)}\n"
         f"Kekuatan: {'; '.join(payload.strengths[:4]) or '-'}\n"
         f"Kelemahan: {'; '.join(payload.weaknesses[:4]) or '-'}\n"
         f"Rekomendasi Saat Ini: {'; '.join(payload.recommendations[:4]) or '-'}\n"
