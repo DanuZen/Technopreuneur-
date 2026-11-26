@@ -139,7 +139,7 @@ export function EditCvDataModal({
         </div>
 
         {/* Tabs */}
-        <div className="shrink-0 px-6 pt-3 pb-2 bg-[#f4f7fb] border-b border-slate-200 flex flex-wrap gap-1.5">
+        <div className="shrink-0 px-4 sm:px-6 pt-3 pb-2 bg-[#f4f7fb] border-b border-slate-200 flex overflow-x-auto scrollbar-none sm:flex-wrap gap-1.5">
           {(
             [
               { id: "identitas", label: "Identitas & Ringkasan", icon: User },
@@ -155,7 +155,7 @@ export function EditCvDataModal({
                 key={tab.id}
                 type="button"
                 onClick={() => setActiveTab(tab.id)}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer ${
+                className={`shrink-0 min-h-[40px] inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer ${
                   active
                     ? "bg-[#0f2c56] text-white"
                     : "bg-white text-slate-600 hover:text-[#0f2c56] border border-slate-200"

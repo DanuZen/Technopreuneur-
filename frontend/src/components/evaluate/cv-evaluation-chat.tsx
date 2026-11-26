@@ -507,14 +507,14 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
       </div>
 
       {/* Bottom Fixed Chat Input + Quick Suggestions */}
-      <div className="shrink-0 bg-[#fefefd] pt-3 pb-1 border-t border-slate-200/70 space-y-2.5">
-        <div className="flex flex-wrap gap-1.5">
+      <div className="shrink-0 bg-[#fefefd] pt-2.5 sm:pt-3 pb-1 border-t border-slate-200/70 space-y-2">
+        <div className="flex overflow-x-auto scrollbar-none sm:flex-wrap gap-1.5 pb-0.5">
           {QUICK_QUESTIONS.map((q) => (
             <button
               key={q}
               type="button"
               onClick={() => handleSend(q)}
-              className="px-3 py-1.5 rounded-full bg-[#edf2f9] hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white text-[11px] font-semibold transition-colors cursor-pointer"
+              className="shrink-0 min-h-[38px] px-3.5 py-1.5 rounded-full bg-[#edf2f9] hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white text-[11px] font-semibold transition-colors cursor-pointer"
             >
               {q}
             </button>
@@ -533,12 +533,12 @@ export function CvEvaluationChat({ analysis }: CvEvaluationChatProps) {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Tanyakan cara memperbaiki skor ATS, kata kunci skill, atau kalimat CV..."
-            className="flex-1 bg-transparent text-xs sm:text-sm text-[#0f2c56] placeholder:text-slate-400 focus:outline-none"
+            className="flex-1 min-w-0 bg-transparent text-xs sm:text-sm text-[#0f2c56] placeholder:text-slate-400 focus:outline-none"
           />
           <button
             type="submit"
             disabled={!input.trim() || isTyping}
-            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] disabled:opacity-50 text-white text-xs font-bold transition-colors cursor-pointer shrink-0"
+            className="inline-flex items-center justify-center gap-1.5 min-h-[42px] min-w-[44px] px-4 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] disabled:opacity-50 text-white text-xs font-bold transition-colors cursor-pointer shrink-0"
           >
             <Send className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Kirim</span>

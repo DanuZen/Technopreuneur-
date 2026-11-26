@@ -70,14 +70,15 @@ export function AppHeader({
     <header className="sticky top-0 z-30 flex min-h-[46px] sm:min-h-[50px] w-full shrink-0 items-center justify-between gap-3 bg-white px-3.5 sm:px-6 py-1.5">
       {/* Left: Mobile Toggle */}
       <div className="flex items-center gap-2.5 min-w-0">
-        {/* Mobile Hamburger Toggle */}
+        {/* Mobile Hamburger Toggle (Labeled + >= 44px tap target) */}
         <button
           type="button"
           onClick={onToggleMobile}
-          className="flex lg:hidden h-10 w-10 items-center justify-center rounded-xl bg-slate-100 hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white transition-colors cursor-pointer"
+          className="flex lg:hidden min-h-[44px] px-3.5 gap-2 items-center justify-center rounded-xl bg-slate-100 hover:bg-[#0f2c56] text-[#0f2c56] hover:text-white text-xs font-extrabold transition-colors cursor-pointer"
           aria-label="Buka menu samping navigasi"
         >
-          <Menu className="w-4 h-4" />
+          <Menu className="w-4 h-4 shrink-0" />
+          <span>Menu</span>
         </button>
       </div>
 
@@ -89,7 +90,7 @@ export function AppHeader({
             <button
               type="button"
               onClick={() => setMenuOpen((s) => !s)}
-              className="flex items-center gap-2 py-1.5 px-2.5 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs font-bold text-[#0f2c56] transition-colors cursor-pointer"
+              className="flex items-center gap-2 min-h-[44px] py-1.5 px-3 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs font-bold text-[#0f2c56] transition-colors cursor-pointer"
               aria-expanded={menuOpen}
               aria-haspopup="menu"
             >

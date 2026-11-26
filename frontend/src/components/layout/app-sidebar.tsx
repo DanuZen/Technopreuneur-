@@ -191,9 +191,9 @@ export function AppSidebar({
         aria-label="Navigasi aplikasi dan riwayat evaluasi"
         className={`fixed top-0 bottom-0 left-0 z-50 flex shrink-0 flex-col bg-[#edf2f9] text-primary overflow-hidden lg:static transition-[width,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isMobileOpen
-            ? "translate-x-0 shadow-2xl w-[310px]"
+            ? "translate-x-0 shadow-2xl w-[85vw] max-w-[310px]"
             : "-translate-x-full lg:translate-x-0"
-        } ${isDesktopCollapsed ? "lg:w-[72px]" : "lg:w-[310px]"} w-[310px]`}
+        } ${isDesktopCollapsed ? "lg:w-[72px]" : "lg:w-[310px]"} w-[85vw] max-w-[310px]`}
       >
         <div className="relative h-full w-full overflow-hidden flex flex-col justify-between">
           {/* ============================================================= */}
@@ -266,7 +266,7 @@ export function AppSidebar({
           {/* FULL EXPANDED SIDEBAR (Tampil saat isDesktopCollapsed = false) */}
           {/* ============================================================= */}
           <div
-            className={`flex flex-col h-full w-[310px] min-w-[310px] transition-opacity duration-200 ${
+            className={`flex flex-col h-full w-full lg:w-[310px] lg:min-w-[310px] transition-opacity duration-200 ${
               isDesktopCollapsed
                 ? "lg:opacity-0 lg:pointer-events-none"
                 : "opacity-100 pointer-events-auto"
@@ -313,7 +313,7 @@ export function AppSidebar({
                       key={item.href}
                       href={item.href}
                       onClick={onCloseMobile}
-                      className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[13px] font-semibold transition-all ${
+                      className={`flex items-center gap-3 min-h-[44px] px-3.5 py-2.5 rounded-xl text-[13px] font-semibold transition-all ${
                         item.isActive
                           ? "bg-[#0f2c56] text-white"
                           : "text-slate-700 hover:bg-white hover:text-[#0f2c56]"

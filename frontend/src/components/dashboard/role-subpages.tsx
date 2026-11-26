@@ -197,7 +197,7 @@ export function CompanyJobsSubpage() {
   const rejectedEstimate = Math.max(totalApplicantsCount - reviewedEstimate - shortlistedEstimate, 0);
 
   return (
-    <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4 lg:overflow-hidden">
+    <main className="min-h-full lg:h-full lg:min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4 lg:overflow-hidden">
       <DashboardPageHeading
         badge="Manajemen Lowongan"
         titleLine1="Kelola posisi kerja"
@@ -408,7 +408,7 @@ export function CompanyCandidatesSubpage() {
     visible.find((c) => c.id === selectedId) || visible[0] || candidates[0];
 
   return (
-    <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4 lg:overflow-hidden">
+    <main className="min-h-full lg:h-full lg:min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4 lg:overflow-hidden">
       <DashboardPageHeading
         badge="Seleksi Kandidat"
         titleLine1="Tinjau kesiapan pelamar"
@@ -438,7 +438,7 @@ export function CompanyCandidatesSubpage() {
 
       <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-4 lg:overflow-hidden">
         {/* Tabel List Ringkas (Tanpa Kolom Aksi) */}
-        <div className="flex-1 min-h-0 flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs">
+        <div className="flex-1 min-h-[260px] lg:min-h-0 flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs">
           <div className="shrink-0 grid grid-cols-12 gap-2 px-4 py-3 border-b border-slate-100 bg-slate-50 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
             <span className="col-span-5">Kandidat</span>
             <span className="col-span-4">Posisi Dilamar</span>
@@ -669,7 +669,7 @@ export function CompanyProfileSubpage() {
   };
 
   return (
-    <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4 lg:overflow-hidden">
+    <main className="min-h-full lg:h-full lg:min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4 lg:overflow-hidden">
       <DashboardPageHeading
         badge="Profil Mitra"
         titleLine1="Identitas perusahaan"
@@ -938,7 +938,7 @@ export function AdminModerationSubpage() {
   const selected = items.find((it) => it.id === selectedId) || items[0];
 
   return (
-    <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4 lg:overflow-hidden">
+    <main className="min-h-full lg:h-full lg:min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4 lg:overflow-hidden">
       <DashboardPageHeading
         badge="Audit & Verifikasi Mitra (FR-50)"
         titleLine1="Audit & verifikasi"
@@ -948,7 +948,7 @@ export function AdminModerationSubpage() {
 
       <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-4 lg:overflow-hidden">
         {/* Tabel List Ringkas (Tanpa Kolom Aksi) */}
-        <div className="flex-1 min-h-0 flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs">
+        <div className="flex-1 min-h-[260px] lg:min-h-0 flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs">
           <div className="shrink-0 grid grid-cols-12 gap-2 px-4 py-3 border-b border-slate-100 bg-slate-50 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
             <span className="col-span-5">Perusahaan</span>
             <span className="col-span-4">Sektor &amp; Lokasi</span>
@@ -1199,7 +1199,7 @@ export function AdminAuditSubpage() {
   };
 
   return (
-    <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4 lg:overflow-hidden">
+    <main className="min-h-full lg:h-full lg:min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4 lg:overflow-hidden">
       <DashboardPageHeading
         badge="Standarisasi Platform (FR-51)"
         titleLine1="Tetapkan standarisasi"
@@ -1568,7 +1568,7 @@ export function AdminReportSubpage() {
   ];
 
   return (
-    <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4 lg:overflow-hidden">
+    <main className="min-h-full lg:h-full lg:min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-4 sm:pb-5 flex flex-col gap-4 lg:overflow-hidden">
       <DashboardPageHeading
         badge="Laporan Eksekutif"
         titleLine1="Ringkasan kepatuhan"
@@ -1644,31 +1644,35 @@ export function AdminReportSubpage() {
             </span>
           </div>
 
-          <div className="grid grid-cols-12 gap-2 px-5 py-2.5 bg-slate-50 border-b border-slate-100 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
-            <span className="col-span-4">Periode</span>
-            <span className="col-span-3 text-right">Jobseeker</span>
-            <span className="col-span-3 text-right">Company Mitra</span>
-            <span className="col-span-2 text-right">Patuh</span>
-          </div>
-
-          <div className="flex-1 divide-y divide-slate-100">
-            {monthlyBreakdown.map((row) => (
-              <div
-                key={row.month}
-                className="grid grid-cols-12 gap-2 px-5 py-3.5 text-xs items-center"
-              >
-                <span className="col-span-4 font-bold text-[#0f2c56]">{row.month}</span>
-                <span className="col-span-3 text-right font-semibold text-slate-700">
-                  {row.jobseekers.toLocaleString("id-ID")}
-                </span>
-                <span className="col-span-3 text-right font-semibold text-slate-700">
-                  {row.companies} Perusahaan
-                </span>
-                <span className="col-span-2 text-right font-extrabold text-[#0f2c56]">
-                  {row.auditPassRate}
-                </span>
+          <div className="overflow-x-auto">
+            <div className="min-w-[440px]">
+              <div className="grid grid-cols-12 gap-2 px-5 py-2.5 bg-slate-50 border-b border-slate-100 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
+                <span className="col-span-4">Periode</span>
+                <span className="col-span-3 text-right">Jobseeker</span>
+                <span className="col-span-3 text-right">Company Mitra</span>
+                <span className="col-span-2 text-right">Patuh</span>
               </div>
-            ))}
+
+              <div className="flex-1 divide-y divide-slate-100">
+                {monthlyBreakdown.map((row) => (
+                  <div
+                    key={row.month}
+                    className="grid grid-cols-12 gap-2 px-5 py-3.5 text-xs items-center"
+                  >
+                    <span className="col-span-4 font-bold text-[#0f2c56]">{row.month}</span>
+                    <span className="col-span-3 text-right font-semibold text-slate-700">
+                      {row.jobseekers.toLocaleString("id-ID")}
+                    </span>
+                    <span className="col-span-3 text-right font-semibold text-slate-700">
+                      {row.companies} Perusahaan
+                    </span>
+                    <span className="col-span-2 text-right font-extrabold text-[#0f2c56]">
+                      {row.auditPassRate}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
           <div className="shrink-0 px-5 py-3.5 bg-[#f4f7fb] border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">

@@ -275,15 +275,17 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
             )}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button (Labeled + >= 44px tap target) */}
           <div className="flex lg:hidden">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-full text-slate-200 hover:bg-white/10 cursor-pointer"
+              className="min-h-[44px] px-3.5 py-2 rounded-full text-xs font-bold text-white bg-white/10 hover:bg-white/20 flex items-center gap-1.5 cursor-pointer"
               aria-label="Toggle navigation menu"
+              aria-expanded={mobileMenuOpen}
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+              <span>{mobileMenuOpen ? "Tutup" : "Menu"}</span>
             </button>
           </div>
         </div>
@@ -291,7 +293,7 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
 
       {/* Mobile Menu Floating Dropdown Card */}
       {mobileMenuOpen && (
-        <div className="pointer-events-auto lg:hidden mt-2 w-full max-w-sm rounded-3xl bg-[#0e2647]/95 backdrop-blur-xl text-white shadow-2xl px-5 py-4 space-y-2.5">
+        <div className="pointer-events-auto lg:hidden mt-2 w-full max-w-sm rounded-3xl bg-[#0e2647]/95 backdrop-blur-xl text-white shadow-2xl px-4 py-4 space-y-1.5">
           {LANDING_SECTIONS.map((item) => {
             const isActive = pathname === "/" && activeLandingSlide === item.slide;
             return (
@@ -299,8 +301,10 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
                 key={item.href}
                 href={item.href}
                 onClick={(e) => handleSectionClick(e, item.href, item.slide)}
-                className={`block text-sm font-medium py-1 ${
-                  isActive ? "text-white font-semibold" : "text-slate-200 hover:text-white"
+                className={`flex items-center min-h-[44px] px-3.5 rounded-xl text-sm font-medium transition-colors ${
+                  isActive
+                    ? "bg-white text-[#0f2c56] font-bold"
+                    : "text-slate-200 hover:text-white hover:bg-white/10"
                 }`}
               >
                 {item.label}
@@ -310,29 +314,36 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
           <Link
             href="/jobs"
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-slate-200 hover:text-white py-1"
+            className="flex items-center min-h-[44px] px-3.5 rounded-xl text-sm font-medium text-slate-200 hover:text-white hover:bg-white/10"
           >
             Pencocokan AI
           </Link>
           <Link
             href="/about"
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-slate-200 hover:text-white py-1"
+            className="flex items-center min-h-[44px] px-3.5 rounded-xl text-sm font-medium text-slate-200 hover:text-white hover:bg-white/10"
           >
             Tentang Kami
           </Link>
-          <div className="pt-2 flex flex-col gap-2">
+          <div className="pt-2 border-t border-white/15 flex flex-col gap-2">
             {user ? (
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-slate-300 font-medium">
+              <div className="space-y-2">
+                <div className="px-3.5 py-1 text-xs text-slate-300 font-medium truncate">
                   {user.name} ({user.role})
-                </span>
+                </div>
+                <Link
+                  href={getDashboardBasePath(user.role)}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-center min-h-[44px] rounded-full bg-white text-[#0f2c56] text-xs font-extrabold"
+                >
+                  Buka Dashboard
+                </Link>
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="text-xs text-rose-400 font-medium py-1 cursor-pointer"
+                  className="w-full min-h-[44px] rounded-full bg-[#ce2731] text-white text-xs font-bold cursor-pointer"
                 >
-                  Keluar
+                  Keluar dari Akun
                 </button>
               </div>
             ) : (
@@ -340,14 +351,14 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
                 <Link
                   href="/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-center text-sm font-medium text-slate-200 bg-white/10 hover:bg-white/15 py-2 rounded-full"
+                  className="flex items-center justify-center min-h-[44px] text-sm font-semibold text-slate-200 bg-white/10 hover:bg-white/15 rounded-full"
                 >
                   Masuk
                 </Link>
                 <Link
                   href="/register"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-center text-sm font-medium text-white bg-[#ce2731] hover:bg-[#b01e27] py-2 rounded-full shadow font-bold"
+                  className="flex items-center justify-center min-h-[44px] text-sm font-bold text-white bg-[#ce2731] hover:bg-[#b01e27] rounded-full shadow"
                 >
                   Daftar Akun
                 </Link>

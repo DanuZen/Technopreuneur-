@@ -155,7 +155,7 @@ function CompanyDashboardView() {
   const rejectedCount = applicants.filter((a) => a.status === "rejected").length;
 
   return (
-    <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-3 sm:pb-4 flex flex-col gap-3 lg:overflow-hidden">
+    <main className="min-h-full lg:h-full lg:min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-3 sm:pb-4 flex flex-col gap-3 lg:overflow-hidden">
       <DashboardPageHeading
         badge="Portal Perusahaan"
         titleLine1="Temukan talenta muda"
@@ -462,7 +462,7 @@ function AdminDashboardView() {
   const incompleteCount = partners.filter((p) => p.complianceStatus === "incomplete").length;
 
   return (
-    <main className="h-full min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-3 sm:pb-4 flex flex-col gap-3 lg:overflow-hidden">
+    <main className="min-h-full lg:h-full lg:min-h-0 w-full px-3.5 sm:px-6 pt-1 sm:pt-1.5 pb-3 sm:pb-4 flex flex-col gap-3 lg:overflow-hidden">
       <DashboardPageHeading
         badge="Panel Administrator"
         titleLine1="Standarisasi ekosistem"

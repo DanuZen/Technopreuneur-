@@ -477,7 +477,7 @@ export function UserProfilePopup({
 
         {/* Section Tabs (Khusus User) */}
         {isUserRole && (
-          <div className="shrink-0 px-6 pt-3 pb-2 bg-[#f4f7fb] border-b border-slate-200 flex flex-wrap gap-1.5">
+          <div className="shrink-0 px-4 sm:px-6 pt-3 pb-2 bg-[#f4f7fb] border-b border-slate-200 flex overflow-x-auto scrollbar-none sm:flex-wrap gap-1.5">
             {(
               [
                 { id: "identitas", label: "Identitas", icon: UserIcon },
