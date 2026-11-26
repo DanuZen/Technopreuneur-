@@ -1,9 +1,12 @@
-# CareerMatch AI — Implementation Tasks & Pembagian Tugas Tim
+# CareerMatch AI (Pasbana) - Implementation Tasks & Pembagian Tugas Tim
 
-Dokumen ini memuat rincian daftar tugas (*work breakdown structure*), roadmap peluncuran 6 minggu, checklist persiapan infrastruktur, dan pembagian tugas per anggota tim:
-- **Wira Fikri Ramadanu (NIM: 23343023)** — *Frontend Lead* (`frontend/`)
-- **Muhammad Gilang Ramadhan (NIM: 23346013)** — *Backend Lead* (`backend-api/`)
-- **Florensius Panca Gati (NIM: 23343006)** — *Backend AI Lead* (`backend-ai/`)
+Dokumen ini memuat rincian daftar tugas (*work breakdown structure*), status progres aktual, roadmap peluncuran 6 minggu, checklist persiapan infrastruktur, dan pembagian tugas lanjutan per anggota tim:
+- **Wira Fikri Ramadanu (NIM: 23343023)** - *Frontend Lead* (`frontend/`)
+- **Muhammad Gilang Ramadhan (NIM: 23346013)** - *Backend Lead* (`backend-api/`)
+- **Florensius Panca Gati (NIM: 23343006)** - *Backend AI Lead* (`backend-ai/`)
+
+> **Status Integrasi Terkini (Update 26 Nov 2026):**
+> Ketiga layanan utama (`frontend/` port `3000`, `backend-api/` port `5000`, dan `backend-ai/` port `8000`) telah terintegrasi penuh secara lokal (`local-json-vault` + Gemini API + `149` unit test `pytest` lulus + `0` error TypeScript). Tugas yang tersisa pada daftar di bawah difokuskan pada aktivasi PostgreSQL `pgvector` produksi, Object Storage cloud, sinkronisasi live Jooble API, dan uji coba Golden Dataset.
 
 ---
 
@@ -12,40 +15,34 @@ Dokumen ini memuat rincian daftar tugas (*work breakdown structure*), roadmap pe
 Riset awal difokuskan secara eksklusif pada **riset teknis** untuk memvalidasi kelayakan arsitektur, pustaka, dan performa infrastruktur pada sisi **Backend AI** dan **Backend API**. Frontend tidak dibebani riset non-teknis dan dapat langsung fokus pada pengembangan antarmuka.
 
 ### 1.1 Riset Teknis Backend AI (Florensius Panca Gati)
-- [ ] **Benchmarking Model LLM Gratis (*Free Tier Feasibility*):**
-  - Menguji latensi, kestabilan rate limit, dan kepatuhan skema JSON terstruktur (*Structured Outputs*) Google Gemini API (Free Tier: 15 RPM).
-  - Melakukan *prompt engineering spike* untuk ekstraksi 5 dimensi nilai CV dan perakitan resume terstruktur dari jawaban kuesioner.
+- [x] **Benchmarking Model LLM Gratis (*Free Tier Feasibility*):**
+  - Menguji latensi, kestabilan rate limit, mekanisme fallback model (`gemini-2.5-flash` / `gemini-2.0-flash`), dan kepatuhan skema JSON terstruktur (*Structured Outputs*) Google Gemini API.
+  - Melakukan *prompt engineering spike* untuk ekstraksi 5 dimensi nilai CV, konsultasi chatbot interaktif, dan analisis teks kuesioner onboarding.
   - **[PIC: Florensius Panca Gati]**
-- [ ] **Eksplorasi Model Vektor & Embedding Teks:**
-  - Evaluasi akurasi model embedding 1536-dimensi untuk teks dwibahasa (Bahasa Indonesia & Inggris).
-  - Pengujian kueri operator jarak kemiripan kosinus pgvector (`<=>`) pada PostgreSQL.
+- [x] **Eksplorasi Model Vektor & Embedding Teks:**
+  - Evaluasi akurasi model embedding 1536-dimensi (`gemini-embedding-001`) untuk teks dwibahasa (Bahasa Indonesia & Inggris).
+  - Pengujian skema jarak kemiripan kosinus (`cosineSimilarity` & kontrak `pgvector`).
   - **[PIC: Florensius Panca Gati]**
-- [ ] **Spike Parser Dokumen & Deteksi Scan Kosong:**
-  - Uji performa pustaka `pypdf` dan `python-docx` terhadap berbagai tata letak CV (1 kolom, 2 kolom, tabel).
-  - Implementasi deteksi berkas gambar/scan tanpa layer teks digital untuk mencegah pemrosesan sia-sia.
+- [x] **Spike Parser Dokumen & Deteksi Scan Kosong:**
+  - Uji performa pustaka `pdfplumber` dan `python-docx` terhadap berbagai tata letak CV (1 kolom, 2 kolom, tabel, serta *List Bullet* Microsoft Word).
+  - Implementasi deteksi berkas gambar/scan tanpa layer teks digital (`is_scanned`) untuk mencegah pemrosesan sia-sia.
   - **[PIC: Florensius Panca Gati]**
-- [ ] **Eksplorasi Integrasi Jooble Publisher API:**
-  - Menguji kueri endpoint resmi Jooble untuk lowongan kerja Indonesia (Jakarta, Surabaya, Bandung, remote).
-  - Merancang pemetaan (*mapping*) skema respons Jooble ke skema tabel database `jobs`.
-  - **[PIC: Florensius Panca Gati]**
+- [x] **Eksplorasi Integrasi Jooble Publisher API:**
+  - Merancang modul normalisasi payload Jooble (`normalize_jooble`) dan Arbeitnow ke skema standar `JobRecord`.
+  - **[PIC: Florensius Panca Gati]** (Catatan: penarikan HTTP live menunggu `JOOBLE_API_KEY` produksi)
 
 ---
 
 ### 1.2 Riset Teknis Backend API (Muhammad Gilang Ramadhan)
-- [ ] **Eksplorasi Integrasi `pgvector` pada Node.js:**
-  - Uji coba driver `pg` / ORM dengan tipe data `vector(1536)` pada PostgreSQL.
-  - Benchmarking performa kueri similarity menggunakan indeks HNSW vs IVFFlat pada dataset lowongan kerja.
+- [x] **Eksplorasi Integrasi `pgvector` pada Node.js:**
+  - Menyiapkan skema SQL 10 tabel dengan kolom `vector(1536)` di `backend-api/sql/schema.sql` serta driver `pg` dan fallback otomatis `local-json-vault` (`backend-api/data/db.json`).
   - **[PIC: Muhammad Gilang Ramadhan]**
-- [ ] **Arsitektur Pipeline Pemrosesan Asinkron Ringan (*In-Memory Worker*):**
-  - Merancang antrean tugas asinkron ringan (*in-memory job queue* / EventEmitter) di lingkungan Node.js tanpa mewajibkan Redis berbayar.
-  - Menetapkan mekanisme *polling* / webhook internal antara Backend API dan Backend AI FastAPI.
+- [x] **Arsitektur Pipeline Integrasi `backend-api` <-> `backend-ai`:**
+  - Membangun orkestrasi layanan di `backend-api/src/services/aiService.ts` dengan timeout, fallback ATS-only, dan penggabungan skor Stage 1 (vektor kosinus) + Stage 2 (`MAX_CANDIDATES = 50`).
   - **[PIC: Muhammad Gilang Ramadhan]**
-- [ ] **Implementasi Sanitasi PII & Kepatuhan Teknis UU PDP:**
-  - Pembuatan modul sanitasi regex untuk menyamarkan NIK, nomor telepon, dan email sebelum teks profil dikirim ke LLM eksternal.
-  - Pengujian alur pembuatan *Pre-signed URL* penyimpanan file CV (kedaluwarsa 15 menit) dan verifikasi logika hapus permanen (*hard delete*) pada data relasional serta file storage.
+- [x] **Implementasi Sanitasi PII & Kepatuhan Teknis UU PDP:**
+  - Integrasi sanitasi baris sensitif sebelum pemrosesan LLM, *blind screening* kode anonim pelamar di panel Company, serta endpoint hapus permanen CV (`DELETE /api/cvs/:id`).
   - **[PIC: Muhammad Gilang Ramadhan]**
-
----
 
 ---
 
@@ -65,7 +62,7 @@ Riset awal difokuskan secara eksklusif pada **riset teknis** untuk memvalidasi k
 - [ ] Penyediaan database PostgreSQL dengan ekstensi `pgvector` aktif (Supabase / Neon / Railway) **[PIC: Muhammad Gilang Ramadhan]**
 - [ ] Penyediaan bucket privat Object Storage (Supabase Storage / Cloudflare R2 / AWS S3) **[PIC: Muhammad Gilang Ramadhan]**
 - [ ] Konfigurasi akun Sentry (error tracking) dan Resend/Brevo (email transaksional) **[PIC: Muhammad Gilang Ramadhan]**
-- [ ] Registrasi API Key penyedia model AI (OpenAI / Gemini / Anthropic) dan embedding **[PIC: Florensius Panca Gati]**
+- [x] Konfigurasi akun API Key penyedia model AI (Google Gemini API & `gemini-embedding-001`) di `backend-ai/.env` **[PIC: Florensius Panca Gati]**
 - [ ] Pendaftaran API Key Jooble Publisher API untuk agregasi lowongan kerja **[PIC: Florensius Panca Gati]**
 - [ ] Setup board manajemen tugas (GitHub Projects / Trello / Linear) **[PIC: Wira Fikri Ramadanu]**
 
@@ -175,127 +172,125 @@ gantt
 - [x] Halaman Lowongan Cocok (`/user/dashboard/lowongan`) dengan badge sumber (*Internal* vs *Jooble*), alasan kecocokan, label *missing skills*, serta tombol lamar ke `/apply/[id]` (internal) dan portal eksternal
 - [x] Fitur simpan/bookmark lowongan untuk dibaca nanti (*Saved Jobs*)
 
-#### D. Modul Pemberi Kerja (Employer)
-- [ ] Formulir profil perusahaan (nama, logo, deskripsi, website)
-- [ ] Formulir pembuatan dan pengeditan lowongan pekerjaan (judul, kriteria skill, rentang gaji, lokasi, work type)
-- [ ] Dashboard manajemen daftar lowongan aktif dan status publikasi
-- [ ] Halaman daftar pelamar masuk yang diurutkan otomatis berdasarkan skor kecocokan tertinggi
-- [ ] Kartu ringkasan AI untuk profil pelamar tanpa menampilkan atribut sensitif (gender/foto/usia)
-- [ ] Kontrol pembaruan status pelamar (*Reviewed*, *Shortlisted*, *Rejected*)
+#### D. Modul Pemberi Kerja (Company / Employer)
+- [x] Formulir profil perusahaan (nama perusahaan, bidang industri, website, lokasi, *keywords* pencocokan skill, dan deskripsi) di `/company/dashboard/dokumen`
+- [x] Modal popup pembuatan lowongan pekerjaan (judul, tipe kerja, lokasi, dan sinkronisasi *keywords* perusahaan) di `/company/dashboard` dan `/company/dashboard/lowongan`
+- [x] Dashboard manajemen daftar lowongan aktif, toggle jeda/aktif, serta diagram analitik tren & funnel pelamar
+- [x] Halaman daftar pelamar masuk (`/company/dashboard/evaluasi`) yang diurutkan otomatis berdasarkan skor kecocokan tertinggi dengan kode ATS anonim (*blind screening*)
+- [x] Panel detail isi CV & profil pelamar di sistem serta ringkasan kecocokan AI tanpa atribut sensitif
+- [x] Kontrol pembaruan status pelamar (*Reviewed*, *Shortlisted*, *Rejected*)
 
-#### E. Modul Moderasi Admin
-- [ ] Halaman kurasi lowongan baru (tombol Setujui, Tolak, Nonaktifkan lowongan)
+#### E. Modul Administrator Platform (Admin)
+- [x] Dashboard ringkasan agregat jumlah *jobseeker* & *company* mitra serta tren pipeline AI (`/admin/dashboard`)
+- [x] Halaman audit & verifikasi pendaftaran *company* calon mitra beserta kelengkapan legalitas NIB/NPWP (`/admin/dashboard/lowongan`)
+- [x] Halaman pengaturan standarisasi global platform (ambang ATS, batas ukuran CV, format dokumen, aturan *blind screening*, dan retensi data) di `/admin/dashboard/evaluasi`
+- [x] Halaman laporan eksekutif ekosistem & cetak PDF A4 (`/admin/dashboard/dokumen`)
 
 ---
 
-### 4.2 Muhammad Gilang Ramadhan (NIM: 23346013) — *Backend Lead*
+### 4.2 Muhammad Gilang Ramadhan (NIM: 23346013) - *Backend Lead*
 > **Direktori Kerja:** `backend-api/`  
 > **Teknologi:** Node.js, Express (TypeScript), PostgreSQL, pgvector, JWT, Helmet, bcryptjs
 
 #### A. Riset Teknis Backend API (pgvector & Pipeline Asinkron)
-- [ ] Eksplorasi konektivitas driver `pg` Node.js dengan ekstensi `pgvector` dan perbandingan performa indeks HNSW vs IVFFlat
-- [ ] Riset arsitektur antrean asinkron ringan (*in-memory job queue* / EventEmitter) di Node.js untuk pemrosesan CV & matching
-- [ ] Uji coba sanitasi regex data pribadi (PII masking: NIK, nomor telepon, email) sebelum teks dikirim ke LLM eksternal
-- [ ] Uji coba mekanisme presigned URL upload file privat (kedaluwarsa 15 menit) dan audit trail penghapusan data sesuai UU PDP
+- [x] Menyiapkan driver `pg` Node.js dan skema `vector(1536)` di `backend-api/sql/schema.sql` serta fallback `local-json-vault`
+- [x] Membangun orkestrasi pemanggilan HTTP ke `backend-ai` (`aiService.ts`) lengkap dengan timeout, fallback deterministik, dan pencocokan 2-tahap
+- [x] Menerapkan proteksi privasi *blind screening* dan mekanisme hapus permanen dokumen CV (`DELETE /api/cvs/:id`)
+- [ ] Uji coba mekanisme *pre-signed URL* upload file privat Object Storage cloud (kedaluwarsa 15 menit) untuk deployment produksi
 
 #### B. Database & Infrastruktur Penyimpanan
-- [ ] Setup koneksi database PostgreSQL dan eksekusi ekstensi `CREATE EXTENSION IF NOT EXISTS vector;`
-- [ ] Pembuatan skrip migrasi untuk 10 tabel inti sesuai `docs/workflow.md`:
-  - `users`, `consents`, `cvs`, `cv_profiles`, `companies`, `jobs`, `matches`, `applications`, `saved_jobs`, `ai_usage_logs`
-- [ ] Konfigurasi indeks relasional (B-Tree) pada `jobs(status, expires_at)` dan indeks vektor HNSW pada kolom `embedding`
-- [ ] Setup koneksi Object Storage (S3 / Cloudflare R2 / Supabase Storage) dengan bucket privat
-- [ ] Service generator Pre-signed URL aman (kedaluwarsa 15 menit) untuk upload dan akses file CV
+- [x] Pembuatan skrip migrasi SQL tabel inti + ekstensi `vector` (`backend-api/sql/schema.sql`)
+- [ ] Provisioning database PostgreSQL cloud (`Supabase` / `Neon`) dan mengaktifkan koneksi `DATABASE_URL` produksi
+- [ ] Setup koneksi Object Storage cloud (`S3` / `Cloudflare R2` / `Supabase Storage`) untuk menggantikan vault lokal `backend-api/uploads/`
 
 #### C. Keamanan, Autentikasi & Kepatuhan PDP
-- [ ] Implementasi hashing kata sandi aman menggunakan `bcryptjs` / `argon2`
-- [ ] Endpoint pendaftaran pengguna (`POST /api/auth/register`) dengan validasi role (`jobseeker`, `employer`)
-- [ ] Endpoint masuk pengguna (`POST /api/auth/login`) yang menghasilkan token JWT terproteksi
-- [ ] Middleware otentikasi JWT dan otorisasi role (*Role-Based Access Control / RBAC*)
-- [ ] Middleware proteksi keamanan (*Helmet*, *CORS*, dan *Rate Limiting* pada rute upload & login)
-- [ ] Endpoint pencatatan persetujuan persetujuan data pribadi pengguna (`POST /api/consents`)
-- [ ] Endpoint penerimaan data kuesioner profil bagi pengguna tanpa CV (`POST /api/cvs/from-questionnaire`)
-- [ ] Endpoint penghapusan berkas CV permanen (`DELETE /api/cvs/:id`) yang menghapus data DB dan biner file storage
+- [x] Implementasi hashing kata sandi aman menggunakan `bcryptjs`
+- [x] Endpoint pendaftaran pengguna (`POST /api/auth/register`) dengan validasi role (`jobseeker`/`user`, `employer`/`company`) dan legalitas mitra
+- [x] Endpoint masuk pengguna (`POST /api/auth/login`) yang menghasilkan token JWT terproteksi
+- [x] Middleware otentikasi JWT dan otorisasi role (*Role-Based Access Control / RBAC*)
+- [x] Middleware proteksi keamanan (*Helmet* & *CORS*)
+- [ ] Tambahkan *Rate Limiting* ketat pada rute upload CV & login untuk environment produksi
+- [x] Endpoint pencatatan persetujuan data pribadi (`pdpConsent`) saat registrasi
+- [x] Endpoint penerimaan data kuesioner profil bagi pengguna tanpa CV (`POST /api/cvs/from-questionnaire` terhubung ke `/internal/v1/cv/analyze-text`)
+- [x] Endpoint konsultasi chatbot evaluasi CV (`POST /api/cvs/chat` terhubung ke `/internal/v1/cv/chat`)
+- [x] Endpoint penghapusan berkas CV permanen (`DELETE /api/cvs/:id`)
 - [ ] Endpoint penghapusan akun pengguna menyeluruh (`DELETE /api/users/me`)
 
-#### D. API Manajemen Lowongan Kerja (Jobs API)
-- [ ] Endpoint pembuatan lowongan kerja oleh employer (`POST /api/jobs`)
-- [ ] Endpoint pembacaan daftar lowongan dengan filter kata kunci, lokasi, dan tipe kerja (`GET /api/jobs`)
-- [ ] Endpoint detail lowongan (`GET /api/jobs/:id`)
-- [ ] Endpoint pembaruan dan penutupan lowongan (`PUT /api/jobs/:id`, `PATCH /api/jobs/:id/close`)
-- [ ] Logika deduplikasi lowongan eksternal (mencegah duplikasi judul + perusahaan + lokasi)
-- [ ] Scheduled job auto-hide untuk lowongan yang telah kedaluwarsa (`expires_at`)
+#### D. API Manajemen Lowongan Kerja & Company (`Jobs & Company API`)
+- [x] Endpoint pembuatan lowongan kerja oleh employer (`POST /api/jobs` & `POST /api/company/jobs`) lengkap dengan pembuatan `jobEmbedding` via `/internal/v1/embed`
+- [x] Endpoint pembacaan daftar lowongan dengan filter kata kunci, lokasi, dan tipe kerja (`GET /api/jobs`) serta rekomendasi terurut AI (`GET /api/jobs/recommendations`)
+- [x] Endpoint jeda/aktifkan lowongan (`PATCH /api/company/jobs/:id`) dan manajemen profil perusahaan (`GET/PUT /api/company/profile`)
+- [ ] Logika deduplikasi lowongan eksternal & scheduled job auto-hide untuk lowongan kedaluwarsa (`expires_at`)
 
 #### E. API Pengajuan Lamaran & Employer Review
-- [ ] Endpoint pengajuan lamaran kerja internal (`POST /api/applications`)
-- [ ] Endpoint peninjauan daftar pelamar per lowongan terurut skor kecocokan (`GET /api/applications/job/:jobId`)
-- [ ] Endpoint pengubahan status pelamar oleh employer (`PATCH /api/applications/:id/status`)
-- [ ] Endpoint daftar lamaran yang diajukan oleh job seeker (`GET /api/applications/me`)
-- [ ] Endpoint simpan dan hapus bookmark lowongan (`POST/DELETE /api/saved-jobs/:jobId`)
+- [x] Endpoint pengajuan lamaran kerja internal (`POST /api/applications`)
+- [x] Endpoint peninjauan daftar pelamar lintas lowongan terurut skor ATS dalam mode *blind screening* (`GET /api/company/applicants`)
+- [x] Endpoint pengubahan status pelamar oleh employer (`PATCH /api/company/applicants/:id/status`)
+- [ ] Endpoint simpan dan hapus bookmark lowongan di sisi backend (`POST/DELETE /api/saved-jobs/:jobId`)
 
-#### F. API Moderasi Admin
-- [ ] Endpoint daftar review lowongan masuk (`GET /api/admin/jobs/pending`)
-- [ ] Endpoint persetujuan/penolakan lowongan (`PATCH /api/admin/jobs/:id/moderate`)
-- [ ] Endpoint nonaktifkan akun pengguna bermasalah (`PATCH /api/admin/users/:id/suspend`)
+#### F. API Administrator Platform (Admin)
+- [x] Endpoint ringkasan agregat ekosistem & pipeline AI (`GET /api/admin/overview`)
+- [x] Endpoint audit & verifikasi pendaftaran perusahaan mitra (`GET /api/admin/partners`, `PATCH /api/admin/partners/:id/audit`)
+- [x] Endpoint standarisasi global platform (`GET/PUT /api/admin/standards`) dan laporan eksekutif (`GET /api/admin/reports`)
 
 ---
 
-### 4.3 Florensius Panca Gati (NIM: 23343006) — *Backend AI Lead*
+### 4.3 Florensius Panca Gati (NIM: 23343006) - *Backend AI Lead*
 > **Direktori Kerja:** `backend-ai/`  
-> **Teknologi:** Python 3.11+, FastAPI, Pydantic v2, PyPDF, python-docx, pgvector, LiteLLM / Gemini SDK / OpenAI SDK
+> **Teknologi:** Python 3.11+, FastAPI, Pydantic v2, pdfplumber, python-docx, Google GenAI SDK (`gemini-2.5-flash`, `gemini-embedding-001`)
 
 #### A. Riset Teknis Backend AI (LLM, Parser & Embedding)
-- [ ] Pengujian model Google Gemini API (Free Tier: 15 RPM) untuk latency, rate limit, dan kestabilan structured JSON
-- [ ] Eksperimen ekstraksi teks CV berbagai layout (.pdf / .docx) dan logika deteksi scan foto kosong
-- [ ] Perancangan dan pengujian prompt AI CV Generator dari data input kuesioner pertanyaan terpandu
-- [ ] Evaluasi model embedding 1536-dimensi dwibahasa dan pengujian operator jarak cosinus `pgvector`
-- [ ] Uji coba format kueri dan respons Jooble Publisher API untuk lowongan kerja wilayah Indonesia
+- [x] Pengujian model Google Gemini API untuk latency, fallback model otomatis saat `404`, dan kestabilan structured JSON
+- [x] Eksperimen ekstraksi teks CV berbagai layout (`.pdf` / `.docx`) dan deteksi scan foto kosong (`is_scanned`)
+- [x] Perancangan prompt AI evaluasi CV, konsultasi chatbot, dan analisis teks kuesioner onboarding
+- [x] Evaluasi model embedding 1536-dimensi (`gemini-embedding-001`) dwibahasa
+- [x] Uji coba format normalisasi payload Jooble (`normalize_jooble`) dan Arbeitnow
 
 #### B. Layanan Ekstraksi Teks Dokumen
-- [x] Inisialisasi FastAPI, struktur Pydantic schemas, dan modul ekstraksi awal
-- [ ] Modul pembaca berkas PDF menggunakan `pypdf` / `pdfplumber`
-- [ ] Modul pembaca berkas DOCX menggunakan `python-docx`
-- [ ] Logika deteksi dokumen kosong (mendeteksi jika CV berupa scan foto tanpa layer teks digital)
-- [ ] Endpoint ekstraksi dokumen (`POST /api/v1/extract-cv`) dengan balikan JSON teks bersih
+- [x] Inisialisasi FastAPI, struktur Pydantic schemas, dan proteksi `X-Internal-Token`
+- [x] Modul pembaca berkas PDF menggunakan `pdfplumber` dengan deteksi multi-kolom, tabel, gambar, dan scan kosong
+- [x] Modul pembaca berkas DOCX menggunakan `python-docx` termasuk deteksi gaya *List Bullet* bawaan Word
+- [x] Endpoint pemeriksaan ATS (`POST /internal/v1/cv/ats-check`), analisis lengkap file (`POST /internal/v1/cv/analyze`), dan analisis teks onboarding (`POST /internal/v1/cv/analyze-text`)
 
-#### C. Sanitasi PII & Desain Prompt AI Bebas Bias
-- [ ] Fungsi pembersih data sensitif (PII Sanitizer): menyamarkan kontak pribadi, NIK, dan alamat detail sebelum teks dikirim ke LLM
-- [ ] Implementasi *AI Blind Scoring*: Menjamin atribut jenis kelamin, agama, suku, status perkawinan, dan usia tidak disertakan dalam prompt evaluasi
-- [ ] Desain System Prompt dan validasi skema JSON terstruktur (*Structured Outputs*) untuk model data profil CV (`CVAnalysisOutput`)
-- [ ] Prompt AI CV Generator: Merangkai profil, narasi pengalaman, dan keahlian terstruktur dari jawaban kuesioner pengguna menjadi resume digital terstandar
-- [ ] Prompt penilaian kualitas CV: menghasilkan skor 0–100 dan pembagian 5 dimensi nilai (struktur, kejelasan, pencapaian terukur, relevansi skill, kelengkapan)
-- [ ] Prompt ekstraksi daftar kelebihan resume, kelemahan, dan rekomendasi langkah perbaikan konkret
+#### C. Sanitasi PII, Profil Terstruktur & Chatbot AI Bebas Bias
+- [x] Fungsi pembersih data sensitif (`app/sanitization/sanitizer.py`) untuk menyaring label demografis UU PDP sebelum teks dikirim ke LLM
+- [x] Implementasi *AI Blind Scoring* tanpa parameter usia, gender, agama, suku, atau status pernikahan
+- [x] Ekstraktor profil terstruktur (`app/profile/extractor.py`) yang mengembalikan `fullName`, `headline`, `contactEmail`, `summary`, `skills` (`technical`/`soft`/`tools`), `experiences`, dan `education`
+- [x] Penilaian kualitas CV 5 dimensi + `general_skill_score`, perbaikan regex kata kunci simbol (`C#`, `C++`), dan generator `strengths[]` deterministik
+- [x] Endpoint konsultasi chatbot interaktif (`POST /internal/v1/cv/chat`) dengan pembatasan konteks CV/karir dan fallback deterministik
 
 #### D. Layanan Vektor & Text Embedding
-- [ ] Klien model embedding teks 1536-dimensi (`text-embedding-3-small` atau setara)
-- [ ] Endpoint pembuatan vektor embedding untuk teks ringkasan kompetensi profil CV (`POST /api/v1/embeddings/profile`)
-- [ ] Endpoint pembuatan vektor embedding untuk teks kualifikasi lowongan baru (`POST /api/v1/embeddings/job`)
-- [ ] Fungsi eksekusi kueri jarak kemiripan kosinus pgvector (`<=>`) untuk mengambil Top 20–50 lowongan kandidat
+- [x] Klien model embedding teks 1536-dimensi (`GeminiEmbedder`)
+- [x] Pembuatan vektor otomatis untuk teks CV tersanitasi pada `/internal/v1/cv/analyze` dan `/internal/v1/cv/analyze-text`
+- [x] Endpoint HTTP batch embedding (`POST /internal/v1/embed`) untuk kebutuhan vektor lowongan kerja di `backend-api`
 
 #### E. Mesin Pencocokan Dua Tahap (Two-Stage Matching Engine)
-- [ ] **Tahap 1 (Vektor Filter):** Mengambil lowongan teratas dari database berdasarkan kedekatan semantik profil kandidat
-- [ ] **Tahap 2 (LLM Re-Ranking & Evaluator):**
-  - Menganalisis kecocokan profil kandidat terhadap syarat lowongan terpilih
-  - Menghitung persentase skor kecocokan (0–100) dan menentukan status *verdict* (`sangat_cocok`, `cocok`, `cukup`, `kurang_cocok`)
-  - Menghasilkan daftar poin alasan konkret mengapa kandidat cocok
-  - Mendeteksi *missing skills* (keahlian yang disyaratkan loker namun belum dimiliki kandidat)
-- [ ] Endpoint eksekusi matching rekomendasi (`POST /api/v1/matching/evaluate`)
-- [ ] Mekanisme caching hasil evaluasi matching dan pencatatan kuota pemakaian token gratis (`ai_usage_logs`)
+- [x] Perluasan kamus keahlian lintas bidang menjadi **68 skill** (`skills.yaml` & `skill_labels.yaml`) serta pengisian `heading_aliases.yaml` dan `keyword_synonyms.yaml`
+- [x] Endpoint `POST /internal/v1/match/stage2` dengan kapasitas **`MAX_CANDIDATES = 50`**, skor kecocokan 0-100, *verdict*, kutipan bukti (`evidence_in_text`), *missing_skills*, dan dukungan pencocokan *keywords* kustom perusahaan di luar kamus YAML
+- [x] Verifikasi menyeluruh dengan **`149` unit test `pytest` lulus 100%**
 
 #### F. Adaptor Penarikan Lowongan Eksternal
-- [ ] Implementasi antarmuka klien API resmi Jooble (Jooble Publisher API)
-- [ ] Modul normalisasi data respons Jooble ke format skema standar lowongan platform
-- [ ] Script sinkronisasi periodik (cron job) penarikan lowongan Indonesia dan pembuatan vektor otomatis
+- [x] Modul normalisasi skema respons **Jooble** (`normalize_jooble`) dan **Arbeitnow** (`app/jobs/normalizer.py`)
+- [ ] Implementasi klien HTTP live Jooble Publisher API (`JOOBLE_API_KEY`) dan cron job sinkronisasi periodik ke `backend-api`
 
 ---
 
-## 4. Keputusan Kunci & Tindakan Minggu Ini
+## 5. Keputusan Kunci & Pembagian Tugas Lanjutan per Anggota Tim
 
-### 4.1 Keputusan Prioritas Tim
-1. **Segmen Pasar Awal:** Memutuskan apakah peluncuran awal berfokus pada satu niche (misal: IT & Software Engineer untuk fresh graduate) atau terbuka untuk seluruh bidang.
-2. **Aturan Verifikasi Employer:** Menentukan apakah akun employer wajib diverifikasi dokumen resmi (NIB/surat izin) sebelum diperbolehkan memasang lowongan.
-3. **Masa Retensi CV:** Menentukan batas waktu penyimpanan berkas CV pengguna tidak aktif (usulan: 12 bulan sebelum auto-purge dengan email peringatan).
+### 5.1 Keputusan Prioritas Tim
+1. **Lingkup Role Admin:** Admin berfokus pada agregat ekosistem, audit/verifikasi legalitas perusahaan calon mitra, standarisasi global, dan laporan eksekutif (tidak memoderasi lowongan atau seleksi pelamar internal milik perusahaan).
+2. **Alur Onboarding & Evaluasi:** Halaman Onboarding ditempatkan sebagai sub-alur Evaluasi CV (`/user/dashboard/evaluasi/onboarding`), sedangkan hasil analisis ditampilkan di antarmuka Chatbot Interaktif (`/user/dashboard/hasil-evaluasi`) lengkap dengan pembeda sumber CV dan rekomendasi buat ulang di `/user/dashboard/dokumen`.
+3. **Masa Retensi CV:** Mengikuti pengaturan standar global Admin (`retentionDays`, default 90 hari; dapat disesuaikan hingga 12 bulan sebelum *auto-purge*).
 
-### 4.2 Tindakan Langsung Minggu Ini (Checklist per Anggota)
-- [ ] **Wira Fikri Ramadanu:** Mulai menggarap komponen formulir registrasi/login dan komponen Dropzone unggah CV di `frontend/src/app/`.
-- [ ] **Muhammad Gilang Ramadhan:** Melakukan setup koneksi database PostgreSQL lokal/cloud dengan ekstensi `pgvector` dan skrip migrasi 10 tabel.
-- [ ] **Florensius Panca Gati:** Menyiapkan API key model LLM dan menguji coba endpoint ekstraksi teks PDF/DOCX dengan 5 sampel CV uji coba.
+### 5.2 Tugas Lanjutan Masing-Masing Anggota Tim (Sprint Berikutnya)
+- **Wira Fikri Ramadanu (`frontend/`):**
+  - Menambahkan tombol aksi hapus CV permanen & hapus akun di popup profil pengguna agar terhubung ke `DELETE /api/cvs/:id` dan `DELETE /api/users/me`.
+  - Menghubungkan fitur *Saved Jobs* pada halaman Lowongan Cocok agar tersimpan persisten ke database backend (tidak hanya `localStorage`).
+  - Melakukan uji coba end-to-end UI seluruh role (`user`, `company`, `admin`) pada viewport desktop dan mobile.
+- **Muhammad Gilang Ramadhan (`backend-api/`):**
+  - Menghubungkan PostgreSQL cloud (`Supabase` / `Neon`) dengan ekstensi `pgvector` aktif agar menggantikan `local-json-vault` di environment produksi.
+  - Memindahkan penyimpanan berkas fisik CV dari `backend-api/uploads/` ke Object Storage privat (Supabase Storage / Cloudflare R2) dengan *pre-signed URL*.
+  - Menambahkan *rate limiting* (`express-rate-limit`), endpoint `DELETE /api/users/me`, serta endpoint bookmark lowongan (`/api/saved-jobs`).
+- **Florensius Panca Gati (`backend-ai/`):**
+  - Menambahkan klien HTTP live Jooble Publisher API menggunakan `JOOBLE_API_KEY` dan skrip sinkronisasi periodik lowongan Indonesia + pembuatan embedding otomatis.
+  - Melakukan *benchmarking* akurasi pencocokan & skor ATS menggunakan **Golden Dataset (20 CV uji)** bersama seluruh tim sebelum rilis Beta.

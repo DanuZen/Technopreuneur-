@@ -83,7 +83,13 @@ Dokumen ini menjadi acuan kontrak REST API antara *frontend* Next.js ([api.ts](.
 ### 3.2 Susun CV via Kuesioner Onboarding (Opsi B)
 - **POST** `/cvs/from-questionnaire`
 - **Request Body**: `QuestionnaireData` (`fullName`, `email`, `educationLevel`, `institution`, `major`, `graduationYear`, `targetRole`, `technicalSkills`, `softSkills`, `experienceSummary`, `portfolioLink`).
+- **Perilaku Backend**: Merakit berkas `.docx` standar ATS 1-kolom dan memanggil `POST /internal/v1/cv/analyze-text` pada `backend-ai` untuk menghasilkan skor 5 dimensi, `strengths`, `profile`, dan `cvEmbedding`.
 - **Response `200 OK`**: `CVAnalysisResult`.
+
+### 3.3 Konsultasi Chatbot Evaluasi CV & Riwayat CV
+- **POST** `/cvs/chat` - Mengirim pertanyaan konsultasi kandidat beserta ringkasan skor, kekuatan, kelemahan, dan teks CV tersanitasi ke `backend-ai` (`/internal/v1/cv/chat`) untuk menghasilkan jawaban terarah berbahasa Indonesia (`{ "answer": "...", "status": "ok" | "fallback" }`).
+- **GET** `/cvs` - Mengambil daftar riwayat evaluasi/onboarding CV milik pengguna yang login.
+- **DELETE** `/cvs/:id` - Menghapus permanen data CV, teks tersanitasi, profil terkait, dan berkas fisik unggahan (hak untuk dilupakan UU PDP).
 
 ### 3.3 Profil Jobseeker (CRUD)
 - **GET** `/profile` — Mengambil detail profil terstruktur (`Identitas`, `Keahlian`, `Pengalaman`, `Pendidikan`).
@@ -195,7 +201,26 @@ Dokumen ini menjadi acuan kontrak REST API antara *frontend* Next.js ([api.ts](.
 
 ---
 
-## 6. Implementasi Client di Frontend
+## 6. Health Check & Implementasi Client di Frontend
+
+- **GET** `http://localhost:5000/health` - Mengembalikan status kesehatan `backend-api`, mode penyimpanan aktif (`postgresql` vs `local-json-vault`), serta status keterjangkauan `backend-ai` (`aiService.reachable` dan `rulesVersion`).
 
 Seluruh method pemanggilan endpoint di atas sudah tersedia pada class `ApiClient` di [api.ts](../frontend/src/lib/api.ts), termasuk tipe payload dan *response* TypeScript sehingga tim *backend* dan *frontend* dapat langsung melakukan integrasi bertahap.
+
+---
+
+## 7. Kontrak Internal `backend-ai` (`http://127.0.0.1:8000`)
+
+Seluruh rute `/internal/v1/*` dilindungi header `X-Internal-Token` dan dipanggil oleh `backend-api` melalui [aiService.ts](../backend-api/src/services/aiService.ts):
+
+| Method & Path | Fungsi Utama |
+| :--- | :--- |
+| `GET /health` | Status kesehatan layanan AI & versi aturan (`rules_version`) |
+| `POST /internal/v1/cv/ats-check` | Pemeriksaan struktur ATS 5 dimensi + `general_skill_score` + `strengths[]` |
+| `POST /internal/v1/cv/advice` | Pemeriksaan ATS beserta saran perbaikan Gemini LLM |
+| `POST /internal/v1/cv/analyze` | Analisis lengkap berkas `.pdf`/`.docx` (`ats`, `advice`, `profile`, `strengths`, `cv_embedding` 1536d, `sanitized_text`) |
+| `POST /internal/v1/cv/analyze-text` | Analisis langsung teks kuesioner *Onboarding CV* tanpa parsing file fisik |
+| `POST /internal/v1/cv/chat` | Konsultasi chatbot interaktif hasil evaluasi CV berbahasa Indonesia dengan fallback deterministik |
+| `POST /internal/v1/embed` | Pembuatan vektor `gemini-embedding-001` (`1536` dimensi) tersanitasi untuk lowongan & profil |
+| `POST /internal/v1/match/stage2` | Pencocokan kandidat lowongan hingga `50` item per batch beserta bukti kutipan CV & dukungan *keywords* kustom perusahaan |
 
