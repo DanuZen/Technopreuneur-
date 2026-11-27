@@ -96,6 +96,78 @@ function formatSkillLabel(raw: string): string {
   return raw;
 }
 
+function checkUserSkillMatch(skillName: string, userTechSkills: string[]): boolean {
+  const normReq = formatSkillLabel(skillName).toLowerCase();
+  const rawReq = skillName.trim().toLowerCase().replace(/_/g, " ");
+  return userTechSkills.some((u) => {
+    const normU = formatSkillLabel(u).toLowerCase();
+    return (
+      normU.includes(normReq) ||
+      normReq.includes(normU) ||
+      normU.includes(rawReq) ||
+      rawReq.includes(normU)
+    );
+  });
+}
+
+function computeJobMatchPercent(
+  job: JobItem,
+  userTechSkills: string[],
+  hasAnalysis: boolean
+): number | null {
+  const matchedCount = job.requiredSkills.filter((req) =>
+    checkUserSkillMatch(req, userTechSkills)
+  ).length;
+
+  const skillRatioPercent =
+    hasAnalysis && job.requiredSkills.length > 0
+      ? Math.min(
+          98,
+          Math.max(
+            matchedCount > 0 ? 65 : 45,
+            Math.round((matchedCount / job.requiredSkills.length) * 100)
+          )
+        )
+      : null;
+
+  if (typeof job.matchScore === "number" && job.matchScore > 0) {
+    return skillRatioPercent !== null
+      ? Math.max(job.matchScore, skillRatioPercent)
+      : job.matchScore;
+  }
+  return skillRatioPercent;
+}
+
+function formatCleanMatchReasons(
+  rawReasons: string[] | undefined,
+  matchedSkills: string[],
+  jobTitle: string
+): string[] {
+  const cleaned: string[] = [];
+  const seen = new Set<string>();
+
+  for (const r of rawReasons || []) {
+    const stripped = r
+      .replace(/\s*\("[^"]*"\)/g, "")
+      .replace(/\s*\('[^']*'\)/g, "")
+      .trim();
+    if (!stripped) continue;
+    const key = stripped.toLowerCase();
+    if (!seen.has(key)) {
+      seen.add(key);
+      cleaned.push(stripped);
+    }
+  }
+
+  if (matchedSkills.length > 0 && cleaned.length === 0) {
+    cleaned.push(
+      `Profil CV Anda telah mencantumkan keahlian ${matchedSkills.join(", ")} yang sesuai dengan kebutuhan posisi ${jobTitle}.`
+    );
+  }
+
+  return cleaned;
+}
+
 const APP_STATUS_META: Record<
   MyApplicationItem["status"],
   { label: string; badgeClass: string }
@@ -325,29 +397,11 @@ export default function LowonganCocokPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {visibleJobs.map((job) => {
-            const matchedSkillsCount = job.requiredSkills.filter((req) =>
-              userTechSkills.some(
-                (u) =>
-                  u.toLowerCase().includes(req.toLowerCase()) ||
-                  req.toLowerCase().includes(u.toLowerCase())
-              )
-            ).length;
-
-            const computedLocal =
-              analysis && job.requiredSkills.length > 0
-                ? Math.min(
-                    98,
-                    Math.max(
-                      65,
-                      Math.round((matchedSkillsCount / job.requiredSkills.length) * 100)
-                    )
-                  )
-                : null;
-
-            const matchPercent =
-              typeof job.matchScore === "number" && job.matchScore > 0
-                ? job.matchScore
-                : computedLocal;
+            const matchPercent = computeJobMatchPercent(
+              job,
+              userTechSkills,
+              Boolean(analysis)
+            );
 
             const isSaved = savedIds.includes(job.id);
             const alreadyApplied = appliedJobIds.has(job.id);
@@ -427,11 +481,7 @@ export default function LowonganCocokPage() {
 
                   <div className="flex flex-wrap items-center gap-1 pt-0.5">
                     {job.requiredSkills.slice(0, 3).map((req, i) => {
-                      const isMatched = userTechSkills.some(
-                        (u) =>
-                          u.toLowerCase().includes(req.toLowerCase()) ||
-                          req.toLowerCase().includes(u.toLowerCase())
-                      );
+                      const isMatched = checkUserSkillMatch(req, userTechSkills);
                       return (
                         <span
                           key={i}
@@ -441,7 +491,7 @@ export default function LowonganCocokPage() {
                               : "bg-slate-100 text-slate-600"
                           }`}
                         >
-                          {req}
+                          {formatSkillLabel(req)}
                         </span>
                       );
                     })}
@@ -497,123 +547,89 @@ export default function LowonganCocokPage() {
 
       {/* POPUP MODAL DETAIL LOWONGAN & ANALISIS KECOCOKAN AI (Mobile & Desktop) */}
       {selectedJob && (() => {
-        const isUserSkillMatch = (skillName: string) => {
-          const normReq = formatSkillLabel(skillName).toLowerCase();
-          const rawReq = skillName.trim().toLowerCase().replace(/_/g, " ");
-          return userTechSkills.some((u) => {
-            const normU = formatSkillLabel(u).toLowerCase();
-            return (
-              normU.includes(normReq) ||
-              normReq.includes(normU) ||
-              normU.includes(rawReq) ||
-              rawReq.includes(normU)
-            );
-          });
-        };
+        const isUserSkillMatch = (skillName: string) =>
+          checkUserSkillMatch(skillName, userTechSkills);
 
-        const matchedSkillsCount = selectedJob.requiredSkills.filter(isUserSkillMatch).length;
+        const matchedRequiredSkills = selectedJob.requiredSkills
+          .filter(isUserSkillMatch)
+          .map(formatSkillLabel);
 
-        const computedLocal =
-          analysis && selectedJob.requiredSkills.length > 0
-            ? Math.min(
-                98,
-                Math.max(
-                  65,
-                  Math.round((matchedSkillsCount / selectedJob.requiredSkills.length) * 100)
-                )
-              )
-            : null;
+        const unmatchedRequiredSkills = selectedJob.requiredSkills
+          .filter((req) => !isUserSkillMatch(req))
+          .map(formatSkillLabel);
 
-        const modalMatchPercent =
-          typeof selectedJob.matchScore === "number" && selectedJob.matchScore > 0
-            ? selectedJob.matchScore
-            : computedLocal;
-
-        const normalizedRequiredSet = new Set(
-          selectedJob.requiredSkills.map((s) => formatSkillLabel(s).toLowerCase())
+        const modalMatchPercent = computeJobMatchPercent(
+          selectedJob,
+          userTechSkills,
+          Boolean(analysis)
         );
-        const uniqueMissingSkills = Array.from(
-          new Map(
-            (selectedJob.missingSkills || [])
-              .filter((ms) => !isUserSkillMatch(ms))
-              .map((ms) => {
-                const label = formatSkillLabel(ms);
-                return [label.toLowerCase(), label] as const;
-              })
-              .filter(([lower]) => !normalizedRequiredSet.has(lower))
-          ).values()
+
+        const extraMissingSkills =
+          unmatchedRequiredSkills.length > 0
+            ? unmatchedRequiredSkills
+            : Array.from(
+                new Map(
+                  (selectedJob.missingSkills || [])
+                    .filter((ms) => !isUserSkillMatch(ms))
+                    .map((ms) => {
+                      const label = formatSkillLabel(ms);
+                      return [label.toLowerCase(), label] as const;
+                    })
+                ).values()
+              ).slice(0, 5);
+
+        const cleanReasons = formatCleanMatchReasons(
+          selectedJob.matchReason,
+          matchedRequiredSkills,
+          selectedJob.title
         );
 
         const isModalSaved = savedIds.includes(selectedJob.id);
         const isModalApplied = appliedJobIds.has(selectedJob.id);
-
-        const ringRadius = 20;
-        const ringCirc = 2 * Math.PI * ringRadius;
-        const ringScore = modalMatchPercent ?? 0;
-        const ringOffset = ringCirc - (Math.min(100, Math.max(0, ringScore)) / 100) * ringCirc;
+        const totalReqCount = selectedJob.requiredSkills.length;
+        const skillProgressPct =
+          totalReqCount > 0
+            ? Math.round((matchedRequiredSkills.length / totalReqCount) * 100)
+            : 0;
 
         return (
           <ModalShell
             onClose={() => setSelectedJob(null)}
             ariaLabel={`Detail lowongan ${selectedJob.title}`}
             size="lg"
-            badge={selectedJob.source === "jooble" ? "Jooble" : "Mitra Internal"}
+            badge={
+              modalMatchPercent !== null
+                ? `${modalMatchPercent}% Cocok`
+                : "Lowongan Terbuka"
+            }
+            headerPills={
+              <>
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/15 text-white/95 text-[10px] font-bold uppercase tracking-wider">
+                  {selectedJob.source === "jooble" ? "Jooble" : "Mitra Internal"}
+                </span>
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/15 text-white/95 text-[10px] font-bold uppercase tracking-wider">
+                  {selectedJob.workType}
+                </span>
+              </>
+            }
             title={selectedJob.title}
             subtitle={
-              <span className="font-semibold">
-                {selectedJob.companyName} · <span className="uppercase">{selectedJob.workType}</span>
+              <span className="font-semibold text-white/85">
+                {selectedJob.companyName}
               </span>
             }
-            headerRight={
-              modalMatchPercent !== null ? (
-                <div className="flex items-center gap-2 bg-white text-[#0f2c56] px-2.5 py-1.5 rounded-2xl">
-                  <div className="relative w-11 h-11 flex items-center justify-center shrink-0">
-                    <svg viewBox="0 0 48 48" className="w-11 h-11 -rotate-90" aria-hidden="true">
-                      <circle
-                        cx="24"
-                        cy="24"
-                        r={ringRadius}
-                        fill="none"
-                        stroke="#E2E8F0"
-                        strokeWidth="4.5"
-                      />
-                      <circle
-                        cx="24"
-                        cy="24"
-                        r={ringRadius}
-                        fill="none"
-                        stroke={ringScore >= 75 ? "#0F2C56" : "#CE2731"}
-                        strokeWidth="4.5"
-                        strokeLinecap="round"
-                        strokeDasharray={ringCirc}
-                        strokeDashoffset={ringOffset}
-                      />
-                    </svg>
-                    <span className="absolute text-[11px] font-black font-mono text-[#0f2c56]">
-                      {ringScore}%
-                    </span>
-                  </div>
-                  <div className="pr-1 hidden sm:block">
-                    <p className="text-[9px] font-mono uppercase text-slate-400 font-bold">
-                      Kecocokan
-                    </p>
-                    <p className="text-[11px] font-extrabold text-[#0f2c56]">
-                      {ringScore >= 75 ? "Tinggi" : "Bertahap"}
-                    </p>
-                  </div>
-                </div>
-              ) : undefined
-            }
             headerExtra={
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-white/90 pt-2 border-t border-white/15">
-                <span className="flex items-center gap-1.5">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-white/90 pt-2.5 border-t border-white/15">
+                <span className="inline-flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5 text-[#ce2731] shrink-0" />
-                  {selectedJob.location}
+                  <span>{selectedJob.location}</span>
                 </span>
                 {selectedJob.salaryRange && (
                   <>
                     <span className="text-white/40">•</span>
-                    <span className="font-bold text-white">{selectedJob.salaryRange}</span>
+                    <span className="font-extrabold text-white">
+                      {selectedJob.salaryRange}
+                    </span>
                   </>
                 )}
               </div>
@@ -623,7 +639,7 @@ export default function LowonganCocokPage() {
                 <button
                   type="button"
                   onClick={() => handleToggleSave(selectedJob.id)}
-                  className={`min-h-[44px] px-4 py-2.5 rounded-xl border text-xs font-bold inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer ${
+                  className={`min-h-[42px] px-4 py-2 rounded-xl border text-xs font-bold inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer ${
                     isModalSaved
                       ? "bg-[#0f2c56] border-[#0f2c56] text-white"
                       : "bg-white border-slate-200 text-[#0f2c56] hover:border-[#0f2c56]"
@@ -638,7 +654,7 @@ export default function LowonganCocokPage() {
                     href={selectedJob.externalUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 min-h-[44px] inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors"
+                    className="flex-1 min-h-[42px] inline-flex items-center justify-center gap-1.5 py-2 px-4 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors"
                   >
                     <span>Lamar di Sumber Asli</span>
                     <ExternalLink className="w-3.5 h-3.5" />
@@ -650,15 +666,15 @@ export default function LowonganCocokPage() {
                       setSelectedJob(null);
                       setActiveTab("applied");
                     }}
-                    className="flex-1 min-h-[44px] inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs font-bold transition-colors cursor-pointer"
+                    className="flex-1 min-h-[42px] inline-flex items-center justify-center gap-1.5 py-2 px-4 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs font-bold transition-colors cursor-pointer"
                   >
                     <CheckCircle2 className="w-3.5 h-3.5 text-white" />
-                    <span>Sudah Dilamar · Lihat Status</span>
+                    <span>Sudah Dilamar (Lihat Status)</span>
                   </button>
                 ) : (
                   <Link
                     href={`/apply/${selectedJob.id}`}
-                    className="flex-1 min-h-[44px] inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors"
+                    className="flex-1 min-h-[42px] inline-flex items-center justify-center gap-1.5 py-2 px-4 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors"
                   >
                     <span>Kirim Lamaran Profil</span>
                     <ChevronRight className="w-3.5 h-3.5" />
@@ -667,98 +683,116 @@ export default function LowonganCocokPage() {
               </div>
             }
           >
-                {/* Quick Compatibility Summary Strip */}
-                <div className="grid grid-cols-2 gap-2.5">
-                  <div className="px-3.5 py-2.5 rounded-2xl bg-[#f8fafc] border border-slate-200/80">
-                    <p className="text-[10px] font-mono uppercase text-slate-400 font-bold">
-                      Skill Terpenuhi
-                    </p>
-                    <p className="text-sm font-extrabold text-[#0f2c56] mt-0.5">
-                      {matchedSkillsCount} dari {selectedJob.requiredSkills.length} keahlian
-                    </p>
-                  </div>
-                  <div className="px-3.5 py-2.5 rounded-2xl bg-[#f8fafc] border border-slate-200/80">
-                    <p className="text-[10px] font-mono uppercase text-slate-400 font-bold">
-                      Status Lamaran
-                    </p>
-                    <p className="text-sm font-extrabold text-[#0f2c56] mt-0.5">
-                      {isModalApplied ? "Sudah Dilamar" : "Belum Dilamar"}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="space-y-1.5">
-                  <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#0f2c56]">
-                    Deskripsi Pekerjaan
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                    {selectedJob.description}
+            {/* Baris Ringkasan Kesiapan Skill & Status */}
+            <div className="p-3 rounded-2xl bg-[#f8fafc] border border-slate-200/80 space-y-2">
+              <div className="flex items-center justify-between gap-2">
+                <div>
+                  <p className="text-[10px] font-mono uppercase text-slate-400 font-bold">
+                    Kesesuaian Keahlian CV
+                  </p>
+                  <p className="text-xs sm:text-sm font-extrabold text-[#0f2c56]">
+                    {matchedRequiredSkills.length} dari {totalReqCount} skill utama terpenuhi
                   </p>
                 </div>
+                <span
+                  className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase ${
+                    isModalApplied
+                      ? "bg-[#0f2c56] text-white"
+                      : "bg-[#edf2f9] text-[#0f2c56]"
+                  }`}
+                >
+                  {isModalApplied ? "Sudah Dilamar" : "Siap Melamar"}
+                </span>
+              </div>
+              <div className="w-full h-1.5 rounded-full bg-slate-200 overflow-hidden">
+                <div
+                  className="h-full rounded-full bg-[#0f2c56] transition-all duration-500"
+                  style={{ width: `${Math.max(12, skillProgressPct)}%` }}
+                />
+              </div>
+            </div>
 
-                {selectedJob.matchReason && selectedJob.matchReason.length > 0 && (
-                  <div className="p-3.5 sm:p-4 rounded-2xl bg-[#edf2f9] border border-slate-200/80 space-y-2">
-                    <div className="flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-[#0f2c56]">
-                      <Sparkles className="w-3.5 h-3.5 text-[#ce2731]" />
-                      <span>Analisis Kecocokan AI</span>
-                    </div>
-                    <ul className="space-y-1.5 text-xs text-slate-700 leading-relaxed">
-                      {selectedJob.matchReason.map((reason, idx) => (
-                        <li key={idx} className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-[#0f2c56] shrink-0 mt-0.5" />
-                          <span>{reason}</span>
-                        </li>
-                      ))}
-                    </ul>
+            {/* Deskripsi Pekerjaan */}
+            <div className="space-y-1">
+              <h3 className="text-[11px] font-extrabold uppercase tracking-wider text-[#0f2c56]">
+                Deskripsi Pekerjaan
+              </h3>
+              <p className="text-xs sm:text-[13px] text-slate-600 leading-relaxed">
+                {selectedJob.description}
+              </p>
+            </div>
+
+            {/* Alasan Kecocokan AI */}
+            {cleanReasons.length > 0 && (
+              <div className="p-3.5 rounded-2xl bg-[#edf2f9]/85 border border-slate-200/80 space-y-2">
+                <div className="flex items-center gap-1.5 text-[11px] font-extrabold uppercase tracking-wider text-[#0f2c56]">
+                  <Sparkles className="w-3.5 h-3.5 text-[#ce2731] shrink-0" />
+                  <span>Alasan Kecocokan AI</span>
+                </div>
+                <ul className="space-y-1.5 text-xs text-slate-700 leading-relaxed">
+                  {cleanReasons.map((reason, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#0f2c56] shrink-0 mt-0.5" />
+                      <span>{reason}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Pemetaan Skill Lowongan: Terpenuhi vs Perlu Ditingkatkan (Tanpa Duplikasi) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-0.5">
+              <div className="p-3 rounded-2xl bg-[#f8fafc] border border-slate-200/80 space-y-2">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#0f2c56]">
+                    Skill Terpenuhi ({matchedRequiredSkills.length})
+                  </span>
+                  <span className="text-[10px] font-bold text-slate-400">
+                    Ada di CV
+                  </span>
+                </div>
+                {matchedRequiredSkills.length > 0 ? (
+                  <div className="flex flex-wrap gap-1.5">
+                    {matchedRequiredSkills.map((label, i) => (
+                      <span
+                        key={i}
+                        className="text-xs font-mono px-2.5 py-1 rounded-lg bg-[#0f2c56] text-white font-bold inline-flex items-center gap-1"
+                      >
+                        <CheckCircle2 className="w-3 h-3 shrink-0" />
+                        <span>{label}</span>
+                      </span>
+                    ))}
                   </div>
+                ) : (
+                  <p className="text-[11px] text-slate-500">
+                    Belum ada keahlian CV yang cocok langsung.
+                  </p>
                 )}
+              </div>
 
-                <div className="space-y-2">
+              {extraMissingSkills.length > 0 && (
+                <div className="p-3 rounded-2xl bg-rose-50/50 border border-rose-200/70 space-y-2">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs font-extrabold uppercase tracking-wider text-[#0f2c56]">
-                      Skill Lowongan ({selectedJob.requiredSkills.length})
+                    <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#ce2731]">
+                      Perlu Ditingkatkan ({extraMissingSkills.length})
                     </span>
-                    <span className="text-[10px] text-slate-500 font-semibold">
-                      Biru = sudah ada di CV Anda
+                    <span className="text-[10px] font-bold text-[#ce2731]/75">
+                      Target Belajar
                     </span>
                   </div>
                   <div className="flex flex-wrap gap-1.5">
-                    {selectedJob.requiredSkills.map((req, i) => {
-                      const isMatched = isUserSkillMatch(req);
-                      return (
-                        <span
-                          key={i}
-                          className={`text-xs font-mono px-2.5 py-1 rounded-lg font-bold inline-flex items-center gap-1 ${
-                            isMatched
-                              ? "bg-[#0f2c56] text-white"
-                              : "bg-slate-100 text-slate-700 border border-slate-200"
-                          }`}
-                        >
-                          {isMatched && <CheckCircle2 className="w-3 h-3 shrink-0" />}
-                          <span>{formatSkillLabel(req)}</span>
-                        </span>
-                      );
-                    })}
+                    {extraMissingSkills.map((label, idx) => (
+                      <span
+                        key={idx}
+                        className="text-xs font-mono px-2.5 py-1 rounded-lg bg-white text-[#ce2731] border border-rose-200 font-bold"
+                      >
+                        + {label}
+                      </span>
+                    ))}
                   </div>
                 </div>
-
-                {uniqueMissingSkills.length > 0 && (
-                  <div className="space-y-2 pt-1 border-t border-slate-100">
-                    <span className="block text-xs font-extrabold uppercase tracking-wider text-[#ce2731]">
-                      Rekomendasi Tambahan Skill ({uniqueMissingSkills.length})
-                    </span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {uniqueMissingSkills.map((label, idx) => (
-                        <span
-                          key={idx}
-                          className="text-xs font-mono px-2.5 py-1 rounded-lg bg-red-50 text-[#ce2731] border border-red-200 font-bold"
-                        >
-                          + {label}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
+              )}
+            </div>
           </ModalShell>
         );
       })()}
