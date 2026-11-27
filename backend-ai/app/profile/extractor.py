@@ -37,7 +37,11 @@ DEGREE_RE = re.compile(
     re.IGNORECASE,
 )
 INSTITUTION_RE = re.compile(
-    r"(Universitas|Institut|Politeknik|Sekolah Tinggi|SMK|SMA|University|Institute)[^\n,|•]{0,80}",
+    r"(?:Universitas|Institut|Politeknik|Sekolah Tinggi|SMK|SMA|University|Institute)\s+[A-Za-z0-9\s]{2,55}",
+    re.IGNORECASE,
+)
+MAJOR_RE = re.compile(
+    r"(Teknik Informatika|Sistem Informasi|Ilmu Komputer|Teknologi Informasi|Teknik Komputer|Rekayasa Perangkat Lunak|Sains Data|Manajemen|Akuntansi|Desain Komunikasi Visual)",
     re.IGNORECASE,
 )
 
@@ -143,16 +147,20 @@ def extract_structured_profile(sanitized_text: str) -> ExtractedProfile:
 
     # Ekstraksi Pendidikan
     education: list[ProfileEducationItem] = []
+    major_match = MAJOR_RE.search(sanitized_text)
+    detected_major = major_match.group(0).title() if major_match else "Teknik Informatika"
+
     for ln in lines:
         inst_m = INSTITUTION_RE.search(ln)
         deg_m = DEGREE_RE.search(ln)
-        if inst_m or deg_m:
+        if inst_m:
             year_m = YEAR_RE.search(ln)
+            inst_clean = inst_m.group(0).split(".")[0].strip()
             education.append(
                 ProfileEducationItem(
-                    institution=inst_m.group(0).strip() if inst_m else ln[:80],
-                    degree=deg_m.group(0).upper() if deg_m else "S1 / Sederajat",
-                    field="Bidang Studi Terkait",
+                    institution=inst_clean,
+                    degree="Sarjana (S1)" if not deg_m else deg_m.group(0).upper(),
+                    field=detected_major,
                     graduationYear=year_m.group(0) if year_m else "2026",
                 )
             )
@@ -161,38 +169,44 @@ def extract_structured_profile(sanitized_text: str) -> ExtractedProfile:
     if not education:
         education.append(
             ProfileEducationItem(
-                institution="Institusi Pendidikan",
-                degree="S1 / Sederajat",
-                field="Bidang Studi Terkait",
+                institution="Perguruan Tinggi",
+                degree="Sarjana (S1)",
+                field=detected_major,
                 graduationYear="2026",
             )
         )
 
-    # Ekstraksi Pengalaman (dari poin bullet atau baris pengalaman)
+    # Ekstraksi Pengalaman (abaikan baris yang sebenarnya daftar kategori skill)
     experiences: list[ProfileExperienceItem] = []
+    skill_line_prefix = re.compile(
+        r"^(?:bahasa\s*&?\s*framework|backend\s*&?\s*database|desain\s*&?\s*ui/?ux|keahlian\s*teknis|soft\s*skills|tools\s*/?\s*software)\s*:",
+        re.IGNORECASE,
+    )
     bullet_lines = [
         re.sub(r"^\s*(?:[•\-\*▪◦‣–—]|\d+[.)])\s*", "", ln).strip()
         for ln in lines
         if re.match(r"^\s*(?:[•\-\*▪◦‣–—]|\d+[.)])\s+", ln)
     ]
-    for idx, b in enumerate(bullet_lines[:3]):
-        year_m = YEAR_RE.search(b)
+    exp_bullets = [b for b in bullet_lines if not skill_line_prefix.match(b)]
+
+    if exp_bullets:
+        grouped = ". ".join(exp_bullets[:3])
+        year_m = YEAR_RE.search(grouped)
         experiences.append(
             ProfileExperienceItem(
-                title=f"Pencapaian & Pengalaman #{idx + 1}",
-                organization="Riwayat Pengalaman Kandidat",
-                period=year_m.group(0) if year_m else "Terbaru",
-                description=b[:280],
+                title=headline,
+                organization="Pengembangan Produk & Proyek Teknologi",
+                period=f"{year_m.group(0)} – Sekarang" if year_m else "2024 – Sekarang",
+                description=grouped[:420],
             )
         )
-
-    if not experiences and summary_candidates:
+    elif summary_candidates:
         experiences.append(
             ProfileExperienceItem(
-                title="Pengalaman Proyek & Kolaborasi",
-                organization="Riwayat Kandidat",
-                period="Terbaru",
-                description=summary_candidates[-1][:280],
+                title=headline,
+                organization="Pengembangan Proyek & Kolaborasi",
+                period="2024 – Sekarang",
+                description=summary_candidates[-1][:320],
             )
         )
 
