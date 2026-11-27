@@ -1167,7 +1167,7 @@ export default function HomePage() {
         <div className="w-full h-full mx-auto px-1.5 sm:px-4 flex flex-col justify-between lg:justify-start lg:grid lg:grid-cols-12 gap-3.5 sm:gap-5 lg:items-stretch">
           {/* Left 5 Cols: Solid Navy CTA Card */}
           <div className="lg:col-span-5 flex flex-col lg:py-1 shrink-0">
-            <div className="bg-[#0f2c56] lg:bg-transparent text-white rounded-[24px] sm:rounded-[28px] px-4 py-4.5 sm:p-7 lg:p-10 flex flex-col justify-center items-center text-center gap-3.5 sm:gap-5 lg:gap-6 flex-1">
+            <div className="bg-[#0f2c56] lg:bg-transparent text-white rounded-[24px] sm:rounded-[28px] p-5 sm:p-7 lg:p-10 flex flex-col justify-center items-center text-center gap-3.5 sm:gap-5 lg:gap-6 flex-1">
               <div className="space-y-2 sm:space-y-4 lg:space-y-5 flex flex-col items-center">
                 <span className={`hidden lg:inline-flex items-center px-3.5 py-1 rounded-full bg-[#ce2731] text-white text-xs font-bold ${getTextRevealClass(6, "delay-75")}`}>
                   Mulai Langkah Karir
@@ -1209,12 +1209,12 @@ export default function HomePage() {
               <span className="inline-flex items-center px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-full bg-[#0f2c56] text-[10px] sm:text-xs font-bold text-white">
                 Pertanyaan Umum
               </span>
-              <h3 className="text-base sm:text-2xl font-extrabold text-[#0f2c56] leading-snug">
+              <h3 className="text-sm sm:text-2xl font-extrabold text-[#0f2c56] leading-snug">
                 Semua yang perlu Anda ketahui tentang Pasbana AI
               </h3>
             </div>
 
-            <div className="flex-1 min-h-0 lg:flex-initial flex flex-col justify-between lg:block gap-2 sm:space-y-2.5">
+            <div className="flex-1 min-h-0 lg:flex-initial flex flex-col justify-between lg:block gap-1.5 sm:space-y-2.5">
               {ACCORDION_ITEMS.map((item, idx) => {
                 const isOpen = openAccordionId === item.id;
                 return (
@@ -1229,7 +1229,7 @@ export default function HomePage() {
                     <button
                       type="button"
                       onClick={() => setOpenAccordionId(item.id)}
-                      className="w-full px-3.5 py-2.5 sm:px-5 sm:py-3.5 lg:py-4 flex items-center justify-between gap-2.5 sm:gap-4 text-left cursor-pointer"
+                      className="w-full px-3.5 py-2 sm:px-5 sm:py-3.5 lg:py-4 flex items-center justify-between gap-2.5 sm:gap-4 text-left cursor-pointer"
                     >
                       <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
                         <span
@@ -1241,7 +1241,7 @@ export default function HomePage() {
                         >
                           0{idx + 1}
                         </span>
-                        <span className="text-[11.5px] sm:text-sm font-bold leading-snug text-[#0f2c56]">
+                        <span className="text-[11px] sm:text-sm font-bold leading-snug text-[#0f2c56]">
                           {item.question}
                         </span>
                       </div>
@@ -1260,7 +1260,7 @@ export default function HomePage() {
                       </span>
                     </button>
                     {isOpen && (
-                      <div className="px-3.5 pb-3 pl-11 pr-4 sm:px-5 sm:pb-4 sm:pl-[62px] sm:pr-10 text-[11px] sm:text-sm text-slate-600 leading-relaxed">
+                      <div className="px-3.5 pb-2.5 pl-11 pr-4 sm:px-5 sm:pb-4 sm:pl-[62px] sm:pr-10 text-[10.5px] sm:text-sm text-slate-600 leading-snug sm:leading-relaxed">
                         {item.answer}
                       </div>
                     )}
