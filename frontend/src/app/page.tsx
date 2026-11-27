@@ -125,7 +125,7 @@ export default function HomePage() {
   const [isEntered, setIsEntered] = useState<boolean>(false);
   const [activeFeatureIdx, setActiveFeatureIdx] = useState<number>(0);
   const [inputMode, setInputMode] = useState<"pdf" | "questionnaire">("pdf");
-  const [openAccordionId, setOpenAccordionId] = useState<number | null>(0);
+  const [openAccordionId, setOpenAccordionId] = useState<number>(0);
 
   const isAnimatingRef = useRef<boolean>(false);
   const touchStartYRef = useRef<number | null>(null);
@@ -1164,10 +1164,10 @@ export default function HomePage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(6)}`}
       >
-        <div className="w-full h-full mx-auto px-1.5 sm:px-4 flex flex-col justify-between lg:justify-start lg:grid lg:grid-cols-12 gap-2.5 sm:gap-5 lg:items-stretch">
+        <div className="w-full h-full mx-auto px-1.5 sm:px-4 flex flex-col justify-center lg:justify-start lg:grid lg:grid-cols-12 gap-3.5 sm:gap-5 lg:items-stretch">
           {/* Left 5 Cols: Solid Navy CTA Card */}
           <div className="lg:col-span-5 flex flex-col lg:py-1 shrink-0">
-            <div className="bg-[#0f2c56] lg:bg-transparent text-white rounded-[22px] sm:rounded-[28px] p-3.5 sm:p-7 lg:p-10 flex flex-col justify-center items-center text-center gap-2.5 sm:gap-5 lg:gap-6 flex-1">
+            <div className="bg-[#0f2c56] lg:bg-transparent text-white rounded-[22px] sm:rounded-[28px] p-4 sm:p-7 lg:p-10 flex flex-col justify-center items-center text-center gap-3 sm:gap-5 lg:gap-6 flex-1">
               <div className="space-y-1.5 sm:space-y-4 lg:space-y-5 flex flex-col items-center">
                 <span className={`hidden lg:inline-flex items-center px-3.5 py-1 rounded-full bg-[#ce2731] text-white text-xs font-bold ${getTextRevealClass(6, "delay-75")}`}>
                   Mulai Langkah Karir
@@ -1178,7 +1178,7 @@ export default function HomePage() {
                     karir terbaik Anda.
                   </span>
                 </h2>
-                <p className={`text-[11px] sm:text-sm lg:text-base text-white/95 max-w-md mx-auto leading-snug sm:leading-[1.8] line-clamp-2 sm:line-clamp-none ${getTextRevealClass(6, "delay-200")}`}>
+                <p className={`text-[11px] sm:text-sm lg:text-base text-white/95 max-w-md mx-auto leading-snug sm:leading-[1.8] ${getTextRevealClass(6, "delay-200")}`}>
                   Pastikan CV Anda terbaca sempurna oleh sistem ATS, perkuat poin pencapaian, dan temukan posisi kerja yang paling pas bana.
                 </p>
               </div>
@@ -1203,9 +1203,9 @@ export default function HomePage() {
 
           {/* Right 7 Cols: Clean Header + 5 Solid Interactive Accordion Cards */}
           <div
-            className={`lg:col-span-7 flex-1 min-h-0 flex flex-col justify-between lg:justify-center gap-1.5 sm:gap-3 lg:py-2 lg:pl-4 ${getChildAnimClass(6, "right", "delay-150")}`}
+            className={`lg:col-span-7 flex flex-col justify-center gap-2.5 sm:gap-3 lg:py-2 lg:pl-4 ${getChildAnimClass(6, "right", "delay-150")}`}
           >
-            <div className="pb-0.5 sm:pb-2 space-y-1 sm:space-y-2 shrink-0">
+            <div className="space-y-1 sm:space-y-2 shrink-0">
               <span className="inline-flex items-center px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-full bg-[#0f2c56] text-[10px] sm:text-xs font-bold text-white">
                 Pertanyaan Umum
               </span>
@@ -1214,7 +1214,7 @@ export default function HomePage() {
               </h3>
             </div>
 
-            <div className="flex-1 min-h-0 lg:flex-initial flex flex-col justify-between lg:block space-y-1.5 sm:space-y-2.5">
+            <div className="space-y-1.5 sm:space-y-2.5">
               {ACCORDION_ITEMS.map((item, idx) => {
                 const isOpen = openAccordionId === item.id;
                 return (
@@ -1228,7 +1228,7 @@ export default function HomePage() {
                   >
                     <button
                       type="button"
-                      onClick={() => setOpenAccordionId(isOpen ? null : item.id)}
+                      onClick={() => setOpenAccordionId(item.id)}
                       className="w-full px-3 py-2 sm:px-5 sm:py-3.5 lg:py-4 flex items-center justify-between gap-2 sm:gap-4 text-left cursor-pointer"
                     >
                       <div className="flex items-center gap-2 sm:gap-3.5 min-w-0">
