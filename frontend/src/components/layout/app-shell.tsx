@@ -58,26 +58,94 @@ export function AppShell({ children }: AppShellProps) {
     );
   }
 
-  // Halaman full-slide (/ , /jobs, /about): Terkunci 1 layar penuh dengan Navbar melayang di atas
+  // Halaman full-slide (/ , /jobs, /about): Terkunci 1 layar penuh dengan Navbar melayang & Reveal Sidebar di mobile
   const isFullSlidePage =
     pathname === "/" || pathname === "/jobs" || pathname === "/about";
 
   if (isFullSlidePage) {
     return (
-      <div className="h-dvh w-full overflow-hidden flex flex-col bg-[#fefefd] text-primary select-none">
-        <Navbar />
-        <main className="flex-1 min-h-0 w-full overflow-hidden relative">{children}</main>
+      <div className="flex h-dvh w-full overflow-hidden bg-[#edf2f9] lg:bg-[#fefefd] text-primary select-none relative">
+        <Suspense fallback={null}>
+          <AppSidebar
+            variant="public"
+            isMobileOpen={isMobileOpen}
+            onCloseMobile={() => setIsMobileOpen(false)}
+            isDesktopCollapsed={false}
+            onToggleDesktopCollapse={() => {}}
+          />
+        </Suspense>
+
+        <div
+          className={`flex flex-1 flex-col min-w-0 min-h-0 overflow-hidden bg-[#fefefd] relative z-20 isolate transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] origin-left lg:translate-x-0 lg:scale-100 ${
+            isMobileOpen
+              ? "translate-x-[232px] sm:translate-x-[256px] scale-[0.84] rounded-[28px] shadow-[0_24px_60px_rgba(15,44,86,0.22)] ring-1 ring-[#0f2c56]/10"
+              : "translate-x-0 scale-100 rounded-none"
+          }`}
+        >
+          {isMobileOpen && (
+            <div
+              role="button"
+              tabIndex={0}
+              aria-label="Tutup menu dan kembali ke halaman"
+              onClick={() => setIsMobileOpen(false)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") setIsMobileOpen(false);
+              }}
+              className="absolute inset-0 z-50 lg:hidden cursor-pointer"
+            />
+          )}
+          <Navbar
+            isMobileOpen={isMobileOpen}
+            onToggleMobile={() => setIsMobileOpen((s) => !s)}
+          />
+          <main className="flex-1 min-h-0 w-full overflow-hidden relative">
+            {children}
+          </main>
+        </div>
       </div>
     );
   }
 
-  // Tampilan halaman publik lainnya (/jobs, /about, /apply): Pill Navbar + Konten + Footer
+  // Tampilan halaman publik lainnya (/apply): Pill Navbar + Konten + Footer + Reveal Sidebar di mobile
   if (!isDashboardWorkspace) {
     return (
-      <div className="min-h-screen flex flex-col justify-between bg-[#fefefd] text-primary">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+      <div className="flex min-h-screen w-full overflow-x-hidden bg-[#edf2f9] lg:bg-[#fefefd] text-primary relative">
+        <Suspense fallback={null}>
+          <AppSidebar
+            variant="public"
+            isMobileOpen={isMobileOpen}
+            onCloseMobile={() => setIsMobileOpen(false)}
+            isDesktopCollapsed={false}
+            onToggleDesktopCollapse={() => {}}
+          />
+        </Suspense>
+
+        <div
+          className={`flex flex-1 flex-col justify-between min-w-0 bg-[#fefefd] relative z-20 isolate transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] origin-left lg:translate-x-0 lg:scale-100 ${
+            isMobileOpen
+              ? "translate-x-[232px] sm:translate-x-[256px] scale-[0.84] rounded-[28px] shadow-[0_24px_60px_rgba(15,44,86,0.22)] ring-1 ring-[#0f2c56]/10 overflow-hidden h-dvh"
+              : "translate-x-0 scale-100 rounded-none"
+          }`}
+        >
+          {isMobileOpen && (
+            <div
+              role="button"
+              tabIndex={0}
+              aria-label="Tutup menu dan kembali ke halaman"
+              onClick={() => setIsMobileOpen(false)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") setIsMobileOpen(false);
+              }}
+              className="absolute inset-0 z-50 lg:hidden cursor-pointer"
+            />
+          )}
+          <Navbar
+            isMobileOpen={isMobileOpen}
+            onToggleMobile={() => setIsMobileOpen((s) => !s)}
+          />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </div>
       </div>
     );
   }

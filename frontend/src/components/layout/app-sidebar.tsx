@@ -16,11 +16,25 @@ import {
   MessageSquareText,
   User as UserIcon,
   LogOut,
+  Sparkles,
+  Compass,
+  HelpCircle,
+  LayoutDashboard,
 } from "lucide-react";
 import { User } from "@/types";
 import { api } from "@/lib/api";
 import { getRoleFromPathname, getDashboardBasePath, getRoleSegment } from "@/lib/routes";
 import { UserProfilePopup } from "./user-profile-popup";
+
+const PUBLIC_LANDING_SLIDES = [
+  { label: "Beranda", href: "/", slide: 0, icon: Home },
+  { label: "Pemeriksa Format ATS", href: "/#fitur", slide: 1, icon: FileCheck },
+  { label: "Persiapan Karir", href: "/#persiapan", slide: 2, icon: Compass },
+  { label: "Asisten Kalimat Aktif", href: "/#asisten", slide: 3, icon: MessageSquareText },
+  { label: "Fitur & Prinsip", href: "/#prinsip", slide: 4, icon: Sparkles },
+  { label: "Cara Kerja Otomatis", href: "/#cara-kerja", slide: 5, icon: FileSpreadsheet },
+  { label: "Pertanyaan Umum", href: "/#mulai", slide: 6, icon: HelpCircle },
+];
 
 export interface ItemRiwayatEvaluasi {
   id: string;
@@ -34,6 +48,7 @@ interface AppSidebarProps {
   onCloseMobile: () => void;
   isDesktopCollapsed: boolean;
   onToggleDesktopCollapse: () => void;
+  variant?: "dashboard" | "public";
 }
 
 export function AppSidebar({
@@ -41,12 +56,42 @@ export function AppSidebar({
   onCloseMobile,
   isDesktopCollapsed,
   onToggleDesktopCollapse,
+  variant = "dashboard",
 }: AppSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [userRole, setUserRole] = useState<string | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [profilePopupOpen, setProfilePopupOpen] = useState(false);
+  const [activeLandingSlide, setActiveLandingSlide] = useState<number>(0);
+
+  useEffect(() => {
+    const handleActiveSlide = (e: Event) => {
+      const customEvent = e as CustomEvent<number>;
+      if (typeof customEvent.detail === "number") {
+        setActiveLandingSlide(customEvent.detail);
+      }
+    };
+    window.addEventListener("pasbana:activeSlide", handleActiveSlide);
+    return () => window.removeEventListener("pasbana:activeSlide", handleActiveSlide);
+  }, []);
+
+  const handlePublicSlideClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+    slide: number
+  ) => {
+    onCloseMobile();
+    if (pathname === "/") {
+      e.preventDefault();
+      if (slide === 0) {
+        window.history.replaceState(null, "", "/");
+      } else {
+        window.history.replaceState(null, "", href);
+      }
+      window.dispatchEvent(new CustomEvent("pasbana:slide", { detail: slide }));
+    }
+  };
 
   useEffect(() => {
     try {
@@ -193,7 +238,9 @@ export function AppSidebar({
       {/* Sidebar Container (Reveal pattern on mobile: sits on left canvas as main page steps back) */}
       <aside
         aria-label="Navigasi aplikasi dan riwayat evaluasi"
-        className={`fixed top-0 bottom-0 left-0 z-10 flex shrink-0 flex-col bg-[#edf2f9] text-primary overflow-hidden lg:static lg:z-auto transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        className={`fixed top-0 bottom-0 left-0 z-10 flex shrink-0 flex-col bg-[#edf2f9] text-primary overflow-hidden ${
+          variant === "public" ? "lg:hidden" : "lg:static lg:z-auto"
+        } transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           isMobileOpen
             ? "translate-x-0 scale-100 opacity-100 pointer-events-auto"
             : "-translate-x-8 scale-[0.96] opacity-0 pointer-events-none lg:translate-x-0 lg:scale-100 lg:opacity-100 lg:pointer-events-auto"
@@ -304,38 +351,100 @@ export function AppSidebar({
             </div>
 
             {/* Scrollable Middle Body: Navigation & Evaluation History */}
-            <div className="flex-1 min-h-0 overflow-y-auto scrollbar-none px-4 py-4 space-y-5">
-              {/* Navigation Menu */}
-              <div className="space-y-1.5">
-                <p className="px-2.5 pb-1 text-[11px] font-mono uppercase tracking-wider text-slate-500 font-bold">
-                  Menu Utama
-                </p>
-                {navLinks.map((item) => {
-                  const Icon = item.icon;
-                  return (
+            <div className="flex-1 min-h-0 overflow-y-auto scrollbar-none px-4 py-3.5 space-y-4">
+              {variant === "public" ? (
+                <>
+                  <div className="space-y-1">
+                    <p className="px-2.5 pb-1 text-[10px] font-mono uppercase tracking-wider text-slate-500 font-bold">
+                      Seksi Beranda
+                    </p>
+                    {PUBLIC_LANDING_SLIDES.map((item) => {
+                      const Icon = item.icon;
+                      const isActive =
+                        pathname === "/" && activeLandingSlide === item.slide;
+                      return (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          onClick={(e) =>
+                            handlePublicSlideClick(e, item.href, item.slide)
+                          }
+                          className={`flex items-center gap-2.5 min-h-[38px] px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                            isActive
+                              ? "bg-[#0f2c56] text-white"
+                              : "text-slate-700 hover:bg-white hover:text-[#0f2c56]"
+                          }`}
+                        >
+                          <Icon className="w-4 h-4 shrink-0" aria-hidden="true" />
+                          <span className="truncate leading-tight">{item.label}</span>
+                        </Link>
+                      );
+                    })}
+                  </div>
+
+                  <div className="space-y-1 pt-2 border-t border-slate-200/80">
+                    <p className="px-2.5 pb-1 text-[10px] font-mono uppercase tracking-wider text-slate-500 font-bold">
+                      Eksplorasi
+                    </p>
                     <Link
-                      key={item.href}
-                      href={item.href}
+                      href="/jobs"
                       onClick={onCloseMobile}
-                      className={`flex items-center gap-3 min-h-[44px] px-3.5 py-2.5 rounded-xl text-[13px] font-semibold transition-all ${
-                        item.isActive
+                      className={`flex items-center gap-2.5 min-h-[38px] px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                        pathname === "/jobs"
                           ? "bg-[#0f2c56] text-white"
                           : "text-slate-700 hover:bg-white hover:text-[#0f2c56]"
                       }`}
                     >
-                      <Icon className="w-[18px] h-[18px] shrink-0" aria-hidden="true" />
-                      <div className="flex-1 min-w-0">
-                        <p className="truncate leading-tight">{item.label}</p>
-                      </div>
+                      <Briefcase className="w-4 h-4 shrink-0" aria-hidden="true" />
+                      <span className="truncate leading-tight">Pencocokan AI</span>
                     </Link>
-                  );
-                })}
-              </div>
+                    <Link
+                      href="/about"
+                      onClick={onCloseMobile}
+                      className={`flex items-center gap-2.5 min-h-[38px] px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                        pathname === "/about"
+                          ? "bg-[#0f2c56] text-white"
+                          : "text-slate-700 hover:bg-white hover:text-[#0f2c56]"
+                      }`}
+                    >
+                      <Users className="w-4 h-4 shrink-0" aria-hidden="true" />
+                      <span className="truncate leading-tight">Tentang Kami</span>
+                    </Link>
+                  </div>
+                </>
+              ) : (
+                /* Navigation Menu */
+                <div className="space-y-1.5">
+                  <p className="px-2.5 pb-1 text-[11px] font-mono uppercase tracking-wider text-slate-500 font-bold">
+                    Menu Utama
+                  </p>
+                  {navLinks.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={onCloseMobile}
+                        className={`flex items-center gap-3 min-h-[44px] px-3.5 py-2.5 rounded-xl text-[13px] font-semibold transition-all ${
+                          item.isActive
+                            ? "bg-[#0f2c56] text-white"
+                            : "text-slate-700 hover:bg-white hover:text-[#0f2c56]"
+                        }`}
+                      >
+                        <Icon className="w-[18px] h-[18px] shrink-0" aria-hidden="true" />
+                        <div className="flex-1 min-w-0">
+                          <p className="truncate leading-tight">{item.label}</p>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
             </div>
 
-            {/* Bottom Pinned Footer: Mobile Account Section (< lg) + Kembali ke Beranda */}
-            <div className="shrink-0 p-3.5 sm:p-4 border-t border-slate-200/80 bg-[#edf2f9] space-y-2.5">
-              {/* Mobile Account Card (Moved from AppHeader on mobile < lg) */}
+            {/* Bottom Pinned Footer: Mobile Account Section (< lg) + Primary CTA */}
+            <div className="shrink-0 p-3.5 sm:p-4 border-t border-slate-200/80 bg-[#edf2f9] space-y-2">
+              {/* Mobile Account Card (Moved from AppHeader/Navbar on mobile < lg) */}
               <div className="lg:hidden">
                 {user ? (
                   <div className="p-2.5 rounded-2xl bg-white border border-slate-200/90 space-y-2">
@@ -375,25 +484,47 @@ export function AppSidebar({
                     </div>
                   </div>
                 ) : (
-                  <Link
-                    href="/login"
-                    onClick={onCloseMobile}
-                    className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-bold text-white bg-[#0f2c56] hover:bg-[#163861] transition-colors"
-                  >
-                    <UserIcon className="w-3.5 h-3.5 shrink-0" />
-                    <span>Masuk Akun</span>
-                  </Link>
+                  <div className="grid grid-cols-2 gap-1.5">
+                    <Link
+                      href="/login"
+                      onClick={onCloseMobile}
+                      className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-bold text-white bg-[#0f2c56] hover:bg-[#163861] transition-colors"
+                    >
+                      <UserIcon className="w-3.5 h-3.5 shrink-0" />
+                      <span>Masuk</span>
+                    </Link>
+                    <Link
+                      href="/register"
+                      onClick={onCloseMobile}
+                      className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-bold text-white bg-[#ce2731] hover:bg-[#b01e27] transition-colors"
+                    >
+                      <span>Daftar</span>
+                    </Link>
+                  </div>
                 )}
               </div>
 
-              <Link
-                href="/"
-                onClick={onCloseMobile}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-2xl text-[13px] font-bold text-white bg-[#ce2731] hover:bg-[#b01e27] transition-colors"
-              >
-                <Home className="w-[18px] h-[18px] shrink-0" aria-hidden="true" />
-                <span>Kembali ke Beranda</span>
-              </Link>
+              {variant === "public" ? (
+                user && (
+                  <Link
+                    href={baseDashboardPath}
+                    onClick={onCloseMobile}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-bold text-white bg-[#ce2731] hover:bg-[#b01e27] transition-colors"
+                  >
+                    <LayoutDashboard className="w-4 h-4 shrink-0" aria-hidden="true" />
+                    <span>Buka Dashboard</span>
+                  </Link>
+                )
+              ) : (
+                <Link
+                  href="/"
+                  onClick={onCloseMobile}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-2xl text-[13px] font-bold text-white bg-[#ce2731] hover:bg-[#b01e27] transition-colors"
+                >
+                  <Home className="w-[18px] h-[18px] shrink-0" aria-hidden="true" />
+                  <span>Kembali ke Beranda</span>
+                </Link>
+              )}
             </div>
           </div>
         </div>

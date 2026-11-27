@@ -28,10 +28,19 @@ const LANDING_SECTIONS = [
   { label: "Cara Kerja", href: "/#cara-kerja", slide: 5 },
 ];
 
-export function Navbar({ floating = false }: { floating?: boolean }) {
+export interface NavbarProps {
+  floating?: boolean;
+  isMobileOpen?: boolean;
+  onToggleMobile?: () => void;
+}
+
+export function Navbar({
+  floating = false,
+  isMobileOpen = false,
+  onToggleMobile,
+}: NavbarProps) {
   const pathname = usePathname();
   const [user, setUser] = useState<User | null>(null);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [profilePopupOpen, setProfilePopupOpen] = useState(false);
   const [activeLandingSlide, setActiveLandingSlide] = useState<number>(0);
@@ -53,7 +62,6 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
     href: string,
     slide: number
   ) => {
-    setMobileMenuOpen(false);
     if (pathname === "/") {
       e.preventDefault();
       if (slide === 0) {
@@ -275,98 +283,24 @@ export function Navbar({ floating = false }: { floating?: boolean }) {
             )}
           </div>
 
-          {/* Mobile Menu Button (Labeled + >= 44px tap target) */}
+          {/* Mobile Menu Toggle (Icon-only matching Dashboard AppHeader) */}
           <div className="flex lg:hidden">
             <button
               type="button"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="min-h-[44px] px-3.5 py-2 rounded-full text-xs font-bold text-white bg-white/10 hover:bg-white/20 flex items-center gap-1.5 cursor-pointer"
-              aria-label="Toggle navigation menu"
-              aria-expanded={mobileMenuOpen}
+              onClick={onToggleMobile}
+              className="w-10 h-10 flex items-center justify-center text-white hover:text-[#ce2731] transition-colors cursor-pointer"
+              aria-label="Buka menu samping navigasi"
+              aria-expanded={isMobileOpen}
             >
-              {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
-              <span>{mobileMenuOpen ? "Tutup" : "Menu"}</span>
+              {isMobileOpen ? (
+                <X className="w-6 h-6 shrink-0" />
+              ) : (
+                <Menu className="w-6 h-6 shrink-0" />
+              )}
             </button>
           </div>
         </div>
       </div>
-
-      {/* Mobile Menu Floating Dropdown Card */}
-      {mobileMenuOpen && (
-        <div className="pointer-events-auto lg:hidden absolute top-full left-2.5 right-2.5 sm:left-auto sm:right-4 sm:w-80 mt-1 rounded-3xl bg-[#0e2647]/95 backdrop-blur-xl border border-white/15 text-white shadow-2xl px-4 py-3.5 space-y-1 z-50">
-          {LANDING_SECTIONS.map((item) => {
-            const isActive = pathname === "/" && activeLandingSlide === item.slide;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={(e) => handleSectionClick(e, item.href, item.slide)}
-                className={`flex items-center min-h-[44px] px-3.5 rounded-xl text-sm font-medium transition-colors ${
-                  isActive
-                    ? "bg-white text-[#0f2c56] font-bold"
-                    : "text-slate-200 hover:text-white hover:bg-white/10"
-                }`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-          <Link
-            href="/jobs"
-            onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center min-h-[44px] px-3.5 rounded-xl text-sm font-medium text-slate-200 hover:text-white hover:bg-white/10"
-          >
-            Pencocokan AI
-          </Link>
-          <Link
-            href="/about"
-            onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center min-h-[44px] px-3.5 rounded-xl text-sm font-medium text-slate-200 hover:text-white hover:bg-white/10"
-          >
-            Tentang Kami
-          </Link>
-          <div className="pt-2 border-t border-white/15 flex flex-col gap-2">
-            {user ? (
-              <div className="space-y-2">
-                <div className="px-3.5 py-1 text-xs text-slate-300 font-medium truncate">
-                  {user.name} ({user.role})
-                </div>
-                <Link
-                  href={getDashboardBasePath(user.role)}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-center min-h-[44px] rounded-full bg-white text-[#0f2c56] text-xs font-extrabold"
-                >
-                  Buka Dashboard
-                </Link>
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="w-full min-h-[44px] rounded-full bg-[#ce2731] text-white text-xs font-bold cursor-pointer"
-                >
-                  Keluar dari Akun
-                </button>
-              </div>
-            ) : (
-              <div className="flex flex-col gap-2 pt-1">
-                <Link
-                  href="/login"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-center min-h-[44px] text-sm font-semibold text-slate-200 bg-white/10 hover:bg-white/15 rounded-full"
-                >
-                  Masuk
-                </Link>
-                <Link
-                  href="/register"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-center min-h-[44px] text-sm font-bold text-white bg-[#ce2731] hover:bg-[#b01e27] rounded-full shadow"
-                >
-                  Daftar Akun
-                </Link>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
     </header>
   );
 }
