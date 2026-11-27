@@ -1224,8 +1224,8 @@ export default function HomePage() {
                     key={item.id}
                     className={`rounded-xl sm:rounded-2xl transition-colors duration-200 ${
                       isOpen
-                        ? "bg-[#0f2c56] text-white"
-                        : "bg-[#f8fafc] border border-slate-200 hover:border-[#0f2c56] text-[#0f2c56]"
+                        ? "bg-white border border-slate-300 shadow-xs text-[#0f2c56]"
+                        : "bg-[#f8fafc] border border-slate-200 hover:border-slate-300 text-[#0f2c56]"
                     }`}
                   >
                     <button
@@ -1243,11 +1243,7 @@ export default function HomePage() {
                         >
                           0{idx + 1}
                         </span>
-                        <span
-                          className={`text-[11px] sm:text-sm font-bold leading-tight sm:leading-snug ${
-                            isOpen ? "text-white" : "text-[#0f2c56]"
-                          }`}
-                        >
+                        <span className="text-[11px] sm:text-sm font-bold leading-tight sm:leading-snug text-[#0f2c56]">
                           {item.question}
                         </span>
                       </div>
@@ -1266,7 +1262,7 @@ export default function HomePage() {
                       </span>
                     </button>
                     {isOpen && (
-                      <div className="px-3 pb-2 pl-9 pr-3 sm:px-5 sm:pb-4 sm:pl-[62px] sm:pr-10 text-[10.5px] sm:text-sm text-white/85 leading-snug sm:leading-relaxed">
+                      <div className="px-3 pb-2.5 pl-9 pr-3 sm:px-5 sm:pb-4 sm:pl-[62px] sm:pr-10 text-[10.5px] sm:text-sm text-slate-600 leading-snug sm:leading-relaxed">
                         {item.answer}
                       </div>
                     )}
