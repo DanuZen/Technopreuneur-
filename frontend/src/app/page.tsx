@@ -961,7 +961,7 @@ export default function HomePage() {
       >
         <div
           ref={slide4ContainerRef}
-          className="relative w-full h-full mx-auto px-1.5 sm:px-8 lg:px-12 py-1 lg:py-0 flex flex-col justify-between lg:justify-center gap-2 sm:gap-5 lg:gap-6"
+          className="relative w-full h-full mx-auto px-1.5 sm:px-8 lg:px-12 py-1 lg:py-0 flex flex-col justify-center gap-2.5 sm:gap-5 lg:gap-6"
         >
           {/* Top-Center Section Header */}
           <div className="space-y-1.5 sm:space-y-4 text-center max-w-2xl mx-auto flex flex-col items-center shrink-0">
@@ -976,10 +976,10 @@ export default function HomePage() {
             </h2>
           </div>
 
-          {/* 2 Columns x 3 Rows on Mobile (fit-to-layout), 3 Columns x 2 Rows on Desktop Feature Grid */}
+          {/* 2 Columns x 3 Rows on Mobile (content-fitted), 3 Columns x 2 Rows on Desktop Feature Grid */}
           <div
             ref={slide4GridRef}
-            className={`flex-1 min-h-0 lg:flex-initial grid grid-cols-2 lg:grid-cols-3 grid-rows-3 lg:grid-rows-none gap-2 sm:gap-4 lg:gap-5 ${getChildAnimClass(4, "up", "delay-150")}`}
+            className={`grid grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-5 ${getChildAnimClass(4, "up", "delay-150")}`}
           >
             {FEATURE_GRID_ITEMS.map((item, idx) => {
               const isSelected = activeFeatureIdx === idx;
@@ -992,14 +992,14 @@ export default function HomePage() {
                   }}
                   onMouseEnter={() => setActiveFeatureIdx(idx)}
                   onClick={() => setActiveFeatureIdx(idx)}
-                  className={`p-2.5 sm:p-5 lg:p-6 rounded-[18px] sm:rounded-[28px] text-left transition-colors duration-300 cursor-pointer flex flex-col justify-between lg:block overflow-hidden ${
+                  className={`p-2.5 sm:p-5 lg:p-6 rounded-[18px] sm:rounded-[28px] text-left transition-colors duration-300 cursor-pointer flex flex-col justify-start ${
                     isSelected
                       ? `${isCrimson ? "bg-[#ce2731]" : "bg-[#0f2c56]"} text-white`
                       : "bg-white border-2 border-slate-200 hover:border-[#0f2c56] text-[#0f2c56]"
                   }`}
                 >
                   {/* Custom Mini UI Illustration Badge at Top (100% Solid Colors) */}
-                  <div className="h-6 sm:h-11 flex items-center mb-1 sm:mb-3 origin-left scale-75 sm:scale-100 shrink-0">
+                  <div className="h-6 sm:h-11 flex items-center mb-1.5 sm:mb-3 origin-left scale-75 sm:scale-100 shrink-0">
                     {item.badgeType === "eye" && (
                       <div className="px-3.5 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[#ce2731] inline-flex items-center justify-center">
                         <Eye className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
@@ -1041,22 +1041,20 @@ export default function HomePage() {
                     )}
                   </div>
 
-                  <div className="space-y-0.5 sm:space-y-0 min-h-0">
-                    <h3
-                      className={`text-[11px] sm:text-base font-extrabold sm:font-bold leading-tight sm:leading-relaxed mb-0.5 sm:mb-2 line-clamp-2 sm:line-clamp-none transition-colors duration-300 ${
-                        isSelected ? "text-white" : "text-[#0f2c56]"
-                      }`}
-                    >
-                      {item.title}
-                    </h3>
-                    <p
-                      className={`text-[10px] sm:text-xs leading-snug sm:leading-[1.7] line-clamp-3 sm:line-clamp-none transition-colors duration-300 ${
-                        isSelected ? "text-white/95" : "text-slate-600"
-                      }`}
-                    >
-                      {item.desc}
-                    </p>
-                  </div>
+                  <h3
+                    className={`text-[11px] sm:text-base font-extrabold sm:font-bold leading-[1.28] sm:leading-relaxed mb-1 sm:mb-2 transition-colors duration-300 ${
+                      isSelected ? "text-white" : "text-[#0f2c56]"
+                    }`}
+                  >
+                    {item.title}
+                  </h3>
+                  <p
+                    className={`text-[10px] sm:text-xs leading-[1.35] sm:leading-[1.7] transition-colors duration-300 ${
+                      isSelected ? "text-white/95" : "text-slate-600"
+                    }`}
+                  >
+                    {item.desc}
+                  </p>
                 </div>
               );
             })}
