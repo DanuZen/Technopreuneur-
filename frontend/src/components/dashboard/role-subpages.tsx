@@ -25,6 +25,7 @@ import {
   CompanyTrendDiagram,
 } from "@/components/dashboard/dashboard-diagrams";
 import { api } from "@/lib/api";
+import { ModalShell } from "@/components/ui/modal-shell";
 
 type ApplicantStatus = "submitted" | "reviewed" | "shortlisted" | "rejected";
 
@@ -216,34 +217,32 @@ export function CompanyJobsSubpage() {
       />
 
       {showForm && (
-        <div
-          className="fixed inset-0 z-50 bg-[#0f2c56]/40 backdrop-blur-[2px] flex items-center justify-center p-4"
-          onClick={() => setShowForm(false)}
-        >
-          <form
-            onSubmit={handleAdd}
-            onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-lg rounded-3xl border border-slate-200 bg-white p-6 space-y-5 shadow-2xl"
-          >
-            <div className="flex items-center justify-between gap-3 pb-3 border-b border-slate-100">
-              <div>
-                <p className="text-sm font-extrabold text-[#0f2c56]">
-                  Publikasikan Lowongan Baru
-                </p>
-                <p className="text-xs text-slate-500 mt-0.5">
-                  Lowongan aktif otomatis terindeks oleh sistem pencocokan AI.
-                </p>
-              </div>
+        <ModalShell
+          onClose={() => setShowForm(false)}
+          ariaLabel="Publikasikan Lowongan Baru"
+          badge="Lowongan Baru"
+          title="Publikasikan Lowongan Baru"
+          subtitle="Lowongan aktif otomatis terindeks oleh sistem pencocokan AI."
+          size="md"
+          onSubmit={handleAdd}
+          footer={
+            <div className="grid grid-cols-2 gap-2.5">
               <button
                 type="button"
                 onClick={() => setShowForm(false)}
-                aria-label="Tutup popup"
-                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-[#0f2c56] flex items-center justify-center cursor-pointer"
+                className="min-h-[44px] px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-[#0f2c56] hover:border-[#0f2c56] text-xs font-bold cursor-pointer transition-colors"
               >
-                <X className="w-4 h-4" />
+                Batal
+              </button>
+              <button
+                type="submit"
+                className="min-h-[44px] px-5 py-2.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-extrabold cursor-pointer transition-colors"
+              >
+                Simpan &amp; Terbitkan
               </button>
             </div>
-
+          }
+        >
             <div className="space-y-3.5">
               <label className="block space-y-1.5">
                 <span className="text-[11px] font-bold uppercase text-slate-500">
@@ -288,24 +287,7 @@ export function CompanyJobsSubpage() {
                 </label>
               </div>
             </div>
-
-            <div className="flex items-center justify-end gap-2.5 pt-2 border-t border-slate-100">
-              <button
-                type="button"
-                onClick={() => setShowForm(false)}
-                className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#0f2c56] text-xs font-bold cursor-pointer"
-              >
-                Batal
-              </button>
-              <button
-                type="submit"
-                className="morph-pill px-5 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-extrabold cursor-pointer"
-              >
-                Simpan &amp; Terbitkan
-              </button>
-            </div>
-          </form>
-        </div>
+        </ModalShell>
       )}
 
       <div className="flex-1 min-h-0 flex flex-col gap-4 overflow-y-auto lg:overflow-hidden scrollbar-none">

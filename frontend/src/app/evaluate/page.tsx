@@ -14,6 +14,7 @@ import { DashboardPageHeading } from "@/components/dashboard/dashboard-page-head
 import { DashboardPageSkeleton } from "@/components/ui/dashboard-skeleton";
 import { CVAnalysisResult } from "@/types";
 import { api } from "@/lib/api";
+import { ModalShell } from "@/components/ui/modal-shell";
 
 function EvaluateContent() {
   const router = useRouter();
@@ -108,67 +109,44 @@ function EvaluateContent() {
       </div>
 
       {showCvOwnershipPrompt && (
-        <div
-          className="fixed inset-0 z-50 bg-[#0f2c56]/45 backdrop-blur-[2px] flex items-center justify-center p-4"
-          onClick={() => dismissPrompt(false)}
+        <ModalShell
+          onClose={() => dismissPrompt(false)}
+          ariaLabel="Pengecekan awal CV"
+          badge="Pengecekan Awal CV"
+          title="Apakah Anda sudah memiliki berkas CV?"
+          subtitle="Pilih metode persiapan yang sesuai dengan kondisi dokumen Anda saat ini."
+          size="md"
         >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-6 space-y-5 shadow-2xl text-[#0f2c56]"
-          >
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <span className="inline-block px-3 py-1 rounded-full bg-[#0f2c56] text-white text-[10px] font-bold uppercase tracking-wider mb-2">
-                  Pengecekan Awal CV
-                </span>
-                <h2 className="text-lg font-extrabold leading-snug">
-                  Apakah Anda sudah memiliki berkas CV?
-                </h2>
-                <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-                  Pilih metode persiapan yang sesuai dengan kondisi dokumen Anda saat ini.
+          <div className="grid grid-cols-1 gap-2.5">
+            <button
+              type="button"
+              onClick={() => dismissPrompt(false)}
+              className="w-full p-4 rounded-2xl bg-[#0f2c56] hover:bg-[#173d74] text-white text-left flex items-center justify-between gap-3 transition-colors cursor-pointer"
+            >
+              <div className="space-y-0.5">
+                <p className="text-xs font-extrabold">Sudah Punya CV</p>
+                <p className="text-[11px] text-slate-200">
+                  Unggah dokumen PDF atau DOCX untuk dianalisis AI
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={() => dismissPrompt(false)}
-                aria-label="Tutup pengecekan awal"
-                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center shrink-0 cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
+              <UploadCloud className="w-5 h-5 shrink-0" />
+            </button>
 
-            <div className="grid grid-cols-1 gap-2.5">
-              <button
-                type="button"
-                onClick={() => dismissPrompt(false)}
-                className="w-full p-4 rounded-2xl bg-[#0f2c56] hover:bg-[#173d74] text-white text-left flex items-center justify-between gap-3 transition-colors cursor-pointer"
-              >
-                <div className="space-y-0.5">
-                  <p className="text-xs font-extrabold">Sudah Punya CV</p>
-                  <p className="text-[11px] text-slate-200">
-                    Unggah dokumen PDF atau DOCX untuk dianalisis AI
-                  </p>
-                </div>
-                <UploadCloud className="w-5 h-5 shrink-0" />
-              </button>
-
-              <button
-                type="button"
-                onClick={() => dismissPrompt(true)}
-                className="w-full p-4 rounded-2xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-left flex items-center justify-between gap-3 transition-colors cursor-pointer"
-              >
-                <div className="space-y-0.5">
-                  <p className="text-xs font-extrabold">Belum Punya CV</p>
-                  <p className="text-[11px] text-white/90">
-                    Susun CV standar ATS 1-kolom dari nol melalui Onboarding
-                  </p>
-                </div>
-                <FileSpreadsheet className="w-5 h-5 shrink-0" />
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={() => dismissPrompt(true)}
+              className="w-full p-4 rounded-2xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-left flex items-center justify-between gap-3 transition-colors cursor-pointer"
+            >
+              <div className="space-y-0.5">
+                <p className="text-xs font-extrabold">Belum Punya CV</p>
+                <p className="text-[11px] text-white/90">
+                  Susun CV standar ATS 1-kolom dari nol melalui Onboarding
+                </p>
+              </div>
+              <FileSpreadsheet className="w-5 h-5 shrink-0" />
+            </button>
           </div>
-        </div>
+        </ModalShell>
       )}
     </div>
   );

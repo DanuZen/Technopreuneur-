@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { UserRole } from "@/types";
 import { api } from "@/lib/api";
+import { ModalShell } from "@/components/ui/modal-shell";
 import { SplashScreen } from "@/components/ui/splash-screen";
 
 const FAQ_ITEMS = [
@@ -516,69 +517,35 @@ export default function RegisterPage() {
 
       {/* FAQ Modal (Pusat Bantuan) */}
       {showFaqModal && (
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4">
-          <div
-            onClick={() => setShowFaqModal(false)}
-            className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity cursor-pointer animate-fade-in"
-          />
-
-          <div className="relative w-full max-w-lg bg-white text-slate-900 border border-slate-200/90 rounded-3xl p-6 shadow-2xl z-10 overflow-hidden animate-scale-up">
-            {/* Header with Title and Close Button */}
-            <div className="flex items-center justify-between pb-4 border-b border-slate-100 relative">
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-[#0f2c56]/10 border border-[#0f2c56]/20 flex items-center justify-center text-[#0f2c56]">
-                  <HelpCircle className="w-4 h-4" />
-                </div>
-                <div>
-                  <h2 className="font-extrabold text-base text-slate-900 leading-tight">
-                    Pusat Bantuan
-                  </h2>
-                  <p className="text-[11px] text-slate-500">
-                    Panduan Pendaftaran &amp; Fitur Pasbana AI
-                  </p>
-                </div>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => setShowFaqModal(false)}
-                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-all cursor-pointer"
-                title="Tutup"
-              >
-                <X className="w-4 h-4" />
-              </button>
+        <ModalShell
+          onClose={() => setShowFaqModal(false)}
+          ariaLabel="Pusat Bantuan"
+          badge="Pusat Bantuan"
+          title="Panduan Pendaftaran & Fitur Pasbana AI"
+          size="md"
+          footer={
+            <button
+              type="button"
+              onClick={() => setShowFaqModal(false)}
+              className="w-full min-h-[44px] px-5 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white font-bold text-xs transition-colors cursor-pointer"
+            >
+              Tutup
+            </button>
+          }
+        >
+          {FAQ_ITEMS.map((item, idx) => (
+            <div
+              key={idx}
+              className="p-3.5 rounded-2xl bg-[#edf2f9] border border-slate-200/80 space-y-1.5"
+            >
+              <h4 className="text-xs font-extrabold text-[#0f2c56] flex items-start gap-2">
+                <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0" />
+                <span>{item.q}</span>
+              </h4>
+              <p className="text-xs text-slate-600 leading-relaxed pl-6">{item.a}</p>
             </div>
-
-            {/* FAQ List Content */}
-            <div className="py-4 space-y-3 max-h-[60vh] overflow-y-auto scrollbar-none pr-1">
-              {FAQ_ITEMS.map((item, idx) => (
-                <div
-                  key={idx}
-                  className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-1.5 transition-colors hover:bg-slate-50/80"
-                >
-                  <h4 className="text-xs font-bold text-slate-900 flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-[#ce2731] shrink-0" />
-                    <span>{item.q}</span>
-                  </h4>
-                  <p className="text-xs text-slate-600 leading-relaxed pl-6 font-normal">
-                    {item.a}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            {/* Footer Action */}
-            <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-3 relative">
-              <button
-                type="button"
-                onClick={() => setShowFaqModal(false)}
-                className="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-all cursor-pointer"
-              >
-                Tutup
-              </button>
-            </div>
-          </div>
-        </div>
+          ))}
+        </ModalShell>
       )}
     </div>
   );

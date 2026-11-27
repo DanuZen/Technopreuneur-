@@ -18,6 +18,7 @@ import { api } from "@/lib/api";
 import { CVAnalysisResult, JobItem, MyApplicationItem } from "@/types";
 import { DashboardPageHeading } from "@/components/dashboard/dashboard-page-heading";
 import { LowonganPageSkeleton } from "@/components/ui/dashboard-skeleton";
+import { ModalShell } from "@/components/ui/modal-shell";
 
 const DEFAULT_RECOMMENDED_JOBS: JobItem[] = [
   {
@@ -552,107 +553,120 @@ export default function LowonganCocokPage() {
         const ringOffset = ringCirc - (Math.min(100, Math.max(0, ringScore)) / 100) * ringCirc;
 
         return (
-          <div
-            className="fixed inset-0 z-50 bg-[#0f2c56]/60 backdrop-blur-[2px] flex items-end sm:items-center justify-center p-0 sm:p-6"
-            onClick={() => setSelectedJob(null)}
-          >
-            <div
-              onClick={(e) => e.stopPropagation()}
-              role="dialog"
-              aria-modal="true"
-              aria-label={`Detail lowongan ${selectedJob.title}`}
-              className="w-full max-w-xl max-h-[90dvh] sm:max-h-[86dvh] bg-white border border-slate-200 rounded-t-[28px] sm:rounded-[28px] shadow-2xl overflow-hidden flex flex-col text-[#0f2c56] animate-page-enter"
-            >
-              {/* Solid Navy Modal Header */}
-              <div className="bg-[#0f2c56] text-white px-5 pt-3 pb-5 sm:p-6 space-y-3.5 shrink-0">
-                {/* Mobile Bottom-Sheet Handle */}
-                <div className="w-10 h-1 rounded-full bg-white/25 mx-auto sm:hidden" aria-hidden="true" />
-
-                <div className="flex items-start justify-between gap-3">
-                  <div className="space-y-1.5 min-w-0 flex-1">
-                    <div className="flex flex-wrap items-center gap-1.5">
-                      <span className="text-[10px] uppercase font-mono px-2.5 py-0.5 rounded-full bg-[#ce2731] text-white font-bold">
-                        {selectedJob.source === "jooble" ? "Jooble" : "Mitra Internal"}
-                      </span>
-                      <span className="text-[10px] uppercase font-mono px-2.5 py-0.5 rounded-full bg-white/15 text-white font-bold">
-                        {selectedJob.workType}
-                      </span>
-                    </div>
-                    <h2 className="text-lg sm:text-xl font-extrabold text-white leading-snug">
-                      {selectedJob.title}
-                    </h2>
-                    <p className="text-xs sm:text-sm text-white/80 font-semibold">
-                      {selectedJob.companyName}
+          <ModalShell
+            onClose={() => setSelectedJob(null)}
+            ariaLabel={`Detail lowongan ${selectedJob.title}`}
+            size="lg"
+            badge={selectedJob.source === "jooble" ? "Jooble" : "Mitra Internal"}
+            title={selectedJob.title}
+            subtitle={
+              <span className="font-semibold">
+                {selectedJob.companyName} · <span className="uppercase">{selectedJob.workType}</span>
+              </span>
+            }
+            headerRight={
+              modalMatchPercent !== null ? (
+                <div className="flex items-center gap-2 bg-white text-[#0f2c56] px-2.5 py-1.5 rounded-2xl">
+                  <div className="relative w-11 h-11 flex items-center justify-center shrink-0">
+                    <svg viewBox="0 0 48 48" className="w-11 h-11 -rotate-90" aria-hidden="true">
+                      <circle
+                        cx="24"
+                        cy="24"
+                        r={ringRadius}
+                        fill="none"
+                        stroke="#E2E8F0"
+                        strokeWidth="4.5"
+                      />
+                      <circle
+                        cx="24"
+                        cy="24"
+                        r={ringRadius}
+                        fill="none"
+                        stroke={ringScore >= 75 ? "#0F2C56" : "#CE2731"}
+                        strokeWidth="4.5"
+                        strokeLinecap="round"
+                        strokeDasharray={ringCirc}
+                        strokeDashoffset={ringOffset}
+                      />
+                    </svg>
+                    <span className="absolute text-[11px] font-black font-mono text-[#0f2c56]">
+                      {ringScore}%
+                    </span>
+                  </div>
+                  <div className="pr-1 hidden sm:block">
+                    <p className="text-[9px] font-mono uppercase text-slate-400 font-bold">
+                      Kecocokan
+                    </p>
+                    <p className="text-[11px] font-extrabold text-[#0f2c56]">
+                      {ringScore >= 75 ? "Tinggi" : "Bertahap"}
                     </p>
                   </div>
-
-                  <div className="flex items-center gap-2.5 shrink-0">
-                    {modalMatchPercent !== null && (
-                      <div className="flex items-center gap-2 bg-white text-[#0f2c56] px-2.5 py-1.5 rounded-2xl">
-                        <div className="relative w-11 h-11 flex items-center justify-center shrink-0">
-                          <svg viewBox="0 0 48 48" className="w-11 h-11 -rotate-90" aria-hidden="true">
-                            <circle
-                              cx="24"
-                              cy="24"
-                              r={ringRadius}
-                              fill="none"
-                              stroke="#E2E8F0"
-                              strokeWidth="4.5"
-                            />
-                            <circle
-                              cx="24"
-                              cy="24"
-                              r={ringRadius}
-                              fill="none"
-                              stroke={ringScore >= 75 ? "#0F2C56" : "#CE2731"}
-                              strokeWidth="4.5"
-                              strokeLinecap="round"
-                              strokeDasharray={ringCirc}
-                              strokeDashoffset={ringOffset}
-                            />
-                          </svg>
-                          <span className="absolute text-[11px] font-black font-mono text-[#0f2c56]">
-                            {ringScore}%
-                          </span>
-                        </div>
-                        <div className="pr-1 hidden sm:block">
-                          <p className="text-[9px] font-mono uppercase text-slate-400 font-bold">
-                            Kecocokan
-                          </p>
-                          <p className="text-[11px] font-extrabold text-[#0f2c56]">
-                            {ringScore >= 75 ? "Tinggi" : "Bertahap"}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-
-                    <button
-                      type="button"
-                      onClick={() => setSelectedJob(null)}
-                      aria-label="Tutup detail lowongan"
-                      className="w-9 h-9 rounded-full bg-white/15 hover:bg-[#ce2731] text-white flex items-center justify-center shrink-0 transition-colors cursor-pointer"
-                    >
-                      <X className="w-4 h-4" />
-                    </button>
-                  </div>
                 </div>
-
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-white/90 pt-1 border-t border-white/15">
-                  <span className="flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-[#ce2731] shrink-0" />
-                    {selectedJob.location}
-                  </span>
-                  {selectedJob.salaryRange && (
-                    <>
-                      <span className="text-white/40">•</span>
-                      <span className="font-bold text-white">{selectedJob.salaryRange}</span>
-                    </>
-                  )}
-                </div>
+              ) : undefined
+            }
+            headerExtra={
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-white/90 pt-2 border-t border-white/15">
+                <span className="flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-[#ce2731] shrink-0" />
+                  {selectedJob.location}
+                </span>
+                {selectedJob.salaryRange && (
+                  <>
+                    <span className="text-white/40">•</span>
+                    <span className="font-bold text-white">{selectedJob.salaryRange}</span>
+                  </>
+                )}
               </div>
+            }
+            footer={
+              <div className="flex items-center justify-between gap-2.5 sm:gap-3">
+                <button
+                  type="button"
+                  onClick={() => handleToggleSave(selectedJob.id)}
+                  className={`min-h-[44px] px-4 py-2.5 rounded-xl border text-xs font-bold inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer ${
+                    isModalSaved
+                      ? "bg-[#0f2c56] border-[#0f2c56] text-white"
+                      : "bg-white border-slate-200 text-[#0f2c56] hover:border-[#0f2c56]"
+                  }`}
+                >
+                  <Bookmark className={`w-3.5 h-3.5 ${isModalSaved ? "fill-current" : ""}`} />
+                  <span>{isModalSaved ? "Tersimpan" : "Simpan"}</span>
+                </button>
 
-              {/* Scrollable Modal Body */}
-              <div className="flex-1 min-h-0 overflow-y-auto scrollbar-none p-5 sm:p-6 space-y-4">
+                {selectedJob.source === "jooble" && selectedJob.externalUrl ? (
+                  <a
+                    href={selectedJob.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 min-h-[44px] inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors"
+                  >
+                    <span>Lamar di Sumber Asli</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                ) : isModalApplied ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedJob(null);
+                      setActiveTab("applied");
+                    }}
+                    className="flex-1 min-h-[44px] inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs font-bold transition-colors cursor-pointer"
+                  >
+                    <CheckCircle2 className="w-3.5 h-3.5 text-white" />
+                    <span>Sudah Dilamar · Lihat Status</span>
+                  </button>
+                ) : (
+                  <Link
+                    href={`/apply/${selectedJob.id}`}
+                    className="flex-1 min-h-[44px] inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors"
+                  >
+                    <span>Kirim Lamaran Profil</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </Link>
+                )}
+              </div>
+            }
+          >
                 {/* Quick Compatibility Summary Strip */}
                 <div className="grid grid-cols-2 gap-2.5">
                   <div className="px-3.5 py-2.5 rounded-2xl bg-[#f8fafc] border border-slate-200/80">
@@ -745,57 +759,7 @@ export default function LowonganCocokPage() {
                     </div>
                   </div>
                 )}
-              </div>
-
-              {/* Pinned Modal Footer */}
-              <div className="shrink-0 p-4 sm:px-6 border-t border-slate-200 bg-[#f8fafc] flex items-center justify-between gap-2.5 sm:gap-3">
-                <button
-                  type="button"
-                  onClick={() => handleToggleSave(selectedJob.id)}
-                  className={`min-h-[44px] px-4 py-2.5 rounded-xl border text-xs font-bold inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer ${
-                    isModalSaved
-                      ? "bg-[#0f2c56] border-[#0f2c56] text-white"
-                      : "bg-white border-slate-200 text-[#0f2c56] hover:border-[#0f2c56]"
-                  }`}
-                >
-                  <Bookmark className={`w-3.5 h-3.5 ${isModalSaved ? "fill-current" : ""}`} />
-                  <span>{isModalSaved ? "Tersimpan" : "Simpan"}</span>
-                </button>
-
-                {selectedJob.source === "jooble" && selectedJob.externalUrl ? (
-                  <a
-                    href={selectedJob.externalUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 min-h-[44px] inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors"
-                  >
-                    <span>Lamar di Sumber Asli</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                ) : isModalApplied ? (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedJob(null);
-                      setActiveTab("applied");
-                    }}
-                    className="flex-1 min-h-[44px] inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs font-bold transition-colors cursor-pointer"
-                  >
-                    <CheckCircle2 className="w-3.5 h-3.5 text-white" />
-                    <span>Sudah Dilamar · Lihat Status</span>
-                  </button>
-                ) : (
-                  <Link
-                    href={`/apply/${selectedJob.id}`}
-                    className="flex-1 min-h-[44px] inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors"
-                  >
-                    <span>Kirim Lamaran Profil</span>
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </Link>
-                )}
-              </div>
-            </div>
-          </div>
+          </ModalShell>
         );
       })()}
     </main>

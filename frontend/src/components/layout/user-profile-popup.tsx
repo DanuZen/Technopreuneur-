@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { CVAnalysisResult, User } from "@/types";
 import { api } from "@/lib/api";
+import { ModalShell } from "@/components/ui/modal-shell";
 
 interface ExperienceEntry {
   id: string;
@@ -428,57 +429,28 @@ export function UserProfilePopup({
   };
 
   const modalContent = (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-label="Detail Profil Pengguna"
-      className="fixed inset-0 z-[999] flex items-center justify-center bg-slate-950/45 backdrop-blur-[2px] p-4"
-      onClick={onClose}
-    >
-      <div
-        className={`w-full ${
-          isUserRole ? "max-w-xl" : "max-w-sm"
-        } max-h-[86dvh] flex flex-col overflow-hidden rounded-[28px] bg-white border border-slate-200 text-[#0f2c56] shadow-[0_24px_60px_-15px_rgba(15,44,86,0.35)] animate-page-enter`}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Header */}
-        <div className="shrink-0 px-6 pt-5 pb-4 border-b border-slate-100 flex items-start justify-between gap-3">
-          <div className="flex items-center gap-3 min-w-0">
-            <div className="w-11 h-11 rounded-2xl bg-[#0f2c56] text-white text-base font-extrabold flex items-center justify-center shrink-0">
-              {(draft.name || user.name).charAt(0).toUpperCase()}
-            </div>
-            <div className="min-w-0">
-              <h2 className="text-base font-extrabold text-[#0f2c56] truncate">
-                {draft.name || user.name}
-              </h2>
-              <div className="flex items-center gap-2 mt-0.5">
-                <span className="uppercase text-[10px] bg-[#ce2731] text-white px-2.5 py-0.5 rounded-full font-mono font-bold">
-                  {user.role}
-                </span>
-                {savedNotice && (
-                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700">
-                    <Check className="w-3 h-3" />
-                    Tersimpan
-                  </span>
-                )}
-              </div>
-            </div>
-          </div>
-
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Tutup popup profil"
-            className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#0f2c56] flex items-center justify-center transition-colors cursor-pointer shrink-0"
-          >
-            <X className="w-4 h-4" />
-          </button>
+    <ModalShell
+      onClose={onClose}
+      ariaLabel="Detail Profil Pengguna"
+      size={isUserRole ? "lg" : "sm"}
+      badge={user.role}
+      title={draft.name || user.name}
+      subtitle={
+        savedNotice ? (
+          <span className="inline-flex items-center gap-1 font-bold text-emerald-300">
+            <Check className="w-3 h-3" />
+            Tersimpan
+          </span>
+        ) : undefined
+      }
+      leading={
+        <div className="w-11 h-11 rounded-2xl bg-white text-[#0f2c56] text-base font-extrabold flex items-center justify-center shrink-0">
+          {(draft.name || user.name).charAt(0).toUpperCase()}
         </div>
-
-        {/* Section Tabs (Khusus User) */}
-        {isUserRole && (
-          <div className="shrink-0 px-4 sm:px-6 pt-3 pb-2 bg-[#f4f7fb] border-b border-slate-200 flex overflow-x-auto scrollbar-none sm:flex-wrap gap-1.5">
-            {(
+      }
+      subHeader={
+        isUserRole
+          ? (
               [
                 { id: "identitas", label: "Identitas", icon: UserIcon },
                 { id: "keahlian", label: "Keahlian", icon: Sparkles },
@@ -494,7 +466,7 @@ export function UserProfilePopup({
                   key={tab.id}
                   type="button"
                   onClick={() => setActiveTab(tab.id)}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer ${
+                  className={`shrink-0 min-h-[40px] inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer ${
                     active
                       ? "bg-[#0f2c56] text-white"
                       : "bg-white text-[#0f2c56] border border-slate-200 hover:bg-[#edf2f9]"
@@ -504,12 +476,34 @@ export function UserProfilePopup({
                   <span>{tab.label}</span>
                 </button>
               );
-            })}
-          </div>
-        )}
-
-        {/* Scrollable Body */}
-        <div className="flex-1 min-h-0 overflow-y-auto scrollbar-none p-6 space-y-4">
+            })
+          : undefined
+      }
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <Link
+            href={baseDashboardPath}
+            onClick={onClose}
+            className="min-h-[44px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs font-bold transition-colors"
+          >
+            <LayoutDashboard className="w-4 h-4" />
+            <span>Buka Dashboard</span>
+          </Link>
+          <button
+            type="button"
+            onClick={() => {
+              onClose();
+              onLogout();
+            }}
+            className="min-h-[44px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs font-bold transition-colors cursor-pointer"
+          >
+            <LogOut className="w-4 h-4" />
+            <span>Keluar</span>
+          </button>
+        </div>
+      }
+    >
+        <div className="space-y-4">
           {!isUserRole ? (
             <div className="rounded-2xl bg-[#f4f7fb] p-4 space-y-2 text-xs">
               <p className="font-bold text-[#0f2c56]">
@@ -944,31 +938,7 @@ export function UserProfilePopup({
             </div>
           )}
         </div>
-
-        {/* Footer Actions */}
-        <div className="shrink-0 px-6 py-4 border-t border-slate-100 bg-slate-50 flex flex-col sm:flex-row gap-2">
-          <Link
-            href={baseDashboardPath}
-            onClick={onClose}
-            className="morph-pill flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs font-bold"
-          >
-            <LayoutDashboard className="w-4 h-4" />
-            <span>Buka Dashboard</span>
-          </Link>
-          <button
-            type="button"
-            onClick={() => {
-              onClose();
-              onLogout();
-            }}
-            className="morph-pill flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs font-bold cursor-pointer"
-          >
-            <LogOut className="w-4 h-4" />
-            <span>Keluar dari Akun</span>
-          </button>
-        </div>
-      </div>
-    </div>
+    </ModalShell>
   );
 
   if (!mounted) return null;
