@@ -112,10 +112,29 @@ function EvaluateContent() {
         <ModalShell
           onClose={() => dismissPrompt(false)}
           ariaLabel="Pengecekan awal CV"
-          badge="Pengecekan Awal CV"
+          badge="Evaluasi CV ATS"
+          headerPills={
+            <>
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/15 text-white/95 text-[10px] font-bold uppercase tracking-wider">
+                5 Dimensi AI
+              </span>
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/15 text-white/95 text-[10px] font-bold uppercase tracking-wider">
+                Standar HRD
+              </span>
+            </>
+          }
           title="Apakah Anda sudah memiliki berkas CV?"
           subtitle="Pilih metode persiapan yang sesuai dengan kondisi dokumen Anda saat ini."
           size="md"
+          footer={
+            <button
+              type="button"
+              onClick={() => dismissPrompt(false)}
+              className="w-full min-h-[42px] px-4 py-2 rounded-xl bg-white border border-slate-200 text-[#0f2c56] hover:border-[#0f2c56] text-xs font-bold transition-colors cursor-pointer"
+            >
+              Lanjutkan ke Halaman Unggah CV
+            </button>
+          }
         >
           <div className="grid grid-cols-1 gap-2.5">
             <button

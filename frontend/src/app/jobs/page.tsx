@@ -14,9 +14,11 @@ import {
   Loader2,
   ArrowUpRight,
   SlidersHorizontal,
+  ChevronRight,
 } from "lucide-react";
 import { JobItem } from "@/types";
 import { api } from "@/lib/api";
+import { ModalShell } from "@/components/ui/modal-shell";
 
 const TOTAL_SLIDES = 2;
 
@@ -27,6 +29,17 @@ export default function JobsPage() {
   const [jobs, setJobs] = useState<JobItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedJob, setSelectedJob] = useState<JobItem | null>(null);
+  const [savedIds, setSavedIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    setSavedIds(api.getSavedJobIds());
+  }, []);
+
+  const handleToggleSave = (jobId: string) => {
+    const updated = api.toggleSavedJob(jobId);
+    setSavedIds(updated);
+  };
 
   const [activeSlide, setActiveSlide] = useState<number>(0);
   const [prevSlide, setPrevSlide] = useState<number>(0);
@@ -401,31 +414,156 @@ export default function JobsPage() {
             {!loading && !error && jobs.length > 0 && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-2.5 sm:gap-4 pb-2">
                 {jobs.map((job) => (
-                  <JobCard key={job.id} job={job} />
+                  <JobCard
+                    key={job.id}
+                    job={job}
+                    saved={savedIds.includes(job.id)}
+                    onToggleSave={() => handleToggleSave(job.id)}
+                    onSelect={() => setSelectedJob(job)}
+                  />
                 ))}
               </div>
             )}
           </div>
         </div>
       </section>
+
+      {selectedJob && (() => {
+        const isModalSaved = savedIds.includes(selectedJob.id);
+        return (
+          <ModalShell
+            onClose={() => setSelectedJob(null)}
+            ariaLabel={`Detail lowongan ${selectedJob.title}`}
+            size="lg"
+            badge={
+              selectedJob.matchScore
+                ? `${selectedJob.matchScore}% Cocok`
+                : "Lowongan Terbuka"
+            }
+            headerPills={
+              <>
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/15 text-white/95 text-[10px] font-bold uppercase tracking-wider">
+                  {selectedJob.source === "jooble" ? "Jooble" : "Mitra Internal"}
+                </span>
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/15 text-white/95 text-[10px] font-bold uppercase tracking-wider">
+                  {selectedJob.workType}
+                </span>
+              </>
+            }
+            title={selectedJob.title}
+            subtitle={
+              <span className="font-semibold text-white/85">
+                {selectedJob.companyName}
+              </span>
+            }
+            headerExtra={
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-white/90 pt-2.5 border-t border-white/15">
+                <span className="inline-flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-[#ce2731] shrink-0" />
+                  <span>{selectedJob.location}</span>
+                </span>
+                {selectedJob.salaryRange && (
+                  <>
+                    <span className="text-white/40">•</span>
+                    <span className="font-extrabold text-white">
+                      {selectedJob.salaryRange}
+                    </span>
+                  </>
+                )}
+              </div>
+            }
+            footer={
+              <div className="flex items-center justify-between gap-2.5 sm:gap-3">
+                <button
+                  type="button"
+                  onClick={() => handleToggleSave(selectedJob.id)}
+                  className={`min-h-[42px] px-4 py-2 rounded-xl border text-xs font-bold inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer ${
+                    isModalSaved
+                      ? "bg-[#0f2c56] border-[#0f2c56] text-white"
+                      : "bg-white border-slate-200 text-[#0f2c56] hover:border-[#0f2c56]"
+                  }`}
+                >
+                  <Bookmark className={`w-3.5 h-3.5 ${isModalSaved ? "fill-current" : ""}`} />
+                  <span>{isModalSaved ? "Tersimpan" : "Simpan"}</span>
+                </button>
+
+                {selectedJob.externalUrl ? (
+                  <a
+                    href={selectedJob.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 min-h-[42px] inline-flex items-center justify-center gap-1.5 py-2 px-4 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-bold transition-colors"
+                  >
+                    <span>Lamar di Sumber Asli</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                ) : (
+                  <Link
+                    href={`/apply/${selectedJob.id}`}
+                    className="flex-1 min-h-[42px] inline-flex items-center justify-center gap-1.5 py-2 px-4 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors"
+                  >
+                    <span>Kirim Lamaran Cepat</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </Link>
+                )}
+              </div>
+            }
+          >
+            <div className="space-y-1">
+              <h3 className="text-[11px] font-extrabold uppercase tracking-wider text-[#0f2c56]">
+                Deskripsi Pekerjaan
+              </h3>
+              <p className="text-xs sm:text-[13px] text-slate-600 leading-relaxed">
+                {selectedJob.description}
+              </p>
+            </div>
+
+            <div className="p-3 rounded-2xl bg-[#f8fafc] border border-slate-200/80 space-y-2">
+              <span className="block text-[11px] font-extrabold uppercase tracking-wider text-[#0f2c56]">
+                Keahlian yang Dibutuhkan ({selectedJob.requiredSkills.length})
+              </span>
+              <div className="flex flex-wrap gap-1.5">
+                {selectedJob.requiredSkills.map((skill, idx) => (
+                  <span
+                    key={idx}
+                    className="text-xs font-mono px-2.5 py-1 rounded-lg bg-[#0f2c56] text-white font-bold"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </ModalShell>
+        );
+      })()}
     </div>
   );
 }
 
-function JobCard({ job }: { job: JobItem }) {
-  const [saved, setSaved] = useState(false);
-
-  useEffect(() => {
-    setSaved(api.getSavedJobIds().includes(job.id));
-  }, [job.id]);
-
-  const handleToggleSave = () => {
-    const updated = api.toggleSavedJob(job.id);
-    setSaved(updated.includes(job.id));
-  };
-
+function JobCard({
+  job,
+  saved,
+  onToggleSave,
+  onSelect,
+}: {
+  job: JobItem;
+  saved: boolean;
+  onToggleSave: () => void;
+  onSelect: () => void;
+}) {
   return (
-    <article className="p-3.5 sm:p-6 bg-white text-[#0f2c56] border border-slate-200 rounded-[20px] sm:rounded-[24px] space-y-2 sm:space-y-3.5">
+    <article
+      role="button"
+      tabIndex={0}
+      onClick={onSelect}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onSelect();
+        }
+      }}
+      className="p-3.5 sm:p-5 bg-white text-[#0f2c56] border border-slate-200 hover:border-[#0f2c56] rounded-[20px] sm:rounded-[24px] space-y-2 sm:space-y-3 transition-colors cursor-pointer group"
+    >
       <div className="flex items-start justify-between gap-2">
         <div className="space-y-0.5 sm:space-y-1 min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
@@ -483,7 +621,10 @@ function JobCard({ job }: { job: JobItem }) {
       <div className="flex items-center justify-between pt-2 sm:pt-2.5 border-t border-slate-100">
         <button
           type="button"
-          onClick={handleToggleSave}
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggleSave();
+          }}
           className={`text-[11px] sm:text-xs font-bold px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg sm:rounded-xl border transition-colors flex items-center gap-1.5 cursor-pointer ${
             saved
               ? "bg-[#0f2c56] border-[#0f2c56] text-white"
@@ -500,6 +641,7 @@ function JobCard({ job }: { job: JobItem }) {
             href={job.externalUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
             className="text-[11px] sm:text-xs font-bold px-3.5 py-1.5 sm:px-4 sm:py-2 bg-[#0f2c56] hover:bg-[#ce2731] text-white rounded-lg sm:rounded-xl transition-colors flex items-center gap-1.5"
           >
             Lamar di Sumber Asli
@@ -508,6 +650,7 @@ function JobCard({ job }: { job: JobItem }) {
         ) : (
           <Link
             href={`/apply/${job.id}`}
+            onClick={(e) => e.stopPropagation()}
             className="text-[11px] sm:text-xs font-bold px-3.5 py-1.5 sm:px-4 sm:py-2 bg-[#ce2731] hover:bg-[#b01e27] text-white rounded-lg sm:rounded-xl transition-colors inline-flex items-center"
           >
             Kirim Lamaran Cepat

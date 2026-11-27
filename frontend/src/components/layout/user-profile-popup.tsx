@@ -433,18 +433,28 @@ export function UserProfilePopup({
       onClose={onClose}
       ariaLabel="Detail Profil Pengguna"
       size={isUserRole ? "lg" : "sm"}
-      badge={user.role}
+      badge={user.role === "employer" ? "Mitra Perusahaan" : user.role === "admin" ? "Administrator" : "Kandidat"}
+      headerPills={
+        <>
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/15 text-white/95 text-[10px] font-bold uppercase tracking-wider">
+            {isUserRole ? draft.seniority : "Terverifikasi"}
+          </span>
+          {savedNotice && (
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/25 text-emerald-200 text-[10px] font-bold uppercase tracking-wider">
+              <Check className="w-3 h-3" />
+              Tersimpan
+            </span>
+          )}
+        </>
+      }
       title={draft.name || user.name}
       subtitle={
-        savedNotice ? (
-          <span className="inline-flex items-center gap-1 font-bold text-emerald-300">
-            <Check className="w-3 h-3" />
-            Tersimpan
-          </span>
-        ) : undefined
+        <span className="font-semibold text-white/85">
+          {isUserRole ? `${draft.field} · ${draft.location}` : user.email || "Akun Portal Pasbana"}
+        </span>
       }
       leading={
-        <div className="w-11 h-11 rounded-2xl bg-white text-[#0f2c56] text-base font-extrabold flex items-center justify-center shrink-0">
+        <div className="w-10 h-10 rounded-xl bg-white text-[#0f2c56] text-sm font-extrabold flex items-center justify-center shrink-0">
           {(draft.name || user.name).charAt(0).toUpperCase()}
         </div>
       }
@@ -466,7 +476,7 @@ export function UserProfilePopup({
                   key={tab.id}
                   type="button"
                   onClick={() => setActiveTab(tab.id)}
-                  className={`shrink-0 min-h-[40px] inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer ${
+                  className={`shrink-0 min-h-[38px] inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer ${
                     active
                       ? "bg-[#0f2c56] text-white"
                       : "bg-white text-[#0f2c56] border border-slate-200 hover:bg-[#edf2f9]"
@@ -484,7 +494,7 @@ export function UserProfilePopup({
           <Link
             href={baseDashboardPath}
             onClick={onClose}
-            className="min-h-[44px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs font-bold transition-colors"
+            className="min-h-[42px] flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-[#0f2c56] hover:bg-[#163861] text-white text-xs font-bold transition-colors"
           >
             <LayoutDashboard className="w-4 h-4" />
             <span>Buka Dashboard</span>
@@ -495,7 +505,7 @@ export function UserProfilePopup({
               onClose();
               onLogout();
             }}
-            className="min-h-[44px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs font-bold transition-colors cursor-pointer"
+            className="min-h-[42px] flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-[#ce2731] hover:bg-[#b01e27] text-white text-xs font-bold transition-colors cursor-pointer"
           >
             <LogOut className="w-4 h-4" />
             <span>Keluar</span>

@@ -221,6 +221,16 @@ export function CompanyJobsSubpage() {
           onClose={() => setShowForm(false)}
           ariaLabel="Publikasikan Lowongan Baru"
           badge="Lowongan Baru"
+          headerPills={
+            <>
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/15 text-white/95 text-[10px] font-bold uppercase tracking-wider">
+                Mitra Internal
+              </span>
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/15 text-white/95 text-[10px] font-bold uppercase tracking-wider">
+                Terindeks AI
+              </span>
+            </>
+          }
           title="Publikasikan Lowongan Baru"
           subtitle="Lowongan aktif otomatis terindeks oleh sistem pencocokan AI."
           size="md"
@@ -230,13 +240,13 @@ export function CompanyJobsSubpage() {
               <button
                 type="button"
                 onClick={() => setShowForm(false)}
-                className="min-h-[44px] px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-[#0f2c56] hover:border-[#0f2c56] text-xs font-bold cursor-pointer transition-colors"
+                className="min-h-[42px] px-4 py-2 rounded-xl bg-white border border-slate-200 text-[#0f2c56] hover:border-[#0f2c56] text-xs font-bold cursor-pointer transition-colors"
               >
                 Batal
               </button>
               <button
                 type="submit"
-                className="min-h-[44px] px-5 py-2.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-extrabold cursor-pointer transition-colors"
+                className="min-h-[42px] px-5 py-2 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-extrabold cursor-pointer transition-colors"
               >
                 Simpan &amp; Terbitkan
               </button>

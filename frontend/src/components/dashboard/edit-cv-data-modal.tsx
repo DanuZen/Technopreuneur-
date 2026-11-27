@@ -111,7 +111,18 @@ export function EditCvDataModal({
       onClose={onClose}
       ariaLabel="Edit Data Dokumen CV ATS"
       badge="Edit Data CV ATS"
+      headerPills={
+        <>
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/15 text-white/95 text-[10px] font-bold uppercase tracking-wider">
+            Standar A4
+          </span>
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/15 text-white/95 text-[10px] font-bold uppercase tracking-wider">
+            1-Kolom ATS
+          </span>
+        </>
+      }
       title="Sesuaikan Isi Dokumen CV Sebelum Dicetak"
+      subtitle="Perubahan langsung memperbarui pratinjau dokumen CV dan profil kandidat Anda."
       size="xl"
       onSubmit={handleSave}
       subHeader={(
@@ -129,7 +140,7 @@ export function EditCvDataModal({
             key={tab.id}
             type="button"
             onClick={() => setActiveTab(tab.id)}
-            className={`shrink-0 min-h-[40px] inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer ${
+            className={`shrink-0 min-h-[38px] inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer ${
               active
                 ? "bg-[#0f2c56] text-white"
                 : "bg-white text-slate-600 hover:text-[#0f2c56] border border-slate-200"
@@ -145,13 +156,13 @@ export function EditCvDataModal({
           <button
             type="button"
             onClick={onClose}
-            className="min-h-[44px] px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-[#0f2c56] hover:border-[#0f2c56] text-xs font-bold cursor-pointer transition-colors"
+            className="min-h-[42px] px-4 py-2 rounded-xl bg-white border border-slate-200 text-[#0f2c56] hover:border-[#0f2c56] text-xs font-bold cursor-pointer transition-colors"
           >
             Batal
           </button>
           <button
             type="submit"
-            className="min-h-[44px] inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors cursor-pointer"
+            className="min-h-[42px] inline-flex items-center justify-center gap-1.5 px-5 py-2 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-bold transition-colors cursor-pointer"
           >
             <Check className="w-3.5 h-3.5" />
             <span>Simpan Perubahan</span>

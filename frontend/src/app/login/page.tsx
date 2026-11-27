@@ -555,15 +555,26 @@ export default function LoginPage() {
           onClose={() => setShowFaqModal(false)}
           ariaLabel="Pusat Bantuan"
           badge="Pusat Bantuan"
+          headerPills={
+            <>
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/15 text-white/95 text-[10px] font-bold uppercase tracking-wider">
+                Panduan Akses
+              </span>
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/15 text-white/95 text-[10px] font-bold uppercase tracking-wider">
+                UU PDP
+              </span>
+            </>
+          }
           title="Panduan Akses & Fitur Pasbana AI"
+          subtitle="Informasi singkat mengenai peran akun, evaluasi CV ATS, dan perlindungan data."
           size="md"
           footer={
             <button
               type="button"
               onClick={() => setShowFaqModal(false)}
-              className="w-full min-h-[44px] px-5 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white font-bold text-xs transition-colors cursor-pointer"
+              className="w-full min-h-[42px] px-5 py-2 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white font-bold text-xs transition-colors cursor-pointer"
             >
-              Tutup
+              Tutup Panduan
             </button>
           }
         >

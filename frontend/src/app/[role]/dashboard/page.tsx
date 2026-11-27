@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { DashboardPageHeading } from "@/components/dashboard/dashboard-page-heading";
 import { DashboardPageSkeleton } from "@/components/ui/dashboard-skeleton";
+import { ModalShell } from "@/components/ui/modal-shell";
 import {
   CompanyFunnelDiagram,
   CompanyTrendDiagram,
@@ -183,71 +184,70 @@ function CompanyDashboardView() {
       />
 
       {showNewJobForm && (
-        <div
-          className="fixed inset-0 z-50 bg-[#0f2c56]/40 backdrop-blur-[2px] flex items-center justify-center p-4"
-          onClick={() => setShowNewJobForm(false)}
-        >
-          <form
-            onSubmit={handleAddJob}
-            onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-md bg-white border border-slate-200 rounded-3xl p-6 space-y-4 text-[#0f2c56] shadow-2xl"
-          >
-            <div className="flex items-center justify-between gap-3 pb-3 border-b border-slate-100">
-              <div>
-                <p className="text-sm font-extrabold">Publikasikan Lowongan Baru</p>
-                <p className="text-xs text-slate-500 mt-0.5">
-                  Tambahkan posisi kerja baru tanpa mengganggu tata letak dashboard.
-                </p>
-              </div>
+        <ModalShell
+          onClose={() => setShowNewJobForm(false)}
+          ariaLabel="Publikasikan Lowongan Baru"
+          badge="Lowongan Baru"
+          headerPills={
+            <>
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/15 text-white/95 text-[10px] font-bold uppercase tracking-wider">
+                Mitra Internal
+              </span>
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/15 text-white/95 text-[10px] font-bold uppercase tracking-wider">
+                Blind Screening
+              </span>
+            </>
+          }
+          title="Publikasikan Lowongan Baru"
+          subtitle="Tambahkan posisi kerja baru tanpa mengganggu tata letak dashboard."
+          size="md"
+          onSubmit={handleAddJob}
+          footer={
+            <div className="grid grid-cols-2 gap-2.5">
               <button
                 type="button"
                 onClick={() => setShowNewJobForm(false)}
-                aria-label="Tutup popup"
-                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-[#0f2c56] flex items-center justify-center cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-            <div className="space-y-3">
-              <div className="space-y-1">
-                <label className="text-xs font-bold block">Judul Posisi Lowongan</label>
-                <input
-                  type="text"
-                  value={newJobTitle}
-                  onChange={(e) => setNewJobTitle(e.target.value)}
-                  placeholder="Contoh: Junior Product Manager"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#0f2c56]"
-                  required
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-xs font-bold block">Lokasi / Sistem Kerja</label>
-                <input
-                  type="text"
-                  value={newJobLocation}
-                  onChange={(e) => setNewJobLocation(e.target.value)}
-                  placeholder="Contoh: Jakarta (Hybrid)"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#0f2c56]"
-                />
-              </div>
-            </div>
-            <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
-              <button
-                type="button"
-                onClick={() => setShowNewJobForm(false)}
-                className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#0f2c56] text-xs font-bold cursor-pointer"
+                className="min-h-[42px] px-4 py-2 rounded-xl bg-white border border-slate-200 text-[#0f2c56] hover:border-[#0f2c56] text-xs font-bold cursor-pointer transition-colors"
               >
                 Batal
               </button>
               <button
                 type="submit"
-                className="px-5 py-2.5 rounded-xl bg-[#0f2c56] hover:bg-[#ce2731] text-white text-xs font-extrabold transition-colors cursor-pointer shrink-0"
+                className="min-h-[42px] px-5 py-2 rounded-xl bg-[#ce2731] hover:bg-[#0f2c56] text-white text-xs font-extrabold transition-colors cursor-pointer"
               >
-                Publikasikan
+                Simpan &amp; Terbitkan
               </button>
             </div>
-          </form>
-        </div>
+          }
+        >
+          <div className="space-y-3.5">
+            <label className="block space-y-1.5">
+              <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#0f2c56]">
+                Judul Posisi Lowongan
+              </span>
+              <input
+                type="text"
+                value={newJobTitle}
+                onChange={(e) => setNewJobTitle(e.target.value)}
+                placeholder="Contoh: Junior Product Manager"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-[#0f2c56] focus:outline-none focus:border-[#0f2c56]"
+                required
+              />
+            </label>
+            <label className="block space-y-1.5">
+              <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#0f2c56]">
+                Lokasi / Sistem Kerja
+              </span>
+              <input
+                type="text"
+                value={newJobLocation}
+                onChange={(e) => setNewJobLocation(e.target.value)}
+                placeholder="Contoh: Jakarta (Hybrid)"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-[#0f2c56] focus:outline-none focus:border-[#0f2c56]"
+              />
+            </label>
+          </div>
+        </ModalShell>
       )}
 
       <div className="flex-1 min-h-0 grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
