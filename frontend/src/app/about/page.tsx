@@ -340,20 +340,20 @@ export default function AboutPage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(2)}`}
       >
-        <div className="relative w-full h-full mx-auto px-2 sm:px-8 lg:px-12 flex flex-col justify-center gap-4 sm:gap-10 lg:gap-14">
-          <div className="space-y-2.5 sm:space-y-3 text-center max-w-2xl mx-auto flex flex-col items-center">
-            <span className={`inline-flex items-center px-3.5 py-1 rounded-full bg-[#0f2c56] text-xs font-bold text-white ${getTextRevealClass(2, "delay-75")}`}>
+        <div className="relative w-full h-full mx-auto px-2 sm:px-8 lg:px-12 py-1 lg:py-0 flex flex-col justify-between lg:justify-center gap-2.5 sm:gap-10 lg:gap-14">
+          <div className="space-y-1.5 sm:space-y-3 text-center max-w-2xl mx-auto flex flex-col items-center shrink-0">
+            <span className={`inline-flex items-center px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-full bg-[#0f2c56] text-[11px] sm:text-xs font-bold text-white ${getTextRevealClass(2, "delay-75")}`}>
               Tim Pengembang
             </span>
-            <h2 className={`text-[24px] sm:text-4xl lg:text-[40px] font-extrabold tracking-tight text-[#0f2c56] leading-[1.24] sm:leading-[1.22] ${getTextRevealClass(2, "delay-150")}`}>
+            <h2 className={`text-xl sm:text-4xl lg:text-[40px] font-extrabold tracking-tight text-[#0f2c56] leading-[1.22] sm:leading-[1.22] ${getTextRevealClass(2, "delay-150")}`}>
               Dibangun oleh kolaborasi{" "}
-              <span className={`inline-block bg-[#ce2731] text-white px-3 py-0.5 rounded-xl mt-1.5 ${getHighlightPopClass(2, "delay-300")}`}>
+              <span className={`inline-block bg-[#ce2731] text-white px-2.5 py-0.5 sm:px-3 rounded-xl mt-1 sm:mt-1.5 ${getHighlightPopClass(2, "delay-300")}`}>
                 tiga peran inti.
               </span>
             </h2>
           </div>
 
-          <div ref={teamGridRef} className="relative grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-7 pt-2 sm:pt-12">
+          <div ref={teamGridRef} className="flex-1 min-h-0 lg:flex-initial relative grid grid-cols-1 lg:grid-cols-3 grid-rows-3 lg:grid-rows-none gap-2.5 sm:gap-7 pt-1 sm:pt-12">
             {TEAM_MEMBERS.map((member, idx) => {
               const isSelected = activeMemberIdx === idx;
               return (
