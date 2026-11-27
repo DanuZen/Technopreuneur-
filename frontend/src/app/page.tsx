@@ -1164,36 +1164,36 @@ export default function HomePage() {
       <section
         className={`absolute inset-0 pt-1 sm:pt-1.5 pb-2.5 sm:pb-3.5 px-2.5 sm:px-4 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${getSectionAnimClass(6)}`}
       >
-        <div className="w-full h-full mx-auto px-1.5 sm:px-4 flex flex-col justify-center lg:justify-start lg:grid lg:grid-cols-12 gap-3.5 sm:gap-5 lg:items-stretch">
+        <div className="w-full h-full mx-auto px-1.5 sm:px-4 flex flex-col justify-between lg:justify-start lg:grid lg:grid-cols-12 gap-3.5 sm:gap-5 lg:items-stretch">
           {/* Left 5 Cols: Solid Navy CTA Card */}
           <div className="lg:col-span-5 flex flex-col lg:py-1 shrink-0">
-            <div className="bg-[#0f2c56] lg:bg-transparent text-white rounded-[22px] sm:rounded-[28px] p-4 sm:p-7 lg:p-10 flex flex-col justify-center items-center text-center gap-3 sm:gap-5 lg:gap-6 flex-1">
-              <div className="space-y-1.5 sm:space-y-4 lg:space-y-5 flex flex-col items-center">
+            <div className="bg-[#0f2c56] lg:bg-transparent text-white rounded-[24px] sm:rounded-[28px] px-4 py-4.5 sm:p-7 lg:p-10 flex flex-col justify-center items-center text-center gap-3.5 sm:gap-5 lg:gap-6 flex-1">
+              <div className="space-y-2 sm:space-y-4 lg:space-y-5 flex flex-col items-center">
                 <span className={`hidden lg:inline-flex items-center px-3.5 py-1 rounded-full bg-[#ce2731] text-white text-xs font-bold ${getTextRevealClass(6, "delay-75")}`}>
                   Mulai Langkah Karir
                 </span>
-                <h2 className={`text-lg sm:text-3xl lg:text-[40px] font-extrabold tracking-normal text-white leading-[1.25] sm:leading-[1.35] ${getTextRevealClass(6, "delay-150")}`}>
+                <h2 className={`text-xl sm:text-3xl lg:text-[40px] font-extrabold tracking-normal text-white leading-[1.26] sm:leading-[1.35] ${getTextRevealClass(6, "delay-150")}`}>
                   Petakan langkah menuju{" "}
-                  <span className={`inline-block bg-[#ce2731] text-white px-2.5 py-0.5 sm:px-3.5 sm:py-1 rounded-xl mt-1 sm:mt-2.5 ${getHighlightPopClass(6, "delay-300")}`}>
+                  <span className={`inline-block bg-[#ce2731] text-white px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-xl mt-1.5 sm:mt-2.5 ${getHighlightPopClass(6, "delay-300")}`}>
                     karir terbaik Anda.
                   </span>
                 </h2>
-                <p className={`text-[11px] sm:text-sm lg:text-base text-white/95 max-w-md mx-auto leading-snug sm:leading-[1.8] ${getTextRevealClass(6, "delay-200")}`}>
+                <p className={`text-xs sm:text-sm lg:text-base text-white/95 max-w-md mx-auto leading-relaxed sm:leading-[1.8] ${getTextRevealClass(6, "delay-200")}`}>
                   Pastikan CV Anda terbaca sempurna oleh sistem ATS, perkuat poin pencapaian, dan temukan posisi kerja yang paling pas bana.
                 </p>
               </div>
 
-              <div className={`grid grid-cols-2 sm:flex sm:flex-wrap items-center justify-center gap-2 sm:gap-3 w-full sm:w-auto ${getTextRevealClass(6, "delay-300")}`}>
+              <div className={`grid grid-cols-2 sm:flex sm:flex-wrap items-center justify-center gap-2.5 sm:gap-3 w-full sm:w-auto ${getTextRevealClass(6, "delay-300")}`}>
                 <Link
                   href="/evaluate"
-                  className="px-3 py-2 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-white text-white hover:text-[#0f2c56] text-xs sm:text-sm font-bold transition-colors inline-flex items-center justify-center gap-1 sm:gap-2"
+                  className="px-3.5 py-2.5 sm:px-6 sm:py-3.5 rounded-xl bg-[#ce2731] hover:bg-white text-white hover:text-[#0f2c56] text-xs sm:text-sm font-bold transition-colors inline-flex items-center justify-center gap-1.5 sm:gap-2"
                 >
                   <span className="truncate">Evaluasi CV</span>
                   <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
                 </Link>
                 <Link
                   href="/onboarding"
-                  className="px-3 py-2 sm:px-6 sm:py-3.5 rounded-xl bg-white hover:bg-[#ce2731] text-[#0f2c56] hover:text-white text-xs sm:text-sm font-bold transition-colors text-center"
+                  className="px-3.5 py-2.5 sm:px-6 sm:py-3.5 rounded-xl bg-white hover:bg-[#ce2731] text-[#0f2c56] hover:text-white text-xs sm:text-sm font-bold transition-colors text-center"
                 >
                   Buat CV
                 </Link>
@@ -1203,18 +1203,18 @@ export default function HomePage() {
 
           {/* Right 7 Cols: Clean Header + 5 Solid Interactive Accordion Cards */}
           <div
-            className={`lg:col-span-7 flex flex-col justify-center gap-2.5 sm:gap-3 lg:py-2 lg:pl-4 ${getChildAnimClass(6, "right", "delay-150")}`}
+            className={`lg:col-span-7 flex-1 min-h-0 flex flex-col justify-between lg:justify-center gap-2 sm:gap-3 lg:py-2 lg:pl-4 ${getChildAnimClass(6, "right", "delay-150")}`}
           >
             <div className="space-y-1 sm:space-y-2 shrink-0">
               <span className="inline-flex items-center px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-full bg-[#0f2c56] text-[10px] sm:text-xs font-bold text-white">
                 Pertanyaan Umum
               </span>
-              <h3 className="text-sm sm:text-2xl font-extrabold text-[#0f2c56] leading-snug">
+              <h3 className="text-base sm:text-2xl font-extrabold text-[#0f2c56] leading-snug">
                 Semua yang perlu Anda ketahui tentang Pasbana AI
               </h3>
             </div>
 
-            <div className="space-y-1.5 sm:space-y-2.5">
+            <div className="flex-1 min-h-0 lg:flex-initial flex flex-col justify-between lg:block gap-2 sm:space-y-2.5">
               {ACCORDION_ITEMS.map((item, idx) => {
                 const isOpen = openAccordionId === item.id;
                 return (
@@ -1229,11 +1229,11 @@ export default function HomePage() {
                     <button
                       type="button"
                       onClick={() => setOpenAccordionId(item.id)}
-                      className="w-full px-3 py-2 sm:px-5 sm:py-3.5 lg:py-4 flex items-center justify-between gap-2 sm:gap-4 text-left cursor-pointer"
+                      className="w-full px-3.5 py-2.5 sm:px-5 sm:py-3.5 lg:py-4 flex items-center justify-between gap-2.5 sm:gap-4 text-left cursor-pointer"
                     >
-                      <div className="flex items-center gap-2 sm:gap-3.5 min-w-0">
+                      <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
                         <span
-                          className={`w-5 h-5 sm:w-7 sm:h-7 rounded-md sm:rounded-lg font-mono text-[10px] sm:text-xs font-black flex items-center justify-center shrink-0 ${
+                          className={`w-6 h-6 sm:w-7 sm:h-7 rounded-md sm:rounded-lg font-mono text-[11px] sm:text-xs font-black flex items-center justify-center shrink-0 ${
                             isOpen
                               ? "bg-[#ce2731] text-white"
                               : "bg-[#0f2c56] text-white"
@@ -1241,12 +1241,12 @@ export default function HomePage() {
                         >
                           0{idx + 1}
                         </span>
-                        <span className="text-[11px] sm:text-sm font-bold leading-tight sm:leading-snug text-[#0f2c56]">
+                        <span className="text-[11.5px] sm:text-sm font-bold leading-snug text-[#0f2c56]">
                           {item.question}
                         </span>
                       </div>
                       <span
-                        className={`w-5 h-5 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shrink-0 transition-colors ${
+                        className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shrink-0 transition-colors ${
                           isOpen
                             ? "bg-[#ce2731] text-white"
                             : "bg-white border border-slate-200 text-[#0f2c56]"
@@ -1260,7 +1260,7 @@ export default function HomePage() {
                       </span>
                     </button>
                     {isOpen && (
-                      <div className="px-3 pb-2.5 pl-9 pr-3 sm:px-5 sm:pb-4 sm:pl-[62px] sm:pr-10 text-[10.5px] sm:text-sm text-slate-600 leading-snug sm:leading-relaxed">
+                      <div className="px-3.5 pb-3 pl-11 pr-4 sm:px-5 sm:pb-4 sm:pl-[62px] sm:pr-10 text-[11px] sm:text-sm text-slate-600 leading-relaxed">
                         {item.answer}
                       </div>
                     )}
